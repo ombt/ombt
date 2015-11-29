@@ -6,12 +6,16 @@ endif
 
 include $(ROOT)/build/makefile.common
 
+#SUBDIRS = \
+#	gcalc \
+#	gtk_tutorial \
+#	qt_book \
+#	qt_filewatcher \
+#	qt_mdivwer \
+#	qt_syncmgr
+
 SUBDIRS = \
 	gcalc \
-	gtk_tutorial \
-	qt_book \
-	qt_filewatcher \
-	qt_mdivwer \
-	qt_syncmgr
+	gtk_tutorial
 
 include $(ROOT)/build/makefile.subdirs

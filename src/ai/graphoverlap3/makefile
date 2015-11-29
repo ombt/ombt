@@ -14,7 +14,7 @@ INCLUDEDIR = $(ROOT)/$(RELEASEHDRDIR)
 
 CXX = g++
 CXXFLAGS = -g -DDEBUG -I. -I$(INCLUDEDIR) -L$(LIBRARYDIR) 
-CXXFLAGS += -lombtgraphs -lombtparsing
+# CXXFLAGS += -lombtgraphs -lombtparsing
 CXXFLAGS += -Wfatal-errors
 
 all:	graphoverlap3
@@ -23,7 +23,10 @@ test:
 
 graphoverlap3:	\
 	graphoverlap3.o 
-	$(CXX) $(CXXFLAGS) -o graphoverlap3 graphoverlap3.o 
+	$(CXX) $(CXXFLAGS) -o graphoverlap3 graphoverlap3.o \
+		-lombtgraphs \
+		-lombtparsing
+		
 
 graphoverlap3.o:	\
 			graphoverlap3.cpp \

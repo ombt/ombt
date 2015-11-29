@@ -17,7 +17,8 @@ CXXFLAGS = -g -O0 -DUSEOSTREAM=1 -I$(INCLUDEDIR) -I.
 CXXFLAGS += -Wfatal-errors -Wno-deprecated
 
 LD = g++
-LDFLAGS = -g -O0 -L$(LIBRARYDIR) -lombtadt
+# LDFLAGS = -g -O0 -L$(LIBRARYDIR) -lombtadt
+LDFLAGS = -g -O0 -L$(LIBRARYDIR) 
 LDFLAGS += -Wfatal-errors -Wno-deprecated
 
 LEX = /usr/bin/lex
@@ -41,6 +42,7 @@ tprop:		propyacc.o \
 			atom.o \
 			clause.o \
 			semantic.o \
+			-lombtadt \
 			-ly \
 			-ll
 
