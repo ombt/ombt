@@ -1,0 +1,23 @@
+CC = CC
+CCFLAGS = -g -DFLEXWARN -xildoff  -DDEBUG
+LD = CC
+LDFLAGS = -g -xildoff 
+INCLDIRS=-I../include
+#
+chap2
+chap2.c
+#
+chap3
+chap3.c
+#
+chap4
+chap4.c
+#
+chap5
+chap5.c
+#
+chap6
+chap6.c
+#
+chap7
+chap7.c

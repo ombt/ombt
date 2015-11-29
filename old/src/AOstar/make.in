@@ -1,0 +1,18 @@
+#
+CC = CC
+CCFLAGS = -g 
+#CCFLAGS = -g -DDEBUG
+#
+LD = CC
+LDFLAGS = -g 
+#LDFLAGS = -g -DDEBUG
+#
+tnode
+tnode.c
+list.c
+#
+tsearch
+tsearch.c
+search.c
+list.c
+#

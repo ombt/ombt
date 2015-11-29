@@ -1,0 +1,11 @@
+nsbPackageDescription: 1
+executableTypes: solaris
+paths: 
+	ocelf.%E
+	ocelf.1
+	ocelf.toolnews
+pathSubs:
+	ocelf.1 man/man1/ocelf.1
+	ocelf.toolnews lib/toolnews/ocelf
+regSubs:
+	^ocelf.%E$ bin/ocelf

@@ -1,0 +1,1132 @@
+Hi Marc,
+
+Last November I sent you an abstract for a paper covering binary trees
+and iterators. You responded that I should write the paper and submit
+it to you. Well, I finished the paper over 1 month ago, but I had
+to pass it through the Lucent legal-eagles. They have to verify that
+I'm not giving away any secrets, and that I can submit it. So I'm 
+submitting it !!!
+
+The paper is slightly long now, and I figure it needs some pruning. Since
+I know that you know your readers, I'd appreciate some feedback as to where
+to prune or where to rewrite.
+
+Thank you for your interest !!!
+
+Mike Rumore
+mrumore@lucent.com
+(1-630-713-4396)
+
+PS: I've written a short biography, as requested.
+
+My educational background is a Ph.D. in Nuclear Physics from University
+of Colorado, Boulder. I've been working for Lucent Technologies (ex-AT&T) 
+Bell Labs for 11 years as a software engineer. I've been using C++ for 
+over 6 years for tool generation. My current interests are data structures 
+and numerical algorithms (Monte Carlo simulations and linear inversion
+methods applied to radiation spectra).
+
+---------------------- cut here -------------------------------------------
+
+A BINARY SEARCH TREE IMPLEMENTATION WITH ITERATORS
+
+1 INTRODUCTION
+
+There are many important data structures which are used every day
+in computer science. Among these data structures are general trees, and 
+their variants: binary trees, balanced trees, B-trees, and many more. 
+Binary search trees, which are the topic for of this article, are used as 
+the underlying basis for many data structures which require a hierarchical 
+and ordered structure.
+
+This article describes an implementation of binary search trees which I 
+wrote about two years ago. The algorithms for creating and maintaining binary 
+trees are described in many data structure books (for example, 
+references [1], [2], [3]). Additional algorithms for visiting and processing 
+the data stored in a binary tree (also known as traversing the tree) are 
+also described in references [1], [2], and [3]. Among the most important 
+of these tree traversing algorithms are: preorder (also known as 
+depth-first), postorder, inorder, and level-order (also known as 
+breadth-first). This article will primarily describe the implementation 
+of these traversal algorithms using iterators (see references [4], [5]).
+
+2 BINARY SEARCH TREE DATA MODEL
+
+A binary search tree is a recursive data structure where each node contains
+a data item and two pointers. One pointer, called the left pointer, points 
+to another node which contains data that is "less than" the data in the 
+current node. Similarly, the second pointer, the right pointer, points to 
+a node which contains data that is "greater than" the current node. The 
+left and right nodes, in turn, also have pointers pointing to nodes which 
+satisfy the same conditions as before: left node data is less than current 
+node data, and right node data is greater than the current node data. This 
+structure gives order to the binary search tree and allows for efficient 
+key-value searches.
+
+Like all data structures, the binary search tree type has a set of operations 
+defined for it. These operations include inserting a new data element, 
+deleting an element, retrieving the data associated with a given key, 
+checking if the the tree is empty, and deleting all data in the tree. Also 
+included in these operations are the traversal methods. The traversal 
+methods are the different orders in which the nodes of a binary tree are
+visited, or processed. They are defined recursively using the following
+pseudo-code:
+
+	struct Node {
+		Node *left;
+		Node *right;
+		DataType data;
+	};
+
+	void
+	Preorder(Node *ptr) 
+	{
+		if (ptr != NULL) 
+		{
+			Process(ptr->data);
+			Preorder(ptr->left);
+			Preorder(ptr->right);
+		}
+	}
+
+	void
+	Inorder(Node *ptr) 
+	{
+		if (ptr != NULL) 
+		{
+			Inorder(ptr->left);
+			Process(ptr->data);
+			Inorder(ptr->right);
+		}
+	}
+
+	void
+	Postorder(Node *ptr) 
+	{
+		if (ptr != NULL) 
+		{
+			Postorder(ptr->left);
+			Postorder(ptr->right);
+			Process(ptr->data);
+		}
+	}
+
+The above algorithms use a stack implicitly every time the traversal
+function is called recursively. The algorithm for a level-order 
+traversal requires a queue, not a stack. The order that nodes are 
+visited in a level-order traversal is dependent on their distance 
+from the root node. That is, the root is visited first, then both 
+left and right nodes of the root. Then the left and right nodes 
+belonging to the root's left and right nodes, and so on. All nodes 
+at the same level are visited before visiting nodes on the next level.
+
+3 IMPLEMENTATION
+
+The binary search tree implementation presented here uses an approach that 
+is different from the approach used in the Standard Template Library. 
+I have used inheritance and virtual functions to define my binary search 
+tree interface, and templates to allow the storing of different data types.
+The STL takes a very different approach. It standardizes the interface to 
+the data structures, and has very little, if any, use of virtual functions 
+and inheritance (see reference [5]). 
+
+The STL defines const and non-const iterators. Const iterators do not 
+allow the data in the underlying data structure to be modified via the
+iterator; they return data values by value (copies of the data). Non-
+const iterators return data by reference and allow modification directly 
+to the data. This implementation supports const iterators since data is 
+returned by value. Also, the STL allows deletes to the underlying data 
+structure with the result that some iterators are left in an insane 
+state (page 133 in [6]). Section 7 describes different approaches to 
+solving this problem.
+
+The major classes used in this binary tree implementation are described 
+next:
+
+1) AbstractTree - defines the interface to the binary tree class. 
+The binary tree class is derived from this class (refer to listing 1).
+
+2) AbstractIterator - defines the interface for all iterator classes. 
+All iterators are derived from this class (refer to listing 2).
+
+3) BinaryTree - contains all the algorithms for inserting, deleting, 
+and retrieving data from a binary tree. This class is derived from 
+AbstractTree (refer to listing 3).
+
+4) BinaryTreeNode - defines the actual structure used to construct 
+the binary tree. It declares BinaryTree and all iterator classes as 
+friend classes. Its internals are all declared protected (refer to 
+listing 3).
+
+5) BinaryTreeIterator_PreOrder - derived from AbstractIterator
+and defines the functions operator++(int), reset(), etc. It is 
+initialized using another preorder iterator or from a binary tree
+(refer to listing 3). A stack is used in this iterator to track
+the nodes that still need visiting. 
+
+6) BinaryTreeIterator_PostOrder and BinaryTreeIterator_InOrder - 
+are both derived from BinaryTreeIterator_PreOrder class. Each class
+overrides the operator++(int) and reset() functions. Each inherits
+done(), operator()() and isEmpty() from the base class (refer to 
+listing 3). 
+
+7) BinaryTreeIterator_LevelOrder - derived from AbstractIterator and
+defines the functions operator++(int), reset(), etc. It is initialized
+using another level order iterator or a binary tree (refer to listing
+3). A queue is used to track which nodes still need visiting. 
+
+8) The iterators require two other classes for their implementation:
+Queue_List, a queue implemented using a doubly-linked list; and 
+Stack_List, a stack implemented using a doubly-linked list.
+
+The code for the creating and maintaining a binary tree is available
+from the CUJ FTP site. You can refer to reference [1] for all the 
+details on inserting and deleting data from a binary tree.
+
+4 TRAVERSALS AND ITERATORS 
+
+Iterators are basically handler classes for collection classes. They 
+provide a method for accessing the contents of a collection without 
+exposing the collection's internal implementation. Also, they allow for
+different access methods to be defined for a collection class. For the 
+present case, we have four different methods for accessing the data 
+within a binary tree: preorder, inorder, postorder, and level-order 
+traversal.  Since more than one iterator can be created at any one time, 
+this allows for multiple and simultaneous traversals of a collection.
+
+There are two basic questions which must be answered when designing an 
+iterator. The first question is whether the underlying collection can be 
+modified or not while an iterator exists, that is, can elements be added 
+to or deleted from the collection. The second question is whether or not 
+the data in the collection can be modified directly via the iterator. A 
+simple way to pose the second question is whether the current object 
+pointed to by the iterator is returned by value or by reference.
+
+The iterators described in this article are for read-only. They return
+the data by value, and depending on the #define MUTABLE_ITERATOR, they 
+track whether the underlying binary tree was modified or not. As will be 
+seen in the example, it is possible to reset the iterator and start fom 
+the beginning again if the binary tree was modified (inserts or deletes).
+
+Listing 4 lists the code for the preorder iterator. There are two 
+constructors, the copy constructor and second one using a BinaryTree &
+as an initializer, and a destructor. The default constructor and the 
+assignment operator are declared private and not provided. Reset()
+reinitializes the iterator to the beginning, and isDone() returns
+true if the iterator is finished, or false if it is not finished.
+Operator++(int) advances the iterator to the next node in the binary
+tree, and operator()() returns the node's value.
+
+Listing 5 lists the code for the inorder iterator. New constructors
+and a destructor are provided. The inorder iterator overrides the 
+reset() function and operator++(int) from the base preorder class.
+The postorder iterator (not listed) does similarly.
+
+Finally, listing 6 lists the code for the level-order iterator. This
+iterator is not based off of the preorder iterator since it requires
+a queue, and not a stack. The same functionality (reset(), operator++(int),
+etc.) is provided.
+
+Standard Template Library iterators are required to allow access to 
+a data item in a collection in O(constant) time (amortized), N 
+accesses for N data items (see reference [6]). The iterators described 
+here provide the same performance, O(constant) per data access 
+(amortized). For example, for the preorder iterator (refer to 
+listing 4), the push, pop, and top stack operations are each called 
+once for each node in the binary tree. Since the pop, top and push 
+operations are O(constant) in time, this means that the access time 
+is also O(constant).
+
+The inorder iterator has O(constant) performance, if the the total
+amount of push, pop and top are amortized over all data accesses. The
+for-loop in the preorder operator++(int) can execute more than once on
+a given call, but in the long run, each node is still pushed, popped, 
+and topped only once. The net result is an average of O(constant) for
+each access (amortized). The level-order traversal iterator is also 
+O(constant) performance. The postorder iterator is the least efficient, 
+but it still maintains an amortized O(constant) performance.
+
+5 EXAMPLE
+
+Listing 7 shows an example where a binary tree is used as a dictionary.
+Strings are inserted into the dictionary, and an inorder iterator
+is defined to print the strings alphabetically. Then, several strings 
+are deleted, some new ones are inserted, and the inorder iterator is 
+reset to start a new traversal of the binary tree. Again the strings 
+are listed in alphabetical order.
+
+The increment operator++(int) is called every time to advance the
+iterator to the next element in the binary tree. IsDone() is called
+to verify whether the iterator is finished traversing the binary tree.
+Finally, operator()() returns the current value of the iterator, and
+reset() reinitializes the iterator after nodes are deleted and 
+inserted.
+
+6 CHANGES TO SUPPORT NON-CONST ITERATORS
+
+The changes to support non-const iterators are listed below:
+
+1) Referring to listing 2, change the return type of operator()() from 
+DataType (return by value) to DataType & (return by reference).
+
+2) Referring to listing 3, all iterators contain a constructor
+of the form BinaryTreeIterator_XXOrder(const BinaryTree<DataType> &)
+where XX is Pre, In, Post, or Level. Remove the const modifier
+from the formal parameter. Next, change all returns from operator()() 
+from DataType to DataType &. Last, for BinaryTreeIterator_PreOrder
+and BinaryTreeIterator_LevelOrder, change the data pointer from const 
+BinaryTree<DataType> * to just BinaryTree<DataType> * .
+
+7 CHANGES TO SUPPORT INSERTS AND DELETES
+
+The simplest change to support inserts and deletes is not to change
+anything as was done in the example. The second simplest method
+is to block inserts and deletes whenever at least one iterator
+exists for the binary tree. The binary tree class has an additional
+data member, a simple counter. This counter is incremented whenever
+an iterator for that binary tree is created, and decremented when 
+an iterator is deleted. Then, both insert and delete operations check
+if the counter is greater than zero before they actually modify the 
+binary tree. The insert code can throw an exception (it is declared 
+void) and the delete can also throw an exception or return failure 
+whenever the operation is blocked.
+
+My first attempt to support inserts and deletes used a strategy similar
+to the one in reference [4]. Listing 8 shows the changes made to
+the binary tree insert, remove and clear functions. When an iterator 
+is created, it registers itself with the underlying data structure, 
+a binary tree in this case. Then, every time an insert or delete is 
+executed, the internal list of iterators (stored in the binary tree) 
+is scanned and each iterator is updated to reflect the insert or delete. 
+The update to an iterator consists of saving the current location (node) 
+for the iterator, then resetting the iterator and stepping through the 
+binary tree with the increment operator until the old location is found. 
+If the old location was deleted, then the next node in the traversal is 
+used. At first this appears to work and it is fairly simple to implement. 
+However, I then ran into the following test case for the post-order 
+traversal. Consider the following binary tree before and after the 
+letter s is deleted.
+
+
+           s                        i
+          / \                      / \
+         f   t                    f   t
+        / \   \                  / \   \
+       d   h   w                d   h   w
+          / \   \                  /     \
+         g   i   z                g       z
+
+      before delete           after delete of s
+
+The post order traversal of the tree before deleting the letter s is given 
+by: d g i h f z w t s. The postorder traversal after the letter s is deleted 
+is given by: d g h f z w t i. Now suppose a post-order iterator exists and 
+it is currently pointing to the letter h in the tree before the delete. 
+Next we delete the letter s. The iterator is modified to reflect the deletion 
+of the letter s and it is reset to point to the letter h as before. Now 
+we continue the traversal and discover the problem that the letter i will 
+be traversed twice! In the original tree, the letter i was visited 
+just before the letter h. In the new tree, the letter i is the last letter 
+to be visited. If this behavior poses a problem, then this strategy
+should be rejected.
+
+The final implementation which I tried (not listed) involves using 
+reference-counted binary tree nodes and storing the complete traversal 
+path in a link list by storing pointers to the binary tree nodes in the 
+order that they must be traversed. This circumvents the problem of inserts 
+and deletions since once the path is generated and stored in a link list, 
+it is never affected by inserts or deletes in the binary tree. The 
+reference counted node prevents the data from being deleted until all 
+references to it are deleted, that is, until the last iterator referring to 
+it is deleted.
+
+8 CONCLUSION
+
+Since I wrote this binary tree class, I have added a height-balanced
+binary tree class to the library for those cases where a large and 
+degenerate tree would be very expensive. I have found that this 
+class is very useful as a dictionary when parsing large log files.
+
+REFERENCES
+
+[1] A. E. Aho, J. E. Hopcroft, J. D. Ullman. Data Structures and
+Algorithms, Addison-Wesley, 1983.
+
+[2] T. A. Budd. Classic Data Structures in C++, Addison-Wesley, 1994.
+
+[3] M. A. Weiss. Data Structures and Algorithm Analysis, Benjamin/Cummings,
+1992.
+
+[4] R. B. Murray. C++ Strategies and Tactics, Addison-Wesley, 1993.
+
+[5] E. Gamma, R. Helm, R. Johnson, J. Vlissides. Design Patterns:
+Elements of Reusable Object-Oriented Software, Addison-Wesley, 1995.
+
+[6] D. R. Musser, A. Saini. STL Tutorial and Reference Guide: C++
+Programming with the Standard Template Library, Addison-Wesley, 1996.
+
+
+------------------ listing 1: abstract tree class header  -------------------
+
+#ifndef __ABSTRACT_TREE_H
+#define __ABSTRACT_TREE_H
+// abstract tree class definition
+
+// required headers
+#include <stdlib.h>
+#include <iostream.h>
+
+// local headers
+#include "returns.h"
+#include "debug.h"
+
+// forward definitions
+template <class DataType> class AbstractTree;
+
+template <class DataType> 
+ostream &
+operator<<(ostream &, const AbstractTree<DataType> &);
+
+// abstract tree class
+template <class DataType> class AbstractTree {
+public:
+        // destructor
+        virtual ~AbstractTree() { }
+
+        // binary tree operations
+        virtual void insert(const DataType &) = 0;
+        virtual int remove(DataType &) = 0;
+        virtual int retrieve(DataType &) const = 0;
+        virtual int isInTree(const DataType &) const = 0;
+	virtual int isEmpty() const = 0;
+        virtual void clear() = 0;
+
+	// tree traversal functions
+	virtual int preOrder(int (*)(DataType &)) = 0;
+	virtual int inOrder(int (*)(DataType &)) = 0;
+	virtual int postOrder(int (*)(DataType &)) = 0;
+	virtual int levelOrder(int (*)(DataType &)) = 0;
+
+	// output data
+	virtual ostream &dump(ostream &) const = 0;
+	friend ostream &operator<<(ostream &os,
+		const AbstractTree<DataType> &bt) {
+		bt.dump(os);
+		return(os);
+	}
+};
+
+#endif
+
+
+----------------- listing 2: abstract iterator header ------------------
+
+#ifndef __ABSTRACT_ITERATOR_H
+#define __ABSTRACT_ITERATOR_H
+// abstract iterator class definition
+
+// headers
+#include <stdlib.h>
+#include <iostream.h>
+
+// local headers
+#include "returns.h"
+#include "debug.h"
+
+// abstract iterator class
+template <class DataType> class AbstractIterator {
+public:
+        // constructors and destructor
+        virtual ~AbstractIterator() { }
+
+	// reset iterator to start
+	virtual void reset() = 0;
+
+	// check if at end of list
+	virtual int done() const = 0;
+
+        // return data 
+        virtual DataType operator()() = 0;
+
+	// advance iterator to next link
+	virtual int operator++(int) = 0;
+
+#ifdef MUTABLE_ITERATOR
+	// reset after data structure is altered
+	virtual void resetByValue(const DataType &datum) {
+		for ((*this).reset(); 
+		     (*this)() != datum; 
+		     (*this)++) ;
+		return;
+	}
+#endif
+};
+
+
+------------------ listing 3: binary tree header -------------------------
+
+#ifndef __BINARY_TREE2_H
+#define __BINARY_TREE2_H
+// binary search tree class definition using recursion
+
+// headers
+#include "absTree.h"
+#include "absIterator.h"
+#include "queue_List.h"
+#include "stack_List.h"
+
+// forward declarations
+template <class DataType> class BinaryTreeNode;
+template <class DataType> class BinaryTree;
+template <class DataType> class BinaryTreeIterator_PreOrder;
+template <class DataType> class BinaryTreeIterator_InOrder;
+template <class DataType> class BinaryTreeIterator_PostOrder;
+template <class DataType> class BinaryTreeIterator_LevelOrder;
+
+// tree node class
+template <class DataType> class BinaryTreeNode
+{
+public:
+	// output
+	friend ostream &operator<<(ostream &os, 
+		const BinaryTreeNode<DataType> &btn) {
+		os << btn.data;
+		return(os);
+	};
+
+protected:
+        // friend classes 
+        friend class BinaryTree<DataType>;
+	friend class BinaryTreeIterator_PreOrder<DataType>;
+	friend class BinaryTreeIterator_InOrder<DataType>;
+	friend class BinaryTreeIterator_PostOrder<DataType>;
+	friend class BinaryTreeIterator_LevelOrder<DataType>;
+
+        // constructors and destructor
+        BinaryTreeNode(const DataType &);
+        BinaryTreeNode(const BinaryTreeNode &);
+        ~BinaryTreeNode();
+
+	// assignment
+        BinaryTreeNode &operator=(const BinaryTreeNode &);
+
+        // internal data
+        DataType data;
+        BinaryTreeNode<DataType> *left;
+        BinaryTreeNode<DataType> *right;
+};
+
+// binary search tree class
+template <class DataType> class BinaryTree:
+	public AbstractTree<DataType>
+{
+public:
+	// friend classes 
+	friend class BinaryTreeIterator_PreOrder<DataType>;
+	friend class BinaryTreeIterator_InOrder<DataType>;
+	friend class BinaryTreeIterator_PostOrder<DataType>;
+	friend class BinaryTreeIterator_LevelOrder<DataType>;
+
+        // constructors and destructor
+        BinaryTree();
+        BinaryTree(const BinaryTree &);
+        ~BinaryTree();
+
+        // assignment
+        BinaryTree &operator=(const BinaryTree &);
+
+        // binary tree operations
+        void insert(const DataType &);
+        int remove(DataType &);
+        int retrieve(DataType &) const;
+        int isInTree(const DataType &) const;
+	int isEmpty() const;
+        void clear();
+	.
+	.
+	.
+
+protected:
+	// utility functions
+	.
+	.
+	.
+
+protected:
+        // internal data
+        BinaryTreeNode<DataType> *root;
+#ifdef MUTABLE_ITERATOR
+	List<AbstractIterator<DataType> * > iterList;
+#endif
+};
+
+// pre-order tree iterator
+template <class DataType> class BinaryTreeIterator_PreOrder:
+	public AbstractIterator<DataType>
+{
+public:
+        // constructors and destructor
+#ifdef MUTABLE_ITERATOR
+        BinaryTreeIterator_PreOrder(
+		BinaryTree<DataType> &);
+#else
+        BinaryTreeIterator_PreOrder(
+		const BinaryTree<DataType> &);
+#endif
+        BinaryTreeIterator_PreOrder(
+		const BinaryTreeIterator_PreOrder<DataType> &);
+        ~BinaryTreeIterator_PreOrder();
+
+	// reset interator to start
+	void reset();
+
+	// check if at end of list
+	int done() const;
+
+        // return data 
+        DataType operator()();
+
+	// advance iterator to next link
+	int operator++(int);
+
+private:
+	// not allowed
+        BinaryTreeIterator_PreOrder();
+        BinaryTreeIterator_PreOrder &operator=(const 
+		BinaryTreeIterator_PreOrder &);
+
+protected:
+        // internal data
+#ifdef MUTABLE_ITERATOR
+	BinaryTree<DataType> *tree;
+#else
+	const BinaryTree<DataType> *tree;
+#endif
+	Stack_List<BinaryTreeNode<DataType> * > stack;
+};
+
+// in-order tree iterator
+template <class DataType> class BinaryTreeIterator_InOrder:
+	public BinaryTreeIterator_PreOrder<DataType>
+{
+public:
+        // constructors and destructor
+#ifdef MUTABLE_ITERATOR
+        BinaryTreeIterator_InOrder(
+		BinaryTree<DataType> &);
+#else
+        BinaryTreeIterator_InOrder(
+		const BinaryTree<DataType> &);
+#endif
+        BinaryTreeIterator_InOrder(
+		const BinaryTreeIterator_InOrder<DataType> &);
+        ~BinaryTreeIterator_InOrder();
+
+	// reset interator to start
+	void reset();
+
+	// advance iterator to next link
+	int operator++(int);
+
+private:
+	// not allowed
+        BinaryTreeIterator_InOrder();
+        BinaryTreeIterator_InOrder &operator=(const 
+		BinaryTreeIterator_InOrder &);
+};
+
+// post-order tree iterator
+template <class DataType> class BinaryTreeIterator_PostOrder:
+	public BinaryTreeIterator_PreOrder<DataType>
+{
+public:
+        // constructors and destructor
+#ifdef MUTABLE_ITERATOR
+        BinaryTreeIterator_PostOrder(
+		BinaryTree<DataType> &);
+#else
+        BinaryTreeIterator_PostOrder(
+		const BinaryTree<DataType> &);
+#endif
+        BinaryTreeIterator_PostOrder(
+		const BinaryTreeIterator_PostOrder<DataType> &);
+        ~BinaryTreeIterator_PostOrder();
+
+	// reset interator to start
+	void reset();
+
+	// advance iterator to next link
+	int operator++(int);
+
+private:
+	// not allowed
+        BinaryTreeIterator_PostOrder();
+        BinaryTreeIterator_PostOrder &operator=(const 
+		BinaryTreeIterator_PostOrder &);
+
+protected:
+        // internal data
+	Stack_List<int> vstack;
+};
+
+// level-order tree iterator
+template <class DataType> class BinaryTreeIterator_LevelOrder:
+	public AbstractIterator<DataType>
+{
+public:
+        // constructors and destructor
+#ifdef MUTABLE_ITERATOR
+        BinaryTreeIterator_LevelOrder(
+		BinaryTree<DataType> &);
+#else
+        BinaryTreeIterator_LevelOrder(
+		const BinaryTree<DataType> &);
+#endif
+        BinaryTreeIterator_LevelOrder(
+		const BinaryTreeIterator_LevelOrder<DataType> &);
+        ~BinaryTreeIterator_LevelOrder();
+
+	// reset interator to start
+	void reset();
+
+	// check if at end of list
+	int done() const;
+
+        // return data 
+        DataType operator()();
+
+	// advance iterator to next link
+	int operator++(int);
+
+private:
+	// not allowed
+        BinaryTreeIterator_LevelOrder();
+        BinaryTreeIterator_LevelOrder &operator=(const 
+		BinaryTreeIterator_LevelOrder &);
+
+protected:
+        // internal data
+#ifdef MUTABLE_ITERATOR
+	BinaryTree<DataType> *tree;
+#else
+	const BinaryTree<DataType> *tree;
+#endif
+	Queue_List<BinaryTreeNode<DataType> * > queue;
+};
+
+#endif
+
+--------------- listing 4: code for preorder iterator -----------------
+
+// preorder iterator constructors and destructor
+template <class DataType>
+BinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+	const BinaryTreeIterator_PreOrder<DataType> &iter): 
+	tree(iter.tree), stack(iter.stack)
+{
+#ifdef MUTABLE_ITERATOR
+	tree->iterList.insertByValue(this);
+#endif
+}
+
+#ifdef MUTABLE_ITERATOR
+template <class DataType>
+BinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+	BinaryTree<DataType> &bt): 
+	tree(&bt), stack()
+{
+	tree->iterList.insertByValue(this);
+	reset();
+}
+
+#else
+
+BinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+	const BinaryTree<DataType> &bt): 
+	tree(&bt), stack()
+{
+	reset();
+}
+#endif
+
+template <class DataType>
+BinaryTreeIterator_PreOrder<DataType>::~BinaryTreeIterator_PreOrder()
+{
+#ifdef MUTABLE_ITERATOR
+	AbstractIterator<DataType> *ptr = this;
+	(void)tree->iterList.removeByValue(ptr);
+#endif
+}
+
+// reset iterator to beginning
+template <class DataType>
+void
+BinaryTreeIterator_PreOrder<DataType>::reset()
+{
+	stack.clear();
+	stack.push(tree->root);
+	return;
+}
+
+// is list empty
+template <class DataType>
+int
+BinaryTreeIterator_PreOrder<DataType>::done() const
+{
+	return(stack.isEmpty());
+}
+
+// return current data
+template <class DataType>
+DataType
+BinaryTreeIterator_PreOrder<DataType>::operator()()
+{
+	BinaryTreeNode<DataType> *btn;
+	MustBeTrue(stack.top(btn) == OK);
+	return(btn->data);
+}
+
+// increment to next data item in list
+template <class DataType>
+int
+BinaryTreeIterator_PreOrder<DataType>::operator++(int)
+{
+	// is iterator done
+	if (stack.isEmpty()) return(NOTOK);
+
+	// get next node from stack
+	BinaryTreeNode<DataType> *btn;
+	MustBeTrue(stack.pop(btn) == OK);
+
+	// stack left and right nodes, if any.
+	if (btn->right != NULL)
+		stack.push(btn->right);
+	if (btn->left != NULL)
+		stack.push(btn->left);
+	return(OK);
+}
+
+
+---------------- listing 5: code for inorder iterator --------------------
+
+// inorder iterator constructors and destructor
+template <class DataType>
+BinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+	const BinaryTreeIterator_InOrder<DataType> &iter): 
+	BinaryTreeIterator_PreOrder<DataType>(iter)
+{
+#ifdef MUTABLE_ITERATOR
+	tree->iterList.insertByValue(this);
+#endif
+}
+
+#ifdef MUTABLE_ITERATOR
+template <class DataType>
+BinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+	BinaryTree<DataType> &bt): 
+	BinaryTreeIterator_PreOrder<DataType>(bt)
+{
+	tree->iterList.insertByValue(this);
+	reset();
+}
+
+#else
+
+template <class DataType>
+BinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+	const BinaryTree<DataType> &bt): 
+	BinaryTreeIterator_PreOrder<DataType>(bt)
+{
+	reset();
+}
+#endif
+
+template <class DataType>
+BinaryTreeIterator_InOrder<DataType>::~BinaryTreeIterator_InOrder()
+{
+#ifdef MUTABLE_ITERATOR
+	AbstractIterator<DataType> *ptr = this;
+	(void)tree->iterList.removeByValue(ptr);
+#endif
+}
+
+// reset iterator to beginning
+template <class DataType>
+void
+BinaryTreeIterator_InOrder<DataType>::reset()
+{
+	stack.clear();
+	for (BinaryTreeNode<DataType> *pn = tree->root; 
+		pn != NULL; pn = pn->left)
+	{
+		stack.push(pn);
+	}
+	return;
+}
+
+// increment to next data item in list
+template <class DataType>
+int
+BinaryTreeIterator_InOrder<DataType>::operator++(int)
+{
+	// is iterator done
+	if (stack.isEmpty()) return(NOTOK);
+
+	// get next node from stack
+	BinaryTreeNode<DataType> *btn;
+	MustBeTrue(stack.pop(btn) == OK);
+
+	// insert right node left links into stack
+	if (btn->right != NULL)
+	{
+		for (BinaryTreeNode<DataType> *pn = btn->right;
+			pn != NULL; pn = pn->left)
+		{
+			stack.push(pn);
+		}
+	}
+	return(OK);
+}
+
+
+---------------- listing 6: code for level-order iterator ----------------
+
+// levelorder iterator constructors and destructor
+template <class DataType>
+BinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+	const BinaryTreeIterator_LevelOrder<DataType> &iter): 
+	tree(iter.tree), queue(iter.queue)
+{
+#ifdef MUTABLE_ITERATOR
+	tree->iterList.insertByValue(this);
+#endif
+}
+
+#ifdef MUTABLE_ITERATOR
+template <class DataType>
+BinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+	BinaryTree<DataType> &bt): 
+	tree(&bt), queue()
+{
+	tree->iterList.insertByValue(this);
+	reset();
+}
+#else
+template <class DataType>
+BinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+	const BinaryTree<DataType> &bt): 
+	tree(&bt), queue()
+{
+	reset();
+}
+#endif
+
+template <class DataType>
+BinaryTreeIterator_LevelOrder<DataType>::~BinaryTreeIterator_LevelOrder()
+{
+#ifdef MUTABLE_ITERATOR
+	AbstractIterator<DataType> *ptr = this;
+	(void)tree->iterList.removeByValue(ptr);
+#endif
+}
+
+// reset iterator to beginning
+template <class DataType>
+void
+BinaryTreeIterator_LevelOrder<DataType>::reset()
+{
+	queue.clear();
+	queue.enqueue(tree->root);
+	return;
+}
+
+// is list empty
+template <class DataType>
+int
+BinaryTreeIterator_LevelOrder<DataType>::done() const
+{
+	return(queue.isEmpty());
+}
+
+// return current data
+template <class DataType>
+DataType
+BinaryTreeIterator_LevelOrder<DataType>::operator()()
+{
+	BinaryTreeNode<DataType> *btn;
+	MustBeTrue(queue.front(btn) == OK);
+	return(btn->data);
+}
+
+// increment to next data item in list
+template <class DataType>
+int
+BinaryTreeIterator_LevelOrder<DataType>::operator++(int)
+{
+	// is iterator done
+	if (queue.isEmpty()) return(NOTOK);
+
+	// get next node from queue
+	BinaryTreeNode<DataType> *btn;
+	MustBeTrue(queue.dequeue(btn) == OK);
+
+	// queue up left and right nodes, if any.
+	if (btn->left != NULL)
+		queue.enqueue(btn->left);
+	if (btn->right != NULL)
+		queue.enqueue(btn->right);
+	return(OK);
+}
+
+
+----------------------- listing 7: sample code ----------------------------
+
+// headers
+#include "binaryTree2.h"
+#include "string.h"
+
+main(int, char **)
+{
+	BinaryTree<String> dictionary;
+
+	dictionary.insert("C++");
+	dictionary.insert("Is");
+	dictionary.insert("A");
+	dictionary.insert("Very");
+	dictionary.insert("Interesting");
+	dictionary.insert("Language.");
+
+	BinaryTreeIterator_InOrder<String> inorder(dictionary);
+	cout << "Inorder: ";
+	for ( ; ! inorder.done(); inorder++)
+	{
+		cout << inorder() << " ";
+	}
+	cout << endl;
+
+	dictionary.remove(String("C++"));
+	dictionary.remove(String("Interesting"));
+
+	dictionary.insert("BASIC");
+	dictionary.insert("Simple");
+
+	cout << "Inorder: ";
+	for (inorder.reset() ; ! inorder.done(); inorder++)
+	{
+		cout << inorder() << " ";
+	}
+	cout << endl;
+
+	return(0);
+}
+
+
+--------- listing 8: code for binary tree insert and remove -----------
+
+// binary tree operations
+template <class DataType>
+void
+BinaryTree<DataType>::insert(const DataType &data)
+{
+	// insert new data
+	insert(root, data);
+
+#ifdef MUTABLE_ITERATOR
+	// check if any iterators are traversing this tree
+	if ( ! iterList.isEmpty())
+	{
+		// now update any iterators
+		ListIterator<AbstractIterator<DataType> * > *piter = 
+		new ListIterator<AbstractIterator<DataType> * >(iterList);
+		MustBeTrue(piter != NULL);
+		for ( ; ! (*piter).done(); (*piter)++)
+		{
+			// save current iterator
+			AbstractIterator<DataType> *paiter = (*piter)();
+
+			// get current value
+			DataType current = (*paiter)();
+
+			// update iterator
+			(*paiter).resetByValue(current);
+		}
+		delete piter;
+	}
+#endif
+	return;
+}
+
+template <class DataType>
+int
+BinaryTree<DataType>::remove(DataType &data)
+{
+#ifdef MUTABLE_ITERATOR
+	// check if any iterators are traversing this tree
+	int status;
+	if (iterList.isEmpty())
+		return(remove(root, data));
+	else
+	{
+		ListIterator<AbstractIterator<DataType> * > *piter = 
+		new ListIterator<AbstractIterator<DataType> * >(iterList);
+		for ( ; ! (*piter).done(); (*piter)++)
+		{
+			// save current iterator
+			AbstractIterator<DataType> *paiter = (*piter)();
+
+			// check of iterator is done
+			if ((*paiter).done()) continue;
+
+			// check if iterator is pointing to deleted node
+			if (data == (*paiter)()) (*paiter)++;
+		}
+
+		// delete element
+		int status = remove(root, data);
+		if (status != OK) return(status);
+
+		// reset all iterators
+		for ((*piter).reset(); ! (*piter).done(); (*piter)++)
+		{
+			// save current iterator
+			AbstractIterator<DataType> *paiter = (*piter)();
+
+			// get current value
+			DataType current = (*paiter)();
+
+			// check if iterator is done
+			if ( ! (*paiter).done())
+				(*paiter).resetByValue(current);
+		}
+		delete piter;
+		return(OK);
+	}
+#else
+	return(remove(root, data));
+#endif
+}
+
+template <class DataType>
+void
+BinaryTree<DataType>::clear()
+{
+	// clear binary tree
+	clear(root);
+
+#ifdef MUTABLE_ITERATOR
+	// reset all iterators
+	ListIterator<AbstractIterator<DataType> * > *piter = 
+	new ListIterator<AbstractIterator<DataType> * >(iterList);
+	for ( ; ! (*piter).done(); (*piter)++)
+	{
+		// current iterator
+		AbstractIterator<DataType> *paiter = (*piter)();
+
+		// reset iterator
+		(*paiter).reset();
+	}
+#endif
+	return;
+}
+
+

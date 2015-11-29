@@ -1,0 +1,7 @@
+moc_*
+qt_*
+*.makefile
+*.pro
+syncmgr
+testfiledata
+testfiledata[0-9]

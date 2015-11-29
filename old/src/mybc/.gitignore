@@ -1,0 +1,7 @@
+install
+lex.yy.c
+mybc
+mybclex.*
+mybcyacc.*
+y.tab.*
+y.output

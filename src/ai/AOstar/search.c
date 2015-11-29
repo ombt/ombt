@@ -1,0 +1,429 @@
+// AO* best-first search for AND/OR graphs
+
+// local headers
+#include "search.h"
+
+// print best-first AO* solution 
+template <class NodeType>
+void
+PrintSolution(NodePtr<NodeType> &pnode)
+{
+	// print the current nodes solution
+	cout << "NODE:" << pnode << endl;
+	
+	// loop through connectors to find the current best connector.
+	ListIterator<Connector<NodePtr<NodeType> > > 
+		connectorIter(*(pnode->getChildren()));
+	for ( ; ! connectorIter.done(); connectorIter++)
+	{
+		if (connectorIter().getMarked())
+		{
+			// found best path connector
+			break;
+		}
+	}
+	MustBeTrue( ! connectorIter.done());
+
+	// print the current connector solution
+	cout << "CONNECTOR:" << connectorIter() << endl;
+
+	// traverse through children and write out results
+	ListIterator<NodePtr<NodeType> > childrenIter(connectorIter());
+	for ( ; ! childrenIter.done(); childrenIter++)
+	{
+		// all nodes must be solved
+		MustBeTrue(childrenIter()->getStatus() == Solved);
+
+		// print results
+		PrintSolution(childrenIter());
+	}
+
+	// all done
+	return;
+}
+
+// back propagate any changes up the graph to the start node
+template <class NodeType>
+int
+BackPropagate(NodePtr<NodeType> &pstart, NodePtr<NodeType> &backnode)
+{
+	// set of nodes that need updating
+	List<NodePtr<NodeType> > updateset;
+	updateset.insertAtFront(backnode);
+
+	// update nodes until update set is empty
+	for (NodePtr<NodeType> pnode; ! updateset.isEmpty(); )
+	{
+		// get first node
+		if (updateset.removeAtFront(pnode) != OK)
+		{
+			// getting a node failed
+			ERROR("remove at front failed for update set.", NOTOK);
+			return(NOTOK);
+		}
+
+		// now check if any of this node's descendants
+		// are also in the update set. we do not want
+		// to visit a node before any of its descendants
+		// since the descendant may have its hvalue updated
+		// and this value then affects the parent. we need
+		// to update all the children before the parent
+		// is updated. that's the bottom line.
+		// 
+		int skipit = 0;
+		ListIterator<Connector<NodePtr<NodeType> > > 
+			connectorIter(*(pnode->getChildren()));
+		for ( ; ! skipit && ! connectorIter.done(); connectorIter++)
+		{
+			ListIterator<NodePtr<NodeType> > 
+				childrenIter(connectorIter());
+			for ( ; ! skipit && ! childrenIter.done(); 
+				childrenIter++)
+			{
+				if (updateset.isInList(childrenIter()))
+				{
+					// node has a child in the 
+					// update set. put this node
+					// at the end of the update
+					// list and go on to the next
+					// node in the update list.
+					//
+					updateset.insertAtEnd(pnode);
+					skipit = 1;
+				}
+			}
+		}
+
+		// do we go to next node or continue with this one
+		if (skipit) continue;
+
+		// now we update the costs for this node
+		int solved = 0;
+		int minhvalue = INT_MAX;
+		Connector<NodePtr<NodeType> > *pmincon = NULL;
+		for (connectorIter.reset(); ! connectorIter.done(); 
+			connectorIter++)
+		{
+			// check status of connector
+			switch (connectorIter().getStatus())
+			{
+			case Solved:
+				// done. skip it. this is probably
+				// an error. flag it.
+				ERROR("skipping suspicious solved connector.", 
+					NOTOK);
+				continue;
+
+			case NotSolved:
+				// we can update this one.
+				break;
+
+			case NoSolution:
+				// skip this one also.
+				continue;
+
+			default:
+				ERROR("invalid connector status.", NOTOK);
+				return(NOTOK);
+				
+			}
+
+			// clear marked bit
+			connectorIter().setMarked(0);
+
+			// add up costs of nodes. also add one
+			// for each node in the connector.
+			int notsolved = 0;
+			int sumhvalue = 0;
+			ListIterator<NodePtr<NodeType> > 
+				childrenIter(connectorIter());
+			for ( ; ! childrenIter.done(); childrenIter++)
+			{
+				sumhvalue += childrenIter()->getHvalue() + 1;
+				if (childrenIter()->getStatus() != Solved)
+					notsolved++;
+			}
+			connectorIter().setHvalue(sumhvalue);
+
+			// is this the best yet?
+			if (sumhvalue < minhvalue)
+			{
+				minhvalue = sumhvalue;
+				pmincon = &(connectorIter());
+			}
+
+			// are all children solved?
+			if (notsolved == 0)
+			{
+				connectorIter().setStatus(Solved);
+			}
+
+			// are any connectors solved?
+			if (connectorIter().getStatus() == Solved)
+				solved++;
+		}
+
+		// mark the new best connector
+		MustBeTrue(pmincon != NULL);
+		pmincon->setMarked(1);
+
+		// update the hvalue for this node
+		int updateparents = 0;
+		if (pnode->getHvalue() != minhvalue)
+		{
+			pnode->setHvalue(minhvalue);
+			updateparents = 1;
+		}
+
+		// now set the flag to indicate if node is solved
+		if (solved > 0)
+		{
+			pnode->setStatus(Solved);
+			updateparents = 1;
+		}
+
+		// place parents in update set
+		if (updateparents)
+		{
+			List<NodePtr<NodeType> > 
+				*pparents = pnode->getParents();
+			MustBeTrue(pparents != NULL);
+			if ( ! pparents->isEmpty())
+			{
+				ListIterator<NodePtr<NodeType> > 
+					parentsIter(*pparents);
+				for ( ; !parentsIter.done(); parentsIter++)
+				{
+					updateset.insertAtEnd(parentsIter());
+				}
+			}
+		}
+	}
+
+	// all done
+	return(OK);
+}
+
+// remove duplicate nodes that might have generated by node expansion
+template <class NodeType>
+int
+RemoveDuplicates(NodePtr<NodeType> &pnode, List<NodePtr<NodeType> > &nodeset)
+{
+	// loop through all the new connectors originating from
+	// pnode. then loop over all nodes connected to each
+	// node. check whether or not each node already exists.
+	// if the node exists, then remove the new child and update
+	// pointers in pnode to point to existing node. also, update
+	// existing node parent list to include pnode as a parent.
+	// before inserting new parent, verify it is not there already.
+	// we don't want two parent pointers between the same nodes.
+	//
+	ListIterator<Connector<NodePtr<NodeType> > > 
+		connectorIter(*(pnode->getChildren()));
+	for ( ; ! connectorIter.done(); connectorIter++)
+	{
+		// loop through all children for each connector
+		ListIterator<NodePtr<NodeType> > 
+			childrenIter(connectorIter());
+		for ( ; ! childrenIter.done(); childrenIter++)
+		{
+			// does the current child already exist in 
+			// the expanded solution graph?
+			//
+			NodePtr<NodeType> pexisting(childrenIter());
+			if (nodeset.retrieveByValue(pexisting) != OK)
+			{
+				// node is new. calculate heuristic 
+				// merit for node
+				childrenIter()->heuristic();
+			}
+			else
+			{
+				// node already exists. update
+				// pointers.
+				//
+				childrenIter() = pexisting;
+				if ( ! pexisting->getParents()->isInList(pnode))
+				{
+					pexisting->getParents()->insertAtEnd(pnode);
+				}
+			}
+		}
+	}
+
+	// all done
+	return(OK);
+}
+
+// trace current best-path through the AND/OR graph.
+template <class NodeType>
+int
+TraceCurrentBestPath(NodePtr<NodeType> &pnode, NodePtr<NodeType> &backnode, 
+	List<NodePtr<NodeType> > &nodeset)
+{
+	// check status of incoming node. must have been expanded.
+	if (pnode->getStatus() != NotSolved)
+	{
+		// status can only be not solved. a node
+		// that is solved, does not need to be traced.
+		// a node that has no solution should not
+		// be in the current best path.
+		//
+		ERROR("node status is not equal to NotSolved.", NOTOK);
+		return(NOTOK);
+	}
+
+	// loop through connectors to find the current best connector.
+	ListIterator<Connector<NodePtr<NodeType> > > 
+		connectorIter(*(pnode->getChildren()));
+	for ( ; ! connectorIter.done(); connectorIter++)
+	{
+		if (connectorIter().getMarked())
+		{
+			// found best path connector
+			break;
+		}
+	}
+
+	// check if we found a connector. if not, it is a error.
+	if (connectorIter.done())
+	{
+		// failed to find a best connector
+		ERROR("best current connector was not found.", NOTOK);
+		return(NOTOK);
+	}
+
+	// scan nodes in connector for a node that is not
+	// solved. if any of the nodes is marked as "no
+	// solution," then the connector has no solution and
+	// we have an error. also, if all the nodes are
+	// marked as "solved," then we also have a problem.
+	//
+	ListIterator<NodePtr<NodeType> > 
+		childrenIter(connectorIter());
+	for ( ; ! childrenIter.done(); childrenIter++)
+	{
+		switch (childrenIter()->getStatus())
+		{
+		case Solved:
+			// skip any nodes that are solved
+			continue;
+
+		case NotSolved:
+			// we found a node to follow.
+			return(TraceCurrentBestPath(childrenIter(), 
+					backnode, nodeset));
+
+		case NotExpanded:
+			// we found a node to expand.
+			if (childrenIter()->expand() != OK)
+			{
+				// expansion failed
+				ERROR("failed to expand a node.", NOTOK);
+				return(NOTOK);
+			}
+			backnode = childrenIter();
+			if (RemoveDuplicates(childrenIter(), nodeset) != OK)
+			{
+				// unable to remove duplicate nodes
+				ERROR("failed to remove duplicate nodes.", NOTOK);
+				return(NOTOK);
+			}
+			else
+				return(OK);
+
+		default:
+			// anything else is an error.
+			ERROR("children status is invalid.", NOTOK);
+			return(NOTOK);
+		}
+	}
+
+	// all nodes are solved. this is an error.
+	ERROR("all nodes are solved.", NOTOK);
+	return(NOTOK);
+}
+
+// AO* search procedure for AND/OR graphs. This procedure is used
+// for problem-reduction cases.
+//
+template <class NodeType>
+int
+BestFirst_AOstar(const NodeType &start)
+{
+	// copy start state, start of solution graph.
+	NodePtr<NodeType> pstart(start);
+
+	// calculate the heuristic value for this node
+	pstart->heuristic();
+
+	// node that needs back-propagating
+	NodePtr<NodeType> backnode;
+
+	// set of all nodes. used to prevent duplicates
+	List<NodePtr<NodeType> > nodeset;
+	nodeset.insertAtEnd(pstart);
+
+	// expand start state
+	if (pstart->expand() != OK)
+	{
+		// expansion failed
+		ERROR("failed to expand a node.", NOTOK);
+		return(NOTOK);
+	}
+	backnode = pstart;
+
+	// remove any duplicate nodes
+	if (RemoveDuplicates(pstart, nodeset) != OK)
+	{
+		// unable to remove duplicate nodes from graph
+		ERROR("failed to remove duplicate nodes from graph.", NOTOK);
+		return(NOTOK);
+	}
+
+	// back propagate the states of the new nodes
+	if (BackPropagate(pstart, backnode) != OK)
+	{
+		// back-propagation failed
+		ERROR("failed to back propagate changes.", NOTOK);
+		return(NOTOK);
+	}
+
+	// repeat the process of expanding nodes and back propagating
+	// costs until the start node is solved or it is marked 
+	// as having no solution.
+	// 
+	while (pstart->getStatus() == NotSolved)
+	{
+		// trace through current best path
+		if (TraceCurrentBestPath(pstart, backnode, nodeset) != OK)
+		{
+			// trace failed
+			ERROR("trace of current best path failed.", NOTOK);
+			return(NOTOK);
+		}
+
+		// back propagate the states of the new nodes
+		if (BackPropagate(pstart, backnode) != OK)
+		{
+			// back-propagation failed
+			ERROR("failed to back propagate changes.", NOTOK);
+			return(NOTOK);
+		}
+	}
+
+	// finished. check if search succeeded.
+	if (pstart->getStatus() == Solved)
+	{
+		// a solution was found
+		PrintSolution(pstart);
+		return(OK);
+	}
+	else
+	{
+		// no solution was found
+		ERROR("problem has no solution.", NOTOK);
+		return(NOTOK);
+	}
+}
+

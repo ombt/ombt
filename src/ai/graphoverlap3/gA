@@ -1,0 +1,41 @@
+v: id:1 label:M
+v: id:2 label:N
+v: id:3 label:J
+v: id:4 label:K
+v: id:5 label:R
+v: id:6 label:H
+v: id:7 label:L
+v: id:8 label:P
+v: id:9 label:L
+v: id:10 label:D
+v: id:11 label:Q
+v: id:12 label:S
+v: id:13 label:V
+v: id:14 label:P
+v: id:15 label:W
+v: id:16 label:L
+v: id:17 label:T
+v: id:18 label:U
+e: fromid:1 toid:5 color:blue
+e: fromid:1 toid:8 color:blue
+e: fromid:1 toid:6 color:blue
+e: fromid:2 toid:6 color:blue
+e: fromid:2 toid:9 color:blue
+e: fromid:3 toid:7 color:blue
+e: fromid:4 toid:7 color:blue
+e: fromid:5 toid:9 color:blue
+e: fromid:6 toid:11 color:blue
+e: fromid:7 toid:10 color:blue
+e: fromid:8 toid:13 color:blue
+e: fromid:9 toid:12 color:blue
+e: fromid:10 toid:12 color:blue
+e: fromid:11 toid:13 color:blue
+e: fromid:11 toid:16 color:blue
+e: fromid:12 toid:14 color:blue
+e: fromid:13 toid:15 color:blue
+e: fromid:14 toid:15 color:blue
+e: fromid:15 toid:16 color:blue
+e: fromid:16 toid:17 color:blue
+e: fromid:16 toid:18 color:blue
+e: fromid:17 toid:5 color:blue
+e: fromid:17 toid:11 color:blue

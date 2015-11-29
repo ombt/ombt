@@ -1,0 +1,242 @@
+Linux Assembly "Hello World" Tutorial, CS 200
+by Bjorn Chambless
+
+Introduction
+    The following is designed familiarize the reader with programming in x86 (AT&T style, that produced by gcc) assembly under Linux and how to interface assembly and higher-level language code (i.e. C). The tutorial will also briefly cover debugging your assembly using GDB.
+
+    This tutorial requires the following:
+
+        * an i386 family PC running Linux
+        * GCC, the GNU C-compiler
+        * GDB, the GNU debugger command line debugger 
+
+    The tutorial was developed on and tested with GCC version 2.95.4 and GDB 19990928 under Linux kernel 2.4.9
+
+    I highly recommend working through this tutorial with "as" and "gdb" documentation close at hand.
+
+Source Code
+    The process begins with a source code program. For example, hello.c
+
+    /* hello.c */
+    #include 
+
+    main()
+    {
+    	printf("hello\n").
+    }
+
+    which, when compiled and executed, prints a message
+
+    linuxbox> gcc -o hello hello.c linuxbox> ./hello hello
+
+    The actual compilation process can be viewed by including the -v option
+
+    linuxbox> gcc -v -o hello hello.c Reading specs from /usr/lib/gcc-lib/i386-linux/2.95.4/specs gcc version 2.95.4 20010902 (Debian prerelease) /usr/lib/gcc-lib/i386-linux/2.95.4/cpp0 -lang-c -v -D__GNUC__=2 -D__GNUC_MINOR__=95 -D__ELF__ -Dunix -D__i386__ -Dlinux -D__ELF__ -D__unix__ -D__i386__ -D__linux__ -D__unix -D__linux -Asystem(posix) -Acpu(i386) -Amachine(i386) -Di386 -D__i386 -D__i386__ hello.c /tmp/ccCGCFmG.i GNU CPP version 2.95.4 20010902 (Debian prerelease) (i386 Linux/ELF) #include "..." search starts here: #include <...> search starts here: /usr/local/include /usr/lib/gcc-lib/i386-linux/2.95.4/include /usr/include End of search list. The following default directories have been omitted from the search path: /usr/lib/gcc-lib/i386-linux/2.95.4/../../../../include/g++-3 /usr/lib/gcc-lib/i386-linux/2.95.4/../../../../i386-linux/include End of omitted list. /usr/lib/gcc-lib/i386-linux/2.95.4/cc1 /tmp/ccCGCFmG.i -quiet -dumpbase hello.c -version -o /tmp/ccI5CJce.s GNU C version 2.95.4 20010902 (Debian prerelease) (i386-linux) compiled by GNU C version 2.95.4 20010902 (Debian prerelease). as -V -Qy -o /tmp/cc2lti5K.o /tmp/ccI5CJce.s GNU assembler version 2.11.90.0.31 (i386-linux) using BFD version 2.11.90.0.31 /usr/lib/gcc-lib/i386-linux/2.95.4/collect2 -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 -o hello /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/gcc-lib/i386-linux/2.95.4/crtbegin.o -L/usr/lib/gcc-lib/i386-linux/2.95.4 /tmp/cc2lti5K.o -lgcc -lc -lgcc /usr/lib/gcc-lib/i386-linux/2.95.4/crtend.o /usr/lib/crtn.o
+
+    The process:
+
+        * Preprocess the source-code with cpp. (The results of this may be viewed with the -E option. I.e. gcc -E hello.c)
+        * Compile the code with cc into assembly code. (This asembly may be viewed using the -S option. gcc -S hello.c generates hello.s)
+        * The assembly language is
+
+          Note that the code uses AT&T syntax 
+
+    of developing an assembly program under linux is somewhat different from development under NT. In order to accommodate object oriented languages which require the compiler to create constructor and destructor methods which execute before and after the execution of "main", the GNU development model embeds user code within a wrapper of system code. In other words, the user's "main" is treated as a function call. An advantage of this is that user is not required to initialize segment registers, though user code must obey some function requirements.
+
+The Code
+    The following is the Linux version of the average temperature program. It will be referred to as "average.s". Note: Assembly language programs should use the ".s" suffix.
+
+    /* linux version of AVTEMP.ASM CS 200, fall 1998 */
+    .data   /* beginning of data segment */
+
+    /* hi_temp data item */
+            .type hi_temp,@object  /* declare as data object */
+            .size hi_temp,1         /* declare size in bytes */
+    hi_temp:
+            .byte 0x92      /* set value */
+
+    /* lo_temp data item */
+            .type lo_temp,@object
+            .size lo_temp,1
+    lo_temp:
+            .byte 0x52
+
+    /* av_temp data item */
+            .type av_temp,@object
+            .size av_temp,1
+    av_temp:
+            .byte 0
+
+    /* segment registers set up by linked code */
+    /* beginning of text(code) segment */
+    .text
+            .align 4        /* set 4 double-word alignment */
+    .globl main             /* make main global for linker */
+            .type main,@function    /* declare main as a function */
+    main:
+            pushl %ebp	/* function requirement */
+            movl %esp,%ebp /* function requirement */
+            movb hi_temp,%al
+            addb lo_temp,%al
+            movb $0,%ah
+            adcb $0,%ah
+            movb $2,%bl
+            idivb %bl
+            movb %al,av_temp
+            leave		/* function requirement */
+            ret			/* function requirement */
+
+
+
+assembly instructions
+This code may be assembled with the following command:
+
+as -a --gstabs -o average.o average.s
+
+The "-a" option prints a memory listing during assembly. This output gives the location variables and code with respect to the beginnings of the data and code segments. "--gstabs" places debugging information in the executable (used by gdb). "-o" specifies average.o as the output file name (the default is a.out, which is confusing since the file is not executable.)
+
+The object file (average.o) can then be linked to the Linux wrapper code in order to create an executable. These files are crt1.o, crti.o and crtn.o. crt1.o and crti.o provide initialization code and crtn.o does cleanup. These should all be located in "/usr/lib" be may be elsewere on some systems. They, and their source, might be located by executing the following find command:
+
+find / -name "crt*" -print
+
+The link command is the following:
+
+ld -m elf_i386 -static /usr/lib/crt1.o /usr/lib/crti.o -lc average.o /usr/lib/crtn.o
+
+"-m elf_i386" instructs the linker to use the ELF file format. "-static" cause static rather than dynamic linking to occur. And "-lc" links in the standard c libraries (libc.a). It might be necessary to include "-I/libdirectory" in the invocation for ld to find the c library.
+
+It will be necessary to change the mode of the resulting object file with "chmod +x ./a.out".
+
+It should now be possible to execute the file. But, of course, there will be no output.
+
+I recommend placing the above commands in a makefile .
+
+debugging
+    The "--gstabs" option given to the assembler allows the assembly program to be debugged under gdb.
+
+    The first step is to invoke gdb:
+
+    gdb ./a.out
+
+    gdb should start with the following message:
+
+    [bjorn@pomade src]$ gdb ./a.out
+    GNU gdb 4.17
+    Copyright 1998 Free Software Foundation, Inc.
+    GDB is free software, covered by the GNU General Public License, and you are
+    welcome to change it and/or distribute copies of it under certain conditions.
+    Type "show copying" to see the conditions.
+    There is absolutely no warranty for GDB.  Type "show warranty" for details.
+    This GDB was configured as "i386-redhat-linux"...
+    (gdb) 
+
+    The "l" command will list the program sourcecode.
+
+    (gdb) l
+    1       /* linux version of AVTEMP.ASM CS 200, fall 1998 */
+    2       .data   /* beginning of data segment */
+    3
+    4       /* hi_temp data item */
+    5               .type hi_temp,@object  /* declare as data object */
+    6               .size hi_temp,1         /* declare size in bytes */
+    7       hi_temp:
+    8               .byte 0x92      /* set value */
+    9
+    10      /* lo_temp data item */
+    (gdb) 
+
+
+    The first thing to do is set a breakpoint so it will be possible to step
+    through the code.
+
+    (gdb) break main
+    Breakpoint 1 at 0x80480f7
+    (gdb) 
+
+    This sets a breakpoint at the beginning of main. Now run the program.
+
+    (gdb) run
+    Starting program: /home/bjorn/src/./a.out 
+
+    Breakpoint 1, main () at average.s:31
+    31              movb hi_temp,%al
+    Current language:  auto; currently asm
+    (gdb) 
+
+    values in registers can be checked with either "info registers"
+
+    (gdb) info registers
+    eax            0x8059200        134582784
+    ecx            0xbffffd94       -1073742444
+    edx            0x0      0
+    ebx            0x8097bf0        134839280
+    esp            0xbffffdd8       0xbffffdd8
+    ebp            0xbffffdd8       0xbffffdd8
+    esi            0x1      1
+    edi            0x8097088        134836360
+    eip            0x80480f7        0x80480f7
+    eflags         0x246    582
+    cs             0x23     35
+    ss             0x2b     43
+    ds             0x2b     43
+    es             0x2b     43
+    fs             0x2b     43
+    gs             0x2b     43
+    (gdb) 
+
+    ...or "p/x $eax" which prints the value in the EAX register in hex.  The "e"
+    in front of the register name indicates a 32 bit register.  The Intel x86
+    family has included "extended" 32 bit registers since the 80386. These E 
+    registers are to the X registers as the L and H are to the X registers.
+    Linux also uses a "flat" and protected memory model rather that segmentation,
+    thus the EIP stores the entire current address.
+
+    (gdb) p/x $eax
+    $4 = 0x8059200
+    (gdb) 
+
+    The "p" command prints, "/x" indicates the output should be in hexadecimal.
+
+    type "s" or "step" to step to the next instruction.
+
+    (gdb) step
+    32              addb lo_temp,%al
+    (gdb) 
+
+    notice that 92H has been loaded into the least significant bit of the EAX
+    register (ie. the AL register) by the movb instruction.
+
+    (gdb) p/x $eax
+    $6 = 0x8059292
+    (gdb) 
+
+    And we continue stepping through the program....
+
+    (gdb) s
+    33              movb $0,%ah
+    (gdb) s
+    34              adcb $0,%ah
+    (gdb) s
+    35              movb $2,%bl
+    (gdb) s
+    36              idivb %bl
+    (gdb) s
+    37              movb %al,av_temp
+    (gdb) s
+    38              leave
+
+    and if we examine the EAX register and the variable av_temp after 
+    the final movb instruction, we see that they are set to the correct 
+    value, 72H. 
+
+    (gdb) p/x $eax
+    $9 = 0x8050072
+    (gdb) p/x av_temp
+    $10 = 0x72
+    (gdb) 
+
+    Note that during stepping the listed instruction is the one about to be 
+    executed.
+
+
+

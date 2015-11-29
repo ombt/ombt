@@ -1,0 +1,409 @@
+Fr
+m rumore@ihgp.ih.lucent.com Mon Jan  4 13:50:51 1999
+Return-Path: <rumore@ihgp.ih.lucent.com>
+Received: from ihgp162h194.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id NAA05367; Mon, 4 Jan 1999 13:50:50 -0600
+Received: by ihgp162h194.ih.lucent.com (SMI-8.6/EMS-L sol2)
+	id NAA01963; Mon, 4 Jan 1999 13:50:50 -0600
+Date: Mon, 4 Jan 1999 13:50:50 -0600
+Message-Id: <199901041950.NAA01963@ihgp162h194.ih.lucent.com>
+From: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+To: mbriand@mfi.com
+Cc: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+Subject: possible article
+Content-Type: text
+Content-Length: 843
+Status: R
+
+Hi Marc,
+
+I was curious if CUJ is interested in articles about Artificial Intelligence 
+methods, in particular, best-first heuristic search of a problem state-space.
+Since last summer I've been learning about AI, and I believe that your
+readers may be interested in a templatized best-first search that I wrote
+while learning about AI. The search routine is based on the algorithm
+described in two books: Principles of Artificial Intelligence, by
+Nils Nilsson, and Heuristics: Intelligent Search Strategies for Computer
+Problem Solving by J. Pearl (the bible for heuristic search methods).
+
+The code was tested with several of the "classic" AI problems: N-queens,
+missionary-cannibals, eight-cube, and a coins problem which may not be
+so "classic."
+
+Please let me know if there is any interest. Thank you !!!
+
+Mike Rumore
+mrumore@lucent.com
+
+
+
+From APettle@mfi.com Mon Jan  4 15:51:53 1999
+Return-Path: <APettle@mfi.com>
+Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id PAA08630; Mon, 4 Jan 1999 15:51:50 -0600
+Received: from hoemlsrv.firewall.lucent.com by ihgp.ih.lucent.com (8.8.8+Sun/EMS-1.4 sol2)
+	id PAA16373; Mon, 4 Jan 1999 15:51:49 -0600 (CST)
+Received: by hoemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id QAA02304 for rumore@ihgp.lucent.com; Mon, 4 Jan 1999 16:52:02 -0500 (EST)
+Received: from alto2.mfi.com by hoemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id QAA02290 for <mrumore@lucent.com>; Mon, 4 Jan 1999 16:52:01 -0500 (EST)
+Received: from sf-mail.mfi.com by alto2.mfi.com
+          via smtpd (for [192.11.226.161]) with SMTP; 4 Jan 1999 21:49:59 UT
+Received: from ccMail by sf-mail.mfi.com
+  (IMA Internet Exchange 3.01 Enterprise) id 0031E3A6; Mon, 4 Jan 99 13:47:10 -0800
+Mime-Version: 1.0
+Date: Mon, 4 Jan 1999 15:32:23 -0800
+Message-ID: <0031E3A6.CE21230@mfi.com>
+From: APettle@mfi.com (Amy Pettle)
+Subject: Regarding proposal to CUJ
+To: mrumore@lucent.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Description: cc:Mail note part
+Content-Length: 507
+Status: R
+
+     Dear Mike,
+     
+     Thank you for your proposal on "Best-First Heuristic Search of a 
+     Problem State-Space." You'll be hearing from us within the next two to 
+     four weeks regarding our decision.
+     
+     Thanks again,
+     
+     Amy Pettle
+     Associate Managing Editor
+     
+     ---------------------------------------
+     Amy Pettle, Associate Managing Editor
+     C/C++ Users Journal
+     Windows Developer's Journal
+     apettle@mfi.com
+     voice: 785.838.7553   fax: 785.841.2047 
+
+From rumore Sat Jan  9 20:44:57 1999
+Return-Path: <rumore>
+Received: by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id UAA09679; Sat, 9 Jan 1999 20:44:49 -0600
+Date: Sat, 9 Jan 1999 20:44:49 -0600
+Message-Id: <199901100244.UAA09679@ihgp24.ih.lucent.com>
+From: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+To: apettle@mfi.com
+Cc: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+Subject: heuristic search article
+Content-Type: text
+Content-Length: 1183
+Status: R
+
+Hi Amy:
+
+Last week I sent an email with a proposal for an article on
+heuristic search of a state-space. After I sent it I realized 
+that I really did not explain why I thought the article would be
+of interest to CUJ readers. Basically, this last year I have 
+been learning about artificial inteligence so that I can create
+an expert system for work. What I found was that most of the 
+problems in AI really boil down to efficiently traversing a 
+directed graph. This is true for games, theorem proving, the
+computing language Prolog, and diagnostic programs (what I 
+am working on), for example. What all this means is that a 
+programmer must have a good understanding of search techniques 
+to solve AI problems. The article I proposed is on the "best-first"
+heuristic search algorithm for traversing a problem state-space.
+This method is used to solve many of the "classic" AI problems,
+N-queens, missionary and cannibals, and the 8-square. In many 
+AI books (Nils Nilsson's Principles of AI, for example), the first
+topic covered is heuristic search, best-first search.
+
+Sorry about sending this with the first email. Thank you for your
+interest.
+
+Mike Rumore
+mrumore@lucent.com
+
+
+
+From APettle@mfi.com Tue Jan 19 11:39:20 1999
+Return-Path: <APettle@mfi.com>
+Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id LAA13257; Tue, 19 Jan 1999 11:39:17 -0600
+Received: from auemlsrv.firewall.lucent.com by ihgp.ih.lucent.com (8.8.8+Sun/EMS-1.4 sol2)
+	id LAA05119; Tue, 19 Jan 1999 11:39:17 -0600 (CST)
+Received: by auemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id MAA23227 for rumore@ihgp.lucent.com; Tue, 19 Jan 1999 12:39:42 -0500 (EST)
+Received: from alto2.mfi.com by auemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id MAA23192 for <mrumore@lucent.com>; Tue, 19 Jan 1999 12:39:39 -0500 (EST)
+Received: from sf-mail.mfi.com by alto2.mfi.com
+          via smtpd (for auemail1.lucent.com [192.11.223.161]) with SMTP; 19 Jan 1999 17:37:44 UT
+Received: from ccMail by sf-mail.mfi.com
+  (IMA Internet Exchange 3.01 Enterprise) id 0034F75A; Tue, 19 Jan 99 09:31:46 -0800
+Mime-Version: 1.0
+Date: Tue, 19 Jan 1999 11:30:52 -0800
+Message-ID: <0034F75A.CE21230@mfi.com>
+From: APettle@mfi.com (Amy Pettle)
+To: mrumore@lucent.com (Mike A Rumore)
+Subject: Re: heuristic search article
+Content-Type: multipart/mixed; boundary="IMA.Boundary.6017676190"
+Content-Length: 2993
+Status: R
+
+--IMA.Boundary.6017676190
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Description: cc:Mail note part
+
+     Mike,
+     
+     Thanks for the clarification. I'm forwarding this on to Marc Briand, 
+     who actually reviews the proposals. Thanks again,
+     
+     Amy
+
+
+______________________________ Reply Separator _________________________________
+Subject: heuristic search article
+Author:  mrumore@lucent.com (Mike A Rumore) at Internet
+Date:    1/9/99 8:44 PM
+
+
+Hi Amy:
+     
+Last week I sent an email with a proposal for an article on 
+heuristic search of a state-space. After I sent it I realized 
+that I really did not explain why I thought the article would be 
+of interest to CUJ readers. Basically, this last year I have been 
+learning about artificial inteligence so that I can create an 
+expert system for work. What I found was that most of the 
+problems in AI really boil down to efficiently traversing a 
+directed graph. This is true for games, theorem proving, the 
+computing language Prolog, and diagnostic programs (what I 
+am working on), for example. What all this means is that a 
+programmer must have a good understanding of search techniques 
+to solve AI problems. The article I proposed is on the "best-first" 
+heuristic search algorithm for traversing a problem state-space. 
+This method is used to solve many of the "classic" AI problems, 
+N-queens, missionary and cannibals, and the 8-square. In many 
+AI books (Nils Nilsson's Principles of AI, for example), the first 
+topic covered is heuristic search, best-first search.
+     
+Sorry about sending this with the first email. Thank you for your 
+interest.
+     
+Mike Rumore
+mrumore@lucent.com
+     
+     
+--IMA.Boundary.6017676190
+Content-Type: text/plain; charset=US-ASCII; name="RFC822 message headers"
+Content-Transfer-Encoding: 7bit
+Content-Description: cc:Mail note part
+Content-Disposition: inline; filename="RFC822 message headers"
+
+Received: from alto.mfi.com ([198.71.19.38]) by sf-mail.mfi.com with SMTP
+  (IMA Internet Exchange 3.01 Enterprise) id 0033254E; Sat, 9 Jan 99 18:43:18
+-0800
+Received: from cbgw2.lucent.com ([207.24.196.52]) by alto.mfi.com
+          via smtpd (for sf-mail.mfi.com [198.71.17.202]) with SMTP; 10 Jan 1999
+02:43:00 UT
+Received: from ihgp24.ih.lucent.com by cbig2.firewall.lucent.com (SMI-8.6/EMS-L
+sol2)
+	id VAA02686; Sat, 9 Jan 1999 21:45:31 -0500
+Received: by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id UAA09699; Sat, 9 Jan 1999 20:44:56 -0600
+From: mrumore@lucent.com (Mike A Rumore)
+Cc: mrumore@lucent.com (Mike A Rumore)
+Received: by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id UAA09679; Sat, 9 Jan 1999 20:44:49 -0600
+Date: Sat, 9 Jan 1999 20:44:49 -0600
+Message-Id: <199901100244.UAA09679@ihgp24.ih.lucent.com>
+Original-From: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+To: apettle@mfi.com
+Original-Cc: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+Subject: heuristic search article
+Content-Type: text
+--IMA.Boundary.6017676190--
+
+From mbriand@mfi.com Tue Jan 19 13:59:06 1999
+Return-Path: <mbriand@mfi.com>
+Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id NAA05924; Tue, 19 Jan 1999 13:59:02 -0600
+Received: from hoemlsrv.firewall.lucent.com by ihgp.ih.lucent.com (8.8.8+Sun/EMS-1.4 sol2)
+	id NAA12015; Tue, 19 Jan 1999 13:59:01 -0600 (CST)
+Received: by hoemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id OAA25806 for rumore@ihgp.lucent.com; Tue, 19 Jan 1999 14:59:05 -0500 (EST)
+Received: from alto2.mfi.com by hoemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id OAA25786 for <mrumore@lucent.com>; Tue, 19 Jan 1999 14:59:04 -0500 (EST)
+Received: from sf-mail.mfi.com by alto2.mfi.com
+          via smtpd (for hoemail1.lucent.com [192.11.226.161]) with SMTP; 19 Jan 1999 19:58:43 UT
+Received: from ccMail by sf-mail.mfi.com
+  (IMA Internet Exchange 3.01 Enterprise) id 00350864; Tue, 19 Jan 99 11:56:00 -0800
+Mime-Version: 1.0
+Date: Tue, 19 Jan 1999 13:55:09 -0800
+Message-ID: <00350864.CE21230@mfi.com>
+From: mbriand@mfi.com (Marc Briand)
+Subject: AI proposal
+To: mrumore@lucent.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Description: cc:Mail note part
+Content-Length: 1603
+Status: R
+
+>Hi Marc,
+>     
+>I was curious if CUJ is interested in articles about Artificial Intelligence 
+>methods, in particular, best-first heuristic search of a problem state-space. 
+>Since last summer I've been learning about AI, and I believe that your 
+>readers may be interested in a templatized best-first search that I wrote 
+>while learning about AI. The search routine is based on the algorithm 
+>described in two books: Principles of Artificial Intelligence, by
+>Nils Nilsson, and Heuristics: Intelligent Search Strategies for Computer 
+>Problem Solving by J. Pearl (the bible for heuristic search methods).
+>     
+>The code was tested with several of the "classic" AI problems: N-queens, 
+>missionary-cannibals, eight-cube, and a coins problem which may not be 
+>so "classic."
+>     
+>Please let me know if there is any interest. Thank you !!!
+>     
+
+Hi Mike,
+
+We definitely are interested. The problem I've seen with AI type
+articles (e.g., articles describing genetic algorithms) is that the
+author focuses so much on describing how the algorithm works that he
+doesn't give the reader a clue as to how to adapt his/her problem to the
+code. So the example or examples you give should clearly illustrate the
+process by which a user "hooks" his/her problem into the code. You
+should also probably say a little bit about what kinds of problems are
+appropriate and what kinds are best suited to other approaches.
+
+I would like to see an article of around 2500 to 3000 words. I'd like to
+receive a draft by the end of February. BTW -- I am assuming Lucent has
+no ownership issues with this code?
+
+Marc
+
+
+From rumore@ihgp.ih.lucent.com Tue Jan 19 14:17:02 1999
+Return-Path: <rumore@ihgp.ih.lucent.com>
+Received: from ihgp162h194.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id OAA15245; Tue, 19 Jan 1999 14:16:59 -0600
+Received: by ihgp162h194.ih.lucent.com (SMI-8.6/EMS-L sol2)
+	id OAA06280; Tue, 19 Jan 1999 14:16:59 -0600
+Date: Tue, 19 Jan 1999 14:16:59 -0600
+Message-Id: <199901192016.OAA06280@ihgp162h194.ih.lucent.com>
+From: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+To: mbriand@mfi.com (Marc Briand)
+Cc: rumore@ihgp.ih.lucent.com (Mike A Rumore)
+Subject: Re: AI proposal
+Content-Type: text
+Content-Length: 2406
+Status: R
+
+Hi Marc,
+
+I can definitely have the article by the end of February,
+and Lucent has no problems since the code was written
+while I was learning about AI. It really has no use for
+the work I do around here. 
+
+I can gear the article to give a quick introduction as to how 
+the code searches a directed graph. Then I can use two of the
+test cases to show how to use the search routine, i.e., adapt
+there problem to the search routine. Does that sound ok?
+
+Mike Rumore
+
+	From mbriand@mfi.com Tue Jan 19 13:59:06 1999
+	Return-Path: <mbriand@mfi.com>
+	Mime-Version: 1.0
+	From: mbriand@mfi.com (Marc Briand)
+	Subject: AI proposal
+	To: mrumore@lucent.com
+	Content-Type: text/plain; charset=US-ASCII
+	Content-Transfer-Encoding: 7bit
+	Content-Description: cc:Mail note part
+	
+	>Hi Marc,
+	>     
+	>I was curious if CUJ is interested in articles about Artificial Intelligence 
+	>methods, in particular, best-first heuristic search of a problem state-space. 
+	>Since last summer I've been learning about AI, and I believe that your 
+	>readers may be interested in a templatized best-first search that I wrote 
+	>while learning about AI. The search routine is based on the algorithm 
+	>described in two books: Principles of Artificial Intelligence, by
+	>Nils Nilsson, and Heuristics: Intelligent Search Strategies for Computer 
+	>Problem Solving by J. Pearl (the bible for heuristic search methods).
+	>     
+	>The code was tested with several of the "classic" AI problems: N-queens, 
+	>missionary-cannibals, eight-cube, and a coins problem which may not be 
+	>so "classic."
+	>     
+	>Please let me know if there is any interest. Thank you !!!
+	>     
+	
+	Hi Mike,
+	
+	We definitely are interested. The problem I've seen with AI type
+	articles (e.g., articles describing genetic algorithms) is that the
+	author focuses so much on describing how the algorithm works that he
+	doesn't give the reader a clue as to how to adapt his/her problem to the
+	code. So the example or examples you give should clearly illustrate the
+	process by which a user "hooks" his/her problem into the code. You
+	should also probably say a little bit about what kinds of problems are
+	appropriate and what kinds are best suited to other approaches.
+	
+	I would like to see an article of around 2500 to 3000 words. I'd like to
+	receive a draft by the end of February. BTW -- I am assuming Lucent has
+	no ownership issues with this code?
+	
+	Marc
+	
+	
+
+
+From mbriand@mfi.com Tue Jan 19 14:35:46 1999
+Return-Path: <mbriand@mfi.com>
+Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.4 sol2)
+	id OAA24299; Tue, 19 Jan 1999 14:35:43 -0600
+Received: from auemlsrv.firewall.lucent.com by ihgp.ih.lucent.com (8.8.8+Sun/EMS-1.4 sol2)
+	id OAA23335; Tue, 19 Jan 1999 14:35:42 -0600 (CST)
+Received: by auemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id PAA14833 for rumore@ihgp.lucent.com; Tue, 19 Jan 1999 15:36:06 -0500 (EST)
+Received: from alto2.mfi.com by auemlsrv.firewall.lucent.com (8.9.1/EMS-1.4.1 sol2)
+	id PAA14815 for <mrumore@lucent.com>; Tue, 19 Jan 1999 15:36:05 -0500 (EST)
+Received: from sf-mail.mfi.com by alto2.mfi.com
+          via smtpd (for auemail1.lucent.com [192.11.223.161]) with SMTP; 19 Jan 1999 20:32:52 UT
+Received: from ccMail by sf-mail.mfi.com
+  (IMA Internet Exchange 3.01 Enterprise) id 00350C1C; Tue, 19 Jan 99 12:31:12 -0800
+Mime-Version: 1.0
+Date: Tue, 19 Jan 1999 14:30:25 -0800
+Message-ID: <00350C1C.CE21230@mfi.com>
+From: mbriand@mfi.com (Marc Briand)
+Subject: Re[2]: AI proposal
+To: mrumore@lucent.com (Mike A Rumore)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Content-Description: cc:Mail note part
+Content-Length: 528
+Status: R
+
+>Hi Marc,
+>     
+>I can definitely have the article by the end of February, 
+>and Lucent has no problems since the code was written 
+>while I was learning about AI. It really has no use for 
+>the work I do around here. 
+>     
+>I can gear the article to give a quick introduction as to how 
+>the code searches a directed graph. Then I can use two of the 
+>test cases to show how to use the search routine, i.e., adapt 
+>there problem to the search routine. Does that sound ok?
+>     
+
+Sure. I look forward to reading it.
+
+Marc
+
+

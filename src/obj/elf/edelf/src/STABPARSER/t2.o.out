@@ -1,0 +1,152 @@
+Elf Header:
+  Ident = "\x7fELF", Class = 1 (32), Data = 2 (2MSB), Id ver = 1 (CURRENT)
+  Type = 1 (REL),	Machine = 2 (SPARC),	Version = 1 (CURRENT)
+  Start address = 0x00000000,	Phdr offset = 0x00000000
+  Shdr offset   = 0x000007e0,	File flags = 0x00000000
+  Ehdr size = 52,	Phdr size = 0,		Num Phdrs = 0
+  Shdr size = 40,	Num Shdrs = 13,		Str Index = 1
+
+
+Section Table @ 0x000007e0 (13 entries, 40 bytes each):
+
+Section 0 () @ 0x000007e0
+  Type = 0 (NULL),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000000, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000000,	Entry size = 0
+
+Section 1 (.shstrtab) @ 0x00000808
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000034, Size = 113
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 2 (.text) @ 0x00000830
+  Type = 1 (PROGBITS),	Flags = 0x6 (EXEC-ALLOC)
+  Addr = 0x00000000,	Offset = 0x000000a8, Size = 48
+  Link = 0,		Info = 0
+  Align = 0x00000008,	Entry size = 0
+
+Section 3 (.bss) @ 0x00000858
+  Type = 8 (NOBITS),	Flags = 0x3 (ALLOC-WRITE)
+  Addr = 0x00000000,	Offset = 0x000000d8, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 4 (.data) @ 0x00000880
+  Type = 1 (PROGBITS),	Flags = 0x3 (ALLOC-WRITE)
+  Addr = 0x00000000,	Offset = 0x000000d8, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 5 (.rodata) @ 0x000008a8
+  Type = 1 (PROGBITS),	Flags = 0x2 (ALLOC)
+  Addr = 0x00000000,	Offset = 0x000000d8, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 6 (.stab.index) @ 0x000008d0
+  Type = 1 (PROGBITS),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x000000d8, Size = 108
+  Link = 7 (.stab.indexstr),	Info = 0
+  Align = 0x00000004,	Entry size = 12
+
+Section 7 (.stab.indexstr) @ 0x000008f8
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000144, Size = 274
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 8 (.stab.excl) @ 0x00000920
+  Type = 1 (PROGBITS),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000258, Size = 408
+  Link = 9 (.stab.exclstr),	Info = 0
+  Align = 0x00000004,	Entry size = 12
+
+Section 9 (.stab.exclstr) @ 0x00000948
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x000003f0, Size = 769
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 10 (.comment) @ 0x00000970
+  Type = 1 (PROGBITS),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x000006f1, Size = 62
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 11 (.strtab) @ 0x00000998
+  Type = 3 (STRTAB),	Flags = 0x2 (ALLOC)
+  Addr = 0x00000000,	Offset = 0x0000072f, Size = 63
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 12 (.symtab) @ 0x000009c0
+  Type = 2 (SYMTAB),	Flags = 0x2 (ALLOC)
+  Addr = 0x00000000,	Offset = 0x00000770, Size = 112
+  Link = 11 (.strtab),	Info = 5 (end of LOCAL syms)
+  Align = 0x00000004,	Entry size = 16
+
+
+Symbol table -- 7 entries	 value	   size		info	  shndx
+
+  0:                           00000000  00000000  LOCAL  NOTYPE    0
+  1:                     t2.c  00000000  00000000  LOCAL    FILE  ABS
+  2:                 Bbss.bss  00000000  00000000  LOCAL  NOTYPE    3
+  3:               Ddata.data  00000000  00000000  LOCAL  NOTYPE    4
+  4:           Drodata.rodata  00000000  00000000  LOCAL  NOTYPE    5
+  5:                     main  00000010  0000001c GLOBAL    FUNC    2
+  6:         __fsr_init_value  00000000  00000000 GLOBAL  NOTYPE  ABS
+
+
+Index Stab table -- 9 entries
+
+   0:  .stabs "t2.c",N_UNDF,0x0,0x8,0x112
+   1:  .stabs "/home/rumore/src/elf/edelf/src/STABPARSER/",N_SO,0x0,0x0,0x0
+   2:  .stabs "t2.c",N_SO,0x0,0x3,0x0
+   3:  .stabs "",N_OBJ,0x0,0x0,0x0
+   4:  .stabs "",N_OBJ,0x0,0x0,0x0
+   5:  .stabs "Xa ; g ; V=3.1 ; R=WorkShop Compilers 5.0 99/12/04 C 5.0 patch 107289-05 ; G=$XAkpdAHshdCBWDn.",N_OPT,0x0,0x0,0x4109d86c
+   6:  .stabs "/home/rumore/src/elf/edelf/src/STABPARSER; /opt/SUNWspro/bin/../SC5.0/bin/cc -cg  t2.c -W0,-xp\$XAkpdAHshdCBWDn.",N_CMDLINE,0x0,0x0,0x0
+   7:  .stabs "main",N_MAIN,0x0,0x0,0x0
+   8:  .stabs "main",N_FUN,0x0,0x0,0x0
+
+
+Excluded Stab table -- 34 entries
+
+   0:  .stabs "t2.c",N_UNDF,0x0,0x21,0x301
+   1:  .stabs "/home/rumore/src/elf/edelf/src/STABPARSER/",N_SO,0x0,0x0,0x0
+   2:  .stabs "t2.c",N_SO,0x0,0x3,0x0
+   3:  .stabs "",N_OBJ,0x0,0x0,0x0
+   4:  .stabs "",N_OBJ,0x0,0x0,0x0
+   5:  .stabs "Xa ; g ; V=3.1 ; R=WorkShop Compilers 5.0 99/12/04 C 5.0 patch 107289-05 ; G=$XAkpdAHshdCBWDn.",N_OPT,0x0,0x0,0x4109d86c
+   6:  .stabs "char:t(0,1)=bsc1;0;8;",N_LSYM,0x0,0x0,0x0
+   7:  .stabs "short:t(0,2)=bs2;0;16;",N_LSYM,0x0,0x0,0x0
+   8:  .stabs "int:t(0,3)=bs4;0;32;",N_LSYM,0x0,0x0,0x0
+   9:  .stabs "long:t(0,4)=bs4;0;32;",N_LSYM,0x0,0x0,0x0
+  10:  .stabs "long long:t(0,5)=bs8;0;64;",N_LSYM,0x0,0x0,0x0
+  11:  .stabs "signed char:t(0,6)=bsc1;0;8;",N_LSYM,0x0,0x0,0x0
+  12:  .stabs "signed short:t(0,7)=bs2;0;16;",N_LSYM,0x0,0x0,0x0
+  13:  .stabs "signed int:t(0,8)=bs4;0;32;",N_LSYM,0x0,0x0,0x0
+  14:  .stabs "signed long:t(0,9)=bs4;0;32;",N_LSYM,0x0,0x0,0x0
+  15:  .stabs "signed long long:t(0,10)=bs8;0;64;",N_LSYM,0x0,0x0,0x0
+  16:  .stabs "unsigned char:t(0,11)=buc1;0;8;",N_LSYM,0x0,0x0,0x0
+  17:  .stabs "unsigned short:t(0,12)=bu2;0;16;",N_LSYM,0x0,0x0,0x0
+  18:  .stabs "unsigned:t(0,13)=bu4;0;32;",N_LSYM,0x0,0x0,0x0
+  19:  .stabs "unsigned int:t(0,14)=bu4;0;32;",N_LSYM,0x0,0x0,0x0
+  20:  .stabs "unsigned long:t(0,15)=bu4;0;32;",N_LSYM,0x0,0x0,0x0
+  21:  .stabs "unsigned long long:t(0,16)=bu8;0;64;",N_LSYM,0x0,0x0,0x0
+  22:  .stabs "float:t(0,17)=R1;4;",N_LSYM,0x0,0x0,0x0
+  23:  .stabs "double:t(0,18)=R2;8;",N_LSYM,0x0,0x0,0x0
+  24:  .stabs "long double:t(0,19)=R6;16;",N_LSYM,0x0,0x0,0x0
+  25:  .stabs "void:t(0,20)=bs0;0;0",N_LSYM,0x0,0x0,0x0
+  26:  .stabs "main:F(0,3);(0,3);(0,21)=*(0,22)=*(0,1)",N_FUN,0x0,0x0,0x0
+  27:  .stabs "main",N_MAIN,0x0,0x0,0x0
+  28:  .stabs "argc:p(0,3)",N_PSYM,0x0,0x4,0x44
+  29:  .stabs "argv:p(0,21)",N_PSYM,0x0,0x4,0x48
+  30:  .stabn N_LBRAC,0x0,0x1,0xc
+  31:  .stabn N_SLINE,0x0,0x3,0x14
+  32:  .stabn N_RBRAC,0x0,0x1,0x14
+  33:  .stabs "",N_ENDM,0x0,0x0,0x0
+
+No Dynamic Table

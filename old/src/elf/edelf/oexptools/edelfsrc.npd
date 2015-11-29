@@ -1,0 +1,7 @@
+nsbPackageDescription: 1
+# executableTypes: solaris
+paths:
+	edelf*.npd
+	*.c
+	*.h
+	makefile

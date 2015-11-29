@@ -1,0 +1,40 @@
+CC = CC
+CCFLAGS = -DDEBUG -DUSEEXCEPTION -g -xildoff
+LD = CC
+LDFLAGS = -DDEBUG -DUSEEXCEPTION -g -xildoff
+#
+atp
+pr.y
+pr.l
+array.c
+binaryTree_AVL.c
+clause.c
+deletion.c
+expandfiles.c
+index.c
+literal.c
+main.c
+map.c
+mylist.c
+mystring.c
+prover.c
+queue_List.c
+semantic.c
+stack_List.c
+substitution.c
+symbol.c
+unification.c
+uniquename.c
+globals.c
+search.c
+bfsnode.c
+options.c
+memoryleak.c
+varnames.c
+-ly
+-ll
+#
+install1 = rm -f $(HOME)/bin/atp
+install2 = ln -s $(PWD)/atp $(HOME)/bin/atp
+install3 = cp $(PWD)/atp $(HOME)/public_html/predcal/cgi-bin/atp
+#

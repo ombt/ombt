@@ -1,0 +1,5 @@
+moc_*
+qt_*
+*.makefile
+*.pro
+syncsvc

@@ -1,0 +1,14 @@
+CC = cc
+# CCFLAGS = -g -DFLEXWARN -DDEBUG
+#
+LD = cc
+LDFLAGS = -g 
+# LDFLAGS = -g -DDEBUG
+#
+INCLDIRS=-I../include
+#
+ftrc
+ftrc.c
+#
+install1=cp ftrc $(HOME)/bin/ftrc
+install2=rcp ftrc integ@ihlbs1:/home/integ/bin/ftrc

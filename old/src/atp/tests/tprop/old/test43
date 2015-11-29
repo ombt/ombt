@@ -1,0 +1,58 @@
+#
+# problem 2.9.3, page 94 in Logic for Mathematics and Computer Science
+#
+f --> g;
+|- (f && h) --> (g && h);
+#
+f --> g;
+|- (f || h) --> (g || h);
+#
+f --> g;
+|- (f --> h) --> (g --> h);
+#
+f --> g;
+|- (f <--> h) --> (g <--> h);
+#
+# problem 2.9.4, page 95 in Logic for Mathematics and Computer Science
+#
+f --> g;
+|- (h && f) --> (h && g);
+#
+f --> g;
+|- (h || f) --> (h || g);
+#
+f --> g;
+|- (h --> f) --> (h --> g);
+#
+f --> g;
+|- (h <--> f) --> (h <--> g);
+#
+# problem 2.9.5, page 94 in Logic for Mathematics and Computer Science
+#
+f <--> g;
+|- (f && h) <--> (g && h);
+#
+f <--> g;
+|- (f || h) <--> (g || h);
+#
+f <--> g;
+|- (f --> h) <--> (g --> h);
+#
+f <--> g;
+|- (f <--> h) <--> (g <--> h);
+#
+# problem 2.9.6, page 95 in Logic for Mathematics and Computer Science
+#
+f <--> g;
+|- (h && f) <--> (h && g);
+#
+f <--> g;
+|- (h || f) <--> (h || g);
+#
+f <--> g;
+|- (h --> f) <--> (h --> g);
+#
+f <--> g;
+|- (h <--> f) <--> (h <--> g);
+#
+quit;

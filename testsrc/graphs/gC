@@ -1,0 +1,17 @@
+v: id:1 label:A
+v: id:2 label:B
+v: id:3 label:C
+v: id:4 label:D
+v: id:5 label:E
+v: id:6 label:F
+v: id:7 label:G
+v: id:8 label:H
+v: id:9 label:I
+e: fromid:1 toid:2 color:blue
+e: fromid:1 toid:3 color:blue
+e: fromid:2 toid:4 color:blue
+e: fromid:4 toid:5 color:blue
+e: fromid:3 toid:6 color:blue
+e: fromid:6 toid:7 color:blue
+e: fromid:6 toid:8 color:blue
+e: fromid:8 toid:9 color:blue

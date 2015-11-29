@@ -1,0 +1,13 @@
+#
+# tests for rings
+#
+program {
+#include "axioms/rings"
+#
+|- M(x, x) = x;
+#
+|- P(x, x) = 0;
+#
+|- M(x, y) = M(y, x);
+#
+}

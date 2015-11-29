@@ -1,0 +1,10 @@
+CC = gcc
+CCFLAGS = -g
+
+LD = gcc
+LDFLAGS = -g
+#
+chess
+chess.c
+-lcurses
+

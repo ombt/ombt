@@ -1,0 +1,14 @@
+#
+# tests for boolean algebras
+#
+program {
+#
+#include "axioms/boolean"
+#
+|- O(x, N(y)) = N(O(x, y));
+#
+|- N(O(x, y)) = O(N(x), N(y));
+#
+|- O(x, A(N(y, z))) = A(O(x, N(y)), O(x, N(z)));
+#
+}

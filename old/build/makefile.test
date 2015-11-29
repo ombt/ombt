@@ -1,0 +1,42 @@
+ifndef ROOT
+$(error ROOT is not set)
+endif
+ifndef PRODS
+$(error PRODS is not set)
+endif
+
+LIBDIR = $(ROOT)/lib
+
+INCLUDEDIR = $(ROOT)/hdr
+
+CXX = g++
+CXXFLAGS = -g -DDEBUG -I$(INCLUDEDIR) -L$(LIBDIR) 
+
+ifdef CXXEXTRAFLAGS
+CXXFLAGS += $(CXXEXTRAFLAGS)
+endif 
+
+define PRODS_template
+$(1):	$(1).cpp
+endef
+
+all:
+
+$(foreach prod, $(PRODS), $(eval $(call PRODS_template, $(prod))))
+
+test:	$(PRODS)
+
+clean:
+	-rm -f install
+	-rm -f *.o
+	-$(foreach prod, $(PRODS), rm -f $(prod);)
+
+install:
+	touch install
+
+backup:
+	bkup
+
+backupd:
+	bkup -d
+

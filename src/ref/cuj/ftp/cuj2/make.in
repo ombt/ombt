@@ -1,0 +1,15 @@
+#
+CC=CC
+LD=CC
+LDFLAGS=-g
+#
+CCFLAGS = -g 
+#
+tbinary2
+tbinary2.c
+binaryTree2.c
+string.c
+queue_List.c
+stack_List.c
+list.c
+#

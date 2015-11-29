@@ -1,0 +1,3586 @@
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then feed it
+# into a shell via "sh file" or similar.  To overwrite existing files,
+# type "sh file -c".
+# The tool that generated this appeared in the comp.sources.unix newsgroup;
+# send mail to comp-sources-unix@uunet.uu.net if you want that tool.
+# Contents:  absIterator.h absQueue.h absStack.h absTree.h
+#   binaryTree2.c binaryTree2.h debug.h list.c list.h make.in makefile
+#   queue_List.c queue_List.h returns.h stack_List.c stack_List.h
+#   string.c string.h tbinary2.c
+# Wrapped by rumore@ihgp194x on Mon Jun  1 14:22:59 1998
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+echo If this archive is complete, you will see the following message:
+echo '          "shar: End of archive."'
+if test -f 'absIterator.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'absIterator.h'\"
+else
+  echo shar: Extracting \"'absIterator.h'\" \(961 characters\)
+  sed "s/^X//" >'absIterator.h' <<'END_OF_FILE'
+X#ifndef __ABSTRACT_ITERATOR_H
+X#define __ABSTRACT_ITERATOR_H
+X// abstract iterator class definition
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X// abstract iterator class
+Xtemplate <class DataType> class AbstractIterator {
+Xpublic:
+X        // constructors and destructor
+X        virtual ~AbstractIterator() { }
+X
+X	// reset iterator to start
+X	virtual void reset() = 0;
+X
+X	// check if at end of list
+X	virtual int done() const = 0;
+X
+X        // return data 
+X        virtual DataType operator()() = 0;
+X
+X	// advance iterator to next link
+X	virtual int operator++(int) = 0;
+X
+X#ifdef MUTABLE_ITERATOR
+X	// reset after data structure is altered
+X	virtual void resetByValue(const DataType &datum) {
+Xcerr << "resetByValue entry ... " << datum << endl;
+X		for ((*this).reset(); (*this)() != datum; (*this)++)
+X		{
+Xcerr << "resetByValue checking against ... " << (*this)() << endl;
+X		}
+X		return;
+X	}
+X#endif
+X};
+X
+X#endif
+END_OF_FILE
+  if test 961 -ne `wc -c <'absIterator.h'`; then
+    echo shar: \"'absIterator.h'\" unpacked with wrong size!
+  fi
+  # end of 'absIterator.h'
+fi
+if test -f 'absQueue.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'absQueue.h'\"
+else
+  echo shar: Extracting \"'absQueue.h'\" \(969 characters\)
+  sed "s/^X//" >'absQueue.h' <<'END_OF_FILE'
+X#ifndef __ABSTRACT_QUEUE_H
+X#define __ABSTRACT_QUEUE_H
+X// abstract queue class definition
+X
+X// required headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X#ifdef SUNCC
+X// forward definitions
+Xtemplate <class DataType> class AbstractQueue;
+X
+Xtemplate <class DataType> 
+Xostream &
+Xoperator<<(ostream &, const AbstractQueue<DataType> &);
+X
+X#endif
+X// abstract queue class
+Xtemplate <class DataType> class AbstractQueue {
+Xpublic:
+X        // destructor
+X        virtual ~AbstractQueue() { }
+X
+X        // queue operations
+X        virtual void clear() = 0;
+X        virtual void enqueue(const DataType &) = 0;
+X        virtual int dequeue(DataType &) = 0;
+X        virtual int front(DataType &) const = 0;
+X        virtual int isEmpty() const = 0;
+X
+X	// output data
+X	virtual ostream &dump(ostream &) const = 0;
+X	friend ostream &operator<<(ostream &os, 
+X		const AbstractQueue<DataType> &q) {
+X		q.dump(os);
+X		return(os);
+X	}
+X};
+X
+X#endif
+END_OF_FILE
+  if test 969 -ne `wc -c <'absQueue.h'`; then
+    echo shar: \"'absQueue.h'\" unpacked with wrong size!
+  fi
+  # end of 'absQueue.h'
+fi
+if test -f 'absStack.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'absStack.h'\"
+else
+  echo shar: Extracting \"'absStack.h'\" \(939 characters\)
+  sed "s/^X//" >'absStack.h' <<'END_OF_FILE'
+X#ifndef __ABSTRACT_STACK_H
+X#define __ABSTRACT_STACK_H
+X// abstract stack class definition
+X
+X// required headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X// forward definitions
+Xtemplate <class DataType> class AbstractStack;
+X
+Xtemplate <class DataType> 
+Xostream &
+Xoperator<<(ostream &, const AbstractStack<DataType> &);
+X
+X// abstract stack class
+Xtemplate <class DataType> class AbstractStack {
+Xpublic:
+X        // destructor
+X        virtual ~AbstractStack() { }
+X
+X        // stack operations
+X        virtual void clear() = 0;
+X        virtual void push(const DataType &) = 0;
+X        virtual int pop(DataType &) = 0;
+X        virtual int top(DataType &) const = 0;
+X        virtual int isEmpty() const = 0;
+X
+X	// output data
+X	virtual ostream &dump(ostream &) const = 0;
+X	friend ostream &operator<<(ostream &os,
+X		const AbstractStack<DataType> &s) {
+X		s.dump(os);
+X		return(os);
+X	}
+X};
+X
+X#endif
+END_OF_FILE
+  if test 939 -ne `wc -c <'absStack.h'`; then
+    echo shar: \"'absStack.h'\" unpacked with wrong size!
+  fi
+  # end of 'absStack.h'
+fi
+if test -f 'absTree.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'absTree.h'\"
+else
+  echo shar: Extracting \"'absTree.h'\" \(1243 characters\)
+  sed "s/^X//" >'absTree.h' <<'END_OF_FILE'
+X#ifndef __ABSTRACT_TREE_H
+X#define __ABSTRACT_TREE_H
+X// abstract tree class definition
+X
+X// required headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X#ifdef SUNCC
+X// forward definitions
+Xtemplate <class DataType> class AbstractTree;
+X
+Xtemplate <class DataType> 
+Xostream &
+Xoperator<<(ostream &, const AbstractTree<DataType> &);
+X#endif
+X
+X// abstract tree class
+Xtemplate <class DataType> class AbstractTree {
+Xpublic:
+X        // destructor
+X        virtual ~AbstractTree() { }
+X
+X        // binary tree operations
+X        virtual void insert(const DataType &) = 0;
+X        virtual int remove(DataType &) = 0;
+X        virtual int retrieve(DataType &) const = 0;
+X        virtual int isInTree(const DataType &) const = 0;
+X	virtual int isEmpty() const = 0;
+X        virtual void clear() = 0;
+X
+X	// tree traversal functions
+X	virtual int preOrder(int (*)(DataType &)) = 0;
+X	virtual int inOrder(int (*)(DataType &)) = 0;
+X	virtual int postOrder(int (*)(DataType &)) = 0;
+X	virtual int levelOrder(int (*)(DataType &)) = 0;
+X
+X	// output data
+X	virtual ostream &dump(ostream &) const = 0;
+X	friend ostream &operator<<(ostream &os,
+X		const AbstractTree<DataType> &bt) {
+X		bt.dump(os);
+X		return(os);
+X	}
+X};
+X
+X#endif
+END_OF_FILE
+  if test 1243 -ne `wc -c <'absTree.h'`; then
+    echo shar: \"'absTree.h'\" unpacked with wrong size!
+  fi
+  # end of 'absTree.h'
+fi
+if test -f 'binaryTree2.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'binaryTree2.c'\"
+else
+  echo shar: Extracting \"'binaryTree2.c'\" \(19062 characters\)
+  sed "s/^X//" >'binaryTree2.c' <<'END_OF_FILE'
+X// member functions for recursive binary tree class
+X
+X// required headers
+X#include "binaryTree2.h"
+X
+X// binary tree node constructors and destructor
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType>::BinaryTreeNode(const DataType &d):
+X	data(d), left(NULL), right(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType>::BinaryTreeNode(const BinaryTreeNode<DataType> &btn):
+X	data(btn.data), left(NULL), right(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType>::~BinaryTreeNode()
+X{
+X	left = NULL;
+X	right = NULL;
+X}
+X
+X// assignment
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType> &
+XBinaryTreeNode<DataType>::operator=(const BinaryTreeNode<DataType> &btn)
+X{
+X	if (this != &btn)
+X	{
+X		left = NULL;
+X		right = NULL;
+X		data = btn.data;
+X	}
+X	return(*this);
+X}
+X
+X// binary tree constructors and destructor
+X#ifdef MUTABLE_ITERATOR
+Xtemplate <class DataType>
+XBinaryTree<DataType>::BinaryTree():
+X	root(NULL), iterList()
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XBinaryTree<DataType>::BinaryTree(const BinaryTree<DataType> &bt):
+X	root(NULL), iterList()
+X{
+X	root = bt.copy();
+X}
+X
+X#else
+X
+Xtemplate <class DataType>
+XBinaryTree<DataType>::BinaryTree():
+X	root(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XBinaryTree<DataType>::BinaryTree(const BinaryTree<DataType> &bt):
+X	root(NULL)
+X{
+X	root = bt.copy();
+X}
+X#endif
+X
+Xtemplate <class DataType>
+XBinaryTree<DataType>::~BinaryTree()
+X{
+X	clear();
+X}
+X
+X// assignment
+Xtemplate <class DataType>
+XBinaryTree<DataType> &
+XBinaryTree<DataType>::operator=(const BinaryTree<DataType> &bt)
+X{
+X	if (this != &bt)
+X	{
+X		clear();
+X#ifdef MUTABLE_ITERATOR
+X		iterList.clear();
+X#endif
+X		root = bt.copy();
+X	}
+X	return(*this);
+X}
+X
+X// binary tree operations
+Xtemplate <class DataType>
+Xvoid
+XBinaryTree<DataType>::insert(const DataType &data)
+X{
+X	insert(root, data);
+X#ifdef MUTABLE_ITERATOR
+X	// check if any iterators are traversing this tree
+X	if ( ! iterList.isEmpty())
+X	{
+X		// now update any iterators
+X		ListIterator<AbstractIterator<DataType> * > *piter = 
+X		new ListIterator<AbstractIterator<DataType> * >(iterList);
+X		MustBeTrue(piter != NULL);
+X		for ( ; ! (*piter).done(); (*piter)++)
+X		{
+X			// save current iterator
+X			AbstractIterator<DataType> *paiter = (*piter)();
+X
+X			// get current value
+X			DataType current = (*paiter)();
+X
+X			// update iterator
+X			(*paiter).resetByValue(current);
+X		}
+X		delete piter;
+X	}
+X#endif
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::remove(DataType &data)
+X{
+X#ifdef MUTABLE_ITERATOR
+X	// check if any iterators are traversing this tree
+X	if (iterList.isEmpty())
+X		return(remove(root, data));
+X	else
+X	{
+X		ListIterator<AbstractIterator<DataType> * > *piter = 
+X		new ListIterator<AbstractIterator<DataType> * >(iterList);
+X		for ( ; ! (*piter).done(); (*piter)++)
+X		{
+X			// save current iterator
+X			AbstractIterator<DataType> *paiter = (*piter)();
+X
+X			// check of iterator is done
+X			if ((*paiter).done()) continue;
+X
+X			// check if iterator is pointing to deleted node
+X			if (data == (*paiter)()) (*paiter)++;
+X		}
+X
+X		// delete element
+X		int status = remove(root, data);
+X		if (status != OK) return(status);
+X
+X		// reset all iterators
+X		for ((*piter).reset(); ! (*piter).done(); (*piter)++)
+X		{
+X			// save current iterator
+X			AbstractIterator<DataType> *paiter = (*piter)();
+X
+X			// check if iterator is done
+X			if ((*paiter).done()) continue;
+X
+X			// get current value
+X			DataType current = (*paiter)();
+X
+X			// reset iterator to last value traversed
+X			(*paiter).resetByValue(current);
+X		}
+X		delete piter;
+X		return(OK);
+X	}
+X#else
+X	return(remove(root, data));
+X#endif
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::retrieve(DataType &data) const
+X{
+X	return(retrieve(root, data));
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::isInTree(const DataType &data) const
+X{
+X	return(isInTree(root, data));
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::isEmpty() const
+X{
+X	return(root == NULL);
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XBinaryTree<DataType>::clear()
+X{
+X	// clear binary tree
+X	clear(root);
+X
+X	// clear all iterators attached to tree
+X#ifdef MUTABLE_ITERATOR
+X	// reset all iterators
+X	ListIterator<AbstractIterator<DataType> * > *piter = 
+X	new ListIterator<AbstractIterator<DataType> * >(iterList);
+X	for ( ; ! (*piter).done(); (*piter)++)
+X	{
+X		// current iterator
+X		AbstractIterator<DataType> *paiter = (*piter)();
+X
+X		// reset iterator
+X		(*paiter).reset();
+X	}
+X#endif
+X	return;
+X}
+X
+X// tree traversal functions
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::preOrder(int (*work)(DataType &))
+X{
+X	MustBeTrue(work != NULL);
+X	return(preOrder(root, work));
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::inOrder(int (*work)(DataType &))
+X{
+X	MustBeTrue(work != NULL);
+X	return(inOrder(root, work));
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::postOrder(int (*work)(DataType &))
+X{
+X	MustBeTrue(work != NULL);
+X	return(postOrder(root, work));
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::levelOrder(int (*work)(DataType &))
+X{
+X	// check if tree is empty
+X	if (root == NULL)
+X		return(OK);
+X
+X	// define queue for level-order traversal
+X	Queue_List<BinaryTreeNode<DataType> * > *pq;
+X	pq = new Queue_List<BinaryTreeNode<DataType> * >();
+X	MustBeTrue(pq != NULL);
+X
+X	// insert root into queue to start traversal
+X	pq->enqueue(root);
+X
+X	// loop over nodes in queue
+X	while ( ! pq->isEmpty())
+X	{
+X		// get next node from queue
+X		BinaryTreeNode<DataType> *btn;
+X		MustBeTrue((pq->dequeue(btn)) == OK);
+X
+X		// execute work function for data
+X		int status = work(btn->data);
+X		if (status != OK)
+X		{
+X			delete pq;
+X			return(status);
+X		}
+X
+X		// queue up left and right nodes, if any.
+X		if (btn->left != NULL)
+X			pq->enqueue(btn->left);
+X		if (btn->right != NULL)
+X			pq->enqueue(btn->right);
+X	}
+X
+X	// release queue
+X	delete pq;
+X
+X	// all done
+X	return(OK);
+X}
+X
+X// print binary tree data
+Xtemplate <class DataType>
+Xostream &
+XBinaryTree<DataType>::dump(ostream &os) const
+X{
+X	dump(root, os);
+X	return(os);
+X}
+X
+X// utility functions
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType> *
+XBinaryTree<DataType>::copy() const
+X{
+X	return(copy(root));
+X}
+X
+Xtemplate <class DataType>
+XBinaryTreeNode<DataType> *
+XBinaryTree<DataType>::copy(const BinaryTreeNode<DataType> *node) const
+X{
+X	BinaryTreeNode<DataType> *pnew = NULL;
+X	if (node != NULL)
+X	{
+X		pnew = new BinaryTreeNode<DataType>(node->data);
+X		MustBeTrue(pnew != NULL);
+X		pnew->left = copy(node->left);
+X		pnew->right = copy(node->right);
+X	}
+X	return(pnew);
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XBinaryTree<DataType>::clear(BinaryTreeNode<DataType> *&node)
+X{
+X	if (node != NULL)
+X	{
+X		clear(node->left);
+X		clear(node->right);
+X		delete node;
+X		node = NULL;
+X	}
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XBinaryTree<DataType>::insert(BinaryTreeNode<DataType> *&btn, 
+X			     const DataType &data)
+X{
+X	// check where new node goes
+X	if (btn == NULL)
+X	{
+X		btn = new BinaryTreeNode<DataType>(data);
+X		MustBeTrue(btn != NULL);
+X	}
+X	else if (data < btn->data)
+X	{
+X		insert(btn->left, data);
+X	}
+X	else if (data > btn->data)
+X	{
+X		insert(btn->right, data);
+X	}
+X	else
+X	{
+X		btn->data = data;
+X	}
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::remove(BinaryTreeNode<DataType> *&btn, 
+X			     DataType &data)
+X{
+X	// search for data, then delete
+X	if (btn == NULL)
+X	{
+X		return(NOMATCH);
+X	}
+X	else if (data < btn->data)
+X	{
+X		return(remove(btn->left, data));
+X	}
+X	else if (data > btn->data)
+X	{
+X		return(remove(btn->right, data));
+X	}
+X
+X	// return data
+X	data = btn->data;
+X
+X	// we found it. now delete it.
+X	if (btn->left == NULL && btn->right == NULL)
+X	{
+X		// it's a leaf. just delete it.
+X		delete btn;
+X		btn = NULL;
+X	}
+X	else if (btn->left == NULL)
+X	{
+X		// replace with right node
+X		BinaryTreeNode<DataType> *p = btn->right;
+X		delete btn;
+X		btn = p;
+X	}
+X	else if (btn->right == NULL)
+X	{
+X		// replace with left node
+X		BinaryTreeNode<DataType> *p = btn->left;
+X		delete btn;
+X		btn = p;
+X	}
+X	else
+X	{
+X		// both children are NOT null. find node
+X		// immediately before this node and copy it.
+X		return(removeRightMost(btn->left, btn->data));
+X	}
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::removeRightMost(BinaryTreeNode<DataType> *&btn, 
+X			     DataType &data)
+X{
+X	// keep looking for right-most node
+X	if (btn->right != NULL)
+X	{
+X		return(removeRightMost(btn->right, data));
+X	}
+X	else
+X	{
+X		// found right-most node. copy data.
+X		data = btn->data;
+X
+X		// remove node.
+X		BinaryTreeNode<DataType> *p = btn->left;
+X		delete btn;
+X		btn = p;
+X		return(OK);
+X	}
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::retrieve(const BinaryTreeNode<DataType> *btn, 
+X			     DataType &data) const
+X{
+X	// search for data
+X	if (btn == NULL)
+X	{
+X		return(NOMATCH);
+X	}
+X	else if (data < btn->data)
+X	{
+X		return(retrieve(btn->left, data));
+X	}
+X	else if (data > btn->data)
+X	{
+X		return(retrieve(btn->right, data));
+X	}
+X	else
+X	{
+X		data = btn->data;
+X		return(OK);
+X	}
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::isInTree(const BinaryTreeNode<DataType> *node, 
+X				const DataType &data) const
+X{
+X	// look for a match
+X	if (node == NULL)
+X	{
+X		// not found
+X		return(0);
+X	}
+X	else if (data < node->data)
+X	{
+X		return(isInTree(node->left, data));
+X	}
+X	else if (data > node->data)
+X	{
+X		return(isInTree(node->right, data));
+X	}
+X	else
+X	{
+X		// found
+X		return(1);
+X	}
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::preOrder(BinaryTreeNode<DataType> *node, 
+X				int (*work)(DataType &))
+X{
+X	if (node != NULL)
+X	{
+X		int status;
+X		if ((status = work(node->data)) != OK)
+X			return(status);
+X		if ((status = preOrder(node->left, work)) != OK)
+X			return(status);
+X		if ((status = preOrder(node->right, work)) != OK)
+X			return(status);
+X	}
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::inOrder(BinaryTreeNode<DataType> *node,
+X				int (*work)(DataType &))
+X{
+X	if (node != NULL)
+X	{
+X		int status;
+X		if ((status = inOrder(node->left, work)) != OK)
+X			return(status);
+X		if ((status = work(node->data)) != OK)
+X			return(status);
+X		if ((status = inOrder(node->right, work)) != OK)
+X			return(status);
+X	}
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XBinaryTree<DataType>::postOrder(BinaryTreeNode<DataType> *node,
+X				int (*work)(DataType &))
+X{
+X	if (node != NULL)
+X	{
+X		int status;
+X		if ((status = postOrder(node->left, work)) != OK)
+X			return(status);
+X		if ((status = postOrder(node->right, work)) != OK)
+X			return(status);
+X		if ((status = work(node->data)) != OK)
+X			return(status);
+X	}
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XBinaryTree<DataType>::dump(BinaryTreeNode<DataType> *node,
+X				ostream &os) const
+X{
+X	if (node != NULL)
+X	{
+X		dump(node->left, os);
+X		os << node->data << " ";
+X		dump(node->right, os);
+X	}
+X	return;
+X}
+X
+X// preorder iterator constructors and destructor
+Xtemplate <class DataType>
+XBinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+X	const BinaryTreeIterator_PreOrder<DataType> &iter): 
+X	tree(iter.tree), stack(iter.stack)
+X{
+X#ifdef MUTABLE_ITERATOR
+X	tree->iterList.insertByValue(this);
+X#endif
+X}
+X
+X#ifdef MUTABLE_ITERATOR
+Xtemplate <class DataType>
+XBinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+X	BinaryTree<DataType> &bt): 
+X	tree(&bt), stack()
+X{
+X	tree->iterList.insertByValue(this);
+X	reset();
+X}
+X
+X#else
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_PreOrder<DataType>::BinaryTreeIterator_PreOrder(
+X	const BinaryTree<DataType> &bt): 
+X	tree(&bt), stack()
+X{
+X	reset();
+X}
+X#endif
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_PreOrder<DataType>::~BinaryTreeIterator_PreOrder()
+X{
+X#ifdef MUTABLE_ITERATOR
+X	AbstractIterator<DataType> *ptr = this;
+X	(void)tree->iterList.removeByValue(ptr);
+X#endif
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XBinaryTreeIterator_PreOrder<DataType>::reset()
+X{
+X	stack.clear();
+X	stack.push(tree->root);
+X	return;
+X}
+X
+X// is list empty
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_PreOrder<DataType>::done() const
+X{
+X	return(stack.isEmpty());
+X}
+X
+X// return current data
+Xtemplate <class DataType>
+XDataType
+XBinaryTreeIterator_PreOrder<DataType>::operator()()
+X{
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(stack.top(btn) == OK);
+X	return(btn->data);
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_PreOrder<DataType>::operator++(int)
+X{
+X	// is iterator done
+X	if (stack.isEmpty()) return(NOTOK);
+X
+X	// get next node from stack
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(stack.pop(btn) == OK);
+X
+X	// stack left and right nodes, if any.
+X	if (btn->right != NULL)
+X		stack.push(btn->right);
+X	if (btn->left != NULL)
+X		stack.push(btn->left);
+X	return(OK);
+X}
+X
+X// inorder iterator constructors and destructor
+Xtemplate <class DataType>
+XBinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+X	const BinaryTreeIterator_InOrder<DataType> &iter): 
+X	BinaryTreeIterator_PreOrder<DataType>(iter)
+X{
+X#ifdef MUTABLE_ITERATOR
+X	tree->iterList.insertByValue(this);
+X#endif
+X}
+X
+X#ifdef MUTABLE_ITERATOR
+Xtemplate <class DataType>
+XBinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+X	BinaryTree<DataType> &bt): 
+X	BinaryTreeIterator_PreOrder<DataType>(bt)
+X{
+X	tree->iterList.insertByValue(this);
+X	reset();
+X}
+X
+X#else
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_InOrder<DataType>::BinaryTreeIterator_InOrder(
+X	const BinaryTree<DataType> &bt): 
+X	BinaryTreeIterator_PreOrder<DataType>(bt)
+X{
+X	reset();
+X}
+X#endif
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_InOrder<DataType>::~BinaryTreeIterator_InOrder()
+X{
+X#ifdef MUTABLE_ITERATOR
+X	AbstractIterator<DataType> *ptr = this;
+X	(void)tree->iterList.removeByValue(ptr);
+X#endif
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XBinaryTreeIterator_InOrder<DataType>::reset()
+X{
+X	stack.clear();
+X	for (BinaryTreeNode<DataType> *pn = tree->root; 
+X		pn != NULL; pn = pn->left)
+X	{
+X		stack.push(pn);
+X	}
+X	return;
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_InOrder<DataType>::operator++(int)
+X{
+X	// is iterator done
+X	if (stack.isEmpty()) return(NOTOK);
+X
+X	// get next node from stack
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(stack.pop(btn) == OK);
+X
+X	// insert right node left links into stack
+X	if (btn->right != NULL)
+X	{
+X		for (BinaryTreeNode<DataType> *pn = btn->right;
+X			pn != NULL; pn = pn->left)
+X		{
+X			stack.push(pn);
+X		}
+X	}
+X	return(OK);
+X}
+X
+X// postorder iterator constructors and destructor
+Xtemplate <class DataType>
+XBinaryTreeIterator_PostOrder<DataType>::BinaryTreeIterator_PostOrder(
+X	const BinaryTreeIterator_PostOrder<DataType> &iter): 
+X	BinaryTreeIterator_PreOrder<DataType>(iter), vstack(iter.vstack)
+X{
+X#ifdef MUTABLE_ITERATOR
+X	tree->iterList.insertByValue(this);
+X#endif
+X}
+X
+X#ifdef MUTABLE_ITERATOR
+Xtemplate <class DataType>
+XBinaryTreeIterator_PostOrder<DataType>::BinaryTreeIterator_PostOrder(
+X	BinaryTree<DataType> &bt): 
+X	BinaryTreeIterator_PreOrder<DataType>(bt), vstack()
+X{
+X	tree->iterList.insertByValue(this);
+X	reset();
+X}
+X
+X#else
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_PostOrder<DataType>::BinaryTreeIterator_PostOrder(
+X	const BinaryTree<DataType> &bt): 
+X	BinaryTreeIterator_PreOrder<DataType>(bt), vstack()
+X{
+X	reset();
+X}
+X#endif
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_PostOrder<DataType>::~BinaryTreeIterator_PostOrder()
+X{
+X#ifdef MUTABLE_ITERATOR
+X	AbstractIterator<DataType> *ptr = this;
+X	(void)tree->iterList.removeByValue(ptr);
+X#endif
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XBinaryTreeIterator_PostOrder<DataType>::reset()
+X{
+X	int visits;
+X
+X	// clear stack
+X	stack.clear();
+X	vstack.clear();
+X
+X	// check if tree is empty
+X	if (tree->isEmpty()) return;
+X
+X	// push root onto stack
+X	visits = 1;
+X	stack.push(tree->root);
+X	vstack.push(visits);
+X
+X	// process until the first visit
+X	BinaryTreeNode<DataType> *btn = NULL;
+X	while ( ! stack.isEmpty())
+X	{
+X		// pop current node
+X		stack.pop(btn);
+X		vstack.pop(visits);
+X
+X		// process
+X		switch (visits)
+X		{
+X		case 1:
+X			visits = 2;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			if (btn->left != NULL)
+X			{
+X				visits = 1;
+X				stack.push(btn->left);
+X				vstack.push(visits);
+X			}
+X			break;
+X
+X		case 2:
+X			visits = 3;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			if (btn->right != NULL)
+X			{
+X				visits = 1;
+X				stack.push(btn->right);
+X				vstack.push(visits);
+X			}
+X			break;
+X
+X		case 3:
+X			visits = 4;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			return;
+X
+X		default:
+X			MustBeTrue(visits <= 3);
+X			return;
+X		}
+X	}
+X	return;
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_PostOrder<DataType>::operator++(int)
+X{
+X	// is iterator done
+X	if (stack.isEmpty()) return(NOTOK);
+X
+X	// get next node from stack
+X	int visits;
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(stack.pop(btn) == OK);
+X	MustBeTrue(vstack.pop(visits) == OK);
+X	MustBeTrue(visits > 3);
+X
+X	// find next node to process
+X	while ( ! stack.isEmpty())
+X	{
+X		// pop current node
+X		stack.pop(btn);
+X		vstack.pop(visits);
+X
+X		// process
+X		switch (visits)
+X		{
+X		case 1:
+X			visits = 2;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			if (btn->left != NULL)
+X			{
+X				visits = 1;
+X				stack.push(btn->left);
+X				vstack.push(visits);
+X			}
+X			break;
+X
+X		case 2:
+X			visits = 3;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			if (btn->right != NULL)
+X			{
+X				visits = 1;
+X				stack.push(btn->right);
+X				vstack.push(visits);
+X			}
+X			break;
+X
+X		case 3:
+X			visits = 4;
+X			stack.push(btn);
+X			vstack.push(visits);
+X			return(OK);
+X
+X		default:
+X			MustBeTrue(visits <= 3);
+X			return(NOTOK);
+X		}
+X	}
+X	return(NOTOK);
+X}
+X
+X// levelorder iterator constructors and destructor
+Xtemplate <class DataType>
+XBinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+X	const BinaryTreeIterator_LevelOrder<DataType> &iter): 
+X	tree(iter.tree), queue(iter.queue)
+X{
+X#ifdef MUTABLE_ITERATOR
+X	tree->iterList.insertByValue(this);
+X#endif
+X}
+X
+X#ifdef MUTABLE_ITERATOR
+Xtemplate <class DataType>
+XBinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+X	BinaryTree<DataType> &bt): 
+X	tree(&bt), queue()
+X{
+X	tree->iterList.insertByValue(this);
+X	reset();
+X}
+X#else
+Xtemplate <class DataType>
+XBinaryTreeIterator_LevelOrder<DataType>::BinaryTreeIterator_LevelOrder(
+X	const BinaryTree<DataType> &bt): 
+X	tree(&bt), queue()
+X{
+X	reset();
+X}
+X#endif
+X
+Xtemplate <class DataType>
+XBinaryTreeIterator_LevelOrder<DataType>::~BinaryTreeIterator_LevelOrder()
+X{
+X#ifdef MUTABLE_ITERATOR
+X	AbstractIterator<DataType> *ptr = this;
+X	(void)tree->iterList.removeByValue(ptr);
+X#endif
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XBinaryTreeIterator_LevelOrder<DataType>::reset()
+X{
+X	queue.clear();
+X	queue.enqueue(tree->root);
+X	return;
+X}
+X
+X// is list empty
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_LevelOrder<DataType>::done() const
+X{
+X	return(queue.isEmpty());
+X}
+X
+X// return current data
+Xtemplate <class DataType>
+XDataType
+XBinaryTreeIterator_LevelOrder<DataType>::operator()()
+X{
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(queue.front(btn) == OK);
+X	return(btn->data);
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XBinaryTreeIterator_LevelOrder<DataType>::operator++(int)
+X{
+X	// is iterator done
+X	if (queue.isEmpty()) return(NOTOK);
+X
+X	// get next node from queue
+X	BinaryTreeNode<DataType> *btn;
+X	MustBeTrue(queue.dequeue(btn) == OK);
+X
+X	// queue up left and right nodes, if any.
+X	if (btn->left != NULL)
+X		queue.enqueue(btn->left);
+X	if (btn->right != NULL)
+X		queue.enqueue(btn->right);
+X	return(OK);
+X}
+X
+X
+END_OF_FILE
+  if test 19062 -ne `wc -c <'binaryTree2.c'`; then
+    echo shar: \"'binaryTree2.c'\" unpacked with wrong size!
+  fi
+  # end of 'binaryTree2.c'
+fi
+if test -f 'binaryTree2.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'binaryTree2.h'\"
+else
+  echo shar: Extracting \"'binaryTree2.h'\" \(7087 characters\)
+  sed "s/^X//" >'binaryTree2.h' <<'END_OF_FILE'
+X#ifndef __BINARY_TREE2_H
+X#define __BINARY_TREE2_H
+X// binary search tree class definition using recursion
+X
+X// headers
+X#include "absTree.h"
+X#include "absIterator.h"
+X#include "queue_List.h"
+X#include "stack_List.h"
+X
+X// forward declarations
+Xtemplate <class DataType> class BinaryTreeNode;
+Xtemplate <class DataType> class BinaryTree;
+Xtemplate <class DataType> class BinaryTreeIterator_PreOrder;
+Xtemplate <class DataType> class BinaryTreeIterator_InOrder;
+Xtemplate <class DataType> class BinaryTreeIterator_PostOrder;
+Xtemplate <class DataType> class BinaryTreeIterator_LevelOrder;
+X
+X// tree node class
+Xtemplate <class DataType> class BinaryTreeNode
+X{
+Xpublic:
+X	// output
+X	friend ostream &operator<<(ostream &os, 
+X		const BinaryTreeNode<DataType> &btn) {
+X		os << btn.data;
+X		return(os);
+X	};
+X
+Xprotected:
+X        // friend classes 
+X        friend class BinaryTree<DataType>;
+X	friend class BinaryTreeIterator_PreOrder<DataType>;
+X	friend class BinaryTreeIterator_InOrder<DataType>;
+X	friend class BinaryTreeIterator_PostOrder<DataType>;
+X	friend class BinaryTreeIterator_LevelOrder<DataType>;
+X
+X        // constructors and destructor
+X        BinaryTreeNode(const DataType &);
+X        BinaryTreeNode(const BinaryTreeNode &);
+X        ~BinaryTreeNode();
+X
+X	// assignment
+X        BinaryTreeNode &operator=(const BinaryTreeNode &);
+X
+X        // internal data
+X        DataType data;
+X        BinaryTreeNode<DataType> *left;
+X        BinaryTreeNode<DataType> *right;
+X};
+X
+X// binary search tree class
+Xtemplate <class DataType> class BinaryTree:
+X	public AbstractTree<DataType>
+X{
+Xpublic:
+X	// friend classes 
+X	friend class BinaryTreeIterator_PreOrder<DataType>;
+X	friend class BinaryTreeIterator_InOrder<DataType>;
+X	friend class BinaryTreeIterator_PostOrder<DataType>;
+X	friend class BinaryTreeIterator_LevelOrder<DataType>;
+X
+X        // constructors and destructor
+X        BinaryTree();
+X        BinaryTree(const BinaryTree &);
+X        ~BinaryTree();
+X
+X        // assignment
+X        BinaryTree &operator=(const BinaryTree &);
+X
+X        // binary tree operations
+X        void insert(const DataType &);
+X        int remove(DataType &);
+X        int retrieve(DataType &) const;
+X        int isInTree(const DataType &) const;
+X	int isEmpty() const;
+X        void clear();
+X
+X	// recursive tree traversal functions
+X	int preOrder(int (*)(DataType &));
+X	int inOrder(int (*)(DataType &));
+X	int postOrder(int (*)(DataType &));
+X	int levelOrder(int (*)(DataType &));
+X
+X        // miscellaneous
+X        ostream &dump(ostream &) const;
+X
+Xprotected:
+X	// utility functions
+X        BinaryTreeNode<DataType> *copy() const;
+X        BinaryTreeNode<DataType> *
+X		copy(const BinaryTreeNode<DataType> *) const;
+X        void clear(BinaryTreeNode<DataType> *&);
+X        void insert(BinaryTreeNode<DataType> *&, const DataType &);
+X        int remove(BinaryTreeNode<DataType> *&, DataType &);
+X        int removeRightMost(BinaryTreeNode<DataType> *&, DataType &);
+X        int retrieve(const BinaryTreeNode<DataType> *, DataType &) const;
+X        int isInTree(const BinaryTreeNode<DataType> *, const DataType &) const;
+X        int preOrder(BinaryTreeNode<DataType> *, int (*)(DataType &));
+X        int inOrder(BinaryTreeNode<DataType> *, int (*)(DataType &));
+X        int postOrder(BinaryTreeNode<DataType> *, int (*)(DataType &));
+X        void dump(BinaryTreeNode<DataType> *, ostream &) const;
+X
+Xprotected:
+X        // internal data
+X        BinaryTreeNode<DataType> *root;
+X#ifdef MUTABLE_ITERATOR
+X	List<AbstractIterator<DataType> * > iterList;
+X#endif
+X};
+X
+X// pre-order tree iterator
+Xtemplate <class DataType> class BinaryTreeIterator_PreOrder:
+X	public AbstractIterator<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X#ifdef MUTABLE_ITERATOR
+X        BinaryTreeIterator_PreOrder(
+X		BinaryTree<DataType> &);
+X#else
+X        BinaryTreeIterator_PreOrder(
+X		const BinaryTree<DataType> &);
+X#endif
+X        BinaryTreeIterator_PreOrder(
+X		const BinaryTreeIterator_PreOrder<DataType> &);
+X        ~BinaryTreeIterator_PreOrder();
+X
+X	// reset interator to start
+X	void reset();
+X
+X	// check if at end of list
+X	int done() const;
+X
+X        // return data 
+X        DataType operator()();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        BinaryTreeIterator_PreOrder();
+X        BinaryTreeIterator_PreOrder &operator=(const 
+X		BinaryTreeIterator_PreOrder &);
+X
+Xprotected:
+X        // internal data
+X#ifdef MUTABLE_ITERATOR
+X	BinaryTree<DataType> *tree;
+X#else
+X	const BinaryTree<DataType> *tree;
+X#endif
+X	Stack_List<BinaryTreeNode<DataType> * > stack;
+X};
+X
+X// in-order tree iterator
+Xtemplate <class DataType> class BinaryTreeIterator_InOrder:
+X	public BinaryTreeIterator_PreOrder<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X#ifdef MUTABLE_ITERATOR
+X        BinaryTreeIterator_InOrder(
+X		BinaryTree<DataType> &);
+X#else
+X        BinaryTreeIterator_InOrder(
+X		const BinaryTree<DataType> &);
+X#endif
+X        BinaryTreeIterator_InOrder(
+X		const BinaryTreeIterator_InOrder<DataType> &);
+X        ~BinaryTreeIterator_InOrder();
+X
+X	// reset interator to start
+X	void reset();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        BinaryTreeIterator_InOrder();
+X        BinaryTreeIterator_InOrder &operator=(const 
+X		BinaryTreeIterator_InOrder &);
+X};
+X
+X// post-order tree iterator
+Xtemplate <class DataType> class BinaryTreeIterator_PostOrder:
+X	public BinaryTreeIterator_PreOrder<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X#ifdef MUTABLE_ITERATOR
+X        BinaryTreeIterator_PostOrder(
+X		BinaryTree<DataType> &);
+X#else
+X        BinaryTreeIterator_PostOrder(
+X		const BinaryTree<DataType> &);
+X#endif
+X        BinaryTreeIterator_PostOrder(
+X		const BinaryTreeIterator_PostOrder<DataType> &);
+X        ~BinaryTreeIterator_PostOrder();
+X
+X	// reset interator to start
+X	void reset();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        BinaryTreeIterator_PostOrder();
+X        BinaryTreeIterator_PostOrder &operator=(const 
+X		BinaryTreeIterator_PostOrder &);
+X
+Xprotected:
+X        // internal data
+X	Stack_List<int> vstack;
+X};
+X
+X// level-order tree iterator
+Xtemplate <class DataType> class BinaryTreeIterator_LevelOrder:
+X	public AbstractIterator<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X#ifdef MUTABLE_ITERATOR
+X        BinaryTreeIterator_LevelOrder(
+X		BinaryTree<DataType> &);
+X#else
+X        BinaryTreeIterator_LevelOrder(
+X		const BinaryTree<DataType> &);
+X#endif
+X        BinaryTreeIterator_LevelOrder(
+X		const BinaryTreeIterator_LevelOrder<DataType> &);
+X        ~BinaryTreeIterator_LevelOrder();
+X
+X	// reset interator to start
+X	void reset();
+X
+X	// check if at end of list
+X	int done() const;
+X
+X        // return data 
+X        DataType operator()();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        BinaryTreeIterator_LevelOrder();
+X        BinaryTreeIterator_LevelOrder &operator=(const 
+X		BinaryTreeIterator_LevelOrder &);
+X
+Xprotected:
+X        // internal data
+X#ifdef MUTABLE_ITERATOR
+X	BinaryTree<DataType> *tree;
+X#else
+X	const BinaryTree<DataType> *tree;
+X#endif
+X	Queue_List<BinaryTreeNode<DataType> * > queue;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 7087 -ne `wc -c <'binaryTree2.h'`; then
+    echo shar: \"'binaryTree2.h'\" unpacked with wrong size!
+  fi
+  # end of 'binaryTree2.h'
+fi
+if test -f 'debug.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'debug.h'\"
+else
+  echo shar: Extracting \"'debug.h'\" \(2102 characters\)
+  sed "s/^X//" >'debug.h' <<'END_OF_FILE'
+X#ifndef __DEBUG_H
+X#define __DEBUG_H
+X
+X// headers
+X#include <stdlib.h>
+X#include <errno.h>
+X#include <string.h>
+X#include <iostream.h>
+X
+X// check macros
+X#if defined(__STDC__)
+X#if defined(USEEXCEPTION)
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		throw #EXPR ; \
+X	}
+X
+X#else
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		abort(); \
+X	}
+X#endif
+X
+X#define CheckReturn(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "ERROR RETURN AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		return(NOTOK); \
+X	}
+X
+X#else
+X
+X#if defined(USEEXCEPTION)
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		throw "EXPR" ; \
+X	}
+X#else
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		abort(); \
+X	}
+X#endif
+X
+X#define CheckReturn(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "ERROR RETURN AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		return(NOTOK); \
+X	}
+X#endif
+X
+X// simple debugging macros
+X#ifdef DEBUG
+X
+X#define TRACE() \
+X	cerr << "TRACE " << __FILE__ << "'" << __LINE__ << ": " << endl
+X#define RETURN(myretval) { \
+X	cerr << "RETURN " << __FILE__ << "'" << __LINE__ << ": " << endl; \
+X	return(myretval); \
+X}
+X#define DUMP(myvalue) \
+X	cerr << "DUMP " << __FILE__ << "'" << __LINE__ << ": value = " << myvalue << endl
+X
+X#else
+X
+X#define TRACE()
+X#define RETURN(myretval)
+X#define DUMP(myvalue)
+X
+X#endif
+X
+X#define ERROR(errmsg, errval) { \
+X	cerr << __FILE__ << "'" << __LINE__ << ": "; \
+X	cerr << errmsg << " (errno = " << errval << ")" << endl; \
+X}
+X#define ERRORD(errmsg, errdata, errval) { \
+X	cerr << __FILE__ << "'" << __LINE__ << ": "; \
+X	cerr << errmsg << " (errno = " << errval << ")" << endl; \
+X	cerr << "(data = " << errdata << ")" << endl; \
+X}
+X
+X#endif
+END_OF_FILE
+  if test 2102 -ne `wc -c <'debug.h'`; then
+    echo shar: \"'debug.h'\" unpacked with wrong size!
+  fi
+  # end of 'debug.h'
+fi
+if test -f 'list.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'list.c'\"
+else
+  echo shar: Extracting \"'list.c'\" \(11420 characters\)
+  sed "s/^X//" >'list.c' <<'END_OF_FILE'
+X// member functions for link list class
+X
+X// required headers
+X#include "list.h"
+X
+X// list item constructors and destructor
+Xtemplate <class DataType>
+XListItem<DataType>::ListItem(const DataType &src):
+X	data(src), next(NULL), previous(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListItem<DataType>::ListItem(const ListItem<DataType> &item):
+X	data(item.data), next(NULL), previous(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListItem<DataType>::~ListItem()
+X{
+X	next = NULL;
+X	previous = NULL;
+X}
+X
+X// assignment 
+Xtemplate <class DataType>
+XListItem<DataType> &
+XListItem<DataType>::operator=(const ListItem<DataType> &item)
+X{
+X	if (this != &item)
+X	{
+X		data = item.data;
+X		next = NULL;
+X		previous = NULL;
+X	}
+X	return(*this);
+X}
+X
+X// print list item
+Xtemplate <class DataType>
+Xostream &
+Xoperator<<(ostream &os, const ListItem<DataType> &item)
+X{
+X	os << item.data;
+X	return(os);
+X}
+X
+X// list contructors and destructor
+Xtemplate <class DataType>
+XList<DataType>::List(): 
+X	first(NULL), last(NULL)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XList<DataType>::List(const List<DataType> &list):
+X	first(NULL), last(NULL)
+X{
+X	for (ListItem<DataType> *pos = list.first; pos != NULL; 
+X	     pos = pos->next)
+X	{
+X		insertAtEnd(pos->data);
+X	}
+X}
+X
+Xtemplate <class DataType>
+XList<DataType>::~List()
+X{
+X	for (ListItem<DataType> *pos = first; pos != NULL; )
+X	{
+X		ListItem<DataType> *save = pos->next;
+X		delete pos;
+X		pos = save;
+X	}
+X	first = last = NULL;
+X}
+X
+X//assignment
+Xtemplate <class DataType>
+XList<DataType> &
+XList<DataType>::operator=(const List<DataType> &list)
+X{
+X	// check for self-assignment
+X	if (this == &list) return(*this);
+X
+X	// delete old list
+X	for (ListItem<DataType> *pos = first; pos != NULL; )
+X	{
+X		ListItem<DataType> *save = pos->next;
+X		delete pos;
+X		pos = save;
+X	}
+X	first = last = NULL;
+X
+X	// copy new list
+X	for (pos = list.first; pos != NULL; pos = pos->next)
+X	{
+X		insertAtEnd(pos->data);
+X	}
+X	return(*this);
+X}
+X
+X// list operations
+Xtemplate <class DataType>
+Xvoid
+XList<DataType>::insertAtFront(const DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// allocate a new item
+X	ListItem<DataType> *pitem = new ListItem<DataType>(data);
+X	MustBeTrue(pitem != NULL);
+X
+X	// insert new item in list
+X	if (first == NULL && last == NULL)
+X	{
+X		// first element in list
+X		first = pitem;
+X		last = pitem;
+X	}
+X	else
+X	{
+X		// insert item at beginning of list
+X		pitem->next = first;
+X		pitem->next->previous = pitem;
+X		pitem->previous = NULL;
+X		first = pitem;
+X	}
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XList<DataType>::insertAtEnd(const DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// allocate a new item
+X	ListItem<DataType> *pitem = new ListItem<DataType>(data);
+X	MustBeTrue(pitem != NULL);
+X
+X	// insert new item in list
+X	if (first == NULL && last == NULL)
+X	{
+X		// first element in list
+X		first = pitem;
+X		last = pitem;
+X	}
+X	else
+X	{
+X		// insert item at end of list
+X		pitem->previous = last;
+X		pitem->previous->next = pitem;
+X		pitem->next = NULL;
+X		last = pitem;
+X	}
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XList<DataType>::insertByValue(const DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// search for correct place to insert new item
+X	for (ListItem<DataType> *pos = first; pos != NULL; 
+X	     pos = pos->next)
+X	{
+X		// find correct position to insert new link
+X		if (pos->data == data)
+X		{
+X			pos->data = data;
+X			return;
+X		}
+X		else if (pos->data > data)
+X		{
+X			// allocate a new item
+X			ListItem<DataType> *pitem = 
+X				new ListItem<DataType>(data);
+X			MustBeTrue(pitem != NULL);
+X
+X			// updata links
+X			pitem->previous = pos->previous;
+X			pitem->next = pos;
+X			pos->previous = pitem;
+X			if (pitem->previous != NULL)
+X			{
+X				// previous link must point to new link
+X				pitem->previous->next = pitem;
+X			}
+X			else
+X			{
+X				// at beginning of list
+X				first = pitem;
+X			}
+X			return;
+X		}
+X	}
+X
+X	// insert at end of list
+X	insertAtEnd(data);
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::removeAtFront(DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// check for an empty list
+X	if (first == NULL && last == NULL)
+X		return(NOTOK);
+X
+X	// check if you are removing the last list item
+X	if (first == last)
+X	{
+X		// removing the last list item
+X		data = first->data;
+X		delete first;
+X		first = NULL;
+X		last = NULL;
+X	}
+X	else
+X	{
+X		// return string at front of list
+X		data = first->data;
+X
+X		// delete first list item
+X		ListItem<DataType> *psave = first;
+X		first = first->next;
+X		first->previous = NULL;
+X		delete psave;
+X	}
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::removeAtEnd(DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// check for an empty list
+X	if (first == NULL && last == NULL)
+X		return(NOTOK);
+X
+X	// check if you are removing the last list item
+X	if (first == last)
+X	{
+X		// removing the last list item
+X		data = last->data;
+X		delete last;
+X		first = NULL;
+X		last = NULL;
+X	}
+X	else
+X	{
+X		// return string at end of list
+X		data = last->data;
+X
+X		// delete last list item
+X		ListItem<DataType> *psave = last;
+X		last = last->previous;
+X		last->next = NULL;
+X		delete psave;
+X	}
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::removeByValue(DataType &data)
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// check for an empty list
+X	if (first == NULL && last == NULL)
+X		return(NOTOK);
+X
+X	// search for correct place to delete data item
+X	ListItem<DataType> *pos;
+X	for (pos = first; pos != NULL; pos = pos->next)
+X	{
+X		// find correct position to delete link
+X		if (pos->data == data) break;
+X	}
+X
+X	// was anything found
+X	if (pos == NULL) 
+X		return(NOMATCH);
+X	else
+X		data = pos->data;
+X
+X	// delete item
+X	if (pos->previous != NULL && pos->next != NULL)
+X	{
+X		// delete item in middle of list
+X		pos->previous->next = pos->next;
+X		pos->next->previous = pos->previous;
+X	}
+X	else if (pos->previous == NULL && pos->next != NULL)
+X	{
+X		// delete first item in list
+X		first = pos->next;
+X		pos->next->previous = NULL;
+X	}
+X	else if (pos->previous != NULL && pos->next == NULL)
+X	{
+X		// delete last item in list
+X		last = pos->previous;
+X		pos->previous->next = NULL;
+X	}
+X	else
+X	{
+X		// delete only item in list
+X		first = NULL;
+X		last = NULL;
+X	}
+X	delete pos;
+X
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// all done 
+X	return(OK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::retrieveAtFront(DataType &data) const
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	if (first != NULL)
+X	{
+X		data = first->data;
+X		return(OK);
+X	}
+X	else
+X		return(NOTOK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::retrieveAtEnd(DataType &data) const
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	if (last != NULL)
+X	{
+X		data = last->data;
+X		return(OK);
+X	}
+X	else
+X		return(NOTOK);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::retrieveByValue(DataType &data) const
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	// check for empty list
+X	if (first == NULL && last == NULL)
+X		return(NOTOK);
+X
+X	// search for data item
+X	for (ListItem<DataType> *p = first; p != NULL; p = p->next)
+X	{
+X		if (data == p->data)
+X		{
+X			data = p->data;
+X			return(OK);
+X		}
+X	}
+X	return(NOMATCH);
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::isInList(const DataType &data) const
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	for (ListItem<DataType> *p = first; p != NULL; p = p->next)
+X	{
+X		if (data == p->data)
+X			return(1);
+X	}
+X	return(0);
+X}
+X
+Xtemplate <class DataType>
+Xvoid
+XList<DataType>::clear()
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	for (ListItem<DataType> *pos = first; pos != NULL; )
+X	{
+X		ListItem<DataType> *save = pos->next;
+X		delete pos;
+X		pos = save;
+X	}
+X	first = last = NULL;
+X	return;
+X}
+X
+Xtemplate <class DataType>
+Xint
+XList<DataType>::isEmpty() const
+X{
+X	// invariant
+X	MustBeTrue((first != NULL || last == NULL) &&
+X		   (first == NULL || last != NULL));
+X
+X	return(first == NULL && last == NULL);
+X}
+X
+X// print list
+Xtemplate <class DataType>
+Xostream &
+Xoperator<<(ostream &os, const List<DataType> &l)
+X{
+X	os << "{ ";
+X	for (ListItem<DataType> *pos = l.first; pos != l.last; pos = pos->next)
+X	{
+X		os << *pos << ",";
+X	}
+X	if (pos != NULL) os << *pos;
+X	os << " }" << endl;
+X	return(os);
+X}
+X
+X// list iterator constructors and destructor
+Xtemplate <class DataType>
+XListIterator<DataType>::ListIterator(const ListIterator<DataType> &li): 
+X	list(li.list), current(li.current)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListIterator<DataType>::ListIterator(const List<DataType> &l): 
+X	list(l), current(l.first)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListIterator<DataType>::~ListIterator()
+X{
+X	current = NULL;
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XListIterator<DataType>::reset()
+X{
+X	current = list.first;
+X	return;
+X}
+X
+X// is list empty
+Xtemplate <class DataType>
+Xint
+XListIterator<DataType>::done() const
+X{
+X	return(current == NULL);
+X}
+X
+X// return current data
+Xtemplate <class DataType>
+XDataType
+XListIterator<DataType>::operator()()
+X{
+X	MustBeTrue(current != NULL);
+X	return(current->data);
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XListIterator<DataType>::operator++(int)
+X{
+X	if (current != NULL)
+X	{
+X		ListItem<DataType> *save = current;
+X		current = current->next;
+X		return(OK);
+X	}
+X	else
+X		return(NOTOK);
+X}
+X
+X// list reverse iterator constructors and destructor
+Xtemplate <class DataType>
+XListIterator_Reverse<DataType>::ListIterator_Reverse(
+X	const ListIterator_Reverse<DataType> &li): 
+X	list(li.list), current(li.current)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListIterator_Reverse<DataType>::ListIterator_Reverse(const List<DataType> &l): 
+X	list(l), current(l.last)
+X{
+X	// do nothing
+X}
+X
+Xtemplate <class DataType>
+XListIterator_Reverse<DataType>::~ListIterator_Reverse()
+X{
+X	current = NULL;
+X}
+X
+X// reset iterator to beginning
+Xtemplate <class DataType>
+Xvoid
+XListIterator_Reverse<DataType>::reset()
+X{
+X	current = list.last;
+X	return;
+X}
+X
+X// is list empty
+Xtemplate <class DataType>
+Xint
+XListIterator_Reverse<DataType>::done() const
+X{
+X	return(current == NULL);
+X}
+X
+X// return current data
+Xtemplate <class DataType>
+XDataType
+XListIterator_Reverse<DataType>::operator()()
+X{
+X	MustBeTrue(current != NULL);
+X	return(current->data);
+X}
+X
+X// increment to next data item in list
+Xtemplate <class DataType>
+Xint
+XListIterator_Reverse<DataType>::operator++(int)
+X{
+X	if (current != NULL)
+X	{
+X		ListItem<DataType> *save = current;
+X		current = current->previous;
+X		return(OK);
+X	}
+X	else
+X		return(NOTOK);
+X}
+X
+END_OF_FILE
+  if test 11420 -ne `wc -c <'list.c'`; then
+    echo shar: \"'list.c'\" unpacked with wrong size!
+  fi
+  # end of 'list.c'
+fi
+if test -f 'list.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'list.h'\"
+else
+  echo shar: Extracting \"'list.h'\" \(3883 characters\)
+  sed "s/^X//" >'list.h' <<'END_OF_FILE'
+X#ifndef __LIST_H
+X#define __LIST_H
+X// list class definition
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X#include "absIterator.h"
+X
+X// forward declarations
+Xtemplate <class DataType> class ListItem;
+Xtemplate <class DataType> class List;
+Xtemplate <class DataType> class ListIterator;
+Xtemplate <class DataType> class ListIterator_Reverse;
+X
+X// forward declarations of friend functions 
+Xtemplate <class DataType> 
+Xostream &
+Xoperator<<(ostream &, const ListItem<DataType> &);
+X
+Xtemplate <class DataType> 
+Xostream &
+Xoperator<<(ostream &, const List<DataType> &);
+X
+X// list item class
+Xtemplate <class DataType> class ListItem {
+Xpublic:
+X        // friend classes and functions
+X        friend class List<DataType>;
+X        friend class ListIterator<DataType>;
+X        friend class ListIterator_Reverse<DataType>;
+X
+X        // constructors and destructor
+X        ListItem(const DataType &);
+X        ListItem(const ListItem &);
+X        ~ListItem();
+X
+X        // assignment 
+X        ListItem &operator=(const ListItem &);
+X
+X        // miscellaneous
+X        friend ostream &operator<<(ostream &, const ListItem<DataType> &);
+X        friend ostream &operator<<(ostream &, const List<DataType> &);
+X
+Xprotected:
+X        // internal data
+X        DataType data;
+X        ListItem<DataType> *next;
+X        ListItem<DataType> *previous;
+X};
+X
+X// list class
+Xtemplate <class DataType> class List {
+Xpublic:
+X        // friend classes
+X        friend class ListIterator<DataType>;
+X        friend class ListIterator_Reverse<DataType>;
+X
+X        // constructors and destructor
+X        List();
+X        List(const List &);
+X        ~List();
+X
+X        // assignment
+X        List &operator=(const List &);
+X
+X        // list operations
+X        void insertAtFront(const DataType &);
+X        void insertAtEnd(const DataType &);
+X        void insertByValue(const DataType &);
+X        int removeAtFront(DataType &);
+X        int removeAtEnd(DataType &);
+X        int removeByValue(DataType &);
+X        int retrieveAtFront(DataType &) const;
+X        int retrieveAtEnd(DataType &) const;
+X        int retrieveByValue(DataType &) const;
+X        int isInList(const DataType &) const;
+X	int isEmpty() const;
+X        void clear();
+X
+X        // miscellaneous
+X        friend ostream &operator<<(ostream &, const List<DataType> &);
+X
+Xprotected:
+X        // internal data
+X        ListItem<DataType> *first;
+X        ListItem<DataType> *last;
+X};
+X
+X// list iterator
+Xtemplate <class DataType> class ListIterator:
+X	public AbstractIterator<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X        ListIterator(const ListIterator &);
+X        ListIterator(const List<DataType> &);
+X        ~ListIterator();
+X
+X        // initialization
+X	void reset();
+X
+X	// check if at end of list
+X	int done() const;
+X
+X        // return data 
+X        DataType operator()();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        ListIterator();
+X	ListIterator &operator=(const ListIterator<DataType> &);
+X
+Xprotected:
+X        // internal data
+X	const List<DataType> &list;
+X        ListItem<DataType> *current;
+X};
+X
+X// list reverse iterator
+Xtemplate <class DataType> class ListIterator_Reverse:
+X	public AbstractIterator<DataType>
+X{
+Xpublic:
+X        // constructors and destructor
+X        ListIterator_Reverse(const ListIterator_Reverse &);
+X        ListIterator_Reverse(const List<DataType> &);
+X        ~ListIterator_Reverse();
+X
+X        // initialization
+X	void reset();
+X
+X	// check if at end of list
+X	int done() const;
+X
+X        // return data 
+X        DataType operator()();
+X
+X	// advance iterator to next link
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X        ListIterator_Reverse();
+X	ListIterator_Reverse &operator=(
+X		const ListIterator_Reverse<DataType> &);
+X
+Xprotected:
+X        // internal data
+X	const List<DataType> &list;
+X        ListItem<DataType> *current;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 3883 -ne `wc -c <'list.h'`; then
+    echo shar: \"'list.h'\" unpacked with wrong size!
+  fi
+  # end of 'list.h'
+fi
+if test -f 'make.in' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'make.in'\"
+else
+  echo shar: Extracting \"'make.in'\" \(121 characters\)
+  sed "s/^X//" >'make.in' <<'END_OF_FILE'
+X#
+XCC=CC
+XLD=CC
+XLDFLAGS=-g
+X#
+XCCFLAGS = -g 
+X#
+Xtbinary2
+Xtbinary2.c
+XbinaryTree2.c
+Xstring.c
+Xqueue_List.c
+Xstack_List.c
+Xlist.c
+X#
+END_OF_FILE
+  if test 121 -ne `wc -c <'make.in'`; then
+    echo shar: \"'make.in'\" unpacked with wrong size!
+  fi
+  # end of 'make.in'
+fi
+if test -f 'makefile' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'makefile'\"
+else
+  echo shar: Extracting \"'makefile'\" \(2724 characters\)
+  sed "s/^X//" >'makefile' <<'END_OF_FILE'
+X
+X.SUFFIXES:		.o .c
+X
+XLEXFLAGS = -n
+XYACC = yacc
+XYACCFLAGS = -d -v
+XLEX = lex
+XMAKE = make
+XLDFLAGS = -g
+XLD = CC
+XBACKUPDIR = BACKUP
+XSHELLBIN = $(HOME)/bin
+XARFLAGS = -r -v
+XCCFLAGS = -g
+XINCLDIRS = 
+XCC = CC
+XAR = ar
+XENDLIST = 
+X
+X.c.o:
+X		$(CC) $(CCFLAGS) $(INCLDIRS) -c $<
+X
+Xall:		tbinary2 \
+X		$(ENDLIST)
+X		touch all
+X
+Xtbinary2:		tbinary2.o \
+X		binaryTree2.o \
+X		string.o \
+X		queue_List.o \
+X		stack_List.o \
+X		list.o \
+X		$(ENDLIST)
+X		$(LD) $(LDFLAGS) -o tbinary2 \
+X			tbinary2.o \
+X			binaryTree2.o \
+X			string.o \
+X			queue_List.o \
+X			stack_List.o \
+X			list.o \
+X			$(ENDLIST)
+X
+XbinaryTree2.o:	binaryTree2.c \
+X		./binaryTree2.h \
+X		./absIterator.h \
+X		./debug.h \
+X		./returns.h \
+X		./absTree.h \
+X		./queue_List.h \
+X		./absQueue.h \
+X		./list.h \
+X		./stack_List.h \
+X		./absStack.h \
+X		$(ENDLIST)
+X
+Xlist.o:	list.c \
+X		./list.h \
+X		./absIterator.h \
+X		./debug.h \
+X		./returns.h \
+X		$(ENDLIST)
+X
+Xtbinary2.o:	tbinary2.c \
+X		./binaryTree2.h \
+X		./absIterator.h \
+X		./debug.h \
+X		./returns.h \
+X		./absTree.h \
+X		./queue_List.h \
+X		./absQueue.h \
+X		./list.h \
+X		./stack_List.h \
+X		./absStack.h \
+X		./string.h \
+X		$(ENDLIST)
+X
+Xqueue_List.o:	queue_List.c \
+X		./queue_List.h \
+X		./absQueue.h \
+X		./debug.h \
+X		./returns.h \
+X		./list.h \
+X		./absIterator.h \
+X		$(ENDLIST)
+X
+Xstring.o:	string.c \
+X		./debug.h \
+X		./string.h \
+X		./returns.h \
+X		$(ENDLIST)
+X
+Xstack_List.o:	stack_List.c \
+X		./stack_List.h \
+X		./absStack.h \
+X		./debug.h \
+X		./returns.h \
+X		./list.h \
+X		./absIterator.h \
+X		$(ENDLIST)
+X
+Xclean:
+X		-rm -rf Templates.DB
+X		-rm -f tbinary2
+X		-rm -f binaryTree2.o
+X		-rm -f list.o
+X		-rm -f tbinary2.o
+X		-rm -f queue_List.o
+X		-rm -f string.o
+X		-rm -f stack_List.o
+X
+Xbackup:		binaryTree2.c \
+X		list.c \
+X		tbinary2.c \
+X		queue_List.c \
+X		string.c \
+X		stack_List.c \
+X		./debug.h \
+X		./absIterator.h \
+X		./binaryTree2.h \
+X		./absQueue.h \
+X		./absStack.h \
+X		./returns.h \
+X		./list.h \
+X		./absTree.h \
+X		./queue_List.h \
+X		./string.h \
+X		./stack_List.h \
+X		$(ENDLIST)
+X		-([ ! -d "./$(BACKUPDIR)" ] && mkdir ./$(BACKUPDIR);)
+X		cp binaryTree2.c $(BACKUPDIR)/binaryTree2.c
+X		cp list.c $(BACKUPDIR)/list.c
+X		cp tbinary2.c $(BACKUPDIR)/tbinary2.c
+X		cp queue_List.c $(BACKUPDIR)/queue_List.c
+X		cp string.c $(BACKUPDIR)/string.c
+X		cp stack_List.c $(BACKUPDIR)/stack_List.c
+X		cp ./debug.h ./$(BACKUPDIR)/debug.h
+X		cp ./absIterator.h ./$(BACKUPDIR)/absIterator.h
+X		cp ./binaryTree2.h ./$(BACKUPDIR)/binaryTree2.h
+X		cp ./absQueue.h ./$(BACKUPDIR)/absQueue.h
+X		cp ./absStack.h ./$(BACKUPDIR)/absStack.h
+X		cp ./returns.h ./$(BACKUPDIR)/returns.h
+X		cp ./list.h ./$(BACKUPDIR)/list.h
+X		cp ./absTree.h ./$(BACKUPDIR)/absTree.h
+X		cp ./queue_List.h ./$(BACKUPDIR)/queue_List.h
+X		cp ./string.h ./$(BACKUPDIR)/string.h
+X		cp ./stack_List.h ./$(BACKUPDIR)/stack_List.h
+X		touch backup
+END_OF_FILE
+  if test 2724 -ne `wc -c <'makefile'`; then
+    echo shar: \"'makefile'\" unpacked with wrong size!
+  fi
+  # end of 'makefile'
+fi
+if test -f 'queue_List.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'queue_List.c'\"
+else
+  echo shar: Extracting \"'queue_List.c'\" \(1395 characters\)
+  sed "s/^X//" >'queue_List.c' <<'END_OF_FILE'
+X// member functions for queue class
+X
+X// headers
+X#include "queue_List.h"
+X
+X// constructors and destructor
+Xtemplate <class DataType>
+XQueue_List<DataType>::Queue_List(): 
+X	list()
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class DataType>
+XQueue_List<DataType>::Queue_List(const Queue_List<DataType> &q): 
+X	list(q.list)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class DataType>
+XQueue_List<DataType>::~Queue_List()
+X{
+X        // do nothing
+X}
+X
+X// assignment
+Xtemplate <class DataType>
+XQueue_List<DataType> &
+XQueue_List<DataType>::operator=(const Queue_List<DataType> &q)
+X{
+X        if (this != &q)
+X                list = q.list;
+X        return(*this);
+X}
+X
+X// queue operations
+Xtemplate <class DataType>
+Xvoid 
+XQueue_List<DataType>::clear()
+X{
+X        list.clear();
+X        return;
+X}
+X
+Xtemplate <class DataType>
+Xvoid 
+XQueue_List<DataType>::enqueue(const DataType &data)
+X{
+X        list.insertAtEnd(data);
+X        return;
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XQueue_List<DataType>::dequeue(DataType &data)
+X{
+X        return(list.removeAtFront(data));
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XQueue_List<DataType>::front(DataType &data) const
+X{
+X        return(list.retrieveAtFront(data));
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XQueue_List<DataType>::isEmpty() const
+X{
+X        return(list.isEmpty());
+X}
+X
+X// print data
+Xtemplate <class DataType>
+Xostream &
+XQueue_List<DataType>::dump(ostream &os) const
+X{
+X        os << list;
+X        return(os);
+X}
+END_OF_FILE
+  if test 1395 -ne `wc -c <'queue_List.c'`; then
+    echo shar: \"'queue_List.c'\" unpacked with wrong size!
+  fi
+  # end of 'queue_List.c'
+fi
+if test -f 'queue_List.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'queue_List.h'\"
+else
+  echo shar: Extracting \"'queue_List.h'\" \(697 characters\)
+  sed "s/^X//" >'queue_List.h' <<'END_OF_FILE'
+X#ifndef __QUEUE_LIST_H
+X#define __QUEUE_LIST_H
+X// queue class definition
+X
+X// headers
+X#include "absQueue.h"
+X#include "list.h"
+X
+X// abstract stack class
+Xtemplate <class DataType> class Queue_List:
+X	public AbstractQueue<DataType> {
+Xpublic:
+X        // destructor
+X        Queue_List();
+X        Queue_List(const Queue_List &);
+X        ~Queue_List();
+X
+X	// assignment 
+X	Queue_List &operator=(const Queue_List &);
+X
+X        // queue operations
+X        void clear();
+X        void enqueue(const DataType &);
+X        int dequeue(DataType &);
+X        int front(DataType &) const;
+X        int isEmpty() const;
+X
+X	// output data
+X	ostream &dump(ostream &) const;
+X
+Xprotected:
+X	// data
+X	List<DataType> list;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 697 -ne `wc -c <'queue_List.h'`; then
+    echo shar: \"'queue_List.h'\" unpacked with wrong size!
+  fi
+  # end of 'queue_List.h'
+fi
+if test -f 'returns.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'returns.h'\"
+else
+  echo shar: Extracting \"'returns.h'\" \(156 characters\)
+  sed "s/^X//" >'returns.h' <<'END_OF_FILE'
+X// return codes
+X#ifndef __RETURNS_H
+X#define __RETURNS_H
+X
+X#define OK 0
+X#define NOTOK -1
+X#define NOMATCH -2
+X#define PROMOTION -3
+X#define DUPLICATE -4
+X
+X#endif
+END_OF_FILE
+  if test 156 -ne `wc -c <'returns.h'`; then
+    echo shar: \"'returns.h'\" unpacked with wrong size!
+  fi
+  # end of 'returns.h'
+fi
+if test -f 'stack_List.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'stack_List.c'\"
+else
+  echo shar: Extracting \"'stack_List.c'\" \(1391 characters\)
+  sed "s/^X//" >'stack_List.c' <<'END_OF_FILE'
+X// member functions for stack class
+X
+X// headers
+X#include "stack_List.h"
+X
+X// constructors and destructor
+Xtemplate <class DataType>
+XStack_List<DataType>::Stack_List(): 
+X	list()
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class DataType>
+XStack_List<DataType>::Stack_List(const Stack_List<DataType> &s): 
+X	list(s.list)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class DataType>
+XStack_List<DataType>::~Stack_List()
+X{
+X        // do nothing
+X}
+X
+X// assignment
+Xtemplate <class DataType>
+XStack_List<DataType> &
+XStack_List<DataType>::operator=(const Stack_List<DataType> &s)
+X{
+X        if (this != &s)
+X                list = s.list;
+X        return(*this);
+X}
+X
+X// stack operations
+Xtemplate <class DataType>
+Xvoid 
+XStack_List<DataType>::clear()
+X{
+X        list.clear();
+X        return;
+X}
+X
+Xtemplate <class DataType>
+Xvoid 
+XStack_List<DataType>::push(const DataType &data) 
+X{
+X        list.insertAtFront(data);
+X        return;
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XStack_List<DataType>::pop(DataType &data) 
+X{
+X        return(list.removeAtFront(data));
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XStack_List<DataType>::top(DataType &data) const
+X{
+X        return(list.retrieveAtFront(data));
+X}
+X
+Xtemplate <class DataType>
+Xint 
+XStack_List<DataType>::isEmpty() const
+X{
+X        return(list.isEmpty());
+X}
+X
+X// print data
+Xtemplate <class DataType>
+Xostream &
+XStack_List<DataType>::dump(ostream &os) const
+X{
+X        os << list;
+X        return(os);
+X}
+X
+END_OF_FILE
+  if test 1391 -ne `wc -c <'stack_List.c'`; then
+    echo shar: \"'stack_List.c'\" unpacked with wrong size!
+  fi
+  # end of 'stack_List.c'
+fi
+if test -f 'stack_List.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'stack_List.h'\"
+else
+  echo shar: Extracting \"'stack_List.h'\" \(688 characters\)
+  sed "s/^X//" >'stack_List.h' <<'END_OF_FILE'
+X#ifndef __STACK_LIST_H
+X#define __STACK_LIST_H
+X// stack class definition
+X
+X// headers
+X#include "absStack.h"
+X#include "list.h"
+X
+X// abstract stack class
+Xtemplate <class DataType> class Stack_List:
+X	public AbstractStack<DataType> {
+Xpublic:
+X        // destructor
+X        Stack_List();
+X        Stack_List(const Stack_List &);
+X        ~Stack_List();
+X
+X	// assignment 
+X	Stack_List &operator=(const Stack_List &);
+X
+X        // stack operations
+X        void clear();
+X        void push(const DataType &);
+X        int pop(DataType &);
+X        int top(DataType &) const;
+X        int isEmpty() const;
+X
+X	// output data
+X	ostream &dump(ostream &) const;
+X
+Xprotected:
+X	// data
+X	List<DataType> list;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 688 -ne `wc -c <'stack_List.h'`; then
+    echo shar: \"'stack_List.h'\" unpacked with wrong size!
+  fi
+  # end of 'stack_List.h'
+fi
+if test -f 'string.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'string.c'\"
+else
+  echo shar: Extracting \"'string.c'\" \(9290 characters\)
+  sed "s/^X//" >'string.c' <<'END_OF_FILE'
+X// functions for string class
+X
+X// headers
+X#include <stdio.h>
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <string.h>
+X#include <assert.h>
+X
+X// local headers
+X#include "debug.h"
+X#include "string.h"
+X
+X// local definitions
+X#define BufSzToStrSz(bs) ((bs)-1)
+X#define StrSzToBufSz(ss) ((ss)+1)
+X
+X// string constructors and destructor
+XString::String():
+X	maxStringSize(BUFSIZ), 
+X	buffer(new char [StrSzToBufSz(BUFSIZ)])
+X{
+X	// check if buffer was allocated
+X        //MustBeTrue(buffer != NULL);
+X
+X	// null terminate
+X	*buffer = 0;
+X}
+X
+XString::String(int maxStrSz):
+X	maxStringSize(maxStrSz), 
+X	buffer(new char [StrSzToBufSz(maxStrSz)])
+X{
+X	// check if buffer was allocated
+X        //MustBeTrue(maxStringSize > 0 && buffer != NULL);
+X
+X	// null terminate
+X	*buffer = 0;
+X}
+X
+XString::String(char c):
+X	maxStringSize(BUFSIZ), 
+X	buffer(new char [StrSzToBufSz(BUFSIZ)])
+X{
+X	// check if buffer was allocated
+X        //MustBeTrue(buffer != NULL);
+X
+X	// store character and null terminate
+X	buffer[0] = c;
+X	buffer[1] = 0;
+X}
+X
+XString::String(const char *pc):
+X	maxStringSize(::strlen(pc)), 
+X	buffer(new char [StrSzToBufSz(::strlen(pc))])
+X{
+X	// check if buffer was allocated
+X        //MustBeTrue(maxStringSize > 0 && buffer != NULL);
+X
+X	// copy string
+X	::strcpy(buffer, pc);
+X}
+X
+XString::String(const String &s):
+X	maxStringSize(s.maxStringSize), 
+X	buffer(new char [StrSzToBufSz(s.maxStringSize)])
+X{
+X	// check if buffer was allocated
+X        //MustBeTrue(maxStringSize > 0 && buffer != NULL);
+X
+X	// copy string
+X	::strcpy(buffer, s.buffer);
+X}
+X
+XString::~String()
+X{
+X	// clear everything
+X	delete [] buffer;
+X	maxStringSize = 0;
+X}
+X
+X// assignment operators
+XString &
+XString::operator=(const String &rhs)
+X{
+X	// check for self-assignment
+X	if (this == &rhs) return(*this);
+X
+X	// is buffer long enough
+X	int stringSize = ::strlen(rhs.buffer);
+X	if (stringSize > maxStringSize)
+X	{
+X		// delete old buffer and allocate new one
+X		delete [] buffer;
+X		maxStringSize = stringSize;
+X		buffer = new char [StrSzToBufSz(maxStringSize)];
+X        	//MustBeTrue(maxStringSize > 0 && buffer != NULL);
+X	}
+X
+X	// copy string
+X	::strcpy(buffer, rhs.buffer);
+X
+X	// return modified string
+X	return(*this);
+X}
+X
+XString &
+XString::operator=(const char *rhs)
+X{
+X	// check for null pointers
+X	//MustBeTrue(rhs != NULL);
+X
+X	// check for self-assignment
+X	if (buffer == rhs) return(*this);
+X
+X	// is buffer long enough
+X	int stringSize = ::strlen(rhs);
+X	if (stringSize > maxStringSize)
+X	{
+X		// delete old buffer and allocate new one
+X		delete [] buffer;
+X		maxStringSize = stringSize;
+X		buffer = new char [StrSzToBufSz(maxStringSize)];
+X        	//MustBeTrue(maxStringSize > 0 && buffer != NULL);
+X	}
+X
+X	// copy string
+X	::strcpy(buffer, rhs);
+X
+X	// return modified string
+X	return(*this);
+X}
+X
+X// access operators
+Xchar &
+XString::operator[](int idx)
+X{
+X	//MustBeTrue(0 <= idx && idx < maxStringSize);
+X	return(buffer[idx]);
+X}
+X
+Xchar &
+XString::operator[](int idx) const
+X{
+X	//MustBeTrue(0 <= idx && idx < maxStringSize);
+X	return(buffer[idx]);
+X}
+X
+X// logical operators
+Xint
+XString::operator==(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) == 0);
+X}
+X
+Xint
+XString::operator!=(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) != 0);
+X}
+X
+Xint
+XString::operator<(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) < 0);
+X}
+X
+Xint
+XString::operator<=(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) <= 0);
+X}
+X
+Xint
+XString::operator>(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) > 0);
+X}
+X
+Xint
+XString::operator>=(const String &rhs) const
+X{
+X	return(::strcmp(buffer, rhs.buffer) >= 0);
+X}
+X
+X// substring operator
+XString
+XString::operator()(int start) const
+X{
+X	return((*this)(start, maxStringSize));
+X}
+X
+XString
+XString::operator()(int start, int charsToCopy) const
+X{
+X	// check start of substring.
+X	//MustBeTrue(0 <= start && start < maxStringSize);
+X	//MustBeTrue(0 <= charsToCopy);
+X
+X	// calculate length of string to copy
+X	if ((start+charsToCopy) > maxStringSize)
+X		charsToCopy = maxStringSize - start;
+X
+X	// copy substring
+X	String substr(charsToCopy);
+X	::strncpy(substr.buffer, buffer+start, charsToCopy);
+X	substr.buffer[charsToCopy] = 0;
+X
+X	// return substring
+X	return(substr);
+X}
+X
+X// concatenation operators
+XString &
+XString::operator+=(const String &rhs)
+X{
+X	// check of current buffer is long enough for new buffer
+X	int charsInBuffer = ::strlen(buffer);
+X	int charsToCopy = ::strlen(rhs.buffer);
+X	int stringSize = charsInBuffer + charsToCopy;
+X	if (stringSize > maxStringSize)
+X	{
+X		// allocate a new buffer 
+X		char *newBuffer = new char [StrSzToBufSz(stringSize)];
+X		//MustBeTrue(newBuffer != NULL);
+X
+X		// copy buffers
+X		::strcpy(newBuffer, buffer);
+X		::strcpy(newBuffer+charsInBuffer, rhs.buffer);
+X
+X		// delete old buffer and save new buffer
+X		delete [] buffer;
+X		buffer = newBuffer;
+X		maxStringSize = stringSize;
+X	}
+X	else
+X	{
+X		// copy buffer
+X		::strcpy(buffer+charsInBuffer, rhs.buffer);
+X	}
+X
+X	// return new string
+X	return(*this);
+X}
+X
+XString
+Xoperator+(const String &lhs, const String &rhs)
+X{
+X	return(String(lhs) += rhs);
+X}
+X
+X// string length
+Xint
+XString::strlen() const
+X{
+X	return(::strlen(buffer));
+X}
+X
+X// casting string to character array
+XString::operator const char *() const
+X{
+X	return(buffer);
+X}
+X
+XString::operator char *()
+X{
+X	return(buffer);
+X}
+X
+X// input and output
+Xostream &
+Xoperator<<(ostream &os, const String &s)
+X{
+X	//MustBeTrue(s.buffer != NULL);
+X	// s.buffer[s.maxStringSize] = 0;
+X	os << s.buffer;
+X	return(os);
+X}
+X 
+Xistream &
+Xoperator>>(istream &is, String &s)
+X{
+X	char buffer[BUFSIZ];
+X	is >> buffer;
+X	s = buffer;
+X	return(is);
+X}
+X
+Xistream &
+Xgetline(istream &is, String &s)
+X{
+X	is.getline(s.buffer, s.maxStringSize);
+X	return(is);
+X}
+X
+X// string matcher constructor and destructor
+XStringMatcher::StringMatcher(const String &s, const String &p):
+X	current(0), stringLength(s.strlen()), patternLength(p.strlen()),
+X	string(s), pattern(p)
+X{
+X	assert(patternLength <= stringLength);
+X	for ( ; current <= (stringLength-patternLength); current++)
+X	{
+X		if (pattern == string(current, patternLength))
+X		{
+X			break;
+X		}
+X	}
+X}
+X
+XStringMatcher::~StringMatcher()
+X{
+X	// do nothing
+X}
+X
+X// string matcher operations
+Xvoid
+XStringMatcher::reset()
+X{
+X	for (current=0 ; current <= (stringLength-patternLength); current++)
+X	{
+X		if (pattern == string(current, patternLength))
+X		{
+X			break;
+X		}
+X	}
+X	return;
+X}
+X
+Xint
+XStringMatcher::done() const
+X{
+X	return(current > (stringLength-patternLength));
+X}
+X
+XString
+XStringMatcher::operator()() const
+X{
+X	assert( ! done());
+X	return(string(current, stringLength-current));
+X}
+X
+Xint
+XStringMatcher::operator++(int)
+X{
+X	for (current++ ; current <= (stringLength-patternLength); current++)
+X	{
+X		if (pattern == string(current, patternLength))
+X		{
+X			return(1);
+X		}
+X	}
+X	return(0);
+X}
+X
+Xint
+XStringMatcher::location() const
+X{
+X	return(current);
+X}
+X
+X//
+X// pseudo-Rabin-Karp string matcher constructor and destructor
+X// 
+X// this implementation of the Rabin-Karp algorithm is a little bit
+X// brain-dead. rather than using a modulo arithmetic and base equal
+X// to the number of characters in the alphabet (127 for ascii), I 
+X// just used a power of 2 and didn't bother with the modulo. the net
+X// result is that the pattern string length is limited to about
+X// 24 characters, that is, log2(2**31/2**7) = 24. hell, if some
+X// pattern matches to 24 character, then it has a good chance that
+X// it is match. if you really need more than 24 characters, then
+X// switch to a simple sum of all the characters in the search pattern.
+X// with that many characters you probably don't have to worry about
+X// 'a'+'b' = 'b'+'a' type of false matches.
+X//
+XStringMatcher_RabinKarp::StringMatcher_RabinKarp(
+X	const String &s, const String &p):
+X	StringMatcher(s, p), powerOfTwo(0), patternValue(0), stringValue(0)
+X{
+X	reset();
+X}
+X
+XStringMatcher_RabinKarp::~StringMatcher_RabinKarp()
+X{
+X	// do nothing
+X}
+X
+X// string matcher operations
+Xvoid
+XStringMatcher_RabinKarp::reset()
+X{
+X	// initialize variables
+X	patternValue = 0;
+X	stringValue = 0;
+X	powerOfTwo = 1;
+X
+X	// initialize test values
+X	for (int ip = 0; ip < patternLength; ip++)
+X	{
+X		patternValue = 2*patternValue + pattern[ip];
+X		stringValue = 2*stringValue + string[ip];
+X		powerOfTwo *= 2;
+X	}
+X	powerOfTwo /= 2;
+X
+X	// look for the first match
+X	for (current=0 ; current <= (stringLength-patternLength); current++)
+X	{
+X		// check if we found a possible match
+X		if (patternValue == stringValue)
+X		{
+X			if (pattern == string(current, patternLength))
+X			{
+X				// we found a match
+X				return;
+X			}
+X		}
+X
+X		// calculate next case
+X		if (current < (stringLength-patternLength))
+X		{
+X			stringValue = 
+X				2*(stringValue - powerOfTwo*string[current]) +
+X				string[current+patternLength];
+X		}
+X	}
+X
+X	// no matches found
+X	return;
+X}
+X
+Xint
+XStringMatcher_RabinKarp::operator++(int)
+X{
+X	// calculate next case
+X	if (current < (stringLength-patternLength))
+X	{
+X		stringValue = 
+X			2*(stringValue - powerOfTwo*string[current]) +
+X			string[current+patternLength];
+X	}
+X
+X	// look for next match
+X	for (current++ ; current <= (stringLength-patternLength); current++)
+X	{
+X		// check if we found a possible match
+X		if (patternValue == stringValue)
+X		{
+X			if (pattern == string(current, patternLength))
+X			{
+X				// we found a match
+X				return(OK);
+X			}
+X		}
+X
+X		// calculate next case
+X		if (current < (stringLength-patternLength))
+X		{
+X			stringValue = 
+X				2*(stringValue - powerOfTwo*string[current]) +
+X				string[current+patternLength];
+X		}
+X	}
+X
+X	// no matches found
+X	return(NOMATCH);
+X}
+END_OF_FILE
+  if test 9290 -ne `wc -c <'string.c'`; then
+    echo shar: \"'string.c'\" unpacked with wrong size!
+  fi
+  # end of 'string.c'
+fi
+if test -f 'string.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'string.h'\"
+else
+  echo shar: Extracting \"'string.h'\" \(2839 characters\)
+  sed "s/^X//" >'string.h' <<'END_OF_FILE'
+X#ifndef __STRING_H
+X#define __STRING_H
+X// string class definitions
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <assert.h>
+X#include <errno.h>
+X#include "returns.h"
+X#include "debug.h"
+X
+X// string class definition
+Xclass String {
+Xpublic:
+X	// constructors and destructor
+X	String();
+X	String(int);
+X	String(char);
+X	String(const char *);
+X	String(const String &);
+X	~String();
+X
+X	// assignment
+X	String &operator=(const String &);
+X	String &operator=(const char *);
+X
+X	// access operator
+X	char &operator[](int);
+X	char &operator[](int) const;
+X
+X	// logical operators
+X	int operator==(const String &) const;
+X	int operator!=(const String &) const;
+X	int operator<(const String &) const;
+X	int operator<=(const String &) const;
+X	int operator>(const String &) const;
+X	int operator>=(const String &) const;
+X
+X	// substring operator
+X	String operator()(int) const;
+X	String operator()(int, int) const;
+X
+X	// concatenation operators
+X	String &operator+=(const String &);
+X	friend String operator+(const String &, const String &);
+X
+X	// string length
+X	int strlen() const;
+X	inline int getMaxSize() const {
+X		return(maxStringSize);
+X	}
+X
+X	// casting operation
+X	operator const char *() const;
+X	operator char *();
+X
+X	// input and output
+X	friend ostream &operator<<(ostream &, const String &);
+X	friend istream &operator>>(istream &, String &);
+X	friend istream &getline(istream &, String &);
+X
+Xprotected:
+X	int maxStringSize;
+X	char *buffer;
+X};
+X
+X// string matcher class
+Xclass StringMatcher {
+Xpublic:
+X        // constructors and destructor
+X	StringMatcher(const String &, const String &);
+X        virtual ~StringMatcher();
+X
+X	// reset iterator to start
+X	virtual void reset();
+X
+X	// check if at end of list
+X	virtual int done() const;
+X
+X        // return data 
+X        virtual String operator()() const;
+X
+X	// advance iterator to next match, if any
+X	virtual int operator++(int);
+X
+X	// get location of match
+X	virtual int location() const;
+X
+Xprivate:
+X	// not allowed
+X	StringMatcher();
+X	StringMatcher(const StringMatcher &);
+X	StringMatcher &operator=(const StringMatcher &);
+X
+Xprotected:
+X	// internal data
+X	unsigned int current;
+X	unsigned int stringLength;
+X	unsigned int patternLength;
+X	const String &string;
+X	const String &pattern;
+X};
+X
+X// rabin-karp string matcher class
+Xclass StringMatcher_RabinKarp: public StringMatcher {
+Xpublic:
+X        // constructors and destructor
+X	StringMatcher_RabinKarp(const String &, const String &);
+X        ~StringMatcher_RabinKarp();
+X
+X	// reset iterator to start
+X	void reset();
+X
+X	// advance iterator to next match, if any
+X	int operator++(int);
+X
+Xprivate:
+X	// not allowed
+X	StringMatcher_RabinKarp();
+X	StringMatcher_RabinKarp(const StringMatcher_RabinKarp &);
+X	StringMatcher &operator=(const StringMatcher_RabinKarp &);
+X
+Xprotected:
+X	// additional internal data
+X	unsigned int powerOfTwo;
+X	unsigned int patternValue;
+X	unsigned int stringValue;
+X};
+X
+X#endif
+X
+END_OF_FILE
+  if test 2839 -ne `wc -c <'string.h'`; then
+    echo shar: \"'string.h'\" unpacked with wrong size!
+  fi
+  # end of 'string.h'
+fi
+if test -f 'tbinary2.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'tbinary2.c'\"
+else
+  echo shar: Extracting \"'tbinary2.c'\" \(934 characters\)
+  sed "s/^X//" >'tbinary2.c' <<'END_OF_FILE'
+X// headers
+X#include "binaryTree2.h"
+X#include "string.h"
+X
+Xmain(int, char **)
+X{
+X	BinaryTree<String> dictionary;
+X
+X	dictionary.insert("C++");
+X	dictionary.insert("Is");
+X	dictionary.insert("A");
+X	dictionary.insert("Very");
+X	dictionary.insert("Interesting");
+X	dictionary.insert("Language.");
+X
+X	BinaryTreeIterator_InOrder<String> inorder(dictionary);
+X
+X	cout << "Inorder: ";
+X	for ( ; ! inorder.done(); inorder++)
+X	{
+X		cout << inorder() << " ";
+X	}
+X	cout << endl;
+X
+X	inorder.reset();
+X	BinaryTreeIterator_InOrder<String> inorder2(inorder);
+X
+X	cout << "Inorder (copy version): ";
+X	for ( ; ! inorder2.done(); inorder2++)
+X	{
+X		cout << inorder2() << " ";
+X	}
+X	cout << endl;
+X
+X	dictionary.remove(String("C++"));
+X	dictionary.remove(String("Interesting"));
+X
+X	dictionary.insert("BASIC");
+X	dictionary.insert("Simple");
+X
+X	cout << "Inorder: ";
+X	for (inorder.reset() ; ! inorder.done(); inorder++)
+X	{
+X		cout << inorder() << " ";
+X	}
+X	cout << endl;
+X
+X	return(0);
+X}
+END_OF_FILE
+  if test 934 -ne `wc -c <'tbinary2.c'`; then
+    echo shar: \"'tbinary2.c'\" unpacked with wrong size!
+  fi
+  # end of 'tbinary2.c'
+fi
+echo shar: End of archive.
+exit 0

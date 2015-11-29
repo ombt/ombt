@@ -1,0 +1,1 @@
+datagrammsechoserverperproc 3 2 localhost:10000:udp localhost:10001:udp localhost:10002:udp localhost:10003:udp localhost:/tmp/10000:datagram localhost:/tmp/10001:datagram localhost:/tmp/10002:datagram localhost:/tmp/10003:datagram

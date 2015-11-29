@@ -1,0 +1,466 @@
+Hi Marc,
+
+I was testing the matrix.c class that I sent yesterday with the LUP
+decomposition code and I found an uninitialized variable in the
+matrix multiplication function. I recently rewrote a large part of
+this code (changed from a internal 2-d array to a 1-d array) and
+there are some bugs. However, this bug does not affect the LUP code
+since matrix elements are accessed individually, not in mass as with
+matrix multiplication. Anyway, please replace the matrix.c with the
+one below.
+
+Again, if anything else is needed, please let me know. 
+
+Mike Rumore
+mrumore@lucent.com
+
+	From mbriand@mfi.com Tue Apr 14 14:41:26 1998
+	Return-Path: <mbriand@mfi.com>
+	Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.3.1 sol2)
+		id OAA04631; Tue, 14 Apr 1998 14:41:25 -0500
+	Received: from cbig1.firewall.lucent.com by ihgp.ih.lucent.com (SMI-8.6/EMS-1.3.1 sol2)
+		id OAA27802; Tue, 14 Apr 1998 14:41:24 -0500
+	Received: by cbig1.firewall.lucent.com (SMI-8.6/EMS-L sol2)
+		id PAA27990; Tue, 14 Apr 1998 15:40:39 -0400
+	Received: by cbig1.firewall.lucent.com (SMI-8.6/EMS-L sol2)
+		id PAA27910; Tue, 14 Apr 1998 15:40:33 -0400
+	Received: by cbgw1.lucent.com; Tue Apr 14 15:38 EDT 1998
+	Received: from sf-mail.mfi.com by alto2.mfi.com
+	          via smtpd (for cbgw1.lucent.com [207.24.196.51]) with SMTP; 14 Apr 1998 19:26:17 UT
+	Received: from ccMail by sf-mail.mfi.com
+	  (IMA Internet Exchange 3.01 Enterprise) id 000278CF; Tue, 14 Apr 98 12:35:35 -0700
+	Mime-Version: 1.0
+	Date: Tue, 14 Apr 1998 14:23:23 -0700
+	Message-ID: <000278CF.CE21230@mfi.com>
+	From: mbriand@mfi.com (Marc Briand)
+	Subject: Comments on four proposal
+	To: mrumore@lucent.com
+	Content-Transfer-Encoding: 7bit
+	Content-Description: cc:Mail note part
+	Content-Type: text/plain; charset=US-ASCII
+	Content-Length: 1332
+	Status: R
+	
+	Hi Mike,
+	
+	Thanks for the four proposals. The one on inverting matrices is the one
+	we would be most interested in.  There are two considerations, however:
+	
+	1. The code that accompanies numerical articles is typically hard to
+	evaluate. We have received code before that wasn't as accurate as
+	claimed or didn't perform as well. So what we would need
+	before we agreed to publish the article would be the source code plus
+	some test cases, so that we (or an independent tester) could test the
+	code and see if it was "up to snuff."
+	
+	2. An article like this could very easily bog down into a theoretical
+	discussion of LUP decomposition. Most of our readers won't want to read
+	about that, so it would be best if you just gave a sort of overview of
+	what LUP decomposition entails, and then refer readers to other texts. 
+	The article should just show the class definition (or just show a
+	skeleton if the class has lots of auxiliary members) and show how to use
+	the class to invert matrices. You could devote some space to explaining
+	uncommon features, however, such as self-calculation of epsilon. The
+	article would probably be short.
+	
+	If you're still interested in writing such an article, the first step
+	would be to provide me with code and test cases.
+	
+	Let me know what you want to do, and, as always, thanks for thinking of us.
+	
+	Marc
+	
+
+###################### cut here ###########################################
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then feed it
+# into a shell via "sh file" or similar.  To overwrite existing files,
+# type "sh file -c".
+# The tool that generated this appeared in the comp.sources.unix newsgroup;
+# send mail to comp-sources-unix@uunet.uu.net if you want that tool.
+# Contents:  matrix.c
+# Wrapped by rumore@ihgp194x on Tue Apr 28 11:58:46 1998
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+echo If this archive is complete, you will see the following message:
+echo '          "shar: End of archive."'
+if test -f 'matrix.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'matrix.c'\"
+else
+  echo shar: Extracting \"'matrix.c'\" \(6730 characters\)
+  sed "s/^X//" >'matrix.c' <<'END_OF_FILE'
+X// matrix class functions
+X
+X// headers
+X#include <stdlib.h>
+X#include <math.h>
+X
+X// local headers
+X#include "matrix.h"
+X
+X// local definitions
+X#define local_abs(x) (((x) < 0) ? (-(x)) : (x))
+X
+X// define epsilon for comparisons
+Xtemplate <class T>
+XT Matrix<T>::epsilon = -1.0;
+X
+X// constructors and destructor
+Xtemplate <class T>
+XMatrix<T>::Matrix(unsigned int rows, unsigned int cols):
+X	matrix(NULL), nrows(rows), ncols(cols)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// allocate a matrix
+X	matrix = new T [nrows*ncols];
+X	MustBeTrue(matrix != NULL);
+X	for (unsigned ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] = 0;
+X	}
+X
+X	// check for epsilon
+X	if (epsilon < 0.0)
+X		epsilon = calcEpsilon((T)(0.0));
+X}
+X
+Xtemplate <class T>
+XMatrix<T>::Matrix(const Matrix<T> &m):
+X	matrix(NULL), nrows(m.nrows), ncols(m.ncols)
+X{
+X	// store dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// allocate a matrix
+X	matrix = new T [nrows*ncols];
+X	MustBeTrue(matrix != NULL);
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] = m.matrix[ia];
+X	}
+X}
+X
+Xtemplate <class T>
+XMatrix<T>::~Matrix()
+X{
+X	delete [] matrix;
+X	matrix = NULL;
+X}
+X
+X// assignment operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator=(const Matrix<T> &m)
+X{
+X	// check if assigning to itself
+X	if (this != &m)
+X	{
+X		// delete matrix
+X		delete [] matrix;
+X		matrix = NULL;
+X
+X		// store new matrix dimension
+X		nrows = m.nrows;
+X		ncols = m.ncols;
+X		MustBeTrue(nrows > 0 && ncols > 0);
+X
+X		// allocate a matrix
+X		matrix = new T [nrows*ncols];
+X		MustBeTrue(matrix != NULL);
+X		for (int ia = 0; ia < nrows*ncols; ia++)
+X		{
+X			matrix[ia] = m.matrix[ia];
+X		}
+X	}
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XT &
+XMatrix<T>::operator()(unsigned int row, unsigned int col)
+X{
+X	MustBeTrue(row < nrows && col < ncols);
+X	return(matrix[row*ncols+col]);
+X}
+X
+Xtemplate <class T>
+XT &
+XMatrix<T>::operator()(unsigned int row, unsigned int col) const
+X{
+X	MustBeTrue(row < nrows && col < ncols);
+X	return(matrix[row*ncols+col]);
+X}
+X
+X// matrix operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator+=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(nrows == m.nrows && ncols == m.ncols);
+X
+X	// add element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] += m.matrix[ia];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator-=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(nrows == m.nrows && ncols == m.ncols);
+X
+X	// subtract element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] -= m.matrix[ia];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator*=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(ncols == m.nrows && ncols > 0);
+X
+X	// get size of new matrix
+X	unsigned int newnrows = nrows;
+X	unsigned int newncols = m.ncols;
+X	MustBeTrue(newnrows > 0 && newncols > 0);
+X	unsigned int nsum = ncols;
+X
+X	// allocate a new matrix
+X	T *newmatrix = new T [newnrows*newncols];
+X	MustBeTrue(newmatrix != NULL);
+X
+X	// multiply element by element
+X	for (unsigned int ir = 0; ir < newnrows; ir++)
+X	{
+X		for (unsigned int ic = 0; ic < newncols; ic++)
+X		{
+X			newmatrix[ir*newncols+ic] = 0;
+X			for (unsigned int is = 0; is < nsum; is++)
+X			{
+X				newmatrix[ir*newncols+ic] += 
+X				matrix[ir*ncols+is]*m.matrix[is*m.ncols+ic];
+X			}
+X		}
+X	}
+X
+X	// delete old matrix and save new one
+X	delete [] matrix;
+X	matrix = newmatrix;
+X	nrows = newnrows;
+X	ncols = newncols;
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator+(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) += m);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator-(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) -= m);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator*(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) *= m);
+X}
+X
+X// matrix and vector operations
+Xtemplate <class T>
+XVector<T>
+XMatrix<T>::operator*(const Vector<T> &v) const
+X{
+X	// check that rows and columns match
+X	MustBeTrue(ncols == v.getDimension() && ncols > 0);
+X
+X	// new vector to hold results
+X	Vector<T> newv(nrows);
+X
+X	// multiply element by element
+X	for (unsigned int ir = 0; ir < nrows; ir++)
+X	{
+X		for (unsigned int is = 0; is < ncols; is++)
+X		{
+X			newv[ir] += matrix[ir*ncols+is]*v[is];
+X		}
+X	}
+X
+X	// all done
+X	return(newv);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+Xoperator*(const Vector<T> &v, const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(v.getDimension() == m.nrows && m.nrows > 0);
+X
+X	// new vector to hold results
+X	Vector<T> newv(m.ncols);
+X
+X	// multiply element by element
+X	for (unsigned int ic = 0; ic < m.ncols; ic++)
+X	{
+X		for (unsigned int is = 0; is < m.nrows; is++)
+X		{
+X			newv[ic] += v[is]*m.matrix[is*ncols+ic];
+X		}
+X	}
+X
+X	// all done
+X	return(newv);
+X}
+X
+X// matrix and scalar operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator*=(const T &n)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// multiply matrix by scalar
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] *= n;
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator/=(const T &n)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X	MustBeTrue(n != 0.0);
+X
+X	// divide matrix by scalar
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] /= n;
+X	}
+X
+X	// all done 
+X	return(*this);
+X}
+X
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator*(const T &n) const
+X{
+X	return(Matrix<T>(*this) *= n);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator/(const T &n) const
+X{
+X	return(Matrix<T>(*this) /= n);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+Xoperator*(const T &n, const Matrix<T> &m)
+X{
+X	// switch around and multiply
+X	return(m*n);
+X}
+X
+X// logical operators
+Xtemplate <class T>
+Xint
+XMatrix<T>::operator==(const Matrix<T> &m) const
+X{
+X	// check if the same matrix
+X	if (this == &m) return(1);
+X
+X	// check if dimensions are the same
+X	if (nrows != m.nrows || ncols != m.ncols) return(0);
+X
+X	// compare element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		T delta = matrix[ia] - m.matrix[ia];
+X		if (delta < 0.0)
+X			delta = -1.0*delta;
+X		if (delta > epsilon)
+X		{      
+X			// a mismatch
+X			return(0);
+X		}
+X	}
+X
+X	// matrices are the same
+X	return(1);
+X}
+X
+Xtemplate <class T>
+Xint
+XMatrix<T>::operator!=(const Matrix<T> &m) const
+X{
+X	return( ! (*this == m));
+X}
+X
+X// print matrix
+Xtemplate <class T>
+Xvoid
+XMatrix<T>::dump(ostream &os) const
+X{
+X	os << "matrix[" << nrows << "," << ncols << "] = {" << endl;
+X	for (unsigned int ir = 0; ir < nrows; ir++)
+X	{
+X		for (unsigned int ic = 0; ic < ncols; ic++)
+X		{
+X			os << matrix[ir*ncols+ic] << " ";
+X		}
+X		os << endl;
+X	}
+X	os << "}" << endl;
+X	return;
+X}
+X
+Xtemplate <class T>
+Xostream &
+Xoperator<<(ostream &os, const Matrix<T> &m)
+X{
+X	m.dump(os);
+X	return(os);
+X}
+X
+END_OF_FILE
+  if test 6730 -ne `wc -c <'matrix.c'`; then
+    echo shar: \"'matrix.c'\" unpacked with wrong size!
+  fi
+  # end of 'matrix.c'
+fi
+echo shar: End of archive.
+exit 0

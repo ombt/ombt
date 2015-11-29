@@ -1,0 +1,4 @@
+qt[0-9]
+qt*.pro
+qt*.make
+moc_*

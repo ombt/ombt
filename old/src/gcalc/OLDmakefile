@@ -1,0 +1,25 @@
+# PKG_CONFIG_PATH = /home/ombt/tools/lib/pkgconfig/
+
+GTKHOME = /home/ombt/tools
+
+CXX = g++
+
+CXXFLAGS = -I$(GTKHOME)/include/glib-2.0 -I$(GTKHOME)/lib/glib-2.0/include -I$(GTKHOME)/include/gtk-2.0 -I$(GTKHOME)/lib/gtk-2.0/include -I$(GTKHOME)/include/atk-1.0 -I$(GTKHOME)/include/cairo -I$(GTKHOME)/include/pango-1.0 -I$(GTKHOME)/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -L$(GTKHOME)/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lgdk_pixbuf-2.0 -lpangocairo-1.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -DDEBUG
+
+# CXXFLAGS = -I$(GTKHOME)/include/glib-2.0 -I$(GTKHOME)/lib/glib-2.0/include -I$(GTKHOME)/include/gtk-2.0 -I$(GTKHOME)/lib/gtk-2.0/include -I$(GTKHOME)/include/atk-1.0 -I$(GTKHOME)/include/cairo -I$(GTKHOME)/include/pango-1.0 -I$(GTKHOME)/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -L$(GTKHOME)/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lgdk_pixbuf-2.0 -lpangocairo-1.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lgmodule-2.0 -lglib-2.0
+
+all:		gcalc install
+
+gcalc:		gcalc.cpp
+
+install:	gcalc
+		cp gcalc $(HOME)/bin
+		touch install
+
+backup:		gcalc.cpp
+		bkup
+		touch backup
+
+backupd:	gcalc.cpp
+		bkup -d
+		touch backupd

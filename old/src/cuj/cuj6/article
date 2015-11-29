@@ -1,0 +1,630 @@
+A TEMPLATE SHARED-MEMORY CLASS FOR UNIX
+
+I INTRODUCTION
+
+A common architecture for client/server systems is a system process
+that monitors a TCP or UDP port for incoming messages, and creates
+child processes to service the incoming requests. This type of architecture 
+often requires the use of a global memory segment shared among the child
+processes and the parent system process. The shared-memory segment can 
+contain virtually any type of data, except for pointers to non-shared memory. 
+
+This article describes a class for creating and initializing shared-memory
+segments between parent and child processes in the UNIX System V environment. 
+Since the shared-memory class uses templates, it allows a user to create a 
+shared-memory segment using his class definitions. The shared memory segment 
+is initialized and cleared using the user-provided default class constructor 
+and class destructor, respectively. The single major restriction to the 
+default constructor in the user-defined class is that dynamic allocation 
+via new is not allowed since heap memory is not shared between processes.
+
+The class provides for the case of a parent process creating and initializing 
+the shared-memory, and child processes attaching to the shared-memory. 
+Since there are no restrictions as to which process can read from or write to 
+the shared-memory, a semaphore must be provided externally to provide
+synchronization among the processes. An example of this procedure is 
+demonstrated in the example.
+
+II SYSTEM V SHARED MEMORY ROUTINES
+
+System V provides four routines for creating and maintaining shared memory
+segments. They are listed below and brief descriptions are provided.
+For more details, please refer to references [1] and [2].
+
+shmget() - obtain a shared memory identifier from the OS. A unique key (created
+by the user), the size of the shared memory segment, and permission and 
+creation flags are passed as parameters.
+
+shmat() - after the shared memory segment is created using shmget(), the
+shared memory segment is attached to the current process using shmat. The
+shared memory identifier, address to attach memory segment or NULL, and
+a read/write permissions flag are passed as parameters. 
+
+shmdt() - detach the shared memory segment from the process. The shared
+memory identifier is passed as a parameter.
+
+shmctl() - execute various shared memory maintenance operations. In this 
+case, used to delete the shared memory segment. The shared memory identifier
+and the flag IPC_RMID are passed as parameters.
+
+III IMPLEMENTATION
+
+The shared-memory class SharedMemory is implemented as a reference-counted
+template data structure. There are two classes, SharedMemory, which provides 
+the user interface; and SharedMemoryData, which contains the actual
+implementation and is reference-counted.
+
+SharedMemory class is listed in listing 1. It contains one data item, prep,
+a pointer to a SharedMemoryData object. SharedMemory provides three 
+constructors, a destructor, an assignment operator, several operators for
+accessing the shared memory contents, and a static member function, 
+removeSharedMemory() for deleting the shared memory segment.
+
+All the SharedMemory constructors and destructor call the SharedMemoryData 
+increment and decrement menber functions to increase or decrease the reference
+counts, respectively.  Also, if the reference counts drop to zero or less, 
+then the SharedMemoryData structure is deleted.
+
+The most important of the constructors is:
+
+	SharedMemory(key_t k, int ne = 1, int m = 0666, void *pa = NULL)
+
+This constructor allows a user to create a array of structures within
+the shared memory segment via the parameter ne (number of elements, defaults
+to one), set the access permissions via the parameter m (defaults to 0666),
+and to define the address to attach the shared memory segment via pa. 
+Parameter pa is usually set to NULL which allows the OS to select the address
+for attaching the shared memory segment (pa is defaulted to NULL). 
+
+The assignment operator and copy constructor support the reference-counted
+idiom in a typical manner. Access operators allow for both const or 
+non-const access to the shared memory. Since a member-access operator 
+operator->() is provided, the user-provided data type must be an 
+aggregate type. To use this class with primitive data types (int, long, 
+etc.), at the very least, the member-access operator must be removed or 
+ifdef'ed out.
+
+SharedMemoryData class is listed in listing 1. It contains a constructor,
+destructor, and four member functions for maintaining the reference counter.
+
+Of key importance is the constructor of SharedMemoryData. It contains
+the code for creating and initializing the shared memory. Referring to 
+listing 1, if a valid key is given, then the constructor attempts to 
+create the segment using the IPC_EXCL flag. Basically, the IPC_EXCL flag 
+demands that the shared memory segment not exist. This call to shmget() 
+only works for a parent process which is creating the shared memory segment 
+for the first time. All child processes should fail this call, and execute the 
+second call to shmget() which does not have the IPC_EXCL flag turned on.
+This basic procedure is described in reference [2]. The parent process also 
+has the owner flag set to true and the child processes have the owner flag
+set to false. The owner flag is important since it determines if the 
+constructor and destructor are called. They are called when the owner flag is
+true.
+
+The default constructor of the user-defined class is called using the
+placement-version of the new operator. For arrays, each element is 
+initialized individually, rather than using the array version of new. 
+This was necessary since it was discovered that the new operator stores 
+some information (array size?) at the beginning of the shared memory. 
+This causes the actual space required for say N elements of type Type to 
+be greater than N*sizeof(Type). Presumably, since the actual extra space is 
+implementation dependent, I chose to initialize the elements individually
+to circumvent this problem. Similarly, the user-defined class destructor 
+is called individually for each element in the array in the SharedMemoryData
+destructor. 
+
+IV EXAMPLE
+
+Listings 2 and 3 contains an example of how to use the SharedMemory class. 
+The test code is a reader/writer example. It contains two cases, one for a 
+parent process (listing 2) which creates and writes into a shared memory 
+segment, and a second case (listing 3) where a child process reads from the 
+shared memory. Two semaphores are used to synchronize the reader and writer. 
+The writer starts first, and writes in the shared memory. It forks and 
+execs the child process, and blocks until the reader process starts and 
+reads the shared memory. The writer and reader processes then take turns 
+writing and reading the shared memory, respectively. 
+
+The traditional semaphore P() and V() operations are used for synchronization. 
+The semaphore operations are provided using a semaphore class based on System
+V semaphores.
+
+The above example and code were all tested on a SUN workstation running 
+Solaris 5.5.1 and compiled using the Solaris Workshop C++ compiler, version 
+5.0.
+
+V CONCLUSIONS
+
+The results from combining the shared memory class with the semaphore class
+used in the test cases, but not described in this article, have been 
+very helpful. The use of shared memory is simplified, and initialization is 
+reduced to providing a class with an appropriate default constructor and
+destructor. 
+
+VI REFERENCES
+
+[1] W. R. Stevens. Advanced Programming in the UNIX Environment 
+(Addison/Wesley, 1992).
+
+[2] W. R. Stevens. UNIX Network Programming: Interprocess Communications,
+Volume II (Prentice Hall, 1999).
+
+[3] S. B. Lippman and J, Lajoie. C++ Primer, Third Edition 
+(Addison/Wesley, 1998).
+
+-------------------- Listing 1: Shared Memory Classes ------------------------
+
+#ifndef __VSHM5_H
+#define __VSHM5_H
+// header for reference-counted SYSTEM-V shared memory class. this class
+// requires an aggregate data type containing a default constructor and 
+// destructor.
+
+// unix headers
+#include <stdlib.h>
+#include <iostream.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <errno.h>
+
+// local headers
+#include "debug.h"
+#include "returns.h"
+
+// forward declarations
+template <class DataType> class SharedMemory;
+template <class DataType> class SharedMemoryData;
+
+// class for shared memory data, reference-counted
+template <class DataType> class SharedMemoryData {
+	// friend class
+	friend class SharedMemory<DataType>;
+
+private:
+	// constructors and destructor
+	SharedMemoryData(key_t k, int ne, int m, void *pa):
+		owner(0), shmid(-1), key(k), size(ne*sizeof(DataType)), 
+		mode(m), nelem(ne), pamem(pa), pmem(NULL), pdmem(NULL),
+		counter(0)
+	{
+		if (key > 0)
+		{
+			// size and number of elements must be greater than 0
+			MustBeTrue(nelem > 0 && size > 0);
+
+			// get shared memory and create it, if necessary.
+			// must keep track of whether or not the data
+			// already existed or not. if the data did not
+			// exist, then we need to initialize it. also,
+			// if we init'ed the data, we probably want to 
+			// delete it by calling the destructor. hence,
+			// we use the owner flag to track all this.
+			//
+			shmid = shmget(key, size, IPC_CREAT|IPC_EXCL|mode);
+			if (shmid < 0)
+			{
+				MustBeTrue(errno == EEXIST);
+				shmid = shmget(key, size, IPC_CREAT|mode);
+				MustBeTrue(shmid >= 0);
+				owner = 0;
+			}
+			else
+			{
+				// data was created, must initialize it.
+				owner = 1;
+			}
+
+			// attach memory to process space
+			if (pamem == (void *)-1)
+				pmem = shmat(shmid, NULL, 0);
+			else
+				pmem = shmat(shmid, pamem, 0);
+			MustBeTrue(pmem != (void *)NOTOK);
+
+			// now allocate one more time to call constructor. each
+			// item is allocated individually since if an array is 
+			// allocated, extra bytes are added by the compiler 
+			// to save information specific to the array. For 
+			// example, if the address 0xf000 is passed to the 
+			// new (placement) operator, and an array is requested,
+			// then the address returned by new is 0xf008, not 
+			// the expected 0xf000. the extra bytes are for 
+			// storing array size, etc. (presumably).
+			//
+			for (int i = 0; i < nelem && owner; i++)
+			{
+				unsigned long p = (long)pmem+i*sizeof(DataType);
+				pdmem = new ((void *)p) DataType;
+				MustBeTrue(pdmem != (DataType *)NULL);
+				MustBeTrue((void *)p == (void *)pdmem);
+			}
+			pdmem = (DataType *)pmem;
+		}
+	}
+	~SharedMemoryData()
+	{
+		// the destructor is called explicitly
+		// since we cannot call delete for memory
+		// which is not from the heap (shared memory).
+		// the data is deleted if it was initialized
+		// by this object, i.e., owner is true.
+		//
+		for (int i = 0; i < nelem && owner; i++)
+		{
+			pdmem->DataType::~DataType();
+		}
+		(void) shmdt((char *)pmem);
+		pmem = NULL;
+		pdmem = NULL;
+		shmid = -1;
+		counter = 0;
+	}
+
+	// counter operations
+	inline int increment()
+	{
+		return(++counter);
+	}
+	inline int decrement()
+	{
+		return(--counter);
+	}
+	inline int getCounter() const
+	{
+		return(counter);
+	}
+	inline int setCounter(int c)
+	{
+		counter = c;
+		return(counter);
+	}
+
+	// data for shared memory segment
+	int owner;
+	int shmid;
+	key_t key;
+	size_t size;
+	int mode;
+	int nelem;
+	void *pamem;
+	void *pmem;
+	DataType *pdmem;
+
+	// reference counter 
+	int counter;
+
+};
+
+// class for shared memory
+template <class DataType> class SharedMemory {
+public:
+	// constructors and destructor
+	SharedMemory():
+		prep(new SharedMemoryData<DataType>(-1, 0, 0, NULL)) {
+		MustBeTrue(prep != NULL);
+		prep->increment();
+	}
+	SharedMemory(key_t k, int ne = 1, int m = 0666, void *pa = NULL):
+		prep(new SharedMemoryData<DataType>(k, ne, m, pa)) {
+		MustBeTrue(prep != NULL);
+		prep->increment();
+	}
+	SharedMemory(const SharedMemory &p):
+		prep(p.prep) {
+		MustBeTrue(prep != NULL);
+		prep->increment();
+	}
+	~SharedMemory() {
+		if (prep->decrement() <= 0)
+			delete prep;
+		prep = NULL;
+	}
+
+	// assignment
+	SharedMemory &operator=(const SharedMemory &rhs) {
+		MustBeTrue(prep != NULL && rhs.prep != NULL);
+		rhs.prep->increment();
+		if (prep->decrement() <= 0)
+		{
+			delete prep;
+			prep = NULL;
+		}
+		prep = rhs.prep;
+		MustBeTrue(prep != NULL);
+		return(*this);
+	}
+
+	// access operators
+	inline operator DataType *() const {
+		MustBeTrue(prep != NULL);
+		return(prep->pdmem);
+	}
+	inline DataType *operator->() const {
+		MustBeTrue(prep != NULL && prep->pdmem != NULL);
+		return(prep->pdmem);
+	}
+	inline DataType &operator*() {
+		MustBeTrue(prep != NULL && prep->pdmem != NULL);
+		return(*prep->pdmem);
+	}
+	inline DataType &operator*() const {
+		MustBeTrue(prep != NULL && prep->pdmem != NULL);
+		return(*prep->pdmem);
+	}
+	inline DataType &operator[](int i) {
+		MustBeTrue(prep != NULL && prep->pdmem != NULL);
+		MustBeTrue(0 <= i && i < prep->nelem);
+		return(prep->pdmem[i]);
+	}
+	inline DataType &operator[](int i) const {
+		MustBeTrue(prep != NULL && prep->pdmem != NULL);
+		MustBeTrue(0 <= i && i < prep->nelem);
+		return(prep->pdmem[i]);
+	}
+	inline int getShmId() const
+	{
+		MustBeTrue(prep != NULL);
+		return(prep->shmid);
+	}
+
+	// is the current object the owner?
+	inline int isOwner() const {
+		MustBeTrue(prep != NULL);
+		return(prep->owner);
+	}
+
+	// delete shared memory segment
+	static void removeSharedMemory(int shmid)
+	{
+		if (shmid >= 0)
+			(void) shmctl(shmid, IPC_RMID, 0);
+		return;
+	}
+
+private:
+	// internal data
+	SharedMemoryData<DataType> *prep;
+};
+
+#endif
+
+------------- Listing 2: Shared Memory Writer Example ------------------------
+
+// test case for shared-memory/semaphore code.
+
+// headers
+#include <stdlib.h>
+#include <iostream.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include "vsem.h"
+#include "vshm5.h"
+
+// dummy class
+struct Dummy {
+	Dummy() {
+		strcpy(buf, "I'm initialized !!!  ");
+	}
+	~Dummy() {
+	}
+	char buf[BUFSIZ];
+};
+
+// main entry into test case
+int
+main(int argc, char **argv)
+{
+	pid_t pid = -1;
+	key_t shmkey = -1;
+	key_t rdkey = -1;
+	key_t wrkey = -1;
+	int shmid = -1;
+	int asize = 0;
+
+	// check number of arguments
+	if (argc != 5)
+	{
+		cout << "usage: writer shmkey readkey writekey arraysize" << endl;
+		return(2);
+	}
+
+	// try/catch block for everything
+	try {
+		// get keys
+		shmkey = atoi(argv[1]);
+		rdkey = atoi(argv[2]);
+		wrkey = atoi(argv[3]);
+		asize = atoi(argv[4]);
+
+		// number of readers and writers
+		int rd_no = 0;
+		int wr_no = 1;
+
+		// attach to shared memory
+		SharedMemory<Dummy> shm(shmkey, asize);
+		shmid = shm.getShmId();
+
+		// check if we own the shared memory
+		MustBeTrue(shm.isOwner())
+
+		// get semaphore
+		Semaphore writer(wrkey, 0666, wr_no);
+		Semaphore reader(rdkey, 0666, rd_no);
+
+		// fork/exec the reader process
+		MustBeTrue((pid = fork()) != (pid_t)NOTOK);
+		if (pid == 0)
+		{
+			// execute the child process
+			try {
+			MustBeTrue(execl("reader", "reader", argv[1], 
+				argv[2], argv[3], argv[4], NULL) != NOTOK);
+			}
+			catch (const char *pe)
+			{
+				ERROR(pe, errno);
+			}
+			return(2);
+		}
+
+		// gain ownership
+		MustBeTrue(writer.P(-1) == OK);
+
+		// get length of initial msg
+		int ilen = strlen(shm[0].buf);
+		ilen--;
+
+		// let reader proceed
+		MustBeTrue(reader.V() == OK);
+
+		for (char c = 'a'; c <= 'z'; c++)
+		{
+			// gain ownership
+			MustBeTrue(writer.P(-1) == OK);
+
+			// write to shared memory
+			for (int ia = 0; ia < asize; ia++)
+			{
+				shm[ia].buf[ilen] = c;
+				shm[ia].buf[ilen+1] = '\0';
+				cout << "WRITER: writing into buffer [";
+				cout << ia << "] ... " << shm[ia].buf << endl;
+			}
+			ilen++;
+
+			// release ownership
+			MustBeTrue(reader.V() == OK);
+		}
+
+		// get permission to write 
+		MustBeTrue(writer.P(-1) == OK);
+
+		// write to shared memory
+		strcpy(shm->buf, "all done");
+		cout << "WRITER: writing ... " << shm->buf << endl;
+
+		// let reader proceed
+		MustBeTrue(reader.V() == OK);
+
+		// gain ownership one last time
+		MustBeTrue(writer.P(-1) == OK);
+	}
+	catch (const char *pe)
+	{
+		ERROR(pe, errno);
+		return(2);
+	}
+
+	// wait for child to finish
+	int status;
+	MustBeTrue(wait(&status) == pid);
+
+	// delete resources
+	SharedMemory<Dummy>::removeSharedMemory(shmid);
+
+	// all done
+	return(0);
+}
+
+------------- Listing 3: Shared Memory Reader Example ------------------------
+
+// test case for shared-memory/semaphore code.
+
+// headers
+#include <stdlib.h>
+#include <iostream.h>
+#include <string.h>
+#include "vsem.h"
+#include "vshm5.h"
+
+// dummy class
+struct Dummy {
+	Dummy() {
+		strcpy(buf, "I'm initialized !!!  ");
+	}
+	~Dummy() {
+	}
+	char buf[BUFSIZ];
+};
+
+// main entry into test case
+int
+main(int argc, char **argv)
+{
+	key_t shmkey = -1;
+	key_t rdkey = -1;
+	key_t wrkey = -1;
+	int shmid = -1;
+	int asize = 0;
+
+	// check number of arguments
+	if (argc != 5)
+	{
+		cout << "usage: reader shmkey readkey writekey arraysize" << endl;
+		return(2);
+	}
+
+	// try/catch block for everything
+	try {
+		// get keys
+		shmkey = atoi(argv[1]);
+		rdkey = atoi(argv[2]);
+		wrkey = atoi(argv[3]);
+		asize = atoi(argv[4]);
+
+		// number of readers and writers
+		int rd_no = 0;
+		int wr_no = 1;
+
+		// attach to shared memory
+		SharedMemory<Dummy> shm(shmkey, asize);
+		shmid = shm.getShmId();
+
+		// check if we own the shared memory
+		MustBeTrue(!shm.isOwner())
+
+		// get semaphore
+		Semaphore writer(wrkey, 0666, wr_no);
+		Semaphore reader(rdkey, 0666, rd_no);
+
+		// reader process
+		for (int done=0; !done; )
+		{
+			// get permission to read
+			MustBeTrue(reader.P(-1) == OK);
+
+			// read shared memory
+			for (int ia = 0; ia < asize; ia++)
+			{
+				cout << "READER: reading buffer [";
+				cout << ia << "] ... " << shm[ia].buf << endl;
+			}
+
+			// are we done
+			if (strcmp(shm->buf, "all done") == 0)
+				done = 1;
+
+			// let writer write
+			MustBeTrue(writer.V() == OK);
+
+			// relax, take a break.
+			sleep(1);
+		}
+	}
+	catch (const char *pe)
+	{
+		ERROR(pe, errno);
+		return(2);
+	}
+
+	// delete resources
+	Semaphore::removeLockFile(rdkey);
+	Semaphore::removeLockFile(wrkey);
+
+	// all done
+	return(0);
+}
+

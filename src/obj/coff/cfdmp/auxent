@@ -1,0 +1,149 @@
+1) table of auxiliary table entries
+
+name		sclass		d1	typ	aux type
+------------------------------------------------------------
+.file		C_FILE		DT_NON	T_NULL	file name
+
+.text		C_STAT		DT_NON	T_NULL	section
+
+.data		C_STAT		DT_NON	T_NULL	section
+
+.bss		C_STAT		DT_NON	T_NULL	section
+
+tagname		C_STRTAG	DT_NON	T_NULL	tag name
+
+tagname		C_UNTAG		DT_NON	T_NULL	tag name
+
+tagname		C_ENTAG		DT_NON	T_NULL	tag name
+
+.eos		C_EOS		DT_NON	T_NULL	end of structure
+
+fcname		C_EXT		DT_FCN	T_NULL	function
+		C_STAT			T_CHAR
+					T_SHORT
+					T_INT
+					T_LONG
+					T_FLOAT
+					T_DOUBLE
+					T_STRUCT
+					T_UNION
+					T_ENUM
+					T_UCHAR
+					T_USHORT
+					T_UNIT
+					T_ULONG
+
+arrname		C_AUTO		DT_ARY	T_NULL	array
+		C_STAT			T_CHAR
+		C_MOS			T_SHORT
+		C_MOU			T_INT
+		C_TPDEF			T_LONG
+					T_FLOAT
+					T_DOUBLE
+					T_STRUCT
+					T_UNION
+					T_ENUM
+					T_UCHAR
+					T_USHORT
+					T_UNIT
+					T_ULONG
+
+.bb		C_BLOCK		DT_NON	T_NULL	beginning of block
+
+.eb		C_BLOCK		DT_NON	T_NULL	end of block
+
+.bf		C_FCN		DT_NON	T_NULL	beginning of function
+
+.ef		C_FCN		DT_NON	T_NULL	end of function
+
+name related	C_AUTO		DT_PTR	T_STRUCT name related to
+to structure,	C_STAT		DT_ARY	T_UNION  structure,
+union, or	C_MOS		DT_NON	T_ENUM   union, or
+enumeration	C_MOU				 enumeration
+		C_TPDEF
+
+2) filenames aux entry
+
+14 character file name in bytes 0 to 13, remaining bytes are 0.
+
+3) section aux entry
+
+bytes	declaration	name		description
+0-3	long int	x_scnlen	section length
+4-5	ushort		x_nreloc	number of relocation entries
+6-7	ushort		x_nlinno	number of line numbers
+8-17	<< unused, zero-filled >>
+
+4) tag name aux entry
+
+bytes	declaration	name		description
+0-5	<< unused, zero-filled >>
+6-7	ushort		x_size		size of structure, union,
+					or enumeration
+8-11	<< unused, zero-filled >>
+12-15	long int	x_endndx	index of next entry beyond
+					this structure, union, or
+					enumeration
+16-17	<< unused, zero-filled >>
+
+5) end-of-structure aux entry
+
+bytes	declaration	name		description
+0-3	long int	x_tagndx	tag index
+4-5	<< unused, zero-filled >>
+6-7	ushort		x_size		size of structure, union,
+					or enumeration
+8-17	<< unused, zero-filled >>
+
+6) function aux entry
+
+bytes	declaration	name		description
+0-3	long int	x_tagndx	tag index
+4-7	long int	x_fsize		function size in bytes
+8-11	long int	x_lnnoptr	file pointer to line number
+12-15	long int	x_endndx	index to next entry beyond
+					this point
+16-17	ushort		x_tvndx		index of the function's
+					address in the transfer
+					vector table
+
+7) array aux entry
+
+bytes	declaration	name		description
+0-3	long int	x_tagndx	tag index
+4-5	ushort		x_lnno		line number of
+					declaration
+6-7	ushort		x_size		size of array
+8-9	ushort		x_dimen[0]	first dimension
+10-11	ushort		x_dimen[1]	second dimension
+12-13	ushort		x_dimen[2]	third dimension
+14-15	ushort		x_dimen[3]	fourth dimension
+16-17	<< unused, zero-filled >>
+
+8) end of blocks and functions aux ent
+
+bytes	declaration	name		description
+0-3	<< unused, zero-filled >>
+4-5	ushort		x_lnno		C-source line number
+6-17	<< unused, zero-filled >>
+
+9) beginning of blocks and functions aux entry
+
+bytes	declaration	name		description
+0-3	<< unused, zero-filled >>
+4-5	ushort		x_lnno		C-source line number
+6-11	<< unused, zero-filled >>
+12-15	long int	x_endndx	index to next entry beyond
+					this point
+16-17	<< unused, zero-filled >>
+
+10) names related to structures, unions and enumerations aux entry
+
+
+bytes	declaration	name		description
+0-3	long int	x_tagndx	tag index
+4-5	<< unused, zero-filled >>
+6-7	ushort		x_size		size of structure, union,
+					or enumeration
+8-17	<< unused, zero-filled >>
+

@@ -1,0 +1,10 @@
+lex.yy.c
+proplex.cpp
+propyacc.cpp
+propyacc.h
+tprop
+tsetlist
+tsettree
+y.output
+y.tab.c
+y.tab.h

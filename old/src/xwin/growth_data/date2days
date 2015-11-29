@@ -1,0 +1,60 @@
+# convert a date to days ...
+#
+cat ${*} | nawk '
+BEGIN {
+	leap[1] = 0;
+	leap[2] = 31;
+	leap[3] = 60;
+	leap[4] = 91;
+	leap[5] = 121;
+	leap[6] = 152;
+	leap[7] = 182;
+	leap[8] = 213;
+	leap[9] = 244;
+	leap[10] = 274;
+	leap[11] = 305;
+	leap[12] = 335;
+	leap[13] = 366;
+	nonleap[1] = 0;
+	nonleap[2] = 31;
+	nonleap[3] = 59;
+	nonleap[4] = 90;
+	nonleap[5] = 120;
+	nonleap[6] = 151;
+	nonleap[7] = 181;
+	nonleap[8] = 212;
+	nonleap[9] = 243;
+	nonleap[10] = 273;
+	nonleap[11] = 304;
+	nonleap[12] = 334;
+	nonleap[13] = 365;
+	baseyear=0;
+}
+{
+	year=$1;	
+	month=$2;
+	day=$3;
+	#
+	if (baseyear == 0) baseyear=year;
+	#
+	totaldays = 0;
+	for (y=baseyear; y<year; y++)
+	{
+		if (y%4 != 0)
+			totaldays += nonleap[13];
+		else
+			totaldays += leap[13];
+	}
+	if (y%4 != 0)
+		totaldays += nonleap[0+month]+day;
+	else
+		totaldays += leap[0+month]+day;
+	# printf("days from base year %d to %02d%02d%02d = %d\n", 
+	# 	baseyear, year, month, day, totaldays);
+	printf("%d %s %s\n", totaldays, $4, $5);
+	next;
+}
+END {
+} '
+#
+exit 0

@@ -1,0 +1,2830 @@
+Hi Marc,
+
+Sorry about the delay. I'm sending you a "shell archive" containing
+the LUP decomposition code, test cases, and any other classes that
+it depends on (epsilon.h, vector.h, matrix.h, etc.). The code was compiled
+and tested on a SUN workstation using SUN's C++ SC2.0.1 compiler. The
+latest version of SUN's compiler, C++ SC4.1, has a serious error, so 
+I ended up using an older version.
+
+If anything else is needed, please let me know. I'd like to know the
+results of your testing !!!
+
+Mike Rumore
+mrumore@lucent.com
+
+PS: sorry about the enormous size of the email. the shell archive starts
+at line 77 in this file.
+
+	From mbriand@mfi.com Tue Apr 14 14:41:26 1998
+	Return-Path: <mbriand@mfi.com>
+	Received: from ihgp.ih.lucent.com by ihgp24.ih.lucent.com (SMI-8.6/EMS-1.3.1 sol2)
+		id OAA04631; Tue, 14 Apr 1998 14:41:25 -0500
+	Received: from cbig1.firewall.lucent.com by ihgp.ih.lucent.com (SMI-8.6/EMS-1.3.1 sol2)
+		id OAA27802; Tue, 14 Apr 1998 14:41:24 -0500
+	Received: by cbig1.firewall.lucent.com (SMI-8.6/EMS-L sol2)
+		id PAA27990; Tue, 14 Apr 1998 15:40:39 -0400
+	Received: by cbig1.firewall.lucent.com (SMI-8.6/EMS-L sol2)
+		id PAA27910; Tue, 14 Apr 1998 15:40:33 -0400
+	Received: by cbgw1.lucent.com; Tue Apr 14 15:38 EDT 1998
+	Received: from sf-mail.mfi.com by alto2.mfi.com
+	          via smtpd (for cbgw1.lucent.com [207.24.196.51]) with SMTP; 14 Apr 1998 19:26:17 UT
+	Received: from ccMail by sf-mail.mfi.com
+	  (IMA Internet Exchange 3.01 Enterprise) id 000278CF; Tue, 14 Apr 98 12:35:35 -0700
+	Mime-Version: 1.0
+	Date: Tue, 14 Apr 1998 14:23:23 -0700
+	Message-ID: <000278CF.CE21230@mfi.com>
+	From: mbriand@mfi.com (Marc Briand)
+	Subject: Comments on four proposal
+	To: mrumore@lucent.com
+	Content-Transfer-Encoding: 7bit
+	Content-Description: cc:Mail note part
+	Content-Type: text/plain; charset=US-ASCII
+	Content-Length: 1332
+	Status: R
+	
+	Hi Mike,
+	
+	Thanks for the four proposals. The one on inverting matrices is the one
+	we would be most interested in.  There are two considerations, however:
+	
+	1. The code that accompanies numerical articles is typically hard to
+	evaluate. We have received code before that wasn't as accurate as
+	claimed or didn't perform as well. So what we would need
+	before we agreed to publish the article would be the source code plus
+	some test cases, so that we (or an independent tester) could test the
+	code and see if it was "up to snuff."
+	
+	2. An article like this could very easily bog down into a theoretical
+	discussion of LUP decomposition. Most of our readers won't want to read
+	about that, so it would be best if you just gave a sort of overview of
+	what LUP decomposition entails, and then refer readers to other texts. 
+	The article should just show the class definition (or just show a
+	skeleton if the class has lots of auxiliary members) and show how to use
+	the class to invert matrices. You could devote some space to explaining
+	uncommon features, however, such as self-calculation of epsilon. The
+	article would probably be short.
+	
+	If you're still interested in writing such an article, the first step
+	would be to provide me with code and test cases.
+	
+	Let me know what you want to do, and, as always, thanks for thinking of us.
+	
+	Marc
+	
+
+
+###################### cut here ###########################################
+#! /bin/sh
+# This is a shell archive.  Remove anything before this line, then feed it
+# into a shell via "sh file" or similar.  To overwrite existing files,
+# type "sh file -c".
+# The tool that generated this appeared in the comp.sources.unix newsgroup;
+# send mail to comp-sources-unix@uunet.uu.net if you want that tool.
+# Contents:  README abstract all complex.c complex.h debug.h epsilon.c
+#   epsilon.h gausslup.c gausslup.h make.in makefile matrix.c matrix.h
+#   returns.h run_tglup tgausslup.c vector.c vector.h
+# Wrapped by rumore@ihgp194x on Mon Apr 27 09:11:36 1998
+PATH=/bin:/usr/bin:/usr/ucb ; export PATH
+echo If this archive is complete, you will see the following message:
+echo '          "shar: End of archive."'
+if test -f 'README' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'README'\"
+else
+  echo shar: Extracting \"'README'\" \(1340 characters\)
+  sed "s/^X//" >'README' <<'END_OF_FILE'
+XMarc,
+X
+XThe "shell archive" contains the following files:
+X
+Xcomplex.c	<<== complex class, may have a bug.
+Xcomplex.h
+Xepsilon.c	<<== calculates epsilon for numeric calculations
+Xepsilon.h
+Xgausslup.c	<<== actual LUP code
+Xgausslup.h
+Xmake.in
+Xmakefile
+Xmatrix.c	<<== matrix class used in LUP code
+Xmatrix.h
+Xreturns.h	<<== return values from LUP code
+Xdebug.h		<<== contains MustBeTrue assert/exception macro
+Xtgausslup.c	<<== test program for LUP code
+Xvector.c	<<== vector code in LUP code
+Xvector.h
+Xrun_tglup	<<== test script with test cases
+XREADME		<<== this readme file :-)
+X
+XThe references are as follows:
+X
+X1) D. Kincaid and W. Cheney, Numerical Analysis, 1991. Chapter 4 of this book
+Xcontains the algorithms implemented in the file gausslup.c.
+X
+X2) W. H. Press, et al, Numerical Recipes: The Art of Scientific Computing,
+X1986. The algorithms for computing the inverse and determinant are from
+Xhere (although, it really is just simple, basic linear algebra).
+X
+X3) R. Gregory and D. Karney, A Collection of Matrices For Testing 
+XComputational Algorithms, 1969. Chapter 3 of this book contains the
+Xtest cases used in testing the gausslup package. Also, many of these cases
+Xare included in the run_tglup shell script. I can fax you part
+Xof chapter 3, if you wish.
+X
+XHopefully, this is enough information for your testers !!!
+X
+XMike Rumore
+Xmrumore@lucent.com
+END_OF_FILE
+  if test 1340 -ne `wc -c <'README'`; then
+    echo shar: \"'README'\" unpacked with wrong size!
+  fi
+  # end of 'README'
+fi
+if test -f 'abstract' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'abstract'\"
+else
+  echo shar: Extracting \"'abstract'\" \(2603 characters\)
+  sed "s/^X//" >'abstract' <<'END_OF_FILE'
+XHi Marc,
+X
+XIn the May issue of C/C++ Users Journal there is a request for articles
+Xon numerical methods. There was interest in papers on digital-filtering,
+Xsmoothing of data, and techniques to increase precision. As an ex-nuclear
+Xphysicist (now computer grunt working for Lucent Technologies), I have 
+Xseveral Fortran subroutines in all these areas which I converted to 
+XC++. If there is interest, I would like to submit an article on one of
+Xthe following topics.
+X
+X1) Data smoothing - I propose an article describing the smoothing 
+Xmethod used by Savitsky and Golay (Analytical Chemistry, 36 (1964) p 1627.
+XThis method is really a convolution of the form:
+X
+X		i=m
+X		----
+X		\     C(i)*X(j+i)
+X	Y(j) =  /     -----------
+X		----      N
+X		i=-m
+X		 
+X
+Xwhere X is the current spectrum, and Y is the smoothed spectrum. The factors
+XC are calculated to smooth the data. The above expression is really a moving
+Xaverage. The number of points (N) in the average depends on the characteristic
+Xwidth of the features found in the data.
+X
+X2) Techniques for improving precision - I propose an article describing a
+Xtemplatized LUP decomposition method for inverting matrices. This method
+Xhas been used for unfolding spectra (solving Fredholm's integral
+Xequation of the 1st kind). In a past issue of C/C++ Users Journal, a
+XGaussian elimination routine was described for inverting matrices. This
+Xmethod is fine for smaller matrices, but if you look at the LINPACK or
+XLAPACK, they use LUP decomposition or iterative methods, not Gaussian
+Xelimination (with pivoting). 
+X
+XThe templatized version that I have calculates it's error (epsilon)
+Xautomatically for whatever data type is given to the template.
+X
+XI believe that this article would have the widest interest of the 
+X4 articles proposed here.
+X
+X3) Another technique for smoothing data, again from my deep, dark past, is 
+Xsimply a low-pass filter implemented using an FFT. This method was applied
+Xto gamma ray spectra. The basic idea is simple. Since noise is about
+Xa channel wide in the configuration space, then it's fourier transform
+Xmust have most of it's contribution at the higher frequencies. So you
+Xapply a low-pass filter to eliminate, or diminish the higher frequencies,
+Xand apply the inverse fourier transform. Hopefully, the noise has been
+Xeliminated from the original spectrum.
+X
+X4) The final technique for smoothing uses a spline function. The original
+Xarticle is by C. Reinsch in the journal Numerische Mathematik 10 (1967) p177.
+X
+XIf there is any interest, I would be very interested in submitting a paper.
+X
+XThank you !!!
+X
+XMike Rumore
+Xmrumore@lucent.com
+X630-713-4396
+END_OF_FILE
+  if test 2603 -ne `wc -c <'abstract'`; then
+    echo shar: \"'abstract'\" unpacked with wrong size!
+  fi
+  # end of 'abstract'
+fi
+if test -f 'all' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'all'\"
+else
+  echo shar: Extracting \"'all'\" \(0 characters\)
+  sed "s/^X//" >'all' <<'END_OF_FILE'
+END_OF_FILE
+  if test 0 -ne `wc -c <'all'`; then
+    echo shar: \"'all'\" unpacked with wrong size!
+  fi
+  # end of 'all'
+fi
+if test -f 'complex.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'complex.c'\"
+else
+  echo shar: Extracting \"'complex.c'\" \(9782 characters\)
+  sed "s/^X//" >'complex.c' <<'END_OF_FILE'
+X// complex class functions
+X
+X// headers
+X#include "complex.h"
+X
+X// local definitions
+X#define plusi Complex<T>(0.0, 1.0)
+X#define minusi Complex<T>(0.0, -1.0)
+X#define plusone Complex<T>(1.0, 0.0)
+X#define minusone Complex<T>(-1.0, 0.0)
+X
+X// constructors and destructor
+Xtemplate <class T>
+XComplex<T>::Complex():
+X        x(0), y(0)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class T>
+XComplex<T>::Complex(T srcx):
+X        x(srcx), y(0)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class T>
+XComplex<T>::Complex(T srcx, T srcy):
+X        x(srcx), y(srcy)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class T>
+XComplex<T>::Complex(const Complex<T> &src): 
+X        x(src.x), y(src.y)
+X{
+X        // do nothing
+X}
+X
+Xtemplate <class T>
+XComplex<T>::~Complex() 
+X{
+X        // do nothing
+X}
+X
+X// arithmetic operators
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator=(const Complex<T> &c)
+X{
+X        x = c.x;
+X        y = c.y;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator+=(const Complex<T> &c)
+X{
+X        x += c.x;
+X        y += c.y;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator-=(const Complex<T> &c)
+X{
+X        x -= c.x;
+X        y -= c.y;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator*=(const Complex<T> &c)
+X{
+X        T tmpx = x*c.x - y*c.y;
+X        T tmpy = x*c.y + y*c.x;
+X        x = tmpx;
+X        y = tmpy;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator/=(const Complex<T> &c)
+X{
+X        MustBeTrue(c.x != 0.0 || c.y != 0.0);
+X        T tmpm = c.x*c.x + c.y*c.y;
+X        T tmpx = (x*c.x + y*c.y)/tmpm;
+X        T tmpy = (y*c.x - x*c.y)/tmpm;
+X        x = tmpx;
+X        y = tmpy;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator+(const Complex<T> &c) const
+X{
+X        return(Complex<T>(*this) += c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator-(const Complex<T> &c) const
+X{
+X        return(Complex<T>(*this) -= c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator*(const Complex<T> &c) const
+X{
+X        return(Complex<T>(*this) *= c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator/(const Complex<T> &c) const
+X{
+X        return(Complex<T>(*this) /= c);
+X}
+X
+X// logical operators
+Xtemplate <class T>
+Xint
+XComplex<T>::operator==(const Complex<T> &c) const
+X{
+X        return((x == c.x) && (y == c.y));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator!=(const Complex<T> &c) const
+X{
+X        return((x != c.x) || (y != c.y));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator<(const Complex<T> &c) const
+X{
+X        return(abs(*this) < abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator>(const Complex<T> &c) const
+X{
+X        return(abs(*this) > abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator<=(const Complex<T> &c) const
+X{
+X        return(abs(*this) <= abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator>=(const Complex<T> &c) const
+X{
+X        return(abs(*this) >= abs(c));
+X}
+X
+X// arithmetic operators
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator=(T r)
+X{
+X        x = r;
+X        y = 0.0;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator+=(T r)
+X{
+X        x += r;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator-=(T r)
+X{
+X        x -= r;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator*=(T r)
+X{
+X        x *= r;
+X        y *= r;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T> &
+XComplex<T>::operator/=(T r)
+X{
+X        MustBeTrue(r != 0.0);
+X        x /= r;
+X        y /= r;
+X        return(*this);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator+(T r) const
+X{
+X        return(Complex<T>(*this) += r);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator-(T r) const
+X{
+X        return(Complex<T>(*this) -= r);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator*(T r) const
+X{
+X        return(Complex<T>(*this) *= r);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+XComplex<T>::operator/(T r) const
+X{
+X        return(Complex<T>(*this) /= r);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xoperator+(T r, const Complex<T> &c)
+X{
+X        return(Complex<T>(r) += c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xoperator-(T r, const Complex<T> &c)
+X{
+X        return(Complex<T>(r) -= c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xoperator*(T r, const Complex<T> &c)
+X{
+X        return(Complex<T>(r) *= c);
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xoperator/(T r, const Complex<T> &c)
+X{
+X        return(Complex<T>(r) /= c);
+X}
+X
+X// logical operators
+Xtemplate <class T>
+Xint
+XComplex<T>::operator==(T r) const
+X{
+X        return((x == r) && (y == 0.0));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator!=(T r) const
+X{
+X        return((x != r) || (y != 0.0));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator<(T r) const
+X{
+X        return(abs(*this) < rabs(r));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator>(T r) const
+X{
+X        return(abs(*this) > rabs(r));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator<=(T r) const
+X{
+X        return(abs(*this) <= rabs(r));
+X}
+X
+Xtemplate <class T>
+Xint
+XComplex<T>::operator>=(T r) const
+X{
+X        return(abs(*this) >= rabs(r));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator==(T r, const Complex<T> &c)
+X{
+X        return((c.x == r) && (c.y == 0.0));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator!=(T r, const Complex<T> &c)
+X{
+X        return((c.x != r) || (c.y != 0.0));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator<(T r, const Complex<T> &c)
+X{
+X        return(rabs(r) < abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator>(T r, const Complex<T> &c)
+X{       
+X        return(rabs(r) > abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator<=(T r, const Complex<T> &c)
+X{
+X        return(rabs(r) <= abs(c));
+X}
+X
+Xtemplate <class T>
+Xint
+Xoperator>=(T r, const Complex<T> &c)
+X{
+X        return(rabs(r) >= abs(c));
+X}
+X
+X// mathematical functions
+Xtemplate <class T>
+XComplex<T>
+Xexp(const Complex<T> &p)
+X{
+X	T expx = exp(p.x);
+X        return(Complex<T>(expx*cos(p.y), expx*sin(p.y)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xlog(const Complex<T> &c)
+X{
+X        MustBeTrue((c.x != 0.0) || (c.y != 0.0));
+X        return(Complex<T>(log(abs(c)), arg(c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xlog10(const Complex<T> &c)
+X{
+X        return(log(c)/Complex<T>(log(10.0)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xpow(const Complex<T> &b, Complex<T> &p)
+X{
+X        if (b == 0.0)
+X                return(Complex<T>(0.0));
+X        else
+X                return(exp(p*log(b)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xsqrt(const Complex<T> &c)
+X{
+X        if (c == 0.0)
+X                return(Complex<T>(0.0));
+X        else
+X                return(exp(Complex<T>(0.5)*log(c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xsin(const Complex<T> &c)
+X{
+X        return(Complex<T>(sin(c.x)*cosh(c.y), cos(c.x)*sinh(c.y)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xcos(const Complex<T> &c)
+X{
+X        return(Complex<T>(cos(c.x)*cosh(c.y), -1.0*sin(c.x)*sinh(c.y)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xtan(const Complex<T> &c)
+X{
+X        return(sin(c)/cos(c));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xasin(const Complex<T> &c)
+X{
+X        return(minusi*log(plusi*c+sqrt(plusone-c*c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xacos(const Complex<T> &c)
+X{
+X        return(minusi*log(c+plusi*sqrt(plusone-c*c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xatan(const Complex<T> &c)
+X{
+X        return(Complex<T>(0.5)*plusi*log((plusi+c)/(plusi-c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xsinh(const Complex<T> &c)
+X{
+X        return(Complex<T>(sinh(c.x)*cos(c.x), cosh(c.x)*sin(c.y)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xcosh(const Complex<T> &c)
+X{
+X        return(Complex<T>(cosh(c.x)*cos(c.x), sinh(c.x)*sin(c.y)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xtanh(const Complex<T> &c)
+X{
+X        T divider = cosh(2.0*c.x)*cos(2.0*c.y);
+X        return(Complex<T>(sinh(2.0*c.x)/divider, cos(2.0*c.y)/divider));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xasinh(const Complex<T> &c)
+X{
+X        return(log(c+sqrt(c*c+plusone)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xacosh(const Complex<T> &c)
+X{
+X        return(log(c+sqrt(c*c-plusone)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xatanh(const Complex<T> &c)
+X{
+X        return(Complex<T>(0.5)*log((plusone+c)/(plusone-c)));
+X}
+X
+Xtemplate <class T>
+XComplex<T>
+Xconj(const Complex<T> &c)
+X{
+X        return(Complex<T>(c.x, -1.0*c.y));
+X}
+X
+Xtemplate <class T>
+XT
+Xabs(const Complex<T> &c)
+X{
+X        return(sqrt(c.x*c.x+c.y*c.y));
+X}
+X
+Xtemplate <class T>
+XT
+Xnorm(const Complex<T> &c)
+X{
+X        return(sqrt(c.x*c.x+c.y*c.y));
+X}
+X
+Xtemplate <class T>
+XT
+Xarg(const Complex<T> &c)
+X{
+X        if (c.x > 0.0)
+X        {
+X                if (c.y > 0.0)
+X                {
+X                        return(atan(c.y/c.x));
+X                }
+X                else if (c.y < 0.0)
+X                {
+X                        return(2.0*M_PI-atan(rabs(c.y/c.x)));
+X                }
+X                else
+X                {
+X                        return(0.0);
+X                }
+X        }
+X        else if (c.x < 0.0)
+X        {
+X                if (c.y > 0.0)
+X                {
+X                        return(M_PI-atan(rabs(c.y/c.x)));
+X                }
+X                else if (c.y < 0.0)
+X                {
+X                        return(M_PI+atan(c.y/c.x));
+X                }
+X                else
+X                {
+X                        return(M_PI);
+X                }
+X        }
+X        else
+X        {
+X                if (c.y > 0.0)
+X                {
+X                        return(M_PI/2.0);
+X                }
+X                else if (c.y < 0.0)
+X                {
+X                        return(-3.0*M_PI/2.0);
+X                }
+X                else
+X                {
+X                        return(0.0);
+X                }
+X        }
+X}
+X
+Xtemplate <class T>
+XT
+Xreal(const Complex<T> &c)
+X{
+X        return(c.x);
+X}
+X
+Xtemplate <class T>
+XT
+Ximag(const Complex<T> &c)
+X{
+X        return(c.y);
+X}
+X
+Xtemplate <class T>
+XT
+Xrabs(T r)
+X{
+X        return((r < 0.0) ? -r : r);
+X}
+X
+X/* print complex number */
+Xtemplate <class T>
+Xostream &
+Xoperator<<(ostream &os, const Complex<T> &c)
+X{
+X        os << "(" << c.x << "," << c.y << ")";
+X        return(os);
+X}
+END_OF_FILE
+  if test 9782 -ne `wc -c <'complex.c'`; then
+    echo shar: \"'complex.c'\" unpacked with wrong size!
+  fi
+  # end of 'complex.c'
+fi
+if test -f 'complex.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'complex.h'\"
+else
+  echo shar: Extracting \"'complex.h'\" \(5715 characters\)
+  sed "s/^X//" >'complex.h' <<'END_OF_FILE'
+X#ifndef __COMPLEX_H
+X#define __COMPLEX_H
+X// complex number class
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <math.h>
+X#include <errno.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X// forward declarations (required by SUN C++ 4.X compiler)
+Xtemplate <class T> class Complex;
+Xtemplate <class T> Complex<T> operator+(T, const Complex<T> &);
+Xtemplate <class T> Complex<T> operator-(T, const Complex<T> &);
+Xtemplate <class T> Complex<T> operator*(T, const Complex<T> &);
+Xtemplate <class T> Complex<T> operator/(T, const Complex<T> &);
+Xtemplate <class T> int operator==(T, const Complex<T> &);
+Xtemplate <class T> int operator!=(T, const Complex<T> &);
+Xtemplate <class T> int operator<(T, const Complex<T> &);
+Xtemplate <class T> int operator>(T, const Complex<T> &);
+Xtemplate <class T> int operator<=(T, const Complex<T> &);
+Xtemplate <class T> int operator>=(T, const Complex<T> &);
+Xtemplate <class T> Complex<T> exp(const Complex<T> &);
+Xtemplate <class T> Complex<T> log(const Complex<T> &);
+Xtemplate <class T> Complex<T> log10(const Complex<T> &);
+Xtemplate <class T> Complex<T> pow(const Complex<T> &, const Complex<T> &);
+Xtemplate <class T> Complex<T> sqrt(const Complex<T> &);
+Xtemplate <class T> Complex<T> sin(const Complex<T> &);
+Xtemplate <class T> Complex<T> cos(const Complex<T> &);
+Xtemplate <class T> Complex<T> tan(const Complex<T> &);
+Xtemplate <class T> Complex<T> asin(const Complex<T> &);
+Xtemplate <class T> Complex<T> acos(const Complex<T> &);
+Xtemplate <class T> Complex<T> atan(const Complex<T> &);
+Xtemplate <class T> Complex<T> sinh(const Complex<T> &);
+Xtemplate <class T> Complex<T> cosh(const Complex<T> &);
+Xtemplate <class T> Complex<T> tanh(const Complex<T> &);
+Xtemplate <class T> Complex<T> asinh(const Complex<T> &);
+Xtemplate <class T> Complex<T> acosh(const Complex<T> &);
+Xtemplate <class T> Complex<T> atanh(const Complex<T> &);
+Xtemplate <class T> Complex<T> conj(const Complex<T> &);
+Xtemplate <class T> T abs(const Complex<T> &);
+Xtemplate <class T> T arg(const Complex<T> &);
+Xtemplate <class T> T norm(const Complex<T> &);
+Xtemplate <class T> T real(const Complex<T> &);
+Xtemplate <class T> T imag(const Complex<T> &);
+Xtemplate <class T> T rabs(T);
+X
+X// complex class definition
+Xtemplate <class T> class Complex
+X{
+Xpublic:
+X        // constructors and destructor
+X        Complex();
+X        Complex(T);
+X        Complex(T, T);
+X        Complex(const Complex &);
+X        ~Complex();
+X
+X        // arithmetic operations
+X        Complex &operator=(const Complex &);
+X        Complex &operator+=(const Complex &);
+X        Complex &operator-=(const Complex &);
+X        Complex &operator*=(const Complex &);
+X        Complex &operator/=(const Complex &);
+X        Complex operator+(const Complex &) const;
+X        Complex operator-(const Complex &) const;
+X        Complex operator*(const Complex &) const;
+X        Complex operator/(const Complex &) const;
+X
+X        // logical operators 
+X        int operator==(const Complex &) const;
+X        int operator!=(const Complex &) const;
+X        int operator<(const Complex &) const;
+X        int operator>(const Complex &) const;
+X        int operator<=(const Complex &) const;
+X        int operator>=(const Complex &) const;
+X
+X        // arithmetic operations
+X        Complex &operator=(T);
+X        Complex &operator+=(T);
+X        Complex &operator-=(T);
+X        Complex &operator*=(T);
+X        Complex &operator/=(T);
+X        Complex operator+(T) const;
+X        Complex operator-(T) const;
+X        Complex operator*(T) const;
+X        Complex operator/(T) const;
+X        friend Complex<T> operator+(T, const Complex<T> &);
+X        friend Complex<T> operator-(T, const Complex<T> &);
+X        friend Complex<T> operator*(T, const Complex<T> &);
+X        friend Complex<T> operator/(T, const Complex<T> &);
+X
+X        // logical operators 
+X        int operator==(T) const;
+X        int operator!=(T) const;
+X        int operator<(T) const;
+X        int operator>(T) const;
+X        int operator<=(T) const;
+X        int operator>=(T) const;
+X        friend int operator==(T, const Complex<T> &);
+X        friend int operator!=(T, const Complex<T> &);
+X        friend int operator<(T, const Complex<T> &);
+X        friend int operator>(T, const Complex<T> &);
+X        friend int operator<=(T, const Complex<T> &);
+X        friend int operator>=(T, const Complex<T> &);
+X
+X        // mathematical functions
+X        friend Complex<T> exp(const Complex<T> &);
+X        friend Complex<T> log(const Complex<T> &);
+X        friend Complex<T> log10(const Complex<T> &);
+X        friend Complex<T> pow(const Complex<T> &, const Complex<T> &);
+X        friend Complex<T> sqrt(const Complex<T> &);
+X	friend Complex<T> sin(const Complex<T> &);
+X        friend Complex<T> cos(const Complex<T> &);
+X        friend Complex<T> tan(const Complex<T> &);
+X        friend Complex<T> asin(const Complex<T> &);
+X        friend Complex<T> acos(const Complex<T> &);
+X        friend Complex<T> atan(const Complex<T> &);
+X        friend Complex<T> sinh(const Complex<T> &);
+X        friend Complex<T> cosh(const Complex<T> &);
+X        friend Complex<T> tanh(const Complex<T> &);
+X        friend Complex<T> asinh(const Complex<T> &);
+X        friend Complex<T> acosh(const Complex<T> &);
+X        friend Complex<T> atanh(const Complex<T> &);
+X        friend Complex<T> conj(const Complex<T> &);
+X        friend T abs(const Complex<T> &);
+X        friend T arg(const Complex<T> &);
+X        friend T norm(const Complex<T> &);
+X        friend T real(const Complex<T> &);
+X        friend T imag(const Complex<T> &);
+X	friend T rabs(T);
+X
+X        // miscellaneous
+X        friend ostream &operator<<(ostream &, const Complex<T> &);
+X
+Xprotected:
+X        // internal data
+X        T x, y;
+X};
+X                   
+X#endif
+END_OF_FILE
+  if test 5715 -ne `wc -c <'complex.h'`; then
+    echo shar: \"'complex.h'\" unpacked with wrong size!
+  fi
+  # end of 'complex.h'
+fi
+if test -f 'debug.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'debug.h'\"
+else
+  echo shar: Extracting \"'debug.h'\" \(2102 characters\)
+  sed "s/^X//" >'debug.h' <<'END_OF_FILE'
+X#ifndef __DEBUG_H
+X#define __DEBUG_H
+X
+X// headers
+X#include <stdlib.h>
+X#include <errno.h>
+X#include <string.h>
+X#include <iostream.h>
+X
+X// check macros
+X#if defined(__STDC__)
+X#if defined(USEEXCEPTION)
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		throw #EXPR ; \
+X	}
+X
+X#else
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		abort(); \
+X	}
+X#endif
+X
+X#define CheckReturn(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "ERROR RETURN AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << #EXPR << endl; \
+X		return(NOTOK); \
+X	}
+X
+X#else
+X
+X#if defined(USEEXCEPTION)
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		throw "EXPR" ; \
+X	}
+X#else
+X#define MustBeTrue(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "INTERNAL ERROR AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		abort(); \
+X	}
+X#endif
+X
+X#define CheckReturn(EXPR) \
+X	if (!(EXPR)) { \
+X		cerr << "ERROR RETURN AT "; \
+X		cerr << __FILE__ << "'" << __LINE__; \
+X		cerr << ": " << "EXPR" << endl; \
+X		return(NOTOK); \
+X	}
+X#endif
+X
+X// simple debugging macros
+X#ifdef DEBUG
+X
+X#define TRACE() \
+X	cerr << "TRACE " << __FILE__ << "'" << __LINE__ << ": " << endl
+X#define RETURN(myretval) { \
+X	cerr << "RETURN " << __FILE__ << "'" << __LINE__ << ": " << endl; \
+X	return(myretval); \
+X}
+X#define DUMP(myvalue) \
+X	cerr << "DUMP " << __FILE__ << "'" << __LINE__ << ": value = " << myvalue << endl
+X
+X#else
+X
+X#define TRACE()
+X#define RETURN(myretval)
+X#define DUMP(myvalue)
+X
+X#endif
+X
+X#define ERROR(errmsg, errval) { \
+X	cerr << __FILE__ << "'" << __LINE__ << ": "; \
+X	cerr << errmsg << " (errno = " << errval << ")" << endl; \
+X}
+X#define ERRORD(errmsg, errdata, errval) { \
+X	cerr << __FILE__ << "'" << __LINE__ << ": "; \
+X	cerr << errmsg << " (errno = " << errval << ")" << endl; \
+X	cerr << "(data = " << errdata << ")" << endl; \
+X}
+X
+X#endif
+END_OF_FILE
+  if test 2102 -ne `wc -c <'debug.h'`; then
+    echo shar: \"'debug.h'\" unpacked with wrong size!
+  fi
+  # end of 'debug.h'
+fi
+if test -f 'epsilon.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'epsilon.c'\"
+else
+  echo shar: Extracting \"'epsilon.c'\" \(185 characters\)
+  sed "s/^X//" >'epsilon.c' <<'END_OF_FILE'
+X#include "epsilon.h"
+X
+Xtemplate <class T>
+XT
+XcalcEpsilon(T)
+X{
+X	T f1 = 1.0;
+X	T f2 = 1.0;
+X	T oldf2 = 0.0;
+X
+X	for (f2 /= 2.0; ((f1-f2) != f1); oldf2=f2, f2 /= 2.0) ;
+X	return(T(2.0)*oldf2);
+X}
+END_OF_FILE
+  if test 185 -ne `wc -c <'epsilon.c'`; then
+    echo shar: \"'epsilon.c'\" unpacked with wrong size!
+  fi
+  # end of 'epsilon.c'
+fi
+if test -f 'epsilon.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'epsilon.h'\"
+else
+  echo shar: Extracting \"'epsilon.h'\" \(101 characters\)
+  sed "s/^X//" >'epsilon.h' <<'END_OF_FILE'
+X#ifndef __EPSILON_H
+X#define __EPSILON_H
+X
+X// declaration
+Xtemplate <class T> T calcEpsilon(T);
+X
+X#endif
+END_OF_FILE
+  if test 101 -ne `wc -c <'epsilon.h'`; then
+    echo shar: \"'epsilon.h'\" unpacked with wrong size!
+  fi
+  # end of 'epsilon.h'
+fi
+if test -f 'gausslup.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gausslup.c'\"
+else
+  echo shar: Extracting \"'gausslup.c'\" \(5506 characters\)
+  sed "s/^X//" >'gausslup.c' <<'END_OF_FILE'
+X//
+X// this file contain functions for solving a linear set of 
+X// equations using gaussian eliminination or LUP decomposition.
+X//
+X// given the equation M*x = y where M is an nxn matrix and x, y
+X// n-dimensioned vectors. Solve for x given M and y. There are
+X// two direct methods of solving this set of equations. On uses
+X// gaussian elimination and the other uses an LU decomposition.
+X//
+X// gaussian elimination reduces a matrix to upper triangular
+X// form. once the matrix is in this form, the back substitution
+X// is used to solve for x.
+X//
+X// the second form factors M into two matrices, a lower triangular
+X// matrix L and an upper triangular matrix U, which satisfy
+X// relation, A = L*U. it works as follows.
+X//
+X// let M*x = y where M is an nxn matrix and x, and y are
+X// n-dimension vectors. Then let M = L*U where L is lower
+X// triangular and U is upper triangular. the solution for x
+X// is given by:
+X//
+X//	M*x = L*U*x = y
+X//
+X// let z = U*x, then
+X//
+X//	L*U*x = L*z = y and U*x = z.
+X//
+X// to solve for x, first solve L*z = y. Use forward substituion since
+X// L is lower triangular. Then once you have z, solve for x
+X// using the equation:
+X//
+X//	U*x = z.
+X//
+X// solve using back substitution since U is upper triangular. this then
+X// gives you x, the original problem.
+X// 
+X// there are two basic ways to calculate L and U. one makes L a unit
+X// lower triangular matrix (l(i, i) = 1, 1<= i <= n). this is doolittle's
+X// method. the second method makes U unit upper triangular matrix
+X// (u(i, i) = 1, 1 <= i <= n). gaussian elimination generates a 
+X// doolittle factorization.
+X//
+X
+X// required headers
+X#include "gausslup.h"
+X
+X//
+X// given a matrix, generate an LUP decomposition using Gaussian
+X// elimination with scaling and pivoting.
+X//
+Xtemplate <class T>
+Xint
+XGaussianLUP_Pivot(Matrix<T> &m, Vector<int> &p, T ep, T &sign)
+X{
+X	// must be a square matrix
+X	MustBeTrue(m.nrows == m.ncols && m.nrows > 0);
+X	sign = -1;
+X
+X	// check epsilon, set if invalid
+X	T minep = calcEpsilon(T(0));
+X	if ((ep = fabs(ep)) < minep)
+X		ep = minep;
+X
+X	// get number of rows and columns
+X	int max = m.nrows;
+X
+X	// generate scaling information for each row. initialize 
+X	// permutation array, p.
+X	Vector<T> s(max);
+X	for (int i = 0; i < max; i++)
+X	{
+X		p[i] = i;
+X		s[i] = fabs(m(i, 1));
+X		for (int j = 2; j < max; j++)
+X		{
+X			T tmp = fabs(m(i, j));
+X			if (tmp > s[i])
+X				s[i] = tmp;
+X		}
+X	}
+X
+X	// start gaussian elimination process
+X	for (int k = 0; k < (max-1); k++)
+X	{
+X		// find pivot row
+X		int pivot = k;
+X		T tmpf = fabs(m(p[pivot], k))/s[p[pivot]];
+X		for (int i = k+1; i < max; i++)
+X		{
+X			T tmpf2 = fabs(m(p[i], k))/s[p[i]];
+X			if (tmpf2 > tmpf)
+X			{
+X				pivot = i;
+X				tmpf = tmpf2;
+X			}
+X		}
+X		if (pivot != k)
+X		{
+X			int tmpp = p[k];
+X			p[k] = p[pivot];
+X			p[pivot] = tmpp;
+X			sign = -sign;
+X		}
+X
+X		// check for division by zero
+X		if (fabs(m(p[k], k)) <= ep)
+X			return(NOTOK);
+X
+X		// calculate L and U matrices
+X		for (i = k+1; i < max; i++)
+X		{
+X			// multiplier for column
+X			T d = m(p[i], k)/m(p[k], k);
+X
+X			// save multiplier since it is L.
+X			m(p[i], k) = d;
+X
+X			// reduce original matrix to get U.
+X			for (int j = k+1; j < max; j++)
+X			{
+X				m(p[i], j) -= d*m(p[k], j);
+X			}
+X		}
+X	}
+X
+X	// all done
+X	return(OK);
+X}
+X
+X//
+X// given a gaussian LUP decomposition of a matrix and a permutation vector,
+X// solve for x-vector using the given y-vector.
+X//
+Xtemplate <class T>
+Xint
+XSolveUsingGaussianLUP_Pivot(Matrix<T> &m, 
+X	Vector<T> &x, Vector<T> &y, Vector<int> &p, T ep)
+X{
+X	// must be a square matrix
+X	MustBeTrue(m.nrows == m.ncols && m.nrows > 0);
+X
+X	// check epsilon, set if invalid
+X	T minep = calcEpsilon(T(0));
+X	if ((ep = fabs(ep)) < minep)
+X		ep = minep;
+X
+X	// get number of rows and columns
+X	int max = m.nrows;
+X
+X	// update y-vector
+X	for (int k = 0; k < (max-1); k++)
+X	{
+X		for (int i = k+1; i < max; i++)
+X		{
+X			y[p[i]] -= m(p[i], k)*y[p[k]];
+X		}
+X	}
+X
+X	// start backward substitution
+X	for (int i = max-1; i >= 0; i--)
+X	{
+X		// check for a singular matrix
+X		if (fabs(m(p[i], i)) <= ep)
+X			return(NOTOK);
+X
+X		// solve for x by substituting previous solutions
+X		x[i] = y[p[i]];
+X		for (int j = i+1; j < max; j++)
+X		{
+X			x[i] -= m(p[i], j)*x[j];
+X		}
+X		x[i] /= m(p[i], i);
+X	}
+X
+X	// all done
+X	return(OK);
+X}
+X
+X//
+X// given a gaussian LUP decomposition of a matrix and a permutation vector,
+X// calculate the inverse of the original matrix.
+X//
+Xtemplate <class T>
+Xint
+XGetInverseUsingGaussianLUP_Pivot(Matrix<T> &m, Matrix<T> &minv, Vector<int> &p, T ep)
+X{
+X	// must be a square matrix
+X	MustBeTrue(m.nrows == m.ncols && m.nrows > 0);
+X	MustBeTrue(minv.nrows == minv.ncols && minv.nrows > 0);
+X	MustBeTrue(minv.nrows == m.ncols);
+X
+X	// get number of rows and columns
+X	int max = m.nrows;
+X
+X	// update inverse matrix
+X	for (int i = 0; i < max; i++)
+X	{
+X		// initialize column vector
+X		Vector<T> y(max);
+X		for (int j = 0; j < max; j++)
+X		{
+X			y[j] = 0;
+X		}
+X		y[i] = 1;
+X
+X		// solve for corresponding vector in inverse
+X		Vector<T> x(max);
+X		if (SolveUsingGaussianLUP_Pivot(m, x, y, p, ep) != OK)
+X			return(NOTOK);
+X
+X		// transfer results to inverse matrix
+X		for (j = 0; j < max; j++)
+X		{
+X			minv(j, i) = x[j];
+X		}
+X	}
+X
+X	// all done
+X	return(OK);
+X}
+X
+X//
+X// given a gaussian LUP decomposition of a matrix,
+X// calculate the determinant of the original matrix.
+X//
+Xtemplate <class T>
+Xint
+XGetDeterminantUsingGaussianLUP_Pivot(Matrix<T> &m, T &d)
+X{
+X	// must be a square matrix
+X	MustBeTrue(m.nrows == m.ncols && m.nrows > 0);
+X
+X	// get number of rows and columns
+X	int max = m.nrows;
+X
+X	// get determinant
+X	for (int i = 0; i < max; i++)
+X	{
+X		d = d*m(i, i);
+X	}
+X
+X	// all done
+X	return(OK);
+X}
+X
+END_OF_FILE
+  if test 5506 -ne `wc -c <'gausslup.c'`; then
+    echo shar: \"'gausslup.c'\" unpacked with wrong size!
+  fi
+  # end of 'gausslup.c'
+fi
+if test -f 'gausslup.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'gausslup.h'\"
+else
+  echo shar: Extracting \"'gausslup.h'\" \(904 characters\)
+  sed "s/^X//" >'gausslup.h' <<'END_OF_FILE'
+X#ifndef __GAUSSLUP_H
+X#define __GAUSSLUP_H
+X
+X// gaussian LUP decomposition definitions
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <math.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X#include "vector.h"
+X#include "matrix.h"
+X#include "epsilon.h"
+X
+X// calculates gaussian LUP decomposition for a matrix.
+Xtemplate <class T>
+Xint
+XGaussianLUP_Pivot(Matrix<T> &, Vector<int> &, T, T &);
+X
+X// solves set of linear equations using results of 
+X// gaussian LUP decomposition
+Xtemplate <class T>
+Xint
+XSolveUsingGaussianLUP_Pivot(Matrix<T> &, 
+X	Vector<T> &, Vector<T> &, Vector<int> &, T);
+X
+X// calculate the inverse using gaussian LUP results
+Xtemplate <class T>
+Xint
+XGetInverseUsingGaussianLUP_Pivot(Matrix<T> &, 
+X	Matrix<T> &, Vector<int> &, T);
+X
+X// calculate the determinant using gaussian LUP results
+Xtemplate <class T>
+Xint
+XGetDeterminantUsingGaussianLUP_Pivot(Matrix<T> &, T &);
+X
+X#endif
+END_OF_FILE
+  if test 904 -ne `wc -c <'gausslup.h'`; then
+    echo shar: \"'gausslup.h'\" unpacked with wrong size!
+  fi
+  # end of 'gausslup.h'
+fi
+if test -f 'make.in' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'make.in'\"
+else
+  echo shar: Extracting \"'make.in'\" \(119 characters\)
+  sed "s/^X//" >'make.in' <<'END_OF_FILE'
+X#
+XCC=CC
+XCCFLAGS=-g 
+X#
+XLD=CC
+XLDFLAGS=-g 
+X#
+Xtgausslup
+Xtgausslup.c
+Xgausslup.c
+Xmatrix.c
+Xvector.c
+Xepsilon.c
+Xcomplex.c
+X-lm
+X#
+END_OF_FILE
+  if test 119 -ne `wc -c <'make.in'`; then
+    echo shar: \"'make.in'\" unpacked with wrong size!
+  fi
+  # end of 'make.in'
+fi
+if test -f 'makefile' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'makefile'\"
+else
+  echo shar: Extracting \"'makefile'\" \(2124 characters\)
+  sed "s/^X//" >'makefile' <<'END_OF_FILE'
+X
+X.SUFFIXES:		.o .c
+X
+XLEXFLAGS = -n
+XYACC = yacc
+XYACCFLAGS = -d -v
+XLEX = lex
+XMAKE = make
+XLDFLAGS = -g
+XLD = CC
+XBACKUPDIR = BACKUP
+XSHELLBIN = $(HOME)/bin
+XARFLAGS = -r -v
+XCCFLAGS = -g
+XINCLDIRS = 
+XCC = CC
+XAR = ar
+XENDLIST = 
+X
+X.c.o:
+X		$(CC) $(CCFLAGS) $(INCLDIRS) -c $<
+X
+Xall:		tgausslup \
+X		$(ENDLIST)
+X		touch all
+X
+Xtgausslup:		tgausslup.o \
+X		gausslup.o \
+X		matrix.o \
+X		vector.o \
+X		epsilon.o \
+X		complex.o \
+X		$(ENDLIST)
+X		$(LD) $(LDFLAGS) -o tgausslup \
+X			tgausslup.o \
+X			gausslup.o \
+X			matrix.o \
+X			vector.o \
+X			epsilon.o \
+X			complex.o \
+X			-lm \
+X			$(ENDLIST)
+X
+Xvector.o:	vector.c \
+X		./vector.h \
+X		./debug.h \
+X		./returns.h \
+X		$(ENDLIST)
+X
+Xgausslup.o:	gausslup.c \
+X		./gausslup.h \
+X		./debug.h \
+X		./epsilon.h \
+X		./matrix.h \
+X		./returns.h \
+X		./vector.h \
+X		$(ENDLIST)
+X
+Xtgausslup.o:	tgausslup.c \
+X		./gausslup.h \
+X		./debug.h \
+X		./epsilon.h \
+X		./matrix.h \
+X		./returns.h \
+X		./vector.h \
+X		$(ENDLIST)
+X
+Xepsilon.o:	epsilon.c \
+X		./epsilon.h \
+X		$(ENDLIST)
+X
+Xmatrix.o:	matrix.c \
+X		./matrix.h \
+X		./debug.h \
+X		./epsilon.h \
+X		./returns.h \
+X		./vector.h \
+X		$(ENDLIST)
+X
+Xcomplex.o:	complex.c \
+X		./complex.h \
+X		./debug.h \
+X		./returns.h \
+X		$(ENDLIST)
+X
+Xclean:
+X		-rm -rf ptrepository
+X		-rm -f tgausslup
+X		-rm -f vector.o
+X		-rm -f gausslup.o
+X		-rm -f tgausslup.o
+X		-rm -f epsilon.o
+X		-rm -f matrix.o
+X		-rm -f complex.o
+X
+Xbackup:		vector.c \
+X		gausslup.c \
+X		tgausslup.c \
+X		epsilon.c \
+X		matrix.c \
+X		complex.c \
+X		./complex.h \
+X		./debug.h \
+X		./vector.h \
+X		./gausslup.h \
+X		./returns.h \
+X		./epsilon.h \
+X		./matrix.h \
+X		$(ENDLIST)
+X		-([ ! -d "./$(BACKUPDIR)" ] && mkdir ./$(BACKUPDIR);)
+X		cp vector.c $(BACKUPDIR)/vector.c
+X		cp gausslup.c $(BACKUPDIR)/gausslup.c
+X		cp tgausslup.c $(BACKUPDIR)/tgausslup.c
+X		cp epsilon.c $(BACKUPDIR)/epsilon.c
+X		cp matrix.c $(BACKUPDIR)/matrix.c
+X		cp complex.c $(BACKUPDIR)/complex.c
+X		cp ./complex.h ./$(BACKUPDIR)/complex.h
+X		cp ./debug.h ./$(BACKUPDIR)/debug.h
+X		cp ./vector.h ./$(BACKUPDIR)/vector.h
+X		cp ./gausslup.h ./$(BACKUPDIR)/gausslup.h
+X		cp ./returns.h ./$(BACKUPDIR)/returns.h
+X		cp ./epsilon.h ./$(BACKUPDIR)/epsilon.h
+X		cp ./matrix.h ./$(BACKUPDIR)/matrix.h
+X		touch backup
+END_OF_FILE
+  if test 2124 -ne `wc -c <'makefile'`; then
+    echo shar: \"'makefile'\" unpacked with wrong size!
+  fi
+  # end of 'makefile'
+fi
+if test -f 'matrix.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'matrix.c'\"
+else
+  echo shar: Extracting \"'matrix.c'\" \(6696 characters\)
+  sed "s/^X//" >'matrix.c' <<'END_OF_FILE'
+X// matrix class functions
+X
+X// headers
+X#include <stdlib.h>
+X#include <math.h>
+X
+X// local headers
+X#include "matrix.h"
+X
+X// local definitions
+X#define local_abs(x) (((x) < 0) ? (-(x)) : (x))
+X
+X// define epsilon for comparisons
+Xtemplate <class T>
+XT Matrix<T>::epsilon = -1.0;
+X
+X// constructors and destructor
+Xtemplate <class T>
+XMatrix<T>::Matrix(unsigned int rows, unsigned int cols):
+X	matrix(NULL), nrows(rows), ncols(cols)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// allocate a matrix
+X	matrix = new T [nrows*ncols];
+X	MustBeTrue(matrix != NULL);
+X	for (unsigned ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] = 0;
+X	}
+X
+X	// check for epsilon
+X	if (epsilon < 0.0)
+X		epsilon = calcEpsilon((T)(0.0));
+X}
+X
+Xtemplate <class T>
+XMatrix<T>::Matrix(const Matrix<T> &m):
+X	matrix(NULL), nrows(m.nrows), ncols(m.ncols)
+X{
+X	// store dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// allocate a matrix
+X	matrix = new T [nrows*ncols];
+X	MustBeTrue(matrix != NULL);
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] = m.matrix[ia];
+X	}
+X}
+X
+Xtemplate <class T>
+XMatrix<T>::~Matrix()
+X{
+X	delete [] matrix;
+X	matrix = NULL;
+X}
+X
+X// assignment operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator=(const Matrix<T> &m)
+X{
+X	// check if assigning to itself
+X	if (this != &m)
+X	{
+X		// delete matrix
+X		delete [] matrix;
+X		matrix = NULL;
+X
+X		// store new matrix dimension
+X		nrows = m.nrows;
+X		ncols = m.ncols;
+X		MustBeTrue(nrows > 0 && ncols > 0);
+X
+X		// allocate a matrix
+X		matrix = new T [nrows*ncols];
+X		MustBeTrue(matrix != NULL);
+X		for (int ia = 0; ia < nrows*ncols; ia++)
+X		{
+X			matrix[ia] = m.matrix[ia];
+X		}
+X	}
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XT &
+XMatrix<T>::operator()(unsigned int row, unsigned int col)
+X{
+X	MustBeTrue(row < nrows && col < ncols);
+X	return(matrix[row*ncols+col]);
+X}
+X
+Xtemplate <class T>
+XT &
+XMatrix<T>::operator()(unsigned int row, unsigned int col) const
+X{
+X	MustBeTrue(row < nrows && col < ncols);
+X	return(matrix[row*ncols+col]);
+X}
+X
+X// matrix operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator+=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(nrows == m.nrows && ncols == m.ncols);
+X
+X	// add element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] += m.matrix[ia];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator-=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(nrows == m.nrows && ncols == m.ncols);
+X
+X	// subtract element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] -= m.matrix[ia];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator*=(const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(ncols == m.nrows && ncols > 0);
+X
+X	// get size of new matrix
+X	unsigned int newnrows = nrows;
+X	unsigned int newncols = m.ncols;
+X	MustBeTrue(newnrows > 0 && newncols > 0);
+X	unsigned int nsum = ncols;
+X
+X	// allocate a new matrix
+X	T *newmatrix = new T [newnrows*newncols];
+X	MustBeTrue(newmatrix != NULL);
+X
+X	// multiply element by element
+X	for (unsigned int ir = 0; ir < newnrows; ir++)
+X	{
+X		for (unsigned int ic = 0; ic < newncols; ic++)
+X		{
+X			for (unsigned int is = 0; is < nsum; is++)
+X			{
+X				newmatrix[ir*newncols+ic] += 
+X				matrix[ir*ncols+is]*m.matrix[is*m.ncols+ic];
+X			}
+X		}
+X	}
+X
+X	// delete old matrix and save new one
+X	delete [] matrix;
+X	matrix = newmatrix;
+X	nrows = newnrows;
+X	ncols = newncols;
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator+(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) += m);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator-(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) -= m);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator*(const Matrix<T> &m) const
+X{
+X	return(Matrix<T>(*this) *= m);
+X}
+X
+X// matrix and vector operations
+Xtemplate <class T>
+XVector<T>
+XMatrix<T>::operator*(const Vector<T> &v) const
+X{
+X	// check that rows and columns match
+X	MustBeTrue(ncols == v.getDimension() && ncols > 0);
+X
+X	// new vector to hold results
+X	Vector<T> newv(nrows);
+X
+X	// multiply element by element
+X	for (unsigned int ir = 0; ir < nrows; ir++)
+X	{
+X		for (unsigned int is = 0; is < ncols; is++)
+X		{
+X			newv[ir] += matrix[ir*ncols+is]*v[is];
+X		}
+X	}
+X
+X	// all done
+X	return(newv);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+Xoperator*(const Vector<T> &v, const Matrix<T> &m)
+X{
+X	// check that rows and columns match
+X	MustBeTrue(v.getDimension() == m.nrows && m.nrows > 0);
+X
+X	// new vector to hold results
+X	Vector<T> newv(m.ncols);
+X
+X	// multiply element by element
+X	for (unsigned int ic = 0; ic < m.ncols; ic++)
+X	{
+X		for (unsigned int is = 0; is < m.nrows; is++)
+X		{
+X			newv[ic] += v[is]*m.matrix[is*ncols+ic];
+X		}
+X	}
+X
+X	// all done
+X	return(newv);
+X}
+X
+X// matrix and scalar operations
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator*=(const T &n)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X
+X	// multiply matrix by scalar
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] *= n;
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XMatrix<T> &
+XMatrix<T>::operator/=(const T &n)
+X{
+X	// check dimensions
+X	MustBeTrue(nrows > 0 && ncols > 0);
+X	MustBeTrue(n != 0.0);
+X
+X	// divide matrix by scalar
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		matrix[ia] /= n;
+X	}
+X
+X	// all done 
+X	return(*this);
+X}
+X
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator*(const T &n) const
+X{
+X	return(Matrix<T>(*this) *= n);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+XMatrix<T>::operator/(const T &n) const
+X{
+X	return(Matrix<T>(*this) /= n);
+X}
+X
+Xtemplate <class T>
+XMatrix<T>
+Xoperator*(const T &n, const Matrix<T> &m)
+X{
+X	// switch around and multiply
+X	return(m*n);
+X}
+X
+X// logical operators
+Xtemplate <class T>
+Xint
+XMatrix<T>::operator==(const Matrix<T> &m) const
+X{
+X	// check if the same matrix
+X	if (this == &m) return(1);
+X
+X	// check if dimensions are the same
+X	if (nrows != m.nrows || ncols != m.ncols) return(0);
+X
+X	// compare element by element
+X	for (unsigned int ia = 0; ia < nrows*ncols; ia++)
+X	{
+X		T delta = matrix[ia] - m.matrix[ia];
+X		if (delta < 0.0)
+X			delta = -1.0*delta;
+X		if (delta > epsilon)
+X		{      
+X			// a mismatch
+X			return(0);
+X		}
+X	}
+X
+X	// matrices are the same
+X	return(1);
+X}
+X
+Xtemplate <class T>
+Xint
+XMatrix<T>::operator!=(const Matrix<T> &m) const
+X{
+X	return( ! (*this == m));
+X}
+X
+X// print matrix
+Xtemplate <class T>
+Xvoid
+XMatrix<T>::dump(ostream &os) const
+X{
+X	os << "matrix[" << nrows << "," << ncols << "] = {" << endl;
+X	for (unsigned int ir = 0; ir < nrows; ir++)
+X	{
+X		for (unsigned int ic = 0; ic < ncols; ic++)
+X		{
+X			os << matrix[ir*ncols+ic] << " ";
+X		}
+X		os << endl;
+X	}
+X	os << "}" << endl;
+X	return;
+X}
+X
+Xtemplate <class T>
+Xostream &
+Xoperator<<(ostream &os, const Matrix<T> &m)
+X{
+X	m.dump(os);
+X	return(os);
+X}
+X
+END_OF_FILE
+  if test 6696 -ne `wc -c <'matrix.c'`; then
+    echo shar: \"'matrix.c'\" unpacked with wrong size!
+  fi
+  # end of 'matrix.c'
+fi
+if test -f 'matrix.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'matrix.h'\"
+else
+  echo shar: Extracting \"'matrix.h'\" \(2131 characters\)
+  sed "s/^X//" >'matrix.h' <<'END_OF_FILE'
+X#ifndef __MATRIX_H
+X#define __MATRIX_H
+X
+X// matrix class definitions
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <math.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X#include "vector.h"
+X#include "epsilon.h"
+X
+X// forward declarations
+Xtemplate <class T> class Matrix;
+Xtemplate <class T> Vector<T> operator*(const Vector<T> &, const Matrix<T> &);
+Xtemplate <class T> Matrix<T> operator*(const T &, const Matrix<T> &);
+Xtemplate <class T> Matrix<T> operator*(T, const Matrix<T> &);
+Xtemplate <class T> ostream &operator<<(ostream &, const Matrix<T> &);
+X
+X// matrix class definition
+Xtemplate <class T> class Matrix
+X{
+Xpublic:
+X	// constructors and destructor
+X	Matrix(unsigned int, unsigned int);
+X	Matrix(const Matrix &);
+X	~Matrix();
+X
+X	// assignment operators
+X	Matrix &operator=(const Matrix &);
+X	T &operator()(unsigned int, unsigned int);
+X	T &operator()(unsigned int, unsigned int) const;
+X
+X	// matrix operations
+X	Matrix &operator+=(const Matrix &);
+X	Matrix &operator-=(const Matrix &);
+X	Matrix &operator*=(const Matrix &);
+X	Matrix operator+(const Matrix &) const;
+X	Matrix operator-(const Matrix &) const;
+X	Matrix operator*(const Matrix &) const;
+X
+X	// matrix and vector operations
+X	Vector<T> operator*(const Vector<T> &) const;
+X	friend Vector<T> operator*(const Vector<T> &, const Matrix<T> &);
+X
+X	// matrix and scalar operations
+X	Matrix &operator*=(const T &);
+X	Matrix &operator/=(const T &);
+X	Matrix operator*(const T &) const;
+X	Matrix operator/(const T &) const;
+X	friend Matrix<T> operator*(const T &, const Matrix<T> &);
+X
+X	// logical operators
+X	int operator==(const Matrix &) const;
+X	int operator!=(const Matrix &) const;
+X
+X	// other functions
+X	inline unsigned int getRows() { return(nrows); }
+X	inline unsigned int getCols() { return(ncols); }
+X	void dump(ostream &) const;
+X	friend ostream &operator<<(ostream &, const Matrix<T> &);
+X
+X	// get epsilon 
+X	static T getEpsilon() {
+X		return(epsilon);
+X	}
+X
+Xpublic:
+X	// make these public. this does not violate encapsulation
+X	// since what is matrix, but a nxm array !!!
+X	unsigned int nrows, ncols;
+X
+Xprotected:
+X	// internal data
+X	T *matrix;
+X	static T epsilon;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 2131 -ne `wc -c <'matrix.h'`; then
+    echo shar: \"'matrix.h'\" unpacked with wrong size!
+  fi
+  # end of 'matrix.h'
+fi
+if test -f 'returns.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'returns.h'\"
+else
+  echo shar: Extracting \"'returns.h'\" \(156 characters\)
+  sed "s/^X//" >'returns.h' <<'END_OF_FILE'
+X// return codes
+X#ifndef __RETURNS_H
+X#define __RETURNS_H
+X
+X#define OK 0
+X#define NOTOK -1
+X#define NOMATCH -2
+X#define PROMOTION -3
+X#define DUPLICATE -4
+X
+X#endif
+END_OF_FILE
+  if test 156 -ne `wc -c <'returns.h'`; then
+    echo shar: \"'returns.h'\" unpacked with wrong size!
+  fi
+  # end of 'returns.h'
+fi
+if test -f 'run_tglup' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'run_tglup'\"
+else
+  echo shar: Extracting \"'run_tglup'\" \(2222 characters\)
+  sed "s/^X//" >'run_tglup' <<'END_OF_FILE'
+X#
+X# run test cases for tgausslup program
+X#
+Xtgausslup -i \
+X	4 4 \
+X	1 1 1 1 \
+X	1 2 3 4 \
+X	1 4 9 16 \
+X	1 8 27 64
+X#
+Xtgausslup -i -s \
+X	3 3 \
+X	33 16 72 \
+X	-24 -10 -57 \
+X	-8 -4 -17 \
+X	-359 281 85
+X#
+Xtgausslup -i -s  \
+X	4 4 \
+X	1 -2 3 1 \
+X	-2 1 -2 -1 \
+X	3 -2 1 5 \
+X	1 -1 5 3 \
+X	3 -4 7 8
+X#
+Xtgausslup -i \
+X	6 6 \
+X	1 0 0 0 0 1 \
+X	1 1 0 0 0 -1 \
+X	-1 1 1 0 0 -1 \
+X	1 -1 1 1 0 -1 \
+X	-1 1 -1 1 1 1 \
+X	1 -1 1 -1 1 -1
+X#
+Xtgausslup -i -s \
+X	4 4 \
+X	5 7 6 5 \
+X	7 10 8 7 \
+X	6 8 10 9 \
+X	5 7 9 10 \
+X	23 32 33 31
+X#
+Xtgausslup -i \
+X	4 4 \
+X	4 3 2 1 \
+X	3 4 3 2 \
+X	2 3 4 3 \
+X	1 2 3 4
+X#
+Xtgausslup -i -d \
+X	4 4 \
+X	28 -42 28 -7 \
+X	-42 98 -77 21 \
+X	28 -77 70 -21 \
+X	-7 21 -21 7
+X#
+Xtgausslup -S -i \
+X	10 10 \
+X	100 \
+X	-4950 326700 \
+X	79200 -5880600 112907520 \
+X	-600600 47567520 -951350400 8245036800 \
+X	2522520 -208107900 4281076800 -37875637800 \
+X		176752976400 \
+X	-6306300 535134600 -11237826600 101001700800 \
+X		-477233036280 130154464440 \
+X	9609600 -832431600 17758540800 -161602721280 \
+X		771285715200 -2121035716800 3480673996800 \
+X	-8751600 770140800 -16635041280 152907955200 \
+X		-73586934400 2037792556800 -3363975014400 \
+X		3267861442560 \
+X	4375800 -389884780 8506555200 -78843164400 \
+X		382086104400 -1064382719400 1766086882560 \
+X		-1723286307600 912328045200 \
+X	-923780 83140200 -1829084400 17071454400 \
+X		-83223340200 233025352560 -388375587600 \
+X		380449555200 -202113826200 44914183600
+X#
+Xtgausslup -S -i \
+X	6 6 \
+X	36 \
+X	-630 14700 \
+X	3360 -88200 564480 \
+X	-7560 211680 -1411200 3628800 \
+X	7560 -220500 1512000 -3969000 4410000 \
+X	-2772 83160 -582120 1552320 -1746360 698544
+X#
+Xtgausslup -i \
+X	6 6 \
+X	-6 630 -6720 22680 -30250 13860 \
+X	105 -7350 88200 -317520 441000 -207900 \
+X	-560 29400 -376320 1411200 -2016000 970200 \
+X	1260 -52920 705600 -2721600 3969000 -1940400 \
+X	-1260 44100 -604800 2381400 -3528000 1746360 \
+X	462 13860 194040 -776160 116420 -582120
+X#
+Xtgausslup -i \
+X	4 4 \
+X	4 3 2 1 \
+X	3 6 4 2 \
+X	2 4 6 3 \
+X	1 2 3 4
+X#
+Xtgausslup -d \
+X	3 3 \
+X	-73 78 24 \
+X	92 66 25 \
+X	-80 37 10
+X#
+Xtgausslup -d \
+X	3 3 \
+X	-73 78 24 \
+X	92 66 25 \
+X	-80 37 10.01
+X#
+Xtgausslup -d \
+X	3 3 \
+X	-73 78 24 \
+X	92.01 66 25 \
+X	-80 37 10
+X#
+Xtgausslup -d \
+X	3 3 \
+X	-73 78.01 24 \
+X	92 66 25 \
+X	-80 37 10
+X#
+Xtgausslup -d \
+X	3 3 \
+X	-73 78.01 24 \
+X	0 66 25 \
+X	0 0 10
+X#
+Xexit 0
+X
+END_OF_FILE
+  if test 2222 -ne `wc -c <'run_tglup'`; then
+    echo shar: \"'run_tglup'\" unpacked with wrong size!
+  fi
+  chmod +x 'run_tglup'
+  # end of 'run_tglup'
+fi
+if test -f 'tgausslup.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'tgausslup.c'\"
+else
+  echo shar: Extracting \"'tgausslup.c'\" \(3645 characters\)
+  sed "s/^X//" >'tgausslup.c' <<'END_OF_FILE'
+X#include "gausslup.h"
+X
+Xvoid
+Xusage(char *cmd)
+X{
+X	cerr << "usage: " << cmd << " [-?vdsiSA] ";
+X	cerr << "nrows ncols matrix-values ... [y-values ...]" << endl;
+X	cerr << endl;
+X	cerr << "\t-v - verify output is turned on, needs y-values." << endl;
+X	cerr << "\t-d - determinant is calculated." << endl;
+X	cerr << "\t-s - solution is calculated, needs y-values." << endl;
+X	cerr << "\t-i - inverse is calculated." << endl;
+X	cerr << "\t-S - symmetric matrix, half the matrix values are given." << endl;
+X	cerr << "\t-A - anti-symmetric matrix, half the matrix values are given." << endl;
+X	cerr << endl;
+X	cerr << "for symmetric or anti-symmetric matrices, (n*(n+1)/2)" << endl;
+X	cerr << "matrix-values are needed; n*n values for all other matrices." << endl;
+X	return;
+X}
+X
+Xmain(int argc, char **argv)
+X{
+X	// command line options
+X	int dflag = 0;
+X	int sflag = 0;
+X	int iflag = 0;
+X	int vflag = 0;
+X	int Sflag = 0;
+X	int Aflag = 0;
+X	for (int c = 0; (c = getopt(argc, argv, "?ASvdsi")) != EOF; )
+X	{
+X		switch (c)
+X		{
+X		case 'A':
+X			Aflag = 1;
+X			Sflag = 0;
+X			break;
+X		case 'S':
+X			Sflag = 1;
+X			Aflag = 0;
+X			break;
+X		case 'v':
+X			vflag = 1;
+X			break;
+X		case 'd':
+X			dflag = 1;
+X			break;
+X		case 's':
+X			sflag = 1;
+X			break;
+X		case 'i':
+X			iflag = 1;
+X			break;
+X		case '?':
+X		default:
+X			usage(argv[0]);
+X			return(2);
+X		}
+X	}
+X
+X	// get number of rows and columns
+X	unsigned int nrows = atoi(argv[optind++]);
+X	unsigned int ncols = atoi(argv[optind++]);
+X
+X	// output precision
+X	cout.precision(6);
+X
+X	// define matrix and initialize elements
+X	Matrix<double> m(nrows, ncols);
+X	if (Sflag || Aflag)
+X	{
+X		double sign = 1;
+X		if (Aflag) 
+X			sign = -sign;
+X		for (int ir = 0 ; ir < nrows; ir++)
+X		{
+X			for (int ic = 0; ic <= ir; ic++)
+X			{
+X				m(ir, ic) = strtod(argv[optind++], NULL);
+X				m(ic, ir) = sign*m(ir, ic);
+X			}
+X		}
+X	}
+X	else
+X	{
+X		for (int ir = 0 ; ir < nrows; ir++)
+X		{
+X			for (int ic = 0; ic < ncols; ic++)
+X			{
+X				m(ir, ic) = strtod(argv[optind++], NULL);
+X			}
+X		}
+X	}
+X	cout << "m is ... " << m << endl;
+X
+X	// initialize inhomogeneous part.
+X	Vector<double> y(nrows);
+X	if (sflag || vflag)
+X	{
+X		for (int ir = 0; ir < nrows; ir++)
+X		{
+X			y[ir] = strtod(argv[optind++], NULL);
+X		}
+X		cout << "y is ... " << y << endl << endl;
+X	}
+X
+X	// get LUP decomposition
+X	Matrix<double> m2(m);
+X	Vector<int> pv2(nrows);
+X	double determinant;
+X	if (GaussianLUP_Pivot(m2, pv2, 0.0, determinant) != OK)
+X	{
+X		cerr << "GaussianLUP_Pivot failed" << endl;
+X		return(2);
+X	}
+X
+X	// get solution using LUP results
+X	if (sflag)
+X	{
+X		Vector<double> x2(nrows);
+X		Vector<double> y2(y);
+X		if (SolveUsingGaussianLUP_Pivot(m2, x2, y2, pv2, 0.0) != OK)
+X		{
+X			cerr << "SolveUsingGaussianLUP_Pivot failed" << endl;
+X			return(2);
+X		}
+X		cout << "SOLUTION: x is ... " << x2 << endl;
+X		if (vflag) cout << "SOLUTION: m*x is ... " << m*x2 << endl;
+X		if (vflag) cout << "SOLUTION: y is ... " << y << endl;
+X	}
+X
+X	// get inverse using LUP results
+X	if (iflag)
+X	{
+X		Matrix<double> minv2(nrows, ncols);
+X		Vector<double> x2(nrows);
+X		if (GetInverseUsingGaussianLUP_Pivot(m2, minv2, pv2, 0.0) != OK)
+X		{
+X			cerr << "GetInverseUsingGaussianLUP_Pivot failed" << endl;
+X			return(2);
+X		}
+X		cout << "INVERSE: minv is ... " << minv2 << endl;
+X		if (vflag) cout << "INVERSE: minv*y is ... " << minv2*y << endl;
+X		if (vflag) cout << "INVERSE: m*minv is ... " << m*minv2 << endl;
+X		if (vflag) cout << "INVERSE: minv*m is ... " << minv2*m << endl;
+X	}
+X
+X	// get deteminant using LUP results
+X	if (dflag)
+X	{
+X		if (GetDeterminantUsingGaussianLUP_Pivot(m2, determinant) != OK)
+X		{
+X			cerr << "GetDeterminantUsingGaussianLUP_Pivot failed" << endl;
+X			return(2);
+X		}
+X		cout << "DETERMINANT: determinant is ... " << determinant << endl;
+X	}
+X
+X	return(0);
+X}
+END_OF_FILE
+  if test 3645 -ne `wc -c <'tgausslup.c'`; then
+    echo shar: \"'tgausslup.c'\" unpacked with wrong size!
+  fi
+  # end of 'tgausslup.c'
+fi
+if test -f 'vector.c' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'vector.c'\"
+else
+  echo shar: Extracting \"'vector.c'\" \(5241 characters\)
+  sed "s/^X//" >'vector.c' <<'END_OF_FILE'
+X// vector class functions
+X
+X// headers
+X#include "vector.h"
+X
+X// constructors and destructor
+Xtemplate <class T>
+XVector<T>::Vector(unsigned int argd):
+X	dimension(argd), vector(new T [argd])
+X{
+X	// check dimension and vector
+X	MustBeTrue(dimension > 0);
+X	MustBeTrue(vector != NULL);
+X
+X	// initialize to zero
+X	for (int id = 0; id < dimension; id++)
+X	{
+X		vector[id] = 0;
+X	}
+X}
+X
+Xtemplate <class T>
+XVector<T>::Vector(const T *argn, unsigned int argd):
+X	dimension(argd), vector(new T [argd])
+X{
+X	// check dimension and vector
+X	MustBeTrue(dimension > 0);
+X	MustBeTrue(vector != NULL);
+X
+X	// copy coordinates
+X	MustBeTrue(argn != NULL);
+X	for (int id = 0; id < dimension; id++)
+X	{
+X		vector[id] = argn[id];
+X	}
+X}
+X
+Xtemplate <class T>
+XVector<T>::Vector(const Vector<T> &argv):
+X	dimension(argv.dimension), vector(new T [argv.dimension])
+X{
+X	// check dimension and vector
+X	MustBeTrue(dimension > 0);
+X	MustBeTrue(vector != NULL);
+X
+X	// copy coordinates
+X	for (int id = 0; id < dimension; id++)
+X	{
+X		vector[id] = argv.vector[id];
+X	}
+X}
+X
+Xtemplate <class T>
+XVector<T>::~Vector()
+X{
+X	// delete vector
+X	delete [] vector;
+X	vector = NULL;
+X	dimension = 0;
+X}
+X
+X// assignment 
+Xtemplate <class T>
+XVector<T> &
+XVector<T>::operator=(const Vector<T> &v)
+X{
+X	// check if assigning to itself
+X	if (this == &v) return(*this);
+X
+X	// clear vector
+X	delete [] vector;
+X
+X	// store vctor dimension
+X	dimension = v.dimension;
+X	MustBeTrue(dimension > 0);
+X
+X	// allocate a vector
+X	vector = new T [dimension];
+X	MustBeTrue(vector != NULL);
+X
+X	// copy vector to new vector
+X	for (int ic = 0; ic < dimension; ic++)
+X	{
+X		vector[ic] = v.vector[ic];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XT &
+XVector<T>::operator[](unsigned int ic)
+X{
+X	// check index
+X	MustBeTrue(0 <= ic && ic < dimension);
+X
+X	// return coordinate
+X	return(vector[ic]);
+X}
+X
+Xtemplate <class T>
+XT &
+XVector<T>::operator[](unsigned int ic) const
+X{
+X	// check index
+X	MustBeTrue(0 <= ic && ic < dimension);
+X
+X	// return coordinate
+X	return(vector[ic]);
+X}
+X
+X// vector operations
+Xtemplate <class T>
+XVector<T> &
+XVector<T>::operator+=(const Vector<T> &v)
+X{
+X	// check dimension
+X	MustBeTrue(dimension == v.dimension);
+X
+X	// add vector
+X	for (int id = 0; id < dimension; id++)
+X	{
+X		vector[id] += v.vector[id];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XVector<T> &
+XVector<T>::operator-=(const Vector<T> &v)
+X{
+X	// check dimension
+X	MustBeTrue(dimension == v.dimension);
+X
+X	// add vector
+X	for (int id = 0; id < dimension; id++)
+X	{
+X		vector[id] -= v.vector[id];
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+XVector<T>::operator+(const Vector<T> &v) const
+X{
+X	// add vectors
+X	return(Vector<T>(*this) += v);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+XVector<T>::operator-(const Vector<T> &v) const
+X{
+X	// subtract vectors
+X	return(Vector<T>(*this) -= v);
+X}
+X
+X// vector and scalar operations
+Xtemplate <class T>
+XVector<T> &
+XVector<T>::operator*=(const T &n)
+X{
+X	// check dimension
+X	MustBeTrue(dimension > 0);
+X
+X	// multiply vector by a scalar
+X	for (int ic = 0; ic < dimension; ic++)
+X	{
+X		vector[ic] *= n;
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XVector<T> &
+XVector<T>::operator/=(const T &n)
+X{
+X	// check dimension and scalar
+X	MustBeTrue(dimension > 0);
+X	MustBeTrue(n != 0.0);
+X
+X	// divide vector by a scalar
+X	for (int ic = 0; ic < dimension; ic++)
+X	{
+X		vector[ic] /= n;
+X	}
+X
+X	// all done
+X	return(*this);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+XVector<T>::operator*(const T &n) const
+X{
+X	// multiply vector by a scalar
+X	return(Vector<T>(*this) *= n);
+X}
+X
+Xtemplate <class T>
+XVector<T>
+XVector<T>::operator/(const T &n) const
+X{
+X	// divide vector by a scalar
+X	return(Vector<T>(*this) /= n);
+X}
+X
+X// logical operators
+Xtemplate <class T>
+Xint
+XVector<T>::operator==(const Vector<T> &v) const
+X{
+X	// check dimension
+X	MustBeTrue(dimension > 0);
+X
+X	// check if vectors are equal
+X	if (v.dimension < dimension)
+X	{
+X		for (int id = 0; id < v.dimension; id++)
+X		{
+X			if (v[id] != vector[id]) return(0);
+X		}
+X		for ( ; id < dimension; id++)
+X		{
+X			if (vector[id] != 0.0) return(0);
+X		}
+X	}
+X	else
+X	{
+X		for (int id = 0; id < dimension; id++)
+X		{
+X			if (v[id] != vector[id]) return(0);
+X		}
+X		for ( ; id < v.dimension; id++)
+X		{
+X			if (v[id] != 0.0) return(0);
+X		}
+X	}
+X
+X	// vectors are equal
+X	return(1);
+X}
+X
+Xtemplate <class T>
+Xint
+XVector<T>::operator!=(const Vector<T> &v) const
+X{
+X	return( ! (*this== v));
+X}
+X
+X// vector products
+Xtemplate <class T>
+XVector<T>
+Xconj(const Vector<T> &v)
+X{
+X	// check dimension
+X	MustBeTrue(v.dimension > 0);
+X
+X	// copy vector and conjugate
+X	Vector<T> tmp(v.dimension);
+X	for (int id = 0; id < v.dimension; id++)
+X	{
+X		tmp[id] = conj(v[id]);
+X	}
+X
+X	// all done
+X	return(tmp);
+X}
+X
+Xtemplate <class T>
+XT
+Xdot(const Vector<T> &v1, const Vector<T> &v2)
+X{
+X	// check dimensions
+X	MustBeTrue(v1.dimension > 0 && v2.dimension > 0);
+X
+X	// calculate dot product
+X	T sum = 0.0;
+X	int maxd = 
+X		(v1.dimension < v2.dimension) ? v1.dimension : v2.dimension;
+X	for (int id = 0; id < maxd; id++)
+X	{
+X		sum += v1[id]*conj(v2[id]);
+X	}
+X
+X	// return the sum
+X	return(sum);
+X}
+X
+Xtemplate <class T>
+XT
+Xnorm(const Vector<T> &v)
+X{
+X	// return vector magnitudes
+X	return(sqrt(dot(v, v)));
+X}
+X
+X// print vector
+Xtemplate <class T>
+Xvoid
+XVector<T>::dump(ostream &os) const
+X{
+X	os << "{";
+X	for (int ic = 0; ic < dimension; )
+X	{
+X		os << vector[ic];
+X		if (++ic != dimension) os << ",";
+X	}
+X	os << "}";
+X	return;
+X}
+END_OF_FILE
+  if test 5241 -ne `wc -c <'vector.c'`; then
+    echo shar: \"'vector.c'\" unpacked with wrong size!
+  fi
+  # end of 'vector.c'
+fi
+if test -f 'vector.h' -a "${1}" != "-c" ; then 
+  echo shar: Will not clobber existing file \"'vector.h'\"
+else
+  echo shar: Extracting \"'vector.h'\" \(1746 characters\)
+  sed "s/^X//" >'vector.h' <<'END_OF_FILE'
+X#ifndef __VECTOR_H
+X#define __VECTOR_H
+X// vector class
+X
+X// headers
+X#include <stdlib.h>
+X#include <iostream.h>
+X#include <math.h>
+X#include <errno.h>
+X
+X// local headers
+X#include "returns.h"
+X#include "debug.h"
+X
+X// forward declarations
+Xtemplate <class T> class Vector;
+Xtemplate <class T> Vector<T> conj(const Vector<T> &);
+Xtemplate <class T> T dot(const Vector<T> &, const Vector<T> &);
+Xtemplate <class T> T norm(const Vector<T> &);
+X
+X// vector class definition
+Xtemplate <class T> class Vector
+X{
+Xpublic:
+X	 // constructors and destructor
+X	 Vector(unsigned int);
+X	 Vector(const T *, unsigned int);
+X	 Vector(const Vector &);
+X	 ~Vector();
+X
+X	 // assignment
+X	 Vector &operator=(const Vector &);
+X	 T &operator[](unsigned int);
+X	 T &operator[](unsigned int) const;
+X
+X	 // vector operations
+X	 Vector &operator+=(const Vector &);
+X	 Vector &operator-=(const Vector &);
+X	 Vector operator+(const Vector &) const;
+X	 Vector operator-(const Vector &) const;
+X
+X	 // arithmetic operations
+X	 Vector &operator*=(const T &);
+X	 Vector &operator/=(const T &);
+X	 Vector operator*(const T &) const;
+X	 Vector operator/(const T &) const;
+X	 friend Vector<T> operator*(const T &n, const Vector<T> &v) {
+X		return(Vector<T>(v) *= n);
+X	}
+X
+X	 // logical operators
+X	 int operator==(const Vector &) const;
+X	 int operator!=(const Vector &) const;
+X
+X	 // vector products
+X	 friend Vector<T> conj(const Vector<T> &);
+X	 friend T dot(const Vector<T> &, const Vector<T> &);
+X	 friend T norm(const Vector<T> &);
+X
+X	 // miscellaneous 
+X	 inline unsigned int getDimension() const { 
+X		  return(dimension);
+X	 }
+X	 void dump(ostream &) const;
+X	 friend ostream &operator<<(ostream &os, const Vector<T> &v) {
+X		v.dump(os);
+X		return(os);
+X	}
+X
+Xprotected:
+X	 // data
+X	 unsigned int dimension;
+X	 T *vector;
+X};
+X
+X#endif
+END_OF_FILE
+  if test 1746 -ne `wc -c <'vector.h'`; then
+    echo shar: \"'vector.h'\" unpacked with wrong size!
+  fi
+  # end of 'vector.h'
+fi
+echo shar: End of archive.
+exit 0

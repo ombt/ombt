@@ -1,0 +1,1 @@
+streammpmsechoserverperproc 3 2 epoll localhost:10000:tcp localhost:10001:tcp localhost:10002:tcp localhost:10003:tcp localhost:/tmp/10000:stream localhost:/tmp/10001:stream localhost:/tmp/10002:stream localhost:/tmp/10003:stream

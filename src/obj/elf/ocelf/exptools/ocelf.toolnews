@@ -1,0 +1,29 @@
+04/01/04
+========
+Fixed bug in program header swabbing for intel processor ELF files. 
+
+03/25/04
+========
+Added swabbing (big-endian vs little-endian) for intel processor ELF files. 
+
+04/01/03
+========
+Installed Version 1.1 of ocelf. The new version contains a fix
+for SHT_NOBIT sections.
+
+01/23/03
+========
+Installed Version 1.0 of ocelf.
+
+ocelf is an ELF (Executable and Linking Format) file comparer, i.e.,
+allows you to "diff" two ELF files and determine the differences.
+Although ocelf diff's all the sections or segments in an ELF file,
+the two files are marked as different only if differences are 
+found in any of the .init, .fini, .data, .rodata or .text sections.
+You can add string tables, symbol tables or .bss sections to the
+previous list using command line options.
+
+Comments, complaints and suggestions are welcomed. Please send all
+email to:
+		mrumore@lucent.com
+

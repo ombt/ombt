@@ -1,0 +1,10 @@
+*.pro
+*.makefile
+moc_*
+*.dat
+mkdata
+testSdiMainWindow
+testMdiMainWindow
+testTreeModel
+testTreeView
+testTreeNode

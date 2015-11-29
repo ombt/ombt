@@ -1,0 +1,26 @@
+Hi Marc,
+
+I received the proof for the article "Binary Tree and Iterators" two days
+ago and I've proof-read it. I found one serious omission. The code within
+the #ifdef MUTABLE_ITERATOR was removed from the iterator code, but it 
+was left in the binary tree code (there are few more places). The net 
+result is the code is incomplete. The code for updating the iterator
+is in place, but the code that registers the iterator with the binary
+tree object is missing. The net result: the binary tree does not know
+that the iterator exists and it needs to be updated if the tree changes
+(inserts or deletes).
+
+I took the agreement that was included with the proofs to Lucent's
+legal-eagles for them to sign off. Well, as with all legal-eagles, 
+this one says he needs to talk to you or some one in your "law dept"
+for clarification. If I understand the problem, it centers on what is
+being "bought": the code or an article describing the code. Also, does
+Lucent retain the right to use the code as it sees fit.
+
+The lawyer's name is Jack Penrod and he can be reached at 
+1-630-979-2155.
+
+Sorry about the problems, but lawyers must to their job.
+
+Mike Rumore
+mrumore@lucent.com

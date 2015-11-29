@@ -1,0 +1,4 @@
+# common file for all make files
+
+BUILDDIR = build
+

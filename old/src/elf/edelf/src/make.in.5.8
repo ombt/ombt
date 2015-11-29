@@ -1,0 +1,42 @@
+CC = CC
+CCFLAGS = -g -DDEBUG -DUSEEXCEPTION 
+LD = CC
+LDFLAGS = -g -DDEBUG -DUSEEXCEPTION
+#
+edelf58
+edelf.c
+data.c
+fhdr.c
+menu.c
+shdrs.c
+phdrs.c
+strings.c
+symbols.c
+reloc.c
+tokenize.c
+util.c
+overwriter.c
+trans.c
+hash.c
+versions.c
+dynamic.c
+dasm.c
+stabs.c
+spaces.c
+stabtokenizer.c
+-ldemangle
+#
+filterout=stab.h
+#
+install1=chmod 755 edelf58
+install2=rm -f /home/rumore/bin/edelf58
+install3=ln -s `pwd`/edelf58 /home/rumore/bin/edelf58 
+# install4=rcp edelf58 rumore@ihlssb1:/home/rumore/bin/edelf58
+# install5=rcp edelf58 rumore@ihecms:/home/rumore/bin/edelf58
+# install6=rcp edelf58 integ@lts00:/home/integ/bin/EDELF
+# install7=rcp edelf58 integ@ihlbs1:/home/integ/bin/EDELF
+#
+# ttoken
+# ttoken.c
+# tokenize.c
+

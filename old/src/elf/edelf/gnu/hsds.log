@@ -1,0 +1,231 @@
+hrdcpy gedelf hsds
+
+editing file hsds ...
+cmd: S
+WARNING: invalid sh_link field (0) for section 130 (.stab.index).
+FOUND sh_link section (133, .stab.indexstr) for section (130, .stab.index).
+WARNING: invalid sh_link field (0) for section 131 (.stab).
+FOUND sh_link section (134, .stabstr) for section (131, .stab).
+editing stabs:
+stabs cmd: P
+stabs unconditional parse mode ON.
+stabs cmd: T
+trace mode ON.
+stabs cmd: ri 131 55
+section 131: .stab (9662)
+55: n_strx : 0x7df (/usr/include/time.h)
+55: n_type : 0x82 (N_BINCL)
+55: n_other: 0x0
+55: n_desc : 0x0
+55: n_value: 0x0
+entry bincl at stabs.c'4880 ...
+   isName() entry, cursor = /usr/include/time.h
+   isName() = /usr/include/time.h
+   accepting token ... /usr/include/time.h
+return OK from bincl at stabs.c'4884 ...
+SUN parseString: SUCCESS ...
+
+total parse success = 1
+total parse fail    = 0
+stabs cmd: 
+56: n_strx : 0x7f3 (/opt/exp/gnu/lib/gcc-lib/sparc-sun-solaris2.8/3.2/include/sys/types.h)
+56: n_type : 0x82 (N_BINCL)
+56: n_other: 0x0
+56: n_desc : 0x0
+56: n_value: 0x0
+entry bincl at stabs.c'4880 ...
+   isName() entry, cursor = /opt/exp/gnu/lib/gcc-lib/sparc-sun-solaris2.8/3.2/include/sys/types.h
+   isName() = /opt/exp/gnu/lib/gcc-lib/sparc-sun-solaris2.8/3.2/include/sys/types.h
+   accepting token ... /opt/exp/gnu/lib/gcc-lib/sparc-sun-solaris2.8/3.2/include/sys/types.h
+return OK from bincl at stabs.c'4884 ...
+SUN parseString: SUCCESS ...
+
+total parse success = 2
+total parse fail    = 0
+stabs cmd: 
+57: n_strx : 0x839 (/usr/include/sys/machtypes.h)
+57: n_type : 0x82 (N_BINCL)
+57: n_other: 0x0
+57: n_desc : 0x0
+57: n_value: 0x0
+entry bincl at stabs.c'4880 ...
+   isName() entry, cursor = /usr/include/sys/machtypes.h
+   isName() = /usr/include/sys/machtypes.h
+   accepting token ... /usr/include/sys/machtypes.h
+return OK from bincl at stabs.c'4884 ...
+SUN parseString: SUCCESS ...
+
+total parse success = 3
+total parse fail    = 0
+stabs cmd: 
+58: n_strx : 0x856 (_label_t:T(12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;)
+58: n_type : 0x80 (N_LSYM)
+58: n_other: 0x0
+58: n_desc : 0x0
+58: n_value: 0x0
+entry lsym at stabs.c'4482 ...
+   isName() entry, cursor = _label_t:T(12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+   isName() = _label_t
+   accepting token ... _label_t
+   isChar() entry, cursor = :T(12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+   getChar() = :
+   accepting token ... :
+   entry symdesc_type at stabs.c'4174 ...
+      isChar() entry, cursor = T(12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+      getChar() = T
+      accepting token ... T
+      entry type at stabs.c'3712 ...
+         entry typeno at stabs.c'2855 ...
+            isChar() entry, cursor = (12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            getChar() = (
+            accepting token ... (
+            isInteger() entry, cursor = 12,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            isInteger() = 12
+            accepting token ... 12
+            isChar() entry, cursor = ,1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            getChar() = ,
+            accepting token ... ,
+            isInteger() entry, cursor = 1)=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            isInteger() = 1
+            accepting token ... 1
+            isChar() entry, cursor = )=s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            getChar() = )
+            accepting token ... )
+         return OK from typeno at stabs.c'2871 ...
+         isChar() entry, cursor = =s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+         getChar() = =
+         accepting token ... =
+         entry typeid at stabs.c'3691 ...
+            isChar() entry, cursor = s8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+            getChar() = s
+            accepting token ... s
+            entry structure_or_record at stabs.c'3582 ...
+               isInteger() entry, cursor = 8val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+               isInteger() = 8
+               accepting token ... 8
+               isName() entry, cursor = val:(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+               isName() = val
+               accepting token ... val
+               isChar() entry, cursor = :(12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+               getChar() = :
+               accepting token ... :
+               entry type at stabs.c'3712 ...
+                  entry typeno at stabs.c'2855 ...
+                     isChar() entry, cursor = (12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     getChar() = (
+                     accepting token ... (
+                     isInteger() entry, cursor = 12,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     isInteger() = 12
+                     accepting token ... 12
+                     isChar() entry, cursor = ,2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     getChar() = ,
+                     accepting token ... ,
+                     isInteger() entry, cursor = 2)=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     isInteger() = 2
+                     accepting token ... 2
+                     isChar() entry, cursor = )=ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     getChar() = )
+                     accepting token ... )
+                  return OK from typeno at stabs.c'2871 ...
+                  isChar() entry, cursor = =ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                  getChar() = =
+                  accepting token ... =
+                  entry typeid at stabs.c'3691 ...
+                     isChar() entry, cursor = ar(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                     getChar() = a
+                     accepting token ... a
+                     entry array at stabs.c'2876 ...
+                        entry type at stabs.c'3712 ...
+                           entry typeno at stabs.c'2855 ...
+                              isChar() entry, cursor = r(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                              getChar() = r
+                           return NOMATCH from typeno at stabs.c'2857 ...
+                           entry typeid at stabs.c'3691 ...
+                              isChar() entry, cursor = r(12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                              getChar() = r
+                              accepting token ... r
+                              entry range at stabs.c'3554 ...
+                                 entry type at stabs.c'3712 ...
+                                    entry typeno at stabs.c'2855 ...
+                                       isChar() entry, cursor = (12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       getChar() = (
+                                       accepting token ... (
+                                       isInteger() entry, cursor = 12,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       isInteger() = 12
+                                       accepting token ... 12
+                                       isChar() entry, cursor = ,3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       getChar() = ,
+                                       accepting token ... ,
+                                       isInteger() entry, cursor = 3)=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       isInteger() = 3
+                                       accepting token ... 3
+                                       isChar() entry, cursor = )=r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       getChar() = )
+                                       accepting token ... )
+                                    return OK from typeno at stabs.c'2871 ...
+                                    isChar() entry, cursor = =r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                    getChar() = =
+                                    accepting token ... =
+                                    entry typeid at stabs.c'3691 ...
+                                       isChar() entry, cursor = r(12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                       getChar() = r
+                                       accepting token ... r
+                                       entry range at stabs.c'3554 ...
+                                          entry type at stabs.c'3712 ...
+                                             entry typeno at stabs.c'2855 ...
+                                                isChar() entry, cursor = (12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                                getChar() = (
+                                                accepting token ... (
+                                                isInteger() entry, cursor = 12,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                                isInteger() = 12
+                                                accepting token ... 12
+                                                isChar() entry, cursor = ,3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                                getChar() = ,
+                                                accepting token ... ,
+                                                isInteger() entry, cursor = 3);000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                                isInteger() = 3
+                                                accepting token ... 3
+                                                isChar() entry, cursor = );000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                                getChar() = )
+                                                accepting token ... )
+                                             return OK from typeno at stabs.c'2871 ...
+                                             isChar() entry, cursor = ;000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                             getChar() = ;
+                                          return OK from type at stabs.c'3717 ...
+                                          isChar() entry, cursor = ;000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                          getChar() = ;
+                                          accepting token ... ;
+                                          isInteger() entry, cursor = 000000000000000000000000;000000000000037777777777;;0;1;(0,3),0,64;;
+                                          isInteger() = 000000000000000000000000
+                                          accepting token ... 000000000000000000000000
+                                          isChar() entry, cursor = ;000000000000037777777777;;0;1;(0,3),0,64;;
+                                          getChar() = ;
+                                          accepting token ... ;
+                                          isInteger() entry, cursor = 000000000000037777777777;;0;1;(0,3),0,64;;
+                                          isInteger() = 000000000000037777777777
+                                          accepting token ... 000000000000037777777777
+                                       return OK from range at stabs.c'3569 ...
+                                    return OK from typeid at stabs.c'3701 ...
+                                 return OK from type at stabs.c'3722 ...
+                                 isChar() entry, cursor = ;;0;1;(0,3),0,64;;
+                                 getChar() = ;
+                                 accepting token ... ;
+                                 isInteger() entry, cursor = ;0;1;(0,3),0,64;;
+                              return NOTOK from range at stabs.c'3561 ...
+                           return NOTOK from typeid at stabs.c'3701 ...
+                        return NOTOK from type at stabs.c'3728 ...
+                     return NOTOK from array at stabs.c'2878 ...
+                  return NOTOK from typeid at stabs.c'3701 ...
+               return NOTOK from type at stabs.c'3720 ...
+            return NOTOK from structure_or_record at stabs.c'3593 ...
+         return NOTOK from typeid at stabs.c'3701 ...
+      return NOTOK from type at stabs.c'3720 ...
+   return NOTOK from symdesc_type at stabs.c'4264 ...
+return NOTOK from lsym at stabs.c'4497 ...
+SUN parseString: FAILED ...
+
+total parse success = 3
+total parse fail    = 1
+stabs cmd: q
+cmd: q
+hrdcpy kexcit      exit

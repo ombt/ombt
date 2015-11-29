@@ -1,0 +1,81 @@
+ifndef ROOT
+$(error ROOT is not set)
+endif
+
+LIBDIR = $(ROOT)/lib
+
+INCLUDEDIR = $(ROOT)/hdr
+
+ifdef FILES
+CXX = g++
+CXXFLAGS = -g -O0 -DDEBUG -fPIC -shared -I. -I$(INCLUDEDIR)
+
+ifdef CXXEXTRAFLAGS
+CXXFLAGS += $(CXXEXTRAFLAGS)
+endif
+
+HDRS += $(addsuffix .h, $(basename $(FILES) ) )
+
+OBJS = $(addsuffix .o, $(basename $(FILES) ) )
+
+all:	installinclude libombt$(LIBNAME).so.1.0
+
+libombt$(LIBNAME).so.1.0:	$(OBJS)
+		$(CXX) -shared \
+			-Wl,-soname,libombt$(LIBNAME).so.1 \
+			-o libombt$(LIBNAME).so.1.0 \
+			$(OBJS) \
+			-lc
+
+install:	installinclude installlib
+		touch install
+else
+
+ifndef HDRS
+	$(error HDRS is not set)
+endif
+
+all:	installinclude
+
+install:	installinclude 
+		touch install
+endif
+
+installinclude:	$(HDRS)
+		-test -d $(INCLUDEDIR)/$(LIBNAME) || mkdir -p $(INCLUDEDIR)/$(LIBNAME);
+		cp $(HDRS) $(INCLUDEDIR)/$(LIBNAME)
+		touch installinclude
+
+ifdef FILES
+installlib:	libombt$(LIBNAME).so.1.0
+		-test -d $(LIBDIR) || mkdir -p $(LIBDIR);
+		cp libombt$(LIBNAME).so.1.0 $(LIBDIR)/libombt$(LIBNAME).so.1.0
+		-rm -f $(LIBDIR)/libombt$(LIBNAME).so
+		-rm -f $(LIBDIR)/libombt$(LIBNAME).so.1
+		ln -s $(LIBDIR)/libombt$(LIBNAME).so.1.0 $(LIBDIR)/libombt$(LIBNAME).so.1
+		ln -s $(LIBDIR)/libombt$(LIBNAME).so.1.0 $(LIBDIR)/libombt$(LIBNAME).so
+		touch installlib
+
+clean:
+		-rm installinclude
+		-rm installlib
+		-rm install
+		-rm -f $(OBJS)
+		-rm -f libombt$(LIBNAME).so.1.0
+		-$(foreach hdr, $(HDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
+		-rm -f $(LIBDIR)/libombt$(LIBNAME).so
+		-rm -f $(LIBDIR)/libombt$(LIBNAME).so.1
+		-rm -f $(LIBDIR)/libombt$(LIBNAME).so.1.0
+
+else
+clean:
+		-rm installinclude
+		-rm install
+		-$(foreach hdr, $(HDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
+endif
+
+backup:
+		bkup
+
+backupd:
+		bkup -d

@@ -1,0 +1,4 @@
+set -x
+find . -type f -print | 
+egrep '.*\.(cpp|h|y|l)$' >cscope.files
+cscope -buq

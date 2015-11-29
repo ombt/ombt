@@ -1,0 +1,55 @@
+#
+CC = CC
+CCFLAGS = -g -compat=4 -pta -xildoff
+#
+LD = CC
+LDFLAGS = -g -compat=4 -pta -xildoff
+#
+tqueen2
+tqueen2.c
+queen.c
+list.c
+search.c
+#
+teight2
+teight2.c
+eight.c
+list.c
+search.c
+#
+tmisscann2
+tmisscann2.c
+misscann.c
+list.c
+search.c
+#
+tcoins2
+tcoins2.c
+coins.c
+list.c
+search.c
+#
+tqueen3
+tqueen3.c
+queen.c
+list.c
+search.c
+#
+teight3
+teight3.c
+eight.c
+list.c
+search.c
+#
+tmisscann3
+tmisscann3.c
+misscann.c
+list.c
+search.c
+#
+tcoins3
+tcoins3.c
+coins.c
+list.c
+search.c
+#

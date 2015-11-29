@@ -1,0 +1,120 @@
+
+t.o:
+
+     **** STRING TABLE INFORMATION ****
+
+.shstrtab:
+   <offset>  	Name
+   <0>  	
+   <1>  	.shstrtab
+   <11>  	.text
+   <17>  	.bss
+   <22>  	.data
+   <28>  	.rodata
+   <36>  	.stab.index
+   <48>  	.stab.indexstr
+   <63>  	.stab.excl
+   <74>  	.stab.exclstr
+   <88>  	.comment
+   <97>  	.strtab
+   <105>  	.symtab
+   <113>  	.rela.text
+
+.stab.indexstr:
+   <offset>  	Name
+   <0>  	
+   <1>  	t.c
+   <5>  	/home/rumore/src/elf/5.8/reng/
+   <36>  	t.c
+   <40>  	
+   <41>  	
+   <42>  	Xa ; g ; V=3.1 ; R=WorkShop Compilers 5.0 99/12/04 C 5.0 patch 107289-05 ; G=$XACLauHtVCQ9CU9.
+   <137>  	/home/rumore/src/elf/5.8/reng; /opt/SUNWspro/bin/../SC5.0/bin/cc -c -g  t.c -W0,-xp\$XACLauHtVCQ9CU9.
+   <239>  	EatMe2
+   <246>  	EatMe4
+   <253>  	f
+   <255>  	g
+   <257>  	main
+   <262>  	main
+   <267>  	barf2
+   <273>  	barf
+   <278>  	EatMe3
+   <285>  	EatMe1
+
+.stab.exclstr:
+   <offset>  	Name
+   <0>  	
+   <1>  	t.c
+   <5>  	/home/rumore/src/elf/5.8/reng/
+   <36>  	t.c
+   <40>  	
+   <41>  	
+   <42>  	Xa ; g ; V=3.1 ; R=WorkShop Compilers 5.0 99/12/04 C 5.0 patch 107289-05 ; G=$XACLauHtVCQ9CU9.
+   <137>  	char:t(0,1)=bsc1;0;8;
+   <159>  	short:t(0,2)=bs2;0;16;
+   <182>  	int:t(0,3)=bs4;0;32;
+   <203>  	long:t(0,4)=bs4;0;32;
+   <225>  	long long:t(0,5)=bs8;0;64;
+   <252>  	signed char:t(0,6)=bsc1;0;8;
+   <281>  	signed short:t(0,7)=bs2;0;16;
+   <311>  	signed int:t(0,8)=bs4;0;32;
+   <339>  	signed long:t(0,9)=bs4;0;32;
+   <368>  	signed long long:t(0,10)=bs8;0;64;
+   <403>  	unsigned char:t(0,11)=buc1;0;8;
+   <435>  	unsigned short:t(0,12)=bu2;0;16;
+   <468>  	unsigned:t(0,13)=bu4;0;32;
+   <495>  	unsigned int:t(0,14)=bu4;0;32;
+   <526>  	unsigned long:t(0,15)=bu4;0;32;
+   <558>  	unsigned long long:t(0,16)=bu8;0;64;
+   <595>  	float:t(0,17)=R1;4;
+   <615>  	double:t(0,18)=R2;8;
+   <636>  	long double:t(0,19)=R6;16;
+   <663>  	void:t(0,20)=bs0;0;0
+   <684>  	Barf:T(0,21)=s8i:(0,3),0,32;j:(0,3),32,32;;
+   <728>  	Barf2:T(0,22)=s4i:(0,3),0,2;j:(0,3),2,4;;
+   <770>  	Barf3:T(0,23)=s8i:(0,3),0,2;j:(0,3),2,4;k:(0,22),32,32;;
+   <827>  	EatMe2:G(0,3)
+   <841>  	EatMe4:G(0,1)
+   <855>  	f:F(0,3)
+   <864>  	f_1:(0,3)
+   <874>  	f_barf:(0,21)
+   <888>  	f_barf2:(0,22)
+   <903>  	f_barf3:(0,23)
+   <918>  	g:F(0,20)
+   <928>  	g_1:(0,3)
+   <938>  	g_barf:(0,21)
+   <952>  	g_barf2:(0,22)
+   <967>  	g_barf3:(0,23)
+   <982>  	main:F(0,3);(0,3);(0,24)=*(0,25)=*(0,1)
+   <1022>  	main
+   <1027>  	argc:p(0,3)
+   <1039>  	argv:p(0,24)
+   <1052>  	babalou:(0,3)
+   <1066>  	babalou2:(0,3)
+   <1081>  	main_barf:(0,21)
+   <1098>  	main_barf2:(0,22)
+   <1116>  	main_barf3:(0,23)
+   <1134>  	barf2:G(0,22)
+   <1148>  	barf:G(0,21)
+   <1161>  	EatMe3:G(0,1)
+   <1175>  	EatMe1:G(0,3)
+   <1189>  	
+
+.strtab:
+   <offset>  	Name
+   <0>  	
+   <1>  	t.c
+   <5>  	Bbss.bss
+   <14>  	Ddata.data
+   <25>  	Drodata.rodata
+   <40>  	EatMe1
+   <47>  	EatMe3
+   <54>  	barf
+   <59>  	barf2
+   <65>  	main
+   <70>  	g
+   <72>  	f
+   <74>  	EatMe4
+   <81>  	EatMe2
+   <88>  	__fsr_init_value
+

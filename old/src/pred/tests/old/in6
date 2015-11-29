@@ -1,0 +1,8 @@
+#
+# schaum's outline problems
+#
+|- ~[x](<y>(L(x, y) <--> ~L(x, x)));
+#
+|- [x](<y>(L(x, y) <--> ~L(x, x)));
+#
+quit;

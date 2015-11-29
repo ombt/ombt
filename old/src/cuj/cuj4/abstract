@@ -1,0 +1,61 @@
+Hi Marc,
+
+In the May issue of C/C++ Users Journal there is a request for articles
+on numerical methods. There was interest in papers on digital-filtering,
+smoothing of data, and techniques to increase precision. As an ex-nuclear
+physicist (now computer grunt working for Lucent Technologies), I have 
+several Fortran subroutines in all these areas which I converted to 
+C++. If there is interest, I would like to submit an article on one of
+the following topics.
+
+1) Data smoothing - I propose an article describing the smoothing 
+method used by Savitsky and Golay (Analytical Chemistry, 36 (1964) p 1627.
+This method is really a convolution of the form:
+
+		i=m
+		----
+		\     C(i)*X(j+i)
+	Y(j) =  /     -----------
+		----      N
+		i=-m
+		 
+
+where X is the current spectrum, and Y is the smoothed spectrum. The factors
+C are calculated to smooth the data. The above expression is really a moving
+average. The number of points (N) in the average depends on the characteristic
+width of the features found in the data.
+
+2) Techniques for improving precision - I propose an article describing a
+templatized LUP decomposition method for inverting matrices. This method
+has been used for unfolding spectra (solving Fredholm's integral
+equation of the 1st kind). In a past issue of C/C++ Users Journal, a
+Gaussian elimination routine was described for inverting matrices. This
+method is fine for smaller matrices, but if you look at the LINPACK or
+LAPACK, they use LUP decomposition or iterative methods, not Gaussian
+elimination (with pivoting). 
+
+The templatized version that I have calculates it's error (epsilon)
+automatically for whatever data type is given to the template.
+
+I believe that this article would have the widest interest of the 
+4 articles proposed here.
+
+3) Another technique for smoothing data, again from my deep, dark past, is 
+simply a low-pass filter implemented using an FFT. This method was applied
+to gamma ray spectra. The basic idea is simple. Since noise is about
+a channel wide in the configuration space, then it's fourier transform
+must have most of it's contribution at the higher frequencies. So you
+apply a low-pass filter to eliminate, or diminish the higher frequencies,
+and apply the inverse fourier transform. Hopefully, the noise has been
+eliminated from the original spectrum.
+
+4) The final technique for smoothing uses a spline function. The original
+article is by C. Reinsch in the journal Numerische Mathematik 10 (1967) p177.
+
+If there is any interest, I would be very interested in submitting a paper.
+
+Thank you !!!
+
+Mike Rumore
+mrumore@lucent.com
+630-713-4396

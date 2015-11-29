@@ -1,0 +1,2840 @@
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+     NAME
+	  elf -	object file access library
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  Functions in the ELF access library let a program manipulate
+	  ELF (Executable and Linking Format) object files, archive
+	  files, and archive members.  The header provides type	and
+	  function declarations	for all	library	services.
+
+	  Programs communicate with many of the	higher-level routines
+	  using	an ELF descriptor.  That is, when the program starts
+	  working with a file, elf_begin(3E) creates an	ELF descriptor
+	  through which	the program manipulates	the structures and
+	  information in the file.  These ELF descriptors can be used
+	  both to read and to write files.  After the program estab-
+	  lishes an ELF	descriptor for a file, it may then obtain
+	  section descriptors to manipulate the	sections of the	file
+	  (see elf_getscn(3E)).	 Sections hold the bulk	of an object
+	  file's real information, such	as text, data, the symbol
+	  table, and so	on.  A section descriptor ``belongs'' to a
+	  particular ELF descriptor, just as a section belongs to a
+	  file.	 Finally, data descriptors are available through sec-
+	  tion descriptors, allowing the program to manipulate the
+	  information associated with a	section.  A data descriptor
+	  ``belongs'' to a section descriptor.
+
+	  Descriptors provide private handles to a file	and its
+	  pieces.  In other words, a data descriptor is	associated
+	  with one section descriptor, which is	associated with	one
+	  ELF descriptor, which	is associated with one file.  Although
+	  descriptors are private, they	give access to data that may
+	  be shared.  Consider programs	that combine input files,
+	  using	incoming data to create	or update another file.	 Such
+	  a program might get data descriptors for an input and	an
+	  output section.  It then could update	the output descriptor
+	  to reuse the input descriptor's data.	 That is, the descrip-
+	  tors are distinct, but they could share the associated data
+	  bytes.  This sharing avoids the space	overhead for duplicate
+	  buffers and the performance overhead for copying data
+	  unnecessarily.
+
+     FILE CLASSES
+	  ELF provides a framework in which to define a	family of
+	  object files,	supporting multiple processors and
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+	  architectures.  An important distinction among object	files
+	  is the class,	or capacity, of	the file.  The 32-bit class
+	  supports architectures in which a 32-bit object can
+	  represent addresses, file sizes, etc., as in the following.
+
+	       Name		   Purpose
+
+	       Elf32_Addr	   Unsigned address
+	       Elf32_Half	   Unsigned medium integer
+	       Elf32_Off	   Unsigned file offset
+	       Elf32_Sword	   Signed large	integer
+	       Elf32_Word	   Unsigned large integer
+	       unsigned	char	   Unsigned small integer
+
+	  Other	classes	will be	defined	as necessary, to support
+	  larger (or smaller) machines.	 Some library services deal
+	  only with data objects for a specific	class, while others
+	  are class-independent.  To make this distinction clear,
+	  library function names reflect their status, as described
+	  below.
+
+     DATA REPRESENTATION
+	  Conceptually,	two parallel sets of objects support cross
+	  compilation environments.  One set corresponds to file con-
+	  tents, while the other set corresponds to the	native memory
+	  image	of the program manipulating the	file.  Type defini-
+	  tions	supplied by the	headers	work on	the native machine,
+	  which	may have different data	encodings (size, byte order,
+	  etc.)	than the target	machine.  Although native memory
+	  objects should be at least as	big as the file	objects	(to
+	  avoid	information loss), they	may be bigger if that is more
+	  natural for the host machine.
+
+	  Translation facilities exist to convert between file and
+	  memory representations.  Some	library	routines convert data
+	  automatically, while others leave conversion as the
+	  program's responsibility.  Either way, programs that create
+	  object files must write file-typed objects to	those files;
+	  programs that	read object files must take a similar view.
+	  See elf32_xlatetof(3E) and elf32_fsize(3E) for more informa-
+	  tion.
+
+	  Programs may translate data explicitly, taking full control
+	  over the object file layout and semantics.  If the program
+	  prefers not to have and exercise complete control, the
+	  library provides a higher-level interface that hides many
+	  object file details.	elf_begin() and	related	functions let
+	  a program deal with the native memory	types, converting
+	  between memory objects and their file	equivalents automati-
+	  cally	when reading or	writing	an object file.
+
+     ELF VERSIONS
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+	  Object file versions allow ELF to adapt to new requirements.
+	  Three	independent versions can be important to a program.
+	  First, an application	program	knows about a particular ver-
+	  sion by virtue of being compiled with	certain	headers.
+	  Second, the access library similarly is compiled with	header
+	  files	that control what versions it understands.  Third, an
+	  ELF object file holds	a value	identifying its	version,
+	  determined by	the ELF	version	known by the file's creator.
+	  Ideally, all three versions would be the same, but they may
+	  differ.
+
+	       If a program's version is newer than the	access
+	       library,	the program might use information unknown to
+	       the library.  Translation routines might	not work prop-
+	       erly, leading to	undefined behavior.  This condition
+	       merits installing a new library.
+
+	       The library's version might be newer than the program's
+	       and the file's.	The library understands	old versions,
+	       thus avoiding compatibility problems in this case.
+
+	       Finally,	a file's version might be newer	than either
+	       the program or the library understands.	The program
+	       might or	might not be able to process the file prop-
+	       erly, depending on whether the file has extra informa-
+	       tion and	whether	that information can be	safely
+	       ignored.	 Again,	the safe alternative is	to install a
+	       new library that	understands the	file's version.
+
+	  To accommodate these differences, a program must use
+	  elf_version(3E) to pass its version to the library, thus
+	  establishing the working version for the process.  Using
+	  this,	the library accepts data from and presents data	to the
+	  program in the proper	representations.  When the library
+	  reads	object files, it uses each file's version to interpret
+	  the data.  When writing files	or converting memory types to
+	  the file equivalents,	the library uses the program's working
+	  version for the file data.
+
+     SYSTEM SERVICES
+	  As mentioned above, elf_begin() and related routines provide
+	  a higher-level interface to ELF files, performing input and
+	  output on behalf of the application program.	These routines
+	  assume a program can hold entire files in memory, without
+	  explicitly using temporary files.  When reading a file, the
+	  library routines bring the data into memory and perform sub-
+	  sequent operations on	the memory copy.  Programs that	wish
+	  to read or write large object	files with this	model must
+	  execute on a machine with a large process virtual address
+	  space.  If the underlying operating system limits the	number
+	  of open files, a program can use elf_cntl(3E)	to retrieve
+	  all necessary	data from the file, allowing the program to
+
+
+
+     Page 3					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+	  close	the file descriptor and	reuse it.
+
+	  Although the elf_begin() interfaces are convenient and effi-
+	  cient	for many programs, they	might be inappropriate for
+	  some.	 In those cases, an application	may invoke the
+	  elf32_xlatetom(3E) or	elf32_xlatetof(3E) data	translation
+	  routines directly.  These routines perform no	input or out-
+	  put, leaving that as the application's responsibility.  By
+	  assuming a larger share of the job, an application controls
+	  its input and	output model.
+
+     LIBRARY NAMES
+	  Names	associated with	the library take several forms.
+
+	  elf_name	  These	class-independent names	perform	some
+			  service, name, for the program.
+
+	  elf32_name	  Service names	with an	embedded class,	32
+			  here,	indicate they work only	for the	desig-
+			  nated	class of files.
+
+	  Elf_Type	  Data types can be class-independent as well,
+			  distinguished	by Type.
+
+	  Elf32_Type	  Class-dependent data types have an embedded
+			  class	name, 32 here.
+
+	  ELF_C_CMD	  Several functions take commands that control
+			  their	actions.  These	values are members of
+			  the Elf_Cmd enumeration; they	range from
+			  zero through ELF_C_NUM-1.
+
+	  ELF_F_FLAG	  Several functions take flags that control
+			  library status and/or	actions.  Flags	are
+			  bits that may	be combined.
+
+	  ELF32_FSZ_TYPE  These	constants give the file	sizes in bytes
+			  of the basic ELF types for the 32-bit	class
+			  of files.  See elf32_fsize() for more	infor-
+			  mation.
+
+	  ELF_K_KIND	  The function elf_kind() identifies the KIND
+			  of file associated with an ELF descriptor.
+			  These	values are members of the Elf_Kind
+			  enumeration; they range from zero through
+			  ELF_K_NUM-1.
+
+	  ELF_T_TYPE	  When a service function, such	as
+			  elf32_xlatetom() or elf32_xlatetof(),	deals
+			  with multiple	types, names of	this form
+			  specify the desired TYPE.  Thus, for exam-
+			  ple, ELF_T_EHDR is directly related to
+
+
+
+     Page 4					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+			  Elf32_Ehdr.  These values are	members	of the
+			  Elf_Type enumeration;	they range from	zero
+			  through ELF_T_NUM-1.
+
+     EXAMPLES
+	  The basic interpretation of an ELF file consists of:
+	       o opening an ELF	object file
+
+	       o obtaining an ELF descriptor
+
+	       o analyzing the file using the descriptor.
+
+	  The following	example	opens the file,	obtains	the ELF
+	  descriptor, and prints out the names of each section in the
+	  file.
+
+	  #include  <fcntl.h>
+	  #include  <stdio.h>
+	  #include  <libelf.h>
+	  #include  <stdlib.h>
+	  #include  <string.h>
+	  static void failure(void);
+
+	  void
+	  main(int argc, char ** argv)
+	  {
+	       Elf32_Shdr *   shdr;
+	       Elf32_Ehdr *   ehdr;
+	       Elf *	      elf;
+	       Elf_Scn * scn;
+	       Elf_Data	*     data;
+	       int	 fd;
+	       unsigned	int   cnt;
+
+		    /* Open the	input file */
+	       if ((fd = open(argv[1], O_RDONLY)) == -1)
+		    exit(1);
+
+		    /* Obtain the ELF descriptor */
+	       (void) elf_version(EV_CURRENT);
+	       if ((elf	= elf_begin(fd,	ELF_C_READ, NULL)) == NULL)
+		    failure();
+
+		    /* Obtain the .shstrtab data buffer	*/
+	       if (((ehdr = elf32_getehdr(elf))	== NULL) ||
+		   ((scn = elf_getscn(elf, ehdr->e_shstrndx)) == NULL) ||
+		   ((data = elf_getdata(scn, NULL)) == NULL))
+		    failure();
+
+		    /* Traverse	input filename,	printing each section */
+	       for (cnt	= 1, scn = NULL; scn = elf_nextscn(elf,	scn); cnt++) {
+		    if ((shdr =	elf32_getshdr(scn)) == NULL)
+
+
+
+     Page 5					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+			 failure();
+
+	       (void) printf("[%d]%s0, cnt,
+		    (char *)data->d_buf	+ shdr->sh_name);
+	       }
+	  }	    /* end main	*/
+
+	  static void
+	  failure()
+	  {
+	       (void) fprintf(stderr, "%s0, elf_errmsg(elf_errno()));
+	       exit(1);
+	  }
+
+
+	  Below	is sample output from compiling	and executing the
+	  above	code, which prints the names of	the sections using
+	  itself as the	input file
+
+	       % cc -o elfprint	example.c -lelf
+	       % elfprint elfprint
+		[1] .interp
+		[2] .hash
+		[3] .dynsym
+		[4] .dynstr
+		[5] .rela.ex_shared
+		[6] .rela.bss
+		[7] .rela.plt
+		[8] .text
+		[9] .init
+		[10]	 .fini
+		[11]	 .exception_ranges
+		...
+
+     SEE ALSO
+	  elf32_fsize(3E), elf32_getshdr(3E), elf32_xlatetof(3E),
+	  elf_begin(3E), elf_cntl(3E), elf_errmsg(3E), elf_fill(3E),
+	  elf_getarhdr(3E), elf_getarsym(3E), elf_getbase(3E),
+	  elf_getdata(3E), elf_getident(3E), elf_getscn(3E),
+	  elf_hash(3E),	elf_kind(3E), elf_memory(3E), elf_rawfile(3E),
+	  elf_strptr(3E), elf_update(3E), elf_version(3E), ar(4)
+
+	  ANSI C Programmer's Guide
+	SPARC only
+	  a.out(4)
+
+     NOTES
+	  Information in the ELF headers is separated into common
+	  parts	and processor-specific parts.  A program can make a
+	  processor's information available by including the appropri-
+	  ate header: <sys/elf_NAME.h> where NAME matches the proces-
+	  sor name as used in the ELF file header.
+
+
+
+     Page 6					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf(3E)		UNIX System V (12 Jul 1995)	       elf(3E)
+
+
+
+	       Name	 Processor
+
+	       M32	 AT&T WE 32100
+	       SPARC	 SPARC
+	       386	 Intel 80386
+	       486	 Intel 80486
+	       860	 Intel 80860
+	       68K	 Motorola 68000
+	       88K	 Motorola 88000
+
+	  Other	processors will	be added to the	table as necessary.
+
+	  To illustrate, a program could use the following code	to
+	  ``see'' the processor-specific information for the SPARC.
+
+
+	       #include	<libelf.h>
+	       #include	<sys/elf_SPARC.h>
+
+	  Without the <sys/elf_SPARC.h>	definition, only the common
+	  ELF information would	be visible.
+
+	  A program could use the following code to ``see'' the
+	  processor-specific information for the Intel 80386:
+
+
+	       #include	<libelf.h>
+	       #include	<sys/elf_386.h>
+
+	  Without the <sys/elf_386.h> definition, only the common ELF
+	  information would be visible.
+
+	  Although reading the objects is rather straightforward,
+	  writing/updating them	can corrupt the	shared offsets among
+	  sections.  Upon creation, relationships are established
+	  among	the sections that must be maintained even if the
+	  object's size	is changed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 7					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf32_fsize(3E)	UNIX System V (22 Jan 1993)    elf32_fsize(3E)
+
+
+
+     NAME
+	  elf32_fsize -	return the size	of an object file type
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  size_t elf32_fsize(Elf_Type type, size_t count, unsigned
+	  ver);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf32_fsize()	gives the size in bytes	of the 32-bit file
+	  representation of count data objects with the	given type.
+	  The library uses version ver to calculate the	size (see
+	  elf(3E) and elf_version(3E)).
+
+	  Constant values are available	for the	sizes of fundamental
+	  types:
+
+	       Elf_Type		File Size	      Memory Size
+	       ELF_T_ADDR	ELF32_FSZ_ADDR	      sizeof(Elf32_Addr)
+	       ELF_T_BYTE	1		      sizeof(unsigned char)
+	       ELF_T_HALF	ELF32_FSZ_HALF	      sizeof(Elf32_Half)
+	       ELT_T_OFF	ELF32_FSZ_OFF	      sizeof(Elf32_Off)
+	       ELF_T_SWORD	ELF32_FSZ_SWORD	      sizeof(Elf32_Sword)
+	       ELF_T_WORD	ELF32_FSZ_WORD	      sizeof(Elf32_Word)
+
+	  elf32_fsize()	returns	zero if	the value of type or ver is
+	  unknown.  See	elf32_xlatetof(3E) for a list of the type
+	  values.
+
+     SEE ALSO
+	  elf(3E), elf32_xlatetof(3E), elf_version(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf32_getshdr(3E)	UNIX System V (22 Jan 1993)  elf32_getshdr(3E)
+
+
+
+     NAME
+	  elf32_getshdr	- retrieve class-dependent section header
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf32_Shdr *elf32_getshdr(Elf_Scn *scn);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  For a	32-bit class file, elf32_getshdr() returns a pointer
+	  to a section header for the section descriptor scn.  Other-
+	  wise,	the file is not	a 32-bit class file, scn was null, or
+	  an error occurred; elf32_getshdr() then returns null.
+
+	  The header includes the following members.
+
+		    Elf32_Word	   sh_name;
+		    Elf32_Word	   sh_type;
+		    Elf32_Word	   sh_flags;
+		    Elf32_Addr	   sh_addr;
+		    Elf32_Off	   sh_offset;
+		    Elf32_Word	   sh_size;
+		    Elf32_Word	   sh_link;
+		    Elf32_Word	   sh_info;
+		    Elf32_Word	   sh_addralign;
+		    Elf32_Word	   sh_entsize;
+
+	  If the program is building a new file, it is responsible for
+	  creating the file's ELF header before	creating sections.
+
+     SEE ALSO
+	  elf(3E), elf_flagdata(3E), elf_getscn(3E), elf_strptr(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf32_xlatetof(3E)	UNIX System V (22 Jan 1993) elf32_xlatetof(3E)
+
+
+
+     NAME
+	  elf32_xlatetof, elf32_xlatetom - class-dependent data	trans-
+	  lation
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf_Data *elf32_xlatetof(Elf_Data *dst, const	Elf_Data *src,
+	       unsigned	encode);
+
+	  Elf_Data *elf32_xlatetom(Elf_Data *dst, const	Elf_Data *src,
+	       unsigned	encode);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf32_xlatetom() translates various data structures from
+	  their	32-bit class file representations to their memory
+	  representations; elf32_xlatetof() provides the inverse.
+	  This conversion is particularly important for	cross develop-
+	  ment environments.  src is a pointer to the source buffer
+	  that holds the original data;	dst is a pointer to a destina-
+	  tion buffer that will	hold the translated copy.  encode
+	  gives	the byte encoding in which the file objects are	to be
+	  represented and must have one	of the encoding	values defined
+	  for the ELF header's e_ident[EI_DATA]	entry (see
+	  elf_getident(3E)).  If the data can be translated, the func-
+	  tions	return dst.  Otherwise,	they return null because an
+	  error	occurred, such as incompatible types, destination
+	  buffer overflow, etc.
+
+	  elf_getdata(3E) describes the	Elf_Data descriptor, which the
+	  translation routines use as follows.
+
+	  d_buf		Both the source	and destination	must have
+			valid buffer pointers.
+
+	  d_type	This member's value specifies the type of the
+			data to	which d_buf points and the type	of
+			data to	be created in the destination.	The
+			program	supplies a d_type value	in the source;
+			the library sets the destination's d_type to
+			the same value.	 These values are summarized
+			below.
+
+	  d_size	This member holds the total size, in bytes, of
+			the memory occupied by the source data and the
+			size allocated for the destination data.  If
+			the destination	buffer is not large enough,
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf32_xlatetof(3E)	UNIX System V (22 Jan 1993) elf32_xlatetof(3E)
+
+
+
+			the routines do	not change its original	con-
+			tents.	The translation	routines reset the
+			destination's d_size member to the actual size
+			required, after	the translation	occurs.	 The
+			source and destination sizes may differ.
+
+	  d_version	This member holds version number of the
+			objects	(desired) in the buffer.  The source
+			and destination	versions are independent.
+
+	  Translation routines allow the source	and destination
+	  buffers to coincide.	That is, dst->d_buf may	equal
+	  src->d_buf.  Other cases where the source and	destination
+	  buffers overlap give undefined behavior.
+
+	       Elf_Type		32-Bit Memory Type
+	       ELF_T_ADDR	Elf32_Addr
+	       ELF_T_BYTE	unsigned char
+	       ELF_T_DYN	Elf32_Dyn
+	       ELF_T_EHDR	Elf32_Ehdr
+	       ELF_T_HALF	Elf32_Half
+	       ELT_T_OFF	Elf32_Off
+	       ELF_T_PHDR	Elf32_Phdr
+	       ELF_T_REL	Elf32_Rel
+	       ELF_T_RELA	Elf32_Rela
+	       ELF_T_SHDR	Elf32_Shdr
+	       ELF_T_SWORD	Elf32_Sword
+	       ELF_T_SYM	Elf32_Sym
+	       ELF_T_WORD	Elf32_Word
+
+	  Translating buffers of type ELF_T_BYTE does not change the
+	  byte order.
+
+     SEE ALSO
+	  elf(3E), elf32_fsize(3E), elf_getdata(3E), elf_getident(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+     NAME
+	  elf_begin, elf_end, elf_memory, elf_next, elf_rand - process
+	  ELF object files
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf *elf_begin(int fildes, Elf_Cmd cmd, Elf *ref);
+
+	  int elf_end(Elf *elf);
+
+	  Elf *elf_memory(char *image, size_tsz);
+
+	  Elf_Cmd elf_next(Elf *elf);
+
+	  size_t elf_rand(Elf *elf, size_t offset);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_begin(), elf_end(), elf_memory(),	elf_next(), and
+	  elf_rand() work together to process Executable and Linking
+	  Format (ELF) object files, either individually or as members
+	  of archives.	After obtaining	an ELF descriptor from
+	  elf_begin() or elf_memory(), the program may read an exist-
+	  ing file, update an existing file, or	create a new file.
+	  fildes is an open file descriptor that elf_begin() uses for
+	  reading or writing.  elf is an ELF descriptor	previously
+	  returned from	elf_begin().  The initial file offset (see
+	  lseek(2)) is unconstrained, and the resulting	file offset is
+	  undefined.
+
+	  cmd may have the following values.
+
+	  ELF_C_NULL	  When a program sets cmd to this value,
+			  elf_begin() returns a	null pointer, without
+			  opening a new	descriptor.  ref is ignored
+			  for this command.  See the examples below
+			  for more information.
+
+	  ELF_C_READ	  When a program wishes	to examine the con-
+			  tents	of an existing file, it	should set cmd
+			  to this value.  Depending on the value of
+			  ref, this command examines archive members
+			  or entire files.  Three cases	can occur.
+
+			  First, if ref	is a null pointer, elf_begin()
+			  allocates a new ELF descriptor and prepares
+			  to process the entire	file.  If the file
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+			  being	read is	an archive, elf_begin()	also
+			  prepares the resulting descriptor to examine
+			  the initial archive member on	the next call
+			  to elf_begin(), as if	the program had	used
+			  elf_next() or	elf_rand() to ``move'' to the
+			  initial member.
+
+			  Second, if ref is a non-null descriptor
+			  associated with an archive file, elf_begin()
+			  lets a program obtain	a separate ELF
+			  descriptor associated	with an	individual
+			  member.  The program should have used
+			  elf_next() or	elf_rand() to position ref
+			  appropriately	(except	for the	initial
+			  member, which	elf_begin() prepares; see the
+			  example below).  In this case, fildes	should
+			  be the same file descriptor used for the
+			  parent archive.
+
+			  Finally, if ref is a non-null	ELF descriptor
+			  that is not an archive, elf_begin() incre-
+			  ments	the number of activations for the
+			  descriptor and returns ref, without allocat-
+			  ing a	new descriptor and without changing
+			  the descriptor's read/write permissions.  To
+			  terminate the	descriptor for ref, the	pro-
+			  gram must call elf_end() once	for each
+			  activation.  See the examples	below for more
+			  information.
+
+	  ELF_C_RDWR	  This command duplicates the actions of
+			  ELF_C_READ and additionally allows the pro-
+			  gram to update the file image	(see
+			  elf_update(3E)).  That is, using ELF_C_READ
+			  gives	a read-only view of the	file, while
+			  ELF_C_RDWR lets the program read and write
+			  the file.  ELF_C_RDWR	is not valid for
+			  archive members.  If ref is non-null,	it
+			  must have been created with the ELF_C_RDWR
+			  command.
+
+	  ELF_C_WRITE	  If the program wishes	to ignore previous
+			  file contents, presumably to create a	new
+			  file,	it should set cmd to this value.  ref
+			  is ignored for this command.
+
+	  elf_begin() ``works''	on all files (including	files with
+	  zero bytes), providing it can	allocate memory	for its	inter-
+	  nal structures and read any necessary	information from the
+	  file.	 Programs reading object files thus may	call
+	  elf_kind(3E) or elf32_getehdr(3E) to determine the file type
+	  (only	object files have an ELF header).  If the file is an
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+	  archive with no more members to process, or an error occurs,
+	  elf_begin() returns a	null pointer.  Otherwise, the return
+	  value	is a non-null ELF descriptor.
+
+	  Before the first call	to elf_begin(),	a program must call
+	  elf_version()	to coordinate versions.
+
+	  elf_end() is used to terminate an ELF	descriptor, elf, and
+	  to deallocate	data associated	with the descriptor.  Until
+	  the program terminates a descriptor, the data	remain allo-
+	  cated.  A null pointer is allowed as an argument, to sim-
+	  plify	error handling.	 If the	program	wishes to write	data
+	  associated with the ELF descriptor to	the file, it must use
+	  elf_update() before calling elf_end().
+
+	  Calling elf_end() removes one	activation and returns the
+	  remaining activation count.  The library does	not terminate
+	  the descriptor until the activation count reaches zero.
+	  Consequently,	a 0 return value indicates the ELF descriptor
+	  is no	longer valid.
+
+	  elf_memory() returns a pointer to an Elf descriptor, the Elf
+	  image	has read operations enabled ( ELF_C_READ).  image is a
+	  pointer to an	image of the Elf file mapped into memory, sz
+	  is the size of the Elf image.	 You may read and modify an
+	  Elf image that is mapped in with elf_memory(), but you may
+	  not change the Elf image size.
+
+	  elf_next() provides sequential access	to the next archive
+	  member.  That	is, having an ELF descriptor, elf, associated
+	  with an archive member, elf_next() prepares the containing
+	  archive to access the	following member when the program
+	  calls	elf_begin().  After successfully positioning an
+	  archive for the next member, elf_next() returns the value
+	  ELF_C_READ.  Otherwise, the open file	was not	an archive,
+	  elf was null,	or an error occurred, and the return value is
+	  ELF_C_NULL.  In either case, the return value	may be passed
+	  as an	argument to elf_begin(), specifying the	appropriate
+	  action.
+
+	  elf_rand() provides random archive processing, preparing elf
+	  to access an arbitrary archive member.  elf must be a
+	  descriptor for the archive itself, not a member within the
+	  archive.  offset gives the byte offset from the beginning of
+	  the archive to the archive header of the desired member.
+	  See elf_getarsym(3E) for more	information about archive
+	  member offsets.  When	elf_rand() works, it returns offset.
+	  Otherwise it returns 0, because an error occurred, elf was
+	  null,	or the file was	not an archive (no archive member can
+	  have a zero offset).	A program may mix random and sequen-
+	  tial archive processing.
+
+
+
+
+     Page 3					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+     SYSTEM SERVICES
+	  When processing a file, the library decides when to read or
+	  write	the file, depending on the program's requests.	Nor-
+	  mally, the library assumes the file descriptor remains
+	  usable for the life of the ELF descriptor.  If, however, a
+	  program must process many files simultaneously and the
+	  underlying operating system limits the number	of open	files,
+	  the program can use elf_cntl() to let	it reuse file descrip-
+	  tors.	 After calling elf_cntl() with appropriate arguments,
+	  the program may close	the file descriptor without interfer-
+	  ing with the library.
+
+	  All data associated with an ELF descriptor remain allocated
+	  until	elf_end() terminates the descriptor's last activation.
+	  After	the descriptors	have been terminated, the storage is
+	  released; attempting to reference such data gives undefined
+	  behavior.  Consequently, a program that deals	with multiple
+	  input	(or output) files must keep the	ELF descriptors	active
+	  until	it finishes with them.
+
+     EXAMPLES
+	  A prototype for reading a file appears below.	 If the	file
+	  is a simple object file, the program executes	the loop one
+	  time,	receiving a null descriptor in the second iteration.
+	  In this case,	both elf and arf will have the same value, the
+	  activation count will	be two,	and the	program	calls
+	  elf_end() twice to terminate the descriptor.
+	  If the file is an archive, the loop processes	each archive
+	  member in turn, ignoring those that are not object files.
+
+	       if (elf_version(EV_CURRENT) == EV_NONE)
+	       {
+		    /* library out of date */
+		    /* recover from error */
+	       }
+	       cmd = ELF_C_READ;
+	       arf = elf_begin(fildes, cmd, (Elf *)0);
+	       while ((elf = elf_begin(fildes, cmd, arf)) != 0)
+	       {
+		    if ((ehdr =	elf32_getehdr(elf)) != 0)
+		    {
+			 /* process the	file ... */
+		    }
+		    cmd	= elf_next(elf);
+		    elf_end(elf);
+	       }
+	       elf_end(arf);
+
+	  Alternatively, the next example illustrates random archive
+	  processing.  After identifying the file as an	archive, the
+	  program repeatedly processes archive members of interest.
+	  For clarity, this example omits error	checking and ignores
+
+
+
+     Page 4					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+	  simple object	files.	Additionally, this fragment preserves
+	  the ELF descriptors for all archive members, because it does
+	  not call elf_end() to	terminate them.
+
+	       elf_version(EV_CURRENT);
+	       arf = elf_begin(fildes, ELF_C_READ, (Elf	*)0);
+	       if (elf_kind(arf) != ELF_K_AR)
+	       {
+		    /* not an archive */
+	       }
+	       /* initial processing */
+	       /* set offset = ... for desired member header */
+	       while (elf_rand(arf, offset) == offset)
+	       {
+		    if ((elf = elf_begin(fildes, ELF_C_READ, arf)) == 0)
+			 break;
+		    if ((ehdr =	elf32_getehdr(elf)) != 0)
+		    {
+			 /* process archive member ... */
+		    }
+		    /* set offset = ...	for desired member header */
+	       }
+
+	  An archive starts with a ``magic string'' that has SARMAG
+	  bytes; the initial archive member follows immediately.  An
+	  application could thus provide the following function	to
+	  rewind an archive (the function returns -1 for errors	and 0
+	  otherwise).
+
+	       #include	<ar.h>
+	       #include	<libelf.h>
+
+	       int
+	       rewindelf(Elf *elf)
+	       {
+		    if (elf_rand(elf, (size_t)SARMAG) == SARMAG)
+			 return	0;
+		    return -1;
+	       }
+
+	  The following	outline	shows how one might create a new ELF
+	  file.	 This example is simplified to show the	overall	flow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 5					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_begin(3E)	UNIX System V (1 Jun 1995)	 elf_begin(3E)
+
+
+
+	       elf_version(EV_CURRENT);
+	       fildes =	open("path/name", O_RDWR|O_TRUNC|O_CREAT, 0666);
+	       if ((elf	= elf_begin(fildes, ELF_C_WRITE, (Elf *)0)) == 0)
+		    return;
+	       ehdr = elf32_newehdr(elf);
+	       phdr = elf32_newphdr(elf, count);
+	       scn = elf_newscn(elf);
+	       shdr = elf32_getshdr(scn);
+	       data = elf_newdata(scn);
+	       elf_update(elf, ELF_C_WRITE);
+	       elf_end(elf);
+
+	  Finally, the following outline shows how one might update an
+	  existing ELF file.  Again, this example is simplified	to
+	  show the overall flow.
+
+	       elf_version(EV_CURRENT);
+	       fildes =	open("path/name", O_RDWR);
+	       elf = elf_begin(fildes, ELF_C_RDWR, (Elf	*)0);
+
+	       /* add new or delete old	information */
+
+	       /* ensure that the memory image of the file is complete */
+	       elf_update(elf, ELF_C_NULL);
+
+	       elf_update(elf, ELF_C_WRITE);   /* update file */
+	       elf_end(elf);
+
+	  Notice that both file	creation examples open the file	with
+	  write	and read permissions.  On systems that support mmap,
+	  the library uses it to enhance performance, and mmap
+	  requires a readable file descriptor.	Although the library
+	  can use a write-only file descriptor,	the application	will
+	  not obtain the performance advantages	of mmap.
+
+     SEE ALSO
+	  creat(2), lseek(2), mmap(2), open(2),	elf(3E),
+	  elf32_getehdr(3E), elf_cntl(3E), elf_getarhdr(3E),
+	  elf_getarsym(3E), elf_getbase(3E), elf_getdata(3E),
+	  elf_getscn(3E), elf_kind(3E),	elf_rawfile(3E),
+	  elf_update(3E), elf_version(3E), ar(4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 6					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_cntl(3E)	UNIX System V (22 Jan 1993)	  elf_cntl(3E)
+
+
+
+     NAME
+	  elf_cntl - control an	elf file descriptor
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  int elf_cntl(Elf *elf, Elf_Cmd cmd);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_cntl() instructs the library to modify its behavior with
+	  respect to an	ELF descriptor,	elf.  As elf_begin(3E)
+	  describes, an	ELF descriptor can have	multiple activations,
+	  and multiple ELF descriptors may share a single file
+	  descriptor.  Generally, elf_cntl() commands apply to all
+	  activations of elf.  Moreover, if the	ELF descriptor is
+	  associated with an archive file, descriptors for members
+	  within the archive will also be affected as described	below.
+	  Unless stated	otherwise, operations on archive members do
+	  not affect the descriptor for	the containing archive.
+
+	  The cmd argument tells what actions to take and may have the
+	  following values.
+
+	  ELF_C_FDDONE
+		    This value tells the library not to	use the	file
+		    descriptor associated with elf.  A program should
+		    use	this command when it has requested all the
+		    information	it cares to use	and wishes to avoid
+		    the	overhead of reading the	rest of	the file.  The
+		    memory for all completed operations	remains	valid,
+		    but	later file operations, such as the initial
+		    elf_getdata() for a	section, will fail if the data
+		    are	not in memory already.
+
+	  ELF_C_FDREAD
+		    This command is similar to ELF_C_FDDONE, except it
+		    forces the library to read the rest	of the file.
+		    A program should use this command when it must
+		    close the file descriptor but has not yet read
+		    everything it needs	from the file.	After
+		    elf_cntl() completes the ELF_C_FDREAD command,
+		    future operations, such as elf_getdata(), will use
+		    the	memory version of the file without needing to
+		    use	the file descriptor.
+
+	  If elf_cntl()	succeeds, it returns zero.  Otherwise elf was
+	  null or an error occurred, and the function returns -1.
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_cntl(3E)	UNIX System V (22 Jan 1993)	  elf_cntl(3E)
+
+
+
+     SEE ALSO
+	  elf(3E), elf_begin(3E), elf_getdata(3E), elf_rawfile(3E)
+
+     NOTES
+	  If the program wishes	to use the ``raw'' operations (see
+	  elf_rawdata(), which elf_getdata(3E) describes, and
+	  elf_rawfile(3E)) after disabling the file descriptor with
+	  ELF_C_FDDONE or ELF_C_FDREAD,	it must	execute	the raw	opera-
+	  tions	explicitly beforehand.	Otherwise, the raw file	opera-
+	  tions	will fail.  Calling elf_rawfile() makes	the entire
+	  image	available, thus	supporting subsequent elf_rawdata()
+	  calls.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_errmsg(3E)	UNIX System V (22 Jan 1993)	elf_errmsg(3E)
+
+
+
+     NAME
+	  elf_errmsg, elf_errno	- error	handling
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  const	char *elf_errmsg (int err);
+
+	  int elf_errno(void);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  If an	ELF library function fails, a program may call
+	  elf_errno() to retrieve the library's	internal error number.
+	  As a side effect, this function resets the internal error
+	  number to zero, which	indicates no error.
+
+	  elf_errmsg() takes an	error number, err, and returns a
+	  null-terminated error	message	(with no trailing new-line)
+	  that describes the problem.  A zero err retrieves a message
+	  for the most recent error.  If no error has occurred,	the
+	  return value is a null pointer (not a	pointer	to the null
+	  string).  Using err of -1 also retrieves the most recent
+	  error, except	it guarantees a	non-null return	value, even
+	  when no error	has occurred.  If no message is	available for
+	  the given number, elf_errmsg() returns a pointer to an
+	  appropriate message.	This function does not have the	side
+	  effect of clearing the internal error	number.
+
+     EXAMPLES
+	  The following	fragment clears	the internal error number and
+	  checks it later for errors.  Unless an error occurs after
+	  the first call to elf_errno(), the next call will return
+	  zero.
+
+	       (void)elf_errno();
+	       /* processing ... */
+	       while (more_to_do)
+	       {
+		    if ((err = elf_errno()) != 0)
+		    {
+			 /* print msg */
+			 msg = elf_errmsg(err);
+		    }
+	       }
+
+     SEE ALSO
+	  elf(3E)
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_fill(3E)	UNIX System V (22 Jan 1993)	  elf_fill(3E)
+
+
+
+     NAME
+	  elf_fill - set fill byte
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  void elf_fill(int fill);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  Alignment constraints	for ELF	files sometimes	require	the
+	  presence of ``holes.''  For example, if the data for one
+	  section are required to begin	on an eight-byte boundary, but
+	  the preceding	section	is too ``short,'' the library must
+	  fill the intervening bytes.  These bytes are set to the fill
+	  character.  The library uses zero bytes unless the applica-
+	  tion supplies	a value.  See elf_getdata(3E) for more infor-
+	  mation about these holes.
+
+     SEE ALSO
+	  elf(3E), elf_flagdata(3E), elf_getdata(3E), elf_update(3E)
+
+     NOTES
+	  An application can assume control of the object file organi-
+	  zation by setting the	ELF_F_LAYOUT bit (see
+	  elf_flagdata(3E)).  When this	is done, the library does not
+	  fill holes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+No manual entry	for elf_getarhd.
+
+
+
+     elf_getarsym(3E)	UNIX System V (22 Jan 1993)   elf_getarsym(3E)
+
+
+
+     NAME
+	  elf_getarsym - retrieve archive symbol table
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf_Arsym *elf_getarsym(Elf *elf, size_t *ptr);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_getarsym() returns a pointer to the archive symbol
+	  table, if one	is available for the ELF descriptor elf.  Oth-
+	  erwise, the archive doesn't have a symbol table, an error
+	  occurred, or elf was NULL; elf_getarsym() then returns a
+	  NULL value.  The symbol table	is an array of structures that
+	  include the following	members.
+
+		    char	   *as_name;
+		    size_t	   as_off;
+		    unsigned long  as_hash;
+
+	  These	members	have the following semantics.
+
+	  as_name   A pointer to a NULL-terminated symbol name resides
+		    here.
+
+	  as_off    This value is a byte offset	from the beginning of
+		    the	archive	to the member's	header.	 The archive
+		    member residing at the given offset	defines	the
+		    associated symbol.	Values in as_off may be	passed
+		    as arguments to elf_rand().	 See elf_begin(3E) to
+		    access the desired archive member.
+
+	  as_hash   This is a hash value for the name, as computed by
+		    elf_hash().
+
+	  If ptr is non-NULL, the library stores the number of table
+	  entries in the location to which ptr points.	This value is
+	  set to zero when the return value is NULL.  The table's last
+	  entry, which is included in the count, has a NULL as_name, a
+	  zero value for as_off, and ~0UL for as_hash.
+
+	  The hash value returned is guaranteed	not to be the bit pat-
+	  tern of all ones ( ~0UL).
+
+     SEE ALSO
+	  elf(3E), elf_begin(3E), elf_getarhdr(3E), elf_hash(3E),
+	  ar(4)
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getbase(3E)	UNIX System V (22 Jan 1993)    elf_getbase(3E)
+
+
+
+     NAME
+	  elf_getbase -	get the	base offset for	an object file
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  off_t	elf_getbase(Elf	*elf);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_getbase()	returns	the file offset	of the first byte of
+	  the file or archive member associated	with elf, if it	is
+	  known	or obtainable, and -1 otherwise.  A null elf is
+	  allowed, to simplify error handling; the return value	in
+	  this case is -1.  The	base offset of an archive member is
+	  the beginning	of the member's	information, not the beginning
+	  of the archive member	header.
+
+     SEE ALSO
+	  elf(3E), elf_begin(3E), ar(4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getdata(3E)	UNIX System V (27 Oct 1994)    elf_getdata(3E)
+
+
+
+     NAME
+	  elf_getdata, elf_newdata, elf_rawdata	- get section data
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf_Data *elf_getdata(Elf_Scn	*scn, Elf_Data *data);
+
+	  Elf_Data *elf_newdata(Elf_Scn	*scn);
+
+	  Elf_Data *elf_rawdata(Elf_Scn	*scn, Elf_Data *data);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  These	functions access and manipulate	the data associated
+	  with a section descriptor, scn.  When	reading	an existing
+	  file,	a section will have a single data buffer associated
+	  with it.  A program may build	a new section in pieces, how-
+	  ever,	composing the new data from multiple data buffers.
+	  For this reason, the data for	a section should be viewed as
+	  a list of buffers, each of which is available	through	a data
+	  descriptor.
+
+	  elf_getdata()	lets a program step through a section's	data
+	  list.	 If the	incoming data descriptor, data,	is null, the
+	  function returns the first buffer associated with the	sec-
+	  tion.	 Otherwise, data should	be a data descriptor associ-
+	  ated with scn, and the function gives	the program access to
+	  the next data	element	for the	section.  If scn is null or an
+	  error	occurs,	elf_getdata() returns a	null pointer.
+
+	  elf_getdata()	translates the data from file representations
+	  into memory representations (see elf32_xlatetof(3E)) and
+	  presents objects with	memory data types to the program,
+	  based	on the file's class (see elf(3E)).  The	working
+	  library version (see elf_version(3E))	specifies what version
+	  of the memory	structures the program wishes elf_getdata() to
+	  present.
+
+	  elf_newdata()	creates	a new data descriptor for a section,
+	  appending it to any data elements already associated with
+	  the section.	As described below, the	new data descriptor
+	  appears empty, indicating the	element	holds no data.	For
+	  convenience, the descriptor's	type (d_type below) is set to
+	  ELF_T_BYTE, and the version (d_version below)	is set to the
+	  working version.  The	program	is responsible for setting (or
+	  changing) the	descriptor members as needed.  This function
+	  implicitly sets the ELF_F_DIRTY bit for the section's	data
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getdata(3E)	UNIX System V (27 Oct 1994)    elf_getdata(3E)
+
+
+
+	  (see elf_flagdata(3E)).  If scn is null or an	error occurs,
+	  elf_newdata()	returns	a null pointer.
+
+	  elf_rawdata()	differs	from elf_getdata() by returning	only
+	  uninterpreted	bytes, regardless of the section type.	This
+	  function typically should be used only to retrieve a section
+	  image	from a file being read,	and then only when a program
+	  must avoid the automatic data	translation described below.
+	  Moreover, a program may not close or disable (see
+	  elf_cntl(3E))	the file descriptor associated with elf	before
+	  the initial raw operation, because elf_rawdata() might read
+	  the data from	the file to ensure it doesn't interfere	with
+	  elf_getdata().  See elf_rawfile(3E) for a related facility
+	  that applies to the entire file.  When elf_getdata() pro-
+	  vides	the right translation, its use is recommended over
+	  elf_rawdata().  If scn is null or an error occurs,
+	  elf_rawdata()	returns	a null pointer.
+
+	  The Elf_Data structure includes the following	members:
+
+		    void	   *d_buf;
+		    Elf_Type	   d_type;
+		    size_t	   d_size;
+		    off_t	   d_off;
+		    size_t	   d_align;
+		    unsigned	   d_version;
+
+	  These	members	are available for direct manipulation by the
+	  program.  Descriptions appear	below.
+
+	  d_buf		A pointer to the data buffer resides here.  A
+			data element with no data has a	null pointer.
+
+	  d_type	This member's value specifies the type of the
+			data to	which d_buf points.  A section's type
+			determines how to interpret the	section	con-
+			tents, as summarized below.
+
+	  d_size	This member holds the total size, in bytes, of
+			the memory occupied by the data.  This may
+			differ from the	size as	represented in the
+			file.  The size	will be	zero if	no data	exist.
+			(See the discussion of SHT_NOBITS below	for
+			more information.)
+
+	  d_off		This member gives the offset, within the sec-
+			tion, at which the buffer resides.  This
+			offset is relative to the file's section, not
+			the memory object's.
+
+	  d_align	This member holds the buffer's required	align-
+			ment, from the beginning of the	section.  That
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getdata(3E)	UNIX System V (27 Oct 1994)    elf_getdata(3E)
+
+
+
+			is, d_off will be a multiple of	this member's
+			value.	For example, if	this member's value is
+			four, the beginning of the buffer will be
+			four-byte aligned within the section.  More-
+			over, the entire section will be aligned to
+			the maximum of its constituents, thus ensuring
+			appropriate alignment for a buffer within the
+			section	and within the file.
+
+	  d_version	This member holds the version number of	the
+			objects	in the buffer.	When the library ori-
+			ginally	read the data from the object file, it
+			used the working version to control the	trans-
+			lation to memory objects.
+
+     DATA ALIGNMENT
+	  As mentioned above, data buffers within a section have
+	  explicit alignment constraints.  Consequently, adjacent
+	  buffers sometimes will not abut, causing ``holes'' within a
+	  section.  Programs that create output	files have two ways of
+	  dealing with these holes.
+
+	  First, the program can use elf_fill()	to tell	the library
+	  how to set the intervening bytes.  When the library must
+	  generate gaps	in the file, it	uses the fill byte to initial-
+	  ize the data there.  The library's initial fill value	is
+	  zero,	and elf_fill() lets the	application change that.
+
+	  Second, the application can generate its own data buffers to
+	  occupy the gaps, filling the gaps with values	appropriate
+	  for the section being	created.  A program might even use
+	  different fill values	for different sections.	 For example,
+	  it could set text sections' bytes to no-operation instruc-
+	  tions, while filling data section holes with zero.  Using
+	  this technique, the library finds no holes to	fill, because
+	  the application eliminated them.
+
+     SECTION AND MEMORY	TYPES
+	  elf_getdata()	interprets sections' data according to the
+	  section type,	as noted in the	section	header available
+	  through elf32_getshdr().  The	following table	shows the sec-
+	  tion types and how the library represents them with memory
+	  data types for the 32-bit file class.	 Other classes would
+	  have similar tables.	By implication,	the memory data	types
+	  control translation by elf32_xlatetof(3E).
+
+
+
+
+
+
+
+
+
+
+     Page 3					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getdata(3E)	UNIX System V (27 Oct 1994)    elf_getdata(3E)
+
+
+
+	       Section Type	   Elf_Type	    32-Bit Type
+	       SHT_DYNAMIC	   ELF_T_DYN	    Elf32_Dyn
+	       SHT_DYNSYM	   ELF_T_SYM	    Elf32_Sym
+	       SHT_HASH		   ELF_T_WORD	    Elf32_Word
+	       SHT_NOBITS	   ELF_T_BYTE	    unsigned char
+	       SHT_NOTE		   ELF_T_BYTE	    unsigned char
+	       SHT_NULL		   none		    none
+	       SHT_PROGBITS	   ELF_T_BYTE	    unsigned char
+	       SHT_REL		   ELF_T_REL	    Elf32_Rel
+	       SHT_RELA		   ELF_T_RELA	    Elf32_Rela
+	       SHT_STRTAB	   ELF_T_BYTE	    unsigned char
+	       SHT_SYMTAB	   ELF_T_SYM	    Elf32_Sym
+	       SHT_SUNW_verdef	   ELF_T_VDEF	    Elf32_Verdef
+	       SHT_SUNW_verneed	   ELF_T_VNEED	    Elf32_Verneed
+	       SHT_SUNW_versym	   ELF_T_HALF	    Elf32_Versym
+	       other		   ELF_T_BYTE	    unsigned char
+
+	  elf_rawdata()	creates	a buffer with type ELF_T_BYTE.
+
+	  As mentioned above, the program's working version controls
+	  what structures the library creates for the application.
+	  The library similarly	interprets section types according to
+	  the versions.	 If a section type belongs to a	version	newer
+	  than the application's working version, the library does not
+	  translate the	section	data.  Because the application cannot
+	  know the data	format in this case, the library presents an
+	  untranslated buffer of type ELF_T_BYTE, just as it would for
+	  an unrecognized section type.
+
+	  A section with a special type, SHT_NOBITS, occupies no space
+	  in an	object file, even when the section header indicates a
+	  non-zero size.  elf_getdata()	and elf_rawdata() work on such
+	  a section, setting the data structure	to have	a null buffer
+	  pointer and the type indicated above.	 Although no data are
+	  present, the d_size value is set to the size from the	sec-
+	  tion header.	When a program is creating a new section of
+	  type SHT_NOBITS, it should use elf_newdata() to add data
+	  buffers to the section.  These empty data buffers should
+	  have the d_size members set to the desired size and the
+	  d_buf	members	set to null.
+
+     EXAMPLES
+	  The following	fragment obtains the string table that holds
+	  section names	(ignoring error	checking).  See	elf_strptr(3E)
+	  for a	variation of string table handling.
+
+
+
+
+
+
+
+
+
+
+     Page 4					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getdata(3E)	UNIX System V (27 Oct 1994)    elf_getdata(3E)
+
+
+
+	       ehdr = elf32_getehdr(elf);
+	       scn = elf_getscn(elf, (size_t)ehdr->e_shstrndx);
+	       shdr = elf32_getshdr(scn);
+	       if (shdr->sh_type != SHT_STRTAB)
+	       {
+		    /* not a string table */
+	       }
+	       data = 0;
+	       if ((data = elf_getdata(scn, data)) == 0	|| data->d_size	== 0)
+	       {
+		    /* error or	no data	*/
+	       }
+
+	  The e_shstrndx member	in an ELF header holds the section
+	  table	index of the string table.  The	program	gets a section
+	  descriptor for that section, verifies	it is a	string table,
+	  and then retrieves the data.	When this fragment finishes,
+	  data->d_buf points at	the first byte of the string table,
+	  and data->d_size holds the string table's size in bytes.
+
+     SEE ALSO
+	  elf(3E), elf32_getehdr(3E), elf32_getshdr(3E),
+	  elf32_xlatetof(3E), elf_cntl(3E), elf_fill(3E),
+	  elf_flagdata(3E), elf_getscn(3E), elf_rawfile(3E),
+	  elf_strptr(3E) elf_version(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 5					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getident(3E)	UNIX System V (22 Jan 1993)   elf_getident(3E)
+
+
+
+     NAME
+	  elf_getident - retrieve file identification data
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  char *elf_getident(Elf *elf, size_t *ptr);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  As elf(3E) explains, ELF provides a framework	for various
+	  classes of files, where basic	objects	may have 32 bits, 64
+	  bits,	etc.  To accommodate these differences,	without	forc-
+	  ing the larger sizes on smaller machines, the	initial	bytes
+	  in an	ELF file hold identification information common	to all
+	  file classes.	 Every ELF header's e_ident has	EI_NIDENT
+	  bytes	with the following interpretation.
+
+	       e_ident Index	  Value		    Purpose
+
+	       EI_MAG0	       ELFMAG0
+	       EI_MAG1	       ELFMAG1
+	       EI_MAG2	       ELFMAG2	      File identification
+	       EI_MAG3	       ELFMAG3
+
+			       ELFCLASSNONE
+	       EI_CLASS	       ELFCLASS32     File class
+			       ELFCLASS64
+
+			       ELFDATANONE
+	       EI_DATA	       ELFDATA2LSB    Data encoding
+			       ELFDATA2MSB
+
+	       EI_VERSION      EV_CURRENT     File version
+
+	       7-15	       0	      Unused, set to zero
+
+	  Other	kinds of files (see elf_kind(3E)) also may have	iden-
+	  tification data, though they would not conform to e_ident.
+
+	  elf_getident() returns a pointer to the file's ``initial
+	  bytes.''  If the library recognizes the file,	a conversion
+	  from the file	image to the memory image may occur.  In any
+	  case,	the identification bytes are guaranteed	not to have
+	  been modified, though	the size of the	unmodified area
+	  depends on the file type.  If	ptr is non-null, the library
+	  stores the number of identification bytes in the location to
+	  which	ptr points.  If	no data	are present, elf is null, or
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getident(3E)	UNIX System V (22 Jan 1993)   elf_getident(3E)
+
+
+
+	  an error occurs, the return value is a null pointer, with
+	  zero stored through ptr, if ptr is non-null.
+
+     SEE ALSO
+	  elf(3E), elf32_getehdr(3E), elf_begin(3E), elf_kind(3E),
+	  elf_rawfile(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getscn(3E)	UNIX System V (22 Jan 1993)	elf_getscn(3E)
+
+
+
+     NAME
+	  elf_getscn, elf_ndxscn, elf_newscn, elf_nextscn - get	sec-
+	  tion information
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf_Scn *elf_getscn(Elf *elf,	size_t index);
+
+	  size_t elf_ndxscn(Elf_Scn *scn);
+
+	  Elf_Scn *elf_newscn(Elf *elf);
+
+	  Elf_Scn *elf_nextscn(Elf *elf, Elf_Scn *scn);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  These	functions provide indexed and sequential access	to the
+	  sections associated with the ELF descriptor elf.  If the
+	  program is building a	new file, it is	responsible for	creat-
+	  ing the file's ELF header before creating sections; see
+	  elf32_getehdr(3E).
+
+	  elf_getscn() returns a section descriptor, given an index
+	  into the file's section header table.	 Note the first
+	  ``real'' section has index 1.	 Although a program can	get a
+	  section descriptor for the section whose index is 0
+	  (SHN_UNDEF, the undefined section), the section has no data
+	  and the section header is ``empty'' (though present).	 If
+	  the specified	section	does not exist,	an error occurs, or
+	  elf is null, elf_getscn() returns a null pointer.
+
+	  elf_newscn() creates a new section and appends it to the
+	  list for elf.	 Because the SHN_UNDEF section is required and
+	  not ``interesting'' to applications, the library creates it
+	  automatically.  Thus the first call to elf_newscn() for an
+	  ELF descriptor with no existing sections returns a descrip-
+	  tor for section 1.  If an error occurs or elf	is null,
+	  elf_newscn() returns a null pointer.
+
+	  After	creating a new section descriptor, the program can use
+	  elf32_getshdr() to retrieve the newly	created, ``clean''
+	  section header.  The new section descriptor will have	no
+	  associated data (see elf_getdata(3E)).  When creating	a new
+	  section in this way, the library updates the e_shnum member
+	  of the ELF header and	sets the ELF_F_DIRTY bit for the sec-
+	  tion (see elf_flagdata(3E)).	If the program is building a
+	  new file, it is responsible for creating the file's ELF
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_getscn(3E)	UNIX System V (22 Jan 1993)	elf_getscn(3E)
+
+
+
+	  header (see elf32_getehdr(3E)) before	creating new sections.
+
+	  elf_nextscn()	takes an existing section descriptor, scn, and
+	  returns a section descriptor for the next higher section.
+	  One may use a	null scn to obtain a section descriptor	for
+	  the section whose index is 1 (skipping the section whose
+	  index	is SHN_UNDEF).	If no further sections are present or
+	  an error occurs, elf_nextscn() returns a null	pointer.
+
+	  elf_ndxscn() takes an	existing section descriptor, scn, and
+	  returns its section table index.  If scn is null or an error
+	  occurs, elf_ndxscn() returns SHN_UNDEF.
+
+     EXAMPLES
+	  An example of	sequential access appears below.  Each pass
+	  through the loop processes the next section in the file; the
+	  loop terminates when all sections have been processed.
+
+	       scn = 0;
+	       while ((scn = elf_nextscn(elf, scn)) != 0)
+	       {
+		    /* process section */
+	       }
+
+     SEE ALSO
+	  elf(3E), elf32_getehdr(3E), elf32_getshdr(3E),
+	  elf_begin(3E), elf_flagdata(3E), elf_getdata(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_hash(3E)	UNIX System V (22 Jan 1993)	  elf_hash(3E)
+
+
+
+     NAME
+	  elf_hash - compute hash value
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  unsigned long	elf_hash(const char *name);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_hash() computes a	hash value, given a null terminated
+	  string, name.	 The returned hash value, h, can be used as a
+	  bucket index,	typically after	computing h mod	x to ensure
+	  appropriate bounds.
+
+	  Hash tables may be built on one machine and used on another
+	  because elf_hash() uses unsigned arithmetic to avoid possi-
+	  ble differences in various machines' signed arithmetic.
+	  Although name	is shown as char* above, elf_hash() treats it
+	  as unsigned char* to avoid sign extension differences.
+	  Using	char* eliminates type conflicts	with expressions such
+	  as elf_hash(name).
+
+	  ELF files' symbol hash tables	are computed using this	func-
+	  tion (see elf_getdata(3E) and	elf32_xlatetof(3E)).  The hash
+	  value	returned is guaranteed not to be the bit pattern of
+	  all ones (~0UL).
+
+     SEE ALSO
+	  elf(3E), elf_getdata(3E), elf32_xlatetof(3E)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_kind(3E)	UNIX System V (22 Jan 1993)	  elf_kind(3E)
+
+
+
+     NAME
+	  elf_kind - determine file type
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  Elf_Kind elf_kind(Elf	*elf);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  This function	returns	a value	identifying the	kind of	file
+	  associated with an ELF descriptor (elf).  Defined values are
+	  below:
+
+	  ELF_K_AR	  The file is an archive [see ar(4)].  An ELF
+			  descriptor may also be associated with an
+			  archive member, not the archive itself, and
+			  then elf_kind() identifies the member's
+			  type.
+
+	  ELF_K_COFF	  The file is a	COFF object file.
+			  elf_begin(3E)	describes the library's	han-
+			  dling	for COFF files.
+
+	  ELF_K_ELF	  The file is an ELF file.  The	program	may
+			  use elf_getident() to	determine the class.
+			  Other	functions, such	as elf32_getehdr(),
+			  are available	to retrieve other file infor-
+			  mation.
+
+	  ELF_K_NONE	  This indicates a kind	of file	unknown	to the
+			  library.
+
+	  Other	values are reserved, to	be assigned as needed to new
+	  kinds	of files.  elf should be a value previously returned
+	  by elf_begin().  A null pointer is allowed, to simplify
+	  error	handling, and causes elf_kind()	to return ELF_K_NONE.
+
+     SEE ALSO
+	  elf(3E), elf32_getehdr(3E), elf_begin(3E), elf_getident(3E),
+	  ar(4)
+
+
+
+
+
+
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+No manual entry	for elf_memor.
+
+
+
+     elf_rawfile(3E)	UNIX System V (22 Jan 1993)    elf_rawfile(3E)
+
+
+
+     NAME
+	  elf_rawfile -	retrieve uninterpreted file contents
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  char *elf_rawfile(Elf	*elf, size_t *ptr);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_rawfile()	returns	a pointer to an	uninterpreted byte
+	  image	of the file.  This function should be used only	to
+	  retrieve a file being	read.  For example, a program might
+	  use elf_rawfile() to retrieve	the bytes for an archive
+	  member.
+
+	  A program may	not close or disable (see elf_cntl(3E))	the
+	  file descriptor associated with elf before the initial call
+	  to elf_rawfile() , because elf_rawfile() might have to read
+	  the data from	the file if it does not	already	have the ori-
+	  ginal	bytes in memory.  Generally, this function is more
+	  efficient for	unknown	file types than	for object files.  The
+	  library implicitly translates	object files in	memory,	while
+	  it leaves unknown files unmodified.  Thus, asking for	the
+	  uninterpreted	image of an object file	may create a duplicate
+	  copy in memory.
+
+	  elf_rawdata()	(see elf_getdata(3E)) is a related function,
+	  providing access to sections within a	file.
+
+	  If ptr is non-null, the library also stores the file's size,
+	  in bytes, in the location to which ptr points.  If no	data
+	  are present, elf is null, or an error	occurs,	the return
+	  value	is a null pointer, with	zero stored through ptr, if
+	  ptr is non-null.
+
+     SEE ALSO
+	  elf(3E), elf32_getehdr(3E), elf_begin(3E), elf_cntl(3E),
+	  elf_getdata(3E), elf_getident(3E), elf_kind(3E)
+
+     NOTES
+	  A program that uses elf_rawfile() and	that also interprets
+	  the same file	as an object file potentially has two copies
+	  of the bytes in memory.  If such a program requests the raw
+	  image	first, before it asks for translated information
+	  (through such	functions as elf32_getehdr(), elf_getdata(),
+	  and so on), the library ``freezes'' its original memory copy
+	  for the raw image.  It then uses this	frozen copy as the
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_rawfile(3E)	UNIX System V (22 Jan 1993)    elf_rawfile(3E)
+
+
+
+	  source for creating translated objects, without reading the
+	  file again.  Consequently, the application should view the
+	  raw file image returned by elf_rawfile() as a	read-only
+	  buffer, unless it wants to alter its own view	of data	subse-
+	  quently translated.  In any case, the	application may	alter
+	  the translated objects without changing bytes	visible	in the
+	  raw image.
+
+	  Multiple calls to elf_rawfile() with the same	ELF descriptor
+	  return the same value; the library does not create duplicate
+	  copies of the	file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_strptr(3E)	UNIX System V (22 Jan 1993)	elf_strptr(3E)
+
+
+
+     NAME
+	  elf_strptr - make a string pointer
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  char *elf_strptr(Elf *elf, size_t section, size_t offset);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  This function	converts a string section offset to a string
+	  pointer.  elf	identifies the file in which the string	sec-
+	  tion resides,	and section identifies the section table index
+	  for the strings.  elf_strptr() normally returns a pointer to
+	  a string, but	it returns a null pointer when elf is null,
+	  section is invalid or	is not a section of type SHT_STRTAB,
+	  the section data cannot be obtained, offset is invalid, or
+	  an error occurs.
+
+     EXAMPLES
+	  A prototype for retrieving section names appears below.  The
+	  file header specifies	the section name string	table in the
+	  e_shstrndx member.  The following code loops through the
+	  sections, printing their names.
+
+	       /* handle the error */
+	       if ((ehdr = elf32_getehdr(elf)) == 0) {
+		    return;
+	       }
+	       ndx = ehdr->e_shstrndx;
+	       scn = 0;
+	       while ((scn = elf_nextscn(elf, scn)) != 0) {
+		    char *name = 0;
+		    if ((shdr =	elf32_getshdr(scn)) != 0)
+			 name =	elf_strptr(elf,	ndx, (size_t)shdr->sh_name);
+		    printf("'%s'\n", name? name: "(null)");
+	       }
+
+     SEE ALSO
+	  elf(3E), elf32_getshdr(3E), elf32_xlatetof(3E),
+	  elf_getdata(3E)
+
+     NOTES
+	  A program may	call elf_getdata() to retrieve an entire
+	  string table section.	 For some applications,	that would be
+	  both more efficient and more convenient than using
+	  elf_strptr().
+
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_update(3E)	UNIX System V (22 Jan 1993)	elf_update(3E)
+
+
+
+     NAME
+	  elf_update - update an ELF descriptor
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  off_t	elf_update(Elf *elf, Elf_Cmd cmd);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  elf_update() causes the library to examine the information
+	  associated with an ELF descriptor, elf, and to recalculate
+	  the structural data needed to	generate the file's image.
+
+	  cmd may have the following values:
+
+	  ELF_C_NULL	  This value tells elf_update()	to recalculate
+			  various values, updating only	the ELF
+			  descriptor's memory structures.  Any modi-
+			  fied structures are flagged with the
+			  ELF_F_DIRTY bit.  A program thus can update
+			  the structural information and then reexam-
+			  ine them without changing the	file associ-
+			  ated with the	ELF descriptor.	 Because this
+			  does not change the file, the	ELF descriptor
+			  may allow reading, writing, or both reading
+			  and writing (see elf_begin(3E)).
+
+	  ELF_C_WRITE	  If cmd has this value, elf_update() dupli-
+			  cates	its ELF_C_NULL actions and also	writes
+			  any ``dirty''	information associated with
+			  the ELF descriptor to	the file.  That	is,
+			  when a program has used elf_getdata(3E) or
+			  the elf_flagdata(3E) facilities to supply
+			  new (or update existing) information for an
+			  ELF descriptor, those	data will be examined,
+			  coordinated, translated if necessary (see
+			  elf32_xlatetof(3E)), and written to the
+			  file.	 When portions of the file are writ-
+			  ten, any ELF_F_DIRTY bits are	reset, indi-
+			  cating those items no	longer need to be
+			  written to the file (see elf_flagdata(3E)).
+			  The sections'	data are written in the	order
+			  of their section header entries, and the
+			  section header table is written to the end
+			  of the file.
+			  When the ELF descriptor was created with
+			  elf_begin(), it must have allowed writing
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_update(3E)	UNIX System V (22 Jan 1993)	elf_update(3E)
+
+
+
+			  the file.  That is, the elf_begin() command
+			  must have been either	ELF_C_RDWR or
+			  ELF_C_WRITE.
+
+	  If elf_update() succeeds, it returns the total size of the
+	  file image (not the memory image), in	bytes.	Otherwise an
+	  error	occurred, and the function returns -1.
+
+	  When updating	the internal structures, elf_update() sets
+	  some members itself.	Members	listed below are the
+	  application's	responsibility and retain the values given by
+	  the program.
+
+	  The following	table shows ELF	Header members:
+
+	    Member	       Notes
+
+	    e_ident[EI_DATA]   Library controls	other e_ident values
+	    e_type
+	    e_machine
+	    e_version
+	    e_entry
+	    e_phoff	       Only when ELF_F_LAYOUT asserted
+	    e_shoff	       Only when ELF_F_LAYOUT asserted
+	    e_flags
+	    e_shstrndx
+
+	  The following	table shows the	Program	Header members:
+
+	     Member	       Notes
+
+	     p_type	       The application controls	all
+	     p_offset	       program header entries
+	     p_vaddr
+	     p_paddr
+	     p_filesz
+	     p_memsz
+	     p_flags
+	     p_align
+
+	  The following	table shows the	Section	Header members:
+
+	     Member	       Notes
+
+	     sh_name
+	     sh_type
+	     sh_flags
+	     sh_addr
+	     sh_offset	       Only when ELF_F_LAYOUT asserted
+	     sh_size	       Only when ELF_F_LAYOUT asserted
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_update(3E)	UNIX System V (22 Jan 1993)	elf_update(3E)
+
+
+
+	     sh_link
+	     sh_info
+	     sh_addralign      Only when ELF_F_LAYOUT asserted
+	     sh_entsize
+
+	  The following	table shows the	Data Descriptor	members:
+
+	     Member	       Notes
+
+	     d_buf
+	     d_type
+	     d_size
+	     d_off	       Only when ELF_F_LAYOUT asserted
+	     d_align
+	     d_version
+
+	  Note that the	program	is responsible for two particularly
+	  important members (among others) in the ELF header.  The
+	  e_version member controls the	version	of data	structures
+	  written to the file.	If the version is EV_NONE, the library
+	  uses its own internal	version.  The e_ident[EI_DATA] entry
+	  controls the data encoding used in the file.	As a special
+	  case,	the value may be ELFDATANONE to	request	the native
+	  data encoding	for the	host machine.  An error	occurs in this
+	  case if the native encoding doesn't match a file encoding
+	  known	by the library.
+
+	  Further note that the	program	is responsible for the
+	  sh_entsize section header member.  Although the library sets
+	  it for sections with known types, it cannot reliably know
+	  the correct value for	all sections.  Consequently, the
+	  library relies on the	program	to provide the values for
+	  unknown section types.  If the entry size is unknown or not
+	  applicable, the value	should be set to zero.
+
+	  When deciding	how to build the output	file, elf_update()
+	  obeys	the alignments of individual data buffers to create
+	  output sections.  A section's	most strictly aligned data
+	  buffer controls the section's	alignment.  The	library	also
+	  inserts padding between buffers, as necessary, to ensure the
+	  proper alignment of each buffer.
+
+     SEE ALSO
+	  elf(3E), elf32_fsize(3E), elf32_getehdr(3E),
+	  elf32_getshdr(3E), elf32_xlatetof(3E), elf_begin(3E),
+	  elf_flagdata(3E), elf_getdata(3E)
+
+     NOTES
+	  As mentioned above, the ELF_C_WRITE command translates data
+	  as necessary,	before writing them to the file.  This trans-
+	  lation is not	always transparent to the application program.
+	  If a program has obtained pointers to	data associated	with a
+
+
+
+     Page 3					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_update(3E)	UNIX System V (22 Jan 1993)	elf_update(3E)
+
+
+
+	  file (for example, see elf32_getehdr(3E) and
+	  elf_getdata(3E)), the	program	should reestablish the
+	  pointers after calling elf_update().
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 4					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_version(3E)	UNIX System V (22 Jan 1993)    elf_version(3E)
+
+
+
+     NAME
+	  elf_version -	coordinate ELF library and application ver-
+	  sions
+
+     SYNOPSIS
+	  cc [ flag ...	] file ...  -lelf [ library ...	]
+
+	  #include <libelf.h>
+
+	  unsigned elf_version(unsigned	ver);
+
+     MT-LEVEL
+	  Unsafe
+
+     DESCRIPTION
+	  As elf(3E) explains, the program, the	library, and an	object
+	  file have independent	notions	of the latest ELF version.
+	  elf_version()	lets a program query the ELF library's
+	  internal version.  It	further	lets the program specify what
+	  memory types it uses by giving its own working version, ver,
+	  to the library.  Every program that uses the ELF library
+	  must coordinate versions as described	below.
+
+	  The header <libelf.h>	supplies the version to	the program
+	  with the macro EV_CURRENT.  If the library's internal	ver-
+	  sion (the highest version known to the library) is lower
+	  than that known by the program itself, the library may lack
+	  semantic knowledge assumed by	the program.  Accordingly,
+	  elf_version()	will not accept	a working version unknown to
+	  the library.
+
+	  Passing ver equal to EV_NONE causes elf_version() to return
+	  the library's	internal version, without altering the working
+	  version.  If ver is a	version	known to the library,
+	  elf_version()	returns	the previous (or initial) working ver-
+	  sion number.	Otherwise, the working version remains
+	  unchanged and	elf_version() returns EV_NONE.
+
+     EXAMPLES
+	  The following	excerpt	from an	application program protects
+	  itself from using an older library.
+
+	       if (elf_version(EV_CURRENT) == EV_NONE) {
+		    /* library out of date */
+		    /* recover from error */
+	       }
+
+     SEE ALSO
+	  elf(3E), elf32_xlatetof(3E), elf_begin(3E)
+
+     NOTES
+	  The working version should be	the same for all operations on
+
+
+
+     Page 1					   (printed 5/15/2002)
+
+
+
+
+
+
+     elf_version(3E)	UNIX System V (22 Jan 1993)    elf_version(3E)
+
+
+
+	  a particular elf descriptor.	Changing the version between
+	  operations on	a descriptor will probably not give the
+	  expected results.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 2					   (printed 5/15/2002)
+
+
+

@@ -1,0 +1,10 @@
+Determining changed paths
+POSTing to http://exptools.web.lucent.com:8665/expmake/changedPaths?ocelfsrc
+Determining length of updates
+POSTing to http://exptools.web.lucent.com:8665/expmake/batchUpdate/clean.sgi?ocelfsrc
+Sending command to clean ocelfsrc on sgi make machine
+Determining changed paths
+POSTing to http://expbuild.research.bell-labs.com:8666/changedPaths?ocelfsrc
+Determining length of updates
+POSTing to http://expbuild.research.bell-labs.com:8666/batchUpdate?ocelfsrc
+Cleaning out /opt/exp/expmake/build/ocelfsrc

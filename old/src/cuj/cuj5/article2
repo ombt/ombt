@@ -1,0 +1,704 @@
+
+A* BEST-FIRST SEARCH OF A STATE SPACE
+
+1 INTRODUCTION
+
+While investigating the feasibility of using an expert system as 
+a diagnostic system for a telephone network, I have learned that many of 
+the problems in artificial intelligence (AI) are represented as graphs [1]. 
+The methods used for solving these problems are really efficient traversals 
+(searches) of the graphs which represent these problems. For example, the 
+major problem in resolution-based automated reasoning is how to choose 
+the clauses to resolve. Many strategies or methods have been developed for 
+choosing these clauses (set of support, linear resolution, etc.), but the 
+underlying problem remains the same: efficiently traversing a graph. 
+
+This article describes a search routine called the "A*" best-first search 
+which solves one class of AI problems, that is, those problems that are 
+describeable using a state space model. Classic AI examples of this class 
+of problems are the N-Queens, 8-tile, and the missionary and cannibals problem. 
+
+A state space is really a graph where each state is a node in a graph, and 
+where each state represents one step in a problem solving process. The arcs 
+in the graph represent the actions which cause the problem solving process 
+to progress from one state to another state, that is, from one node to another 
+node. Thus, the object of a search routine is to find a path from the start 
+node to a goal node. The search can be exhaustive, as with breadth-first or 
+depth-first, or you can be clever about it, and try to determine which node 
+is most likely to be along a path to a goal node. The best-first search uses 
+a function to estimate the likelihood that a node is on a path to a goal node.
+Once the estimate is known for all frontier nodes (unexpanded nodes), then the
+node with the best value is chosen as the next node to visit and expand. The 
+function is called a heuristic function.
+
+The name "best-first" refers to the fact that the search routine chooses, as 
+the next graph node to visit, the unexpanded graph node which has the most 
+promise as estimated using a heuristic function. A node is said to be most 
+promising when the estimated cost to get from that node to a goal node is a 
+minimum from among all the nodes which have been generated, but not visited 
+and expanded.
+
+It is the form of this heuristic function which determines the type of search 
+which is conducted. For the A* search the heuristic function has the following 
+form:
+
+	f(state) = g(state) + h(state),
+
+where g(state) is length of the path from the start state to current state, 
+and h(state) is an estimate of the path length from the current state to a 
+goal state. The total f(state) is then used as the promise of the state, that 
+is, how likely the current node is actually on a path to a goal state. It is 
+very important to realize that h(state) is only an estimate of the cost to a 
+goal state. The actual cost, the h*(state) from AI literature, is only truly 
+known once the problem is solved.
+
+When the function h(state) satisfies certain restrictions, then it is known 
+that the A* search will discover the optimal path from a start state to a goal 
+state, that is, the path with the minimal cost. These restrictions are known 
+as the monotonic condition, they are [1]:
+
+1) For all nodes n(i) and n(j), where n(j) is a descendant of n(i), then the 
+following must be true,
+
+	h(n(i)) - h(n(j)) <= cost(n(i), n(j)).
+
+2) h(goal) = 0.
+
+When the heuristic function satisfies these restrictions, it is known that when 
+a state is first generated, the path from the start state to it is the shortest 
+possible. Later, if another path is discovered to the same state, the second 
+path can be discarded since the first path is guaranteed to be the minimal 
+path from the start state to it. This fact is important since it is used to 
+simplify the search routine presented in this article. A second search routine 
+(not described in this article) which does not require the monotonic condition 
+is available from the CUJ FTP site, as is all the code described in this article.
+
+2 IMPLEMENTATION
+
+The header and source files for the A* search routine are displayed in listings 
+1 and 2. The algorithms are described in references [2] and [3]. Listings 3 to 5 
+are for an example, the N-Queen problem, and are described in the next section. 
+A reference-counted base class and a node proxy class which are used in the search 
+routine are not listed.
+
+The search routine remains unchanged from problem to problem. It is the 
+description of the states that changes. The examples described in the next 
+sections highlight the parts of the state description which must be modifed from 
+problem to problem.
+
+There are two search routines listed in listing 2. They are basically identical 
+except in how they determine when a goal state has been reached. The first search 
+routine expects a list of possible goal states as a function parameter, and the 
+second search routine does not. The second search routine uses a predicate 
+function to determine if a state is a goal or not.
+
+These search routines assume that the heuristic function is monotonic. If a state 
+is produced a second time, then the second state is discarded since the path to 
+the first occurrence of the state is known to be optimal for a monotonic heuristic 
+functions. 
+
+All the code presented here was tested using a SUN Solaris 4.2 C++ compiler
+(without the use of #pragmas).
+
+3 EXAMPLE 1 - N-QUEENS PROBLEM
+
+Given an NxN chess board, the goal of the N-Queens problem is to place exactly N 
+queens on the NxN board such that no queen attacks another queen. For example, a 
+solution for a 4x4 board is shown below. The squares with a queen are marked with 
+a "Q" and the empty squares are marked with an "X."
+
+
+		------
+		|XQXX|
+		|XXXQ|
+		|QXXX|
+		|XXQX|
+		------
+
+Listings 3, header file queen.h, contains the definition of the class, NQueenNode, 
+which represents a state in the N-Queens problem. The internal data is separated 
+into 2 parts: the part associated with the search routine (fvalue, gvalue, hvalue, 
+parent pointer, and children pointer list), and the data specific to the problem 
+(chess board, number of rows and columns, number of queens currently on the boards, 
+number of queens required).
+
+Listing 4, source file queen.c (edited for brevity), contains the code for the 
+member functions of NQueenNode. The key member functions are heuristic(), which 
+calculates the heuristic value for the current node; expand(), which generates 
+all the children for the current node; and isGoal(), which determines if the 
+current state is a goal state. 
+
+A state of the N-Queens problem is described using an NxN board with the squares 
+containing queens marked with the character 'Q', squares that are under attacked 
+are marked with the character 'X', and empty, unattacked squares marked with a 
+blank. Each state contains a count of how many queens are currently on the board, 
+and how many queens are required.
+
+The heuristic function, h(state), is a number of unattacked squares in the board. 
+If the number of required queens is less than the number of unattacked spaces, 
+then the h(state) is set to a very large positive value. This effectively marks 
+the state as very unpromising, that is, as being extremely unlikely of it being on 
+a path to a goal state.
+
+The function expand() is called for every state. Its purpose is to generate all 
+the states that are direct descendants from the current state. For this case, 
+suppose we have a state for an 8x8 board with 3 queens on it. The states that 
+are reachable from this board are all the states with 4 queens. These states are 
+generated by adding one queen in every square that is unattacked in the current 
+state's board.
+
+Listing 5, source file tqueen2.c, contains the main() for the N-Queens example. It 
+calls the search routine BestFirst_Astar_BasicCheck() with a start state. The goal 
+state is determined within the search routine by calling the member function 
+isGoal(). isGoal() checks if the number of queens on the board matches the number 
+of required queens. If the numbers are equal, then true is returned to indicate 
+the state is a goal state; otherwise, it returns false.
+
+A solution for an 8x8 board which was generated by this code case is shown below.
+
+	----------
+	|XXXXXQXX|
+	|XXQXXXXX|
+	|QXXXXXXX|
+	|XXXXXXQX|
+	|XXXXQXXX|
+	|XXXXXXXQ|
+	|XQXXXXXX|
+	|XXXQXXXX|
+	----------
+
+4 SUMMARY
+
+The search functions presented in this article implement an A* best-first search 
+using a monotonic heuristic function. If the heuristic function is not monotonic, 
+then the path found between the start state and a goal may not be optimal.
+
+5 REFERENCES
+
+[1] G. F. Fluger and W. A. Stubblefield, Artificial Intelligence: Structures
+for Complex Problem Solving (Benjamin/Cummings Publishing Co., Inc, 1993).
+
+[2] N. Nilsson, Principles of Artificial Intelligence (Tioga Publishing Co., 
+1980).
+
+[3] J. Pearl, Heuristics: Intelligent Search Strategies for Computer Problem 
+Solving (1984).
+
+
+------ Listing 1: search.h
+
+#ifndef __SEARCH_H
+#define __SEARCH_H
+// heuristic search routines
+
+// headers
+#include <stdlib.h>
+#include <iostream.h>
+#include <assert.h>
+
+// local headers
+#include "returns.h"
+#include "debug.h"
+#include "list.h"
+
+// best-first search routine with checking for redundant states,
+// and with a set of goal states passed in. redundant states
+// are removed.
+template <class NodeType>
+int
+BestFirst_Astar_BasicCheck(const NodeType &, const List<NodeType> &, 
+	int &, int &);
+
+// best-first search routine with checking for redundant states,
+// and using a termination predicate function. redundant states
+// are removed.
+template <class NodeType>
+int
+BestFirst_Astar_BasicCheck(const NodeType &, int &, int &);
+
+
+------ Listing 2: search.c
+
+// A* best-first search for state-space graphs
+
+// local headers
+#include "search.h"
+
+// print solution by tracing parent pointers
+template <class NodeType>
+void
+PrintSolution(NodeType *pnode)
+{
+	// need to reverse direction of list before printing
+	List<NodeType *> solution;
+	for ( ; pnode != NULL; pnode = pnode->getParent())
+	{
+		solution.insertAtFront(pnode);
+	}
+
+	// now print the solution starting from the start node
+	ListIterator<NodeType *> solutionIter(solution);
+	for (int i = 1; !solutionIter.done(); i++, solutionIter++)
+	{
+		cout << "STEP " << i << " ..." << endl;
+		cout << *solutionIter() << endl;
+	}
+	return;
+}
+
+// best first search routine with multiple goal states and with
+// checking for redundant states. redundant states are removed.
+//
+template <class NodeType>
+int
+BestFirst_Astar_BasicCheck(const NodeType &start, const List<NodeType> &goals, 
+	int &uniquenodes, int &expandednodes)
+{
+	uniquenodes = expandednodes = 0;
+
+	// copy start state
+	NodePtr<NodeType> pstart(start);
+
+	// calculate the heuristic value for this node
+	pstart->heuristic(*pstart, goals);
+
+	// create open priority queue
+	List<NodePtr<NodeType> > openpq;
+	openpq.insertByValue(pstart);
+	uniquenodes++;
+
+	// create closed set
+	List<NodePtr<NodeType> > closedset;
+
+	// start search loop
+	for (NodePtr<NodeType> pnode; ! openpq.isEmpty(); )
+	{
+		// remove next node from priority open queue
+		openpq.removeAtFront(pnode);
+
+		// check if we have a goal node or not
+		if (goals.isInList(*pnode))
+		{
+			// goal node, print solution
+			PrintSolution((NodeType *)pnode);
+			return(OK);
+		}
+
+		// generate the children of the current node
+		if (pnode->expand() != OK)
+		{
+			// unable to expand current node
+			return(NOTOK);
+		}
+		if (((++expandednodes%1000) == 0) && (expandednodes > 0))
+		{
+			cout << expandednodes << " nodes expanded." << endl;
+			cout << "current node is ... " << *pnode << endl;
+		}
+
+		// set up links to parent and calculate the heuristic value
+		ListIterator<NodePtr<NodeType> > 
+			childrenIter(*pnode->getChildren());
+		for ( ; !childrenIter.done(); childrenIter++)
+		{
+			// set up link to parent
+			childrenIter()->setParent((NodeType *)pnode);
+
+			// calculate the heuristic value
+			childrenIter()->heuristic(*pstart, goals);
+
+			// check if node was already generated
+			if ( ! openpq.isInList(childrenIter()) &&
+			     ! closedset.isInList(childrenIter()))
+			{
+				// insert into open queue
+				openpq.insertByValue(childrenIter());
+				if (((++uniquenodes%1000) == 0) && (uniquenodes > 0))
+				{
+					cout << uniquenodes << " unique nodes." << endl;
+				}
+			}
+		}
+
+		// store node in closed set
+		closedset.insertAtFront(pnode);
+	}
+
+	// finished with error
+	return(NOTOK);
+}
+
+// best first search routine with a termination-detection function 
+// and with checking for redundant states. redundant states are removed.
+//
+template <class NodeType>
+int
+BestFirst_Astar_BasicCheck(const NodeType &start, 
+	int &uniquenodes, int &expandednodes)
+{
+	uniquenodes = expandednodes = 0;
+
+	// copy start state
+	NodePtr<NodeType> pstart(start);
+
+	// calculate the heuristic value for this node
+	pstart->heuristic(*pstart);
+
+	// create open priority queue
+	List<NodePtr<NodeType> > openpq;
+	openpq.insertByValue(pstart);
+	uniquenodes++;
+
+	// create closed set
+	List<NodePtr<NodeType> > closedset;
+
+	// start search loop
+	for (NodePtr<NodeType> pnode; ! openpq.isEmpty(); )
+	{
+		// remove next node from priority open queue
+		openpq.removeAtFront(pnode);
+
+		// check if we have a goal node or not
+		if (pnode->isGoal())
+		{
+			// goal node, print solution
+			PrintSolution((NodeType *)pnode);
+			return(OK);
+		}
+
+		// generate the children of the current node
+		if (pnode->expand() != OK)
+		{
+			// unable to expand current node
+			return(NOTOK);
+		}
+		if (((++expandednodes%1000) == 0) && (expandednodes > 0))
+		{
+			cout << expandednodes << " nodes expanded." << endl;
+			cout << "current node is ... " << *pnode << endl;
+		}
+
+		// set up links to parent and calculate the heuristic value
+		ListIterator<NodePtr<NodeType> > 
+			childrenIter(*pnode->getChildren());
+		for ( ; !childrenIter.done(); childrenIter++)
+		{
+			// set up link to parent
+			childrenIter()->setParent((NodeType *)pnode);
+
+			// calculate the heuristic value
+			childrenIter()->heuristic(*pstart);
+
+			// check if node was already generated
+			if ( ! openpq.isInList(childrenIter()) &&
+			     ! closedset.isInList(childrenIter()))
+			{
+				// insert into open queue
+				openpq.insertByValue(childrenIter());
+				if (((++uniquenodes%1000) == 0) && (uniquenodes > 0))
+				{
+					cout << uniquenodes << " unique nodes." << endl;
+				}
+			}
+		}
+
+		// store node in closed set
+		closedset.insertAtFront(pnode);
+	}
+
+	// finished with error
+	return(NOTOK);
+}
+
+
+------ Listing 3: queen.h
+
+#ifndef __QUEEN_H
+#define __QUEEN_H
+// definitions for N-queen node class used in A* search
+
+// headers
+#include <stdlib.h>
+#include <iostream.h>
+#include <limits.h>
+
+// local headers
+#include "returns.h"
+#include "debug.h"
+#include "list.h"
+#include "refcount.h"
+#include "nodeptr.h"
+
+// forward definitions
+class NQueenNode;
+
+// node class definition
+class NQueenNode: public RefCount {
+public:
+	// constructors and destructor
+	NQueenNode();
+	NQueenNode(int, int, int);
+	NQueenNode(const NQueenNode &);
+	virtual ~NQueenNode();
+
+	// comparison operators
+	virtual int operator<(const NQueenNode &) const;
+	virtual int operator>(const NQueenNode &) const;
+	virtual int operator==(const NQueenNode &) const;
+	virtual int operator!=(const NQueenNode &) const;
+
+	// assignment operator
+	NQueenNode &operator=(const NQueenNode &);
+
+	// board accessing function
+	char &operator()(int, int);
+	const char &operator()(int, int) const;
+
+	// function to determine if node is a goal.
+	virtual int isGoal() const;
+
+	// get/set heuristic values functions
+	int getHvalue() const;
+	int getFvalue() const;
+	int getGvalue() const;
+	void setHvalue(int);
+	void setFvalue(int);
+	void setGvalue(int);
+
+	// get/set parent functions
+	NQueenNode *getParent() const;
+	void setParent(NQueenNode *);
+
+	// get a pointer to children list 
+	List<NodePtr<NQueenNode> > *getChildren();
+
+	// calculate heuristic value
+	virtual int heuristic(const NQueenNode &, const List<NQueenNode> &);
+	virtual int heuristic(const NQueenNode &);
+	virtual int calculateGvalue();
+
+	// expand node
+	virtual int expand();
+
+	// print out
+	friend ostream &operator<<(ostream &, const NQueenNode &);
+
+protected:
+	// internal definitions
+	enum Characters {
+		SpaceChar = ' ',
+		QueenChar = 'Q',
+		AttackedChar = 'X'
+	};
+
+protected:
+	// data specific to search algorithm
+	int fvalue;
+	int gvalue;
+	int hvalue;
+	NQueenNode *parent;
+	List<NodePtr<NQueenNode> > children;
+
+	// data specific to N-queen problem
+	int nqueens, queens, nrows, ncols;
+	char *board;
+};
+
+#endif
+
+
+------ Listing 4: queen.c
+
+// definitions for node class
+
+// headers
+#include "queen.h"
+
+// constructors and destructor
+NQueenNode::NQueenNode():
+	RefCount(),
+	fvalue(INT_MAX), gvalue(INT_MAX), hvalue(INT_MAX), 
+	parent(NULL), children(),
+	nqueens(0), queens(0), nrows(0), ncols(0), 
+	board(NULL)
+{
+	// do nothing
+}
+
+.
+.
+.
+
+// check if the node is a goal.
+int
+NQueenNode::isGoal() const
+{
+	if (nqueens == queens)
+		return(1);	
+	else
+		return(0);
+}
+
+.
+.
+.
+
+// calculate the heuristic value for current node
+int
+NQueenNode::calculateGvalue()
+{
+	gvalue = 0;
+	for (NQueenNode *ppar = parent; ppar != NULL; 
+		gvalue++, ppar = ppar->parent) ;
+	return(gvalue);
+}
+
+.
+.
+.
+
+int
+NQueenNode::heuristic(const NQueenNode &start)
+{
+	gvalue = 0;
+	for (NQueenNode *ppar = parent; ppar != NULL; 
+		gvalue++, ppar = ppar->parent) ;
+
+	// calculate the heuristic estimate for this node
+	int numberOfSpaces = 0;
+	for (int ib = 0; ib < nrows*ncols; ib++)
+	{
+		if (board[ib] == SpaceChar) numberOfSpaces++;
+	}
+	hvalue = numberOfSpaces;
+
+	// check if the number of spaces is enough to store
+	// the remaining required queens.
+	if ((nqueens-queens) > numberOfSpaces)
+		hvalue = INT_MAX/2;
+
+	// add up to get total heuristic estimate for this goal
+	fvalue = gvalue + hvalue;
+	return(OK);
+}
+
+// expand current node. this function MUST populate the
+// children list and set all parent pointers to point to
+// the current node.
+int
+NQueenNode::expand()
+{
+	// generate new children for the
+	// current node
+	for (int r = 0; r < nrows; r++)
+	{
+		for (int c = 0; c < ncols; c++)
+		{
+			// check if space is attacked
+			if ((*this)(r, c) != SpaceChar)
+				continue;
+
+			// copy current node
+			NQueenNode *pnew = new NQueenNode(*this);
+			MustBeTrue(pnew != NULL);
+
+			// set parent pointer 
+			pnew->parent = this;
+
+			// place new queen 
+			(*pnew)(r, c) = QueenChar;
+			pnew->queens++;
+			
+			// update attacked row squares
+			for (int ic = 0; ic < ncols; ic++)
+			{
+				if ((*pnew)(r, ic) == SpaceChar)
+					(*pnew)(r, ic) = AttackedChar;
+			}
+
+			// update attacked column squares
+			for (int ir = 0; ir < nrows; ir++)
+			{
+				if ((*pnew)(ir, c) == SpaceChar)
+					(*pnew)(ir, c) = AttackedChar;
+			}
+
+			// update attacked diagonal squares
+			for (ir = r, ic = c; 
+				ir >= 0 && ic >= 0; ir--, ic--)
+			{
+				if ((*pnew)(ir, ic) == SpaceChar)
+					(*pnew)(ir, ic) = AttackedChar;
+			}
+			for (ir = r, ic = c; 
+				ir < nrows && ic < ncols; ir++, ic++)
+			{
+				if ((*pnew)(ir, ic) == SpaceChar)
+					(*pnew)(ir, ic) = AttackedChar;
+			}
+			for (ir = r, ic = c; 
+				ir < nrows && ic >= 0; ir++, ic--)
+			{
+				if ((*pnew)(ir, ic) == SpaceChar)
+					(*pnew)(ir, ic) = AttackedChar;
+			}
+			for (ir = r, ic = c; 
+				ir >= 0 && ic < ncols; ir--, ic++)
+			{
+				if ((*pnew)(ir, ic) == SpaceChar)
+					(*pnew)(ir, ic) = AttackedChar;
+			}
+
+			// insert into children list
+			children.insertAtFront(NodePtr<NQueenNode>(pnew));
+		}
+	}
+	return(OK);
+}
+
+
+------ Listing 5: tqueen2.c
+
+// test for best-first search code
+#include <stdlib.h>
+#include <iostream.h>
+#include "queen.h"
+#include "search.h"
+
+// main entry point
+int
+main(int argc, char **argv)
+{
+	// check number of arguments
+	if (argc != 4)
+	{
+		cerr << "usage: tqueen rows cols nqueens" << endl;
+		return(2);
+	}
+
+	// get number of columns and rows
+	int nrows = atoi(argv[1]);
+	int ncols = atoi(argv[2]);
+
+	// get number of queens
+	int nqueens = atoi(argv[3]);
+
+	// start state
+	NQueenNode start(nqueens, nrows, ncols);
+
+	// best-first search
+	int unique, expanded;
+	if (BestFirst_Astar_BasicCheck(start, unique, expanded) == OK)
+	{
+		cout << "SOLUTION FOUND ..." << endl;
+	}
+	else
+	{
+		cout << "NO SOLUTION FOUND ..." << endl;
+	}
+	cout << "Unique nodes ... " << unique << endl;
+	cout << "Expanded nodes ... " << expanded << endl;
+
+	// all done
+	return(0);
+}

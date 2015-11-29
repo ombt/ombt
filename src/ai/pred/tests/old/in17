@@ -1,0 +1,7 @@
+#
+# example from Formal Concepts in Artificial Intelligence.
+#
+<y><z>([u](P(y, u) || P(z, u)) --> [u]Q(y, z, u));
+|- True;
+#
+quit;

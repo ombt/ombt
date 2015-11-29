@@ -1,0 +1,24 @@
+Hi Amy,
+
+I would like to propose an article describing a template-based 
+shared-memory class for the UNIX environment. The class has the unique 
+feature that it calls the default constructor when the shared memory is 
+first created and calls the destructor when the shared memory is released
+by the creating-process, not by any other process accessing the shared-
+memory data. Basically, you don't want other processes creating or 
+destroying the shared-memory data as the processes attach and detach 
+from the shared-memory data. 
+
+The model used in the class is useful for system processes that fork
+child processes as helpers (a typical architecture for client/server
+systems). 
+
+As for my background, CUJ has previously published two of my articles 
+so I'm in your database !!!
+
+Thank you !!!
+
+Mike Rumore
+mrumore@lucent.com
+630-713-4396
+

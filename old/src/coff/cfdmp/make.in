@@ -1,0 +1,10 @@
+CC = cc
+CCFLAGS = -g -DFLEXWARN
+LD = cc
+LDFLAGS = -g
+INCLDIRS=-I../include
+#
+cfdmp
+cfdmp.c
+#
+install1=cp cfdmp $(HOME)/bin/cfdmp

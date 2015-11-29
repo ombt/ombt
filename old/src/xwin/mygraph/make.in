@@ -1,0 +1,12 @@
+CC = CC
+#CCFLAGS = -g -DDEBUG
+CCFLAGS = -g 
+LD = CC
+LDFLAGS = -g
+INCLDIRS = -I/opt/x11r5/include
+#
+mygraph
+mygraph.c
+-lX11
+install1=chmod 755 mygraph
+install2=cp mygraph /home/rumore/bin/mygraph

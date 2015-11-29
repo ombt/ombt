@@ -1,0 +1,116 @@
+.TH OCELF 1 EXPTOOLS
+.SH NAME
+ocelf
+-- compares two ELF files
+.SH SYNOPSIS
+.B ocelf
+[-?sfTYBat] [-M bytes] [-S or -P] ELF_file1 ELF_file2 
+
+.SH DESCRIPTION
+.P
+.I ocelf
+compares two ELF (Executable and Linking Format) files and reports
+any differences. Although all sections or segments are compared,
+and all differences are reported, only differences in 
+the .init, .text, .fini, .rodata, and .data sections will mark the files as
+different. You can add string tables, symbols tables and .bss
+sections to the previous list using command line options.
+.P
+.I ocelf
+command line options are described below.
+
+.PP
+.PD
+.TP 10
+.BI -?
+print a usage message.
+
+.PP
+.PD
+.TP 10
+.BI -s 
+silent mode, no output is generated; the return code indicates 
+the final status.
+
+.PP
+.PD
+.TP 10
+.BI -f
+fast mode, 
+.B ocelf
+returns when the first difference between the files is detected.
+
+
+.PP
+.PD
+.TP 10
+.BI -S
+compare file sections (default) instead of program segments. This
+option turns off the 
+.B -P
+option.
+
+.PP
+.PD
+.TP 10
+.BI -P
+compare program segments instead of file sections. This option
+turns off the
+.B -S
+option.
+
+.PP
+.PD
+.TP 10
+.BI -T
+include string tables in comparisons that can mark the files
+as different.
+
+.PP
+.PD
+.TP 10
+.BI -Y 
+include symbol tables in comparisons that can mark the files
+as different.
+
+.PP
+.PD
+.TP 10
+.BI -B 
+include .bss sections in comparisons that can mark the files
+as different.
+
+.PP
+.PD
+.TP 10
+.BI -a 
+list all differences found between the files. This option can
+generate a lot of output for large files which are different.
+
+.PP
+.PD
+.TP 10
+.BI -t
+translate byte differences to ASCII, when possible. A "." is 
+printed if no translation is possible.
+
+.PP
+.PD
+.TP 10
+.BI -M number_of_bytes_to_print
+the maximum number of bytes to print per difference found; the default
+is to print the first 100 bytes which are different.
+
+.br
+.SH EXIT STATUS
+.B ocelf
+returns with an exit code of 0 if the files are the same; it returns
+an exit code of 1 if the files are different; and, finally, an exit
+code of >1 if an error occurred.
+
+.SH "AUTHOR"
+.B ocelf 
+author is Mike A. Rumore <mrumore@lucent.com>.
+
+.SH "PROVIDER"
+The author is also the provider.

@@ -1,0 +1,126 @@
+
+Reading file: g1t1
+
+Vertex: v: id:1 label:A
+Vertex: v: id:2 label:B
+Vertex: v: id:3 label:C
+Vertex: v: id:4 label:G
+Vertex: v: id:5 label:H
+Edge: e: fromid:1 toid:2 color:blue
+Edge: e: fromid:1 toid:3 color:blue
+Edge: e: fromid:2 toid:4 color:blue
+Edge: e: fromid:2 toid:5 color:blue
+
+Reading file: g2t1
+
+Vertex: v: id:1 label:B
+Vertex: v: id:3 label:G
+Vertex: v: id:4 label:H
+Edge: e: fromid:1 toid:3 color:blue
+Edge: e: fromid:1 toid:4 color:blue
+
+Graph G1 is connected.
+Graph G2 is connected.
+
+
+G1 Vertex: (1,A)
+Vertices visited Via To-Links: 0
+Vertices visited Via From-Links: 4
+
+G1 Vertex: (2,B)
+Vertices visited Via To-Links: 1
+Vertices visited Via From-Links: 2
+
+G1 Vertex: (3,C)
+Vertices visited Via To-Links: 1
+Vertices visited Via From-Links: 0
+
+G1 Vertex: (4,G)
+Vertices visited Via To-Links: 2
+Vertices visited Via From-Links: 0
+
+G1 Vertex: (5,H)
+Vertices visited Via To-Links: 2
+Vertices visited Via From-Links: 0
+
+G1 PQ:
+ (VID:(1,A),PQ:4) (VID:(2,B),PQ:3) (VID:(4,G),PQ:2) (VID:(5,H),PQ:2) (VID:(3,C),PQ:1)
+
+G2 Vertex: (1,B)
+Vertices visited Via To-Links: 0
+Vertices visited Via From-Links: 2
+
+G2 Vertex: (3,G)
+Vertices visited Via To-Links: 1
+Vertices visited Via From-Links: 0
+
+G2 Vertex: (4,H)
+Vertices visited Via To-Links: 1
+Vertices visited Via From-Links: 0
+
+G2 PQ:
+ (VID:(1,B),PQ:2) (VID:(3,G),PQ:1) (VID:(4,H),PQ:1)
+
+G1 PQ, G2 PQ
+DUMP graphOverlap'315: g1vid = 1, g1.label(g1vid) = A
+DUMP graphOverlap'320: g2vid = 1, g2.label(g2vid) = B
+DUMP graphOverlap'321: g1.label(g1vid) = A, g2.label(g2vid) = B
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 3, g2.label(g2vid) = G
+DUMP graphOverlap'321: g1.label(g1vid) = A, g2.label(g2vid) = G
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 4, g2.label(g2vid) = H
+DUMP graphOverlap'321: g1.label(g1vid) = A, g2.label(g2vid) = H
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'315: g1vid = 2, g1.label(g1vid) = B
+DUMP graphOverlap'320: g2vid = 1, g2.label(g2vid) = B
+DUMP graphOverlap'321: g1.label(g1vid) = B, g2.label(g2vid) = B
+TRACE graphOverlap'210: to-sets are unequal
+DUMP graphOverlap'320: g2vid = 3, g2.label(g2vid) = G
+DUMP graphOverlap'321: g1.label(g1vid) = B, g2.label(g2vid) = G
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 4, g2.label(g2vid) = H
+DUMP graphOverlap'321: g1.label(g1vid) = B, g2.label(g2vid) = H
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'315: g1vid = 4, g1.label(g1vid) = G
+DUMP graphOverlap'320: g2vid = 1, g2.label(g2vid) = B
+DUMP graphOverlap'321: g1.label(g1vid) = G, g2.label(g2vid) = B
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 3, g2.label(g2vid) = G
+DUMP graphOverlap'321: g1.label(g1vid) = G, g2.label(g2vid) = G
+TRACE graphOverlap'213: possible match
+TRACE graphOverlap'257: a match
+TRACE graphOverlap'210: to-sets are unequal
+TRACE graphOverlap'282: 
+DUMP graphOverlap'340: finalg1g2overlap = 
+v: id: 4 label:G
+
+DUMP graphOverlap'320: g2vid = 4, g2.label(g2vid) = H
+DUMP graphOverlap'321: g1.label(g1vid) = G, g2.label(g2vid) = H
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'315: g1vid = 5, g1.label(g1vid) = H
+DUMP graphOverlap'320: g2vid = 1, g2.label(g2vid) = B
+DUMP graphOverlap'321: g1.label(g1vid) = H, g2.label(g2vid) = B
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 3, g2.label(g2vid) = G
+DUMP graphOverlap'321: g1.label(g1vid) = H, g2.label(g2vid) = G
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 4, g2.label(g2vid) = H
+DUMP graphOverlap'321: g1.label(g1vid) = H, g2.label(g2vid) = H
+TRACE graphOverlap'210: to-sets are unequal
+DUMP graphOverlap'315: g1vid = 3, g1.label(g1vid) = C
+DUMP graphOverlap'320: g2vid = 1, g2.label(g2vid) = B
+DUMP graphOverlap'321: g1.label(g1vid) = C, g2.label(g2vid) = B
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 3, g2.label(g2vid) = G
+DUMP graphOverlap'321: g1.label(g1vid) = C, g2.label(g2vid) = G
+TRACE graphOverlap'201: labels do NOT match
+DUMP graphOverlap'320: g2vid = 4, g2.label(g2vid) = H
+DUMP graphOverlap'321: g1.label(g1vid) = C, g2.label(g2vid) = H
+TRACE graphOverlap'201: labels do NOT match
+
+==>> G1-only is empty!
+==>> G2-only is empty!
+==>> G1-G2-overlap graph:
+v: id: 4 label:G
+

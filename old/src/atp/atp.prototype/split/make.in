@@ -1,0 +1,22 @@
+CC = CC
+CCFLAGS = -DDEBUG -g -xildoff
+#
+LD = CC
+LDFLAGS = -DDEBUG -g -xildoff
+#
+atpsplit
+split.y
+split.l
+binaryTree_AVL.c
+mylist.c
+queue_List.c
+semantic.c
+symbol.c
+stack_List.c
+mystring.c
+strategy.c
+-ly
+-ll
+#
+install1 = cp atpsplit $(HOME)/bin/atpsplit
+

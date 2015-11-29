@@ -1,0 +1,85 @@
+#
+# test cases from chapter 4 in the book Deduction: Introductory 
+# Symbolic Logic, by D. Bonevac.
+#
+#############################################################################
+#
+p && q;
+|- q;
+#
+p && ( q && r);
+|- q;
+#
+|- ~(p && ~p);
+#
+|- ~(p && (q && ~p));
+#
+|- ~((p && ~q) && (q && ~p));
+#
+~p && ~q;
+|- ~(p && q);
+#
+(p && q) && r;
+|- p && (q && r);
+#
+p && ~q;
+~r && s;
+|- s && p;
+#
+~( p && q);
+q;
+|- ~p;
+#
+q;
+|- ~(~p && ~q);
+#
+p;
+|- ~(q && ~(p && q));
+#
+~((p && ~q) && r);
+|- ~((p && r) && ~q);
+#
+~(p && ~q);
+p;
+|- q;
+#
+~(~p && q);
+~(p && q);
+|- ~q;
+#
+p && q;
+~(q && ~r);
+~(p && ~s);
+|- r && s;
+#
+|- ~(~(~(p && ~q) && ~p) && ~p);
+#
+p && q;
+~(~r && q);
+~(r && ~s);
+|- p && s;
+#
+# in the following problem, the conclusion "r" never appears anywhere
+# in the assumptions. is this a typo???
+#
+~(p && ~q);
+~(q && ~p);
+~(p && q);
+~(~p && ~q);
+|- r;
+#
+~(~s && q);
+~(p && (~q && ~r));
+~(r && ~s);
+|- ~(~s && p);
+#
+# this one fails since the conclusion does not appear anywhere in the
+# assumptions. need to check this one out.
+#
+~(p && r);
+~(~(p && q) && ~p);
+r;
+|- ~s;
+#
+quit;
+

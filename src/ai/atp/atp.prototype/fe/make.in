@@ -1,0 +1,21 @@
+CC = CC
+CCFLAGS = -DDEBUG -g -xildoff
+#
+LD = CC
+LDFLAGS = -DDEBUG -g -xildoff
+#
+atpfe
+fe.y
+fe.l
+binaryTree_AVL.c
+mylist.c
+queue_List.c
+semantic.c
+symbol.c
+stack_List.c
+mystring.c
+-ly
+-ll
+#
+install1 = cp atpfe $(HOME)/bin/atpfe
+

@@ -1,0 +1,41 @@
+Marc,
+
+The "shell archive" contains the following files:
+
+complex.c	<<== complex class, may have a bug.
+complex.h
+epsilon.c	<<== calculates epsilon for numeric calculations
+epsilon.h
+gausslup.c	<<== actual LUP code
+gausslup.h
+make.in
+makefile
+matrix.c	<<== matrix class used in LUP code
+matrix.h
+returns.h	<<== return values from LUP code
+debug.h		<<== contains MustBeTrue assert/exception macro
+tgausslup.c	<<== test program for LUP code
+vector.c	<<== vector code in LUP code
+vector.h
+run_tglup	<<== test script with test cases
+README		<<== this readme file :-)
+
+The references are as follows:
+
+1) D. Kincaid and W. Cheney, Numerical Analysis, 1991. Chapter 4 of this book
+contains the algorithms implemented in the file gausslup.c.
+
+2) W. H. Press, et al, Numerical Recipes: The Art of Scientific Computing,
+1986. The algorithms for computing the inverse and determinant are from
+here (although, it really is just simple, basic linear algebra).
+
+3) R. Gregory and D. Karney, A Collection of Matrices For Testing 
+Computational Algorithms, 1969. Chapter 3 of this book contains the
+test cases used in testing the gausslup package. Also, many of these cases
+are included in the run_tglup shell script. I can fax you part
+of chapter 3, if you wish.
+
+Hopefully, this is enough information for your testers !!!
+
+Mike Rumore
+mrumore@lucent.com

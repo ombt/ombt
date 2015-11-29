@@ -1,0 +1,114 @@
+Hi K.B. Williams,
+
+I've made several changes to the LUP code. I've listed them below.
+
+1) I've changed the headers to include the "<T>" wherever a 
+template class is referred. For example, previously the
+Matrix class had declarations as follows:
+
+        // constructors and destructor
+        Matrix(unsigned int, unsigned int);
+        Matrix(const Matrix &);
+        ~Matrix();
+
+	.
+	.
+	.
+
+        // matrix operations
+        Matrix &operator+=(const Matrix &);
+        Matrix &operator-=(const Matrix &);
+        Matrix &operator*=(const Matrix &);
+        Matrix operator+(const Matrix &) const;
+        Matrix operator-(const Matrix &) const;
+        Matrix operator*(const Matrix &) const;
+ 
+I have changed the declarations to this:
+
+        // constructors and destructor
+        Matrix<T>(unsigned int, unsigned int);
+        Matrix<T>(const Matrix<T> &);
+        ~Matrix<T>();
+
+	.
+	.
+	.
+
+        // matrix operations
+        Matrix<T> &operator+=(const Matrix<T> &);
+        Matrix<T> &operator-=(const Matrix<T> &);
+        Matrix<T> &operator*=(const Matrix<T> &);
+        Matrix<T> operator+(const Matrix<T> &) const;
+        Matrix<T> operator-(const Matrix<T> &) const;
+        Matrix<T> operator*(const Matrix<T> &) const;
+
+I hope this fixes the problem. I don't see how else I can declare
+the proto-types.
+
+2) The warnings about the initializer lists in the test file 
+tgausslup.c should be gone. I split up the test structure into
+two parts: TestCase and a double array which holds the actual
+matrix and y-vector data. You should not get the warnings about
+incomplete initializer lists (famous last words).
+
+I also changed all the constants in the initializer lists from
+the integer form to a floating-point form. I added the decimal
+point.
+
+3) I have added overflow checks via the macro CheckForOverFlow().
+If the code is built with the #define OVERFLOWCHECK turned on, then
+this macro checks for overflows, else it is empty macro. This macro
+is stored in header file debug.h.
+
+4) I have added the function operator[](unsigned int) to the 
+Matrix class. This operator contains a sanity check for the index,
+i.e., if the index is out-of-range, then an assert is fired.
+I have changed all the low-level accesses to this operator where
+ever it was possible. This should catch the out-of-range array
+accesses.
+
+5) Similar to item 4, any matrix accesses that are NOT using
+operator[](unsigned int) have been changed to use the double
+index operator, operator()(unsigned int, unsigned int). This
+should catch out-of-range accesses when a row and column are
+given. Again the operator()(unsigned int, unsigned int) function
+has sanity checks built into it.
+
+6) The final change involves how the summation of products is calculated. 
+The naive way is as follows. Suppose you have 2 arrays, x[] and y[],
+the usual way to multiply and add is follows:
+
+	sum = x[0]*y[0] + x[1]*y[1] + x[2]*y[2] + ... + x[n]*y[n]
+
+However, since floating point representation has a limited number
+of digits available (about 14 for a double), the better way is to 
+add the values in ascending order, smallest to largest.
+For example, like this:
+
+	sum = 0.00001 + 0.001 + 0.1 + 1.0 + 100.0 + 1000000.0 + ...;
+
+This functionality is implemented in the function sortAndAdd(). The
+#define SORTANDADD must be defined to enable this change. By default,
+it is not enabled.
+
+7) I have changed (hopefully all of them) the "for (int ...)" cases to 
+have the "int ..." outside the for-loop. This should cure the scoping 
+problems.
+
+With all the above changes enabled, I ran the test cases in the
+file tglup.c and they all worked. I still have not found the 
+out-of-range acccess. I'm hoping that when you run the test cases
+that you will see an error. 
+
+Finally, I have added a statements to dump the matrix before and 
+after any major operation is executed, verification that nothing
+has been trashed. This is enabled with the #define DEBUG.
+
+I've attached several gzip files containing the updated code. There
+is a MAKEFILE if you have any questions as how to build this stuff.
+There are two testfile: tgausslup.c and tglup.c. It is tglup.c that
+you have been using.
+
+Thank you for your help.
+
+Mike Rumore

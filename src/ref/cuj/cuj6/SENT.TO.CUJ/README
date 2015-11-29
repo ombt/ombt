@@ -1,0 +1,77 @@
+The following files are included:
+
+	debug.h
+	reader.c
+	returns.h
+	vsem.c
+	vsem.h
+	vshm5.h
+	writer.c
+
+	make.in
+	makefile
+
+Makefile defines the macroes CC and LD to be "CC", that is, the C++ 
+compiler is called CC by default. You will have to change these 
+definitions if you are using a compiler with a different name. The
+Solaris Workshop C++ compiler is called "CC". 
+
+Enter the following command to build writer and reader:
+
+	$ make
+
+To run the example, make sure both the reader and writer executables are in 
+the same directory. Change directory to the directory containing the
+executables and run:
+
+	$ writer 1 11 111 5
+
+This run writer with three keys 1, 11, 111, and for an array containing
+5 elements. The output appears as follows:
+
+READER: reading buffer [0] ... I'm initialized !!!  
+READER: reading buffer [1] ... I'm initialized !!!  
+READER: reading buffer [2] ... I'm initialized !!!  
+READER: reading buffer [3] ... I'm initialized !!!  
+READER: reading buffer [4] ... I'm initialized !!!  
+WRITER: writing into buffer [0] ... I'm initialized !!! a
+WRITER: writing into buffer [1] ... I'm initialized !!! a
+WRITER: writing into buffer [2] ... I'm initialized !!! a
+WRITER: writing into buffer [3] ... I'm initialized !!! a
+WRITER: writing into buffer [4] ... I'm initialized !!! a
+READER: reading buffer [0] ... I'm initialized !!! a
+READER: reading buffer [1] ... I'm initialized !!! a
+READER: reading buffer [2] ... I'm initialized !!! a
+READER: reading buffer [3] ... I'm initialized !!! a
+READER: reading buffer [4] ... I'm initialized !!! a
+WRITER: writing into buffer [0] ... I'm initialized !!! ab
+WRITER: writing into buffer [1] ... I'm initialized !!! ab
+WRITER: writing into buffer [2] ... I'm initialized !!! ab
+WRITER: writing into buffer [3] ... I'm initialized !!! ab
+WRITER: writing into buffer [4] ... I'm initialized !!! ab
+READER: reading buffer [0] ... I'm initialized !!! ab
+READER: reading buffer [1] ... I'm initialized !!! ab
+READER: reading buffer [2] ... I'm initialized !!! ab
+READER: reading buffer [3] ... I'm initialized !!! ab
+READER: reading buffer [4] ... I'm initialized !!! ab
+WRITER: writing into buffer [0] ... I'm initialized !!! abc
+WRITER: writing into buffer [1] ... I'm initialized !!! abc
+WRITER: writing into buffer [2] ... I'm initialized !!! abc
+WRITER: writing into buffer [3] ... I'm initialized !!! abc
+WRITER: writing into buffer [4] ... I'm initialized !!! abc
+READER: reading buffer [0] ... I'm initialized !!! abc
+READER: reading buffer [1] ... I'm initialized !!! abc
+READER: reading buffer [2] ... I'm initialized !!! abc
+READER: reading buffer [3] ... I'm initialized !!! abc
+READER: reading buffer [4] ... I'm initialized !!! abc
+WRITER: writing into buffer [0] ... I'm initialized !!! abcd
+WRITER: writing into buffer [1] ... I'm initialized !!! abcd
+WRITER: writing into buffer [2] ... I'm initialized !!! abcd
+WRITER: writing into buffer [3] ... I'm initialized !!! abcd
+WRITER: writing into buffer [4] ... I'm initialized !!! abcd
+.
+.
+.
+
+
+

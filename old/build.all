@@ -1,0 +1,3 @@
+set -x
+. build.env
+(make 2>&1; make install 2>&1; make test 2>&1 ) | tee /tmp/build.all.out

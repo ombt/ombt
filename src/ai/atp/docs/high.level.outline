@@ -1,0 +1,1264 @@
+
+the high-level design is given here.
+
+1 - example:
+
+1.1) assume the logic programs look as follows:
+
+	#
+	# problem 1
+	#
+	# axioms for problem 1
+	#
+	p1ax1 (axiom 1 for problem 1)
+	p1ax2
+	.
+	.
+	.
+	p1axN1
+	#
+	# conclusions to prove using axioms in problem 1
+	#
+	p1c1 (conclusion 1 for problem 1)
+	p1c2
+	.
+	.
+	.
+	p1cM1
+	#
+	# problem 2
+	#
+	# axioms for problem 2
+	#
+	p2ax1 (axiom 1 for problem 2)
+	p2ax2
+	.
+	.
+	.
+	p2axN2
+	#
+	# conclusions to prove using axioms in problem 2
+	#
+	p2c1 (conclusion 1 for problem 1)
+	p2c2
+	.
+	.
+	.
+	p2cM2
+	#
+	# problem 3
+	#
+	.
+	.
+	.
+
+1.2) the first step is to take each set of axioms and combine with
+each conclusion which is to be proven using the axioms in the 
+problem set. the above sets are used to generate the following
+problem sets:
+
+	# problem set 1 for problem 1, conclusion 1
+	p1ax1
+	p1ax2
+	.
+	.
+	.
+	p1axN1
+	p1c1
+	# problem set 2 for problem 1, conclusion 2
+	p1ax1
+	p1ax2
+	.
+	.
+	.
+	p1axN1
+	p1c2
+	#
+	.
+	.
+	.
+	# problem set M1 for problem 1, conclusion M1
+	p1ax1
+	p1ax2
+	.
+	.
+	.
+	p1axN1
+	p1cM1
+	#
+	# problem set 1 for problem 2, conclusion 1
+	p2ax1
+	p2ax2
+	.
+	.
+	.
+	p2axN2
+	p2c1
+	# problem set 2 for problem 2, conclusion 2
+	p2ax1
+	p2ax2
+	.
+	.
+	.
+	p2axN2
+	p2c2
+	#
+	.
+	.
+	.
+	# problem set M2 for problem 2, conclusion M2
+	p2ax1
+	p2ax2
+	.
+	.
+	.
+	p2axN2
+	p2cM2
+	# problem 3 ...
+	.
+	.
+	.
+
+1.3) each of the above problem sets are independent and must be proven or
+disproven. the general method is to take each problem set and to divide
+it into subproblems which are then proven. different strategies may be
+used to divide a problem set into separate subproblems. depending 
+on the strategy, several different sets of subproblems may be generated;
+each subset represents the entire problem. the method which was used
+to generate the equivalent subproblems differs. this means that given 
+a problem set, we will generate different sets of subproblems depending
+only on the strategy used to break up the initial problem.
+
+example: consider the following set of axioms and conclusions
+
+	axiom 1: A --> B
+	axiom 2: B --> C
+	conclusion 1: A --> C
+
+or
+	A --> B
+	B --> C
+	|- A --> C
+
+one strategy is to apply resolution directly on the negated conclusion
+along with the axioms. this gives the following problem set, call it 
+problem set 1.
+
+	A --> B
+	B --> C
+	~(A --> C)
+
+another strategy tries to break up the initial problem into 2 subproblems
+which each must be solved. this is accomplished using the following
+transformations:
+
+	A --> C = ~A || B
+
+now the original problem set becomes two problem sets; each one smaller 
+than the original.
+
+	A --> B
+	B --> C
+	A --> C
+
+becomes
+
+	A --> B
+	B --> C
+	~A || C
+
+which then corresponds to proving one of the following problem sets,
+
+	A --> B
+	B --> C
+	~A
+
+OR
+	A --> B
+	B --> C
+	C
+if any of the above problem sets can be proven, then the original 
+problem has been proven.
+
+a third approach uses semantic tableaux to break up the problem into
+different subproblem. then a resolution theorem prover can be
+run on all the subproblems.
+
+The above process can really become complicated since it is fully
+possible to take each subproblem, and in turn, break the subproblem
+down just as the original problem was broken down. again, different
+strategies are available to break each problem down. eventually, the
+smallest subproblems are passed to a resolution-based theorem prover
+which takes the subproblem and attempts to prove it or disprove it.
+
+The results of the theorem prover are then combined to prove the 
+larger original problem.
+	
+
+2 - pseudo-code or design for the separate processes
+
+2.1) read in logical programs and check syntax
+
+main()
+{
+	while (problems to read)
+	{
+		read in axioms for current problem
+		and check syntax
+
+		while (conclusions to read in)
+		{
+			read in conclusion and check syntax
+
+			define set-of-support for current conclusion
+
+			write out problem set = 
+				{ axioms, conclusion, set-of-support)
+		}
+
+		start up next phase or just return success.
+	}
+}
+
+the directory structure for the above sets appear as follows:
+
+home
+	problem1
+		original_axioms_conclusions
+		axioms_conclusion1
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		axioms_conclusion2
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		...
+		axioms_conclusionN
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+	problem2
+		original_axioms_conclusions
+		axioms_conclusion1
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		axioms_conclusion2
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		...
+		axioms_conclusionN
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+	...
+	problemN
+		original_axioms_conclusions
+		axioms_conclusion1
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		axioms_conclusion2
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+		...
+		axioms_conclusionN
+			strategy1
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			strategy2
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+			...
+			strategyN
+				AND/OR_graph
+				subproblem1
+				subproblem2
+				...
+				subproblemN
+	
+
+2.2) break problems into sets of subproblems depending on strategy
+
+main()
+{
+	while (problem sets to read)
+	{
+		read in problem set = ( axioms, conclusion, set-of-support }
+
+		for each strategy used to break down problems, including
+		using resolution on the entire problem set,
+		{
+			create a set of subproblems which must be
+			solved to prove the original problem.
+
+			subproblem set is a list of subproblems
+			of the form:
+			1) { subset of axioms, subset of conclusion, 
+				subset of set-of-support }
+			.
+			.
+			.
+			N) { subset of axioms, subset of conclusion, 
+				subset of set-of-support }
+				  
+			create an AND/OR graph to describe how
+			the results of each subproblem set is combined 
+			to prove or disprove the larger original problem.
+		}
+	}
+}
+
+NOTE: always have the case where only resolution is used in the entire 
+original problem set.
+
+some basic ways to break a problem apart into smaller subproblems are
+lists next.
+
+
+2.2.1) some basic approaches for proving conclusions which have
+different types of primary logical operators are given below.
+they are from Schaums Outlines on Logic, page 59.
+
+conclusion 		strategy
+type
+------------------------------------------------------------------
+atomic formula		if nothing is obvious, hypothesize
+			the negation of the conclusion and use RAA.
+			if RAA succeeds, then use ~E.
+
+negated formula		hypothesize the conclusion without the
+			negation sign. if a contradiction follows, then
+			use RAA succeeds to obtain the conclusion.
+
+conjunction		prove each conjuct separately and join using
+			&I.
+
+disjunction		try to prove the conditionals to prove
+			the disjunction using VE, they are,
+
+			A || B
+			A --> C
+			B --> C
+			|- C		VE-rule.
+
+			NOTE: This only works with (A || B) as a premise.
+
+			Negate the conclusion and try RAA. finally,
+			try proving one the disjuncts and then applying
+			VI.
+
+			A
+			|- A || B	VI-rule
+			where B is anything.
+
+conditional		hypothesize the antecedent, and use CP to
+			show the consequent. can also rewrite as
+			follows
+				A --> B = ~A || B
+			and then try to show ~A or B.
+
+			this is automatically done when converting
+			to clause form. the difference is when each
+			clause is taken independent of the other clause.
+
+biconditional		Use CP to show the two conditionals required
+			to prove the biconditional, that is,
+
+				A <--> B = A --> B && B --> A
+
+			then show A-->B and B-->A separately. of course,
+			A-->B can be rewritten as ~A || B and B-->A
+			can be rewritten as ~B || A. these transformations
+			occur automatically when written in clause form.
+			the difference is when each problem is used as a
+			subproblem without the other part present.
+
+2.2.2) splitting techniques from Bledsoe's paper, AI 2 (1971) p55-77.
+
+conclusion 		strategy
+type
+------------------------------------------------------------------
+1) A && B		show two theorems A and B, separately.
+
+2) A <--> B		show A-->B && B-->A.
+
+3) ALL x P(x)		P(x)
+
+4) A = B		Universal set, U, if A is identical to B.
+			A = B, otherwise.
+
+5) (p --> (A --> B))	(p && A) --> B
+
+6) (p --> (A && B)	(p-->A) && (p-->B)
+
+7) (p || q) --> A	(p-->A) && (q-->A)
+
+8) (A --> ALL x P(x))	(A --> P(y)) y is a new variable
+
+9) ((SOME x P(x))--> D)	(P(y)-->D), y is a new variable
+
+10) ((x=y)-->P(x, x))	P(y, y) if x is a variable.
+
+Rules 6 and 7 can lead to splitting problems up when combined
+with rule 1.
+
+example:
+
+	1) (A && (B || C)) --> D
+
+	2) ((A && B) || (A && C)) --> D	by distribution
+
+	3) ((A&&B)-->D) && ((A&&C)-->D)	by rule 7
+
+	4) then by rule 1, convert 3) to:
+
+		(A&&B)-->D
+		(A&&C)-->D
+
+	now each of above are proved separately.
+
+In Bledsoe's paper he has additional rewrite rules which can be used
+for simplifying set theoretic clauses.
+
+
+2.3) try to solve subproblems
+
+main()
+{
+	while (problems sets to read)
+	{
+		for each strategy used to break down problems
+		{
+			read in the AND/OR graph used to combine a
+			subproblem set
+
+			for each subproblem in the current subproblem set
+			{
+				read in subproblem = 
+				{ subset of axioms, subset of conclusions,
+				  subset of set-of-support }
+
+				run resolution theorem prover on subproblem
+
+				record the results of the theorem prover for
+				the current subproblem.
+
+				using AND/OR graph and previous results,
+				check if original theorem is proven.
+
+				if (original theorem is proven)
+				{
+					theorem is VALID, print results.
+					goto NEXT PROBLEM SET:
+				}
+			}
+
+			if you reach this point, then the current
+			strategy did not work for original problem.
+			continue to the next strategy.
+		}
+
+		if you reach this point, then all the different strategies
+		for breaking down problems did NOT work. mark the problem
+		as unproven or invalid.
+
+NEXT PROBLEM SET:
+	}
+}
+
+
+3 - pseudo-code or high-level design of resolution theorem prover
+
+3.1) the theorem prover uses resolution as its basic inference
+rule and combines it with paramodulation for handling equality.
+
+3.2) all logic programs are converted to skolemized conjunctive
+normal form. this means, that existential quantifiers are replaced
+with skolem functions, and all logic expressions are written
+as clauses, sets of literals with implied ORs between each literal
+in the clause, and every variable is bounded to a universal quantifer.
+
+3.3) the deletion strategies that are used are:
+
+	1) factoring - removing unifiable terms from within
+	a clause.
+	2) removing tautologies - remove any clause that contains
+	a term and its negation, A || ~A is always true.
+	3) forward subsumption - remove a clause that is subsumed by 
+	another clause. forward subsumption means that a newly
+	generated clause is removed if it is subsumed by a 
+	previously generated or original clause.
+	4) backward subsumption - existing clauses are removed if they
+	are subsumed by the newly generated clause.
+	5) remove clauses with "pure" literals (a la Putnam).
+	6) merge resolvent clauses.
+
+3.4) equality is handled in two possible ways;
+
+	1) model equality using axioms, and basic resolution is used.
+	2) add a minimal set of axioms (reflexive axiom and functionally
+	reflexive axioms) to support equality, and use paramodulation to 
+	handle the substitutions, combined with basic resolution.
+	
+3.4.1) demodulation - using rewrite rules to "simplify" clauses.
+
+3.5) there are several variations of resolution that exist. a partial list 
+is given below. this program uses a few of the following.
+
+	1) binary resolution
+	2) semantic (PI-) resolution
+	3) positive hyper resolution (subset of PI-)
+	4) negative hyper resolution (subset of PI-)
+	5) set-of-support (subset of PI-)
+	6) ordered binary resolution
+	7) ordered semantic resolution (OI-)
+	8) lock resolution
+	9) linear resolution
+	10) input resolution
+	11) unit resolution
+	12) OL-resolution
+	13) paramodulation linear resolution
+	14) paramodulation input/unit resolution
+	15) paramodulation hyper resolution
+
+3.6) unification - there are many algorithms. this program will use
+a variation of Robinson's original alogrithm. it is not very efficient
+since it uses a binary tree to represent terms, but for the prototype
+I will use it. an improvement is the Martelli et al. algorithm. this
+one will be implemented later.
+
+the basic unification algorithm is given below, this one is from the
+AI book by Rich and Knight, pages 152 and 153.
+
+
+// unify two term, if possible
+int
+unify(Term &t1, Term &t2, Substitutions &s)
+{
+	// check if a variable or constant
+	if ((t1.type != Term::PredicateFunction && 
+	     t1.type != Term::Function) ||
+	    (t2.type != Term::PredicateFunction && 
+	     t2.type != Term::Function))
+	{
+		// type better be known
+		MustBeTrue((t1.type != Term::Unknown) && 
+			   (t2.type != Term::Unknown));
+
+		// check if they are identical
+		if (t1 == t2)
+		{
+			// no substitutions required
+			s.clear();
+		}
+		else if (t1.type == Term::Variable)
+		{
+			// t1 is a variable, check if t1 occurs in t2
+			if (t2.occurs(t1))
+			{
+				// not unifiable
+				s.clear();
+				return(NOMATCH);
+			}
+
+			// return { t2 / t1 }
+			s.insert(Substitution(t2, t1.value));
+		}
+		else if (t2.type == Term::Variable)
+		{
+			// t2 is a variable, check if t2 occurs in t1
+			if (t1.occurs(t2))
+			{
+				// not unifiable
+				s.clear();
+				return(NOMATCH);
+			}
+
+			// return { t1 / t2 }
+			s.insert(Substitution(t1, t2.value));
+		}
+		else
+		{
+			// not unifiable
+			s.clear();
+			return(NOMATCH);
+		}
+		return(OK);
+	}
+
+	// symbol name must the same
+	if (t1 != t2)
+	{
+		// not unifiable
+		s.clear();
+		return(NOMATCH);
+	}
+
+	// check number arguments
+	MustBeTrue(t1.argnum > 0 && t2.argnum > 0);
+	if (t1.argnum != t2.argnum)
+	{
+		// not unifiable
+		s.clear();
+		return(NOMATCH);
+	}
+
+	// unify function arguments
+	ListIterator<Term *> t1ai(*t1.pargs);
+	ListIterator<Term *> t2ai(*t2.pargs);
+
+	// cycle through the arguments
+	Substitutions s2;
+	for ( ; !t1ai.done() && !t2ai.done(); t1ai++, t2ai++)
+	{
+		// clear old substitutions
+		s2.clear();
+
+		// attempt to unify the arguments
+		int status = unify(*t1ai(), *t2ai(), s2);
+		if (status != OK)
+		{
+			// not unifiable
+			s.clear();
+			return(status);
+		}
+
+		// check if any substitutions were generated
+		if (s2.isEmpty()) continue;
+
+		// apply substitution to remaining arguments
+		ListIterator<Term *> restoft1ai(t1ai);
+		ListIterator<Term *> restoft2ai(t2ai);
+		for (restoft1ai++, restoft2ai++;
+		     !restoft1ai.done() && !restoft2ai.done();
+		     restoft1ai++, restoft2ai++)
+		{
+			if (s2.applyTo(*restoft1ai()) != OK)
+			{
+				// not unifiable
+				s.clear();
+				return(NOMATCH);
+			}
+			if (s2.applyTo(*restoft2ai()) != OK)
+			{
+				// not unifiable
+				s.clear();
+				return(NOMATCH);
+			}
+		}
+
+		// save substitution
+		s = s*s2;
+	}
+
+	// both iterators should be done
+	if (!t1ai.done() || !t2ai.done())
+	{
+		// not unifiable
+		s.clear();
+		return(NOMATCH);
+	}
+
+	// unified
+	return(OK);
+}
+
+3.7) there are different methods for searching a proof. some of the 
+basic ways are:
+
+	1) depth-first search - use a depth limit so the search does
+	not search forever.
+	2) breadth-first search - also called saturation, generate all 
+	clauses at the given depth, check for null clause, and
+	continue if not done.
+	3) iterative-deepening search - combines breadth and depth. basically,
+	alternate between one strategy, then the other, then switch
+	back, etc.
+	4) heuristic search search - similar to breadth-first, instead
+	of choosing an arbitrary pair of clauses to resolve, choose
+	a pair of clauses which are "best", that is, most likely
+	to produce a null clause. a simple measure of quality is 
+	the number of literals in a clause. unit resolution is an
+	extreme case of this strategy.
+
+3.8) the following steps convert a FOL statement to skolemized CNF. the 
+steps are from Nilson and Genesereth, page 64.
+
+	1) remove all biconditionals using:
+
+		(A <--> B) = ((A --> B) && (B --> A))
+
+	2) remove all conditionals using:
+
+		(A --> B) = (~A || B)
+
+	3) apply demorgans laws until negation only applies to atomic
+	formulas.
+
+		~~A = A
+		~(A && B) = (~A || ~B)
+		~(A && B) = (~A || ~B)
+		~(ALL x P(x) = (SOME x ~P(x))
+		~(SOME x P(x) = (ALL x ~P(x))
+
+	4) rename all variables to unique names, that is, no two
+	quantifier can use the same variable name.
+
+	5) skolemize to remove existential variables. replace
+	every existential variable with a new skolem function 
+	which depends on all universal variables that are in
+	scope. for example,
+
+	(ALL x (SOME y (ALL z P(x, y, z))))
+
+	becomes
+
+	(ALL x (ALL z P(x, skolem(x), z))))
+
+	Note that y was replaced by the function skolem(x) which
+	depends on x, the universal variable in scope, but not 
+	on z (not in scope).
+
+	6) remove all universal quantifiers since all variables
+	are now assumed to be universal because existential variables
+	were replaced by skolem functions.
+
+	7) convert to CNF using the following distributions laws.
+
+		(A || (B && C)) = ((A || B) && (A || C))
+		((A && B) || C) = ((A || C) && (B || C))
+
+	8) rewrite conjunctions as separate clauses with an assumed
+	conjunction between all clauses.
+
+	9) rename all variables so that no one variable appears in more than
+	one clause. called standardizing the variables apart.
+
+3.9) handling equality is done two ways: paramodulation or by axiomatizing
+equality.
+
+VERY IMPORTANT: the equality is between terms, not predicates. the analogous
+version of "=" for predicates is "<-->", the biconditional. paramodulation
+is for "=" between terms, not "<-->" which is between predicates.
+
+equality can be axiomatized by adding the following axioms (clauses) to the 
+original problem set.
+
+	{ x = x}
+	{ x != y, y = x }
+	{ x != y, y != z, x = z }
+	{ x1 != y1, ..., xn != yn, f(x1,...,xn) = f(y1,...,yn) } for
+	every n-place function f.
+	{ x1 != y1, ..., xn != yn, ~r(x1,...,xn), r(y1,...,yn) } for
+	every n-place relation r.
+
+combining the above with the original problem set can then be passed to
+a resolution-only theorem prover. from logic book by Burris, page 308-309,
+and from Chang and Lee, pages 164-165.
+
+the second method is called paramodulation. it is an additional inference
+rule that is combined with resolution to handle equality. a set of 
+axioms must still be added to the original problem set for the paramodulation
+and resolution to be complete. 
+
+the extra axioms are:
+
+	1) { x = x }, reflexivity.
+
+	2) { f(x1,...,xn) = f(x1,...,xn) } for every n-place function f,
+	also called the functionally reflexive axioms.
+
+the paramodulation rule is then:
+
+let C1 and C2 be two clauses with no variables in common. if 
+
+	C1 is (L[t] || C1') and
+	C2 is (r = s || C2'), 
+
+where L[t] is a literal containing the term t and C1' and C2' are clauses,
+and if t and r have a most general unifier, mgu, then infer,
+
+	L*mgu[s*mgu] + C1'*mgu + C2'*mgu
+
+where '+' is the set union operation, and '*' is operation of 
+applying the unifier mgu. L*mgu[s*mgu] represents the result obtained
+by replacing a single occurrence of t*mgu with s*mgu.
+
+3.10) the following algorithm is based on the modified depth-first 
+procedure listed in Chang and Lee, page 151 to 153.
+
+	1) the clause sets are:
+		S = { ordered clauses to be proved }
+		C0 = start clause
+
+	2) find all ordered clauses in S that can be side clauses of C0.
+	if no such side clauses exist, terminate without a proof. Let
+	B0(1), ..., B0(r) be all these side clauses. construct pairs
+	(C0, B0(1)), ..., (CO, B0(r)). let CLIST equal a list of
+	these pairs arranged in arbitrary order.
+
+	3) if CLIST is empty, then terminate without a proof, else
+	continue.
+
+	4) Let (C, B) be the first pair in CLIST. delete (C, B) from 
+	CLIST. if depth of C is greater than maxdepth, discard C, and 
+	goto step 2.
+
+	5) Resolve C with B. Let R1, ..., Rm denote all the ordered
+	resolvents of C against B. let Ri* be the reduced ordered
+	clause of Ri. if Ri is not reducible, then Ri* = Ri.
+
+	5a) check if any of the Ri* is a tautology, if so, then 
+	discard the Ri* which is a tautology.
+
+	5b) if there is a pair (C, B) in CLIST s.t. Ri* is subsumed
+	by C, then discard that Ri*.
+
+	6) if some Rq* is the empty clause for 1 <= q <= m, then
+	terminate WITH a proof, else continue.
+
+	7) for each i = 1,2,...,m, find ordered clauses in S that
+	can be side clauses of Ri*. if no such clauses exist, delete Ri*.
+	Otherwise, let Bi(1), ..., Bi(si) be these clauses. construct the
+	pairs, (Ri*, Bi(1)), ..., (Ri*, Bi(si)), and insert these
+	pairs at the BEGINNING of CLIST. goto step 3.
+
+
+the above looks as follows. 
+
+NOTE: what follows has modifications for including paramodulation.
+
+main()
+{
+	// read in clauses for sub-problem
+	read in problem set = { axioms, conclusion, set-of-support)
+
+	// convert all clauses to conjunctive normal form
+	convert to CNF 
+
+	// define set of all clauses
+	S = { all ordered clauses generated from problem set }
+
+	// at this time, you might want add the reflexive
+	// axiom for equality, X = X, and the functional
+	// reflexive axioms.
+	if (equality is used in the sub-problem set)
+	{
+		add { X = X } to S;
+		for every function in S, do
+			add functional reflexive axioms to S;
+		for every predicate in S, do
+			add functional reflexive axioms to S;
+	}
+
+	// deletion strategy 
+	for every C in S, do
+	{
+		if (C is a taulogy)
+			discard C;
+
+		for every C' in S where C' != C,
+		{
+			check if C' is subsumed by C
+			if (C subsumes C')
+				delete C'
+		}
+	}
+
+	// choose a place to start. this clause should be from the
+	// set generated from the conclusion. the set-of-support
+	// clauses at this point can be ordered using a heuristic
+	// as shown here, we just go from one clause to another.
+	//
+	for every clause in the set-of-support (conclusion-based)
+	{
+		// find a place to start.
+		choose a start clause. call it C0.
+
+		// define CLIST queue for storing pairs
+		// of clauses to resolve.
+		CLIST = { };
+
+		// find all side clauses for C0. the side clauses
+		// can be for resolution OR paramodulation. the 
+		// algorithm as shown in the book is for resolution,
+		// may be it can also handle paramodulation.
+		//
+		for every clause B in the set S.
+		{
+			determine if the clause B can be a side clause of C0.
+	
+			if (clause B can be a side clause of C0)
+			{
+				insert (B, C0) in CLIST.
+			}
+		}
+
+		// check the depth limit
+		while ( CLIST is NOT empty )
+		{
+			retrieve and delete the first (C, B) in CLIST. 
+
+			if (depth(C) > maxdepth)
+			{
+				discard C.
+				continue;
+			}
+
+	
+			// resolve C with B. at this point, you could
+			// add PARAMODULATION.
+			//
+			resolve C with B, OR paramodulate C with B. 
+			generate Ri, all the possible resolvents of C 
+			against B. let RI* be the reduced Ri. if Ri* 
+			can not be reduced, then Ri* = Ri.
+
+			// deletion strategy 
+			for every Ri*, do
+			{
+				if (Ri* is a taulogy)
+					discard Ri*;
+
+				for every pair (C, B) in CLIST
+				{
+					if (Ri* is subsumed by C)
+						discard Ri*;
+				}
+			}
+
+			// check for proof
+			for every Ri*, do
+			{
+				if (Ri* == { }, the empty clause)
+				{
+					return (PROOF FOUND);
+				}
+			}
+	
+			// find the possible side clauses for Ri*
+			for every Ri*, do
+			{
+				for every clause B in S, do
+				{
+					if (B can be a side clause of Ri*)
+					{
+						insert (Ri*, B) at the
+						beginning of CLIST.
+					}
+				}
+			}
+		}
+	}
+	
+	// no proof found
+	return NO PROOF !!!
+}
+
+the above can be modified by making CLIST a priority queue, and using 
+a heuristic for determining the value of a (C, B) pair. a simple estimate
+is the length of the resolvent:
+
+	length(R) = length(C) + length (B) - 2.
+
+the smaller the value of length(R), the "better" the (C, B) pair is. there
+are many other heuristic functions which can be used, this is simple one.
+
+other variables which can be used in the heuristic function are listed
+below, many of these variables are ad hoc:
+
+1) number of unframed literals in C.
+2) number of framed literals in C.
+3) number of side clauses of C.
+4) number of constants in the last literal in C.
+5) number of function symbols in the last literal in C.
+6) number of framed literals of C, each of which subsumes the last 
+literal in C.
+7) number of distinct variables in C and B.
+8) length(C) + length(B) - 2
+9) (number of constants in C)/(1 + number of variables in C)
+10) (number of constants in C)/(1 + number of distinct variablse in C)
+11) depth of C
+12) number of unframed literals that are in both C and B.
+13) number of literals in B, each of which has a framed complement in C.
+14) number of distinct predicate symbols in C and B.
+
+
+appendix - FOL BNF
+
+The syntax for the first-order language used in the theorem-prover, atp,
+is listed below.
+
+The tokens are:
+
+identifier		[a-z][a-zA-Z0-9_]*
+pidentifier		[A-Z][a-zA-Z0-9_]*
+number			[0-9]+
+string			\"[^\"]*\"
+whitespace		[ \t]+
+pound			#[^\n]*"\n"
+newline			"\n"
+
+{whitespace}	ignore
+{pound}		ECHO;ignore
+{newline}	return NEWLINE
+"|-"		return(THEREFORE);
+"<-->"		return(BICONDITIONAL);
+"-->"		return(IMPLICATION);
+"||"		return(OR);
+"&&"		return(AND);
+"~"		return(NEGATION);
+"="		return(EQUAL);
+"("		return(LPAREN);
+")"		return(RPAREN);
+","		return(COMMA);
+";"		return(SEMICOLON);
+"<"		return(LEFTUNIVERSAL);
+">"		return(RIGHTUNIVERSAL);
+"["		return(LEFTEXISTENTIAL);
+"]"		return(RIGHTEXISTENTIAL);
+"quit"		return(QUIT);
+"True"		return(TRUE);
+"False"		return(FALSE);
+"SOS"		return(SOS);
+{number}	return(NUMBER);
+{string}	return(STRING);
+{identifier}	return(IDENTIFIER);
+{pidentifier}	return(PIDENTIFIER);
+.		return actual character
+
+
+The BNF rules are:
+
+start:
+	/* empty */
+	| start ARGUMENT LBRACE conclusionlist RBRACE
+	| start ARGUMENT LBRACE expressionlist conclusionlist RBRACE
+
+conclusionlist:
+	sos_option conclusion linesynch
+	| conclusionlist sos_option conclusion linesynch
+
+expressionlist:
+	separator_expressionlist linesynch
+	| expressionlist separator_expressionlist linesynch
+
+separator_expressionlist:
+	sos_option expression
+	| separator_expressionlist separator sos_option expression
+
+sos_option:
+	/* empty */
+	| SOS
+
+expression:
+	biconditional
+
+biconditional:
+	implication
+	| biconditional BICONDITIONAL implication
+
+implication:
+	or
+	| implication IMPLICATION or
+
+or:
+	and
+	| or OR and
+
+and:
+	unary
+	| and AND unary
+
+unary:
+	atom
+	| NEGATION unary
+	| universal unary
+	| existential unary
+
+universal:
+	LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL
+
+existential:
+	LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL
+
+atom:
+	predicate
+	| TRUE
+	| FALSE
+	| LPAREN expression RPAREN
+
+predicate:
+	PIDENTIFIER
+	| PIDENTIFIER LPAREN arglist RPAREN
+	| term EQUAL term
+
+arglist:
+	arg
+	| arglist separator arg
+
+arg:
+	term
+
+term:
+	constant
+	| variable
+	| function
+
+constant:
+	STRING
+	| NUMBER
+
+variable:
+	IDENTIFIER
+
+function:
+	IDENTIFIER LPAREN arglist RPAREN
+	
+separator:
+	COMMA 
+
+conclusion:
+	THEREFORE expression
+
+linesynch:
+	SEMICOLON 
+

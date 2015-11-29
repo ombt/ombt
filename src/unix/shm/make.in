@@ -1,0 +1,19 @@
+CC = cc
+CCFLAGS = -g
+#
+LD = cc
+LDFLAGS = -g
+#
+dbms
+dbmsmain.c
+dbms.c
+sem.c
+shmmsgs.c
+syserr.c 
+#
+user
+user.c
+dbmslib.c
+sem.c
+shmmsgs.c
+syserr.c

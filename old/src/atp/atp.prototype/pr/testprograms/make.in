@@ -1,0 +1,88 @@
+CC = CC
+CCFLAGS = -DDEBUG -g -xildoff
+#
+LD = CC
+LDFLAGS = -DDEBUG -g -xildoff
+#
+atppr
+pr.y
+pr.l
+binaryTree_AVL.c
+binaryTree.c
+mylist.c
+array.c
+queue_List.c
+stack_List.c
+mystring.c
+map.c
+semantic.c
+symbol.c
+prover.c
+literal.c
+clause.c
+uniquename.c
+orderedset.c
+deletion.c
+unification.c
+substitution.c
+-ly
+-ll
+#
+install1 = cp atppr $(HOME)/bin/atppr
+#
+# tunify
+# tunify.c
+# binaryTree.c
+# mylist.c
+# array.c
+# queue_List.c
+# stack_List.c
+# mystring.c
+# literal.c
+# substitution.c
+# unification.c
+#
+# tunify2
+# tunify2.c
+# binaryTree.c
+# mylist.c
+# array.c
+# queue_List.c
+# stack_List.c
+# mystring.c
+# literal.c
+# substitution.c
+# unification.c
+#
+# tdeletion
+# tdeletion.c
+# binaryTree.c
+# mylist.c
+# array.c
+# queue_List.c
+# stack_List.c
+# map.c
+# mystring.c
+# literal.c
+# substitution.c
+# unification.c
+# clause.c
+# deletion.c
+#
+# tsubsumes
+# tsubsumes.c
+# binaryTree.c
+# mylist.c
+# array.c
+# queue_List.c
+# stack_List.c
+# map.c
+# orderedset.c
+# mystring.c
+# literal.c
+# substitution.c
+# unification.c
+# clause.c
+# deletion.c
+# uniquename.c
+#

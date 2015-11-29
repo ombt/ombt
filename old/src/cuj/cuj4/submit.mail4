@@ -1,0 +1,440 @@
+Hi K.B. Williams,
+
+I'm sending you a new version of the file tgausslup.c. This file
+has all the test cases built in it. Each test has a verification
+step. The verification steps are as follows:
+
+	1) For the matrix M, if the inverse was calculated (call
+	it MINV), then the following two products are reported
+
+		M*MINV and MINV*M.
+
+	Both of these products should (ideally) give the identity
+	matrix.
+
+	2) For the matrix M and a vector Y, if the vector X is calculated
+	for the following equation:
+
+		M*X = Y,
+
+	then the following are reported:
+
+		M*X and Y.
+
+	They should be the same.
+
+I will send the photocopies as soon as I can get my hands on the
+book again.
+
+Thank you. If you have any question, please let me know.
+
+Mike Rumore
+
+------------------- cut here ----------------------------------------
+
+// gaussian LUP header, matrix header, vector header, etc.
+#include "gausslup.h"
+
+// constants
+const int MaxPoints = 2000;
+
+// structure to hold test data
+struct TestData {
+	int testno;
+	char *options;
+	int nrows;
+	int ncols;
+	double data[MaxPoints];
+};
+
+// define test cases
+TestData test1 = {
+	1,
+	"-i -v",
+	4, 4,
+	1, 1, 1, 1,
+	1, 2, 3, 4,
+	1, 4, 9, 16,
+	1, 8, 27, 64
+};
+
+TestData test2 = {
+	2,
+	"-i -s -v",
+	3, 3,
+	33, 16, 72,
+	-24, -10, -57,
+	-8, -4, -17,
+	-359, 281, 85
+};
+ 
+TestData test3 = {
+	3,
+	"-i -s -v",
+	4, 4,
+	1, -2, 3, 1,
+	-2, 1, -2, -1,
+	3, -2, 1, 5,
+	1, -1, 5, 3,
+	3, -4, 7, 8
+};
+ 
+TestData test4 = {
+	4,
+	"-i -v",
+	6, 6,
+	1, 0, 0, 0, 0, 1,
+	1, 1, 0, 0, 0, -1,
+	-1, 1, 1, 0, 0, -1,
+	1, -1, 1, 1, 0, -1,
+	-1, 1, -1, 1, 1, 1,
+	1, -1, 1, -1, 1, -1
+};
+ 
+TestData test5 = {
+	5,
+	"-i -s -v",
+	4, 4,
+	5, 7, 6, 5,
+	7, 10, 8, 7,
+	6, 8, 10, 9,
+	5, 7, 9, 10,
+	23, 32, 33, 31
+};
+ 
+TestData test6 = {
+	6,
+	"-i -v",
+	4, 4,
+	4, 3, 2, 1,
+	3, 4, 3, 2,
+	2, 3, 4, 3,
+	1, 2, 3, 4
+};
+ 
+TestData test7 = {
+	7,
+	"-i -v",
+	4, 4,
+	28, -42, 28, -7,
+	-42, 98, -77, 21,
+	28, -77, 70, -21,
+	-7, 21, -21, 7
+};
+ 
+TestData test8 = {
+	8,
+	"-S -i -v",
+	10, 10,
+	100,
+	-4950, 326700,
+	79200, -5880600, 112907520,
+	-600600, 47567520, -951350400, 8245036800,
+	2522520, -208107900, 4281076800, -37875637800,
+		176752976400,
+	-6306300, 535134600, -11237826600, 101001700800,
+		-477233036280, 130154464440,
+	9609600, -832431600, 17758540800, -161602721280,
+		771285715200, -2121035716800, 3480673996800,
+	-8751600, 770140800, -16635041280, 152907955200,
+		-73586934400, 2037792556800, -3363975014400,
+		3267861442560,
+	4375800, -389884780, 8506555200, -78843164400,
+		382086104400, -1064382719400, 1766086882560,
+		-1723286307600, 912328045200,
+	-923780, 83140200, -1829084400, 17071454400,
+		-83223340200, 233025352560, -388375587600,
+		380449555200, -202113826200, 44914183600
+};
+ 
+TestData test9 = {
+	9,
+	"-S -i -v",
+	6, 6,
+	36,
+	-630, 14700,
+	3360, -88200, 564480,
+	-7560, 211680, -1411200, 3628800,
+	7560, -220500, 1512000, -3969000, 4410000,
+	-2772, 83160, -582120, 1552320, -1746360, 698544
+};
+ 
+TestData test10 = {
+	10,
+	"-i -v",
+	6, 6,
+	-6, 630, -6720, 22680, -30250, 13860,
+	105, -7350, 88200, -317520, 441000, -207900,
+	-560, 29400, -376320, 1411200, -2016000, 970200,
+	1260, -52920, 705600, -2721600, 3969000, -1940400,
+	-1260, 44100, -604800, 2381400, -3528000, 1746360,
+	462, 13860, 194040, -776160, 116420, -582120
+};
+ 
+TestData test11 = {
+	11,
+	"-i -v",
+	4, 4,
+	4, 3, 2, 1,
+	3, 6, 4, 2,
+	2, 4, 6, 3,
+	1, 2, 3, 4
+};
+ 
+TestData test12 = {
+	12,
+	"-i -s -v",
+	1, 1,
+	1, 
+	2
+};
+
+#if 0
+TestData test13 = {
+	13,
+	"-d -v",
+	3, 3,
+	-73, 78, 24,
+	92, 66, 25,
+	-80, 37, 10
+};
+ 
+TestData test14 = {
+	14,
+	"-d -v",
+	3, 3,
+	-73, 78, 24,
+	92, 66, 25,
+	-80, 37, 10.01
+};
+ 
+TestData test15 = {
+	15,
+	"-d -v",
+	3, 3,
+	-73, 78, 24,
+	92.01, 66, 25,
+	-80, 37, 10
+};
+ 
+TestData test16 = {
+	16,
+	"-d -v",
+	3, 3,
+	-73, 78.01, 24,
+	92, 66, 25,
+	-80, 37, 10
+};
+ 
+TestData test17 = {
+	17,
+	"-d -v",
+	3, 3,
+	-73, 78.01, 24,
+	0, 66, 25,
+	0, 0, 10
+};
+#endif
+
+// run test case
+void
+runit(TestData &test)
+{
+	// test case that we are running
+	cout << endl << ">>>>> STARTING TEST CASE ... ";
+	cout << test.testno << endl << endl;
+
+	// get options for test
+	int dflag = 0;
+	int sflag = 0;
+	int iflag = 0;
+	int vflag = 0;
+	int Sflag = 0;
+	int Aflag = 0;
+	for (char *popt = test.options; *popt != 0; )
+	{
+		// skip if not an option
+		if (*popt++ != '-') continue;
+
+		// get option 
+		switch (*popt++)
+		{
+		case 'A':
+			Aflag = 1;
+			Sflag = 0;
+			break;
+		case 'S':
+			Sflag = 1;
+			Aflag = 0;
+			break;
+		case 'v':
+			vflag = 1;
+			break;
+		case 'd':
+			dflag = 1;
+			break;
+		case 's':
+			sflag = 1;
+			break;
+		case 'i':
+			iflag = 1;
+			break;
+		}
+	}
+
+	// get number of rows and columns
+	unsigned int nrows = test.nrows;
+	unsigned int ncols = test.ncols;
+
+	// output precision
+	cout.precision(6);
+	cout.setf(ios::showpoint);
+
+	// define matrix and initialize elements
+	int idata = 0;
+	Matrix<double> m(nrows, ncols);
+	if (Sflag || Aflag)
+	{
+		double sign = 1;
+		if (Aflag) 
+			sign = -sign;
+		for (int ir = 0 ; ir < nrows; ir++)
+		{
+			for (int ic = 0; ic <= ir; ic++)
+			{
+				m(ir, ic) = test.data[idata++];
+				m(ic, ir) = sign*m(ir, ic);
+			}
+		}
+	}
+	else
+	{
+		for (int ir = 0 ; ir < nrows; ir++)
+		{
+			for (int ic = 0; ic < ncols; ic++)
+			{
+				m(ir, ic) = test.data[idata++];
+			}
+		}
+	}
+	cout << "TEST MATRIX IS ... " << endl;
+	cout << m << endl;
+
+	// initialize inhomogeneous part.
+	Vector<double> y(nrows);
+	if (sflag)
+	{
+		for (int ir = 0; ir < nrows; ir++)
+		{
+			y[ir] = test.data[idata++];
+		}
+		cout << "TEST Y-VECTOR IS ... " << endl;
+		cout << y << endl << endl;
+	}
+
+	// get LUP decomposition
+	Matrix<double> m2(m);
+	Vector<int> pv2(nrows);
+	double determinant;
+	if (GaussianLUP_Pivot(m2, pv2, 0.0, determinant) != OK)
+	{
+		cerr << "GaussianLUP_Pivot failed" << endl;
+		return;
+	}
+
+	// get solution using LUP results
+	if (sflag)
+	{
+		cout << ">>>>> RUNNING SOLUTION TEST ..." << endl;
+		cout << ">>>>> GIVEN M*X = Y, SOLVE FOR X ..." << endl;
+		Vector<double> x2(nrows);
+		Vector<double> y2(y);
+		if (SolveUsingGaussianLUP_Pivot(m2, x2, y2, pv2, 0.0) != OK)
+		{
+			cerr << "SolveUsingGaussianLUP_Pivot failed" << endl;
+			return;
+		}
+		cout << "SOLUTION X IS ... " << endl << x2 << endl;
+		if (vflag) 
+		{
+			cout << "VERIFICATION: THE M*X AND Y SHOULD BE THE SAME" << endl;
+			cout << "SOLUTION: M*X IS ... " << endl;
+			cout << m*x2 << endl;
+			cout << "SOLUTION: Y IS ... " << endl;
+			cout << y << endl;
+		}
+	}
+
+	// get inverse using LUP results
+	if (iflag)
+	{
+		cout << ">>>>> RUNNING MATRIX INVERSE TEST ..." << endl;
+		cout << ">>>>> GIVEN M, SOLVE FOR INVERSE OF M ..." << endl;
+		Matrix<double> minv2(nrows, ncols);
+		Vector<double> x2(nrows);
+		if (GetInverseUsingGaussianLUP_Pivot(m2, minv2, pv2, 0.0) != OK)
+		{
+			cerr << "GetInverseUsingGaussianLUP_Pivot failed" << endl;
+			return;
+		}
+		cout << "INVERSE OF M IS ... " << endl;
+		cout << minv2 << endl;
+		if (vflag) 
+		{
+			cout << "VERIFICATION: M*MINV AND MINV*M SHOULD GIVE THE IDENTITY MATRIX" << endl;
+			cout << "INVERSE: M*MINV IS ... " << endl;
+			cout << m*minv2 << endl;
+			cout << "INVERSE: MINV*M IS ... " << endl;
+			cout << minv2*m << endl;
+		}
+	}
+
+	// get deteminant using LUP results
+	if (dflag)
+	{
+		cout << ">>>>> RUNNING DETERMINANT TEST ..." << endl;
+		cout << ">>>>> GIVEN M, GET DETERMINANT OF M ..." << endl;
+		if (GetDeterminantUsingGaussianLUP_Pivot(m2, determinant) != OK)
+		{
+			cerr << "GetDeterminantUsingGaussianLUP_Pivot failed" << endl;
+			return;
+		}
+		cout << "DETERMINANT IS ... " << determinant << endl;
+	}
+
+	cout << ">>>>> ENDING TEST CASE ... " << test.testno << endl;
+	return;
+}
+
+// test driver
+main(int argc, char **argv)
+{
+	// start testing
+	cout << "START OF LUP TEST CASES ..." << endl;
+
+	// run test cases
+	runit(test1);
+	runit(test2);
+	runit(test3);
+	runit(test4);
+	runit(test5);
+	runit(test6);
+	runit(test7);
+	runit(test8);
+	runit(test9);
+	runit(test10);
+	runit(test11);
+	runit(test12);
+#if 0
+	runit(test13);
+	runit(test14);
+	runit(test15);
+	runit(test16);
+	runit(test17);
+#endif
+
+	// all done
+	cout << "END OF LUP TEST CASEs ..." << endl << endl;
+	return(0);
+}
+

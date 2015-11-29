@@ -1,0 +1,85 @@
+#
+# TEST CASES FROM CHAPTER 4 IN THE BOOK DEDUCTION: INTRODUCTORY 
+# SYMBOLIC LOGIC, BY D. BONEVAC.
+#
+#############################################################################
+#
+P && Q;
+|- Q;
+#
+P && ( Q && R);
+|- Q;
+#
+|- ~(P && ~P);
+#
+|- ~(P && (Q && ~P));
+#
+|- ~((P && ~Q) && (Q && ~P));
+#
+~P && ~Q;
+|- ~(P && Q);
+#
+(P && Q) && R;
+|- P && (Q && R);
+#
+P && ~Q;
+~R && S;
+|- S && P;
+#
+~( P && Q);
+Q;
+|- ~P;
+#
+Q;
+|- ~(~P && ~Q);
+#
+P;
+|- ~(Q && ~(P && Q));
+#
+~((P && ~Q) && R);
+|- ~((P && R) && ~Q);
+#
+~(P && ~Q);
+P;
+|- Q;
+#
+~(~P && Q);
+~(P && Q);
+|- ~Q;
+#
+P && Q;
+~(Q && ~R);
+~(P && ~S);
+|- R && S;
+#
+|- ~(~(~(P && ~Q) && ~P) && ~P);
+#
+P && Q;
+~(~R && Q);
+~(R && ~S);
+|- P && S;
+#
+# IN THE FOLLOWING PROBLEM, THE CONCLUSION "R" NEVER APPEARS ANYWHERE
+# IN THE ASSUMPTIONS. IS THIS A TYPO???
+#
+~(P && ~Q);
+~(Q && ~P);
+~(P && Q);
+~(~P && ~Q);
+|- R;
+#
+~(~S && Q);
+~(P && (~Q && ~R));
+~(R && ~S);
+|- ~(~S && P);
+#
+# THIS ONE FAILS SINCE THE CONCLUSION DOES NOT APPEAR ANYWHERE IN THE
+# ASSUMPTIONS. NEED TO CHECK THIS ONE OUT.
+#
+~(P && R);
+~(~(P && Q) && ~P);
+R;
+|- ~S;
+#
+quit;
+

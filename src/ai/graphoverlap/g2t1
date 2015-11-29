@@ -1,0 +1,5 @@
+v: id:1 label:B
+v: id:3 label:G
+v: id:4 label:H
+e: fromid:1 toid:3 color:blue
+e: fromid:1 toid:4 color:blue

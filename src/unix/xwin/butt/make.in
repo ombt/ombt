@@ -1,0 +1,10 @@
+CC = CC
+CCFLAGS = -g 
+LD = CC
+LDFLAGS = -g
+INCLDIRS = -I/opt/x11r5/include
+#
+butt
+butt.c
+-lX11
+#

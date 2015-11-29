@@ -1,0 +1,94 @@
+
+A SIMPLE MACRO FOR EXCEPTIONS AND ASSERTIONS
+
+A common method for debugging during the development of a product is 
+the use of asserts. An assert is simply a check for a condition which
+must always be true. The check can be for an invariant condition, or for
+some other type of error which indicates an insane condition in a program.
+If the condition is true, then everything is assumed to be correct. If
+the condition is false, then an error message is reported and the
+program aborts. 
+
+A program which aborts during development may be acceptable, but a 
+program that aborts for a customer may be considered slightly unfriendly. 
+This simple observation led me to write the following debugging macro. 
+The macro MustBeTrue() (see listing 1) is used identically to the 
+assert() macro in the header assert.h. The difference between assert()
+and MustBeTrue() is the option to either abort or to throw an exception.
+The choice of behavior between aborting or throwing an exception is
+controlled during compile time. If the code is compiled with USEEXCEPTION
+defined, then an exception is thrown if the test condition is false.
+Otherwise, if USEEXCEPTION is not defined at compile time, then abort
+is called (the same as assert()). Depending on whether the compiler
+supports ANSI C or not, the stringizing operator # is used to convert
+the test condition to a character string. 
+
+Listing 2 shows a simple example of how to use the macro and listing 3 
+shows the output when an exception is fired.
+
+------------------- listing 1: debug.h  ----------------------------------
+
+#ifndef __DEBUG_H
+#define __DEBUG_H
+
+// headers
+#include <stdlib.h>
+#include <string.h>
+#include <iostream.h>
+
+// debug macros
+#if defined(__STDC__)
+#if defined(USEEXCEPTION)
+#define MustBeTrue(EXPR) \
+	if (!(EXPR)) { \
+		throw #EXPR ; \
+	}
+
+#else
+#define MustBeTrue(EXPR) \
+	if (!(EXPR)) { \
+		cerr << "INTERNAL ERROR AT "; \
+		cerr << __FILE__ << "'" << __LINE__; \
+		cerr << ": " << #EXPR << endl; \
+		abort(); \
+	}
+#endif
+
+#else
+
+#if defined(USEEXCEPTION)
+#define MustBeTrue(EXPR) \
+	if (!(EXPR)) { \
+		throw "EXPR" ; \
+	}
+#else
+#define MustBeTrue(EXPR) \
+	if (!(EXPR)) { \
+		cerr << "INTERNAL ERROR AT "; \
+		cerr << __FILE__ << "'" << __LINE__; \
+		cerr << ": " << "EXPR" << endl; \
+		abort(); \
+	}
+#endif
+#endif
+
+--------------------- listing 2: test.c ----------------------------
+
+#include "debug.h"
+
+main(int , char **argv)
+{
+	try {
+		MustBeTrue(atoi(argv[1]) < 0);
+	}
+	catch (const char *msg) {
+		cout << "EXCEPTION CAUGHT: " << msg << endl;
+	}
+	return(0);
+}
+
+--------------------- listing 3: test program output -----------------------
+
+$ CC -DUSEEXCEPTION test.c
+$ a.out 10
+EXCEPTION CAUGHT: atoi(argv[1]) < 0

@@ -1,0 +1,101 @@
+CC = CC
+CCFLAGS = -g -DDEBUG -L/opt/x11r6/lib
+LD = CC
+LDFLAGS = -g -DDEBUG -L/opt/x11r6/lib
+INCLDIRS = -I/opt/x11r6/include
+#
+xgraph
+xgraph.c
+-lX11
+-lsocket
+-lnsl
+install1=chmod 755 xgraph
+install2=cp xgraph $(HOME)/bin/xgraph
+#
+sin
+sin.c
+-lX11
+-lsocket
+-lnsl
+install1=chmod 755 sin
+install2=cp sin $(HOME)/bin/sin
+#
+cos
+cos.c
+-lX11
+-lsocket
+-lnsl
+install1=chmod 755 cos
+install2=cp cos $(HOME)/bin/cos
+#
+tan
+tan.c
+-lX11
+-lsocket
+-lnsl
+install1=chmod 755 tan
+install2=cp tan $(HOME)/bin/tan
+#
+rotate
+rotate.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 rotate
+install2=cp rotate $(HOME)/bin/rotate
+#
+mirror
+mirror.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 mirror
+install2=cp mirror $(HOME)/bin/mirror
+#
+ahdr
+ahdr.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 ahdr
+install2=cp ahdr $(HOME)/bin/ahdr
+#
+scale
+scale.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 scale
+install2=cp scale $(HOME)/bin/scale
+#
+trans
+trans.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 trans
+install2=cp trans $(HOME)/bin/trans
+#
+circle
+circle.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 circle
+install2=cp circle $(HOME)/bin/circle
+#
+rhdr
+rhdr.c
+-lX11
+-lsocket
+-lnsl
+-lm
+install1=chmod 755 rhdr
+install2=cp rhdr $(HOME)/bin/rhdr
+#

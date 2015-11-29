@@ -1,0 +1,50 @@
+#.sym "qRaUOVLQg7HNKNZWoFPg" 
+	=SN "" 
+	=SC "" ;
+#.sym "NY6YeYvfU3rEf2f9_-XP" 
+	=SN "" 
+	=SC "" ;
+#.sym "5weuFI5b3w5PKAC3qjlG" 
+	=SN "" 
+	=SC "" ;
+#.sym "UCsRR1P8Qt406PMsPP2R" 
+	=SN "" 
+	=SC "" ;
+#.obj "reader.o" 
+	+CS
+	"qRaUOVLQg7HNKNZWoFPg"
+	"NY6YeYvfU3rEf2f9_-XP"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/cuj/cuj6" 
+	=SO "/home/rumore/cuj/cuj6/reader.c" 
+	=CM "-g -DDEBUG -DUSEEXCEPTION -c " ;
+#.obj "vsem.o" 
+	+CS
+	"qRaUOVLQg7HNKNZWoFPg"
+	"NY6YeYvfU3rEf2f9_-XP"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/cuj/cuj6" 
+	=SO "/home/rumore/cuj/cuj6/vsem.c" 
+	=CM "-g -DDEBUG -DUSEEXCEPTION -c " ;
+#.obj "writer.o" 
+	+CS
+	"qRaUOVLQg7HNKNZWoFPg"
+	"NY6YeYvfU3rEf2f9_-XP"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/cuj/cuj6" 
+	=SO "/home/rumore/cuj/cuj6/writer.c" 
+	=CM "-g -DDEBUG -DUSEEXCEPTION -c " ;
+#.obj "writer" 
+	+CO
+	""
+	=BP "/home/rumore/cuj/cuj6" 
+	=CM "writer.o vsem.o -o writer " ;
+#.obj "" ;
+#.obj "reader" 
+	+CO
+	""
+	=BP "/home/rumore/cuj/cuj6" 
+	=CM "reader.o vsem.o -o reader " ;
