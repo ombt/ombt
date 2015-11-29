@@ -10,6 +10,7 @@ PRODS = \
 	notify1 \
 	notify2 \
 
-CXXEXTRAFLAGS = -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers -lombtreactors -lombtfiles -lombtsockets 
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads -lombttimers -lombtreactors -lombtfiles -lombtsockets -lombtparsing
 
 include $(ROOT)/build/makefile.test

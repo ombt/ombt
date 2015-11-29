@@ -17,6 +17,7 @@ PRODS = \
 	iterativereactor8 \
 	iterativereactor9 \
 
-CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtfiles
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads -lombtreactors -lombtsockets -lombttimers -lombtsignals -lombtfiles -lombtparsing
 
 include $(ROOT)/build/makefile.test

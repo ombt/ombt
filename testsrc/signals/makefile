@@ -10,6 +10,8 @@ PRODS = \
 	sigtest1 \
 	sigtest2 \
 
-CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtsockets 
+# CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtsockets 
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtsockets -lombtparsing
 
 include $(ROOT)/build/makefile.test

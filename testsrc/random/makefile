@@ -9,6 +9,7 @@ include $(ROOT)/build/makefile.common
 PRODS = \
 	random1 \
 
-CXXEXTRAFLAGS = -lombtrandom -lombtlogging
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -lombtrandom -lombtlogging
 
 include $(ROOT)/build/makefile.test

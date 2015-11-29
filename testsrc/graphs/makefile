@@ -8,6 +8,7 @@ include $(ROOT)/build/makefile.common
 
 PRODS = test1 test2
 
-CXXEXTRAFLAGS = -lombtgraphs -lombtparsing
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -lombtgraphs -lombtparsing
 
 include $(ROOT)/build/makefile.test

@@ -26,6 +26,8 @@ PRODS = \
 	tcpcombo2 \
 	tcpcombogc
 
-CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers
+# CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers
 
 include $(ROOT)/build/makefile.test

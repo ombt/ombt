@@ -3,6 +3,7 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
+#include <unistd.h>
 #include <matrix/GaussLUP.h>
 
 using namespace ombt;

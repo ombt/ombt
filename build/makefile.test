@@ -20,8 +20,13 @@ ifdef CXXEXTRAFLAGS
 CXXFLAGS += $(CXXEXTRAFLAGS)
 endif 
 
+# define PRODS_template
+# $(1):	$(1).cpp
+# endef
+
 define PRODS_template
 $(1):	$(1).cpp
+	$(CXX) $(CXXFLAGS) -o $(1) $(1).cpp $(CXXLIBFLAGS)
 endef
 
 all:

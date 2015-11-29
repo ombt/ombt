@@ -26,6 +26,7 @@ PRODS = \
 	pearsontypev1 \
 	pearsontypevi1 \
 
-CXXEXTRAFLAGS = -lombtlogging -lombtrandom -lombtdistributions
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -lombtlogging -lombtrandom -lombtdistributions
 
 include $(ROOT)/build/makefile.test

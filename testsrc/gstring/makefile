@@ -8,7 +8,7 @@ include $(ROOT)/build/makefile.common
 
 PRODS = tgstring tspell ttrie ttrie2 ttrie3 ttrie4
 
-CXXEXTRAFLAGS = -lombtrandom -lombtparsing
-CXXEXTRAFLAGS += -Wfatal-errors
+CXXEXTRAFLAGS = -Wfatal-errors
+CXXLIBFLAGS = -lombtrandom -lombtparsing
 
 include $(ROOT)/build/makefile.test

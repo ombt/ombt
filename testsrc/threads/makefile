@@ -24,6 +24,7 @@ PRODS = \
 	test15 \
 	test16
 
-CXXEXTRAFLAGS = -pthread -lombtthreads -lombtlogging -lombtrandom
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -pthread -lombtthreads -lombtlogging -lombtrandom
 
 include $(ROOT)/build/makefile.test

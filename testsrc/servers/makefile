@@ -112,7 +112,9 @@ PRODS = \
 	udpmsechoserver \
 	udpserver
 
-CXXEXTRAFLAGS = -lombtsockets -lombtservers -pthread -lombttimers -lombtlogging -lombtparsing -lombtthreads
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = -pthread -lombtservers -lombtsockets -lombttimers -lombtlogging -lombtparsing -lombtthreads
+# CXXLIBFLAGS = -lombtsockets -lombtservers -pthread -lombttimers -lombtlogging -lombtparsing -lombtthreads
 
 include $(ROOT)/build/makefile.test
 
