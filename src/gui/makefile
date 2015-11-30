@@ -16,6 +16,6 @@ include $(ROOT)/build/makefile.common
 
 SUBDIRS = \
 	gcalc \
-	gtk_tutorial
+	gtk_tutorial2
 
 include $(ROOT)/build/makefile.subdirs

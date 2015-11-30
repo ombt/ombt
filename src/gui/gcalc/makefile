@@ -9,7 +9,8 @@ include $(ROOT)/build/makefile.common
 PRODS = \
 	gcalc
 
-CXXEXTRAFLAGS = `pkg-config --cflags --libs gtk+-2.0` 
+CXXEXTRAFLAGS = 
+CXXLIBFLAGS = `pkg-config --cflags --libs gtk+-2.0` 
 
-include $(ROOT)/build/makefile.src
+include $(ROOT)/build/makefile.src2
 
