@@ -4,13 +4,13 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "list.h"
-#include "mystring.h"
+#include <Returns.h>
+#include <Debug.h>
+#Include <adt/List.h>
+#include <adt/String.h>
 
 // forward declaration
 class Substitution;

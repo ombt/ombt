@@ -4,12 +4,12 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "list.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/List.h>
 #include "term.h"
 #include "substitution.h"
 
@@ -42,8 +42,8 @@ public:
 #endif
 
 	// add or remove terms from clause
-	void insert(const Term &);
-	void remove(Term &);
+	int insert(const Term &);
+	int remove(Term &);
 	void clear();
 
 	// tests to run on a clause

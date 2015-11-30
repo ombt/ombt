@@ -3,14 +3,14 @@
 // predicate calculus parser
 
 // required headers
-#include "returns.h"
-#include "debug.h"
-#include "array.h"
-#include "list.h"
-#include "binaryTree_AVL.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/Array.h>
+#include <adt/List.h>
+#include <adt/BinaryTree_AVL.h>
 #include "semantic.h"
 #include "symbol.h"
-#include "mystring.h"
+#include <adt/String.h>
 #include "irclause.h"
 
 #endif

@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include <iostream.h>
-#include <fstream.h>
 #include <unistd.h>
+#include <iostream>
+#include <fstream>
 
 // other headers
 #include "pred.h"
@@ -41,6 +41,8 @@
 extern int yylineno;
 extern int optind;
 extern char *optarg;
+extern int yylex();
+extern void yyerror(const char *s);
 
 // symbol table
 BinaryTree_AVL<Symbol> symbols;
@@ -407,8 +409,9 @@ predicate:
 	| PIDENTIFIER LPAREN arglist RPAREN
 	{
 		/* count the number of arguments */
+		int nargs;
 		ListIterator<Semantic * > argsIter(*$3);
-		for (int nargs = 0; !argsIter.done(); argsIter++, nargs++);
+		for (nargs = 0; !argsIter.done(); argsIter++, nargs++);
 
 		/* check if symbol exists */
 		Symbol newsym(String($1), Symbol::PredicateFunction, nargs);
@@ -571,8 +574,9 @@ function:
 	IDENTIFIER LPAREN arglist RPAREN
 	{
 		/* get number of arguments */
+		int nargs;
 		ListIterator<Semantic * > argsIter(*$3);
-		for (int nargs = 0; !argsIter.done(); argsIter++, nargs++);
+		for (nargs = 0; !argsIter.done(); argsIter++, nargs++);
 
 		/* check if symbol exists */
 		Symbol newsym(String($1), Symbol::Function, nargs);

@@ -1,740 +1,964 @@
+Grammar
 
-state 0
-	$accept : _start $end 
-	start : _    (1)
-
-	.  reduce 1
-
-	start  goto 1
-
-state 1
-	$accept :  start_$end 
-	start :  start_conclusion linesynch 
-	start :  start_expressionlist conclusion linesynch 
-	start :  start_newline 
-	start :  start_error newline 
-	start :  start_QUIT linesynch 
-	start :  start_QUIT newline 
-
-	$end  accept
-	error  shift 5
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	NEWLINE  shift 9
-	PIDENTIFIER  shift 26
-	QUIT  shift 6
-	THEREFORE  shift 7
-	TRUE  shift 21
-	.  error
-
-	and  goto 14
-	atom  goto 16
-	biconditional  goto 11
-	conclusion  goto 2
-	expression  goto 10
-	implication  goto 12
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
-	expressionlist  goto 3
-	newline  goto 4
-	separator_expressionlist  goto 8
-
-state 2
-	start :  start conclusion_linesynch 
-
-	SEMICOLON  shift 28
-	.  error
-
-	linesynch  goto 27
-
-state 3
-	start :  start expressionlist_conclusion linesynch 
-	expressionlist :  expressionlist_separator_expressionlist linesynch 
-
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	THEREFORE  shift 7
-	TRUE  shift 21
-	.  error
-
-	and  goto 14
-	atom  goto 16
-	biconditional  goto 11
-	conclusion  goto 29
-	expression  goto 10
-	implication  goto 12
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
-	separator_expressionlist  goto 30
-
-state 4
-	start :  start newline_    (4)
-
-	.  reduce 4
-
-
-state 5
-	start :  start error_newline 
+    0 $accept: start $end
 
-	NEWLINE  shift 9
-	.  error
+    1 start: %empty
+    2      | start conclusion linesynch
+    3      | start expressionlist conclusion linesynch
+    4      | start newline
+    5      | start error newline
+    6      | start QUIT linesynch
+    7      | start QUIT newline
 
-	newline  goto 31
+    8 expressionlist: separator_expressionlist linesynch
+    9               | expressionlist separator_expressionlist linesynch
 
-state 6
-	start :  start QUIT_linesynch 
-	start :  start QUIT_newline 
+   10 separator_expressionlist: expression
+   11                         | separator_expressionlist separator expression
 
-	NEWLINE  shift 9
-	SEMICOLON  shift 28
-	.  error
+   12 expression: biconditional
 
-	linesynch  goto 32
-	newline  goto 33
+   13 biconditional: implication
+   14              | biconditional BICONDITIONAL implication
+
+   15 implication: or
+   16            | implication IMPLICATION or
+
+   17 or: and
+   18   | or OR and
+
+   19 and: unary
+   20    | and AND unary
+
+   21 unary: atom
+   22      | NEGATION unary
+   23      | universal unary
+   24      | existential unary
+
+   25 universal: LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL
+
+   26 existential: LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL
+
+   27 atom: predicate
+   28     | TRUE
+   29     | FALSE
+   30     | LPAREN expression RPAREN
+
+   31 predicate: PIDENTIFIER
+   32          | PIDENTIFIER LPAREN arglist RPAREN
+
+   33 arglist: arg
+   34        | arglist separator arg
+
+   35 arg: term
+
+   36 term: constant
+   37     | variable
+   38     | function
+
+   39 constant: STRING
+   40         | NUMBER
+
+   41 variable: IDENTIFIER
+
+   42 function: IDENTIFIER LPAREN arglist RPAREN
+
+   43 separator: COMMA
+
+   44 conclusion: THEREFORE expression
+
+   45 linesynch: SEMICOLON newline
+
+   46 newline: NEWLINE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 5
+AND (258) 20
+BICONDITIONAL (259) 14
+COMMA (260) 43
+FALSE (261) 29
+IDENTIFIER (262) 25 26 41 42
+IMPLICATION (263) 16
+LEFTEXISTENTIAL (264) 26
+LEFTUNIVERSAL (265) 25
+LPAREN (266) 30 32 42
+NEGATION (267) 22
+NEWLINE (268) 46
+NUMBER (269) 40
+OR (270) 18
+PIDENTIFIER (271) 31 32
+QUIT (272) 6 7
+RIGHTEXISTENTIAL (273) 26
+RIGHTUNIVERSAL (274) 25
+RPAREN (275) 30 32 42
+SEMICOLON (276) 45
+STRING (277) 39
+THEREFORE (278) 44
+TRUE (279) 28
+
 
-state 7
-	conclusion :  THEREFORE_expression 
+Nonterminals, with rules where they appear
+
+$accept (25)
+    on left: 0
+start (26)
+    on left: 1 2 3 4 5 6 7, on right: 0 2 3 4 5 6 7
+expressionlist (27)
+    on left: 8 9, on right: 3 9
+separator_expressionlist (28)
+    on left: 10 11, on right: 8 9 11
+expression (29)
+    on left: 12, on right: 10 11 30 44
+biconditional (30)
+    on left: 13 14, on right: 12 14
+implication (31)
+    on left: 15 16, on right: 13 14 16
+or (32)
+    on left: 17 18, on right: 15 16 18
+and (33)
+    on left: 19 20, on right: 17 18 20
+unary (34)
+    on left: 21 22 23 24, on right: 19 20 22 23 24
+universal (35)
+    on left: 25, on right: 23
+existential (36)
+    on left: 26, on right: 24
+atom (37)
+    on left: 27 28 29 30, on right: 21
+predicate (38)
+    on left: 31 32, on right: 27
+arglist (39)
+    on left: 33 34, on right: 32 34 42
+arg (40)
+    on left: 35, on right: 33 34
+term (41)
+    on left: 36 37 38, on right: 35
+constant (42)
+    on left: 39 40, on right: 36
+variable (43)
+    on left: 41, on right: 37
+function (44)
+    on left: 42, on right: 38
+separator (45)
+    on left: 43, on right: 11 34
+conclusion (46)
+    on left: 44, on right: 2 3
+linesynch (47)
+    on left: 45, on right: 2 3 6 8 9
+newline (48)
+    on left: 46, on right: 4 5 7 45
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
 
-	and  goto 14
-	atom  goto 16
-	biconditional  goto 11
-	expression  goto 34
-	implication  goto 12
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
+State 0
 
-state 8
-	expressionlist :  separator_expressionlist_linesynch 
-	separator_expressionlist :  separator_expressionlist_separator expression 
+    0 $accept: . start $end
+
+    $default  reduce using rule 1 (start)
+
+    start  go to state 1
+
+
+State 1
 
-	COMMA  shift 37
-	SEMICOLON  shift 28
-	.  error
+    0 $accept: start . $end
+    2 start: start . conclusion linesynch
+    3      | start . expressionlist conclusion linesynch
+    4      | start . newline
+    5      | start . error newline
+    6      | start . QUIT linesynch
+    7      | start . QUIT newline
 
-	linesynch  goto 35
-	separator  goto 36
+    $end             shift, and go to state 2
+    error            shift, and go to state 3
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    NEWLINE          shift, and go to state 9
+    PIDENTIFIER      shift, and go to state 10
+    QUIT             shift, and go to state 11
+    THEREFORE        shift, and go to state 12
+    TRUE             shift, and go to state 13
 
-state 9
-	newline :  NEWLINE_    (46)
+    expressionlist            go to state 14
+    separator_expressionlist  go to state 15
+    expression                go to state 16
+    biconditional             go to state 17
+    implication               go to state 18
+    or                        go to state 19
+    and                       go to state 20
+    unary                     go to state 21
+    universal                 go to state 22
+    existential               go to state 23
+    atom                      go to state 24
+    predicate                 go to state 25
+    conclusion                go to state 26
+    newline                   go to state 27
 
-	.  reduce 46
 
+State 2
 
-state 10
-	separator_expressionlist :  expression_    (10)
+    0 $accept: start $end .
 
-	.  reduce 10
+    $default  accept
 
 
-state 11
-	expression :  biconditional_    (12)
-	biconditional :  biconditional_BICONDITIONAL implication 
+State 3
 
-	BICONDITIONAL  shift 38
-	.  reduce 12
+    5 start: start error . newline
 
+    NEWLINE  shift, and go to state 9
 
-state 12
-	biconditional :  implication_    (13)
-	implication :  implication_IMPLICATION or 
+    newline  go to state 28
 
-	IMPLICATION  shift 39
-	.  reduce 13
 
+State 4
 
-state 13
-	implication :  or_    (15)
-	or :  or_OR and 
+   29 atom: FALSE .
 
-	OR  shift 40
-	.  reduce 15
+    $default  reduce using rule 29 (atom)
 
 
-state 14
-	or :  and_    (17)
-	and :  and_AND unary 
+State 5
 
-	AND  shift 41
-	.  reduce 17
+   26 existential: LEFTEXISTENTIAL . IDENTIFIER RIGHTEXISTENTIAL
 
+    IDENTIFIER  shift, and go to state 29
 
-state 15
-	and :  unary_    (19)
 
-	.  reduce 19
+State 6
 
+   25 universal: LEFTUNIVERSAL . IDENTIFIER RIGHTUNIVERSAL
 
-state 16
-	unary :  atom_    (21)
+    IDENTIFIER  shift, and go to state 30
 
-	.  reduce 21
 
+State 7
 
-state 17
-	unary :  NEGATION_unary 
+   30 atom: LPAREN . expression RPAREN
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-	atom  goto 16
-	predicate  goto 20
-	unary  goto 42
-	universal  goto 18
-	existential  goto 19
+    expression     go to state 31
+    biconditional  go to state 17
+    implication    go to state 18
+    or             go to state 19
+    and            go to state 20
+    unary          go to state 21
+    universal      go to state 22
+    existential    go to state 23
+    atom           go to state 24
+    predicate      go to state 25
 
-state 18
-	unary :  universal_unary 
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+State 8
 
-	atom  goto 16
-	predicate  goto 20
-	unary  goto 43
-	universal  goto 18
-	existential  goto 19
+   22 unary: NEGATION . unary
 
-state 19
-	unary :  existential_unary 
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    unary        go to state 32
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
 
-	atom  goto 16
-	predicate  goto 20
-	unary  goto 44
-	universal  goto 18
-	existential  goto 19
 
-state 20
-	atom :  predicate_    (27)
+State 9
 
-	.  reduce 27
+   46 newline: NEWLINE .
 
+    $default  reduce using rule 46 (newline)
 
-state 21
-	atom :  TRUE_    (28)
 
-	.  reduce 28
+State 10
 
+   31 predicate: PIDENTIFIER .
+   32          | PIDENTIFIER . LPAREN arglist RPAREN
 
-state 22
-	atom :  FALSE_    (29)
+    LPAREN  shift, and go to state 33
 
-	.  reduce 29
+    $default  reduce using rule 31 (predicate)
 
 
-state 23
-	atom :  LPAREN_expression RPAREN 
+State 11
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    6 start: start QUIT . linesynch
+    7      | start QUIT . newline
 
-	and  goto 14
-	atom  goto 16
-	biconditional  goto 11
-	expression  goto 45
-	implication  goto 12
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
+    NEWLINE    shift, and go to state 9
+    SEMICOLON  shift, and go to state 34
 
-state 24
-	universal :  LEFTUNIVERSAL_IDENTIFIER RIGHTUNIVERSAL 
+    linesynch  go to state 35
+    newline    go to state 36
 
-	IDENTIFIER  shift 46
-	.  error
 
+State 12
 
-state 25
-	existential :  LEFTEXISTENTIAL_IDENTIFIER RIGHTEXISTENTIAL 
+   44 conclusion: THEREFORE . expression
 
-	IDENTIFIER  shift 47
-	.  error
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
+    expression     go to state 37
+    biconditional  go to state 17
+    implication    go to state 18
+    or             go to state 19
+    and            go to state 20
+    unary          go to state 21
+    universal      go to state 22
+    existential    go to state 23
+    atom           go to state 24
+    predicate      go to state 25
 
-state 26
-	predicate :  PIDENTIFIER_    (31)
-	predicate :  PIDENTIFIER_LPAREN arglist RPAREN 
 
-	LPAREN  shift 48
-	.  reduce 31
+State 13
 
+   28 atom: TRUE .
 
-state 27
-	start :  start conclusion linesynch_    (2)
+    $default  reduce using rule 28 (atom)
 
-	.  reduce 2
 
+State 14
 
-state 28
-	linesynch :  SEMICOLON_newline 
+    3 start: start expressionlist . conclusion linesynch
+    9 expressionlist: expressionlist . separator_expressionlist linesynch
 
-	NEWLINE  shift 9
-	.  error
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    THEREFORE        shift, and go to state 12
+    TRUE             shift, and go to state 13
 
-	newline  goto 49
+    separator_expressionlist  go to state 38
+    expression                go to state 16
+    biconditional             go to state 17
+    implication               go to state 18
+    or                        go to state 19
+    and                       go to state 20
+    unary                     go to state 21
+    universal                 go to state 22
+    existential               go to state 23
+    atom                      go to state 24
+    predicate                 go to state 25
+    conclusion                go to state 39
 
-state 29
-	start :  start expressionlist conclusion_linesynch 
 
-	SEMICOLON  shift 28
-	.  error
+State 15
 
-	linesynch  goto 50
+    8 expressionlist: separator_expressionlist . linesynch
+   11 separator_expressionlist: separator_expressionlist . separator expression
 
-state 30
-	expressionlist :  expressionlist separator_expressionlist_linesynch 
-	separator_expressionlist :  separator_expressionlist_separator expression 
+    COMMA      shift, and go to state 40
+    SEMICOLON  shift, and go to state 34
 
-	COMMA  shift 37
-	SEMICOLON  shift 28
-	.  error
+    separator  go to state 41
+    linesynch  go to state 42
 
-	linesynch  goto 51
-	separator  goto 36
 
-state 31
-	start :  start error newline_    (5)
+State 16
 
-	.  reduce 5
+   10 separator_expressionlist: expression .
 
+    $default  reduce using rule 10 (separator_expressionlist)
 
-state 32
-	start :  start QUIT linesynch_    (6)
 
-	.  reduce 6
+State 17
 
+   12 expression: biconditional .
+   14 biconditional: biconditional . BICONDITIONAL implication
 
-state 33
-	start :  start QUIT newline_    (7)
+    BICONDITIONAL  shift, and go to state 43
 
-	.  reduce 7
+    $default  reduce using rule 12 (expression)
 
 
-state 34
-	conclusion :  THEREFORE expression_    (44)
+State 18
 
-	.  reduce 44
+   13 biconditional: implication .
+   16 implication: implication . IMPLICATION or
 
+    IMPLICATION  shift, and go to state 44
 
-state 35
-	expressionlist :  separator_expressionlist linesynch_    (8)
+    $default  reduce using rule 13 (biconditional)
 
-	.  reduce 8
 
+State 19
 
-state 36
-	separator_expressionlist :  separator_expressionlist separator_expression 
+   15 implication: or .
+   18 or: or . OR and
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    OR  shift, and go to state 45
 
-	and  goto 14
-	atom  goto 16
-	biconditional  goto 11
-	expression  goto 52
-	implication  goto 12
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
+    $default  reduce using rule 15 (implication)
 
-state 37
-	separator :  COMMA_    (43)
 
-	.  reduce 43
+State 20
 
+   17 or: and .
+   20 and: and . AND unary
 
-state 38
-	biconditional :  biconditional BICONDITIONAL_implication 
+    AND  shift, and go to state 46
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    $default  reduce using rule 17 (or)
 
-	and  goto 14
-	atom  goto 16
-	implication  goto 53
-	or  goto 13
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
 
-state 39
-	implication :  implication IMPLICATION_or 
+State 21
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+   19 and: unary .
 
-	and  goto 14
-	atom  goto 16
-	or  goto 54
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
+    $default  reduce using rule 19 (and)
 
-state 40
-	or :  or OR_and 
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+State 22
 
-	and  goto 55
-	atom  goto 16
-	predicate  goto 20
-	unary  goto 15
-	universal  goto 18
-	existential  goto 19
+   23 unary: universal . unary
 
-state 41
-	and :  and AND_unary 
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-	FALSE  shift 22
-	LEFTEXISTENTIAL  shift 25
-	LEFTUNIVERSAL  shift 24
-	LPAREN  shift 23
-	NEGATION  shift 17
-	PIDENTIFIER  shift 26
-	TRUE  shift 21
-	.  error
+    unary        go to state 47
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
 
-	atom  goto 16
-	predicate  goto 20
-	unary  goto 56
-	universal  goto 18
-	existential  goto 19
 
-state 42
-	unary :  NEGATION unary_    (22)
+State 23
 
-	.  reduce 22
+   24 unary: existential . unary
 
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-state 43
-	unary :  universal unary_    (23)
+    unary        go to state 48
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
 
-	.  reduce 23
 
+State 24
 
-state 44
-	unary :  existential unary_    (24)
+   21 unary: atom .
 
-	.  reduce 24
+    $default  reduce using rule 21 (unary)
 
 
-state 45
-	atom :  LPAREN expression_RPAREN 
+State 25
 
-	RPAREN  shift 57
-	.  error
+   27 atom: predicate .
 
+    $default  reduce using rule 27 (atom)
 
-state 46
-	universal :  LEFTUNIVERSAL IDENTIFIER_RIGHTUNIVERSAL 
 
-	RIGHTUNIVERSAL  shift 58
-	.  error
+State 26
 
+    2 start: start conclusion . linesynch
 
-state 47
-	existential :  LEFTEXISTENTIAL IDENTIFIER_RIGHTEXISTENTIAL 
+    SEMICOLON  shift, and go to state 34
 
-	RIGHTEXISTENTIAL  shift 59
-	.  error
+    linesynch  go to state 49
 
 
-state 48
-	predicate :  PIDENTIFIER LPAREN_arglist RPAREN 
+State 27
 
-	IDENTIFIER  shift 68
-	NUMBER  shift 67
-	STRING  shift 66
-	.  error
+    4 start: start newline .
 
-	arglist  goto 60
-	arg  goto 61
-	constant  goto 63
-	function  goto 65
-	term  goto 62
-	variable  goto 64
+    $default  reduce using rule 4 (start)
 
-state 49
-	linesynch :  SEMICOLON newline_    (45)
 
-	.  reduce 45
+State 28
 
+    5 start: start error newline .
 
-state 50
-	start :  start expressionlist conclusion linesynch_    (3)
+    $default  reduce using rule 5 (start)
 
-	.  reduce 3
 
+State 29
 
-state 51
-	expressionlist :  expressionlist separator_expressionlist linesynch_    (9)
+   26 existential: LEFTEXISTENTIAL IDENTIFIER . RIGHTEXISTENTIAL
 
-	.  reduce 9
+    RIGHTEXISTENTIAL  shift, and go to state 50
 
 
-state 52
-	separator_expressionlist :  separator_expressionlist separator expression_    (11)
+State 30
 
-	.  reduce 11
+   25 universal: LEFTUNIVERSAL IDENTIFIER . RIGHTUNIVERSAL
 
+    RIGHTUNIVERSAL  shift, and go to state 51
 
-state 53
-	biconditional :  biconditional BICONDITIONAL implication_    (14)
-	implication :  implication_IMPLICATION or 
 
-	IMPLICATION  shift 39
-	.  reduce 14
+State 31
 
+   30 atom: LPAREN expression . RPAREN
 
-state 54
-	implication :  implication IMPLICATION or_    (16)
-	or :  or_OR and 
+    RPAREN  shift, and go to state 52
 
-	OR  shift 40
-	.  reduce 16
 
+State 32
 
-state 55
-	or :  or OR and_    (18)
-	and :  and_AND unary 
+   22 unary: NEGATION unary .
 
-	AND  shift 41
-	.  reduce 18
+    $default  reduce using rule 22 (unary)
 
 
-state 56
-	and :  and AND unary_    (20)
+State 33
 
-	.  reduce 20
+   32 predicate: PIDENTIFIER LPAREN . arglist RPAREN
 
+    IDENTIFIER  shift, and go to state 53
+    NUMBER      shift, and go to state 54
+    STRING      shift, and go to state 55
 
-state 57
-	atom :  LPAREN expression RPAREN_    (30)
+    arglist   go to state 56
+    arg       go to state 57
+    term      go to state 58
+    constant  go to state 59
+    variable  go to state 60
+    function  go to state 61
 
-	.  reduce 30
 
+State 34
 
-state 58
-	universal :  LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL_    (25)
+   45 linesynch: SEMICOLON . newline
 
-	.  reduce 25
+    NEWLINE  shift, and go to state 9
 
+    newline  go to state 62
 
-state 59
-	existential :  LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL_    (26)
 
-	.  reduce 26
+State 35
 
+    6 start: start QUIT linesynch .
 
-state 60
-	predicate :  PIDENTIFIER LPAREN arglist_RPAREN 
-	arglist :  arglist_separator arg 
+    $default  reduce using rule 6 (start)
 
-	COMMA  shift 37
-	RPAREN  shift 69
-	.  error
 
-	separator  goto 70
+State 36
 
-state 61
-	arglist :  arg_    (33)
+    7 start: start QUIT newline .
 
-	.  reduce 33
+    $default  reduce using rule 7 (start)
 
 
-state 62
-	arg :  term_    (35)
+State 37
 
-	.  reduce 35
+   44 conclusion: THEREFORE expression .
 
+    $default  reduce using rule 44 (conclusion)
 
-state 63
-	term :  constant_    (36)
 
-	.  reduce 36
+State 38
 
+    9 expressionlist: expressionlist separator_expressionlist . linesynch
+   11 separator_expressionlist: separator_expressionlist . separator expression
 
-state 64
-	term :  variable_    (37)
+    COMMA      shift, and go to state 40
+    SEMICOLON  shift, and go to state 34
 
-	.  reduce 37
+    separator  go to state 41
+    linesynch  go to state 63
 
 
-state 65
-	term :  function_    (38)
+State 39
 
-	.  reduce 38
+    3 start: start expressionlist conclusion . linesynch
 
+    SEMICOLON  shift, and go to state 34
 
-state 66
-	constant :  STRING_    (39)
+    linesynch  go to state 64
 
-	.  reduce 39
 
+State 40
 
-state 67
-	constant :  NUMBER_    (40)
+   43 separator: COMMA .
 
-	.  reduce 40
+    $default  reduce using rule 43 (separator)
 
 
-state 68
-	variable :  IDENTIFIER_    (41)
-	function :  IDENTIFIER_LPAREN arglist RPAREN 
+State 41
 
-	LPAREN  shift 71
-	.  reduce 41
+   11 separator_expressionlist: separator_expressionlist separator . expression
 
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-state 69
-	predicate :  PIDENTIFIER LPAREN arglist RPAREN_    (32)
+    expression     go to state 65
+    biconditional  go to state 17
+    implication    go to state 18
+    or             go to state 19
+    and            go to state 20
+    unary          go to state 21
+    universal      go to state 22
+    existential    go to state 23
+    atom           go to state 24
+    predicate      go to state 25
 
-	.  reduce 32
 
+State 42
 
-state 70
-	arglist :  arglist separator_arg 
+    8 expressionlist: separator_expressionlist linesynch .
 
-	IDENTIFIER  shift 68
-	NUMBER  shift 67
-	STRING  shift 66
-	.  error
+    $default  reduce using rule 8 (expressionlist)
 
-	arg  goto 72
-	constant  goto 63
-	function  goto 65
-	term  goto 62
-	variable  goto 64
 
-state 71
-	function :  IDENTIFIER LPAREN_arglist RPAREN 
+State 43
 
-	IDENTIFIER  shift 68
-	NUMBER  shift 67
-	STRING  shift 66
-	.  error
+   14 biconditional: biconditional BICONDITIONAL . implication
 
-	arglist  goto 73
-	arg  goto 61
-	constant  goto 63
-	function  goto 65
-	term  goto 62
-	variable  goto 64
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-state 72
-	arglist :  arglist separator arg_    (34)
+    implication  go to state 66
+    or           go to state 19
+    and          go to state 20
+    unary        go to state 21
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
 
-	.  reduce 34
 
+State 44
 
-state 73
-	arglist :  arglist_separator arg 
-	function :  IDENTIFIER LPAREN arglist_RPAREN 
+   16 implication: implication IMPLICATION . or
 
-	COMMA  shift 37
-	RPAREN  shift 74
-	.  error
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
 
-	separator  goto 70
+    or           go to state 67
+    and          go to state 20
+    unary        go to state 21
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
 
-state 74
-	function :  IDENTIFIER LPAREN arglist RPAREN_    (42)
 
-	.  reduce 42
+State 45
 
+   18 or: or OR . and
 
-24/127 terminals, 23/600 nonterminals
-47/300 grammar rules, 75/1000 states
-0 shift/reduce, 0 reduce/reduce conflicts reported
-34/601 working sets used
-memory: states,etc. 185/2000, parser 137/4000
-37/3001 distinct lookahead sets
-14 extra closures
-126 shift entries, 1 exceptions
-46 goto entries
-81 entries saved by goto default
-Optimizer space used: input 323/2000, output 125/4000
-125 table entries, 29 zero
-maximum spread: 278, maximum offset: 275
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
+
+    and          go to state 68
+    unary        go to state 21
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
+
+
+State 46
+
+   20 and: and AND . unary
+
+    FALSE            shift, and go to state 4
+    LEFTEXISTENTIAL  shift, and go to state 5
+    LEFTUNIVERSAL    shift, and go to state 6
+    LPAREN           shift, and go to state 7
+    NEGATION         shift, and go to state 8
+    PIDENTIFIER      shift, and go to state 10
+    TRUE             shift, and go to state 13
+
+    unary        go to state 69
+    universal    go to state 22
+    existential  go to state 23
+    atom         go to state 24
+    predicate    go to state 25
+
+
+State 47
+
+   23 unary: universal unary .
+
+    $default  reduce using rule 23 (unary)
+
+
+State 48
+
+   24 unary: existential unary .
+
+    $default  reduce using rule 24 (unary)
+
+
+State 49
+
+    2 start: start conclusion linesynch .
+
+    $default  reduce using rule 2 (start)
+
+
+State 50
+
+   26 existential: LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL .
+
+    $default  reduce using rule 26 (existential)
+
+
+State 51
+
+   25 universal: LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL .
+
+    $default  reduce using rule 25 (universal)
+
+
+State 52
+
+   30 atom: LPAREN expression RPAREN .
+
+    $default  reduce using rule 30 (atom)
+
+
+State 53
+
+   41 variable: IDENTIFIER .
+   42 function: IDENTIFIER . LPAREN arglist RPAREN
+
+    LPAREN  shift, and go to state 70
+
+    $default  reduce using rule 41 (variable)
+
+
+State 54
+
+   40 constant: NUMBER .
+
+    $default  reduce using rule 40 (constant)
+
+
+State 55
+
+   39 constant: STRING .
+
+    $default  reduce using rule 39 (constant)
+
+
+State 56
+
+   32 predicate: PIDENTIFIER LPAREN arglist . RPAREN
+   34 arglist: arglist . separator arg
+
+    COMMA   shift, and go to state 40
+    RPAREN  shift, and go to state 71
+
+    separator  go to state 72
+
+
+State 57
+
+   33 arglist: arg .
+
+    $default  reduce using rule 33 (arglist)
+
+
+State 58
+
+   35 arg: term .
+
+    $default  reduce using rule 35 (arg)
+
+
+State 59
+
+   36 term: constant .
+
+    $default  reduce using rule 36 (term)
+
+
+State 60
+
+   37 term: variable .
+
+    $default  reduce using rule 37 (term)
+
+
+State 61
+
+   38 term: function .
+
+    $default  reduce using rule 38 (term)
+
+
+State 62
+
+   45 linesynch: SEMICOLON newline .
+
+    $default  reduce using rule 45 (linesynch)
+
+
+State 63
+
+    9 expressionlist: expressionlist separator_expressionlist linesynch .
+
+    $default  reduce using rule 9 (expressionlist)
+
+
+State 64
+
+    3 start: start expressionlist conclusion linesynch .
+
+    $default  reduce using rule 3 (start)
+
+
+State 65
+
+   11 separator_expressionlist: separator_expressionlist separator expression .
+
+    $default  reduce using rule 11 (separator_expressionlist)
+
+
+State 66
+
+   14 biconditional: biconditional BICONDITIONAL implication .
+   16 implication: implication . IMPLICATION or
+
+    IMPLICATION  shift, and go to state 44
+
+    $default  reduce using rule 14 (biconditional)
+
+
+State 67
+
+   16 implication: implication IMPLICATION or .
+   18 or: or . OR and
+
+    OR  shift, and go to state 45
+
+    $default  reduce using rule 16 (implication)
+
+
+State 68
+
+   18 or: or OR and .
+   20 and: and . AND unary
+
+    AND  shift, and go to state 46
+
+    $default  reduce using rule 18 (or)
+
+
+State 69
+
+   20 and: and AND unary .
+
+    $default  reduce using rule 20 (and)
+
+
+State 70
+
+   42 function: IDENTIFIER LPAREN . arglist RPAREN
+
+    IDENTIFIER  shift, and go to state 53
+    NUMBER      shift, and go to state 54
+    STRING      shift, and go to state 55
+
+    arglist   go to state 73
+    arg       go to state 57
+    term      go to state 58
+    constant  go to state 59
+    variable  go to state 60
+    function  go to state 61
+
+
+State 71
+
+   32 predicate: PIDENTIFIER LPAREN arglist RPAREN .
+
+    $default  reduce using rule 32 (predicate)
+
+
+State 72
+
+   34 arglist: arglist separator . arg
+
+    IDENTIFIER  shift, and go to state 53
+    NUMBER      shift, and go to state 54
+    STRING      shift, and go to state 55
+
+    arg       go to state 74
+    term      go to state 58
+    constant  go to state 59
+    variable  go to state 60
+    function  go to state 61
+
+
+State 73
+
+   34 arglist: arglist . separator arg
+   42 function: IDENTIFIER LPAREN arglist . RPAREN
+
+    COMMA   shift, and go to state 40
+    RPAREN  shift, and go to state 75
+
+    separator  go to state 72
+
+
+State 74
+
+   34 arglist: arglist separator arg .
+
+    $default  reduce using rule 34 (arglist)
+
+
+State 75
+
+   42 function: IDENTIFIER LPAREN arglist RPAREN .
+
+    $default  reduce using rule 42 (function)

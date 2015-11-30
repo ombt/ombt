@@ -27,7 +27,7 @@ Clause::Clause(const List<Term> &alist, int d, int poc):
 	depth(d), number(-1), partOfConclusion(poc), terms()
 {
 	ListIterator<Term> alisti(alist);
-	for ( ; !alist.done(); alist++)
+	for ( ; !alisti.done(); alisti++)
 	{
 		Term *newterm = new Term(alisti());
 		MustBeTrue(newterm != NULL);
@@ -186,12 +186,12 @@ Clause::insert(const Term &term)
 	}
 
 	// check if the term already exist, use unification
-	Substitution sts;
-	ListIterator<Term *) termsi(terms);
+	Substitutions sts;
+	ListIterator<Term *> termsi(terms);
 	for ( ; !termsi.done(); termsi++)
 	{
-		Term t1(*termsi());
-		Term t2(term);
+		Term term1(*termsi());
+		Term term2(term);
 		sts.clear();
 		if (unify(term1, term2, sts) == OK)
 		{
