@@ -4,12 +4,15 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+
+using namespace std;
+using namespace ombt;
 
 // symbol class definitions
 class Symbol {

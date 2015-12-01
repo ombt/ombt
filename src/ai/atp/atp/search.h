@@ -4,16 +4,19 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <assert.h>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mylist.h"
-#include "binaryTree_AVL.h"
-#include "proxy.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/List.h>
+#include <adt/BinaryTree_AVL.h>
+#include <adt/Proxy.h>
 #include "varnames.h"
+
+using namespace std;
+using namespace ombt;
 
 // best-first search routine 
 template <class NodeType, class DataType>

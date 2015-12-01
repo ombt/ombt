@@ -4,12 +4,15 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
 #include <string.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
+#include <Returns.h>
+#include <Debug.h>
+
+using namespace std;
+using namespace ombt;
 
 // forward declarations
 class MemoryLeak;

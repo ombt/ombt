@@ -5,7 +5,7 @@
 // headers
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -13,12 +13,12 @@
 #include <signal.h>
  
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "mylist.h"
-#include "tuple.h"
-#include "binaryTree_AVL.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/List.h>
+#include <adt/Tuple.h>
+#include <adt/BinaryTree_AVL.h>
 #include "clause.h"
 #include "semantic.h"
 #include "symbol.h"
@@ -31,6 +31,9 @@
 #include "search.h"
 #include "bfsnode.h"
 #include "varnames.h"
+
+using namespace std;
+using namespace ombt;
 
 // symbol table
 extern BinaryTree_AVL<Symbol> symbols;

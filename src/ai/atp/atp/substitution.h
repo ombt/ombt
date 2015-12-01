@@ -4,16 +4,19 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mylist.h"
-#include "mystring.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/List.h>
+#include <adt/String.h>
 #include "literal.h"
 #include "clause.h"
 #include "index.h"
+
+using namespace std;
+using namespace ombt;
 
 // forward declarations
 class Substitution;

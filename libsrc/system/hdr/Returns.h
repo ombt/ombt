@@ -15,5 +15,8 @@
 #define NOMATCH -2
 #define PROMOTION -3
 #define DUPLICATE -4
+#define NOTPROVEN -5
+#define MAXDEPTHEXCEEDED -6
+#define MAXCLAUSEEXCEEDED -7
 
 #endif

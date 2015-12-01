@@ -4,15 +4,15 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "tuple.h"
-#include "binaryTree_AVL.h"
-#include "map.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/Tuple.h>
+#include <adt/BinaryTree_AVL.h>
+#include <adt/Map.h>
 
 // define structure for tracking variable names
 extern BinaryTree_AVL<Tuple<String, String> > variableNames;

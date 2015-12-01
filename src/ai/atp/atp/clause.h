@@ -4,19 +4,19 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mylist.h"
-#include "mystring.h"
-#include "binaryTree_AVL.h"
-#include "map.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/List.h>
+#include <adt/String.h>
+#include <adt/BinaryTree_AVL.h>
+#include <adt/Map.h>
+#include <adt/Tuple.h>
 #include "literal.h"
 #include "statistics.h"
 #include "memoryleak.h"
-#include "tuple.h"
 #include "varnames.h"
 
 // forward declarations

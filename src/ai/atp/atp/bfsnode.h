@@ -4,15 +4,15 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <limits.h>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mylist.h"
-#include "binaryTree_AVL.h"
-#include "proxy.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/List.h>
+#include <adt/BinaryTree_AVL.h>
+#include <adt/Proxy.h>
 #include "literal.h"
 #include "clause.h"
 #include "statistics.h"
@@ -21,6 +21,10 @@
 #include "substitution.h"
 #include "options.h"
 #include "memoryleak.h"
+#include "unification.h"
+
+using namespace std;
+using namespace ombt;
 
 // forward definitions
 class BFSNode;

@@ -3,8 +3,11 @@
 // function to return a unique index number
 
 // headers
-#include "returns.h"
-#include "debug.h"
+#include <Returns.h>
+#include <Debug.h>
+
+using namespace std;
+using namespace ombt;
 
 // function names
 extern unsigned long nextIndex();

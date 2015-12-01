@@ -5,13 +5,13 @@
 // headers
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "map.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/Map.h>
 #include "globals.h"
 
 // externs

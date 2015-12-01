@@ -4,14 +4,14 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "array.h"
-#include "map.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/Array.h>
+#include <adt/Map.h>
 #include "literal.h"
 #include "clause.h"
 #include "substitution.h"
@@ -19,6 +19,9 @@
 #include "uniquename.h"
 #include "statistics.h"
 #include "globals.h"
+
+using namespace std;
+using namespace ombt;
 
 // deletion-related functions
 int tautology(const Clause &);

@@ -3,9 +3,12 @@
 // function to return a unique name
 
 // headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+
+using namespace std;
+using namespace ombt;
 
 // function names
 String uniqueName(const String &);

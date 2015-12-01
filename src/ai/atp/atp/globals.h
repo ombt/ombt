@@ -4,16 +4,19 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <limits.h>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "mylist.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/List.h>
+#include <adt/Tuple.h>
 #include "statistics.h"
-#include "tuple.h"
+
+using namespace std;
+using namespace ombt;
 
 // definitions
 #define DEFAULTTEMPDIR "atp_temp"

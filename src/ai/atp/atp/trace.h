@@ -4,15 +4,18 @@
 
 // headers
 #include <stdlib.h>
-#include <iostream.h>
 #include <unistd.h>
+#include <iostream>
 
 // local headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "map.h"
-#include "twokeys.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/Map.h>
+#include <adt/Twokeys.h>
+
+using namespace std;
+using namespace ombt;
 
 // externs definitions
 extern Map<unsigned long, long> trace1;

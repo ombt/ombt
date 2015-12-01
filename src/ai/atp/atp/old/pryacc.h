@@ -118,7 +118,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 43 "pr.y" /* yacc.c:1909  */
+#line 41 "pr.y" /* yacc.c:1909  */
 
 	int flag;
 	char cstring[32];

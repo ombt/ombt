@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -16,6 +16,8 @@
 extern int yylineno;
 extern int optind;
 extern char *optarg;
+extern int yylex();
+extern void yyerror(const char *s);
 
 // symbol table
 BinaryTree_AVL<Symbol> symbols;

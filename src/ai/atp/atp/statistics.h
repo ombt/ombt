@@ -3,10 +3,14 @@
 // map used to store statistics
 
 // headers
-#include "returns.h"
-#include "debug.h"
-#include "mystring.h"
-#include "map.h"
+#include <Returns.h>
+#include <Debug.h>
+#include <adt/String.h>
+#include <adt/StringTokens.h>
+#include <adt/Map.h>
+
+using namespace std;
+using namespace ombt;
 
 // type definitions
 typedef Map<String, unsigned long> Statistics;
