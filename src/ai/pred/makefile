@@ -22,7 +22,7 @@ CXXFLAGS = -g -O0 -DUSEOSTREAM=1 -I$(INCLUDEDIR) -I.
 CXXFLAGS += -Wfatal-errors -Wno-deprecated
 
 LD = g++
-LDFLAGS = -g -O0 -L$(LIBRARYDIR) -lombtadt
+LDFLAGS = -g -O0 -L$(LIBRARYDIR) 
 LDFLAGS += -Wfatal-errors -Wno-deprecated
 
 LEX = /usr/bin/lex
@@ -37,7 +37,6 @@ test:
 
 tpred:		predyacc.o \
 		predlex.o \
-		clause.o \
 		irclause.o \
 		semantic.o \
 		substitution.o \
@@ -49,7 +48,6 @@ tpred:		predyacc.o \
 		$(LD) $(LDFLAGS) -o tpred \
 			predyacc.o \
 			predlex.o \
-			clause.o \
 			irclause.o \
 			semantic.o \
 			substitution.o \
@@ -57,7 +55,8 @@ tpred:		predyacc.o \
 			term.o \
 			term_syntax.o \
 			term_tree.o \
-			unification.o
+			unification.o \
+			-lombtadt \
 			-ly \
 			-ll
 
@@ -80,7 +79,6 @@ backupd:
 
 predlex.o:	pred.l \
 		./pred.h \
-		./clause.h \
 		./semantic.h \
 		pred.y 
 		$(LEX) $(LEXFLAGS) pred.l
@@ -89,15 +87,11 @@ predlex.o:	pred.l \
 
 predyacc.o:	pred.y \
 		./pred.h \
-		./clause.h \
 		./semantic.h 
 		$(YACC) $(YACCFLAGS) pred.y
 		cp y.tab.h predyacc.h
 		cp y.tab.c predyacc.cpp
 		$(CXX) $(CXXFLAGS) -c predyacc.cpp
-
-clause.o:	clause.cpp \
-		clause.h
 
 irclause.o:	irclause.cpp \
 		irclause.h

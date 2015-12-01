@@ -1,0 +1,143 @@
+The syntax for the first-order language used in the theorem-prover, atp,
+is listed below.
+
+The tokens are:
+
+identifier		[a-z][a-zA-Z0-9_]*
+pidentifier		[A-Z][a-zA-Z0-9_]*
+number			[0-9]+
+string			\"[^\"]*\"
+whitespace		[ \t]+
+pound			#[^\n]*"\n"
+newline			"\n"
+
+{whitespace}	ignore
+{pound}		ECHO;ignore
+{newline}	return NEWLINE
+"|-"		return(THEREFORE);
+"<-->"		return(BICONDITIONAL);
+"-->"		return(IMPLICATION);
+"||"		return(OR);
+"&&"		return(AND);
+"~"		return(NEGATION);
+"="		return(EQUAL);
+"("		return(LPAREN);
+")"		return(RPAREN);
+","		return(COMMA);
+";"		return(SEMICOLON);
+"<"		return(LEFTUNIVERSAL);
+">"		return(RIGHTUNIVERSAL);
+"["		return(LEFTEXISTENTIAL);
+"]"		return(RIGHTEXISTENTIAL);
+"quit"		return(QUIT);
+"True"		return(TRUE);
+"False"		return(FALSE);
+"SOS"		return(SOS);
+{number}	return(NUMBER);
+{string}	return(STRING);
+{identifier}	return(IDENTIFIER);
+{pidentifier}	return(PIDENTIFIER);
+.		return actual character
+
+
+The BNF rules are:
+
+start:
+	start conclusionlist 
+	| start expressionlist conclusionlist 
+	| start newline
+	| start error newline
+	| start QUIT linesynch
+	| start QUIT newline
+
+conclusionlist:
+	sos_option conclusion linesynch
+	| conclusionlist sos_option conclusion linesynch
+
+expressionlist:
+	separator_expressionlist linesynch
+	| expressionlist separator_expressionlist linesynch
+
+separator_expressionlist:
+	sos_option expression
+	| separator_expressionlist separator sos_option expression
+
+sos:
+	/* empty
+	| SOS
+
+expression:
+	biconditional
+
+biconditional:
+	implication
+	| biconditional BICONDITIONAL implication
+
+implication:
+	or
+	| implication IMPLICATION or
+
+or:
+	and
+	| or OR and
+
+and:
+	unary
+	| and AND unary
+
+unary:
+	atom
+	| NEGATION unary
+	| universal unary
+	| existential unary
+
+universal:
+	LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL
+
+existential:
+	LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL
+
+atom:
+	predicate
+	| TRUE
+	| FALSE
+	| LPAREN expression RPAREN
+
+predicate:
+	PIDENTIFIER
+	| term EQUAL term
+	| PIDENTIFIER LPAREN arglist RPAREN
+
+arglist:
+	arg
+	| arglist separator arg
+
+arg:
+	term
+
+term:
+	constant
+	| variable
+	| function
+
+constant:
+	STRING
+	| NUMBER
+
+variable:
+	IDENTIFIER
+
+function:
+	IDENTIFIER LPAREN arglist RPAREN
+	
+separator:
+	COMMA 
+
+conclusion:
+	THEREFORE expression
+
+linesynch:
+	SEMICOLON newline
+
+newline:
+	NEWLINE

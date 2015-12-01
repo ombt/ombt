@@ -13,6 +13,9 @@
 #include <term.h>
 #include <substitution.h>
 
+using namespace std;
+using namespace ombt;
+
 // unification function
 int unify(Term &, Term &, Substitutions &);
 

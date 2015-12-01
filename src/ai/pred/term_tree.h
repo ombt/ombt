@@ -11,6 +11,10 @@
 #include "system/Debug.h"
 #include "adt/List.h"
 #include "adt/String.h"
+#include "adt/StringTokens.h"
+
+using namespace std;
+using namespace ombt;
 
 // forward declaration
 class Substitution;
@@ -83,7 +87,7 @@ public:
 	};
 
 	// print data
-	friend std::Ostream &operator<<(std::Ostream &, const Term &);
+	friend std::ostream &operator<<(std::ostream &, const Term &);
 
 protected:
 	// internal data
@@ -142,7 +146,7 @@ public:
 	int isDegenerate() const;
 
 	// output function
-	friend std::Ostream &operator<<(std::Ostream &, const Substitution &);
+	friend std::ostream &operator<<(std::ostream &, const Substitution &);
 
 protected:
 	// internal data
@@ -182,7 +186,7 @@ public:
 	int applyTo(Term &) const;
 
 	// output function
-	friend std::Ostream &operator<<(std::Ostream &, const Substitutions &);
+	friend std::ostream &operator<<(std::ostream &, const Substitutions &);
 
 protected:
 	// internal data

@@ -11,6 +11,9 @@
 #include "system/Debug.h"
 #include "adt/String.h"
 
+using namespace std;
+using namespace ombt;
+
 // symbol class definitions
 class Symbol {
 public:

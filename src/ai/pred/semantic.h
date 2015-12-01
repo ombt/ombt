@@ -16,6 +16,9 @@
 #include <symbol.h>
 #include <irclause.h>
 
+using namespace std;
+using namespace ombt;
+
 // forward declarations
 class SemanticRep;
 class Predicate;

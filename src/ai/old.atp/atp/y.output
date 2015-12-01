@@ -1,0 +1,1183 @@
+
+state 0
+	$accept : _start $end 
+	start : _    (1)
+
+	.  reduce 1
+
+	start  goto 1
+
+state 1
+	$accept :  start_$end 
+	start :  start_argument sosconclusionlist rbrace 
+	start :  start_argument expressionlist rbrace 
+	start :  start_argument expressionlist sosconclusionlist rbrace 
+	start :  start_error RBRACE 
+	start :  start_QUIT linesynch 
+	start :  start_options RBRACE 
+	start :  start_options optionslist RBRACE 
+
+	$end  accept
+	error  shift 3
+	ARGUMENT  shift 6
+	QUIT  shift 4
+	OPTION  shift 7
+	.  error
+
+	argument  goto 2
+	options  goto 5
+
+state 2
+	start :  start argument_sosconclusionlist rbrace 
+	start :  start argument_expressionlist rbrace 
+	start :  start argument_expressionlist sosconclusionlist rbrace 
+	sos_option : _    (23)
+
+	SOS  shift 12
+	.  reduce 23
+
+	sos_option  goto 10
+	sosconclusionlist  goto 8
+	expressionlist  goto 9
+	separator_expressionlist  goto 11
+
+state 3
+	start :  start error_RBRACE 
+
+	RBRACE  shift 13
+	.  error
+
+
+state 4
+	start :  start QUIT_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 14
+
+state 5
+	start :  start options_RBRACE 
+	start :  start options_optionslist RBRACE 
+
+	IDENTIFIER  shift 18
+	RBRACE  shift 16
+	.  error
+
+	optionslist  goto 17
+
+state 6
+	argument :  ARGUMENT_LBRACE 
+
+	LBRACE  shift 19
+	.  error
+
+
+state 7
+	options :  OPTION_LBRACE 
+
+	LBRACE  shift 20
+	.  error
+
+
+state 8
+	start :  start argument sosconclusionlist_rbrace 
+
+	RBRACE  shift 22
+	.  error
+
+	rbrace  goto 21
+
+state 9
+	start :  start argument expressionlist_rbrace 
+	start :  start argument expressionlist_sosconclusionlist rbrace 
+	expressionlist :  expressionlist_separator_expressionlist linesynch 
+	sos_option : _    (23)
+
+	SOS  shift 12
+	RBRACE  shift 22
+	.  reduce 23
+
+	sos_option  goto 10
+	sosconclusionlist  goto 24
+	rbrace  goto 23
+	separator_expressionlist  goto 25
+
+state 10
+	sosconclusionlist :  sos_option_conclusiontype linesynch 
+	separator_expressionlist :  sos_option_expression 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	THEREFORE  shift 28
+	QUERY  shift 29
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	biconditional  goto 30
+	conclusiontype  goto 26
+	constant  goto 49
+	expression  goto 27
+	function  goto 51
+	implication  goto 31
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 11
+	expressionlist :  separator_expressionlist_linesynch 
+	separator_expressionlist :  separator_expressionlist_separator sos_option expression 
+
+	COMMA  shift 57
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 55
+	separator  goto 56
+
+state 12
+	sos_option :  SOS_    (24)
+
+	.  reduce 24
+
+
+state 13
+	start :  start error RBRACE_    (5)
+
+	.  reduce 5
+
+
+state 14
+	start :  start QUIT linesynch_    (6)
+
+	.  reduce 6
+
+
+state 15
+	linesynch :  SEMICOLON_    (63)
+
+	.  reduce 63
+
+
+state 16
+	start :  start options RBRACE_    (7)
+
+	.  reduce 7
+
+
+state 17
+	start :  start options optionslist_RBRACE 
+	optionslist :  optionslist_IDENTIFIER EQUAL STRING linesynch 
+	optionslist :  optionslist_IDENTIFIER EQUAL NUMBER linesynch 
+	optionslist :  optionslist_IDENTIFIER EQUAL NEGNUMBER linesynch 
+
+	IDENTIFIER  shift 59
+	RBRACE  shift 58
+	.  error
+
+
+state 18
+	optionslist :  IDENTIFIER_EQUAL STRING linesynch 
+	optionslist :  IDENTIFIER_EQUAL NUMBER linesynch 
+	optionslist :  IDENTIFIER_EQUAL NEGNUMBER linesynch 
+
+	EQUAL  shift 60
+	.  error
+
+
+state 19
+	argument :  ARGUMENT LBRACE_    (17)
+
+	.  reduce 17
+
+
+state 20
+	options :  OPTION LBRACE_    (9)
+
+	.  reduce 9
+
+
+state 21
+	start :  start argument sosconclusionlist rbrace_    (2)
+
+	.  reduce 2
+
+
+state 22
+	rbrace :  RBRACE_    (16)
+
+	.  reduce 16
+
+
+state 23
+	start :  start argument expressionlist rbrace_    (3)
+
+	.  reduce 3
+
+
+state 24
+	start :  start argument expressionlist sosconclusionlist_rbrace 
+
+	RBRACE  shift 22
+	.  error
+
+	rbrace  goto 61
+
+state 25
+	expressionlist :  expressionlist separator_expressionlist_linesynch 
+	separator_expressionlist :  separator_expressionlist_separator sos_option expression 
+
+	COMMA  shift 57
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 62
+	separator  goto 56
+
+state 26
+	sosconclusionlist :  sos_option conclusiontype_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 63
+
+state 27
+	separator_expressionlist :  sos_option expression_    (21)
+
+	.  reduce 21
+
+
+state 28
+	conclusiontype :  THEREFORE_expression 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	biconditional  goto 30
+	constant  goto 49
+	expression  goto 64
+	function  goto 51
+	implication  goto 31
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 29
+	conclusiontype :  QUERY_expression 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	biconditional  goto 30
+	constant  goto 49
+	expression  goto 65
+	function  goto 51
+	implication  goto 31
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 30
+	expression :  biconditional_    (25)
+	biconditional :  biconditional_BICONDITIONAL implication 
+
+	BICONDITIONAL  shift 66
+	.  reduce 25
+
+
+state 31
+	biconditional :  implication_    (26)
+	implication :  implication_IMPLICATION or 
+
+	IMPLICATION  shift 67
+	.  reduce 26
+
+
+state 32
+	implication :  or_    (28)
+	or :  or_OR and 
+
+	OR  shift 68
+	.  reduce 28
+
+
+state 33
+	or :  and_    (30)
+	and :  and_AND unary 
+
+	AND  shift 69
+	.  reduce 30
+
+
+state 34
+	and :  unary_    (32)
+
+	.  reduce 32
+
+
+state 35
+	unary :  atom_    (34)
+
+	.  reduce 34
+
+
+state 36
+	unary :  NEGATION_unary 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	predicate  goto 39
+	term  goto 48
+	unary  goto 70
+	variable  goto 50
+
+state 37
+	unary :  universal_unary 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	predicate  goto 39
+	term  goto 48
+	unary  goto 71
+	variable  goto 50
+
+state 38
+	unary :  existential_unary 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	predicate  goto 39
+	term  goto 48
+	unary  goto 72
+	variable  goto 50
+
+state 39
+	atom :  predicate_    (42)
+
+	.  reduce 42
+
+
+state 40
+	atom :  TRUE_    (43)
+
+	.  reduce 43
+
+
+state 41
+	atom :  FALSE_    (44)
+
+	.  reduce 44
+
+
+state 42
+	atom :  LPAREN_expression RPAREN 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	biconditional  goto 30
+	constant  goto 49
+	expression  goto 73
+	function  goto 51
+	implication  goto 31
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 43
+	universal :  LEFTUNIVERSAL_IDENTIFIER RIGHTUNIVERSAL 
+
+	IDENTIFIER  shift 74
+	.  error
+
+
+state 44
+	universal :  UNIVERSAL_LPAREN IDENTIFIER RPAREN 
+
+	LPAREN  shift 75
+	.  error
+
+
+state 45
+	existential :  LEFTEXISTENTIAL_IDENTIFIER RIGHTEXISTENTIAL 
+
+	IDENTIFIER  shift 76
+	.  error
+
+
+state 46
+	existential :  EXISTENTIAL_LPAREN IDENTIFIER RPAREN 
+
+	LPAREN  shift 77
+	.  error
+
+
+state 47
+	predicate :  PIDENTIFIER_    (46)
+	predicate :  PIDENTIFIER_LPAREN arglist RPAREN 
+
+	LPAREN  shift 78
+	.  reduce 46
+
+
+state 48
+	predicate :  term_EQUAL term 
+	predicate :  term_NOTEQUAL term 
+
+	EQUAL  shift 79
+	NOTEQUAL  shift 80
+	.  error
+
+
+state 49
+	term :  constant_    (53)
+
+	.  reduce 53
+
+
+state 50
+	term :  variable_    (54)
+
+	.  reduce 54
+
+
+state 51
+	term :  function_    (55)
+
+	.  reduce 55
+
+
+state 52
+	constant :  STRING_    (56)
+
+	.  reduce 56
+
+
+state 53
+	constant :  NUMBER_    (57)
+
+	.  reduce 57
+
+
+state 54
+	variable :  IDENTIFIER_    (58)
+	function :  IDENTIFIER_LPAREN arglist RPAREN 
+
+	LPAREN  shift 81
+	.  reduce 58
+
+
+state 55
+	expressionlist :  separator_expressionlist linesynch_    (19)
+
+	.  reduce 19
+
+
+state 56
+	separator_expressionlist :  separator_expressionlist separator_sos_option expression 
+	sos_option : _    (23)
+
+	SOS  shift 12
+	.  reduce 23
+
+	sos_option  goto 82
+
+state 57
+	separator :  COMMA_    (60)
+
+	.  reduce 60
+
+
+state 58
+	start :  start options optionslist RBRACE_    (8)
+
+	.  reduce 8
+
+
+state 59
+	optionslist :  optionslist IDENTIFIER_EQUAL STRING linesynch 
+	optionslist :  optionslist IDENTIFIER_EQUAL NUMBER linesynch 
+	optionslist :  optionslist IDENTIFIER_EQUAL NEGNUMBER linesynch 
+
+	EQUAL  shift 83
+	.  error
+
+
+state 60
+	optionslist :  IDENTIFIER EQUAL_STRING linesynch 
+	optionslist :  IDENTIFIER EQUAL_NUMBER linesynch 
+	optionslist :  IDENTIFIER EQUAL_NEGNUMBER linesynch 
+
+	NUMBER  shift 85
+	NEGNUMBER  shift 86
+	STRING  shift 84
+	.  error
+
+
+state 61
+	start :  start argument expressionlist sosconclusionlist rbrace_    (4)
+
+	.  reduce 4
+
+
+state 62
+	expressionlist :  expressionlist separator_expressionlist linesynch_    (20)
+
+	.  reduce 20
+
+
+state 63
+	sosconclusionlist :  sos_option conclusiontype linesynch_    (18)
+
+	.  reduce 18
+
+
+state 64
+	conclusiontype :  THEREFORE expression_    (61)
+
+	.  reduce 61
+
+
+state 65
+	conclusiontype :  QUERY expression_    (62)
+
+	.  reduce 62
+
+
+state 66
+	biconditional :  biconditional BICONDITIONAL_implication 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	implication  goto 87
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 67
+	implication :  implication IMPLICATION_or 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	or  goto 88
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 68
+	or :  or OR_and 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 89
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 69
+	and :  and AND_unary 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	atom  goto 35
+	constant  goto 49
+	function  goto 51
+	predicate  goto 39
+	term  goto 48
+	unary  goto 90
+	variable  goto 50
+
+state 70
+	unary :  NEGATION unary_    (35)
+
+	.  reduce 35
+
+
+state 71
+	unary :  universal unary_    (36)
+
+	.  reduce 36
+
+
+state 72
+	unary :  existential unary_    (37)
+
+	.  reduce 37
+
+
+state 73
+	atom :  LPAREN expression_RPAREN 
+
+	RPAREN  shift 91
+	.  error
+
+
+state 74
+	universal :  LEFTUNIVERSAL IDENTIFIER_RIGHTUNIVERSAL 
+
+	RIGHTUNIVERSAL  shift 92
+	.  error
+
+
+state 75
+	universal :  UNIVERSAL LPAREN_IDENTIFIER RPAREN 
+
+	IDENTIFIER  shift 93
+	.  error
+
+
+state 76
+	existential :  LEFTEXISTENTIAL IDENTIFIER_RIGHTEXISTENTIAL 
+
+	RIGHTEXISTENTIAL  shift 94
+	.  error
+
+
+state 77
+	existential :  EXISTENTIAL LPAREN_IDENTIFIER RPAREN 
+
+	IDENTIFIER  shift 95
+	.  error
+
+
+state 78
+	predicate :  PIDENTIFIER LPAREN_arglist RPAREN 
+
+	IDENTIFIER  shift 54
+	NUMBER  shift 53
+	STRING  shift 52
+	.  error
+
+	arglist  goto 96
+	arg  goto 97
+	constant  goto 49
+	function  goto 51
+	term  goto 98
+	variable  goto 50
+
+state 79
+	predicate :  term EQUAL_term 
+
+	IDENTIFIER  shift 54
+	NUMBER  shift 53
+	STRING  shift 52
+	.  error
+
+	constant  goto 49
+	function  goto 51
+	term  goto 99
+	variable  goto 50
+
+state 80
+	predicate :  term NOTEQUAL_term 
+
+	IDENTIFIER  shift 54
+	NUMBER  shift 53
+	STRING  shift 52
+	.  error
+
+	constant  goto 49
+	function  goto 51
+	term  goto 100
+	variable  goto 50
+
+state 81
+	function :  IDENTIFIER LPAREN_arglist RPAREN 
+
+	IDENTIFIER  shift 54
+	NUMBER  shift 53
+	STRING  shift 52
+	.  error
+
+	arglist  goto 101
+	arg  goto 97
+	constant  goto 49
+	function  goto 51
+	term  goto 98
+	variable  goto 50
+
+state 82
+	separator_expressionlist :  separator_expressionlist separator sos_option_expression 
+
+	FALSE  shift 41
+	IDENTIFIER  shift 54
+	EXISTENTIAL  shift 46
+	LEFTEXISTENTIAL  shift 45
+	LEFTUNIVERSAL  shift 43
+	UNIVERSAL  shift 44
+	LPAREN  shift 42
+	NEGATION  shift 36
+	NUMBER  shift 53
+	PIDENTIFIER  shift 47
+	STRING  shift 52
+	TRUE  shift 40
+	.  error
+
+	existential  goto 38
+	universal  goto 37
+	and  goto 33
+	atom  goto 35
+	biconditional  goto 30
+	constant  goto 49
+	expression  goto 102
+	function  goto 51
+	implication  goto 31
+	or  goto 32
+	predicate  goto 39
+	term  goto 48
+	unary  goto 34
+	variable  goto 50
+
+state 83
+	optionslist :  optionslist IDENTIFIER EQUAL_STRING linesynch 
+	optionslist :  optionslist IDENTIFIER EQUAL_NUMBER linesynch 
+	optionslist :  optionslist IDENTIFIER EQUAL_NEGNUMBER linesynch 
+
+	NUMBER  shift 104
+	NEGNUMBER  shift 105
+	STRING  shift 103
+	.  error
+
+
+state 84
+	optionslist :  IDENTIFIER EQUAL STRING_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 106
+
+state 85
+	optionslist :  IDENTIFIER EQUAL NUMBER_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 107
+
+state 86
+	optionslist :  IDENTIFIER EQUAL NEGNUMBER_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 108
+
+state 87
+	biconditional :  biconditional BICONDITIONAL implication_    (27)
+	implication :  implication_IMPLICATION or 
+
+	IMPLICATION  shift 67
+	.  reduce 27
+
+
+state 88
+	implication :  implication IMPLICATION or_    (29)
+	or :  or_OR and 
+
+	OR  shift 68
+	.  reduce 29
+
+
+state 89
+	or :  or OR and_    (31)
+	and :  and_AND unary 
+
+	AND  shift 69
+	.  reduce 31
+
+
+state 90
+	and :  and AND unary_    (33)
+
+	.  reduce 33
+
+
+state 91
+	atom :  LPAREN expression RPAREN_    (45)
+
+	.  reduce 45
+
+
+state 92
+	universal :  LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL_    (38)
+
+	.  reduce 38
+
+
+state 93
+	universal :  UNIVERSAL LPAREN IDENTIFIER_RPAREN 
+
+	RPAREN  shift 109
+	.  error
+
+
+state 94
+	existential :  LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL_    (40)
+
+	.  reduce 40
+
+
+state 95
+	existential :  EXISTENTIAL LPAREN IDENTIFIER_RPAREN 
+
+	RPAREN  shift 110
+	.  error
+
+
+state 96
+	predicate :  PIDENTIFIER LPAREN arglist_RPAREN 
+	arglist :  arglist_separator arg 
+
+	COMMA  shift 57
+	RPAREN  shift 111
+	.  error
+
+	separator  goto 112
+
+state 97
+	arglist :  arg_    (50)
+
+	.  reduce 50
+
+
+state 98
+	arg :  term_    (52)
+
+	.  reduce 52
+
+
+state 99
+	predicate :  term EQUAL term_    (48)
+
+	.  reduce 48
+
+
+state 100
+	predicate :  term NOTEQUAL term_    (49)
+
+	.  reduce 49
+
+
+state 101
+	arglist :  arglist_separator arg 
+	function :  IDENTIFIER LPAREN arglist_RPAREN 
+
+	COMMA  shift 57
+	RPAREN  shift 113
+	.  error
+
+	separator  goto 112
+
+state 102
+	separator_expressionlist :  separator_expressionlist separator sos_option expression_    (22)
+
+	.  reduce 22
+
+
+state 103
+	optionslist :  optionslist IDENTIFIER EQUAL STRING_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 114
+
+state 104
+	optionslist :  optionslist IDENTIFIER EQUAL NUMBER_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 115
+
+state 105
+	optionslist :  optionslist IDENTIFIER EQUAL NEGNUMBER_linesynch 
+
+	SEMICOLON  shift 15
+	.  error
+
+	linesynch  goto 116
+
+state 106
+	optionslist :  IDENTIFIER EQUAL STRING linesynch_    (10)
+
+	.  reduce 10
+
+
+state 107
+	optionslist :  IDENTIFIER EQUAL NUMBER linesynch_    (11)
+
+	.  reduce 11
+
+
+state 108
+	optionslist :  IDENTIFIER EQUAL NEGNUMBER linesynch_    (12)
+
+	.  reduce 12
+
+
+state 109
+	universal :  UNIVERSAL LPAREN IDENTIFIER RPAREN_    (39)
+
+	.  reduce 39
+
+
+state 110
+	existential :  EXISTENTIAL LPAREN IDENTIFIER RPAREN_    (41)
+
+	.  reduce 41
+
+
+state 111
+	predicate :  PIDENTIFIER LPAREN arglist RPAREN_    (47)
+
+	.  reduce 47
+
+
+state 112
+	arglist :  arglist separator_arg 
+
+	IDENTIFIER  shift 54
+	NUMBER  shift 53
+	STRING  shift 52
+	.  error
+
+	arg  goto 117
+	constant  goto 49
+	function  goto 51
+	term  goto 98
+	variable  goto 50
+
+state 113
+	function :  IDENTIFIER LPAREN arglist RPAREN_    (59)
+
+	.  reduce 59
+
+
+state 114
+	optionslist :  optionslist IDENTIFIER EQUAL STRING linesynch_    (13)
+
+	.  reduce 13
+
+
+state 115
+	optionslist :  optionslist IDENTIFIER EQUAL NUMBER linesynch_    (14)
+
+	.  reduce 14
+
+
+state 116
+	optionslist :  optionslist IDENTIFIER EQUAL NEGNUMBER linesynch_    (15)
+
+	.  reduce 15
+
+
+state 117
+	arglist :  arglist separator arg_    (51)
+
+	.  reduce 51
+
+
+34/127 terminals, 28/600 nonterminals
+64/300 grammar rules, 118/1000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+36/601 working sets used
+memory: states,etc. 279/2000, parser 277/4000
+48/3001 distinct lookahead sets
+25 extra closures
+224 shift entries, 1 exceptions
+62 goto entries
+132 entries saved by goto default
+Optimizer space used: input 546/2000, output 194/4000
+194 table entries, 54 zero
+maximum spread: 288, maximum offset: 287

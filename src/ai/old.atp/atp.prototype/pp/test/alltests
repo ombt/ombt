@@ -1,0 +1,48 @@
+#
+# tests for boolean algebras
+#
+#include "axioms/boolean"
+#
+|- O(x, N(y)) = N(O(x, y));
+#
+|- N(O(x, y)) = O(N(x), N(y));
+#
+|- O(x, A(N(y, z))) = A(O(x, N(y)), O(x, N(z)));
+#
+#
+# tests for groups
+#
+#include "axioms/groups"
+#
+|- P(x, x) = 0;
+#
+|- P(P(x, x), x) = x;
+#
+|- P(x, y) = P(y, x);
+#
+|- P(P(x, y), I(x)) = P(y, y);
+#
+|- P(P(x, y), P(I(x), I(y))) = 0;
+#
+#
+# tests for rings
+#
+#include "axioms/rings"
+#
+|- M(x, x) = x;
+#
+|- P(x, x) = 0;
+#
+|- M(x, y) = M(y, x);
+#
+#
+# tests for semigroups
+#
+#include "axioms/semigroups"
+#
+|- M(M(x, x), x) = x;
+#
+|- M(M(x, x), x) = M(x, x);
+#
+|- M(M(x, y), x) = M(M(x, x), y);
+#

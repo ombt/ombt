@@ -2,7 +2,7 @@ Grammar
 
     0 $accept: start $end
 
-    1 start: /* empty */
+    1 start: %empty
     2      | start conclusion linesynch
     3      | start expressionlist conclusion linesynch
     4      | start newline
@@ -152,7 +152,7 @@ newline (48)
     on left: 46, on right: 4 5 7 45
 
 
-state 0
+State 0
 
     0 $accept: . start $end
 
@@ -161,7 +161,7 @@ state 0
     start  go to state 1
 
 
-state 1
+State 1
 
     0 $accept: start . $end
     2 start: start . conclusion linesynch
@@ -200,14 +200,14 @@ state 1
     newline                   go to state 27
 
 
-state 2
+State 2
 
     0 $accept: start $end .
 
     $default  accept
 
 
-state 3
+State 3
 
     5 start: start error . newline
 
@@ -216,28 +216,28 @@ state 3
     newline  go to state 28
 
 
-state 4
+State 4
 
    29 atom: FALSE .
 
     $default  reduce using rule 29 (atom)
 
 
-state 5
+State 5
 
    26 existential: LEFTEXISTENTIAL . IDENTIFIER RIGHTEXISTENTIAL
 
     IDENTIFIER  shift, and go to state 29
 
 
-state 6
+State 6
 
    25 universal: LEFTUNIVERSAL . IDENTIFIER RIGHTUNIVERSAL
 
     IDENTIFIER  shift, and go to state 30
 
 
-state 7
+State 7
 
    30 atom: LPAREN . expression RPAREN
 
@@ -261,7 +261,7 @@ state 7
     predicate      go to state 25
 
 
-state 8
+State 8
 
    22 unary: NEGATION . unary
 
@@ -280,14 +280,14 @@ state 8
     predicate    go to state 25
 
 
-state 9
+State 9
 
    46 newline: NEWLINE .
 
     $default  reduce using rule 46 (newline)
 
 
-state 10
+State 10
 
    31 predicate: PIDENTIFIER .
    32          | PIDENTIFIER . LPAREN arglist RPAREN
@@ -297,7 +297,7 @@ state 10
     $default  reduce using rule 31 (predicate)
 
 
-state 11
+State 11
 
     6 start: start QUIT . linesynch
     7      | start QUIT . newline
@@ -309,7 +309,7 @@ state 11
     newline    go to state 36
 
 
-state 12
+State 12
 
    44 conclusion: THEREFORE . expression
 
@@ -333,14 +333,14 @@ state 12
     predicate      go to state 25
 
 
-state 13
+State 13
 
    28 atom: TRUE .
 
     $default  reduce using rule 28 (atom)
 
 
-state 14
+State 14
 
     3 start: start expressionlist . conclusion linesynch
     9 expressionlist: expressionlist . separator_expressionlist linesynch
@@ -368,7 +368,7 @@ state 14
     conclusion                go to state 39
 
 
-state 15
+State 15
 
     8 expressionlist: separator_expressionlist . linesynch
    11 separator_expressionlist: separator_expressionlist . separator expression
@@ -380,14 +380,14 @@ state 15
     linesynch  go to state 42
 
 
-state 16
+State 16
 
    10 separator_expressionlist: expression .
 
     $default  reduce using rule 10 (separator_expressionlist)
 
 
-state 17
+State 17
 
    12 expression: biconditional .
    14 biconditional: biconditional . BICONDITIONAL implication
@@ -397,7 +397,7 @@ state 17
     $default  reduce using rule 12 (expression)
 
 
-state 18
+State 18
 
    13 biconditional: implication .
    16 implication: implication . IMPLICATION or
@@ -407,7 +407,7 @@ state 18
     $default  reduce using rule 13 (biconditional)
 
 
-state 19
+State 19
 
    15 implication: or .
    18 or: or . OR and
@@ -417,7 +417,7 @@ state 19
     $default  reduce using rule 15 (implication)
 
 
-state 20
+State 20
 
    17 or: and .
    20 and: and . AND unary
@@ -427,14 +427,14 @@ state 20
     $default  reduce using rule 17 (or)
 
 
-state 21
+State 21
 
    19 and: unary .
 
     $default  reduce using rule 19 (and)
 
 
-state 22
+State 22
 
    23 unary: universal . unary
 
@@ -453,7 +453,7 @@ state 22
     predicate    go to state 25
 
 
-state 23
+State 23
 
    24 unary: existential . unary
 
@@ -472,21 +472,21 @@ state 23
     predicate    go to state 25
 
 
-state 24
+State 24
 
    21 unary: atom .
 
     $default  reduce using rule 21 (unary)
 
 
-state 25
+State 25
 
    27 atom: predicate .
 
     $default  reduce using rule 27 (atom)
 
 
-state 26
+State 26
 
     2 start: start conclusion . linesynch
 
@@ -495,49 +495,49 @@ state 26
     linesynch  go to state 49
 
 
-state 27
+State 27
 
     4 start: start newline .
 
     $default  reduce using rule 4 (start)
 
 
-state 28
+State 28
 
     5 start: start error newline .
 
     $default  reduce using rule 5 (start)
 
 
-state 29
+State 29
 
    26 existential: LEFTEXISTENTIAL IDENTIFIER . RIGHTEXISTENTIAL
 
     RIGHTEXISTENTIAL  shift, and go to state 50
 
 
-state 30
+State 30
 
    25 universal: LEFTUNIVERSAL IDENTIFIER . RIGHTUNIVERSAL
 
     RIGHTUNIVERSAL  shift, and go to state 51
 
 
-state 31
+State 31
 
    30 atom: LPAREN expression . RPAREN
 
     RPAREN  shift, and go to state 52
 
 
-state 32
+State 32
 
    22 unary: NEGATION unary .
 
     $default  reduce using rule 22 (unary)
 
 
-state 33
+State 33
 
    32 predicate: PIDENTIFIER LPAREN . arglist RPAREN
 
@@ -553,7 +553,7 @@ state 33
     function  go to state 61
 
 
-state 34
+State 34
 
    45 linesynch: SEMICOLON . newline
 
@@ -562,28 +562,28 @@ state 34
     newline  go to state 62
 
 
-state 35
+State 35
 
     6 start: start QUIT linesynch .
 
     $default  reduce using rule 6 (start)
 
 
-state 36
+State 36
 
     7 start: start QUIT newline .
 
     $default  reduce using rule 7 (start)
 
 
-state 37
+State 37
 
    44 conclusion: THEREFORE expression .
 
     $default  reduce using rule 44 (conclusion)
 
 
-state 38
+State 38
 
     9 expressionlist: expressionlist separator_expressionlist . linesynch
    11 separator_expressionlist: separator_expressionlist . separator expression
@@ -595,7 +595,7 @@ state 38
     linesynch  go to state 63
 
 
-state 39
+State 39
 
     3 start: start expressionlist conclusion . linesynch
 
@@ -604,14 +604,14 @@ state 39
     linesynch  go to state 64
 
 
-state 40
+State 40
 
    43 separator: COMMA .
 
     $default  reduce using rule 43 (separator)
 
 
-state 41
+State 41
 
    11 separator_expressionlist: separator_expressionlist separator . expression
 
@@ -635,14 +635,14 @@ state 41
     predicate      go to state 25
 
 
-state 42
+State 42
 
     8 expressionlist: separator_expressionlist linesynch .
 
     $default  reduce using rule 8 (expressionlist)
 
 
-state 43
+State 43
 
    14 biconditional: biconditional BICONDITIONAL . implication
 
@@ -664,7 +664,7 @@ state 43
     predicate    go to state 25
 
 
-state 44
+State 44
 
    16 implication: implication IMPLICATION . or
 
@@ -685,7 +685,7 @@ state 44
     predicate    go to state 25
 
 
-state 45
+State 45
 
    18 or: or OR . and
 
@@ -705,7 +705,7 @@ state 45
     predicate    go to state 25
 
 
-state 46
+State 46
 
    20 and: and AND . unary
 
@@ -724,49 +724,49 @@ state 46
     predicate    go to state 25
 
 
-state 47
+State 47
 
    23 unary: universal unary .
 
     $default  reduce using rule 23 (unary)
 
 
-state 48
+State 48
 
    24 unary: existential unary .
 
     $default  reduce using rule 24 (unary)
 
 
-state 49
+State 49
 
     2 start: start conclusion linesynch .
 
     $default  reduce using rule 2 (start)
 
 
-state 50
+State 50
 
    26 existential: LEFTEXISTENTIAL IDENTIFIER RIGHTEXISTENTIAL .
 
     $default  reduce using rule 26 (existential)
 
 
-state 51
+State 51
 
    25 universal: LEFTUNIVERSAL IDENTIFIER RIGHTUNIVERSAL .
 
     $default  reduce using rule 25 (universal)
 
 
-state 52
+State 52
 
    30 atom: LPAREN expression RPAREN .
 
     $default  reduce using rule 30 (atom)
 
 
-state 53
+State 53
 
    41 variable: IDENTIFIER .
    42 function: IDENTIFIER . LPAREN arglist RPAREN
@@ -776,21 +776,21 @@ state 53
     $default  reduce using rule 41 (variable)
 
 
-state 54
+State 54
 
    40 constant: NUMBER .
 
     $default  reduce using rule 40 (constant)
 
 
-state 55
+State 55
 
    39 constant: STRING .
 
     $default  reduce using rule 39 (constant)
 
 
-state 56
+State 56
 
    32 predicate: PIDENTIFIER LPAREN arglist . RPAREN
    34 arglist: arglist . separator arg
@@ -801,70 +801,70 @@ state 56
     separator  go to state 72
 
 
-state 57
+State 57
 
    33 arglist: arg .
 
     $default  reduce using rule 33 (arglist)
 
 
-state 58
+State 58
 
    35 arg: term .
 
     $default  reduce using rule 35 (arg)
 
 
-state 59
+State 59
 
    36 term: constant .
 
     $default  reduce using rule 36 (term)
 
 
-state 60
+State 60
 
    37 term: variable .
 
     $default  reduce using rule 37 (term)
 
 
-state 61
+State 61
 
    38 term: function .
 
     $default  reduce using rule 38 (term)
 
 
-state 62
+State 62
 
    45 linesynch: SEMICOLON newline .
 
     $default  reduce using rule 45 (linesynch)
 
 
-state 63
+State 63
 
     9 expressionlist: expressionlist separator_expressionlist linesynch .
 
     $default  reduce using rule 9 (expressionlist)
 
 
-state 64
+State 64
 
     3 start: start expressionlist conclusion linesynch .
 
     $default  reduce using rule 3 (start)
 
 
-state 65
+State 65
 
    11 separator_expressionlist: separator_expressionlist separator expression .
 
     $default  reduce using rule 11 (separator_expressionlist)
 
 
-state 66
+State 66
 
    14 biconditional: biconditional BICONDITIONAL implication .
    16 implication: implication . IMPLICATION or
@@ -874,7 +874,7 @@ state 66
     $default  reduce using rule 14 (biconditional)
 
 
-state 67
+State 67
 
    16 implication: implication IMPLICATION or .
    18 or: or . OR and
@@ -884,7 +884,7 @@ state 67
     $default  reduce using rule 16 (implication)
 
 
-state 68
+State 68
 
    18 or: or OR and .
    20 and: and . AND unary
@@ -894,14 +894,14 @@ state 68
     $default  reduce using rule 18 (or)
 
 
-state 69
+State 69
 
    20 and: and AND unary .
 
     $default  reduce using rule 20 (and)
 
 
-state 70
+State 70
 
    42 function: IDENTIFIER LPAREN . arglist RPAREN
 
@@ -917,14 +917,14 @@ state 70
     function  go to state 61
 
 
-state 71
+State 71
 
    32 predicate: PIDENTIFIER LPAREN arglist RPAREN .
 
     $default  reduce using rule 32 (predicate)
 
 
-state 72
+State 72
 
    34 arglist: arglist separator . arg
 
@@ -939,7 +939,7 @@ state 72
     function  go to state 61
 
 
-state 73
+State 73
 
    34 arglist: arglist . separator arg
    42 function: IDENTIFIER LPAREN arglist . RPAREN
@@ -950,14 +950,14 @@ state 73
     separator  go to state 72
 
 
-state 74
+State 74
 
    34 arglist: arglist separator arg .
 
     $default  reduce using rule 34 (arglist)
 
 
-state 75
+State 75
 
    42 function: IDENTIFIER LPAREN arglist RPAREN .
 

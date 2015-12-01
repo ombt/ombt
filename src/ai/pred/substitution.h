@@ -13,6 +13,9 @@
 #include "adt/String.h"
 #include <term.h>
 
+using namespace std;
+using namespace ombt;
+
 // forward declarations
 class Term;
 class Substitution;

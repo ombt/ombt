@@ -5,19 +5,19 @@
 
 // term constructors and destructor
 Term::Term():
-	value(""), type(Unknown), argnum(0), args()
+	value(""), type(Unknown), argnum(0)
 {
 	// nothing to do
 }
 
 Term::Term(const Term &t):
-	value(t.value), type(t.type), argnum(t.argnum), args(t.args)
+	value(t.value), type(t.type), argnum(t.argnum)
 {
 	// nothing to do
 }
 
 Term::Term(const String &s):
-	value(""), type(Unknown), argnum(0), args()
+	value(""), type(Unknown), argnum(0)
 {
 	MustBeTrue(parse(s) == OK);
 }
@@ -37,7 +37,6 @@ Term::operator=(const Term &rhs)
 		value = rhs.value;
 		type = rhs.type;
 		argnum = rhs.argnum;
-		args = rhs.args;
 	}
 	return(*this);
 }
@@ -49,7 +48,6 @@ Term::operator=(const String &rhss)
 	value = "";
 	type = Unknown;
 	argnum = 0;
-	args.clear();
 
 	// parse string
 	MustBeTrue(parse(rhss) == OK);
@@ -82,7 +80,7 @@ int
 Term::operator<=(const Term &t) const
 {
 	if ((*this < t) || (*this == t))
-		return(1)
+		return(1);
 	else
 		return(0);
 }
@@ -100,7 +98,7 @@ int
 Term::operator>=(const Term &t) const
 {
 	if ((*this > t) || (*this == t))
-		return(1)
+		return(1);
 	else
 		return(0);
 }

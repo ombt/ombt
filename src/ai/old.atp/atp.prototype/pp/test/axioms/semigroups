@@ -1,0 +1,18 @@
+#
+# axioms for semigroups
+#
+# semigroups are defined using the following language:
+#
+# L(SG) = { * } where * is binary.
+#
+# the axioms for semigroups are then:
+#
+# (x * y) * z = x * (y * z)
+#
+# let M be "*"
+#
+############################################################################
+#
+M(M(x, y), z) = M(x, M(y, z));
+#
+

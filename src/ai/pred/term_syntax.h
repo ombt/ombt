@@ -12,6 +12,9 @@
 #include "adt/List.h"
 #include "adt/String.h"
 
+using namespace std;
+using namespace ombt;
+
 // forward declaration
 class Substitution;
 class Substitutions;

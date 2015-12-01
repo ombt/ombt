@@ -1,0 +1,12 @@
+CC = CC
+CCFLAGS = -DDEBUG -g -xildoff
+#
+LD = CC
+LDFLAGS = -DDEBUG -g -xildoff
+#
+atppp
+pp.c
+mylist.c
+mystring.c
+#
+install1 = cp atppp $(HOME)/bin/atppp

@@ -1,0 +1,151 @@
+Description of the resolution-based automated theorem prover, myatp
+
+1) Atp supports first-order logic with equality. The syntax is given 
+below in BNF form. A C-like syntax is used. The operators are:
+
+	operator | type   | description   | precedence
+	----------------------------------------------
+	( )      | meta   | grouping      | 1
+	----------------------------------------------
+	~        | unary  | negation      | 2
+	----------------------------------------------
+	[ ]      | unary  | existential   | 2
+	----------------------------------------------
+	< >      | unary  | universal     | 2
+	----------------------------------------------
+	=        | binary | equivalence   | 3		NO !!!
+	----------------------------------------------
+	&&       | binary | conjunction   | 4
+	----------------------------------------------
+	||       | binary | disjunction   | 5
+	----------------------------------------------
+	-->      | binary | conditional   | 6
+	----------------------------------------------
+	<-->     | binary | biconditional | 7
+	----------------------------------------------
+
+QUESTION: where to put "=" in the predence chart ??? NO !!!
+"=" is a predicate, treat like any other predicate symbol.
+
+a = b is the same a EQ(a, b) or =(a, b).
+
+2) Predicates are symbols starting with uppercase letters, given by
+the RE:
+
+	predicates = [A-Z][a-zA-Z0-9_]*
+
+3) Functions are symbols that start with lowercase letters, given by
+the RE:
+
+	functions = [a-z][a-zA-Z0-9_]*
+
+4) Variables start with lowercase letters and are identified as different
+from functions since they must be declared with in an existential or
+universal quantifier. One thing, function symbols are global, once a 
+symbol is used as a function, it can not be reused as a variable. Although
+a variable is local to the scope of the quantifier that declared it, once
+a symbol is declared a variable, it's type is maintained through out the
+program. The variable symbol may not be in scope, but if the symbol is
+reused, it must be resused as a variable, nothing else.
+
+5) Equality, =, is treated as a binary predicate. Equality is an infix
+notation versus a prefix notation:
+
+	a = b instead of =(a, b) 
+
+6) Universal quantification with the English translation of,
+
+	for all X, ...
+
+has the syntax of,
+
+	<x>(...),
+
+where < > denotes universal quantification and x is variable. X must
+NOT have been used as a function at any earlier time.
+
+
+7) Existential quantification with the English translation of,
+
+	for some X, ... or
+	there exists at least one X, ...
+
+has the syntax of,
+
+	[x](...),
+
+where [ ] denotes existential quantification and x is variable. x must
+NOT have been used as a function at any earlier time.
+
+8) A minor C-ism. All statements are terminated with a semicolon.
+
+9) Examples of a first-order language:
+
+	~(A && B) <--> (~A || ~B);
+	~(A || B) <--> (~A && ~B);
+
+	(A --> B) <--> (~A || B);
+
+	~[x]P(x) <--> <x>~P(x);
+	~<x>P(x) <--> [x]~P(x);
+
+	~~A <--> A;
+
+10) The above first-order language is translated into an intermediate
+language based on a prefix notation.
+
+11) The overall architecture/steps of the atp prover is as follows:
+
+
+		logical program (program)
+			|
+			|
+			V
+		lexical analyzer (lex)
+			|
+			|
+			V
+		syntax analyzer (yacc)
+			|
+			|
+			V
+		convert to clause form, ordered clauses
+		are generated.
+			|
+			|
+			V
+		generate intermediate language form
+			|
+			|
+			V
+		post-processing, if any. remove tautologies
+		or subsumed clauses.
+			|
+			|
+			V
+		automated theorem provers
+
+12) The choice of automated theorem provers depends on the 
+type of clauses, propositional, predicate without equality, or 
+predicate with equality, and the type of mechanism used to manipulate
+the clauses, resolution, semantic tableaux. Also, the search strategy
+and heuristics affect the provers. 
+
+13) Ways to remove redundant clauses:
+
+	1) subsumption - for clauses, if D subset of C, then
+	D subsumes C.
+	2) factorization - for clauses A, B, if sigma(A) = sigma(B),
+	where sigma() is a substitution, then remove B, if |A| < |B|.
+	3) Tautologies - for a clause A, if term T and ~T are in A,
+	then remove A. It is trivially true.
+
+14) Choices for resolution methods:
+
+	1) Semantic resolution - positive hyperresolvents.
+
+	2) lock resolution - 
+
+	3) linear resolution - complete with set-of-support strategy.
+
+	4) unit and input resolution.

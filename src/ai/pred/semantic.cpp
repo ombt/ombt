@@ -1216,7 +1216,8 @@ Semantic::skolemize(List<Symbol> &localscope)
 			List<Semantic * > *pargs = new List<Semantic * >;
 			MustBeTrue(pargs != NULL);
 			ListIterator<Symbol> scopeIter(localscope);
-			for (int nargs = 0; !scopeIter.done(); scopeIter++)
+			int nargs;
+			for (nargs = 0; !scopeIter.done(); scopeIter++)
 			{
 				// get symbol
 				Symbol uvar = scopeIter();
@@ -2006,7 +2007,7 @@ String
 Semantic::uniqueName(const String &prefix)
 {
 	char buf[BUFSIZ];
-	sprintf(buf, "%d", ++counter);
+	sprintf(buf, "%ld", ++counter);
 	return(prefix + String(buf));
 }
 

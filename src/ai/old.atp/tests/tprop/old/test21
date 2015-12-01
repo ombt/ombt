@@ -1,0 +1,10 @@
+#
+# problems from Deduction: Introductory Symbolic Logic by
+# Daniel Bonevac, chapter 4.
+#
+(p && ~r) <--> (s || ~q);
+s1 && ((~s && ~r) --> p);
+((s1 --> q) || (s1 --> r)) && (((p && q) && s) --> r);
+|- q && r;
+#
+quit;

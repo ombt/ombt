@@ -13,6 +13,9 @@
 #include "adt/String.h"
 #include "adt/StringTokens.h"
 
+using namespace std;
+using namespace ombt;
+
 // forward declaration
 class Substitution;
 class Substitutions;
