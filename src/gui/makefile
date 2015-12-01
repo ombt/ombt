@@ -25,9 +25,8 @@ include $(ROOT)/build/makefile.common
 # gcalc and gtk_tutorial for now.
 
 SUBDIRS = \
-	qt_book \
-	qt_filewatcher \
-	qt_mdivwer \
-	qt_syncmgr
+	gcalc \
+	gtk_tutorial \
+	gtk_tutorial2
 
 include $(ROOT)/build/makefile.subdirs
