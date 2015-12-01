@@ -143,7 +143,6 @@ MultiProcessDatagramServerPerProcess::run()
 
     for (int status; !pids_.empty(); )
     {
-        int status;
         pid_t pid = ::waitpid(-1, &status, 0);
         if (errno == ECHILD)
         {
@@ -392,7 +391,6 @@ MultiProcessStreamServerPerProcess::run()
 
     for (int status; !pids_.empty(); )
     {
-        int status;
         pid_t pid = ::waitpid(-1, &status, 0);
         if (errno == ECHILD)
         {

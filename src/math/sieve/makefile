@@ -7,3 +7,5 @@ sieve:	sieve.cpp
 clean:
 	-(rm -f sieve);
 
+depend:
+
