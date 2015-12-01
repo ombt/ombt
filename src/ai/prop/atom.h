@@ -7,9 +7,9 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/String.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/String.h"
 
 // clause class definitions
 class Atom {

@@ -7,12 +7,9 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/String.h>
-
-using namespace ombt;
-using namespace std;
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/String.h"
 
 // symbol class definitions
 class Symbol {
@@ -32,10 +29,10 @@ public:
 	// constructors and destructor
 	Symbol();
 	Symbol(const Symbol &);
-	Symbol(const String &);
-	Symbol(const String &, Type, int = 0);
-	Symbol(const String &, const String &);
-	Symbol(const String &, const String &, Type, int = 0);
+	Symbol(const ombt::String &);
+	Symbol(const ombt::String &, Type, int = 0);
+	Symbol(const ombt::String &, const ombt::String &);
+	Symbol(const ombt::String &, const ombt::String &, Type, int = 0);
 	~Symbol();
 
 	// assignment operator
@@ -57,10 +54,10 @@ public:
 	Type getType() const {
 		return(type);
 	}
-	String getName() const {
+	ombt::String getName() const {
 		return(name);
 	};
-	String getUniqueName() const {
+	ombt::String getUniqueName() const {
 		return(uniquename);
 	};
 	int getArgs() const {
@@ -71,12 +68,12 @@ public:
 	};
 
 	// print data
-	friend ostream &operator<<(ostream &, const Symbol &);
+	friend std::ostream &operator<<(std::ostream &, const Symbol &);
 
 protected:
 	// internal data
-	String name;
-	String uniquename;
+	ombt::String name;
+	ombt::String uniquename;
 	Type type;
 	int argnum;
 	int used;

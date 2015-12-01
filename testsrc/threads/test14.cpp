@@ -9,14 +9,14 @@
 #include <iostream>
 #include <list>
 
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <random/Random.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "random/Random.h"
 
-#include <atomic/UseCntPtr.h>
-#include <threads/PriorityQueue.h>
-#include <threads/Task.h>
-#include <threads/Thread.h>
+#include "atomic/UseCntPtr.h"
+#include "threads/PriorityQueue.h"
+#include "threads/Task.h"
+#include "threads/Thread.h"
 
 using namespace ombt;
 using namespace std;

@@ -1,0 +1,52 @@
+#!/usr/bin/ksh
+#
+# backup a database
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+: ${DB_NAME:?"is NOT set."}
+#
+case "${DB_NAME}" in
+*rumore*)
+	;;
+*)
+	echo -e "\nWARNING: You are backing up a non-user DB: ${DB_NAME}"
+	echo -e "\nDo you want to continue? [y/n/<cr>=n] \c"
+	read answer
+	case "${answer}" in
+	y*|Y*)
+		echo -e "\nWill continue ... Gulp."
+		;;
+	*)
+		echo -e "\nABORTING!"
+		exit 2
+		;;
+	esac
+esac
+#
+echo -e "\nexecuting: ${@}\n"
+set -x
+case "${DB_SERVER}" in
+mar-sql-server)
+	/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+USE ${DB_NAME}
+GO
+BACKUP DATABASE ${DB_NAME} TO DISK = 'C:\SQLServerBackup\MAR_${DB_NAME}.bak';
+GO
+BYE
+EOF
+	;;
+sqlsrvr2008)
+	/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+USE ${DB_NAME}
+GO
+BACKUP DATABASE ${DB_NAME} TO DISK = 'E:\DBBackups\MAR_${DB_NAME}.bak';
+GO
+BYE
+EOF
+	;;
+*)
+	;;
+esac
+#
+exit 0

@@ -9,15 +9,15 @@
 #include <string>
 
 // local headers
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntPtr.h>
-#include <timers/Timer.h>
-#include <reactors/IterativeReactor.h>
-#include <threads/Thread.h>
-#include <threads/Task.h>
-#include <threads/ThreadBarrier.h>
-#include <files/Notify.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntPtr.h"
+#include "timers/Timer.h"
+#include "reactors/IterativeReactor.h"
+#include "threads/Thread.h"
+#include "threads/Task.h"
+#include "threads/ThreadBarrier.h"
+#include "files/Notify.h"
 
 using namespace ombt;
 using namespace std;

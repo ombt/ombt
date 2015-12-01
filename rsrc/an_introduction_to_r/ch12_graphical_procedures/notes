@@ -1,0 +1,91 @@
+1) although automatically, the functon to open a display window 
+is:
+	X11() - for Unix
+	windows() - for Windows
+	quartz() - for OS X (???)
+
+a new device can be opened using:
+
+	> dev.new()
+
+2) high level plotting commands:
+
+> plot(x, y) - where X,y are vectors
+> plot(xy) - where xy is a list containing an x list 
+and a y list, or a matrix with two columns.
+> plot(x) - plots a time series against the index.
+> plot(f) = bar plot of factor object f.
+> plot(f, y) - box plot of Y for each level of f.
+> plot(df) - plot data frame.
+> plot(~ expr) - distributional plot
+> plot(y ~ expr) - plots y against every object in expr.
+
+3) diplaying multivariate data -
+
+> pairs(X)
+
+> coplot(a ~ b | c)
+
+4) high-level plotting functions:
+
+
+Other high-level graphics functions produce different types of plots. Some examples are:
+qqnorm(x)
+qqline(x)
+qqplot(x, y)
+Distribution-comparison plots. The first form plots the numeric vector x against the
+expected Normal order scores (a normal scores plot) and the second adds a straight
+line to such a plot by drawing a line through the distribution and data quartiles.
+The third form plots the quantiles of x against those of y to compare their respective
+distributions.
+hist(x)
+hist(x, nclass=n)
+hist(x, breaks=b, ...)
+Produces a histogram of the numeric vector x. A sensible number of classes is
+usually chosen, but a recommendation can be given with the nclass= argument.
+Alternatively, the breakpoints can be specified exactly with the breaks= argument.
+Chapter 12: Graphical procedures
+65
+If the probability=TRUE argument is given, the bars represent relative frequencies
+divided by bin width instead of counts.
+dotchart(x, ...)
+Constructs a dotchart of the data in x. In a dotchart the y-axis gives a labelling
+of the data in x and the x-axis gives its value. For example it allows easy visual
+selection of all data entries with values lying in specified ranges.
+image(x, y, z, ...)
+contour(x, y, z, ...)
+persp(x, y, z, ...)
+Plots of three variables. The image plot draws a grid of rectangles using different
+colours to represent the value of z, the contour plot draws contour lines to represent
+the value of z, and the persp plot draws a 3D surface.
+
+
+5) other devices ...
+
+Device drivers are started by calling a device driver function. There is one such function
+for every device driver: type help(Devices) for a list of them all. For example, issuing the
+command
+> postscript()
+causes all future graphics output to be sent to the printer in PostScript format. Some commonly-
+used device drivers are:
+X11()
+For use with the X11 window system on Unix-alikes
+windows()
+For use on Windows
+quartz()
+For use on OS X
+postscript()
+For printing on PostScript printers, or creating PostScript graphics files.
+pdf() Produces a PDF file, which can also be included into PDF files.
+png() Produces a bitmap PNG file. (Not always available: see its help page.)
+jpeg() Produces a bitmap JPEG file, best used for image plots. (Not always available: see
+      its help page.)
+When you have finished with a device, be sure to terminate the device driver by issuing the
+command
+> dev.off()
+This ensures that the device finishes cleanly; for example in the case of hardcopy devices
+this ensures that every page is completed and has been sent to the printer. (This will happen
+automatically at the normal end of a session.)
+
+
+6) 

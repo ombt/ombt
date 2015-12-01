@@ -1,0 +1,9 @@
+find . -type f -print |
+egrep '(\.c|\.cpp|\.h|\.l|\.y)$' |
+while read file
+do
+	cat $file |
+	sed 's?"\(Debug.h\)"?"system/\1"?;
+s?"\(Returns.h\)"?"system/\1"?;' >/tmp/out.$$
+	cp /tmp/out.$$ $file
+done

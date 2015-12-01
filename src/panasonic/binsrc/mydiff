@@ -1,0 +1,9 @@
+#!/usr/bin/ksh
+#
+if [[ $# -ne 0 && "${1}" == "-c" ]]
+then
+	shift 1
+	exec /opt/rational/clearcase/bin/cleartool diff -columns 100 -predecessor "${@}"
+else
+	exec /opt/rational/clearcase/bin/cleartool diff -serial_format -predecessor "${@}"
+fi

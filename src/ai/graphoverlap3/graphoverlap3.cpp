@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include <iostream>
 #include <queue>
-#include <Debug.h>
-#include <graphs/Graph.h>
+#include "system/Debug.h"
+#include "graphs/Graph.h"
 
 using namespace ombt;
 

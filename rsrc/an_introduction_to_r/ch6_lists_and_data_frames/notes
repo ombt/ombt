@@ -1,0 +1,426 @@
+1) lists and data frames
+
+R list is an ordered collection of objects known as components.
+components can be of different types.
+
+> Lst <- list(name="Fred", wife="Mary", no.children=3, 
++ child.ages = c(4,7,9))
+> lst
+Error: object 'lst' not found
+> Lst
+$name
+[1] "Fred"
+
+$wife
+[1] "Mary"
+
+$no.children
+[1] 3
+
+$child.ages
+[1] 4 7 9
+
+> Lst[[4]][1]
+[1] 4
+> Lst[[4]][1:2]
+[1] 4 7
+> Lst[[4]][-2]
+[1] 4 9
+> length(Lst)
+[1] 4
+> Lst[[wife]]
+Error: object 'wife' not found
+> Lst[["wife"]]
+[1] "Mary"
+> Lst[["child.ages"]][2]
+[1] 7
+> Lst[["child.ages"]][1:2]
+[1] 4 7
+> 
+> 
+> 
+> 
+> x="wife"
+> L[[x]]
+Error: object 'L' not found
+> Lst[[x]]
+[1] "Mary"
+> Lst[["w"]]
+NULL
+> List$wife
+Error: object 'List' not found
+> Lst$wife
+[1] "Mary"
+> Lst$w
+[1] "Mary"
+> 
+> Lst[1]
+$name
+[1] "Fred"
+
+> Lst[2]
+$wife
+[1] "Mary"
+
+> Lst
+$name
+[1] "Fred"
+
+$wife
+[1] "Mary"
+
+$no.children
+[1] 3
+
+$child.ages
+[1] 4 7 9
+
+>  Lst[5] <- list(matrix=Mat)
+Error: object 'Mat' not found
+> Mat <- array(1:4, dim=c(2,2))
+> Mat
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+>  Lst[5] <- list(matrix=Mat)
+> Lst
+$name
+[1] "Fred"
+
+$wife
+[1] "Mary"
+
+$no.children
+[1] 3
+
+$child.ages
+[1] 4 7 9
+
+[[5]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+> Lst$matrix
+NULL
+>  Lst[5] <- list(matrix=Mat)
+> lst[5]
+Error: object 'lst' not found
+> Lst[5]
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+
+2) data.frames -
+
+A data frame is a list with class "data.frame". There are restrictions on
+lists that may be made into data frames, namely 
+
+- The components must be vectors (numeric, character, or logical), factors,
+numeric matrices, lists, or other data frames.  
+
+- Matrices, lists, and data frames provide as many variables to the new data
+frame as they have columns, elements, or variables, respectively.  
+
+- Numeric vectors, logicals and factors are included as is, and by default1
+character vectors are coerced to be factors, whose levels are the unique
+values appearing in the vector.  
+
+- Vector structures appearing as variables of the data frame must all have the
+same length, and matrix structures must all have the same row size.  
+
+A data frame may for many purposes be regarded as a matrix with columns
+possibly of differing modes and attributes. It may be displayed in matrix
+form, and its rows and columns extracted using matrix indexing conventions.
+
+3) making data frames -
+
+> source("data.cmds")
+> ls()
+[1] "incomes" "Lst"     "Mat"     "state"   "statef"  "x"      
+> acountants <- data.frame(home=statef, loot=incomes, shot=incomef)
+Error in data.frame(home = statef, loot = incomes, shot = incomef) : 
+  object 'incomef' not found
+> incomef <- factors(incomes)
+Error: could not find function "factors"
+> incomef <- factor(incomes)
+> incomef
+ [1] 60 49 40 61 64 60 59 54 62 69 70 42 56 61 61 61 58 51 48 65 49 49 41 48 52
+[26] 46 59 46 58 43
+Levels: 40 41 42 43 46 48 49 51 52 54 56 58 59 60 61 62 64 65 69 70
+> acountants <- data.frame(home=statef, loot=incomes, shot=incomef)
+> accountants
+Error: object 'accountants' not found
+> accountants <- data.frame(home=statef, loot=incomes, shot=incomef)
+> accountants
+   home loot shot
+1   tas   60   60
+2   qld   49   49
+3    sa   40   40
+4    sa   61   61
+5    sa   64   64
+6   vic   60   60
+7    nt   59   59
+8   act   54   54
+9   qld   62   62
+10  nsw   69   69
+11   wa   70   70
+12  nsw   42   42
+13  nsw   56   56
+14  vic   61   61
+15  vic   61   61
+16  vic   61   61
+17  nsw   58   58
+18  qld   51   51
+19  qld   48   48
+20  vic   65   65
+21   nt   49   49
+22   wa   49   49
+23   wa   41   41
+24  qld   48   48
+25   sa   52   52
+26  tas   46   46
+27  nsw   59   59
+28  nsw   46   46
+29   wa   58   58
+30  act   43   43
+> 
+
+4) you can attach() and detach() data.frames and use them like
+namespaces with locally defined variables, data, etc.
+
+attach - similar to using a namespace
+detach - removes the namespace you might say.
+
+attach adds a list to the search path when looking for names
+and variables.
+
+5) to see search path for variables, objects:
+
+> search()
+[1] ".GlobalEnv"        "package:stats"     "package:graphics" 
+[4] "package:grDevices" "package:utils"     "package:datasets" 
+[7] "package:methods"   "Autoloads"         "package:base"     
+> ls(1)
+[1] "accountants" "acountants"  "incomef"     "incomes"     "Lst"        
+[6] "Mat"         "state"       "statef"      "x"          
+> ls(".GlobalEnv")
+[1] "accountants" "acountants"  "incomef"     "incomes"     "Lst"        
+[6] "Mat"         "state"       "statef"      "x"          
+> ls(7)
+  [1] "@<-"                             "addNextMethod"                  
+  [3] "allGenerics"                     "allNames"                       
+  [5] "Arith"                           "as"                             
+  [7] "as<-"                            "asMethodDefinition"             
+  [9] "assignClassDef"                  "assignMethodsMetaData"          
+ [11] "balanceMethodsList"              "body<-"                         
+ [13] "cacheGenericsMetaData"           "cacheMetaData"                  
+ [15] "cacheMethod"                     "callGeneric"                    
+ [17] "callNextMethod"                  "canCoerce"                      
+ [19] "cbind2"                          "checkSlotAssignment"            
+ [21] "classesToAM"                     "classLabel"                     
+ [23] "classMetaName"                   "className"                      
+ [25] "coerce"                          "coerce<-"                       
+ [27] "Compare"                         "completeClassDefinition"        
+ [29] "completeExtends"                 "completeSubclasses"             
+ [31] "Complex"                         "conformMethod"                  
+ [33] "defaultDumpName"                 "defaultPrototype"               
+ [35] "doPrimitiveMethod"               "dumpMethod"                     
+ [37] "dumpMethods"                     "el"                             
+ [39] "el<-"                            "elNamed"                        
+ [41] "elNamed<-"                       "empty.dump"                     
+ [43] "emptyMethodsList"                "evalSource"                     
+ [45] "existsFunction"                  "existsMethod"                   
+ [47] "extends"                         "finalDefaultMethod"             
+ [49] "findClass"                       "findFunction"                   
+ [51] "findMethod"                      "findMethods"                    
+ [53] "findMethodSignatures"            "findUnique"                     
+ [55] "fixPre1.8"                       "formalArgs"                     
+ [57] "functionBody"                    "functionBody<-"                 
+ [59] "generic.skeleton"                "getAccess"                      
+ [61] "getAllMethods"                   "getAllSuperClasses"             
+ [63] "getClass"                        "getClassDef"                    
+ [65] "getClasses"                      "getClassName"                   
+ [67] "getClassPackage"                 "getDataPart"                    
+ [69] "getExtends"                      "getFunction"                    
+ [71] "getGeneric"                      "getGenerics"                    
+ [73] "getGroup"                        "getGroupMembers"                
+ [75] "getMethod"                       "getMethods"                     
+ [77] "getMethodsForDispatch"           "getMethodsMetaData"             
+ [79] "getPackageName"                  "getProperties"                  
+ [81] "getPrototype"                    "getRefClass"                    
+ [83] "getSlots"                        "getSubclasses"                  
+ [85] "getValidity"                     "getVirtual"                     
+ [87] "hasArg"                          "hasMethod"                      
+ [89] "hasMethods"                      "implicitGeneric"                
+ [91] "inheritedSlotNames"              "initFieldArgs"                  
+ [93] "initialize"                      "initRefFields"                  
+ [95] "insertMethod"                    "insertSource"                   
+ [97] "is"                              "isClass"                        
+ [99] "isClassDef"                      "isClassUnion"                   
+[101] "isGeneric"                       "isGrammarSymbol"                
+[103] "isGroup"                         "isSealedClass"                  
+[105] "isSealedMethod"                  "isVirtualClass"                 
+[107] "isXS3Class"                      "languageEl"                     
+[109] "languageEl<-"                    "linearizeMlist"                 
+[111] "listFromMethods"                 "listFromMlist"                  
+[113] "loadMethod"                      "Logic"                          
+[115] "makeClassRepresentation"         "makeExtends"                    
+[117] "makeGeneric"                     "makeMethodsList"                
+[119] "makePrototypeFromClassDef"       "makeStandardGeneric"            
+[121] "matchSignature"                  "Math"                           
+[123] "Math2"                           "mergeMethods"                   
+[125] "metaNameUndo"                    "MethodAddCoerce"                
+[127] "methodSignatureMatrix"           "method.skeleton"                
+[129] "MethodsList"                     "MethodsListSelect"              
+[131] "methodsPackageMetaName"          "missingArg"                     
+[133] "mlistMetaName"                   "multipleClasses"                
+[135] "new"                             "newBasic"                       
+[137] "newClassRepresentation"          "newEmptyObject"                 
+[139] "Ops"                             "packageSlot"                    
+[141] "packageSlot<-"                   "possibleExtends"                
+[143] "prohibitGeneric"                 "promptClass"                    
+[145] "promptMethods"                   "prototype"                      
+[147] "Quote"                           "rbind2"                         
+[149] "reconcilePropertiesAndPrototype" "registerImplicitGenerics"       
+[151] "rematchDefinition"               "removeClass"                    
+[153] "removeGeneric"                   "removeMethod"                   
+[155] "removeMethods"                   "removeMethodsObject"            
+[157] "representation"                  "requireMethods"                 
+[159] "resetClass"                      "resetGeneric"                   
+[161] "S3Class"                         "S3Class<-"                      
+[163] "S3Part"                          "S3Part<-"                       
+[165] "sealClass"                       "seemsS4Object"                  
+[167] "selectMethod"                    "selectSuperClasses"             
+[169] "sessionData"                     "setAs"                          
+[171] "setClass"                        "setClassUnion"                  
+[173] "setDataPart"                     "setGeneric"                     
+[175] "setGenericImplicit"              "setGroupGeneric"                
+[177] "setIs"                           "setMethod"                      
+[179] "setOldClass"                     "setPackageName"                 
+[181] "setPrimitiveMethods"             "setRefClass"                    
+[183] "setReplaceMethod"                "setValidity"                    
+[185] "show"                            "showClass"                      
+[187] "showDefault"                     "showExtends"                    
+[189] "showMethods"                     "showMlist"                      
+[191] "signature"                       "SignatureMethod"                
+[193] "sigToEnv"                        "slot"                           
+[195] "slot<-"                          "slotNames"                      
+[197] "slotsFromS3"                     "substituteDirect"               
+[199] "substituteFunctionArgs"          "Summary"                        
+[201] "superClassDepth"                 "testInheritedMethods"           
+[203] "testVirtual"                     "traceOff"                       
+[205] "traceOn"                         "tryNew"                         
+[207] "trySilent"                       "unRematchDefinition"            
+[209] "validObject"                     "validSlotNames"                 
+> ls("package:methods")
+  [1] "@<-"                             "addNextMethod"                  
+  [3] "allGenerics"                     "allNames"                       
+  [5] "Arith"                           "as"                             
+  [7] "as<-"                            "asMethodDefinition"             
+  [9] "assignClassDef"                  "assignMethodsMetaData"          
+ [11] "balanceMethodsList"              "body<-"                         
+ [13] "cacheGenericsMetaData"           "cacheMetaData"                  
+ [15] "cacheMethod"                     "callGeneric"                    
+ [17] "callNextMethod"                  "canCoerce"                      
+ [19] "cbind2"                          "checkSlotAssignment"            
+ [21] "classesToAM"                     "classLabel"                     
+ [23] "classMetaName"                   "className"                      
+ [25] "coerce"                          "coerce<-"                       
+ [27] "Compare"                         "completeClassDefinition"        
+ [29] "completeExtends"                 "completeSubclasses"             
+ [31] "Complex"                         "conformMethod"                  
+ [33] "defaultDumpName"                 "defaultPrototype"               
+ [35] "doPrimitiveMethod"               "dumpMethod"                     
+ [37] "dumpMethods"                     "el"                             
+ [39] "el<-"                            "elNamed"                        
+ [41] "elNamed<-"                       "empty.dump"                     
+ [43] "emptyMethodsList"                "evalSource"                     
+ [45] "existsFunction"                  "existsMethod"                   
+ [47] "extends"                         "finalDefaultMethod"             
+ [49] "findClass"                       "findFunction"                   
+ [51] "findMethod"                      "findMethods"                    
+ [53] "findMethodSignatures"            "findUnique"                     
+ [55] "fixPre1.8"                       "formalArgs"                     
+ [57] "functionBody"                    "functionBody<-"                 
+ [59] "generic.skeleton"                "getAccess"                      
+ [61] "getAllMethods"                   "getAllSuperClasses"             
+ [63] "getClass"                        "getClassDef"                    
+ [65] "getClasses"                      "getClassName"                   
+ [67] "getClassPackage"                 "getDataPart"                    
+ [69] "getExtends"                      "getFunction"                    
+ [71] "getGeneric"                      "getGenerics"                    
+ [73] "getGroup"                        "getGroupMembers"                
+ [75] "getMethod"                       "getMethods"                     
+ [77] "getMethodsForDispatch"           "getMethodsMetaData"             
+ [79] "getPackageName"                  "getProperties"                  
+ [81] "getPrototype"                    "getRefClass"                    
+ [83] "getSlots"                        "getSubclasses"                  
+ [85] "getValidity"                     "getVirtual"                     
+ [87] "hasArg"                          "hasMethod"                      
+ [89] "hasMethods"                      "implicitGeneric"                
+ [91] "inheritedSlotNames"              "initFieldArgs"                  
+ [93] "initialize"                      "initRefFields"                  
+ [95] "insertMethod"                    "insertSource"                   
+ [97] "is"                              "isClass"                        
+ [99] "isClassDef"                      "isClassUnion"                   
+[101] "isGeneric"                       "isGrammarSymbol"                
+[103] "isGroup"                         "isSealedClass"                  
+[105] "isSealedMethod"                  "isVirtualClass"                 
+[107] "isXS3Class"                      "languageEl"                     
+[109] "languageEl<-"                    "linearizeMlist"                 
+[111] "listFromMethods"                 "listFromMlist"                  
+[113] "loadMethod"                      "Logic"                          
+[115] "makeClassRepresentation"         "makeExtends"                    
+[117] "makeGeneric"                     "makeMethodsList"                
+[119] "makePrototypeFromClassDef"       "makeStandardGeneric"            
+[121] "matchSignature"                  "Math"                           
+[123] "Math2"                           "mergeMethods"                   
+[125] "metaNameUndo"                    "MethodAddCoerce"                
+[127] "methodSignatureMatrix"           "method.skeleton"                
+[129] "MethodsList"                     "MethodsListSelect"              
+[131] "methodsPackageMetaName"          "missingArg"                     
+[133] "mlistMetaName"                   "multipleClasses"                
+[135] "new"                             "newBasic"                       
+[137] "newClassRepresentation"          "newEmptyObject"                 
+[139] "Ops"                             "packageSlot"                    
+[141] "packageSlot<-"                   "possibleExtends"                
+[143] "prohibitGeneric"                 "promptClass"                    
+[145] "promptMethods"                   "prototype"                      
+[147] "Quote"                           "rbind2"                         
+[149] "reconcilePropertiesAndPrototype" "registerImplicitGenerics"       
+[151] "rematchDefinition"               "removeClass"                    
+[153] "removeGeneric"                   "removeMethod"                   
+[155] "removeMethods"                   "removeMethodsObject"            
+[157] "representation"                  "requireMethods"                 
+[159] "resetClass"                      "resetGeneric"                   
+[161] "S3Class"                         "S3Class<-"                      
+[163] "S3Part"                          "S3Part<-"                       
+[165] "sealClass"                       "seemsS4Object"                  
+[167] "selectMethod"                    "selectSuperClasses"             
+[169] "sessionData"                     "setAs"                          
+[171] "setClass"                        "setClassUnion"                  
+[173] "setDataPart"                     "setGeneric"                     
+[175] "setGenericImplicit"              "setGroupGeneric"                
+[177] "setIs"                           "setMethod"                      
+[179] "setOldClass"                     "setPackageName"                 
+[181] "setPrimitiveMethods"             "setRefClass"                    
+[183] "setReplaceMethod"                "setValidity"                    
+[185] "show"                            "showClass"                      
+[187] "showDefault"                     "showExtends"                    
+[189] "showMethods"                     "showMlist"                      
+[191] "signature"                       "SignatureMethod"                
+[193] "sigToEnv"                        "slot"                           
+[195] "slot<-"                          "slotNames"                      
+[197] "slotsFromS3"                     "substituteDirect"               
+[199] "substituteFunctionArgs"          "Summary"                        
+[201] "superClassDepth"                 "testInheritedMethods"           
+[203] "testVirtual"                     "traceOff"                       
+[205] "traceOn"                         "tryNew"                         
+[207] "trySilent"                       "unRematchDefinition"            
+[209] "validObject"                     "validSlotNames"                 
+> 
+
+6) 

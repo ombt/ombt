@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <iostream>
 #include <set>
-#include <timers/OldTimer.h>
+#include "timers/OldTimer.h"
 
 using namespace ombt;
 using namespace std;

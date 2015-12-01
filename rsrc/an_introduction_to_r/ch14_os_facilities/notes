@@ -1,0 +1,85 @@
+14.1 Files and directories
+There are many functions to manipulate files and directories. Here are pointers to some of the
+more commonly used ones.
+To create an (empty) file or directory, use file.create or create.dir. (These are the
+analogues of the POSIX utilities touch and mkdir.) For temporary files and directories in the
+R session directory see tempfile.
+Files can be removed by either file.remove or unlink: the latter can remove directory
+trees.
+For directory listings use list.files (also available as dir) or list.dirs. These can select
+files using a regular expression: to select by wildcards use Sys.glob.
+Many types of information on a filepath (including for example if it is a file or directory) can
+be found by file.info.
+There are several ways to find out if a file ‘exists’ (and file can exist on the filesystem and not
+be visible to the current user). There are functions file.exists, file.access and file_test
+with various versions of this test: file_test is a version of the POSIX test command for those
+familiar with shell scripting.
+Function file.copy is the R analogue of the POSIX command cp.
+Choosing files can be done interactively by file.choose: the Windows port has the more
+versatile functions choose.files and choose.dir and there are similar functions in the tcltk
+package: tk_choose.files and tk_choose.dir.
+Functions file.show and file.edit will display and edit one or more files in a way appro-
+priate to the R port, using the facilities of a console (such as RGui on Windows or R.app on OS
+X) if one is in use.
+There is some support for links in the filesystem: see functions file.link and Sys.readlink.
+14.2 Filepaths
+With a few exceptions, R relies on the underlying OS functions to manipulate filepaths. Some
+aspects of this are allowed to depend on the OS, and do, even down to the version of the OS.
+There are POSIX standards for how OSes should interpret filepaths and many R users assume
+POSIX compliance: but Windows does not claim to be compliant and other OSes may be less
+than completely compliant.
+The following are some issues which have been encountered with filepaths.
+• POSIX filesystems are case-sensitive, so foo.png and Foo.PNG are different files. However,
+the defaults on Windows and OS X are to be case-insensitive, and FAT filesystems (com-
+monly used on removable storage) are not normally case-sensitive (and all filepaths may be
+mapped to lower case).
+• Almost all the Windows’ OS services support the use of slash or backslash as the filepath
+separator, and R converts the known exceptions to the form required by Windows.
+Chapter 14: OS facilities
+80
+• The behaviour of filepaths with a trailing slash is OS-dependent. Such paths are not valid
+on Windows and should not be expected to work. POSIX-2008 requires such paths to
+match only directories, but earlier versions allowed them to also match files. So they are
+best avoided.
+• Multiple slashes in filepaths such as /abc//def are valid on POSIX filesystems and treated
+as if there was only one slash. They are usually accepted by Windows’ OS functions.
+However, leading double slashes may have a different meaning.
+• Windows’
+UNC
+filepaths
+(such
+as
+\\server\dir1\dir2\file
+and
+\\?\UNC\server\dir1\dir2\file) are not supported, but they may work in
+some R functions. POSIX filesystems are allowed to treat a leading double slash specially.
+• Windows allows filepaths containing drives and relative to the current directory on a drive,
+e.g. d:foo/bar refers to d:/a/b/c/foo/bar if the current directory on drive d: is /a/b/c.
+It is intended that these work, but the use of absolute paths is safer.
+Functions basename and dirname select parts of a file path: the recommended way to as-
+semble a file path from components is file.path. Function pathexpand does ‘tilde expansion’,
+substituting values for home directories (the current user’s, and perhaps those of other users).
+On filesystems with links, a single file can be referred to by many filepaths. Function
+normalizePath will find a canonical filepath.
+Windows has the concepts of short (‘8.3’) and long file names: normalizePath will return an
+absolute path using long file names and shortPathName will return a version using short names.
+The latter does not contain spaces and uses backslash as the separator, so is sometimes useful
+for exporting names from R.
+File permissions are a related topic.
+R has support for the POSIX concepts of
+read/write/execute permission for owner/group/all but this may be only partially supported
+on the filesystem (so for example on Windows only read-only files (for the account running the
+R session) are recognized. Access Control Lists (ACLs) are employed on several filesystems,
+but do not have an agreed standard and R has no facilities to control them. Use Sys.chmod to
+change permissions.
+14.3 System commands
+Functions system and system2 are used to invoke a system command and optionally collect
+its output. system2 is a little more general but its main advantage is that it is easier to write
+cross-platform code using it.
+system behaves differently on Windows from other OSes (because the API C call of that
+name does). Elsewhere it invokes a shell to run the command: the Windows port of R has a
+function shell to do that.
+To find out if the OS includes a command, use Sys.which, which attempts to do this in a
+cross-platform way (unfortunately it is not a standard OS service).
+Function shQuote will quote filepaths as needed for commands in the current OS.
+

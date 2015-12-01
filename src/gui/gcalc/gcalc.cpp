@@ -861,9 +861,17 @@ main(int argc, char **argv)
     gtk_table_attach_defaults(GTK_TABLE(table), text_entry, 0, 10, 0, 1);
 
     // add lines of separation
+#if 0
     GtkWidget *horizontal_line = gtk_hseparator_new();
+#else
+    GtkWidget *vertical_line = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+#endif
     gtk_table_attach_defaults(GTK_TABLE(table), horizontal_line, 0, 10, 1, 2);
+#if 0
     GtkWidget *vertical_line = gtk_vseparator_new();
+#else
+    GtkWidget *vertical_line = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+#endif
     gtk_table_attach_defaults(GTK_TABLE(table), vertical_line, 5, 6, 1, 10);
 
     // add row 1 buttons

@@ -1,0 +1,4 @@
+#!/usr/bin/ksh
+# print the product setups for routes with kx machines
+basemachine=32
+exec machine.type.product.setups ${basemachine}

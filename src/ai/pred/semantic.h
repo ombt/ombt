@@ -9,12 +9,12 @@
 #include <string.h>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/List.h>
-#include <adt/String.h>
-#include "symbol.h"
-#include "irclause.h"
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include "adt/String.h"
+#include <symbol.h>
+#include <irclause.h>
 
 // forward declarations
 class SemanticRep;
@@ -46,8 +46,8 @@ protected:
 	virtual int isArgument() const;
 
 	// print data
-	virtual void dumpData(ostream &) const;
-	friend ostream &operator<<(ostream &, const SemanticRep &);
+	virtual void dumpData(std::ostream &) const;
+	friend std::ostream &operator<<(std::ostream &, const SemanticRep &);
 
 	// internal data
 	int conclusion;
@@ -69,8 +69,8 @@ protected:
 	// constructors and destructor
 	Argument();
 	Argument(const Argument &);
-	Argument(Type, const String &, int = 0);
-	Argument(Type, const String &, List<Semantic *> *, int, int = 0);
+	Argument(Type, const ombt::String &, int = 0);
+	Argument(Type, const ombt::String &, ombt::List<Semantic *> *, int, int = 0);
 	~Argument();
 
 	// copy object
@@ -85,15 +85,15 @@ protected:
 	int isArgument() const;
 
 	// print data
-	void dumpData(ostream &) const;
-	friend ostream& operator<<(ostream &, const Argument &);
+	void dumpData(std::ostream &) const;
+	friend std::ostream& operator<<(std::ostream &, const Argument &);
 
 	// internal data
 	Type type;
 	int argnum;
-	String name;
-	String value;
-	List<Semantic *> *pargs;
+	ombt::String name;
+	ombt::String value;
+	ombt::List<Semantic *> *pargs;
 };
 
 // predicate class definition
@@ -111,8 +111,8 @@ protected:
 	// constructor and destructor
 	Predicate();
 	Predicate(const Predicate &);
-	Predicate(Type, const String &, const String &, int = 0);
-	Predicate(Type, const String &, List<Semantic *> *, int, int = 0);
+	Predicate(Type, const ombt::String &, const ombt::String &, int = 0);
+	Predicate(Type, const ombt::String &, ombt::List<Semantic *> *, int, int = 0);
 	~Predicate();
 
 	// copy object
@@ -127,15 +127,15 @@ protected:
 	int isArgument() const;
 
 	// print data
-	void dumpData(ostream &) const;
-	friend ostream &operator<<(ostream &, const Predicate &);
+	void dumpData(std::ostream &) const;
+	friend std::ostream &operator<<(std::ostream &, const Predicate &);
 
 	// internal data
 	int argnum;
 	Type type;
-	String name;
-	String value;
-	List<Semantic * > *pargs;
+	ombt::String name;
+	ombt::String value;
+	ombt::List<Semantic * > *pargs;
 };
 
 // expression record class definition
@@ -155,7 +155,7 @@ protected:
 	Expression();
 	Expression(const Expression &);
 	Expression(Type, Semantic *, Semantic *, int = 0);
-	Expression(Type, Semantic *, const String &, int = 0);
+	Expression(Type, Semantic *, const ombt::String &, int = 0);
 	~Expression();
 
 	// copy object
@@ -174,8 +174,8 @@ protected:
 	void setVarIsUsed(int);
 
 	// print data
-	void dumpData(ostream &) const;
-	friend ostream &operator<<(ostream &, const Expression &);
+	void dumpData(std::ostream &) const;
+	friend std::ostream &operator<<(std::ostream &, const Expression &);
 
 	// internal data
 	Type type;
@@ -183,7 +183,7 @@ protected:
 	Semantic *right;
 
 	// internal data for quantifiers
-	String name;
+	ombt::String name;
 	int varisused;
 };
 
@@ -194,12 +194,12 @@ public:
 	Semantic();
 	Semantic(const Semantic &);
 	Semantic(Expression::Type, Semantic *, Semantic *, int = 0);
-	Semantic(Expression::Type, const String &, Semantic *, int = 0);
-	Semantic(Predicate::Type, const String &, const String &, int = 0);
-	Semantic(Predicate::Type, const String &, List<Semantic * > *, 
+	Semantic(Expression::Type, const ombt::String &, Semantic *, int = 0);
+	Semantic(Predicate::Type, const ombt::String &, const ombt::String &, int = 0);
+	Semantic(Predicate::Type, const ombt::String &, ombt::List<Semantic * > *, 
 		int, int = 0);
-	Semantic(Argument::Type, const String &, int = 0);
-	Semantic(Argument::Type, const String &, List<Semantic * > *, 
+	Semantic(Argument::Type, const ombt::String &, int = 0);
+	Semantic(Argument::Type, const ombt::String &, ombt::List<Semantic * > *, 
 		int, int = 0);
 	~Semantic();
 
@@ -224,33 +224,33 @@ public:
 	int skolemize();
 	int removeUniversals();
 	int distribution();
-	int getClauses(List<Semantic * > &);
+	int getClauses(ombt::List<Semantic * > &);
 	int renameAgain();
-	int getClausesAsLists(List<IRClause> &);
+	int getClausesAsLists(ombt::List<IRClause> &);
 
 	// helper functions
 	int removeExtraNots();
-	int renameVariables(List<Symbol> &);
-	int skolemize(List<Symbol> &);
+	int renameVariables(ombt::List<Symbol> &);
+	int skolemize(ombt::List<Symbol> &);
 	int removeExistentials();
 	int distributeLeftAnd(int &);
 	int distributeRightAnd(int &);
 	int distribution(int &);
-	int getClauses(List<Semantic * > &, int);
-	int renameAgain(List<Symbol> &);
+	int getClauses(ombt::List<Semantic * > &, int);
+	int renameAgain(ombt::List<Symbol> &);
 	int getClausesAsLists(IRClause &);
-	int getClausesAsLists(IRClause &, String &, int);
+	int getClausesAsLists(IRClause &, ombt::String &, int);
 
 	// access conclusion data
 	int getConclusion() const;
 	void setConclusion(int);
 
 	// print data
-	void dumpData(ostream &) const;
-	friend ostream &operator<<(ostream &, const Semantic &);
+	void dumpData(std::ostream &) const;
+	friend std::ostream &operator<<(std::ostream &, const Semantic &);
 
 	// static function for creating unique names
-	static String uniqueName(const String &);
+	static ombt::String uniqueName(const ombt::String &);
 
 protected:
 	// internal data

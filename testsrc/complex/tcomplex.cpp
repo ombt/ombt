@@ -5,7 +5,7 @@
 //
 #include <stdlib.h>
 #include <iostream>
-#include <complex/Complex.h>
+#include "complex/Complex.h"
 
 using namespace ombt;
 

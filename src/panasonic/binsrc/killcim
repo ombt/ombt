@@ -1,0 +1,16 @@
+#!/usr/bin/ksh
+#
+cd  ~/cim
+source $ENV
+mycimenv
+#
+for exec in $(ls bin)
+do
+	# echo "killall -r ${exec}"
+	killall -r ${exec} 2>/dev/null
+done
+#
+rm -f /tmp/.LPM.*
+rm -f /tmp/.PMG.*
+#
+exit 0

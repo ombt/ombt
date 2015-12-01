@@ -1,0 +1,60 @@
+# script to convert old tprop scripts to atp2 scripts.
+#
+if [[ ! -d newscripts ]] 
+then
+	mkdir newscripts
+else
+	rm -rf newscripts/*
+fi
+#
+for tfile in ${*}
+do
+	echo "<<< converting script ${tfile} ... >>>"
+	#
+	cat ${tfile} | 
+	grep -v quit | 
+	grep -v '^[ 	]*$' |
+	tr '[a-z]' '[A-Z]' |
+	sed 's/$/;/g; s/;;* *$/;/g;' |
+	sed 's/TRUE/true/g; s/FALSE/false/g;' >/tmp/junk$$
+	#
+	cat /tmp/junk$$ |
+	nawk 'BEGIN {
+		first = 1;
+	}
+	$0 ~ /^[ 	]*$/ {
+		# print comment line
+		next;
+	}
+	$0 ~ /.*#.*/ {
+		# print comment line
+		print $0
+		next;
+	}
+	$0 ~ /.*\|-.*/ {
+		if (first)
+			print "argument {";
+		print "SOS " $0;
+		print "}";
+		first = 1;
+		next;
+	}
+	{
+		if (first)
+		{
+			print "argument {";
+			first = 0;
+		}
+		print $0;
+		next;
+	}
+	END {
+		print "quit;"
+	} ' >/tmp/newjunk$$
+	#
+	mv /tmp/newjunk$$ newscripts/${tfile}.t
+done
+#
+rm /tmp/*junk$$
+#
+exit 0

@@ -8,10 +8,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntBase.h>
-#include <atomic/UseCntPtr.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntBase.h"
+#include "atomic/UseCntPtr.h"
 
 using namespace std;
 using namespace ombt;

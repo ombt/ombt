@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
-#include <random/Random.h>
-#include <logging/Logging.h>
+#include "random/Random.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 

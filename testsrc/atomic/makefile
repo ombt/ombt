@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -8,7 +13,8 @@ include $(ROOT)/build/makefile.common
 
 PRODS = atomic1 atomic2 atomic3 atomic4 atomic5 atomic6 usecnt1 usecnt2
 
-CXXEXTRAFLAGS = 
-CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads
+CXXEXTRAFLAGS = -pthread 
 
-include $(ROOT)/build/makefile.test
+TESTLIBS = logging threads
+
+include $(ROOT)/build/makefile.test2

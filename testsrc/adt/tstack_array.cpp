@@ -6,8 +6,8 @@
 // headers
 #include <stdlib.h>
 #include <iostream>
-#include <adt/String.h>
-#include <adt/Stack_Array.h>
+#include "adt/String.h"
+#include "adt/Stack_Array.h"
 
 using namespace ombt;
 using namespace std;

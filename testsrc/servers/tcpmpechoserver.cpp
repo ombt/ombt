@@ -9,12 +9,12 @@
 #include <assert.h>
 #include <errno.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <sockets/Socket.h>
-#include <sockets/InetAddress.h>
-#include <sockets/EndPoint.h>
-#include <servers/MultiProcessServer.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "sockets/Socket.h"
+#include "sockets/InetAddress.h"
+#include "sockets/EndPoint.h"
+#include "servers/MultiProcessServer.h"
 
 using namespace ombt;
 

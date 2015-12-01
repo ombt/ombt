@@ -7,10 +7,10 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/List.h>
-#include <adt/String.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include "adt/String.h"
 
 // forward declarations
 class IRClauseIterator;
@@ -24,7 +24,7 @@ public:
 	// constructors and destructor
 	IRClause();
 	IRClause(const IRClause &);
-	IRClause(const List<String> &, int = 0);
+	IRClause(const ombt::List<ombt::String> &, int = 0);
 	~IRClause();
 
 	// assignment 
@@ -35,12 +35,12 @@ public:
 	int operator!=(const IRClause &) const;
 
 	// add or remove term from clause
-	void insert(const String &);
-	void remove(String &);
+	void insert(const ombt::String &);
+	void remove(ombt::String &);
 	void clear();
 
 	// tests to run on a clause
-	int isInClause(const String &) const;
+	int isInClause(const ombt::String &) const;
 	int isEmpty() const;
 
 	// access conclusion bit
@@ -48,12 +48,12 @@ public:
 	void setPartOfConclusion(int);
 
 	// dump data
-	friend ostream &operator<<(ostream &, const IRClause &);
+	friend std::ostream &operator<<(std::ostream &, const IRClause &);
 
 protected:
 	// internal data
 	int partOfConclusion;
-	List<String> terms;
+	ombt::List<ombt::String> terms;
 };
 
 // clause iterator definition
@@ -71,7 +71,7 @@ public:
 	int done() const;
 
 	// return current member in set
-	String operator()();
+	ombt::String operator()();
 
 	// advance to next set member
 	int operator++(int);
@@ -82,7 +82,7 @@ private:
 
 protected:
 	// internal data
-	ListIterator<String> iterator;
+	ombt::ListIterator<ombt::String> iterator;
 };
 
 #endif

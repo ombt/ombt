@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -17,7 +22,6 @@ CXXFLAGS = -g -O0 -DUSEOSTREAM=1 -I$(INCLUDEDIR) -I.
 CXXFLAGS += -Wfatal-errors -Wno-deprecated
 
 LD = g++
-# LDFLAGS = -g -O0 -L$(LIBRARYDIR) -lombtadt
 LDFLAGS = -g -O0 -L$(LIBRARYDIR) 
 LDFLAGS += -Wfatal-errors -Wno-deprecated
 
@@ -56,6 +60,8 @@ clean:
 install:
 	cp tprop $(BINARYDIR)/tprop
 	touch install
+
+depend:
 
 backup:
 	bkup

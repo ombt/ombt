@@ -1,0 +1,12 @@
+# get my laptop ip
+#
+# $ nmblookup -U 10.128.32.52 -R mrumo-cff9-rm
+# querying mrumo-cff9-rm on 10.128.32.52
+# 10.140.65.147 mrumo-cff9-rm<00>
+#
+nmblookup -U ${2:-"10.128.32.52"} -R ${1:-"mrumo-cff9-rm"} |
+grep -v 'failed' |
+sed -n '2,2s/^\([^ ]*\).*$/\1/p'
+#
+exit 0
+

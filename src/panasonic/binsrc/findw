@@ -1,0 +1,6 @@
+#!/usr/bin/ksh
+# find all files that are owner writable, exclude 
+# build output files.
+find . -type f -perm /u=w -print |
+egrep -v '(/obj/|/\.D\.|/\.DEPEND|\.OBJECTS|\.DEBUG_FLAGS|\.SIM|/bx/)'
+exit 0

@@ -1,0 +1,19 @@
+#!/usr/bin/ksh
+#
+# add TRACE macros at the start of fuctions.
+#
+if [[ $# -eq 0 ]]
+then
+	set -- *.C *.cpp *.c 
+fi
+#
+for file in ${*}
+do
+	[[ ! -r "${file}" ]] && continue;
+	echo -e "\nProcessing file: ${file}"
+	cat ${file} | sed 's/^{/{ WEP();/' >/tmp/addtrc.$$
+	mv -f /tmp/addtrc.$$ ${file}
+done
+#
+exit 0
+

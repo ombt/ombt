@@ -6,11 +6,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <threads/Queue.h>
-#include <threads/SimpleThread.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "threads/Queue.h"
+#include "threads/SimpleThread.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 using namespace std;

@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -13,8 +18,8 @@ PRODS = talphabet tarray2 tarray tbinary2 tbinary_array tbinary_AVL2 \
 	tqueue_array tqueue_list tset_bitvector tset_hashtable tset_list \
 	tstack_array tstack_list
 
-# CXXEXTRAFLAGS = -DDEBUG -DUSEOSTREAM=1 -Wfatal-errors -lombtrandom -lombtadt
 CXXEXTRAFLAGS = -DDEBUG -DUSEOSTREAM=1 -Wfatal-errors 
-CXXLIBFLAGS = -lombtrandom -lombtadt
 
-include $(ROOT)/build/makefile.test
+TESTLIBS = random adt
+
+include $(ROOT)/build/makefile.test2

@@ -8,11 +8,11 @@
 #include <iostream>
 #include <list>
 #include <vector>
-#include <Debug.h>
-#include <threads/ThreadBarrier.h>
-#include <threads/ThreadSafePtr.h>
-#include <threads/SimpleThread.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "threads/ThreadBarrier.h"
+#include "threads/ThreadSafePtr.h"
+#include "threads/SimpleThread.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 using namespace std;

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
-#include <interpolation/CubicSpline.h>
+#include "interpolation/CubicSpline.h"
 
 using namespace ombt;
 using namespace std;
@@ -37,12 +37,13 @@ main(int argc, char **argv)
 		double x = i*M_PI/60;
 		double y = ::sin(x);
 		double yspline = cs(x);
-		cerr << "(i,x,y,ysp,y-ysp) = ("
+		cerr << "(i,x,y,ysp,y-ysp,(y-ysp)/y) = ("
                      << i << ","
                      << x << ","
                      << y << ","
                      << yspline << ","
-                     << (y-yspline) << ")" << endl;
+                     << (y-yspline) << ","
+                     << (y-yspline)/y << ")" << endl;
 	}
 
 	cerr << endl << "TESTS FOR CubicSpline USING cos() ..." << endl;
@@ -60,12 +61,13 @@ main(int argc, char **argv)
 		double x = i*M_PI/60;
 		double y = ::cos(x);
 		double yspline = cs(x);
-		cerr << "(i,x,y,ysp,y-ysp) = ("
+		cerr << "(i,x,y,ysp,y-ysp,(y-ysp)/y) = ("
                      << i << ","
                      << x << ","
                      << y << ","
                      << yspline << ","
-                     << (y-yspline) << ")" << endl;
+                     << (y-yspline) << ","
+                     << (y-yspline)/y << ")" << endl;
 	}
 
 	cerr << endl << "TESTS FOR CubicSpline USING exp() ..." << endl;
@@ -83,12 +85,13 @@ main(int argc, char **argv)
 		double x = i*M_PI/60;
 		double y = ::exp(x);
 		double yspline = cs(x);
-		cerr << "(i,x,y,ysp,y-ysp) = ("
+		cerr << "(i,x,y,ysp,y-ysp,(y-ysp)/y) = ("
                      << i << ","
                      << x << ","
                      << y << ","
                      << yspline << ","
-                     << (y-yspline) << ")" << endl;
+                     << (y-yspline) << ","
+                     << (y-yspline)/y << ")" << endl;
 	}
 
 	return(0);

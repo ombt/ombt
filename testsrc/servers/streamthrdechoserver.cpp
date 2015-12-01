@@ -8,37 +8,60 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <atomic/UseCntPtr.h>
-#include <sockets/Socket.h>
-#include <sockets/LocalAddress.h>
-#include <sockets/EndPoint.h>
-#include <servers/MultiThreadServer.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "sockets/Socket.h"
+#include "sockets/LocalAddress.h"
+#include "sockets/EndPoint.h"
+#include "servers/MultiThreadServer.h"
 
 using namespace ombt;
 
 class MyHandler: public MultiThreadStreamServer::Handler {
 public:
-    MyHandler() { setOk(true); }
-    virtual ~MyHandler() { }
+    MyHandler() {
+TRACE();
+        setOk(true);
+TRACE();
+    }
+    virtual ~MyHandler() {
+TRACE();
+    }
 
-    virtual int operator()(EndPoint *clientep)
-    {
+    virtual int operator()(EndPoint *clientep) {
+TRACE();
         char buf[BUFSIZ+1];
         size_t count = BUFSIZ;
 
+TRACE();
         UseCntPtr<EndPoint> pclientep(clientep);
+TRACE();
         count = pclientep->read(buf, count);
+TRACE();
         if (count > 0)
         {
+TRACE();
             if (pclientep->write(buf, count) > 0)
+            {
+TRACE();
                 return(0);
+            }
             else
+            {
+TRACE();
                 return(-1);
+            }
         }
         else if (count == 0)
+        {
+TRACE();
             return(1);
+        }
         else
+        {
+TRACE();
             return(-1);
+        }
     }
 };
 
@@ -58,28 +81,36 @@ main(int argc, char *argv[])
         return(2);
     }
 
+TRACE();
     std::cout << "Creating Streams Socket ..." << std::endl;
     UseCntPtr<StreamSocket> stream_socket(new StreamSocket());
     assert(stream_socket->isOk());
 
+TRACE();
     std::cout << "Creating Local Address ..." << std::endl;
     ::unlink(filepath.c_str());
     UseCntPtr<LocalAddress> my_address(new LocalAddress(filepath));
     assert(my_address->isOk());
 
+TRACE();
     std::cout << "Creating Stream EndPoint ..." << std::endl;
     UseCntPtr<EndPoint> server_ep(new EndPoint(stream_socket, my_address));
     assert(server_ep->isOk());
 
+TRACE();
     UseCntPtr<MyHandler> iss_handler(new MyHandler);
     MultiThreadStreamServer iss(server_ep, iss_handler);
 
+TRACE();
     iss.init();
 
+TRACE();
     iss.run();
 
+TRACE();
     iss.finish();
 
+TRACE();
     return(0);
 }
 

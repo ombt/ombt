@@ -1,0 +1,9 @@
+#!/usr/bin/ksh
+#
+# build doxygen repo for the current *cim* load
+/cimuser/mrumore/bin/doxy.bld.repo PanaCIM cim /cimuser/mrumore/cim /cimuser/mrumore/doxygen/repository/cim 2>&1 | /bin/mailx -s "current cim doxygen run on `date`" mrumore 2>/dev/null 1>&2
+#
+# build menu page for any new load
+/cimuser/mrumore/bin/doxy.main.menu /cimuser/mrumore/doxygen 2>&1 | /bin/mailx -s "current cim doxygen main menu run on `date`" mrumore 2>/dev/null 1>&2
+#
+exit 0

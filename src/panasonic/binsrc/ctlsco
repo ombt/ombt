@@ -1,0 +1,23 @@
+#!/usr/bin/ksh
+#
+/opt/rational/clearcase/bin/cleartool lscheckout -all -me "${@}" |
+gawk '
+BEGIN {
+	file = "";
+	cq = "";
+}
+$0 ~ /checkout version/ {
+	# print NR " " $5;
+	file = $5;
+	next;
+}
+$0 ~ /activity:SOLNS/ {
+	# print NR " " $1;
+	cq = $1;
+	print cq " " file;
+	next;
+} ' |
+sed -n 's/^activity[^:]*:\([^@]*\)[^"]*"\([^"]*\)".*$/\1 \2/p' |
+sed -n 's?^\([^ ]*\) .*/mes/cimc/\(.*\)$?\1 \2?p'
+#
+exit 0

@@ -1,0 +1,79 @@
+#!/usr/bin/ksh
+#
+# log files.
+#
+errlog="/tmp/el.$$"
+#
+rmfiles() {
+rm -f ${errlog} 2>/dev/null 1>&1
+}
+#
+trap 'rmfiles' 0
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [-s db_server-| -m] [-p db_port] [-U username] [-P passwd]
+
+where:
+	-? = print usage message
+	-x = debug
+	-s db_server = DB server name/IP (default: DB_SERVER).
+	-p db_port = DB server TCP port (default: DB_PORT_NO).
+	-U user_name = DB user name (default: cim).
+	-P password = DB user password (default: cim).
+	-m = use my laptop server, mrumo-cff9-rm.
+
+EOF
+}
+#
+dbusername=cim
+dbpasswd=cim
+mysqlserver=mrumo-cff9-rm
+#
+set -- $(getopt xmU:P:s:p: ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-s)
+		export DB_SERVER="${2}"
+		shift 2
+		;;
+	-m)
+		DB_SERVER="$(nmblookup -U 10.128.32.52 -R ${mysqlserver} | sed -n '2,2p' | cut -d' ' -f1)"
+		shift
+		;;
+	-p)
+		export DB_PORT_NO="${2}"
+		shift 2
+		;;
+	-U)
+		dbusername="${2}"
+		shift 2
+		;;
+	-P)
+		dbpasswd="${2}"
+		shift 2
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+exec /usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U ${dbusername} -P ${dbpasswd}

@@ -11,7 +11,10 @@ LIBRARYDIR = $(ROOT)/$(RELEASELIBDIR)
 INCLUDEDIR = $(ROOT)/$(RELEASEHDRDIR)
 
 ifdef FILES
+
 CXX = g++
+
+# CXXFLAGS = -g -O0 -DDEBUG -fPIC -shared -I. -Ihdr -I$(INCLUDEDIR)
 CXXFLAGS = -g -O0 -DDEBUG -fPIC -shared -I. -I$(INCLUDEDIR)
 
 ifdef CXXEXTRAFLAGS
@@ -20,7 +23,14 @@ endif
 
 HDRS += $(addsuffix .h, $(basename $(FILES) ) )
 
-OBJS = $(addsuffix .o, $(basename $(FILES) ) )
+CLEANHDRS := $(HDRS)
+
+HDRS := $(addprefix hdr/, $(HDRS) )
+
+OBJS = $(addprefix obj/, $(addsuffix .o, $(basename $(FILES) ) ) )
+
+obj/%.o: src/%.cpp
+	$(COMPILE.cpp) $(OUTPUT_OPTION) $<
 
 all:	installinclude libombt$(LIBNAME).so.$(OMBTVERSION)
 
@@ -38,6 +48,10 @@ else
 ifndef HDRS
 $(error HDRS is not set)
 endif
+
+CLEANHDRS := $(HDRS)
+
+HDRS := $(addprefix hdr/, $(HDRS) )
 
 all:	installinclude
 
@@ -66,7 +80,7 @@ clean:
 		-rm install
 		-rm -f $(OBJS)
 		-rm -f libombt$(LIBNAME).so.$(OMBTVERSION)
-		-$(foreach hdr, $(HDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
+		-$(foreach hdr, $(CLEANHDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
 		-rm -f $(LIBRARYDIR)/libombt$(LIBNAME).so
 		-rm -f $(LIBRARYDIR)/libombt$(LIBNAME).so.$(OMBTMAJORVERSION)
 		-rm -f $(LIBRARYDIR)/libombt$(LIBNAME).so.$(OMBTVERSION)
@@ -75,8 +89,11 @@ else
 clean:
 		-rm installinclude
 		-rm install
-		-$(foreach hdr, $(HDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
+		-$(foreach hdr, $(CLEANHDRS), rm -f $(INCLUDEDIR)/$(LIBNAME)/$(hdr); )
 endif
+
+depend:
+		../libsrc.depends
 
 backup:
 		bkup

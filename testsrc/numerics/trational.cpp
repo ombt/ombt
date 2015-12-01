@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <numerics/Rational.h>
+#include "numerics/Rational.h"
 
 using namespace ombt;
 using namespace std;

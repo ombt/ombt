@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <adt/Array.h>
+#include "adt/Array.h"
 
 using namespace ombt;
 using namespace std;

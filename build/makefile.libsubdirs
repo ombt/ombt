@@ -14,6 +14,12 @@ install:
 		(cd $$SUBDIR; make install; ) ; \
 	done
 
+depend:
+	for SUBDIR in $(SUBDIRS); do \
+		echo "libsrc.depends $$SUBDIR"; \
+		(cd $$SUBDIR; ../libsrc.depends; ) ; \
+	done
+
 backup:
 	for SUBDIR in $(SUBDIRS); do \
 		echo "backup $$SUBDIR"; \

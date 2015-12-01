@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+use DBI;
+#
+my @drivers = DBI->available_drivers();
+#
+print "Available drivers:\n";
+print join("\n", @drivers);
+print "\n";
+#
+exit 0;
+

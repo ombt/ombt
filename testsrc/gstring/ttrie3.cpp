@@ -5,11 +5,11 @@
 //
 #include <string>
 
-#include <Debug.h>
-#include <Returns.h>
-#include <gstring/gstring.h>
-#include <gstring/triedata.h>
-#include <parsing/Tokenizer.h>
+#include "system/Debug.h"
+#include "system/Returns.h"
+#include "gstring/gstring.h"
+#include "gstring/triedata.h"
+#include "parsing/Tokenizer.h"
 
 using namespace ombt;
 using namespace std;

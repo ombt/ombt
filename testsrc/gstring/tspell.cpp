@@ -17,8 +17,8 @@
 #include <errno.h>
 
 // local headers
-#include <gstring/gstring.h>
-#include <gstring/trie.h>
+#include "gstring/gstring.h"
+#include "gstring/trie.h"
 
 using namespace ombt;
 using namespace std;

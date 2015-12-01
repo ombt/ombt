@@ -1,0 +1,84 @@
+#!/usr/bin/ksh
+#
+# tail last mybld log file
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [-f] [-l number_of_lines]
+
+where:
+	-? = print usage message
+	-x = debug
+	-f = tail file using -f option
+	-l number = print last 'number' of lines (default=100)
+
+'-l 100' is the default if no options are given.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+tailfile=no
+printlastlines=yes
+numberoflines=100
+#
+rmfiles() {
+rm -f ${errlog} 2>/dev/null 1>&1
+}
+#
+trap 'rmfiles' 0
+#
+set -- $(getopt xfl: ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-f)
+		tailfile=yes
+		printlastlines=no
+		shift
+		;;
+	-l)
+		tailfile=no
+		printlastlines=yes
+		numberoflines=${2}
+		shift 2
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+lastlogfile="$(ls -tr /tmp/lf.* 2>/dev/null | tail -1)"
+if [[ ! -r "${lastlogfile}" || -z "${lastlogfile}" ]]
+then
+	echo -e "\nNO 'last' log file found."
+	exit 2
+fi
+#
+if [[ "${tailfile}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	tail -f ${lastlogfile}
+elif [[ "${printlastlines}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	tail -${numberoflines} ${lastlogfile}
+fi
+#
+exit 0
+
+

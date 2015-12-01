@@ -1,0 +1,28 @@
+#!/usr/bin/ksh
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [dir1 [dir2 ...]]
+
+where:
+	-? = print usage message.
+
+EOF
+}
+#
+if [[ $# -eq 0 ]]
+then
+	cleartool ls -l -recurse 
+elif [[ "${1}" == "-?" ]]
+then
+	usage
+else
+	# run for the given list of (presumed) directories.
+	for dir in "${@}"
+	do
+		cleartool ls -l -recurse ${dir} 
+	done 
+fi
+#
+exit 0

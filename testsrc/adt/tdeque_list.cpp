@@ -6,8 +6,8 @@
 // headers
 #include <stdlib.h>
 #include <iostream>
-#include <adt/String.h>
-#include <adt/Deque_List.h>
+#include "adt/String.h"
+#include "adt/Deque_List.h"
 
 using namespace ombt;
 using namespace std;

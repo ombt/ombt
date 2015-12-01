@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <assert.h>
-#include <adt/String.h>
-#include <adt/List.h>
+#include "adt/String.h"
+#include "adt/List.h"
 
 using namespace ombt;
 using namespace std;

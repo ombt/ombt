@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <timers/OldTimer.h>
+#include "timers/OldTimer.h"
 
 using namespace ombt;
 using namespace std;

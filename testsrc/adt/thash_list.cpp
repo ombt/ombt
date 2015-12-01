@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <iostream>
 #include <assert.h>
-#include <random/Random.h>
-#include <adt/HashTable_List.h>
-#include <adt/List.h>
-#include <adt/Tuple.h>
+#include "random/Random.h"
+#include "adt/HashTable_List.h"
+#include "adt/List.h"
+#include "adt/Tuple.h"
 
 using namespace ombt;
 using namespace std;

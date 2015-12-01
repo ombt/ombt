@@ -1,0 +1,14 @@
+# script to start route 1
+#
+cd ~/cim
+#
+source $ENV
+mycimenv
+#
+killall -r route_editor 
+killall -r zone_interface 
+killall -r pptcp_sim 
+killall -r db_query_tool 
+killall -r machine_interface
+killall mi
+#

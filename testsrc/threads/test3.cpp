@@ -3,15 +3,15 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <threads/SimpleThread.h>
+#include "threads/SimpleThread.h"
 
 #include <stdio.h>
 #include <iostream>
 #include <list>
-#include <Debug.h>
-#include <threads/SimpleThread.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntPtr.h>
+#include "system/Debug.h"
+#include "threads/SimpleThread.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntPtr.h"
 
 using namespace ombt;
 using namespace std;

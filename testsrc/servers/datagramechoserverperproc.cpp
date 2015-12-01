@@ -8,13 +8,13 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <sockets/Socket.h>
-#include <sockets/LocalAddress.h>
-#include <sockets/EndPoint.h>
-#include <servers/IterativeServerPerProcess.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "sockets/Socket.h"
+#include "sockets/LocalAddress.h"
+#include "sockets/EndPoint.h"
+#include "servers/IterativeServerPerProcess.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 

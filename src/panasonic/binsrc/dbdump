@@ -1,0 +1,20 @@
+#!/usr/bin/ksh
+# dump tables
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+: ${DB_NAME:?"is NOT set."}
+#
+for table in "${@}"
+do
+	echo -e "\nDUMP table: ${table}"
+	/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+USE ${DB_NAME}
+GO
+SELECT * FROM ${table}
+GO
+BYE
+EOF
+done
+#
+exit 0

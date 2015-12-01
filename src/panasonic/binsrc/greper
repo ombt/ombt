@@ -1,0 +1,12 @@
+if [[ "${1}" == "-a" ]]
+then
+	shift
+	find . -type f -print |
+	xargs grep -n "${@}" |
+	grep -vi 'binary.*file.*matches'
+else
+	find . -type f -print |
+	egrep '.*\.(c|C|cpp|h|H|C.TEMPLATE|H.TEMPLATE|I|uil|sql|EC|cs)$'|
+	xargs grep -n "${@}" |
+	grep -vi 'binary.*file.*matches'
+fi

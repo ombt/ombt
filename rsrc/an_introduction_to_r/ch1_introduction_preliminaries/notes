@@ -1,0 +1,26 @@
+1) to read in a command file:
+
+> source("in-file-name");
+
+2) to redirect output to a file:
+
+> sink("out-file-name")
+
+3) to restore output to stdout:
+
+> sink()
+
+4) to list objects in environment:
+
+> objects()
+
+5)  to remove objects:
+
+> remove(obj1, obj2, ...)
+
+6) when you exit data and commands are stored in the files:
+
+.RData
+.Rhistory
+
+7) 

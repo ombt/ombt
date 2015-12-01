@@ -9,12 +9,12 @@
 #include <string.h>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/List.h>
-#include <adt/Set_List.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include "adt/Set_List.h"
 #include <clause.h>
-#include <adt/String.h>
+#include "adt/String.h"
 
 // local definitions
 #define NameSize 32

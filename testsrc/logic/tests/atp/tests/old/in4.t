@@ -1,0 +1,7 @@
+#
+argument {
+[y]<x>~F(f(x), y);
+|-<x>(F(f(x), x) <--> ~G(h(z)));
+}
+#
+quit;

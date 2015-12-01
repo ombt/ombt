@@ -1,0 +1,67 @@
+#!/usr/bin/ksh
+# find all hijacked files for the given or current 
+# directory and all subdirectories and tar them.
+#
+smso="$(tput smso)"
+rmso="$(tput rmso)"
+#
+hjfiles="/tmp/hjf.$$"
+#
+rmfiles() {
+rm -f ${hjfiles} 2>/dev/null 1>&2
+}
+#
+# trap 'rmfiles' 0
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [dir1 [dir2 ...]]
+
+where:
+	-? = print usage message.
+
+find all hijacked files in the given directory(s) or use 
+the current directory by default. The subdirectories are 
+recursively visited. Any resulting hijacked files are 
+tar'ed into a file created in the home directory ${HOME}.
+
+EOF
+}
+#
+if [[ $# -eq 0 ]]
+then
+	# just use current directory
+	cleartool ls -l -recurse | 
+	grep -i hijacked |
+	sed 's/[ 	][ 	]*/ /g;' |
+	cut -d'@' -f1 |
+	cut -d' ' -f2 >${hjfiles}
+elif [[ "${1}" == "-?" ]]
+then
+	usage
+	exit 0
+else
+	# run for the given list of (presumed) directories.
+	for dir in "${@}"
+	do
+		cleartool ls -l -recurse ${dir} | 
+		grep -i hijacked
+	done |
+	sed 's/[ 	][ 	]*/ /g;' |
+	cut -d'@' -f1 |
+	cut -d' ' -f2 >${hjfiles}
+fi
+#
+if [[ ! -f "${hjfiles}" || ! -s "${hjfiles}" ]]
+then
+	echo -e "\n${smso}WARNING${rmso}: no hijacked files found to tar."
+	exit 0
+fi
+#
+tarfile="${HOME}/$(date '+%y%m%d%H%M').tar"
+#
+echo -e "\nTAR CMD: tar cf ${tarfile} --files-from ${hjfiles}"
+tar cvf ${tarfile} --files-from ${hjfiles}
+#
+exit 0

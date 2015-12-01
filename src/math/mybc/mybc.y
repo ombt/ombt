@@ -6098,7 +6098,7 @@ usury(double principal, double interest, double length)
 
 main(int argc, char **argv)
 {
-	if (argc != 2 || strcmp(argv[1], "--slave") != 0)
+	if (argc == 1)
 	{
 		return(system("rlwrap mybc --slave"));
 	}
@@ -6108,7 +6108,7 @@ main(int argc, char **argv)
 #endif
 	extern FILE *yyin;
 	char inbuf[10000];	/* it works, so don't complain !!! */
-	FILE fakefd;
+	FILE *fakefd;
 
 	/* error tolerance for doubles */
 	deps = calcEpsilon(double(0));
@@ -6118,8 +6118,7 @@ main(int argc, char **argv)
 	extern int yydebug;
 	yydebug = 1;
 #endif
-#if 0
-	if (argc > 1)
+	if ((argc > 1) && (strcmp(argv[1], "--slave") != 0))
 	{
 		/* concatenate the arguments into one string */
 		int arg = 1;
@@ -6141,15 +6140,11 @@ main(int argc, char **argv)
 		*pib = 0;
 
 		/* set up a fake FILE structure */
-		fakefd._flag = _IOREAD ;
-		fakefd._ptr = fakefd._base = (unsigned char *)inbuf;
-		fakefd._cnt = pib - inbuf;
-		fakefd._file = 0;
+		fakefd = fmemopen(inbuf, pib-inbuf, "r");
 
 		/* set yyin to pointer to fake FILE structure */
-		yyin = &fakefd;
+		yyin = fakefd;
 	}
-#endif
 
 	/* call parser */
 	yyparse();

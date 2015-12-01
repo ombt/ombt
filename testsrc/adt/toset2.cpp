@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <assert.h>
-#include <adt/Tuple.h>
-#include <adt/OrderedSet.h>
+#include "adt/Tuple.h"
+#include "adt/OrderedSet.h"
 
 using namespace ombt;
 using namespace std;

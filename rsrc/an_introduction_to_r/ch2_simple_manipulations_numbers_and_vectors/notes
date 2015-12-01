@@ -1,0 +1,287 @@
+1) data structure - simplest one is a vector.
+
+> x <- c(10.4, 5.6, 3.1, 6.4, 21.7)
+or
+> x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+
+> c(10.4, 5.6, 3.1, 6.4, 21.7) -> x
+
+also works.
+
+2) to just calculate and print:
+
+> 1/x
+
+3) cam use vectors in assignment also:
+
+> y <- c(x, 0, x)
+> y
+
+4) vector arithmetic if one vector is of shorter lenth then 
+it is recycled to fill in the longest vector.
+
+> x <- 1:4
+> y <- 1:8
+> z <- 1:12
+x+y+z
+
+> x <- 1:4
+> y <- 1:8
+> z <- 1:12
+> x+y+z
+ [1]  3  6  9 12 11 14 17 20 11 14 17 20
+Warning message:
+In x + y + z :
+  longer object length is not a multiple of shorter object length
+
+5) usual math operators:
+
+	+ - / * and ^ for raising to a power.
+
+3^4 = 3*3*3*3
+
+6) common math functions are available:
+
+log, exp, sin, cose, tan. sqrt, etc
+
+7) additional vector operations:
+
+	max(vec), 
+	min(vec)
+	range(vec) - returns c(min(vec), max(vec))
+	length(vec) - reurns number of elements in vec
+	sum(vec) - total of values in vac.
+
+
+8) two functions mean(vec) and var(vec) are equal to:
+
+	mean(vec) <- sum(vec)/length(vec)
+	var(vec) <- sum((vec-mean(vec))^2/(length(vec)-1))
+
+9) pmin and pmax return min and max values for corresponding
+values in the vectors.
+
+> x <- (1:10)^2
+> x
+ [1]   1   4   9  16  25  36  49  64  81 100
+> y<- (10:1)^2
+> y
+ [1] 100  81  64  49  36  25  16   9   4   1
+> pmin(x,y)
+ [1]  1  4  9 16 25 25 16  9  4  1
+> pmaX(x,y)
+Error: could not find function "pmaX"
+> pmax(x,y)
+ [1] 100  81  64  49  36  36  49  64  81 100
+
+10) generating sequences using : operator:
+
+> n <- 5
+1:n-1
+1:(n-1)
+
+gives
+
+> n <- 5
+> 1:n-1
+[1] 0 1 2 3 4
+> 1:(n-1)
+[1] 1 2 3 4
+
+11) seq() operator:
+
+seq(2:10) the same as 2:10
+
+another form ...
+
+seq(from=10,to=2)
+seq(to=2,from=10)
+seq(2,10)
+2:10
+
+all above are the *same*
+
+can use a increment
+
+seq(from=-5,to=5,by=2)
+
+gives
+
+> seq(from=-5,to=5,by=2)
+[1] -5 -3 -1  1  3  5
+
+another form is:
+
+> seq(from=-5,to=5,by=2)
+[1] -5 -3 -1  1  3  5
+> s <- seq(length=11, from=-1, by=2)
+> s
+ [1] -1  1  3  5  7  9 11 13 15 17 19
+> s <- seq(length=11, from=-5, by=2)
+> s
+ [1] -5 -3 -1  1  3  5  7  9 11 13 15
+> s <- seq(length=7, from=-5, by=2)
+> s
+[1] -5 -3 -1  1  3  5  7
+
+final form of seq():
+
+v <- 1:7
+seq(v)
+
+is equivalent to:
+
+seq(1,length(v))
+> v=1:5
+> seq(along=v)
+[1] 1 2 3 4 5
+> seq(along=v)
+[1] 1 2 3 4 5
+> v=1:20
+> v=2*(1:20)
+> v
+ [1]  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40
+> seq(along=v)
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+
+12) can generate logical vectors with true or false or NA by using
+a comparison operator with a vector. like this:
+
+> x <- 1:10
+> x
+ [1]  1  2  3  4  5  6  7  8  9 10
+> y <- x > 5
+> y
+ [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+> sum(y)
+[1] 5
+
+in above sum() TRUE=1 and FALSE=0.
+
+13) if a value is not known, then the value is NA (not available):
+
+z <- c(1:3,NA)
+inf <- is.na(z)
+z
+
+testing for NA with is.na() gives this:
+
+> z <- c(1:3,NA)
+> ind <- is.na(z)
+> z
+[1]  1  2  3 NA
+
+14) there is also the value NaN, not-a-number:
+
+0/0
+
+an we have Inf for infinity, such as,
+
+1/0
+
+both gives this:
+
+> 0/0
+[1] NaN
+> 1/0
+[1] Inf
+
+there are two functions to test for NA and NaN:
+
+is.na(xx) and is.nan(x)
+
+> v<-c(0/0,NA)
+> is.na(v)
+[1] TRUE TRUE
+> is.nan(v)
+[1]  TRUE FALSE
+
+15) using psate() to make strings:
+
+> labs <- paste(c("x","y"), 1:10, sep="")
+> labs
+ [1] "x1"  "y2"  "x3"  "y4"  "x5"  "y6"  "x7"  "y8"  "x9"  "y10"
+> labs <- paste(c("x","y"), 1:10, sep="-")
+> labs
+ [1] "x-1"  "y-2"  "x-3"  "y-4"  "x-5"  "y-6"  "x-7"  "y-8"  "x-9"  "y-10"
+> labs <- paste(c("x","y"), 1:10, 1:3, sep="")
+> labs
+ [1] "x11"  "y22"  "x33"  "y41"  "x52"  "y63"  "x71"  "y82"  "x93"  "y101"
+> labs <- paste(c("x","y"), 1:10, 1:3, sep="-")
+> labs
+ [1] "x-1-1"  "y-2-2"  "x-3-3"  "y-4-1"  "x-5-2"  "y-6-3"  "x-7-1"  "y-8-2" 
+ [9] "x-9-3"  "y-10-1"
+
+16) index vectors allow to choose specific members of an array:
+
+> x <- c(NA,1,3,4,NA,4,5)
+> x
+[1] NA  1  3  4 NA  4  5
+> y <- x[!is.na(x)]
+> y
+[1] 1 3 4 4 5
+> 
+> z <- (x+1)[(!is.na(x)) & x>0]
+> z
+[1] 2 4 5 5 6
+> t <- x[(!is.na(x)) & x>0] + 1
+> t
+[1] 2 4 5 5 6
+> t[1:3]
+[1] 2 4 5
+> t[-(1:3)]
+[1] 5 6
+> 
+
+using names to label vector entries:
+
+> fruit <- c(5,10,1,20)
+> names(fruit) <- c("orange", "banana", "apple", "peach")
+> lunch -< fruit[c("orange","apple")]
+Error: unexpected '<' in "lunch -<"
+> lunch <- fruit[c("orange","apple")]
+> lunch
+orange  apple 
+     5      1 
+
+also can be on receiving end:
+
+> x
+[1] NA  1  3  4 NA  4  5
+> y <- x
+> y
+[1] NA  1  3  4 NA  4  5
+> y[is.na(y)] <- Inf
+> y
+[1] Inf   1   3   4 Inf   4   5
+> y[is.na(y)] <- 0
+> y
+[1] Inf   1   3   4 Inf   4   5
+
+17) other types of objects are:
+
+• matrices or more generally arrays are multi-dimensional 
+generalizations of vectors. In fact, they are vectors that can be 
+indexed by two or more indices and will be printed in special
+ways. See Chapter 5 [Arrays and matrices], page 18.
+
+• factors provide compact ways to handle categorical data. See 
+Chapter 4 [Factors], page 16.
+
+• lists are a general form of vector in which the various elements 
+need not be of the same type, and are often themselves vectors or 
+lists. Lists provide a convenient way to return the
+results of a statistical computation. See Section 6.1 [Lists], page 26.
+
+• data frames are matrix-like structures, in which the columns can 
+be of different types. Think of data frames as ‘data matrices’ with 
+one row per observational unit but with (possibly) Chapter 2: Simple 
+manipulations; numbers and vectors 12 both numerical and categorical 
+variables. Many experiments are best described by data frames: the 
+treatments are categorical but the response is numeric. 
+See Section 6.3 [Data frames], page 27.
+
+• functions are themselves objects in R which can be stored in 
+the project’s workspace. This provides a simple and convenient way 
+to extend R.
+

@@ -1,0 +1,85 @@
+#!/usr/bin/ksh 
+#
+if [[ $# -eq 0 ]]
+then
+	set -- ${PWD}
+elif [[ "${1}" == "-?" ]]
+then
+	echo -e "\nusage: $0 [-?] [-l label] [dir1 [...]]\n"
+	exit 0
+elif [[ "${1}" == "-l" ]]
+then
+	shift 1
+	label="${1}"
+	if [[ -z "${label}" ]]
+	then
+		echo -e "\nERROR: -l option requires a label."
+		exit 2
+	fi
+	shift 1
+	if [[ $# -eq 0 ]]
+	then
+		set -- ${PWD}
+	fi
+fi
+#
+bkupdir=${HOME}/bkup_files/all/$(date '+%y%m%d%H%M')
+if [[ ! -z "${label}" ]]
+then
+	bkupdir="${bkupdir}-${label}"
+fi
+[ ! -d "${bkupdir}" ] && mkdir -p ${bkupdir};
+#
+echo "backup into directory ${bkupdir} ..."
+#
+cimdir=~/cim/
+echo -e "\nCIM Directory: ${cimdir}"
+#
+hjfiles="/tmp/$$.hijacked.files"
+>${hjfiles}
+#
+for srcdir in "${@}"
+do
+	if [[ ! -d "${srcdir}" ]]
+	then
+		echo -e "\nWARNING: ${srcdir} is NOT a directory."
+		echo -e "\nSkipping it."
+		continue
+	fi
+	#
+	cd ${srcdir}
+	cwdir=${PWD}
+	reldir="${cwdir#${cimdir}}"
+	#
+	echo -e "\nCurrent Directory : ${cwdir}"
+	echo "Relative Directory: ${reldir}"
+	#
+	if [[ "${cwdir}" == "${reldir}" ]]
+	then
+		echo -e "\nWARNING: CWD = RELDIR. Skipping it."
+		continue
+	elif [[ -z "${reldir}" ]]
+	then
+		echo -e "\nWARNING: CWD = CIM ROOT. Skipping it."
+		continue
+	else
+		echo -e "\nStarting backup of directory: ${reldir}"
+	fi
+	#
+	fullbkupdir=${bkupdir}/${reldir}
+	[ ! -d "${fullbkupdir}" ] && mkdir -p ${fullbkupdir};
+	#
+	cp -r . ${fullbkupdir}
+	#
+	cd - >/dev/null
+	#
+	# list any hijacked files in the directoty
+	ctlshj ${reldir} >>${hjfiles}
+done
+#
+mv ${hjfiles} ${bkupdir}/hijacked.files
+#
+echo -e "\nHijacked files:"
+cat ${bkupdir}/hijacked.files
+#
+exit 0

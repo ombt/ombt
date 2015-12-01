@@ -9,12 +9,12 @@
 #include <unistd.h>
 #include <iostream>
 #include <vector>
-#include <Debug.h>
-#include <atomic/Atomic.h>
-#include <atomic/UseCntPtr.h>
-#include <threads/ThreadMutex.h>
-#include <logging/Logging.h>
-#include <threads/SimpleThread.h>
+#include "system/Debug.h"
+#include "atomic/Atomic.h"
+#include "atomic/UseCntPtr.h"
+#include "threads/ThreadMutex.h"
+#include "logging/Logging.h"
+#include "threads/SimpleThread.h"
 
 using namespace std;
 using namespace ombt;

@@ -7,13 +7,13 @@
 #include <unistd.h>
 #include <iostream>
 
-#include <Debug.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
 
-#include <atomic/UseCntPtr.h>
-#include <threads/Task.h>
-#include <threads/Thread.h>
-#include <threads/Queue.h>
+#include "atomic/UseCntPtr.h"
+#include "threads/Task.h"
+#include "threads/Thread.h"
+#include "threads/Queue.h"
 
 using namespace ombt;
 using namespace std;

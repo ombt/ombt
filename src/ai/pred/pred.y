@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include <unistd.h>
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 
 // other headers
 #include "pred.h"
@@ -14,8 +14,8 @@
 #define IfDebug(DebugLevel, DebugMsg, StuffToDump) \
 	if (DebugLevel <= currentDebugLevel) \
 	{ \
-		cout << DebugMsg << endl; \
-		cout << StuffToDump << endl; \
+		std::cout << DebugMsg << std::endl; \
+		std::cout << StuffToDump << std::endl; \
 	}
 
 #define IfDebugCall(DebugLevel, Called) \
@@ -45,13 +45,13 @@ extern int yylex();
 extern void yyerror(const char *s);
 
 // symbol table
-BinaryTree_AVL<Symbol> symbols;
+ombt::BinaryTree_AVL<Symbol> symbols;
 
 // program data
-List<Symbol> scope;
-List<Semantic * > ptrees;
-List<List<Semantic * > > programs;
-List<List<IRClause> > clausesPrograms;
+ombt::List<Symbol> scope;
+ombt::List<Semantic * > ptrees;
+ombt::List<ombt::List<Semantic * > > programs;
+ombt::List<ombt::List<IRClause> > clausesPrograms;
 
 // other globals
 int currentDebugLevel = 0;
@@ -66,7 +66,7 @@ int syntaxErrors = 0;
 %union {
 	char cstring[32];
 	Semantic *psemantic;
-	List<Semantic *> *parguments;
+	ombt::List<Semantic *> *parguments;
 };
 
 %token <cstring> AND
@@ -245,7 +245,7 @@ unary:
 	| universal unary
 	{
 		/* create an NEGATION record */
-		$$ = new Semantic(Expression::Universal, String($1), $2);
+		$$ = new Semantic(Expression::Universal, ombt::String($1), $2);
 		MustBeTrue($$ != NULL);
 
 		/* end scope */
@@ -293,7 +293,7 @@ universal:
 		strcpy($$, $2);
 
 		/* check if symbol exists in global symbol table */
-		Symbol newqvsym(String($2), Symbol::UniversalVariable);
+		Symbol newqvsym(ombt::String($2), Symbol::UniversalVariable);
 		if (symbols.retrieve(newqvsym) == OK)
 		{
 			/* symbol was found */
@@ -309,12 +309,12 @@ universal:
 		else
 		{
 			/* new symbol, insert into symbol table */
-			symbols.insert(Symbol(String($2), 
+			symbols.insert(Symbol(ombt::String($2), 
 				Symbol::Variable));
 		}
 
 		/* insert name into scope */
-		scope.insertAtFront(Symbol(String($2), 
+		scope.insertAtFront(Symbol(ombt::String($2), 
 			Symbol::UniversalVariable));
 		IfDebug(5, "starting a new universal scope ...", scope);
 	}
@@ -327,7 +327,7 @@ existential:
 		strcpy($$, $2);
 
 		/* check if symbol exists in global symbol table */
-		Symbol newqvsym(String($2), Symbol::ExistentialVariable);
+		Symbol newqvsym(ombt::String($2), Symbol::ExistentialVariable);
 		if (symbols.retrieve(newqvsym) == OK)
 		{
 			/* symbol was found */
@@ -343,12 +343,12 @@ existential:
 		else
 		{
 			/* new symbol, insert into symbol table */
-			symbols.insert(Symbol(String($2), 
+			symbols.insert(Symbol(ombt::String($2), 
 				Symbol::Variable));
 		}
 
 		/* insert name into scope */
-		scope.insertAtFront(Symbol(String($2),
+		scope.insertAtFront(Symbol(ombt::String($2),
 			Symbol::ExistentialVariable));
 		IfDebug(5, "starting a new existential scope ...", scope);
 	}
@@ -363,14 +363,14 @@ atom:
 	{
 		/* create a predicate logical record */
 		$$ = new Semantic(Predicate::LogicalConstant, 
-				String(""), String("True"));
+				ombt::String(""), ombt::String("True"));
 		MustBeTrue($$ != NULL);
 	}
 	| FALSE
 	{
 		/* create a logical constant record */
 		$$ = new Semantic(Predicate::LogicalConstant, 
-				String(""), String("False"));
+				ombt::String(""), ombt::String("False"));
 		MustBeTrue($$ != NULL);
 	}
 	| LPAREN expression RPAREN
@@ -383,7 +383,7 @@ predicate:
 	PIDENTIFIER
 	{
 		/* check if symbol exists */
-		Symbol newsym(String($1), Symbol::PredicateConstant);
+		Symbol newsym(ombt::String($1), Symbol::PredicateConstant);
 		if (symbols.retrieve(newsym) == OK)
 		{
 			/* symbol was found */
@@ -403,18 +403,18 @@ predicate:
 		}
 
 		/* create a predicate constant record */
-		$$ = new Semantic(Predicate::Constant, String($1), String(""));
+		$$ = new Semantic(Predicate::Constant, ombt::String($1), ombt::String(""));
 		MustBeTrue($$ != NULL);
 	}
 	| PIDENTIFIER LPAREN arglist RPAREN
 	{
 		/* count the number of arguments */
 		int nargs;
-		ListIterator<Semantic * > argsIter(*$3);
+		ombt::ListIterator<Semantic * > argsIter(*$3);
 		for (nargs = 0; !argsIter.done(); argsIter++, nargs++);
 
 		/* check if symbol exists */
-		Symbol newsym(String($1), Symbol::PredicateFunction, nargs);
+		Symbol newsym(ombt::String($1), Symbol::PredicateFunction, nargs);
 		if (symbols.retrieve(newsym) == OK)
 		{
 			/* symbol was found, type should not change */
@@ -444,7 +444,7 @@ predicate:
 		}
 
 		/* create a predicate record */
-		$$ = new Semantic(Predicate::Function, String($1), $3, nargs);
+		$$ = new Semantic(Predicate::Function, ombt::String($1), $3, nargs);
 		MustBeTrue($$ != NULL);
 	}
 	;
@@ -453,7 +453,7 @@ arglist:
 	arg
 	{
 		/* create an argument list */
-		$$ = new List<Semantic *>;
+		$$ = new ombt::List<Semantic *>;
 		MustBeTrue($$ != NULL);
 
 		/* insert an argument in the list */
@@ -492,13 +492,13 @@ constant:
 	STRING
 	{
 		/* create a string record */
-		$$ = new Semantic(Argument::QuotedString, String($1));
+		$$ = new Semantic(Argument::QuotedString, ombt::String($1));
 		MustBeTrue($$ != NULL);
 	}
 	| NUMBER
 	{
 		/* create a number record */
-		$$ = new Semantic(Argument::Number, String($1));
+		$$ = new Semantic(Argument::Number, ombt::String($1));
 		MustBeTrue($$ != NULL);
 	}
 	;
@@ -507,7 +507,7 @@ variable:
 	IDENTIFIER
 	{
 		/* search if name is in the scope */
-		Symbol varsym(String($1));
+		Symbol varsym(ombt::String($1));
 		if (scope.retrieve(varsym) == OK)
 		{
 			/* increment usage */
@@ -519,7 +519,7 @@ variable:
 			IfDebug(5, "scope updated (after) ...", scope);
 
 			/* we have a variable, verify type did not change */
-			Symbol sym(String($1));
+			Symbol sym(ombt::String($1));
 			if (symbols.retrieve(sym) != OK)
 			{
 				sprintf(errormsg, 
@@ -538,13 +538,13 @@ variable:
 			}
 
 			/* create a variable semantic record */
-			$$ = new Semantic(Argument::Variable, String($1));
+			$$ = new Semantic(Argument::Variable, ombt::String($1));
 			MustBeTrue($$ != NULL);
 		}
 		else
 		{
 			/* we have a constant, verify type did not change */
-			Symbol sym(String($1));
+			Symbol sym(ombt::String($1));
 			if (symbols.retrieve(sym) == OK)
 			{
 				if (sym.getType() != Symbol::Constant)
@@ -559,12 +559,12 @@ variable:
 			else
 			{
 				/* insert new constant symbol entry */
-				symbols.insert(Symbol(String($1), 
+				symbols.insert(Symbol(ombt::String($1), 
 					Symbol::Constant));
 			}
 
 			/* create a constant semantic record */
-			$$ = new Semantic(Argument::Constant, String($1));
+			$$ = new Semantic(Argument::Constant, ombt::String($1));
 			MustBeTrue($$ != NULL);
 		}
 	}
@@ -575,11 +575,11 @@ function:
 	{
 		/* get number of arguments */
 		int nargs;
-		ListIterator<Semantic * > argsIter(*$3);
+		ombt::ListIterator<Semantic * > argsIter(*$3);
 		for (nargs = 0; !argsIter.done(); argsIter++, nargs++);
 
 		/* check if symbol exists */
-		Symbol newsym(String($1), Symbol::Function, nargs);
+		Symbol newsym(ombt::String($1), Symbol::Function, nargs);
 		if (symbols.retrieve(newsym) == OK)
 		{
 			/* symbol was found, type should not change */
@@ -609,7 +609,7 @@ function:
 		}
 
 		/* create a function record */
-		$$ = new Semantic(Argument::Function, String($1), $3, nargs);
+		$$ = new Semantic(Argument::Function, ombt::String($1), $3, nargs);
 		MustBeTrue($$ != NULL);
 	}
 	;
@@ -651,7 +651,7 @@ yyerror(char *s)
 void
 usage(const char *cmd)
 {
-	cout << "usage: " << cmd << " [-?d:p:] [-o outfile] input_file" << endl;
+	std::cout << "usage: " << cmd << " [-?d:p:] [-o outfile] input_file" << std::endl;
 }
 
 // print program
@@ -664,20 +664,20 @@ dumpPtrees()
 
 	// iterate over all parsetrees, and print them.
 	int progno = 1;
-	ListIterator<Semantic * > ptreesIter(ptrees);
+	ombt::ListIterator<Semantic * > ptreesIter(ptrees);
 	for (int lnno = 1; !ptreesIter.done(); ptreesIter++, lnno++)
 	{
 		if (lnno == 1)
-			cout << endl << "PARSE TREE: " << progno++ << endl;
-		cout << "Line " << lnno << ": ";
+			std::cout << std::endl << "PARSE TREE: " << progno++ << std::endl;
+		std::cout << "Line " << lnno << ": ";
 		if (ptreesIter()->getConclusion())
 		{
-			cout << "conclusion: ";
+			std::cout << "conclusion: ";
 			lnno = 0;
 		}
 		else
-			cout << "assumption: ";
-		cout << *ptreesIter() << endl;
+			std::cout << "assumption: ";
+		std::cout << *ptreesIter() << std::endl;
 	}
 	return;
 }
@@ -690,16 +690,16 @@ dumpPrograms()
 		return;
  
 	// iterate over all programs, and print them.
-	ListIterator<List<Semantic *> > programsIter(programs);
+	ombt::ListIterator<ombt::List<Semantic *> > programsIter(programs);
 	for (int progno = 1; !programsIter.done(); programsIter++, progno++)
 	{
 		// iterate over all clauses in program
-		cout << endl << "PROGRAM: " << progno << endl;
-		ListIterator<Semantic *> programIter(programsIter());
+		std::cout << std::endl << "PROGRAM: " << progno << std::endl;
+		ombt::ListIterator<Semantic *> programIter(programsIter());
 		for (int lnno = 1; !programIter.done(); programIter++, lnno++)
 		{
-			cout << "Clause " << lnno << ": ";
-			cout << *programIter() << endl;
+			std::cout << "Clause " << lnno << ": ";
+			std::cout << *programIter() << std::endl;
 		}
 	}
 	return;
@@ -713,25 +713,25 @@ dumpIRClausesPrograms()
 		return;
 
 	// iterate over all programs, and print them.
-	ListIterator<List<IRClause> > cprogsIter(clausesPrograms);
+	ombt::ListIterator<ombt::List<IRClause> > cprogsIter(clausesPrograms);
 	for (int progno = 1; !cprogsIter.done(); cprogsIter++, progno++)
 	{
 		// iterate over all clauses in program
-		cout << endl << "CLAUSE PROGRAM: " << progno << endl;
-		ListIterator<IRClause> clauseIter(cprogsIter());
+		std::cout << std::endl << "CLAUSE PROGRAM: " << progno << std::endl;
+		ombt::ListIterator<IRClause> clauseIter(cprogsIter());
 		for (int lnno = 1; !clauseIter.done(); clauseIter++, lnno++)
 		{
-			cout << "Clause " << lnno << ": " << clauseIter();
+			std::cout << "Clause " << lnno << ": " << clauseIter();
 			if (clauseIter().getPartOfConclusion())
-				cout << "(part of conclusion)";
-			cout << endl;
+				std::cout << "(part of conclusion)";
+			std::cout << std::endl;
 		}
 	}
 	return;
 }
 
 void
-dumpIRClausesPrograms(const char *ofile, ofstream &outfile, int &emptyFile)
+dumpIRClausesPrograms(const char *ofile, std::ofstream &outfile, int &emptyFile)
 {
 	// check if any program to print
 	if (clausesPrograms.isEmpty())
@@ -739,20 +739,20 @@ dumpIRClausesPrograms(const char *ofile, ofstream &outfile, int &emptyFile)
 
 	// iterate over all programs, and print them.
 	emptyFile = 0;
-	outfile << "file " << ofile << ":" << endl;
-	ListIterator<List<IRClause> > cprogsIter(clausesPrograms);
+	outfile << "file " << ofile << ":" << std::endl;
+	ombt::ListIterator<ombt::List<IRClause> > cprogsIter(clausesPrograms);
 	for (int progno = 1; !cprogsIter.done(); cprogsIter++, progno++)
 	{
 		// iterate over all clauses in program
-		outfile << "program " << progno << ":" << endl;
-		ListIterator<IRClause> clauseIter(cprogsIter());
+		outfile << "program " << progno << ":" << std::endl;
+		ombt::ListIterator<IRClause> clauseIter(cprogsIter());
 		for (int lnno = 1; !clauseIter.done(); clauseIter++, lnno++)
 		{
 			if (clauseIter().getPartOfConclusion())
 				outfile << "conclusion " << lnno << ": " << clauseIter();
 			else
 				outfile << "assumption " << lnno << ": " << clauseIter();
-			outfile << endl;
+			outfile << std::endl;
 		}
 	}
 	return;
@@ -763,11 +763,11 @@ int
 convert2cnf()
 {
 	// list for holding individual programs
-	List<Semantic *> program;
-	List<IRClause> clausesProgram;
+	ombt::List<Semantic *> program;
+	ombt::List<IRClause> clausesProgram;
 
 	// loop over all expressions and convert
-	ListIterator<Semantic * > ptreesIter(ptrees);
+	ombt::ListIterator<Semantic * > ptreesIter(ptrees);
 	for ( ; !ptreesIter.done(); ptreesIter++)
 	{
 		// initial tree
@@ -826,7 +826,7 @@ convert2cnf()
 		if (ptreesIter()->getConclusion())
 		{
 			// rename variables in clauses
-			ListIterator<Semantic *> programIter(program);
+			ombt::ListIterator<Semantic *> programIter(program);
 			for (int ic=1 ; !programIter.done(); ic++,programIter++)
 			{
 				// rename all variables to unique names
@@ -873,7 +873,7 @@ clearPtrees()
 		return;
  
 	// iterate over all parsetrees, and delete them
-	ListIterator<Semantic * > ptreesIter(ptrees);
+	ombt::ListIterator<Semantic * > ptreesIter(ptrees);
 	for ( ; !ptreesIter.done(); ptreesIter++)
 	{
 		if (ptreesIter() != NULL)
@@ -891,10 +891,10 @@ clearPrograms()
 		return;
  
 	// iterate over all programs, and delete them
-	ListIterator<List<Semantic * > > programsIter(programs);
+	ombt::ListIterator<ombt::List<Semantic * > > programsIter(programs);
 	for ( ; !programsIter.done(); programsIter++)
 	{
-		ListIterator<Semantic * > programIter(programsIter());
+		ombt::ListIterator<Semantic * > programIter(programsIter());
 		for ( ; !programIter.done(); programIter++)
 		{
 			if (programIter() != NULL)
@@ -961,7 +961,7 @@ main(int argc, char **argv)
 	// check if an output file was given. also, do not write out
 	// a file if a full conversion is NOT done.
 	//
-	ofstream outfile;
+	std::ofstream outfile;
 	if (outfilename != NULL && maxPhase >= MAXPHASE)
 	{
 		outfile.open(outfilename);

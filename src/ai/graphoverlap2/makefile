@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -39,6 +44,8 @@ clean:
 install:
 	cp graphoverlap2 $(BINARYDIR)/graphoverlap2
 	touch install
+
+depend:
 
 backup:
 	bkup

@@ -1,0 +1,5 @@
+#!/usr/bin/ksh
+#
+# log file build.
+#
+exec /cimuser/mrumore/bin/mybld -L "${@}"

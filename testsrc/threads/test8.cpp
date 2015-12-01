@@ -7,12 +7,12 @@
 #include <unistd.h>
 #include <iostream>
 #include <list>
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <threads/SimpleThread.h>
-#include <threads/ThreadMutex.h>
-#include <threads/ThreadConditionVariable.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "threads/SimpleThread.h"
+#include "threads/ThreadMutex.h"
+#include "threads/ThreadConditionVariable.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 using namespace std;

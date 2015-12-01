@@ -1,0 +1,56 @@
+#!/usr/bin/ksh
+#
+# vi last mybld log file
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [vi options]
+
+where:
+	-? = print usage message
+	-x = debug
+
+vi the last build log file.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+#
+set -- $(getopt x ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+lastlogfile="$(ls -tr /tmp/lf.* 2>/dev/null | tail -1)"
+if [[ ! -r "${lastlogfile}" || -z "${lastlogfile}" ]]
+then
+	echo -e "\nNO 'last' log file found."
+	exit 2
+fi
+#
+echo -e "\nFound 'last' log file: ${lastlogfile}"
+#
+vi "${@}" ${lastlogfile}
+#
+rm -f ${errlog} 2>/dev/null 1>&2
+#
+exit 0

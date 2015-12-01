@@ -1,0 +1,327 @@
+#!/bin/bash
+#
+: ${DB_NAME:?"is NOT set."}
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+usage() {
+cat >&2 <<EOF
+usage: $0 [-?x] [-t] [-e] export_file [export_file2 [...]]
+where
+	-? = print usage message
+	-x = debug
+	-t = truncate table
+	-e = execute sql script.
+
+export_file is a file generated using the export.tables script.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+output="/tmp/output.$$"
+#
+rmfiles() {
+	rm -f ${errlog} 2>/dev/null 1>&2
+	rm -f ${output} 2>/dev/null 1>&2
+}
+#
+trap 'rmfiles' 0
+#
+truncate=0
+execute=0
+#
+set -- $(getopt edxt ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-t)
+		truncate=1
+		shift
+		;;
+	-e)
+		execute=1
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+MYLAPTOPIP="$(mylaptopip)"
+#
+if [[ "${execute}" != 0 ]]
+then
+	case "${DB_SERVER}" in
+	mar-sql-server|${MYLAPTOPIP})
+		echo -e "\nDB server ${DB_SERVER} allowed."
+		;;
+	*)
+		echo -e "\nDB server ${DB_SERVER} NOT allowed."
+		exit 2
+		;;
+	esac
+fi
+#
+for file in "${@}"
+do
+	echo -e "\nProcessing file: ${file}"
+	#
+	if [[ ! -r "${file}" ]]
+	then
+		echo -e "\nFile ${file} is NOT readable. Skipping it."
+		continue
+	fi
+	#
+	>${output}
+	#
+	cat ${file} |
+	gawk 'BEGIN {
+		verbose = 0;
+		state = "unknown";
+		table = "unknown";
+		use_identity = 0;
+		meta_rec_no = 0;
+		data_rec_no = 0;
+		truncate_flag = '"${truncate}"';
+	}
+	$0 ~ /START TABLE:/ && state == "unknown" {
+		if (verbose) print "Start Table Processing: " $0;
+		state = "table";
+		table = $3;
+		outfile = table ".sql";
+		print "Output File Name: " outfile;
+		next;
+	}
+	$0 ~ /END TABLE:/ && state == "table" {
+		if (verbose) print "End Table Processing: " $0;
+		state = "unknown";
+		table = "unknown";
+		next;
+	}
+	$0 ~ /START METADATA:/ && state == "table" {
+		if (verbose) print "Start Metadata Processing: " $0;
+		state = "metadata";
+		meta_rec_no = 1;
+		meta_fld_no = 0;
+		use_identity = 0;
+		metadata["number_of_fields"] = 0;
+		metadata["use_identity"] = 0;
+		oldFS = FS;
+		FS = "\t";
+		next;
+	}
+	$0 ~ /END METADATA:/ && state == "metadata" {
+		if (verbose) print "End Metadata Processing: " $0;
+		metadata["number_of_fields"] = meta_fld_no;
+		state = "table";
+		FS = oldFS;
+		next;
+	}
+	state == "metadata" && meta_rec_no == 1{
+		if (verbose) print "Metadata Column Record Processing: " $0;
+		for (i=1;i<=NF;i++)
+		{
+			meta_col_names[$i] = i;
+		}
+		metadata["number_of_fields"] = 0;
+		meta_rec_no += 1;
+		next;
+	}
+	state == "metadata" && meta_rec_no > 1{
+		if (verbose) print "Metadata Row Record Processing: " $0;
+		meta_fld_no += 1;
+		meta_rec_no += 1;
+		fld_name = $meta_col_names["field_name"];
+		metadata[fld_name,"field_name"] = fld_name;
+		metadata[fld_name,"is_identity"] = $meta_col_names["is_identity"];
+		metadata[fld_name,"precision"] = $meta_col_names["precision"];
+		if (metadata[fld_name,"is_identity"] != 0)
+		{
+			metadata["use_identity"] = 1;
+		}
+		next;
+	}
+	$0 ~ /START DATA:/ && state == "table" {
+		if (verbose) print "Start Data Processing: " $0;
+		state = "data";
+		data_rec_no = 1;
+		data_rec_to_print = 0;
+		oldFS = FS;
+		FS = "\t";
+		next;
+	}
+	$0 ~ /END DATA:/ && state == "data" {
+		FS = oldFS;
+		if (verbose) print "End Data Processing: " $0;
+		if (data_rec_to_print > 0)
+		{
+			open_file(outfile);
+			db_name(outfile);
+			count(table, outfile);
+			truncate(table, outfile);
+			use_identity_insert(table, "ON", outfile);
+			insert(data_rec_to_print, data_col_names["insert_prefix"], outfile);
+			count(table, outfile);
+			use_identity_insert(table, "OFF", outfile);
+			bye(outfile);
+			close_file(outfile);
+		}
+		else
+		{
+			print "NO SQL FILE WRITTEN SINCE NO DATA RECORDS FOUND.";
+		}
+		state = "table";
+		next;
+	}
+	state == "data" && data_rec_no == 1{
+		if (verbose) print "Data Column Record Processing: " $0;
+		data_col_names[1] = $1;
+		data_col_names["insert_prefix"] = "INSERT INTO " table " (" data_col_names[1];
+		for (i=2;i<=NF;i++)
+		{
+			data_col_names[i] = $i;
+			data_col_names["insert_prefix"] = data_col_names["insert_prefix"] "," data_col_names[i];
+		}
+		data_col_names["insert_prefix"] = data_col_names["insert_prefix"] ") ";
+		data_col_names["number_of_fields"] = NF;
+		data_rec_no += 1;
+		next;
+	}
+	state == "data" && data_rec_no > 1{
+		if (verbose) print "Metadata Row Record Processing: " $0;
+		data_rec_to_print += 1;
+		values = " VALUES ( ";
+		first_fld = 1;
+		for (i=1;i<=NF;i++)
+		{
+			fld_name = data_col_names[i];
+			fld_value = $i;
+			if ((fld_name,"field_name") in metadata)
+			{
+				if (!first_fld)
+				{
+					values = values ","
+				}
+				if (fld_value != "NULL")
+				{
+					if (metadata[fld_name,"precision"] == 0)
+					{
+						values = values "\x27" fld_value "\x27";
+					}
+					else
+					{
+						values = values fld_value;
+					}
+				} else if (metadata[fld_name,"precision"] != 0) {
+					values = values "0";
+				} else {
+					values = values "\x27\x27";
+				}
+				first_fld = 0;
+			}
+		}
+		values = values " )";
+		valuesrecs[data_rec_to_print] = values
+		data_rec_no += 1;
+		next;
+	}
+	{
+		print "UNKOWN STATE !!!";
+		exit(1);
+	}
+	END {
+	} 
+	function open_file(filename) {
+		printf "" >filename;
+	}
+	function close_file(filename) {
+		close(filename);
+	}
+	function go(filename) {
+		print "GO" >>filename;
+	}
+	function bye(filename) {
+		print "BYE" >>filename;
+	}
+	function db_name(filename) {
+		print "USE '"${DB_NAME}"'" >>filename;
+		go(filename);
+	} 
+	function count(table, filename) {
+		print "SELECT count(*) FROM " table >>filename;
+		go(filename);
+	}
+	function truncate(table, filename) {
+		if (truncate_flag != 0)
+		{
+			print "TRUNCATE TABLE " table >>filename;
+			go(filename);
+			count(table, outfile);
+		}
+	}
+	function use_identity_insert(table, onoff, filename) {
+		if (metadata["use_identity"] == 1)
+		{
+			print "SET IDENTITY_INSERT " table " " onoff >>filename;
+			go(filename);
+		}
+	}
+	function insert(nrecs, insert_prefix, filename)
+	{
+		for (i=1;i<=nrecs;i++)
+		{
+			print insert_prefix valuesrecs[i] >>filename;
+			go(filename);
+		}
+	} ' | 
+	tee ${output}
+	#
+	if [[ "${execute}" != 0 ]]
+	then
+		sqlfile=$(cat ${output} |
+			  grep "Output File Name:" |
+			  sed 's/ //g' |
+			  cut -d: -f2)
+		if [[ -r "${sqlfile}" ]]
+		then
+			echo -e "Execute ${sqlfile} on ${DB_NAME}:${DB_SERVER} ???"
+			read ans
+			case "${ans}" in
+			[yY]*)
+				echo -e "Executing."
+				mytsql < ${sqlfile} |
+	 			sed -e "s/[0-9][0-9][0-9]> //g" \
+				     -e "s/[0-9][0-9]> //g" \
+				     -e "s/[0-9]> //g" \
+				     -e "s/(return status = 0)//g" \
+				     -e "s/local.*$//g" \
+				     -e "s/[ 	]*$//g"
+				;;
+			*)
+				echo -e "NOT Executing."
+				;;
+			esac
+		else
+			echo -e "NO SQL file generated."
+		fi
+	fi
+done
+#
+exit 0
+
+

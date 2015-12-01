@@ -1,0 +1,111 @@
+#!/usr/bin/ksh
+#******************************************************************************
+#         COPYRIGHT 2011 PANASONIC FACTORY SOLUTIONS COMPANY OF AMERICA
+#              DIVISION OF PANASONIC CORPORATION OF NORTH AMERICA
+#    5201 TOLLVIEW DRIVE, ROLLING MEADOWS, IL, 60008. ALL RIGHTS RESERVED
+#******************************************************************************
+#
+# Name Of File  : doxygen_main_menu
+#
+# Version       : %I%
+#
+# Last Modified : %G%
+#
+# Type Of File  : Shell Script
+#
+# Author        : Mike Rumore
+#
+# Description   : Build web page of available doxygen loads.
+#
+# assumed doxygen path hierarchy;
+#
+# doxyhome/repository
+# doxyhome/repository/index.html
+# doxyhome/repository/LOADDIR1
+# ...
+# doxyhome/repository/LOADDIRN
+#
+#******************************************************************************
+#
+# usage message
+#
+usage() {
+'cat' <<EOF
+usage: $0 [-?] doxygen_home_path
+EOF
+}
+#
+# doxygen repository paths
+#
+if [[ $# -eq 0 ]]
+then
+	usage >&2
+	'exit' 2
+elif [[ "${1}" == "-?" ]]
+then
+	usage >&2
+	'exit' 0
+fi
+#
+DOXYPATH="${1}"
+#
+cd ${DOXYPATH}
+DOXYPATH="$(pwd -P)"
+cd -
+#
+# is path writeable?
+#
+if [[ ! -w "${DOXYPATH}" ]]
+then
+	'echo' "ERROR: path ${DOXYPATH} is NOT writeable'" >&2
+	'exit' 2
+fi
+#
+# html files to be generated
+#
+NEWINDEXHTML="${DOXYPATH}/newindex.html"
+INDEXHTML="${DOXYPATH}/index.html"
+#
+# html standard header
+#
+'cat' >${NEWINDEXHTML} <<EOF
+
+<html>
+<body bgcolor="FFFFFF">
+<center>
+
+<h3> PanaCIM doxygen Repository </h3>
+EOF
+#
+# generate list of available doxygen loads
+#
+set -- ${DOXYPATH}/repository/*
+#
+if [[ $# != 0 ]]
+then
+	'echo' "<ul>" >>${NEWINDEXHTML}
+	for LOAD in $('echo' ${*} | 'tr' ' ' '\012' | 'sort' -r | 'grep' -v tobedeleted | 'grep' -v temp)
+	do
+		LOADNAME=$('basename' "${LOAD}")
+		'cat' >>${NEWINDEXHTML} <<EOF
+<li>
+<a href="file://${LOAD}/html/index.html">${LOADNAME}</a>
+EOF
+	done
+	'echo' "</ul>" >>${NEWINDEXHTML}
+fi
+#
+# html standard trailer
+#
+'cat' >>${NEWINDEXHTML} <<EOF
+</center>
+</body>
+</html>
+EOF
+#
+# overwrite old version with new version
+#
+'cp' ${NEWINDEXHTML} ${INDEXHTML}
+#
+'exit' 0
+

@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -24,7 +29,8 @@ PRODS = \
 	test15 \
 	test16
 
-CXXEXTRAFLAGS = 
-CXXLIBFLAGS = -pthread -lombtthreads -lombtlogging -lombtrandom
+CXXEXTRAFLAGS = -pthread 
 
-include $(ROOT)/build/makefile.test
+TESTLIBS = threads logging random
+
+include $(ROOT)/build/makefile.test2

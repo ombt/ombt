@@ -12,16 +12,16 @@
 #include <list>
 
 // local headers
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntPtr.h>
-#include <threads/ThreadBarrier.h>
-#include <threads/Task.h>
-#include <threads/Thread.h>
-#include <threads/Queue.h>
-#include <sockets/Socket.h>
-#include <sockets/LocalAddress.h>
-#include <sockets/EndPoint.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntPtr.h"
+#include "threads/ThreadBarrier.h"
+#include "threads/Task.h"
+#include "threads/Thread.h"
+#include "threads/Queue.h"
+#include "sockets/Socket.h"
+#include "sockets/LocalAddress.h"
+#include "sockets/EndPoint.h"
 
 using namespace ombt;
 

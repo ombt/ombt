@@ -1,0 +1,63 @@
+#!/usr/bin/ksh
+#
+# print the product setups for routes with given machine type
+#
+# the machine types are in the file cim/db_classes/hdr/MachineModel.H.
+# look at the enum: PMachineModel::MachineType.
+#
+# the base machine is equal to machine type/1000.
+#
+# these are the current machine types:
+#
+#	A 	= 1000, // NM-2024, NM-2041  (Generic A type)
+#	DIIC 	= 2000, // NM-2245	  (Generic DIIC type)
+#	G 	= 3000, // NM-2204B	  (Generic G type)
+#	HD 	= 4000, // 		     (Generic HD type)
+#	JV 	= 5000, // NM-2034, NM-2035  (Generic J type)
+#	MK 	= 6000, // 		     (Generic MK type)
+#	MPA 	= 7000, // NM-2523, NM-2524  (Generic MPA type)
+#	MQ 	= 8000, // (Generic MQ type)
+#	MR 	= 9000, // NM-2560, NM-2560B, NM-2561
+#	MSH 	= 10000, // NM-2576 	     (Generic MSH type)
+#	MV 	= 11000, // 	     (Generic MV type)
+#	NX 	= 12000, // NM-2302C	     (Generic NX type)
+#	P 	= 13000, // NM-2207, NM-2257  (Generic P type)
+#	REF 	= 14000, // NM-2633B, NM-2633 (Generic REF type)
+#	RH 	= 15000, // (Generic RH type)
+#	RT 	= 16000, // NM-2120, NM-2143  (Generic RT type)
+#	SPC 	= 17000, // NM-2623, NM-2623B (Generic SPC type)
+#	SPP 	= 18000, // NM-2624, NM-2624B (Generic SPP type)
+#	UII	= 19000, // NM-2284C	     (Generic U type)
+#	E	= 20000, // NM-2209	     (Generic Eyelet)
+#	M	= 21000, // NM-2501	     (Generic M)
+#	MMC	= 22000, //		     (Generic MMC)
+#	IMC     = 23000, // (Generic IMC)
+#	MSR     = 24000, // NM-HD10(M 75/75),NM-HD11(M 50/50)
+#	MSF     = 25000, // NM-MD15(XL)
+#	MCF     = 26000, // ME15, ME16
+#	SPF     = 27000, // NM-PC10, NM-PC15
+#	RSF     = 28000, // NM-FA00A
+#	PW	= 29000, // NM-2701 
+#	HDF     = 30000, // NM-DC10/10U, NM-DC11/11U
+#	GSM     = 31000, // NM-GSM (Generic GSM Universal Machine)
+#	KX      = 32000, // Panasonic Generic KX machines
+#	BM       = 33000, // BM Generic
+#	UVS      = 34000, // UV Scriber
+#	IPAC     = 35000, // IPAC Generic
+#	HT       = 36000, // HT Generic
+#	NPM      = 37000, // NPM Generic NM-EJM9B (17/17)
+#	YV       = 38000, // Yamaha YV Generic
+#	KE       = 39000, // Juki - Generic
+#	KX_CM20  = 40000, // CM20
+#	KX_CM20F = 40100                // CM20F
+#
+basemachine="${1:-32}"	# default KX=32XXX
+#
+mytsql <<EOF
+USE ${DB_NAME:-cimc824d_rumore}
+GO
+SELECT distinct PD.product_name, PS.product_id, PS.route_id, PS.mix_name, PS.setup_id FROM product_data PD, product_setup PS, route_layout RL, zone_layout ZL, machines M, machine_models MM WHERE PD.product_id = PS.product_id AND PS.route_id = RL.route_id AND ZL.zone_id = RL.zone_id AND M.equipment_id = ZL.equipment_id AND MM.model_number = M.model_number AND cast(MM.mach_type / 1000 as INT) = ${basemachine}
+GO
+QUIT
+EOF
+

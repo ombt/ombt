@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -17,13 +22,14 @@ CXXFLAGS = -g -O0 -DUSEOSTREAM=1 -I$(INCLUDEDIR) -I.
 CXXFLAGS += -Wfatal-errors -Wno-deprecated
 
 LD = g++
-LDFLAGS = -g -O0 -L$(LIBRARYDIR) 
+LDFLAGS = -g -O0 -L$(LIBRARYDIR) -lombtadt
 LDFLAGS += -Wfatal-errors -Wno-deprecated
 
 LEX = /usr/bin/lex
 LEXFLAGS = -n
 YACC = /usr/bin/yacc
 YACCFLAGS = -d -v
+
 
 all:	tpred
 
@@ -51,8 +57,7 @@ tpred:		predyacc.o \
 			term.o \
 			term_syntax.o \
 			term_tree.o \
-			unification.o \
-			-lombtadt \
+			unification.o
 			-ly \
 			-ll
 
@@ -73,26 +78,29 @@ backup:
 backupd:
 	bkup -d
 
-clause.o:	clause.cpp \
-		clause.h
-
-irclause.o:	irclause.cpp \
-		irclause.h
-
 predlex.o:	pred.l \
 		./pred.h \
+		./clause.h \
+		./semantic.h \
 		pred.y 
 		$(LEX) $(LEXFLAGS) pred.l
 		cp lex.yy.c predlex.cpp
 		$(CXX) $(CXXFLAGS) -c predlex.cpp
 
-
 predyacc.o:	pred.y \
-		./pred.h
+		./pred.h \
+		./clause.h \
+		./semantic.h 
 		$(YACC) $(YACCFLAGS) pred.y
 		cp y.tab.h predyacc.h
 		cp y.tab.c predyacc.cpp
 		$(CXX) $(CXXFLAGS) -c predyacc.cpp
+
+clause.o:	clause.cpp \
+		clause.h
+
+irclause.o:	irclause.cpp \
+		irclause.h
 
 semantic.o:	semantic.cpp \
 		semantic.h

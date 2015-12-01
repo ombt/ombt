@@ -4,8 +4,8 @@
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
 // headers
-#include <adt/BinaryTree2.h>
-#include <adt/String.h>
+#include "adt/BinaryTree2.h"
+#include "adt/String.h"
 
 using namespace ombt;
 using namespace std;

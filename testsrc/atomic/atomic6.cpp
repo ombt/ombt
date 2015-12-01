@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/Atomic.h>
+#include "system/Debug.h"
+#include "atomic/Atomic.h"
 
 using namespace std;
 using namespace ombt;

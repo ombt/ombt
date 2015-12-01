@@ -1,0 +1,86 @@
+1) A factor is a vector object used to specify a discrete classification
+ (grouping) of the components of other vectors of the same length.
+ R provides both ordered and unordered factors. While the “real”
+ application of factors is with model formulae (see Section 11.1.1
+
+ [Contrasts], page 53), we here look at a specific example.
+
+> state <- c("tas",
++ "qld",  <<== this *factor* is assigned to location 1
++ "sa",   <<== this *factor* is assigned to location 2
++ "sa",   <<== same as above
++ "sa",   <<== same as above
++ "vic",  <<== this *factor* is assigned to location 5
++ "nt",   etc.
++ "act",
++ "qld",
++ "nsw",
++ "wa",
++ "nsw",
++ "nsw",
++ "vic",
++ "vic",
++ "vic",
++ "nsw",
++ "qld",
++ "qld",
++ "vic",
++ "nt", 
++ "wa", 
++ "wa",
++ "qld", 
++ "sa", 
++ "tas",
++ "nsw", 
++ "nsw", 
++ "wa",
++ "act")
+> state
+ [1] "tas" "qld" "sa"  "sa"  "sa"  "vic" "nt"  "act" "qld" "nsw" "wa"  "nsw"
+[13] "nsw" "vic" "vic" "vic" "nsw" "qld" "qld" "vic" "nt"  "wa"  "wa"  "qld"
+[25] "sa"  "tas" "nsw" "nsw" "wa"  "act"
+> 
+> 
+> statef <- factor(state)
+> statef
+ [1] tas qld sa  sa  sa  vic nt  act qld nsw wa  nsw nsw vic vic vic nsw qld qld
+[20] vic nt  wa  wa  qld sa  tas nsw nsw wa  act
+Levels: act nsw nt qld sa tas vic wa
+> levels(statef)
+[1] "act" "nsw" "nt"  "qld" "sa"  "tas" "vic" "wa" 
+
+levels() returns the number of unique values which were assigned.
+
+2) can use factors to group date and applu functions to the groupings
+of data:
+
+> incomes <- c(60, 49, 40, 61, 64, 60, 59, 54, 62, 69, 70, 42, 56,
++ 61, 61, 61, 58, 51, 48, 65, 49, 49, 41, 48, 52, 46,
++ 59, 46, 58, 43)
+> ls()
+[1] "incomes" "state"   "statef" 
+> incmeans <- tapply(incomes, statef, mean)
+> incmeans
+  act   nsw    nt   qld    sa   tas   vic    wa 
+48.50 55.00 54.00 51.60 54.25 53.00 61.60 54.50 
+
+suppose we need to do further calculations. we can use our
+own function:
+
+> stderr <- function(x) sqrt(var(x)/length(x))
+> incster <- tapply(incomes, statef, stderr)
+> incster
+      act       nsw        nt       qld        sa       tas       vic        wa 
+5.5000000 3.9665266 5.0000000 2.6570661 5.3909647 7.0000000 0.8717798 6.2249498
+
+3) ordered factor:
+
+The levels of factors are stored in alphabetical order, or in the order they were specified to
+factor if they were specified explicitly.
+Sometimes the levels will have a natural ordering that we want to record and want our
+statistical analysis to make use of. The ordered() function creates such ordered factors but
+is otherwise identical to factor. For most purposes the only difference between ordered and
+unordered factors is that the former are printed showing the ordering of the levels, but the
+contrasts generated for them in fitting linear models are different.
+
+4) 

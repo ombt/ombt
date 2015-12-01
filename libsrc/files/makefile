@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -10,17 +15,10 @@ include $(ROOT)/build/makefile.common
 
 LIBNAME = files
 
-FILES = Notify.cpp 
+include .FILES
 
-include $(ROOT)/build/makefile.lib2
+include .HDRS
 
-Notify.o:	Notify.cpp \
-		Notify.h \
-		$(INCLUDEDIR)/Returns.h \
-		$(INCLUDEDIR)/Debug.h \
-		$(INCLUDEDIR)/atomic/UCBaseObject.h \
-		$(INCLUDEDIR)/sockets/Socket.h \
-		$(INCLUDEDIR)/sockets/Address.h \
-		$(INCLUDEDIR)/sockets/EndPoint.h \
+include $(ROOT)/build/makefile.lib3
 
-
+include .DEPENDS

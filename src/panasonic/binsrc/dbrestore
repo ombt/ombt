@@ -1,0 +1,45 @@
+#!/usr/bin/ksh
+#
+# restore a database
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+: ${DB_NAME:?"is NOT set."}
+#
+echo -e "\nWARNING: You are restoring DB: ${DB_NAME}"
+echo -e "\nDo you want to continue? [y/n/<cr>=n] \c"
+read answer
+case "${answer}" in
+y*|Y*)
+	echo -e "\nWill continue ... Gulp."
+	;;
+*)
+	echo -e "\nABORTING!"
+	exit 2
+	;;
+esac
+#
+echo -e "\nexecuting: ${@}\n"
+set -x
+case "${DB_SERVER}" in
+mar-sql-server)
+	/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+RESTORE DATABASE ${DB_NAME} FROM DISK = 'C:\SQLServerBackup\MAR_${DB_NAME}.bak';
+GO
+BYE
+EOF
+	;;
+sqlsrvr2008)
+	/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+RESTORE DATABASE ${DB_NAME} FROM DISK = 'E:\DBBackups\MAR_${DB_NAME}.bak';
+GO
+BYE
+EOF
+	;;
+*)
+	;;
+esac
+#
+exit 0
+
+

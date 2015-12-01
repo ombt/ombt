@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -6,37 +11,14 @@ endif
 
 include $(ROOT)/build/makefile.common
 
-CXXEXTRAFLAGS = -Wfatal-errors
+# CXXEXTRAFLAGS = -Wfatal-errors
 
 LIBNAME = timers
 
-FILES = Timer.cpp TimerQueue.cpp OldTimer.cpp OldTimerQueue.cpp
+include .FILES
 
-include $(ROOT)/build/makefile.lib2
+include .HDRS
 
-Timer.o:	Timer.cpp \
-		Timer.h \
-		$(INCLUDEDIR)/Returns.h \
-		$(INCLUDEDIR)/Debug.h \
-		$(INCLUDEDIR)/atomic/BaseObject.h
+include $(ROOT)/build/makefile.lib3
 
-TimerQueue.o:	TimerQueue.cpp \
-		TimerQueue.h \
-		Timer.h \
-		$(INCLUDEDIR)/Returns.h \
-		$(INCLUDEDIR)/Debug.h \
-		$(INCLUDEDIR)/atomic/UCBaseObject.h
-
-OldTimer.o:	OldTimer.cpp \
-		OldTimer.h \
-		$(INCLUDEDIR)/Returns.h \
-		$(INCLUDEDIR)/Debug.h \
-		$(INCLUDEDIR)/atomic/BaseObject.h
-
-OldTimerQueue.o:	OldTimerQueue.cpp \
-		OldTimerQueue.h \
-		OldTimer.h \
-		$(INCLUDEDIR)/Returns.h \
-		$(INCLUDEDIR)/Debug.h \
-		$(INCLUDEDIR)/atomic/UCBaseObject.h
-
+include .DEPENDS

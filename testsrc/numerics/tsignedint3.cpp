@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <iostream>
 
-#include <numerics/SignedInteger.h>
+#include "numerics/SignedInteger.h"
 
 using namespace ombt;
 using namespace std;

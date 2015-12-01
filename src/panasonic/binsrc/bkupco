@@ -1,0 +1,40 @@
+#!/usr/bin/ksh
+#
+backupdir=${1:-"${HOME}/bkup_files/co"}/$(date '+%y%m%d%H%M')
+[ ! -d ${backupdir} ] && mkdir -p ${backupdir};
+#
+echo "backup into directory ${backupdir} ..."
+#
+cd ~/cim
+#
+/opt/rational/clearcase/bin/cleartool lscheckout -all -me "${@}" |
+gawk '
+BEGIN {
+	file = "";
+	cq = "";
+}
+$0 ~ /checkout version/ {
+	# print NR " " $5;
+	file = $5;
+	next;
+}
+$0 ~ /activity:SOLNS/ {
+	# print NR " " $1;
+	cq = $1;
+	print cq " " file;
+	next;
+} ' |
+sed -n 's/^activity[^:]*:\([^@]*\)[^"]*"\([^"]*\)".*$/\1 \2/p' |
+sed -n 's?^\([^ ]*\) .*/mes/cimc/\(.*\)$?\1 \2?p' |
+while read activity path
+do
+	echo "Activity: ${activity}"
+	echo "Path    : ${path}"
+	#
+	dname="$(dirname ${path})"
+	bkuppath="${backupdir}/${activity}/${dname}"
+	[ ! -d ${bkuppath} ] && mkdir -p ${bkuppath};
+	cp ${path} ${bkuppath}
+done
+#
+exit 0

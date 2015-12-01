@@ -1,0 +1,12 @@
+#!/usr/bin/ksh
+# batch mode
+for f in "${@}"
+do
+	# /usr/local/bin/tsql -H sqlsrvr2008 -p 1207 -U cim -P cim < ${f} 2>&1 |
+	# sed -e "s|[0-9][0-9][0-9]> ||g" -e "s|[0-9][0-9]> ||g" -e "s|[0-9]> ||g" -e "s|(return status = 0)||g" -e "s|local.*$||g" -e "s|\t||g" |
+	# grep -v "^$"
+	#
+	/usr/local/bin/tsql -H sqlsrvr2008 -p 1207 -U cim -P cim < ${f} 2>&1 |
+	sed -e "s|[0-9][0-9]*> ||g" -e "s|(return status = 0)||g" -e "s|local.*$||g" -e "s|\t||g" |
+	grep -v "^$"
+done

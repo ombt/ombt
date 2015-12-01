@@ -1,7 +1,7 @@
 
 #include <iostream>
-#include <graphs/Graph.h>
-#include <graphs/Algorithms.h>
+#include "graphs/Graph.h"
+#include "graphs/Algorithms.h"
 
 using namespace ombt;
 

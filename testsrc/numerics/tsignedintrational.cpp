@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <numerics/Rational.h>
-#include <numerics/SignedInteger.h>
+#include "numerics/Rational.h"
+#include "numerics/SignedInteger.h"
 
 using namespace ombt;
 using namespace std;

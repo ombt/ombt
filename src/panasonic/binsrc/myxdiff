@@ -1,0 +1,2 @@
+#!/usr/bin/ksh
+exec /opt/rational/clearcase/bin/cleartool diff -graphical -predecessor "${@}"

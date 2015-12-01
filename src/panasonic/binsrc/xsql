@@ -1,0 +1,18 @@
+#!/usr/bin/ksh
+#
+# exec a given sql statement
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+: ${DB_NAME:?"is NOT set."}
+#
+echo -e "\nexecuting: ${@}\n"
+/usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim <<EOF
+USE ${DB_NAME}
+GO
+${@}
+GO
+BYE
+EOF
+#
+exit 0

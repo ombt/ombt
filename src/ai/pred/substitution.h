@@ -7,11 +7,11 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/List.h>
-#include <adt/String.h>
-#include "term.h"
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include "adt/String.h"
+#include <term.h>
 
 // forward declarations
 class Term;
@@ -28,7 +28,7 @@ public:
 	// constructors and destructor
 	Substitution();
 	Substitution(const Substitution &);
-	Substitution(const Term &, const String &);
+	Substitution(const Term &, const ombt::String &);
 	~Substitution();
 
 	// assignment operator
@@ -49,10 +49,10 @@ public:
 	int applyTo(Term &) const;
 
 	// access data
-	String getVariable() const {
+	ombt::String getVariable() const {
 		return(variable);
 	}
-	void setVariable(const String &v) {
+	void setVariable(const ombt::String &v) {
 		variable = v;
 	}
 	Term getTerm() const {
@@ -66,11 +66,11 @@ public:
 	int isDegenerate() const;
 
 	// output function
-	friend ostream &operator<<(ostream &, const Substitution &);
+	friend std::ostream &operator<<(std::ostream &, const Substitution &);
 
 protected:
 	// internal data
-	String variable;
+	ombt::String variable;
 	Term term;
 };
 
@@ -106,11 +106,11 @@ public:
 	int applyTo(Term &) const;
 
 	// output function
-	friend ostream &operator<<(ostream &, const Substitutions &);
+	friend std::ostream &operator<<(std::ostream &, const Substitutions &);
 
 protected:
 	// internal data
-	List<Substitution *> *psubs;
+	ombt::List<Substitution *> *psubs;
 };
 
 #endif

@@ -19,6 +19,8 @@ SHELLDIR = $(ROOT)/$(RELEASEBINDIR)
 
 all:	install
 
+depend:
+
 install:	$(SHELLSCRIPTS)
 		-test -d $(SHELLDIR) || mkdir -p $(SHELLDIR);
 		-$(foreach script, $(SHELLSCRIPTS), cp $(script).sh $(SHELLDIR)/$(script); )

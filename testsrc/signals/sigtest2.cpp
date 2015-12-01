@@ -9,10 +9,10 @@
 #include <string>
 
 // local headers
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntPtr.h>
-#include <signals/Signal.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntPtr.h"
+#include "signals/Signal.h"
 
 using namespace ombt;
 

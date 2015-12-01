@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 SYNCMGRSOURCEFILES = \
 	DASQDebug.h \
 	main.cpp \
@@ -47,6 +52,8 @@ TESTFILEDATA4SOURCEFILES = \
 	FileData.cpp 
 
 all:	syncmgr testfiledata testfiledata2 testfiledata3 testfiledata4
+
+depend:
 
 syncmgr: $(SYNCMGRSOURCEFILES)
 	qmake -project -nopwd -o syncmgr.pro $(SYNCMGRSOURCEFILES)

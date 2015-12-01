@@ -1,0 +1,2 @@
+#!/usr/bin/ksh
+exec lpr -P hpcim.panasonicfa.com "${@}"

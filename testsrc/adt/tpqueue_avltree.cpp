@@ -6,9 +6,9 @@
 // headers
 #include <stdlib.h>
 #include <iostream>
-#include <adt/String.h>
-#include <adt/PriorityQueue_AVLTree.h>
-#include <random/Random.h>
+#include "adt/String.h"
+#include "adt/PriorityQueue_AVLTree.h"
+#include "random/Random.h"
 
 using namespace ombt;
 using namespace std;

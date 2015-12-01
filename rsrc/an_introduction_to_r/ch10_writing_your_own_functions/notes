@@ -1,0 +1,314 @@
+1) writing functions uses this format:
+
+> name <- function(arg_1, arg_2, ...) expression
+
+2) random examples, some work and some do not work.
+
+> attach(women)
+> women
+   height weight
+1      58    115
+2      59    117
+3      60    120
+4      61    123
+5      62    126
+6      63    129
+7      64    132
+8      65    135
+9      66    139
+10     67    142
+11     68    146
+12     69    150
+13     70    154
+14     71    159
+15     72    164
+> bmi <- function() {
++ for (w in women) {
++ wbmi <- sqrt(w$height*w$weight)
++ }
++ }
+> bmi
+function() {
+for (w in women) {
+wbmi <- sqrt(w$height*w$weight)
+}
+}
+> bmi()
+Error in w$height : $ operator is invalid for atomic vectors
+> mode(women)
+[1] "list"
+> women[[1]]
+ [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+> women[[1]]$weight
+Error in women[[1]]$weight : $ operator is invalid for atomic vectors
+> women[["weight"]]
+ [1] 115 117 120 123 126 129 132 135 139 142 146 150 154 159 164
+> women[["weight"]][1]
+[1] 115
+> women[["weight"]][1:5]
+[1] 115 117 120 123 126
+> women[["height"]][1:5]
+[1] 58 59 60 61 62
+> rm(bmi)
+> bmi <- function() {
++ for (w in women) {
++ wbmi <- sqrt(w[["height"]]*w[["wight"]])
++ }
++ }
+> bmi()
+Error in w[["height"]] : subscript out of bounds
+> wbmi <- sqrt(w[["height"]]*w[["weight"]])
+Error: object 'w' not found
+> bmi <- function() {
++ for (w in women) {
++ wbmi <- sqrt(w[["height"]]*w[["weight"]])
++ }
++ }
+> bmi()
+Error in w[["height"]] : subscript out of bounds
+> bmi <- function() {
++ for (w in women) {
++ w
++ }
++ }
+> bmi()
+
+3) can define new binary operators as follows:
+
+Had we given the bslash() function a different name, namely one of the form
+
+%anything%
+
+it could have been used as a binary operator in expressions rather than in
+function form. Suppose, for example, we choose ! for the internal character.
+The function definition would then start as
+
+> "%!%" <- function(X, y) { ... }
+
+(Note the use of quote marks.) The function could then be used as X %!% y.
+
+4) using named arguments and default values in function definitions:
+
+If arguments to called functions are given in the “name=object” form, they may
+be given in any order. Furthermore the argument sequence may begin in the
+unnamed, positional form, and specify named arguments after the positional
+arguments.
+
+Thus if there is a function fun1 defined by
+
+> fun1 <- function(data, data.frame, graph, limit) {
+[function body omitted]
+}
+
+then the function may be invoked in several ways, for example
+
+> ans <- fun1(d, df, TRUE, 20)
+> ans <- fun1(d, df, graph=TRUE, limit=20)
+> ans <- fun1(data=d, limit=20, graph=TRUE, data.frame=df)
+
+are all equivalent.
+
+In many cases arguments can be given commonly appropriate default values, in
+which case they may be omitted altogether from the call when the defaults are
+appropriate. For example, if fun1 were defined as
+
+> fun1 <- function(data, data.frame, graph=TRUE, limit=20) { ... }
+
+it could be called as
+
+> ans <- fun1(d, df)
+
+which is now equivalent to the three cases above, or as
+
+> ans <- fun1(d, df, limit=10)
+
+which changes one of the defaults.
+
+5) varargs ...
+
+This can be done by including an extra argument, literally ‘...’, of the
+function, which may then be passed on. An outline example is given below.
+
+fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) {
+[omitted statements]
+if (graph)
+par(pch="*", ...)
+[more omissions]
+}
+
+Less frequently, a function will need to refer to components of ‘...’. The
+expression list(...) evaluates all such arguments and returns them in a named
+list, while ..1, ..2, etc. evaluate them one at a time, with ‘..n’ returning
+the n’th unmatched argument.
+
+6) assignments within functions are local unless *super assignment* 
+is used.
+
+<<- or assign()
+
+7) functions can be recursive.
+
+functions can be defined within functions !!!
+
+area <- function(f, a, b, eps = 1.0e-06, lim = 10) {
+fun1 <- function(f, a, b, fa, fb, a0, eps, lim, fun) {
+## function ‘fun1’ is only visible inside ‘area’
+d <- (a + b)/2
+h <- (b - a)/4
+fd <- f(d)
+a1 <- h * (fa + fd)
+a2 <- h * (fd + fb)
+if(abs(a0 - a1 - a2) < eps || lim == 0)
+return(a1 + a2)
+else {
+return(fun(f, a, d, fa, fd, a1, eps, lim - 1, fun) +
+fun(f, d, b, fd, fb, a2, eps, lim - 1, fun))
+}
+}
+fa <- f(a)
+fb <- f(b)
+a0 <- ((fa + fb) * (b - a))/2
+fun1(f, a, b, fa, fb, a0, eps, lim, fun1)
+}
+
+8) scoping in R is by frames: start from inside and go out:
+
+> cube <- function(n) {
++ sq <- function() n*n
++ n*sq()
++ }
+> 
+> cube(3)
+[1] 27
+
+in the above example 'n' is scoped in cube() where it first defined.
+
+> m=5
+> cube <- function(n) {
++ sq <- function() m*n*n
++ n*sq()
++ }
+> cube
+function(n) {
+sq <- function() m*n*n
+n*sq()
+}
+> cube(2)
+[1] 40
+
+in the above example "m" was scoped at the global level.
+
+9) use "<<-" to assign a value outside the functon scope:
+
+> sum <- function() {
++ local = 0
++ for (i in 1:20) {
++ local = local + i;
++ }
++ total <<- local
++ local
++ }
+> total = 0
+> sum()
+[1] 210
+> total
+[1] 210
+> total = 0
+> total
+[1] 0
+> sum()
+[1] 210
+> total
+[1] 210
+
+10) you can customize the environment using a .profile mechanism.
+
+Users can customize their environment in several different ways. There is a
+site initialization file and every directory can have its own special
+initialization file. Finally, the special functions .First and .Last can be
+used.
+
+The location of the site initialization file is taken from the value of the
+R_PROFILE environment variable. If that variable is unset, the file
+Rprofile.site in the R home subdirectory etc is used.  This file should
+contain the commands that you want to execute every time R is started under
+your system. A second, personal, profile file named .Rprofile3 can be placed
+in any directory. If R is invoked in that directory then that file will be
+sourced. This file gives individual users control over their workspace and
+allows for different startup procedures in different working directories.  If
+no .Rprofile file is found in the startup directory, then R looks for a
+.Rprofile file in the user’s home directory and uses that (if it exists). If
+the environment variable R_PROFILE_USER is set, the file it points to is used
+instead of the .Rprofile files.
+
+Any function named .First() in either of the two profile files or in the
+.RData image has a special status. It is automatically performed at the
+beginning of an R session and may be used to initialize the environment. For
+example, the definition in the example below alters the prompt to $ and sets
+up various other useful things that can then be taken for granted in the rest
+of the session.
+
+Thus, the sequence in which files are executed is, Rprofile.site, the user
+profile, .RData and then .First(). A definition in later files will mask
+definitions in earlier files.
+
+> .First <- function() {
+options(prompt="$ ", continue="+\t") # $ is the prompt
+options(digits=5, length=999)
+# custom numbers and printout
+x11()
+# for graphics
+par(pch = "+")
+# plotting character
+source(file.path(Sys.getenv("HOME"), "R", "mystuff.R"))
+# my personal functions
+library(MASS)
+# attach a package
+}
+
+Similarly a function .Last(), if defined, is (normally) executed at the very
+end of the session.  An example is given below.
+
+> .Last <- function() {
+graphics.off()
+cat(paste(date(),"\nAdios\n"))
+}
+
+11) functions can be defined so their behavior depends on the
+type of object that is passed as an argument.
+
+examples of functions which have specific behaviors are:
+
+> methods(class="data.frame")
+ [1] aggregate.data.frame     anyDuplicated.data.frame as.data.frame.data.frame
+ [4] as.list.data.frame       as.matrix.data.frame     by.data.frame           
+ [7] cbind.data.frame         [<-.data.frame           [.data.frame            
+[10] [[<-.data.frame          [[.data.frame            $<-.data.frame          
+[13] dim.data.frame           dimnames<-.data.frame    dimnames.data.frame     
+[16] droplevels.data.frame    duplicated.data.frame    edit.data.frame*        
+[19] format.data.frame        formula.data.frame*      head.data.frame*        
+[22] is.na.data.frame         Math.data.frame          mean.data.frame         
+[25] merge.data.frame         na.exclude.data.frame*   na.omit.data.frame*     
+[28] Ops.data.frame           plot.data.frame*         print.data.frame        
+[31] prompt.data.frame*       rbind.data.frame         row.names<-.data.frame  
+[34] row.names.data.frame     rowsum.data.frame        split<-.data.frame      
+[37] split.data.frame         stack.data.frame*        str.data.frame*         
+[40] subset.data.frame        summary.data.frame       Summary.data.frame      
+[43] tail.data.frame*         t.data.frame             transform.data.frame    
+[46] unique.data.frame        unstack.data.frame*      within.data.frame       
+
+   Non-visible functions are asterisked
+> methods(class="list")
+[1] all.equal.list     as.data.frame.list relist.list*       within.list       
+
+   Non-visible functions are asterisked
+> methods(class="matrix")
+ [1] anyDuplicated.matrix as.data.frame.matrix as.raster.matrix*   
+ [4] boxplot.matrix       determinant.matrix   duplicated.matrix   
+ [7] edit.matrix*         head.matrix          isSymmetric.matrix  
+[10] relist.matrix*       subset.matrix        summary.matrix      
+[13] tail.matrix          unique.matrix       
+
+   Non-visible functions are asterisked
+
+

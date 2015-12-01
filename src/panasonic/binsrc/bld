@@ -1,0 +1,2 @@
+#!/usr/bin/ksh
+exec /cimuser/mrumore/bin/mybld -l "${@}"

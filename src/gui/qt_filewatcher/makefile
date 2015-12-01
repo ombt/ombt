@@ -1,4 +1,11 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 all:	filewatcher testfilewatcher testfilewatcherthread testdasdbmgr
+
+depend:
 
 filewatcher:	\
 	main.cpp \
@@ -96,4 +103,5 @@ clean:
 
 install:
 	touch install
+
 

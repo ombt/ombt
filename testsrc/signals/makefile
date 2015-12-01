@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -10,8 +15,8 @@ PRODS = \
 	sigtest1 \
 	sigtest2 \
 
-# CXXEXTRAFLAGS = -lombtsockets -pthread -lombtlogging -lombtparsing -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtsockets 
-CXXEXTRAFLAGS = 
-CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads -lombttimers -lombtreactors -lombtsignals -lombtsockets -lombtparsing
+CXXEXTRAFLAGS = -pthread 
 
-include $(ROOT)/build/makefile.test
+TESTLIBS = logging threads timers reactors signals sockets parsing
+
+include $(ROOT)/build/makefile.test2

@@ -1,0 +1,74 @@
+#!/usr/bin/ksh
+#
+PS3="Choose a release directory: "
+#
+RELEASEDIRS="$(ls -d ${HOME}/mrumore_panacim8*dev)"
+#
+select RELEASEDIR in QUIT SHOW_CIM ${RELEASEDIRS}
+do
+	case "${RELEASEDIR}" in
+	QUIT)
+		echo "Exiting!"
+		exit 2
+		;;
+	SHOW_CIM)
+		cd ~/cim
+		pwd -P
+		cd - 1>/dev/null 2>&1
+		;;
+	*)
+		echo "Release directory: ${RELEASEDIR}"
+		break
+		;;
+	esac
+done
+#
+cd ${RELEASEDIR}
+#
+checkdir=$(pwd -P)
+homedir=~$(logname)
+cimdir=${homedir}/cim
+#
+while [[ ! -z "${checkdir}" && "${homedir}" != "${checkdir}" ]]
+do
+	# echo "Checking: ${checkdir}"
+	#
+	if [[ -r "${checkdir}/cim.mk" ]]
+	then
+		# echo "Found cim.mk file!"
+		#
+		rm -f ${cimdir} 2>/dev/null
+		ln -s ${checkdir} ${cimdir}
+		#
+		cd ${cimdir}
+		echo "New cim: $(pwd -P)"
+		#
+		exit 0
+	fi
+	#
+	checkdir="$(dirname ${checkdir})"
+done
+#
+checkdir=$(pwd -P)
+#
+for relpath in mes/cimc cimc
+do
+	# echo "Checking: ${checkdir}/${relpath}"
+	#
+	if [[ -r "${checkdir}/${relpath}/cim.mk" ]]
+	then
+		# echo "Found cim.mk file!"
+		#
+		rm -f ${cimdir} 2>/dev/null
+		ln -s ${checkdir}/${relpath} ${cimdir}
+		#
+		cd ${cimdir}
+		echo "New cim: $(pwd -P)"
+		#
+		exit 0
+	fi
+done
+#
+echo "ERROR: cim.mk NOT found!"
+#
+exit 2

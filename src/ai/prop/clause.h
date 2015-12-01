@@ -7,10 +7,10 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
 #include <atom.h>
-#include <adt/Set_List.h>
+#include "adt/Set_List.h"
 
 // forward declarations
 class ClauseIterator;

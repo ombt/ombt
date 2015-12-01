@@ -1,0 +1,20 @@
+#!/usr/bin/ksh
+#
+backupdir=${1:-"BACKUPD"}/$(date '+%y%m%d%H%M')
+#
+echo "backup into directory ${backupdir} ..."
+#
+[ ! -d ${backupdir} ] && mkdir -p ${backupdir};
+#
+#for file in *.cgi *.tcl *.TCL *.sh *.java *.[chly] make.in *.ini *.pl *.pm *.PL *.PM
+#
+for file in *
+do
+	if [[ ! -d "${file}" && -r "${file}" ]]
+	then
+		echo "cp ${file} ${backupdir}"
+		cp ${file} ${backupdir}
+	fi
+done
+#
+exit 0

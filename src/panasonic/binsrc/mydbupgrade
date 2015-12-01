@@ -1,0 +1,55 @@
+#!/usr/bin/ksh
+#
+# upgrade a database
+#
+cd ~/cim/install
+#
+: ${CC_GEN:?"is NOT set."}
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+: ${DB_NAME:?"is NOT set."}
+#
+dbupgrade_script="db_upgrade_${CC_GEN##cim}"
+dbupgrade_script_out="/tmp/db_upgrade_${CC_GEN##cim}.out"
+#
+if [[ -r "${dbupgrade_script}" ]]
+then
+	echo -e "\nUsing DB upgrade script: ${dbupgrade_script}"
+else
+	echo -e "\nERROR: DB upgrade script ${dbupgrade_script} NOT readable."
+	exit 2
+fi
+#
+echo -e "\nDB Server: ${DB_SERVER:}"
+echo -e "DB Port No: ${DB_PORT_NO:}"
+#
+echo -e "\nYou are upgrading DB: ${DB_NAME}"
+echo -e "\nDo you want to continue? [y/n/<cr>=n] \c"
+read answer
+case "${answer}" in
+y*|Y*)
+	echo -e "\nWill continue."
+	;;
+*)
+	echo -e "\nABORTING!"
+	exit 2
+	;;
+esac
+#
+cd install
+export APP_SERVER=$(hostname)
+#
+set -x
+${dbupgrade_script} 2>&1 | tee ${dbupgrade_script_out}
+#
+#case "${CC_GEN}" in
+#cim8.2.4)
+#	./db_upgrade_8.2.4 2>&1 | tee /tmp/db_upgrade_8.2.4.out
+#	;;
+#*)
+#	echo -e "\nERROR: ${CC_ENV} NOT SUPPORTED BY ${0}"
+#	exit 2
+#	;;
+#esac
+#
+exit 0

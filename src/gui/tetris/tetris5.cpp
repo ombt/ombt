@@ -20,7 +20,7 @@
 #include <iostream>
 #include <map>
 
-#include <logging/Logging.h>
+#include "logging/Logging.h"
 
 using namespace ombt;
 

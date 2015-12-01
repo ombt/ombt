@@ -51,6 +51,8 @@ install:
 	touch install
 endif
 
+depend:
+
 backup:
 	bkup
 

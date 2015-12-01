@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <timers/Timer.h>
-#include <timers/TimerQueue.h>
+#include "timers/Timer.h"
+#include "timers/TimerQueue.h"
 
 using namespace ombt;
 using namespace std;

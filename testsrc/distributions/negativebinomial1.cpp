@@ -6,9 +6,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <random/Random.h>
-#include <distributions/NegativeBinomial.h>
-#include <logging/Logging.h>
+#include "random/Random.h"
+#include "distributions/NegativeBinomial.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 using namespace std;

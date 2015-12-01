@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+: ${DB_NAME:?"is NOT set."}
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+count_records () {
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s/[0-9][0-9][0-9]> //g" \
+	     -e "s/[0-9][0-9]> //g" \
+	     -e "s/[0-9]> //g" \
+	     -e "s/(return status = 0)//g" \
+	     -e "s/local.*$//g" \
+	     -e "s/[ 	]*$//g" |
+	 grep -v "^$" ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT count(*) FROM ${1}
+GO
+BYE
+EOF
+}
+#
+usage() {
+cat >&2 <<EOF
+usage: $0 [-?x] [-a] table1 [table2 [...]]
+where
+	-? = print usage message
+	-x = debug
+	-a = export *all* user tables
+
+table is the name of the table to record count. if '-a' is given, 
+then the list of tables is ignored.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+tables="/tmp/tl.$$"
+#
+rmfiles() {
+	rm -f ${errlog} ${tables} 2>/dev/null 1>&2
+}
+#
+trap 'rmfiles' 0
+#
+alltables=no
+#
+set -- $(getopt xa ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-a)
+		alltables=yes
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+if [[ "${alltables}" == yes ]]
+then
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s|[0-9][0-9][0-9]> ||g" \
+	     -e "s|[0-9][0-9]> ||g" \
+	     -e "s|[0-9]> ||g" \
+	     -e "s|(return status = 0)||g" \
+	     -e "s|local.*$||g" \
+	     -e "s|[	 ]*$||g" |
+	 grep -v "^[	 ]*$" >${tables} ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT name FROM sys.objects WHERE type_desc = 'USER_TABLE'
+GO
+BYE
+EOF
+else
+	echo "${@}" |
+	sed -e 's/[ 	][ 	]*/ /g' \
+	    -e 's/^[	 ]*//g' \
+	    -e 's/[	 ]*$//g' |
+	tr ' ' '\012' |
+	grep -v '^[	 ]*$' >${tables}
+fi
+#
+cat ${tables} |
+while read table
+do
+	datafile="${table}.dat"
+	#
+	echo -e "\nCount of records in ${table}: "
+	#
+	count_records ${table}
+done
+#
+exit 0

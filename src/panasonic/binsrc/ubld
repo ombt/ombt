@@ -1,0 +1,5 @@
+#!/usr/bin/ksh
+#
+# unconditional build.
+#
+exec /cimuser/mrumore/bin/mybld -u -f -c -D -l "${@}"

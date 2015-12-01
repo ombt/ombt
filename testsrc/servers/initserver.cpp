@@ -10,9 +10,9 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <iostream>
-#include <Debug.h>
-#include <servers/InitServer.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "servers/InitServer.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 

@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+ sed -e "s/[0-9][0-9][0-9]> //g" \
+     -e "s/[0-9][0-9]> //g" \
+     -e "s/[0-9]> //g" \
+     -e "s/(return status = 0)//g" \
+     -e "s/local.*$//g" \
+     -e "s/[ 	]*$//g" |
+ grep -v "^$" ) <<EOF
+SELECT @@DBTS AS DBTS=
+GO
+SELECT @@LANGID AS 'LANGID='
+GO
+SELECT @@LANGUAGE AS 'LANGUAGE='
+GO
+SELECT @@LOCK_TIMEOUT AS 'LOCK_TIMEOUT='
+GO
+SELECT @@MAX_CONNECTIONS AS 'MAX_CONNECTIONS='
+GO
+SELECT @@MAX_PRECISION AS 'MAX_PRECISION='
+GO
+SELECT @@NESTLEVEL AS 'NESTLEVEL='
+GO
+SELECT @@OPTIONS AS 'OPTIONS='
+GO
+SELECT @@REMSERVER AS 'REMSERVER='
+GO
+SELECT @@SERVERNAME AS 'SERVERNAME='
+GO
+SELECT @@SERVICENAME AS 'SERVICENAME='
+GO
+SELECT @@SPID AS 'SPID='
+GO
+SELECT @@TEXTSIZE AS 'TEXTSIZE='
+GO
+SELECT @@VERSION AS 'VERSION='
+GO
+BYE
+EOF

@@ -1,0 +1,20 @@
+#!/bin/sh
+find ./*/hdr/ -name *.uil -perm +222 -type f -print  
+find ./*/hdr/ -name *.H -perm +222 -type f -print
+find ./*/hdr/ -name *.I -perm +222 -type f -print
+find ./*/src/ -name *.EC -perm +222 -type f -print  
+find ./*/src/ -name *.C -perm +222 -type f -print
+find . -name \*.bat -perm +222 -type f -print
+find . -name \*.mk -perm +222 -type f -print
+find . -name \*.awk -perm +222 -type f -print
+find ./install/ -name \* -perm +222 -type f -print
+find ./icons/ -name \* -perm +222 -type f -print
+find . -name *.cpp -perm +222 -type f -print
+find . -name *.h -perm +222 -type f -print
+find . -name *.inl -perm +222 -type f -print
+find . -name Makefile -perm +222 -type f -print
+find . -name *.rc -perm +222 -type f -print
+find . -name *.vcw -perm +222 -type f -print
+find . -name *.vcp -perm +222 -type f -print
+find . -name *.ico -perm +222 -type f -print
+find . -name *.bmp -perm +222 -type f -print

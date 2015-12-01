@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -17,7 +22,8 @@ PRODS = \
 	iterativereactor8 \
 	iterativereactor9 \
 
-CXXEXTRAFLAGS = 
-CXXLIBFLAGS = -pthread -lombtlogging -lombtthreads -lombtreactors -lombtsockets -lombttimers -lombtsignals -lombtfiles -lombtparsing
+CXXEXTRAFLAGS = -pthread 
 
-include $(ROOT)/build/makefile.test
+TESTLIBS = logging threads reactors signals files timers sockets parsing
+
+include $(ROOT)/build/makefile.test2

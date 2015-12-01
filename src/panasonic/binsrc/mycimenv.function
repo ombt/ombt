@@ -1,0 +1,250 @@
+mycimenv () {
+	if [[ $# != 0  && "${1}" == "-q" ]]
+	then
+	else
+	fi
+	echo -e "\nregular cim_env ..."
+	. ~/cim/cim_env
+	echo "CC_GEN=${CC_GEN}"
+	
+}
+
+myoldcimenv () {
+	echo "regular cim_env ..."
+	. ~/cim/cim_env
+	echo "CC_GEN=${CC_GEN}"
+	case "${CC_GEN}" in
+	cim8.2.4)
+		echo "reset DB_NAME ..."
+		export DB_NAME=cimc824d_rumore
+		;;
+	cim8.3)
+		echo "reset DB_NAME ..."
+		export DB_NAME=cimc824d_rumore
+		;;
+	*)
+		;;
+	esac
+	echo "DB_NAME=${DB_NAME}"
+}
+myapexcimenv () {
+	echo "regular cim_env ..."
+	. ~/cim/cim_env
+	echo "CC_GEN=${CC_GEN}"
+	case "${CC_GEN}" in
+	cim8.2.4)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=APEX
+		;;
+	cim8.3)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=APEX
+		;;
+	cim8.3.1)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=APEX
+		;;
+	*)
+		;;
+	esac
+	echo "DB_NAME=${DB_NAME}"
+	echo "DB_SERVER=${DB_SERVER}"
+	echo "DB_PORT_NO=${DB_PORT_NO}"
+}
+mylocalcimenv () {
+	echo "regular cim_env ..."
+	. ~/cim/cim_env
+	echo "CC_GEN=${CC_GEN}"
+	case "${CC_GEN}" in
+	cim8.2.4)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	cim8.3)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	cim8.3.1)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-laptop-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=49260
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	*)
+		;;
+	esac
+	echo "DB_NAME=${DB_NAME}"
+	echo "DB_SERVER=${DB_SERVER}"
+	echo "DB_PORT_NO=${DB_PORT_NO}"
+}
+mycimenv () {
+	echo "regular cim_env ..."
+	. ~/cim/cim_env
+	echo "CC_GEN=${CC_GEN}"
+	case "${CC_GEN}" in
+	cim8.2.4)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=1127
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	cim8.3)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=1127
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	cim8.3.1)
+		echo "reset DB_SERVER ..."
+		export DB_SERVER=mar-sql-server
+		echo "reset DB_PORT_NO ..."
+		export DB_PORT_NO=1127
+		echo "reset DB_NAME ..."
+		export DB_NAME=PanaCIM
+		;;
+	*)
+		;;
+	esac
+	echo "DB_NAME=${DB_NAME}"
+	echo "DB_SERVER=${DB_SERVER}"
+	echo "DB_PORT_NO=${DB_PORT_NO}"
+}
+dbenv () {
+	echo "$(tput smso)CC_GEN=${CC_GEN}$(tput rmso)"
+	set | grep DB_
+}
+setdisplay () {
+	export DISPLAY="$(who am i | sed -n 's/^.*(\(.*\)).*$/\1/p'):0.0"
+	echo "DISPLAY=${DISPLAY}"
+}
+ckenv () {
+	smso="$(tput smso)"
+	rmso="$(tput rmso)"
+	blink="$(tput blink)"
+	unblink="$(tput sgr0)"
+	notset="${blink}NOT SET${unblink}"
+	#
+	echo "HOST              = ${smso}$(hostname)${rmso}"
+	echo "PWD               = ${smso}$(pwd -P)${rmso}"
+	echo "CC_GEN            = ${smso}${CC_GEN:-${notset}}${rmso}"
+	echo "DB_NAME           = ${smso}${DB_NAME:-${notset}}${rmso}"
+	echo "DB_INCLUDE        = ${smso}${DB_INCLUDE:-${notset}}${rmso}"
+	echo "DB_INSTANCE_NAME  = ${smso}${DB_INSTANCE_NAME:-${notset}}${rmso}"
+	echo "DB_PORT_NO        = ${smso}${DB_PORT_NO:-${notset}}${rmso}"
+	echo "DB_PROD_HOME      = ${smso}${DB_PROD_HOME:-${notset}}${rmso}"
+	echo "DB_PROD_PATH      = ${smso}${DB_PROD_PATH:-${notset}}${rmso}"
+	echo "DB_SERVER         = ${smso}${DB_SERVER:-${notset}}${rmso}"
+	echo "DB_SPECIFIC_CLASS = ${smso}${DB_SPECIFIC_CLASS:-${notset}}${rmso}"
+	echo "DB_TYPE           = ${smso}${DB_TYPE:-${notset}}${rmso}"
+}
+setappserver() {
+	export APP_SERVER=$(hostname)
+	echo APP_SERVER=$APP_SERVER
+}
+atl () {
+	clear
+	at -l
+}
+
+alias ct='cleartool'
+
+
+#!/usr/bin/ksh
+#
+# log files.
+#
+errlog="/tmp/el.$$"
+#
+rmfiles() {
+rm -f ${errlog} 2>/dev/null 1>&1
+}
+#
+trap 'rmfiles' 0
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [-s db_server] [-p db_port] [-U username] [-P passwd]
+
+where:
+	-? = print usage message
+	-x = debug
+	-s db_server = DB server name/IP (default: DB_SERVER).
+	-p db_port = DB server TCP port (default: DB_PORT_NO).
+	-U user_name = DB user name (default: cim).
+	-P password = DB user password (default: cim).
+
+EOF
+}
+#
+dbusername=cim
+dbpasswd=cim
+#
+set -- $(getopt xU:P:s:p: ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-s)
+		export DB_SERVER="${2}"
+		shift 2
+		;;
+	-p)
+		export DB_PORT_NO="${2}"
+		shift 2
+		;;
+	-U)
+		dbusername="${2}"
+		shift 2
+		;;
+	-P)
+		dbpasswd="${2}"
+		shift 2
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+exec /usr/local/bin/tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U ${dbusername} -P ${dbpasswd}

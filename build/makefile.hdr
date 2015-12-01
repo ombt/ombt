@@ -17,6 +17,8 @@ INCLUDEDIR = $(ROOT)/$(RELEASEHDRDIR)
 
 all:	install
 
+depend:
+
 install:	installinclude
 		touch install
 

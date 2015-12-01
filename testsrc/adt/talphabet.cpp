@@ -5,9 +5,9 @@
 //
 // test for alphabet class
 
-#include <random/Random.h>
-#include <adt/Alphabet.h>
-#include <adt/Array.h>
+#include "random/Random.h"
+#include "adt/Alphabet.h"
+#include "adt/Array.h"
 
 using namespace ombt;
 using namespace std;

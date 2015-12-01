@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <matrix/Matrix.h>
-#include <matrix/GaussLUP.h>
-#include <matrix/TriDiagonal.h>
+#include "matrix/Matrix.h"
+#include "matrix/GaussLUP.h"
+#include "matrix/TriDiagonal.h"
 
 using namespace ombt;
 using namespace std;

@@ -3,8 +3,8 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <gstring/gstring.h>
-#include <random/Random.h>
+#include "gstring/gstring.h"
+#include "random/Random.h"
 
 #define ABS(x) ((x) < 0 ? (-(x)) : (x))
 

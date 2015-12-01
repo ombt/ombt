@@ -6,9 +6,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <list>
-#include <Debug.h>
-#include <threads/SimpleThread.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "threads/SimpleThread.h"
+#include "logging/Logging.h"
 
 using namespace ombt;
 using namespace std;

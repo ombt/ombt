@@ -7,10 +7,10 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#Include <adt/List.h>
-#include <adt/String.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include "adt/String.h"
 
 // forward declaration
 class Substitution;
@@ -42,7 +42,7 @@ public:
 	// constructors and destructor
 	Term();
 	Term(const Term &);
-	Term(const String &);
+	Term(const ombt::String &);
 	~Term();
 
 	// copy data
@@ -50,7 +50,7 @@ public:
 
 	// assignment operator
 	Term &operator=(const Term &);
-	Term &operator=(const String &);
+	Term &operator=(const ombt::String &);
 
 	// comparison operators
 	int operator==(const Term &) const;
@@ -61,8 +61,8 @@ public:
 	int operator>=(const Term &) const;
 
 	// parse a list representation
-	int parse(const String &);
-	int parse(StringTokens &);
+	int parse(const ombt::String &);
+	int parse(ombt::StringTokens &);
 
 	// negation functions
 	int isNegated() const;
@@ -78,19 +78,19 @@ public:
 	Type getType() const {
 		return(type);
 	}
-	String getValue() const {
+	ombt::String getValue() const {
 		return(value);
 	};
 
 	// print data
-	friend ostream &operator<<(ostream &, const Term &);
+	friend std::Ostream &operator<<(std::Ostream &, const Term &);
 
 protected:
 	// internal data
-	String value;
+	ombt::String value;
 	Type type;
 	int argnum;
-	List<Term *> *pargs;
+	ombt::List<Term *> *pargs;
 };
 
 // substitution class
@@ -104,7 +104,7 @@ public:
 	// constructors and destructor
 	Substitution();
 	Substitution(const Substitution &);
-	Substitution(const Term &, const String &);
+	Substitution(const Term &, const ombt::String &);
 	~Substitution();
 
 	// assignment operator
@@ -125,10 +125,10 @@ public:
 	int applyTo(Term &) const;
 
 	// access data
-	String getVariable() const {
+	ombt::String getVariable() const {
 		return(variable);
 	}
-	void setVariable(const String &v) {
+	void setVariable(const ombt::String &v) {
 		variable = v;
 	}
 	Term getTerm() const {
@@ -142,11 +142,11 @@ public:
 	int isDegenerate() const;
 
 	// output function
-	friend ostream &operator<<(ostream &, const Substitution &);
+	friend std::Ostream &operator<<(std::Ostream &, const Substitution &);
 
 protected:
 	// internal data
-	String variable;
+	ombt::String variable;
 	Term term;
 };
 
@@ -182,11 +182,11 @@ public:
 	int applyTo(Term &) const;
 
 	// output function
-	friend ostream &operator<<(ostream &, const Substitutions &);
+	friend std::Ostream &operator<<(std::Ostream &, const Substitutions &);
 
 protected:
 	// internal data
-	List<Substitution *> *psubs;
+	ombt::List<Substitution *> *psubs;
 };
 
 // unification function

@@ -1,0 +1,373 @@
+#!/usr/bin/ksh
+#
+# log files.
+#
+errlog="/tmp/el.$$"
+logfile="/tmp/lf.$$"
+cmdfile="/tmp/cf.$$"
+#
+rmfiles() {
+# echo -e "\nRemove temp files."
+# leave logfile, but delete all other files.
+rm -f ${errlog} 2>/dev/null 1>&1
+[[ "${usebatch}" != "yes" ]] && rm -f ${cmdfile} 2>/dev/null 1>&1
+}
+#
+trap 'rmfiles' 0
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [-V] [-b] [-f [-k]] [-u|-U] [-d] [-l|-L] [-D] [-a|-A] [-c] [-P] [-C] [-K] [-t] [-j] [-s] [-B]
+
+where:
+	-? = print usage message
+	-x = debug
+	-V = verbose
+	-b = use batch mode (at now)
+	-u = update current directory via cleartool
+	-U = ONLY update current directory via cleartool, NO builds.
+	-D = regenerate .DEPEND makefile
+	-d or -g = debug build for gdb, CPPFLAGS+='-O0 -g'
+	-L = generate a build log file by redirection.
+	-l = generate a build log file by tee.
+	-a = choose -u, -D, -l options (update, DEPEND, tee build log file)
+	-A = choose -c, -u, -D, -l options (clean, update, DEPEND, tee build log file)
+	-c = clean before build (also enables -D).
+	-f = force update and overwrite any hijacked files.
+	-k = keep hijacked files if '-f' (forced) is given.
+	-P = enable profiling for gprof, add CPPFLAGS+='-pg'. can be combined
+	     with -C for code coverage.
+	-C = enable code coverage for gcov, add 
+	     CPPFLAGS+='-fprofile-arcs -ftest-coverage'. can be combined with
+	     -P for profiling.
+	-K = run ckbld on log file.
+	-t = time each step.
+	-j = run make with multiple jobs (-j option).
+	-s = also build simulators
+	-B = unconditionally make all targets.
+EOF
+}
+#
+mk_updatecmd () {
+	#
+	updatecmd=
+	#
+	if [[ "${updatenode}" == "yes" ]]
+	then
+		updatecmd='cleartool update'
+		#
+		if [[ "${forceupdate}" == "yes" ]]
+		then
+			if [[ "${keephijackedfiles}" == "yes" ]]
+			then
+				updatecmd="${updatecmd} -force -rename"
+			else
+				updatecmd="${updatecmd} -force -overwrite"
+			fi
+		fi
+		#
+		updatecmd="${updatecmd} ."
+		#
+		[[ "${verbosemode}" == yes ]] && echo -e "\nUpdate cmd: ${updatecmd}"
+		echo "${timecmd}${updatecmd}" >>${cmdfile}
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo update requested."
+	fi
+	#
+	return 0
+}
+#
+mk_cleancmd () {
+	if [[ "${updatenodeonly}" == "yes" ]]
+	then
+		return 0
+	fi
+	#
+	# do the builds after update, if any.
+	cleancmd=
+	#
+	if [[ "${runclean}" == "yes" ]]
+	then
+		cleancmd="make ${makeBopt} clean"
+		#
+		[[ "${verbosemode}" == yes ]] && echo -e "\nClean cmd: ${cleancmd}"
+		echo "${timecmd}${cleancmd}" >>${cmdfile}
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo clean cmd."
+	fi
+	#
+	mkversion=~/cim/mkversion
+	echo "[[ ! -x \"${mkversion}\" ]] && chmod 755 ${mkversion}" >>${cmdfile}
+	return 0
+}
+#
+mk_dependcmd () {
+	if [[ "${updatenodeonly}" == "yes" ]]
+	then
+		return 0
+	fi
+	#
+	dependcmd=
+	#
+	if [[ "${rundepend}" == "yes" ]]
+	then
+		dependcmd="make ${makeBopt} depend"
+		#
+		[[ "${verbosemode}" == yes ]] && echo -e "\nDEPEND generation cmd: ${dependcmd}"
+		echo "${timecmd}${dependcmd}" >>${cmdfile}
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo .DEPEND makefile regeneration."
+	fi
+	return 0
+}
+#
+mk_buildcmd () {
+	if [[ "${updatenodeonly}" == "yes" ]]
+	then
+		return 0
+	fi
+	#
+	#
+	cppflags=
+	#
+	if [[ "${buildfordebug}" == "yes" ]]
+	then
+		cppflags="-O0 -g"
+		[[ "${verbosemode}" == yes ]] && echo -e "\nDebug build CPPFLAGS: ${cppflags}"
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo debug build."
+	fi
+	#
+	if [[ "${buildforprofile}" == "yes" ]]
+	then
+		if [[ -z "${cppflags}" ]]
+		then
+			cppflags="-pg"
+		else
+			cppflags="${cppflags} -pg"
+		fi
+		[[ "${verbosemode}" == yes ]] && echo -e "\nProfiling build CPPFLAGS: ${cppflags}"
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo profiling build."
+	fi
+	#
+	if [[ "${buildforcodecoverage}" == "yes" ]]
+	then
+		if [[ -z "${cppflags}" ]]
+		then
+			cppflags="-fprofile-arcs -ftest-coverage"
+		else
+			cppflags="${cppflags} -fprofile-arcs -ftest-coverage"
+		fi
+		[[ "${verbosemode}" == yes ]] && echo -e "\nCode coverage build CPPFLAGS: ${cppflags}"
+	else
+		[[ "${verbosemode}" == yes ]] && echo -e "\nNo code coverage build."
+	fi
+	#
+	bldcmd=
+	#
+	if [[ ! -z "${cppflags}" ]]
+	then
+		bldcmd="make ${makejopt} ${makeBopt} CPPFLAGS+='${cppflags}'"
+	else
+		bldcmd="make ${makejopt} ${makeBopt}"
+	fi
+	#
+	[[ "${verbosemode}" == yes ]] && echo -e "\nBuild cmd: ${bldcmd}"
+	echo "${timecmd}${bldcmd}" >>${cmdfile}
+	[[ "${buildsim}" == yes ]] && echo "${timecmd}${bldcmd} sim" >>${cmdfile}
+	return 0
+}
+#
+updatenode=no
+updatenodeonly=no
+rundepend=no
+uselogfile=no
+runclean=no
+buildfordebug=no
+forceupdate=no
+keephijackedfiles=no
+usetee=no
+buildforprofile=no
+buildforcodecoverage=no
+verbosemode=no
+usebatch=no
+runckbld=no
+timecmd=
+makejopt=
+makeBopt=
+buildsim=no
+#
+set -- $(getopt gBsxjtKbVCPAfkcDauUdlL ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-V)
+		verbosemode=yes
+		shift
+		;;
+	-K)
+		runckbld=yes
+		shift
+		;;
+	-s)
+		buildsim=yes
+		shift
+		;;
+	-b)
+		usebatch=yes
+		shift
+		;;
+	-j)
+		makejopt="-j"
+		shift
+		;;
+	-u)
+		updatenode=yes
+		updatenodeonly=no
+		shift
+		;;
+	-U)
+		updatenode=yes
+		updatenodeonly=yes
+		shift
+		;;
+	-f)
+		forceupdate=yes
+		shift
+		;;
+	-k)
+		keephijackedfiles=yes
+		shift
+		;;
+	-c)
+		runclean=yes
+		rundepend=yes
+		shift
+		;;
+	-C)
+		buildforcodecoverage=yes
+		shift
+		;;
+	-P)
+		buildforprofile=yes
+		shift
+		;;
+	-D)
+		rundepend=yes
+		shift
+		;;
+	-d|-g)
+		buildfordebug=yes
+		shift
+		;;
+	-l)
+		uselogfile=yes
+		usetee=yes
+		shift
+		;;
+	-L)
+		uselogfile=yes
+		usetee=no
+		shift
+		;;
+	-B)
+		makeBopt="-B"
+		shift
+		;;
+	-t)
+		timecmd="time "
+		shift
+		;;
+	-a)
+		runclean=no
+		updatenode=yes
+		rundepend=yes
+		uselogfile=yes
+		usetee=yes
+		shift
+		;;
+	-A)
+		runclean=yes
+		updatenode=yes
+		rundepend=yes
+		uselogfile=yes
+		usetee=yes
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+echo -e "\nCurrent node: $(pwd)"
+#
+if [[ -z "${CC_GEN}" ]]
+then
+	echo -e "\nERROR: CC_GEN is NOT set." >&2
+	exit 2
+fi
+#
+>${cmdfile}
+#
+mk_updatecmd
+mk_cleancmd
+mk_dependcmd
+mk_buildcmd
+#
+echo -e "\nCmd file ${cmdfile} contents:"
+cat ${cmdfile}
+echo
+#
+chmod 777 ${cmdfile}
+#
+kshcmd="/usr/bin/ksh ${cmdfile}"
+#
+if [[ "${uselogfile}" == "yes" ]]
+then
+	echo -e "\nLog File: ${logfile}"
+	#
+	if [[ "${usetee}" == "yes" ]]
+	then
+		kshcmd="${kshcmd} 2>&1 | tee ${logfile}"
+	else
+		kshcmd="${kshcmd} 2>${logfile} 1>&2"
+	fi
+fi
+#
+if [[ "${usebatch}" == "yes" ]]
+then
+	echo -e "\nUsing batch mode:"
+	at now <<EOF
+eval ${kshcmd}
+if [[ "${uselogfile}" == "yes" && "${runckbld}" == "yes" ]]
+then
+	echo -e "\nChecking log file:"
+	ckbld ${logfile}
+fi
+EOF
+else
+	eval ${kshcmd}
+	if [[ "${uselogfile}" == "yes" && "${runckbld}" == "yes" ]]
+	then
+		echo -e "\nChecking log file:"
+		ckbld ${logfile}
+	fi
+fi
+#
+exit 0

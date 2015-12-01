@@ -3,9 +3,9 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <complex/Complex.h>
-#include <matrix/Matrix.h>
-#include <matrix/MatrixOps.h>
+#include "complex/Complex.h"
+#include "matrix/Matrix.h"
+#include "matrix/MatrixOps.h"
 
 using namespace ombt;
 using namespace std;

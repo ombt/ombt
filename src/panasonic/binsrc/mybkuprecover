@@ -1,0 +1,78 @@
+#!/usr/bin/ksh
+#
+# recover file(s) using the last backup copy.
+#
+if [[ $# == 0 ]]
+then
+	echo "usage: $0 [-?] [-a] file [file2 ...]" >&2
+	exit 2
+elif [[ "${1}" == "-?" ]]
+then
+	echo "usage: $0 [-?] [-a] file [file2 ...]"
+	exit 0
+elif [[ "${1}" == "-a" ]]
+then
+	shift
+	set -- * "${@}"
+fi
+#
+if [[ ! -d "BACKUPD" ]]
+then
+	echo -e "\nERROR: No BACKUPD directory exists!" >&2
+	exit 2
+fi
+#
+outfile="/tmp/of$$"
+trap 'rm -f ${outfile}' 0
+#
+for file in "${@}"
+do
+	if [[ ! -f "${file}" ]]
+	then
+		# skip anything that is not a file
+		continue
+	fi
+	if [[ ! -r "${file}" ]]
+	then
+		echo -e "\nFile ${file} NOT readable. Skipping it." >&2
+		continue
+	fi
+	#
+	latestbkupfile="$(ls -tr BACKUPD/*/${file} 2>/dev/null| tail -1)"
+	if [[ ! -r "${latestbkupfile}" ]]
+	then
+		echo -e "\nBackup file for ${file} NOT FOUND. Skipping it." >&2
+		continue
+	fi
+	#
+	localhash=$(sum ${file})
+	latestbkuphash=$(sum ${latestbkupfile})
+	#
+	echo -e "\nLocal File: ${file} (HASH=${localhash})"
+	echo "Backup File: ${latestbkupfile} (HASH=${latestbkuphash})"
+	if [[ "${localhash}" == "${latestbkuphash}" ]]
+	then
+		echo -e "\nHASH SUMS ARE $(tput smso)EQUAL$(tput rmso)."
+	else
+		echo -e "\nHASH SUMS ARE $(tput smso)NOT EQUAL$(tput rmso)."
+	fi
+	#
+	echo -e "\n$(tput smso)Overwrite$(tput rmso) local file with backup file? [y/n/q[uit]/<cr>=n] \c"
+	read ans
+	#
+	case "${ans}" in
+	q*)
+		echo -e "\nExiting."
+		exit 0
+		;;
+	y*)
+		echo -e "\nCopying file ..."
+		cp ${latestbkupfile} ${file}
+		;;
+	*)
+		echo -e "\nSkipping file ..."
+		;;
+	esac
+done
+#
+exit 0

@@ -1,0 +1,142 @@
+#!/usr/bin/ksh
+#
+# check for errors in the last or current build log file
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [-x] [-f] [-h] [-l] [-q] [logfile]
+
+where:
+	-? = print usage message
+	-x = debug
+	-f = tail file using -f option
+	-h = check update output for hijacked files.
+	-i = return number of lines in log file.
+	-q = check at-queue.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+tailfile=no
+hijacked=no
+linecount=no
+checkqueue=no
+#
+rmfiles() {
+rm -f ${errlog} 2>/dev/null 1>&1
+}
+#
+trap 'rmfiles' 0
+#
+set -- $(getopt xqlhf ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-f)
+		tailfile=yes
+		printlastlines=no
+		shift
+		;;
+	-h)
+		hijacked=yes
+		shift
+		;;
+	-l)
+		linecount=yes
+		shift
+		;;
+	-q)
+		checkqueue=yes
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+if [[ $# -ne 0 ]]
+then
+	lastlogfile="${1}"
+else
+	lastlogfile="$(ls -tr /tmp/lf.* 2>/dev/null | tail -1)"
+fi
+#
+if [[ ! -r "${lastlogfile}" || -z "${lastlogfile}" ]]
+then
+	echo -e "\nNO 'last' log file found."
+	exit 2
+fi
+#
+if [[ "${hijacked}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	egrep -i 'Keeping hijacked' ${lastlogfile} |
+	sed 's|^[^"]*"\([^"]*\)".*$|Keeping hijacked file: \1|'
+	#cut -d- -f1
+	exit 0
+fi
+#
+if [[ "${linecount}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	# echo -e "Lines: $(wc -l ${lastlogfile})"
+	wc -l ${lastlogfile}
+	exit 0
+fi
+#
+if [[ "${checkqueue}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	atq
+	exit 0
+fi
+#
+if [[ "${tailfile}" == "yes" ]]
+then
+	echo -e "\nFound 'last' log file and Tailing: ${lastlogfile}"
+	tail -f ${lastlogfile} |
+	egrep -in '(>>>>>>>> making all for|error|fail|warning|no rule to make target|undefined.*reference)' |
+	egrep -v '(Compiling|a *- *obj/)' |
+	egrep -v 'DEPEND.*scanning:.*src/(ErrorMsg|ErrorLookup|ShowError)\.C'
+else
+	echo -e "\nFound 'last' log file: ${lastlogfile}"
+	egrep -in '(>>>>>>>> making all for|error|fail|warning|no rule to make target|undefined.*reference)' ${lastlogfile} |
+	egrep -v '(Compiling|a *- *obj/)' |
+	egrep -v 'DEPEND.*scanning:.*src/(ErrorMsg|ErrorLookup|ShowError)\.C'
+fi |
+gawk '
+BEGIN {
+	current = "";
+}
+$0 ~ />>>>> making all for/ {
+	current = $0;
+	next;
+}
+{
+	if (current != "")
+	{
+		print "\n\t\t" current "\n";
+		current = "";
+	}
+	print $0
+	next;
+}
+END {
+} '
+#
+exit 0

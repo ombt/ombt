@@ -6,14 +6,14 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
-#include <Debug.h>
-#include <threads/ThreadBarrier.h>
-#include <logging/Logging.h>
+#include "system/Debug.h"
+#include "threads/ThreadBarrier.h"
+#include "logging/Logging.h"
 
-#include <atomic/UseCntPtr.h>
-#include <threads/Queue.h>
-#include <threads/Thread.h>
-#include <threads/Task.h>
+#include "atomic/UseCntPtr.h"
+#include "threads/Queue.h"
+#include "threads/Thread.h"
+#include "threads/Task.h"
 
 using namespace ombt;
 using namespace std;

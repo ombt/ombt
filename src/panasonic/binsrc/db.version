@@ -1,0 +1,90 @@
+#!/bin/bash
+#
+: ${DB_NAME:?"is NOT set."}
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+db_version () {
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s/[0-9][0-9][0-9]> //g" \
+	     -e "s/[0-9][0-9]> //g" \
+	     -e "s/[0-9]> //g" \
+	     -e "s/(return status = 0)//g" \
+	     -e "s/local.*$//g" \
+	     -e "s/[ 	]*$//g" |
+	 grep -v "^$" ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT attribute_value AS '=== DB Version ==='
+FROM system_config 
+WHERE attribute_name = 'db_version'
+GO
+SELECT attribute_value AS '=== CIM Version ==='
+FROM system_config 
+WHERE attribute_name = 'cim_version'
+GO
+SELECT attribute_value AS '=== Build Num ==='
+FROM system_config 
+WHERE attribute_name = 'build_num'
+GO
+SELECT attribute_value AS '=== Site Name ==='
+FROM system_config 
+WHERE attribute_name = 'site_name'
+GO
+SELECT attribute_value AS '=== Site Locn ==='
+FROM system_config 
+WHERE attribute_name = 'site_locn'
+GO
+BYE
+EOF
+}
+#
+usage() {
+cat >&2 <<EOF
+usage: $0 [-?x] 
+where
+	-? = print usage message
+	-x = debug
+
+list database and cim versions.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+#
+rmfiles() {
+	rm -f ${errlog} 2>/dev/null 1>&2
+}
+#
+trap 'rmfiles' 0
+#
+set -- $(getopt x ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+echo -e "\nDB_NAME=${DB_NAME}"
+echo -e "DB_SERVER=${DB_SERVER}\n"
+#
+db_version 
+#
+exit 0

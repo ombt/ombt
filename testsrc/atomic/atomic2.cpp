@@ -7,10 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/Atomic.h>
-#include <logging/Logging.h>
-#include <threads/SimpleThread.h>
+#include "system/Debug.h"
+#include "atomic/Atomic.h"
+#include "logging/Logging.h"
+#include "threads/SimpleThread.h"
 
 using namespace std;
 using namespace ombt;

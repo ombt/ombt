@@ -3,8 +3,8 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <gstring/gstring.h>
-#include <gstring/trie.h>
+#include "gstring/gstring.h"
+#include "gstring/trie.h"
 
 using namespace ombt;
 using namespace std;

@@ -14,7 +14,7 @@ Clause::Clause(const Clause &src):
 	depth(src.depth), number(src.number), 
 	partOfConclusion(src.partOfConclusion), terms()
 {
-	ListIterator<Term *> srcti(src.terms);
+	ombt::ListIterator<Term *> srcti(src.terms);
 	for ( ; !srcti.done(); srcti++)
 	{
 		Term *newterm = new Term(*srcti());
@@ -23,10 +23,10 @@ Clause::Clause(const Clause &src):
 	}
 }
 
-Clause::Clause(const List<Term> &alist, int d, int poc):
+Clause::Clause(const ombt::List<Term> &alist, int d, int poc):
 	depth(d), number(-1), partOfConclusion(poc), terms()
 {
-	ListIterator<Term> alisti(alist);
+	ombt::ListIterator<Term> alisti(alist);
 	for ( ; !alisti.done(); alisti++)
 	{
 		Term *newterm = new Term(alisti());
@@ -37,7 +37,7 @@ Clause::Clause(const List<Term> &alist, int d, int poc):
 
 Clause::~Clause()
 {
-	ListIterator<Term *> termsi(terms);
+	ombt::ListIterator<Term *> termsi(terms);
 	for ( ; !termsi.done(); termsi++)
 	{
 		delete termsi();
@@ -52,7 +52,7 @@ Clause::operator=(const Clause &rhs)
 	if (this != &rhs)
 	{
 		// delete old terms
-		ListIterator<Term *> termsi(terms);
+		ombt::ListIterator<Term *> termsi(terms);
 		for ( ; !termsi.done(); termsi++)
 		{
 			delete termsi();
@@ -65,7 +65,7 @@ Clause::operator=(const Clause &rhs)
 		partOfConclusion = rhs.partOfConclusion;
 
 		// copy terms
-		ListIterator<Term *> rhsti(rhs.terms);
+		ombt::ListIterator<Term *> rhsti(rhs.terms);
 		for ( ; !rhsti.done(); rhsti++)
 		{
 			Term *newterm = new Term(*rhsti());
@@ -187,23 +187,23 @@ Clause::insert(const Term &term)
 
 	// check if the term already exist, use unification
 	Substitutions sts;
-	ListIterator<Term *> termsi(terms);
+	ombt::ListIterator<Term *> termsi(terms);
 	for ( ; !termsi.done(); termsi++)
 	{
-		Term term1(*termsi());
-		Term term2(term);
+		Term t1(*termsi());
+		Term t2(term);
 		sts.clear();
-		if (unify(term1, term2, sts) == OK)
+		if (unify(t1, t2, sts) == OK)
 		{
 			sts.applyTo(*termsi());
 		}
 	}
 }
 
-int
+void
 Clause::remove(Term &term)
 {
-	terms.remove(term);
+	terms.remove(&term);
 }
 
 int
@@ -227,7 +227,7 @@ Clause::isEmpty() const
 int
 Clause::isATautology() const
 {
-	ListIterator<Term> termsIter(terms);
+	ombt::ListIterator<Term> termsIter(terms);
 	for ( ; !termsIter.done(); termsIter++)
 	{
 		if (terms.isMember(~termsIter()))

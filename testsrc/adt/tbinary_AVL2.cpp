@@ -8,9 +8,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <adt/BinaryTree_AVL.h>
-#include <adt/Queue_List.h>
-#include <random/Random.h>
+#include "adt/BinaryTree_AVL.h"
+#include "adt/Queue_List.h"
+#include "random/Random.h"
 
 using namespace ombt;
 using namespace std;

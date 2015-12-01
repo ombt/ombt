@@ -1,0 +1,127 @@
+1) reading data from a file into a table, data.frame.
+
+use read.table()
+
+2) file must have a specific format to be read in
+directly into a data.frame.
+
+To read an entire data frame directly, the external file will normally 
+have a special form.  
+
+• The first line of the file should have a name for each
+variable in the data frame.  
+
+• Each additional line of the file has as its
+first item a row label and the values for each variable.
+
+
+you can then use 
+
+> HousePrice <- read.table("house.data")
+
+to read in the data into a data frame.
+
+> hp <- read.table("houses.dat")
+> hp
+   Price Floor Area Rooms Age Cent.Heat
+01 52.00   111  830     5 6.2        no
+02 54.75   128  710     5 7.5        no
+03 57.50   128 1000     5 4.2        no
+04 57.50   131  690     6 8.8        no
+05 59.75    92  900     5 1.9       yes
+> 
+> 
+> hp2 <- read.table("houses2.dat")
+> hp2
+     V1    V2   V3    V4  V5        V6
+1 Price Floor Area Rooms Age Cent.Heat
+2 52.00 111.0  830     5 6.2        no
+3 54.75 128.0  710     5 7.5        no
+4 57.50 128.0 1000     5 4.2        no
+5 57.50 131.0  690     6 8.8        no
+6 59.75  92.0  900     5 1.9       yes
+> hp2 <- read.table("houses2.dat, header=TRUE)
++ hp2
++ 
+> hp2 <- read.table("houses2.dat", header=TRUE)
+> hp2
+  Price Floor Area Rooms Age Cent.Heat
+1 52.00   111  830     5 6.2        no
+2 54.75   128  710     5 7.5        no
+3 57.50   128 1000     5 4.2        no
+4 57.50   131  690     6 8.8        no
+5 59.75    92  900     5 1.9       yes
+
+3) R contains default data sets.
+
+to list the data sets:
+
+> data()
+
+to access the data in the dataset:
+
+data(package="rpart")
+data(Puromycin, package="datasets")
+
+package "datasets" contains all the default data which comes with R.
+
+to edit dataset, use edit command. it brings up VI and the
+commands to load the dataset.
+
+> date(package="rpart")
+Error in date(package = "rpart") : unused argument(s) (package = "rpart")
+> data()
+> date(package="Nile")
+Error in date(package = "Nile") : unused argument(s) (package = "Nile")
+> data(package="Nile")
+Error in find.package(package, lib.loc, verbose = verbose) : 
+  there is no package called ‘Nile’
+> data()
+> data(Nile, package="datasets")
+> ls()
+[1] "hp"   "hp2"  "Nile"
+> Nile
+Time Series:
+Start = 1871 
+End = 1970 
+Frequency = 1 
+  [1] 1120 1160  963 1210 1160 1160  813 1230 1370 1140  995  935 1110  994 1020
+ [16]  960 1180  799  958 1140 1100 1210 1150 1250 1260 1220 1030 1100  774  840
+ [31]  874  694  940  833  701  916  692 1020 1050  969  831  726  456  824  702
+ [46] 1120 1100  832  764  821  768  845  864  862  698  845  744  796 1040  759
+ [61]  781  865  845  944  984  897  822 1010  771  676  649  846  812  742  801
+ [76] 1040  860  874  848  890  744  749  838 1050  918  986  797  923  975  815
+ [91] 1020  906  901 1170  912  746  919  718  714  740
+> 
+> 
+> 
+> old <- Nile
+> old
+Time Series:
+Start = 1871 
+End = 1970 
+Frequency = 1 
+  [1] 1120 1160  963 1210 1160 1160  813 1230 1370 1140  995  935 1110  994 1020
+ [16]  960 1180  799  958 1140 1100 1210 1150 1250 1260 1220 1030 1100  774  840
+ [31]  874  694  940  833  701  916  692 1020 1050  969  831  726  456  824  702
+ [46] 1120 1100  832  764  821  768  845  864  862  698  845  744  796 1040  759
+ [61]  781  865  845  944  984  897  822 1010  771  676  649  846  812  742  801
+ [76] 1040  860  874  848  890  744  749  838 1050  918  986  797  923  975  815
+ [91] 1020  906  901 1170  912  746  919  718  714  740
+> edit(old)
+Time Series:
+Start = 1871 
+End = 1970 
+Frequency = 1 
+  [1] 1120 1160  963 1210 1160 1160  813 1230 1370 1140  995  935 1110  994 1020
+ [16]  960 1180  799  958 1140 1100 1210 1150 1250 1260 1220 1030 1100  774  840
+ [31]  874  694  940  833  701  916  692 1020 1050  969  831  726  456  824  702
+ [46] 1120 1100  832  764  821  768  845  864  862  698  845  744  796 1040  759
+ [61]  781  865  845  944  984  897  822 1010  771  676  649  846  812  742  801
+ [76] 1040  860  874  848  890  744  749  838 1050  918  986  797  923  975  815
+ [91] 1020  906  901 1170  912  746  919  718  714  740
+
+
+
+
+

@@ -1,0 +1,22 @@
+#!/usr/bin/ksh
+#
+# install debug hacks, TRACE, DUMP and hack to
+# enable stdout redirection.
+#
+smso=$(tput smso)
+rmso=$(tput rmso)
+#
+echo -e "\n${smso}Installing debug versions:${rmso}"
+cd ~/cqs/debug
+#
+echo -e "\n${smso}Copy SysLogger.H to cim/hdr:${rmso}"
+cp -f SysLogger.H ~/cim/hdr
+#
+echo -e "\n${smso}Copy SysLogger.C to cim/classes/src:${rmso}"
+cp -f SysLogger.C ~/cim/classes/src
+#
+echo -e "\n${smso}Build cim/classes:${rmso}"
+cd ~/cim/classes
+mybld -l
+#
+exit 0

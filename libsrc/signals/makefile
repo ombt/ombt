@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -10,17 +15,10 @@ include $(ROOT)/build/makefile.common
 
 LIBNAME = signals
 
-FILES = Signal.cpp 
+include .FILES
 
-include $(ROOT)/build/makefile.lib2
+include .HDRS
 
-Signal.o:	Signal.cpp \
-		Signal.h \
-		$(INCLUDEDIR)/sockets/EndPoint.h \
-		$(INCLUDEDIR)/sockets/Socket.h \
-		$(INCLUDEDIR)/sockets/Address.h \
-		$(INCLUDEDIR)/sockets/LocalAddress.h \
-		$(INCLUDEDIR)/sockets/InetAddress.h \
-		$(INCLUDEDIR)/atomic/BaseObject.h
+include $(ROOT)/build/makefile.lib3
 
-
+include .DEPENDS

@@ -1,0 +1,12 @@
+#!/usr/bin/ksh
+#
+# clean up old processes
+#
+cd  ~/cim
+#
+echo "Killing any OLD post_master processes ..."
+killall -r post_master
+#
+echo "Done."
+#
+exit 0

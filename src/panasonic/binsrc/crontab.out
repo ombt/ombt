@@ -1,0 +1,19 @@
+#
+# update integration node every week day at 7AM
+#
+55 6 * * 1-5	/opt/rational/clearcase/bin/cleartool update -force -overwrite /cimuser/mrumore/mrumore_panacim8.3_int/ 2>&1 | /bin/mailx -s "8.3_INT checkout for `date`" mrumore 1>/dev/null 2>&1
+0 7 * * 1-5	/opt/rational/clearcase/bin/cleartool update -force -overwrite /cimuser/mrumore/mrumore_panacim8.2.4_int/ 2>&1 | /bin/mailx -s "8.2.4_INT checkout for `date`" mrumore 1>/dev/null 2>&1
+# 5 7 * * 1-5	/opt/rational/clearcase/bin/cleartool update -force -overwrite /cimuser/mrumore/mrumore_panacim8.2.3_int/ 2>&1 | /bin/mailx -s "8.2.3_INT checkout for `date`" mrumore 1>/dev/null 2>&1
+#
+# daily doxygen run for current cim directory
+#
+0 2 * * 1-5	/cimuser/mrumore/bin/doxy.bld.repo PanaCIM cim /cimuser/mrumore/cim /cimuser/mrumore/doxygen/repository/cim 2>&1 | /bin/mailx -s "current cim doxygen run on `date`" mrumore 2>/dev/null 1>&2
+#
+# build doxygen menu page for any new load
+#
+0 6 * * 1-5	/cimuser/mrumore/bin/doxy.main.menu /cimuser/mrumore/doxygen 2>&1 | /bin/mailx -s "current cim doxygen main menu run on `date`" mrumore 2>/dev/null 1>&2
+#
+# backup at least once a week on monday.
+#
+0 7 * * 1	(cd /cimuser/mrumore/bin 2>&1; /cimuser/mrumore/bin/mybkup 2>&1) | /bin/mailx -s "weekly backup of bin for `date`" mrumore 1>/dev/null 2>&1
+0 7 * * 1	(cd /cimuser/mrumore/readmes 2>&1; /cimuser/mrumore/bin/mybkup 2>&1) | /bin/mailx -s "weekly backup of READMES for `date`" mrumore 1>/dev/null 2>&1

@@ -13,15 +13,15 @@
 #include <sstream>
 
 // local headers
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <threads/Task.h>
-#include <threads/Thread.h>
-#include <logging/Logging.h>
-#include <sockets/Socket.h>
-#include <sockets/InetAddress.h>
-#include <sockets/EndPoint.h>
-#include <threads/ThreadBarrier.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "threads/Task.h"
+#include "threads/Thread.h"
+#include "logging/Logging.h"
+#include "sockets/Socket.h"
+#include "sockets/InetAddress.h"
+#include "sockets/EndPoint.h"
+#include "threads/ThreadBarrier.h"
 
 using namespace ombt;
 

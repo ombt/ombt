@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <assert.h>
-#include <adt/Array.h>
-#include <adt/String.h>
+#include "adt/Array.h"
+#include "adt/String.h"
 
 
 using namespace ombt;

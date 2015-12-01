@@ -1,0 +1,43 @@
+#!/usr/bin/ksh
+# find all hijacked files for the given or current 
+# directory and all subdirectories.
+#
+usage() {
+cat >&2 <<EOF
+
+usage: $0 [-?] [dir1 [dir2 ...]]
+
+where:
+	-? = print usage message.
+
+find all hijacked files in the given directory(s) or use 
+the current directory by default. The subdirectories are 
+recursively visited.
+
+EOF
+}
+#
+if [[ $# -eq 0 ]]
+then
+	# just use current directory
+	cleartool ls -l -recurse | 
+	grep -i '\[hijacked\]' |
+	sed 's/[ 	][ 	]*/ /g;' |
+	cut -d'@' -f1 |
+	cut -d' ' -f2
+elif [[ "${1}" == "-?" ]]
+then
+	usage
+else
+	# run for the given list of (presumed) directories.
+	for dir in "${@}"
+	do
+		cleartool ls -l -recurse ${dir} | 
+		grep -i '\[hijacked\]'
+	done |
+	sed 's/[ 	][ 	]*/ /g;' |
+	cut -d'@' -f1 |
+	cut -d' ' -f2
+fi
+#
+exit 0

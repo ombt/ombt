@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <adt/BinaryTree_AVL.h>
-#include <adt/String.h>
+#include "adt/BinaryTree_AVL.h"
+#include "adt/String.h"
 
 using namespace ombt;
 using namespace std;

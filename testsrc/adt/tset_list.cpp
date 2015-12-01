@@ -3,8 +3,8 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <random/Random.h>
-#include <adt/Set_List.h>
+#include "random/Random.h"
+#include "adt/Set_List.h"
 
 using namespace ombt;
 using namespace std;

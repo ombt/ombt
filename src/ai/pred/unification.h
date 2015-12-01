@@ -7,11 +7,11 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/String.h>
-#include "term.h"
-#include "substitution.h"
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/String.h"
+#include <term.h>
+#include <substitution.h>
 
 // unification function
 int unify(Term &, Term &, Substitutions &);

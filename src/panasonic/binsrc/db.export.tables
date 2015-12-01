@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+: ${DB_NAME:?"is NOT set."}
+: ${DB_SERVER:?"is NOT set."}
+: ${DB_PORT_NO:?"is NOT set."}
+#
+init_export_file() {
+	>${1}
+	return 0
+}
+#
+start_table() {
+	echo "START TABLE: ${1}" >>${2}
+	return 0
+}
+#
+end_table() {
+	echo "END TABLE: ${1}" >>${2}
+	return 0
+}
+#
+export_meta_data () {
+	echo "START METADATA:" >>${2}
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s/[0-9][0-9][0-9]> //g" \
+	     -e "s/[0-9][0-9]> //g" \
+	     -e "s/[0-9]> //g" \
+	     -e "s/(return status = 0)//g" \
+	     -e "s/local.*$//g" \
+	     -e "s/[ 	]*$//g" |
+	 grep -v "^$" >>${2} ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT O.name AS table_name, C.name AS field_name, C.is_identity, C.user_type_id, T.name AS type_name, T.precision FROM sys.objects O, sys.columns C, sys.types T WHERE O.name = '${1}' AND O.type_desc = 'USER_TABLE' AND O.object_id = C.object_id AND C.user_type_id = T.user_type_id ORDER BY O.name, C.column_id
+GO
+BYE
+EOF
+	echo "END METADATA:" >>${2}
+}
+#
+export_data () {
+	echo "START DATA:" >>${2}
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s/[0-9][0-9][0-9]> //g" \
+	     -e "s/[0-9][0-9]> //g" \
+	     -e "s/[0-9]> //g" \
+	     -e "s/(return status = 0)//g" \
+	     -e "s/local.*$//g" \
+	     -e "s/[ 	]*$//g" |
+	 grep -v "^$" >>${2} ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT * FROM ${1}
+GO
+BYE
+EOF
+	echo "END DATA:" >>${2}
+}
+#
+usage() {
+cat >&2 <<EOF
+usage: $0 [-?x] [-a] table1 [table2 [...]]
+where
+	-? = print usage message
+	-x = debug
+	-a = export *all* user tables
+
+table is the name of the table to export. if '-a' is given, 
+then the list of tables is ignored.
+
+EOF
+}
+#
+errlog="/tmp/el.$$"
+tables="/tmp/tl.$$"
+#
+rmfiles() {
+	rm -f ${errlog} ${tables} 2>/dev/null 1>&2
+}
+#
+trap 'rmfiles' 0
+#
+exportall=no
+#
+set -- $(getopt xa ${*} 2>${errlog})
+if [[ -s "${errlog}" ]]
+then
+	echo -e "\nERROR: invalid option" >&2
+	cat ${errlog} >&2
+	usage
+	exit 2
+fi
+#
+for i in ${*}
+do
+	case "${i}" in
+	-x)
+		set -x
+		shift
+		;;
+	-a)
+		exportall=yes
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+#
+if [[ "${exportall}" == yes ]]
+then
+	(tsql -H ${DB_SERVER} -p ${DB_PORT_NO} -U cim -P cim |
+	 sed -e "s|[0-9][0-9][0-9]> ||g" \
+	     -e "s|[0-9][0-9]> ||g" \
+	     -e "s|[0-9]> ||g" \
+	     -e "s|(return status = 0)||g" \
+	     -e "s|local.*$||g" \
+	     -e "s|[	 ]*$||g" |
+	 grep -v "^[	 ]*$" >${tables} ) <<EOF
+USE ${DB_NAME}
+GO
+SELECT name FROM sys.objects WHERE type_desc = 'USER_TABLE'
+GO
+BYE
+EOF
+else
+	echo "${@}" |
+	sed -e 's/[ 	][ 	]*/ /g' \
+	    -e 's/^[	 ]*//g' \
+	    -e 's/[	 ]*$//g' |
+	tr ' ' '\012' |
+	grep -v '^[	 ]*$' >${tables}
+fi
+#
+cat ${tables} |
+while read table
+do
+	datafile="${table}.dat"
+	#
+	echo -e "\nExporting ${table} to file: ${datafile}"
+	#
+	init_export_file ${datafile}
+	start_table ${table} ${datafile}
+	export_meta_data ${table} ${datafile}
+	export_data ${table} ${datafile}
+	end_table ${table} ${datafile}
+done
+#
+exit 0

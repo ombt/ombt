@@ -1,0 +1,22 @@
+#
+# axioms for monoids
+#
+# monoids are defined using the following language:
+#
+# L(M) = { *, 1 } where * is binary, and 1 is a constant.
+#
+# the axioms for monoids are then:
+#
+# (x * y) * z = x * (y * z)
+# (x * 1) = x
+# (1 * x) = x
+#
+# let M be "*"
+#
+############################################################################
+#
+forall(x)forall(y)forall(z)m(m(x, y), z) = m(x, m(y, z));
+forall(x)m(x, 1) = x;
+forall(x)m(1, x) = x;
+#
+

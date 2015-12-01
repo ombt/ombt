@@ -8,11 +8,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <atomic/UseCntPtr.h>
-#include <sockets/Socket.h>
-#include <sockets/InetAddress.h>
-#include <sockets/EndPoint.h>
-#include <servers/IterativeServer.h>
+#include "atomic/UseCntPtr.h"
+#include "sockets/Socket.h"
+#include "sockets/InetAddress.h"
+#include "sockets/EndPoint.h"
+#include "servers/IterativeServer.h"
 
 using namespace ombt;
 

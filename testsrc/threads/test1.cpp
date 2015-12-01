@@ -4,7 +4,7 @@
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
 #include <iostream>
-#include <threads/ThreadMutex.h>
+#include "threads/ThreadMutex.h"
 
 using namespace ombt;
 

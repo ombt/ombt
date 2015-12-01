@@ -4,7 +4,6 @@
 #include <string.h>
 #include <limits.h>
 #include <iostream>
-#include <unistd.h>
 
 // other headers
 #include <prop.h>

@@ -1,7 +1,7 @@
 // functions for string class
 
 // headers
-#include <adt/String.h>
+#include "adt/String.h"
 
 // local definitions
 #define BufSzToStrSz(bs) ((bs)-1)

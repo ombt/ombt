@@ -1,0 +1,309 @@
+#!/usr/bin/ksh
+#******************************************************************************
+#         COPYRIGHT 2011 PANASONIC FACTORY SOLUTIONS COMPANY OF AMERICA
+#              DIVISION OF PANASONIC CORPORATION OF NORTH AMERICA
+#    5201 TOLLVIEW DRIVE, ROLLING MEADOWS, IL, 60008. ALL RIGHTS RESERVED
+#******************************************************************************
+#
+# Name Of File  : build_doxygen_repository
+#
+# Version       : %I%
+#
+# Last Modified : %G%
+#
+# Type Of File  : Shell Script
+#
+# Author        : Mike Rumore
+#
+# Description   : This script creates an Doxygen repository using
+#                 the given source directory and target repository.
+#
+#******************************************************************************
+#
+# turn bold on/off 
+#
+SMSO="$(tput smso)"
+RMSO="$(tput rmso)"
+ERROR="${SMSO}ERROR${RMSO}"
+#
+# print usage message
+#
+short_usage() {
+'cat' <<EOF
+usage: $0 [-?] [[-I] | project_name load_name source_path repository_path]
+EOF
+}
+#
+usage() {
+'cat' <<EOF
+
+usage: $0 [-?] [[-I] | project_name load_name source_path repository_path]
+where:
+	-? = print usage message
+	-I = interactive or must enter all parameters
+
+The source path must be readable and the repository path, if it 
+does not exist, will be created (mkdir -p).
+
+As an example, for the 8.2.4 integration load, the parameters
+would be:
+
+	project_name = PanaCIM 
+	load_name = panacim8.2.4_int 
+	source_path = /home/cim/ccviews/cim_panacim8.2.4_int/mes/cimc 
+	repository_path = /cimuser/doxygen/repository/panacim8.2.4_int 
+
+and the command line is:
+
+$ $0 PanaCIM panacim8.2.4_int /home/cim/ccviews/cim_panacim8.2.4_int/mes/cimc /cimuser/doxygen/repository/panacim8.2.4_int 
+
+${SMSO}NOTE${RMSO}: The source node, an integration node for this example, should
+be updated before this script is executed.
+
+The following crontab example runs the script at 1AM during the work
+week and sends email to the mailx alias mrumore:
+
+1 * * 1-5     /cimuser/doxygen/bin/build_doxygen_repository PanaCIM panacim8.2.4_int /home/cim/ccviews/cim_panacim8.2.4_int/mes/cimc /cimuser/doxygen/repository/panacim8.2.4_int 2>&1 | /bin/mailx -s "8.2.4_int doxygen run on \`date\`" mrumore 2>/dev/null 1>&2
+
+EOF
+}
+#
+# sanity check parameters
+#
+if [[ $# -eq 0 ]]
+then
+	'echo' "${ERROR}: no parameters were given. Use ${SMSO}-?${RMSO} for long usage." >&2
+	short_usage >&2
+	'exit' 2
+elif [[ "${1}" == "-?" ]]
+then
+	usage
+	'exit' 2
+elif [[ "${1}" == "-I" ]]
+then
+	PS3="Choose a project: "
+	#
+	PROJECTNAMES="$('ls' -d /home/cim/src/cim8* | 'cut' -d/ -f5 | 'sed' -n 's/^\([a-zA-Z0-9][a-zA-Z0-9]*\).*$/\1/p' | 'sort' -ru)"
+	#
+	select PROJECTNAME in QUIT ${PROJECTNAMES}
+	do
+		case "${PROJECTNAME}" in
+		QUIT)
+			'echo' "Exiting!"
+			'exit' 2
+			;;
+		*)
+			'echo' "Project Name: ${PROJECTNAME}"
+			break
+			;;
+		esac
+	done
+	#
+	PS3="Choose a load: "
+	#
+	LOADNAMES="$('ls' -d /home/cim/src/${PROJECTNAME}[_,.]B[0-9]* | 'cut' -d/ -f5 | 'sed' -n 's/^\([a-zA-Z0-9][a-zA-Z0-9]*.B[0-9][0-9]*\).*$/\1/p' | 'sort' -ru)"
+	#
+	select LOADNAME in QUIT cim ${LOADNAMES}
+	do
+		case "${LOADNAME}" in
+		QUIT)
+			'echo' "Exiting!"
+			'exit' 2
+			;;
+		*)
+			'echo' "Load Name: ${LOADNAME}"
+			break
+			;;
+		esac
+	done
+	#
+	if {{ "${LOADNAME}" != cim ]]
+	then
+		SRCPATH="/home/cim/src/${LOADNAME}"
+		'echo' "Source Path: ${SRCPATH}"
+	else
+		cd ~/cim
+		SRCPATH="$(pwd -P)"
+		'echo' "Source Path: ${SRCPATH}"
+	fi
+	#
+	if [[ "$(logname)" != "doxygen" ]]
+	then
+		REPOPATH="${HOME}/doxygen/repository/${LOADNAME}"
+	else
+		REPOPATH="${HOME}/repository/${LOADNAME}"
+	fi
+	'echo' "Doxygen Repository Path: ${REPOPATH}"
+elif [[ $# -ne 4 ]]
+then
+	'echo' "${ERROR}: wrong number of parameters was given." >&2
+	usage >&2
+	'exit' 2
+else
+	PROJECTNAME="${1}"
+	LOADNAME="${2} $(date)"
+	SRCPATH="${3}"
+	REPOPATH="${4}"
+fi
+#
+# parameter values sanity check
+#
+if [[ -z "${PROJECTNAME}" ]]
+then
+	'echo'  "${ERROR}: project name is NULL." >&2
+	'exit' 2
+else
+	'echo' "Project Name: ${PROJECTNAME}"
+fi
+if [[ -z "${LOADNAME}" ]]
+then
+	'echo'  "${ERROR}: load name is NULL." >&2
+	'exit' 2
+else
+	'echo' "Load Name: ${LOADNAME}"
+fi
+if [[ ! -d "${SRCPATH}" ]]
+then
+	'echo' "${ERROR}: source directory ${SRCPATH} does not exist or is not readable." >&2
+	'exit' 2
+else
+	'echo' "Source Path: ${SRCPATH}"
+fi
+if [[ ! -d "${REPOPATH}" ]]
+then
+	'echo' "WARNING: repository path ${REPOPATH} does not exist." >&2
+	'echo' "Will create ${REPOPATH} now." >&2
+	'mkdir' -p "${REPOPATH}"
+	if [[ $? -ne 0 ]]
+	then
+		'echo' "${ERROR}: unable to create repository path ${REPOPATH}. Exiting now." >&2
+		'exit' 2
+	fi
+	TEMPREPOPATH="${REPOPATH}"
+else
+	# directory exists. create new doxygen in a 
+	# temp directory. once the new doxygen
+	# repo is built in the temp directory, then overwrite
+	# the old directory with the new directory.
+	TEMPREPOPATH="${REPOPATH}.temp.$$"
+	'mkdir' -p "${TEMPREPOPATH}"
+	if [[ $? -ne 0 ]]
+	then
+		'echo' "${ERROR}: unable to create temporary repository path ${TEMPREPOPATH}. Exiting now." >&2
+		'exit' 2
+	fi
+	TOBEDELETEDREPOPATH="${REPOPATH}.tobedeleted.$$"
+fi
+#
+if [[ ! -w "${REPOPATH}" ]]
+then
+	'echo' "${ERROR}: repository path ${REPOPATH} is NOT writable. Exiting now." >&2
+	'exit' 2
+fi
+#
+'echo' "Repository Path: ${REPOPATH}"
+#
+# create default Doxyfile using whatever doxygen is in the path and
+# update required parameters depending on doxygen version
+#
+DOXYFILE="${TEMPREPOPATH}/Doxyfile"
+DOXYVERSION="$(doxygen --version)"
+#
+# default doxygen option values
+#
+DEFAULT_EXTRACT_ALL=YES
+DEFAULT_EXTRACT_PRIVATE=YES
+DEFAULT_EXTRACT_STATIC=YES
+DEFAULT_EXTRACT_LOCAL_METHODS=YES
+DEFAULT_SHOW_DIRECTORIES=YES
+DEFAULT_RECURSIVE=YES
+DEFAULT_QUIET=YES
+DEFAULT_TOC_EXPAND=YES
+DEFAULT_CREATE_SUBDIRS=YES
+DEFAULT_SORT_BRIEF_DOCS=YES
+DEFAULT_INLINE_SOURCES=YES
+DEFAULT_SOURCE_BROWSER=YES
+DEFAULT_GENERATE_TREEVIEW=NO
+DEFAULT_CALLER_GRAPH=YES
+DEFAULT_ALPHABETICAL_INDEX=YES
+#
+case "${DOXYVERSION}" in
+1.4.7)
+	# update Doxyfile with required options
+	# update output directory
+	doxygen -g - |
+	sed "s?^ *PROJECT_NAME *=.*\$?PROJECT_NAME = \"${PROJECTNAME} ${LOADNAME}\"?;
+             s?^ *OUTPUT_DIRECTORY *=.*\$?OUTPUT_DIRECTORY = \"${TEMPREPOPATH}\"?;
+             s?^ *EXTRACT_ALL *=.*\$?EXTRACT_ALL = ${DEFAULT_EXTRACT_ALL}?;
+             s?^ *EXTRACT_PRIVATE *=.*\$?EXTRACT_PRIVATE = ${DEFAULT_EXTRACT_PRIVATE}?;
+             s?^ *EXTRACT_STATIC *=.*\$?EXTRACT_STATIC = ${DEFAULT_EXTRACT_STATIC}?;
+             s?^ *EXTRACT_LOCAL_METHODS *=.*\$?EXTRACT_LOCAL_METHODS = ${DEFAULT_EXTRACT_LOCAL_METHODS}?;
+             s?^ *SHOW_DIRECTORIES *=.*\$?SHOW_DIRECTORIES = ${DEFAULT_SHOW_DIRECTORIES}?;
+             s?^ *RECURSIVE *=.*\$?RECURSIVE = ${DEFAULT_RECURSIVE}?;
+             s?^ *QUIET *=.*\$?QUIET = ${DEFAULT_QUIET}?;
+             s?^ *TOC_EXPAND *=.*\$?TOC_EXPAND = ${DEFAULT_TOC_EXPAND}?;
+             s?^ *CREATE_SUBDIRS *=.*\$?CREATE_SUBDIRS = ${DEFAULT_CREATE_SUBDIRS}?;
+             s?^ *SORT_BRIEF_DOCS *=.*\$?SORT_BRIEF_DOCS = ${DEFAULT_SORT_BRIEF_DOCS}?;
+             s?^ *INLINE_SOURCES *=.*\$?INLINE_SOURCES = ${DEFAULT_INLINE_SOURCES}?;
+             s?^ *SOURCE_BROWSER *=.*\$?SOURCE_BROWSER = ${DEFAULT_SOURCE_BROWSER}?;
+             s?^ *GENERATE_TREEVIEW *=.*\$?GENERATE_TREEVIEW = ${DEFAULT_GENERATE_TREEVIEW}?;
+             s?^ *CALLER_GRAPH *=.*\$?CALLER_GRAPH = ${DEFAULT_CALLER_GRAPH}?;
+             s?^ *ALPHABETICAL_INDEX *=.*\$?ALPHABETICAL_INDEX = ${DEFAULT_ALPHABETICAL_INDEX}?;
+             s?^ *FILE_PATTERNS *=.*\$?FILE_PATTERNS = *.c *.C *.CC *.cpp *.cs *.EC *.h *.H *.HH *.i *.I *.l *.C.TEMPLATE *.H.TEMPLATE?;
+             s?^ *EXCLUDE_PATTERNS *=.*\$?EXCLUDE_PATTERNS = .D.* .OBJECTS .DEBUG* .DEPEND*?;" > ${DOXYFILE}
+	;;
+*)
+	'echo' "${ERROR}: doxygen version NOT supported." >&2
+	'exit' 2
+	;;
+esac
+#
+# before we run, check the available space. get the space
+# available in 1k blocks
+#
+DISKSPACEAVAILABLE="$('df' -k ${REPOPATH} | 'tail' -1 | 'sed' 's/  */ /g' | 'cut' -d' ' -f4)"
+if [[ ${DISKSPACEAVAILABLE} -gt 1000000 ]]
+then
+	# we have enough space.
+	#
+	# goto src directory and run doxygen
+	#
+	'cd' ${SRCPATH}
+	doxygen ${DOXYFILE} 
+	#
+	# check if we were using a temp path
+	#
+	if [[ "${REPOPATH}" != "${TEMPREPOPATH}" ]]
+	then
+		# temp repo path was used.
+		'mv' ${REPOPATH} ${TOBEDELETEDREPOPATH}
+		'mv' ${TEMPREPOPATH} ${REPOPATH}
+		'rm' -rf ${TOBEDELETEDREPOPATH}
+	fi
+elif [[ "${REPOPATH}" != "${TEMPREPOPATH}" ]]
+then
+	#
+	# delete old database, then we have enough space
+	#
+	'mv' ${REPOPATH} ${TOBEDELETEDREPOPATH}
+	'rm' -rf ${TOBEDELETEDREPOPATH}
+	#
+	# goto src directory and run doxygen
+	#
+	'cd' ${SRCPATH}
+	doxygen ${DOXYFILE} 
+	#
+	# rename to standard name
+	#
+	'mv' ${TEMPREPOPATH} ${REPOPATH}
+else
+	# first time for this load and we do not have
+	# enough space.
+	#
+	echo "${ERROR}: insufficient space for doxygen database." >&2
+	exit 2
+fi
+
+
+#
+'exit' 0

@@ -21,6 +21,12 @@ install:
 		(cd $$SUBDIR; make install; ) ; \
 	done
 
+depend:
+	for SUBDIR in $(SUBDIRS); do \
+		echo "depend $$SUBDIR"; \
+		(cd $$SUBDIR; make depend; ) ; \
+	done
+
 backup:
 	for SUBDIR in $(SUBDIRS); do \
 		echo "backup $$SUBDIR"; \

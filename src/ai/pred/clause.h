@@ -7,11 +7,11 @@
 #include <iostream>
 
 // local headers
-#include <Returns.h>
-#include <Debug.h>
-#include <adt/List.h>
-#include "term.h"
-#include "substitution.h"
+#include "system/Returns.h"
+#include "system/Debug.h"
+#include "adt/List.h"
+#include <term.h>
+#include <substitution.h>
 
 // forward declarations
 class ClauseIterator;
@@ -25,7 +25,7 @@ public:
 	// constructors and destructor
 	Clause();
 	Clause(const Clause &);
-	Clause(const List<Term> &, int = -1, int = 0);
+	Clause(const ombt::List<Term> &, int = -1, int = 0);
 	~Clause();
 
 	// assignment 
@@ -43,7 +43,7 @@ public:
 
 	// add or remove terms from clause
 	int insert(const Term &);
-	int remove(Term &);
+	void remove(Term &);
 	void clear();
 
 	// tests to run on a clause
@@ -76,14 +76,14 @@ public:
         Clause operator-(const Clause &) const;
 
 	// dump data
-	friend ostream &operator<<(ostream &, const Clause &);
+	friend std::ostream &operator<<(std::ostream &, const Clause &);
 
 protected:
 	// internal data
 	int depth;
 	int number;
 	int partOfConclusion;
-	List<Term *> terms;
+	ombt::List<Term *> terms;
 };
 
 // clause iterator definition
@@ -112,7 +112,7 @@ private:
 
 protected:
 	// internal data
-	ListIterator<Term> iterator;
+	ombt::ListIterator<Term> iterator;
 };
 
 #endif

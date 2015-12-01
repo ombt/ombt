@@ -1,0 +1,22 @@
+#!/usr/bin/ksh
+#
+# remove TRACE macros at the start of fuctions.
+#
+if [[ $# -eq 0 ]]
+then
+	set -- *.C *.cpp *.c 
+fi
+#
+for file in ${*}
+do
+	[[ ! -r "${file}" ]] && continue;
+	echo -e "\nProcessing file: ${file}"
+	cat ${file} | 
+	sed 's/^{ TRACE();/{/' |
+	sed 's/^{ WEP();/{/' |
+	grep -v '^[ 	]*WXP()[ 	]*;[	 ]*$' >/tmp/rmvtrc.$$
+	mv -f /tmp/rmvtrc.$$ ${file}
+done
+#
+exit 0
+

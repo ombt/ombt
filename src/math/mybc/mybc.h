@@ -6,9 +6,10 @@
 #include <stdlib.h>
 
 /* local headers */
-#include <complex/Complex.h>
-#include <matrix/Epsilon.h>
-#include <numerics/Rational.h>
+#include "system/Debug.h"
+#include "complex/Complex.h"
+#include "matrix/Epsilon.h"
+#include "numerics/Rational.h"
 
 /* enumeration for parser */
 enum VALUETYPE { COMPLEX, ULONG, LONG, DOUBLE, RATIONAL, VOID, UNKNOWN };

@@ -1,0 +1,56 @@
+#!/usr/bin/ksh
+#
+# diff current copy against the last backup copy.
+#
+if [[ $# == 0 ]]
+then
+	echo "usage: $0 [-?] [-a] file [file2 ...]" >&2
+	exit 2
+elif [[ "${1}" == "-?" ]]
+then
+	echo "usage: $0 [-?] [-a] file [file2 ...]"
+	exit 0
+elif [[ "${1}" == "-a" ]]
+then
+	shift
+	set -- * "${@}"
+fi
+#
+if [[ ! -d "BACKUPD" ]]
+then
+	echo -e "\nERROR: No BACKUPD directory exists!" >&2
+	exit 2
+fi
+#
+outfile="/tmp/of$$"
+trap 'rm -f ${outfile}' 0
+#
+for file in "${@}"
+do
+	if [[ ! -f "${file}" ]]
+	then
+		# skip anything that is not a file
+		continue
+	fi
+	if [[ ! -r "${file}" ]]
+	then
+		echo -e "\nFile ${file} NOT readable. Skipping it." >&2
+		continue
+	fi
+	#
+	latestbkupfile="$(ls -tr BACKUPD/*/${file} 2>/dev/null| tail -1)"
+	if [[ ! -r "${latestbkupfile}" ]]
+	then
+		echo -e "\nBackup file for ${file} NOT FOUND. Skipping it." >&2
+		continue
+	fi
+	#
+	diff ${latestbkupfile} ${file} >${outfile}
+	if [[ -s "${outfile}" ]]
+	then
+		echo -e "\nDiff ${latestbkupfile} vs. ${file}:"
+		cat ${outfile}
+	fi
+done
+#
+exit 0

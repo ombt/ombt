@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -9,6 +14,6 @@ include $(ROOT)/build/makefile.common
 PRODS = timer1 timer2 timer3 timer4 timer5
 
 CXXEXTRAFLAGS = 
-CXXLIBFLAGS = -lombttimers
+TESTLIBS = timers
 
-include $(ROOT)/build/makefile.test
+include $(ROOT)/build/makefile.test2

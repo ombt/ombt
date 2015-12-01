@@ -1,0 +1,30 @@
+#
+# delimiter = ,
+# class = name of class
+# qtr = 1,2,3,4,yr
+# honors = yes,no
+# grade = a+,a,a-,b+,b,b-,c+,c,c-,d+,d,d-,anything else is f
+#
+class,qtr,honors,grade
+honors english 2,3,yes,b
+honors english 2,4,yes,b
+honors english 2,yr,yes,b
+honors algebra 2,3,yes,b-
+honors algebra 2,4,yes,b-
+honors algebra 2,yr,yes,b-
+honors geo/alg,1,yes,c
+honors geo/alg,2,yes,c+
+honors geo/alg,yr,yes,c+
+chemistry,3,no,a-
+chemistry,4,no,a-
+chemistry,yr,no,b+
+honors us history,1,yes,a-
+honors us history,2,yes,a
+honors us history,yr,yes,a
+spanish 2,1,no,b-
+spanish 2,2,no,b+
+spanish 2,2,no,b-
+foods and nutrition 1,3,no,a
+foods and nutrition 1,yr,no,a
+visual art 1,1,no,a-
+visual art 1,yr,no,a-

@@ -23,6 +23,12 @@ install:
 		(cd $$TESTSUBDIR; make install; ) ; \
 	done
 
+depend:
+	for TESTSUBDIR in $(TESTSUBDIRS); do \
+		echo "depend $$TESTSUBDIR"; \
+		(cd $$TESTSUBDIR; make depend; ) ; \
+	done
+
 backup:
 	for TESTSUBDIR in $(TESTSUBDIRS); do \
 		echo "backup $$TESTSUBDIR"; \

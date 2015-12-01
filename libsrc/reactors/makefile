@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
@@ -10,19 +15,10 @@ include $(ROOT)/build/makefile.common
 
 LIBNAME = reactors
 
-FILES = IterativeReactor.cpp
+include .FILES
 
-include $(ROOT)/build/makefile.lib2
+include .HDRS
 
-IterativeReactor.o:	IterativeReactor.cpp \
-			IterativeReactor.h \
-			$(INCLUDEDIR)/Returns.h \
-			$(INCLUDEDIR)/Debug.h \
-			$(INCLUDEDIR)/sockets/Address.h \
-			$(INCLUDEDIR)/sockets/EndPoint.h \
-			$(INCLUDEDIR)/signals/Signal.h \
-			$(INCLUDEDIR)/atomic/UCBaseObject.h \
-			$(INCLUDEDIR)/atomic/UseCntPtr.h \
-			$(INCLUDEDIR)/timers/Timer.h \
-			$(INCLUDEDIR)/logging/Logging.h \
+include $(ROOT)/build/makefile.lib3
 
+include .DEPENDS

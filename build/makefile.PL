@@ -31,6 +31,8 @@ clean:
 		-$(foreach script, $(PERLSCRIPTS), rm -f $(script); )
 		-$(foreach script, $(PERLSCRIPTS), rm -f $(PERLDIR)/$(script); )
 
+depend:
+
 backup:
 		bkup
 

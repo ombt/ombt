@@ -8,12 +8,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <iostream>
-#include <Debug.h>
-#include <atomic/UseCntPtr.h>
-#include <sockets/Socket.h>
-#include <sockets/InetAddress.h>
-#include <sockets/EndPoint.h>
-#include <servers/MultiProcessMultiServiceServer.h>
+#include "system/Debug.h"
+#include "atomic/UseCntPtr.h"
+#include "sockets/Socket.h"
+#include "sockets/InetAddress.h"
+#include "sockets/EndPoint.h"
+#include "servers/MultiProcessMultiServiceServer.h"
 
 using namespace ombt;
 

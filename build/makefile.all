@@ -16,6 +16,12 @@ all:
 		(cd $$SUBDIR; make; ) ; \
 	done
 
+depend:
+	for SUBDIR in $(SUBDIRS); do \
+		echo "make $$SUBDIR"; \
+		(cd $$SUBDIR; make depend; ) ; \
+	done
+
 test:
 	for TESTSUBDIR in $(TESTSUBDIRS); do \
 		echo "make $$TESTSUBDIR"; \

@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
 SYNCSVCSOURCEFILES = \
 	DAS.cpp \
 	DAS.h \
@@ -27,6 +32,8 @@ SYNCSVCSOURCEFILES = \
 	transactionlog.h
 
 all:	syncsvc
+
+depend:
 
 syncsvc: $(SYNCSVCSOURCEFILES)
 	qmake -project -nopwd -o syncsvc.pro $(SYNCSVCSOURCEFILES)

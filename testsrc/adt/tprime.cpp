@@ -3,7 +3,7 @@
 // All rights reserved.
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
-#include <adt/Prime.h>
+#include "adt/Prime.h"
 
 using namespace ombt;
 using namespace std;

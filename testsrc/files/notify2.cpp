@@ -9,10 +9,10 @@
 #include <string>
 
 // local headers
-#include <Debug.h>
-#include <logging/Logging.h>
-#include <atomic/UseCntPtr.h>
-#include <files/Notify.h>
+#include "system/Debug.h"
+#include "logging/Logging.h"
+#include "atomic/UseCntPtr.h"
+#include "files/Notify.h"
 
 using namespace ombt;
 
@@ -39,6 +39,7 @@ main(int argc, char **argv)
 
     for (int arg=1; arg < argc; ++arg)
     {
+DUMP(argv[arg]);
         pnot->watch(argv[arg], IN_CLOSE_WRITE|IN_MODIFY|IN_CREATE|IN_DELETE);
     }
 

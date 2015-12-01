@@ -1,0 +1,7 @@
+#!/usr/bin/ksh
+#
+# force an update of the current directory and all subdirectories.
+# hijacked files are *overwritten*. the force disables *all*
+# prompting. use carefully.
+#
+exec cleartool update -force -overwrite .

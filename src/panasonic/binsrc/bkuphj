@@ -1,0 +1,25 @@
+#!/usr/bin/ksh
+#
+backupdir=${1:-"${HOME}/bkup_files/hj"}/$(date '+%y%m%d%H%M')
+[ ! -d ${backupdir} ] && mkdir -p ${backupdir};
+#
+echo "backup into directory ${backupdir} ..."
+#
+cd ~/cim
+#
+cleartool ls -l -recurse | 
+grep -i '\[hijacked\]' |
+sed 's/[ 	][ 	]*/ /g;' |
+cut -d'@' -f1 |
+cut -d' ' -f2 |
+while read path
+do
+	echo "Path: ${path}"
+	#
+	dname="$(dirname ${path})"
+	bkuppath="${backupdir}/${dname}"
+	[ ! -d ${bkuppath} ] && mkdir -p ${bkuppath};
+	cp ${path} ${bkuppath}
+done
+#
+exit 0

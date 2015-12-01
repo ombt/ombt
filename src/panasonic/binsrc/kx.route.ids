@@ -1,0 +1,14 @@
+#!/usr/bin/ksh
+#
+# print the route ids that have KX-type machines (machine type = 32XXX)
+#
+: ${DB_NAME:?"not set"}
+#
+mytsql <<EOF
+USE ${DB_NAME}
+GO
+ SELECT RL.route_id FROM route_layout RL, zone_layout ZL, machines M, machine_models MM WHERE ZL.zone_id = RL.zone_id AND M.equipment_id = ZL.equipment_id AND MM.model_number = M.model_number AND cast(MM.mach_type / 1000 as INT) = 32
+GO
+QUIT
+EOF
+

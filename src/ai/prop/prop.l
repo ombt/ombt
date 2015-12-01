@@ -7,8 +7,8 @@
 #include <unistd.h>
 
 // other headers
-#include <Returns.h>
-#include <Debug.h>
+#include "system/Returns.h"
+#include "system/Debug.h"
 #include <prop.h>
 #include <propyacc.h>
 

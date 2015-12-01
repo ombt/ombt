@@ -5,9 +5,9 @@
 //
 #include <string>
 
-#include <gstring/gstring.h>
-#include <gstring/trie.h>
-#include <parsing/Tokenizer.h>
+#include "gstring/gstring.h"
+#include "gstring/trie.h"
+#include "parsing/Tokenizer.h"
 
 using namespace ombt;
 using namespace std;

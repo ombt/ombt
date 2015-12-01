@@ -1,0 +1,56 @@
+1) for grouped expressions:
+
+R is an expression language in the sense that its only command type is a
+function or expression which returns a result. Even an assignment is an
+expression whose result is the value assigned, and it may be used 
+wherever any expression may be used; in particular multiple assignments 
+are possible.
+
+Commands may be grouped together in braces, {expr_1; ...; expr_m}, in which
+case the value of the group is the result of the last expression in the group
+evaluated. Since such a group is also an expression it may, for example, be
+itself included in parentheses and used a part of an even larger expression,
+and so on.
+
+2) conditional statements 
+
+The language has available a conditional construction of the form
+
+> if (expr_1) expr_2 else expr_3
+
+where expr 1 must evaluate to a single logical value and the result of the
+entire expression is then evident.
+
+The “short-circuit” operators && and || are often used as part of the
+condition in an if statement. Whereas & and | apply element-wise to vectors,
+&& and || apply to vectors of length one, and only evaluate their second
+argument if necessary.
+
+There is a vectorized version of the if/else construct, the ifelse function.
+This has the form ifelse(condition, a, b) and returns a vector of the length
+of its longest argument, with elements a[i] if condition[i] is true, otherwise
+b[i].
+
+Repetitive execution: for loops, repeat and while loops
+
+> for (name in expr_1) expr_2
+> repeat expr
+> while (condition) expr
+
+
+
+> y <- 1:20
+> total = 0
+> for (i in y) {
++ total
++ total += i
+Error: unexpected '=' in:
+"total
+total +="
+> for (i in y) {
++ total = total + i
++ total
++ }
+> total
+[1] 210
+

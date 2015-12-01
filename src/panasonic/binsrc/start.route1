@@ -1,0 +1,21 @@
+# script to start route 1
+#
+cd ~/cim
+#
+source $ENV
+mycimenv
+#
+route_editor 1>re.out 2>&1 &
+#
+zone_interface Zone-1 1>zi.zone-1.out 2>&1 &
+zone_interface Zone-2 1>zi.zone-2.out 2>&1 &
+#
+cd pptcp_sim
+#
+pptcp_sim 1>../pptcpsim.8001.out 2>&1 &
+pptcp_sim 1>../pptcpsim.8003.out 2>&1 &
+#
+cd ~/cim
+#
+db_query_tool 1>dbqt.out 2>&1 &
+#

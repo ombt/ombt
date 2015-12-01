@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <iostream>
 
-#include <numerics/UnsignedInteger.h>
+#include "numerics/UnsignedInteger.h"
 
 using namespace ombt;
 using namespace std;

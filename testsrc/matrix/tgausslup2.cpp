@@ -4,7 +4,7 @@
 // Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 //
 // gaussian LUP header, matrix header, vector header, etc.
-#include <matrix/GaussLUP.h>
+#include "matrix/GaussLUP.h"
 
 using namespace ombt;
 

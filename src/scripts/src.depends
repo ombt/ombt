@@ -1,0 +1,210 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
+use strict;
+#
+use FileHandle;
+use File::Basename;
+use Getopt::Std;
+#
+my $cmd = $0;
+my $verbose = 0;
+#
+sub usage {
+	my ($arg0) = @_;
+	print <<EOF;
+
+usage: $arg0 [-?|-h] [-V] [directory_path]
+
+where:
+	-? - print usage.
+	-h - print usage.
+	-V - enable verbose.
+
+and [directory_parh] is the path where to start scanning. if 
+[directory] is not given, then the current directory is used.
+
+EOF
+}
+#
+sub get_cpps {
+	my ($pcpps) = @_;
+	#
+	# glob list of src files.
+	#
+	@{${pcpps}} = <src/*.cpp>;
+}
+#
+sub get_cpphdrs {
+	my ($pcpps, $pcpphdrs) = @_;
+	#
+	foreach my $cpp (@{${pcpps}})
+	{
+		print "SRC: ${cpp}\n";
+		#
+		open(FH, $cpp) or die $!;
+		my @buf = <FH>;
+		close(FH);
+		#
+		my @includes = grep (/^ *# *include *"[^"]*" *$/, @buf);
+		chomp(@includes);
+		#
+		foreach my $include (@includes)
+		{
+			print "\tINCLUDE: ${include}\n" if ($verbose == 1);
+			$include =~ s/^[^"]*"([^"]*)".*$/$1/m;
+			print "\tHEADER : ${include}\n";
+			push(@{$pcpphdrs->{$cpp}}, $include);
+		}
+	}
+}
+#
+sub get_hdrs {
+	my ($phdrs, $pincludes) = @_;
+	#
+	# glob list of headers
+	#
+	@{${phdrs}} = <hdr/*.h>;
+	@{${pincludes}} = <hdr/*.i>;
+}
+#
+sub get_hdrhdrs {
+	my ($phdrs, $phdrhdrs) = @_;
+	#
+	foreach my $hdr (@{${phdrs}})
+	{
+		print "HDR: ${hdr}\n";
+		#
+		open(FH, $hdr) or die $!;
+		my @buf = <FH>;
+		close(FH);
+		#
+		my @includes = grep (/^ *# *include *"[^"]*" *$/, @buf);
+		chomp(@includes);
+		#
+		foreach my $include (@includes)
+		{
+			print "\tINCLUDE: ${include}\n" if ($verbose == 1);
+			$include =~ s/^[^"]*"([^"]*)".*$/$1/m;
+			print "\tHEADER : ${include}\n";
+			push(@{$phdrhdrs->{$hdr}}, $include);
+		}
+	}
+}
+#
+sub make_files {
+	my ($pcpps) = @_;
+	#
+	open(FH, ">.FILES") or die $!;
+	#
+	print FH "FILES =";
+	foreach my $cpp (@{${pcpps}})
+	{
+		my $tmpcpp = $cpp;
+		$tmpcpp =~ s/src\///;
+		print FH " \\\n\t${tmpcpp}";
+	}
+	print FH "\n";
+	#
+	close(FH);
+}
+#
+sub make_headers {
+	my ($phdrs, $pincludes) = @_;
+	#
+	open(FH, ">.HDRS") or die $!;
+	#
+	print FH "HDRS =";
+	foreach my $hdr (@{${phdrs}})
+	{
+		my $tmphdr = $hdr;
+		$tmphdr =~ s/hdr\///;
+		print FH " \\\n\t${tmphdr}";
+	}
+	foreach my $hdr (@{${pincludes}})
+	{
+		my $tmphdr = $hdr;
+		$tmphdr =~ s/hdr\///;
+		print FH " \\\n\t${tmphdr}";
+	}
+	print FH "\n";
+	#
+	close(FH);
+}
+#
+sub trace_headers {
+	my ($pfh, $pcpphdrs, $phdrs, $phdrhdrs) = @_;
+	#
+	foreach my $cpphdr (@{$pcpphdrs})
+	{
+		if (${cpphdr} =~ m/Returns.h/) {
+			print $pfh " \\\n\t\t\$(INCLUDEDIR)/Returns.h";
+		} elsif (${cpphdr} =~ m/Debug.h/) {
+			print $pfh " \\\n\t\t\$(INCLUDEDIR)/Debug.h";
+		} elsif (${cpphdr} !~ m/.*\/.*/) {
+			print $pfh " \\\n\t\thdr/${cpphdr}";
+		} else {
+			print $pfh " \\\n\t\t\$(INCLUDEDIR)/${cpphdr}";
+		}
+	}
+}
+#
+sub make_dependencies {
+	my ($pcpps, $pcpphdrs, $phdrs, $phdrhdrs) = @_;
+	#
+	open(FH, ">.DEPENDS") or die $!;
+	#
+	foreach my $cpp (@{${pcpps}})
+	{
+		my $obj = $cpp;
+		$obj =~ s/^src\/(.*).cpp$/obj\/$1.o/;
+		print FH "\n${obj}: \\\n\t\t${cpp}";
+		#
+		trace_headers(\*FH, \@{$pcpphdrs->{$cpp}}, $phdrs, $phdrhdrs);
+		#
+		print FH "\n";
+	}
+	#
+	close(FH);
+}
+#
+my %opts;
+if (getopts('?hV', \%opts) != 1) {
+	usage($cmd);
+	exit 2;
+}
+#
+foreach my $opt (%opts) {
+	if ($opt eq "h") {
+		usage($cmd);
+		exit 0;
+	} elsif ($opt eq "?") {
+		usage($cmd);
+		exit 0;
+	} elsif ($opt eq "V") {
+		$verbose = 1;
+	}
+}
+#
+my @cpps;
+get_cpps(\@cpps);
+#
+my %cpphdrs;
+get_cpphdrs(\@cpps, \%cpphdrs);
+#
+my @hdrs;
+my @includes;
+get_hdrs(\@hdrs, \@includes);
+#
+my %hdrhdrs;
+get_hdrhdrs(\@hdrs, \%hdrhdrs);
+#
+make_files(\@cpps);
+make_headers(\@hdrs, \@includes);
+#
+make_dependencies(\@cpps, \%cpphdrs, \@hdrs, \%hdrhdrs);
+#
+exit 0;

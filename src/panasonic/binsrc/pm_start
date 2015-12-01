@@ -1,0 +1,23 @@
+#!/bin/sh
+# Script to start postmaster general and local postmaster
+#
+cd 
+#
+echo "Killing any OLD post_master processes ..."
+killall -r post_master
+#
+rm -f /tmp/.LPM.*
+rm -f /tmp/.PMG.*
+#
+HOST=`hostname`
+#
+echo "Starting post_master general ..."
+cim/bin/post_master -g &
+sleep 2;
+#
+echo "Starting local (${HOST}) post_master ..."
+cim/bin/post_master ${HOST} &
+#
+echo "Done."
+#
+exit 0
