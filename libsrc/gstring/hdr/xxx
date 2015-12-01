@@ -1,0 +1,4 @@
+mv gstring.cpp gstring.i
+mv trie.cpp trie.i
+mv triedata.cpp triedata.i
+mv trieindex.cpp trieindex.i

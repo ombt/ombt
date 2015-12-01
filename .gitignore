@@ -1,7 +1,7 @@
 *.o
 *.so
 *.so.*
-hdr/
+release/
 bin/
 lib/
 all
@@ -16,3 +16,6 @@ core
 build.all.out
 cscope.*
 doxygen
+.FILES
+.DEPENDS
+.HDRS
