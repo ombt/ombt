@@ -239,7 +239,8 @@ BFSNode::isGoal(BinaryTree_AVL<Clause> &slist, BinaryTree_AVL<Clause> &olist)
 
 	// attempt to unify the clauses
 	Substitutions subs;
-	int status = unify(maxlit1, ~maxlit2, subs);
+	Literal negation_maxlit2(~maxlit2);
+	int status = unify(maxlit1, negation_maxlit2, subs);
 	switch (status)
 	{
 	case OK:
