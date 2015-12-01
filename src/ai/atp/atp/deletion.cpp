@@ -248,7 +248,9 @@ ST(Array<Literal> &C, Array<Literal> &D, int i, int j, Substitutions &theta)
 	}
 
 	// attempt to extend the matching
-	if (i == C.getSize() || ST(C, D, i+1, 1, theta*mu) == OK)
+	Substitutions theta_mu(theta*mu);
+	// if (i == C.getSize() || ST(C, D, i+1, 1, theta*mu) == OK)
+	if (i == C.getSize() || ST(C, D, i+1, 1, theta_mu) == OK)
 	{
 		return(OK);
 	}
@@ -407,8 +409,10 @@ factor(Literal &fl, Clause &cl, Substitutions &flsubs)
 		}
 
 		// try to unify
+		Literal tmp_fl(fl);
+		Literal tmp_flit(flsetIter());
 		subs.clear();
-		if (unify(Literal(fl), Literal(flsetIter()), subs) == OK)
+		if (unify(tmp_fl, tmp_flit, subs) == OK)
 		{
 			// literals unified
 			factorfound++;

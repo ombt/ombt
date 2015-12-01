@@ -160,6 +160,8 @@
 	_iftrace = 0; \
 }
 
+#define GETTRACE() _iftrace
+
 #else
 
 #define TMSG(_tmsg)
@@ -173,6 +175,7 @@
 #define EXTERNTRACE()
 #define ENABLETRACE()
 #define DISABLETRACE()
+#define GETTRACE() 
 
 #endif
 

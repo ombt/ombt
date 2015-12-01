@@ -1,6 +1,9 @@
 // expand files for #include directives
 
 // headers
+#define _REGEX_RE_COMP
+#include <sys/types.h>
+#include <regex.h>
 #include "pr.h"
 
 // constants
@@ -59,7 +62,7 @@ expandFile(int tabs, const String &ifile, FILE *ofd)
 
 		case 0:
 			// not an include file, just print the line
-			fprintf(ofd, ibuf);
+			fprintf(ofd, "%s", ibuf);
 			continue;
 
 		case -1:

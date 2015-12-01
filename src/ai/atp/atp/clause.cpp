@@ -376,10 +376,11 @@ Clause::insertAnswer(const Literal &key)
 int
 Clause::isInClause(const Literal &key) const
 {
+	Literal local_key(key);
 	if (key.isNegated())
-		return(negativeClause.retrieve(Literal(key)) == OK);
+		return(negativeClause.retrieve(local_key) == OK);
 	else
-		return(positiveClause.retrieve(Literal(key)) == OK);
+		return(positiveClause.retrieve(local_key) == OK);
 }
 
 int 
@@ -532,14 +533,12 @@ Clause::convertToString(String &s) const
 	return(s);
 }
 
-String
 Clause::operator String() const
 {
 	String tmp;
 	return(convertToString(tmp));
 }
 
-String
 Clause::operator String()
 {
 	return(convertToString(inputstring));

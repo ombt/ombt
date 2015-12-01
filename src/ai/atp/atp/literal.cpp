@@ -631,14 +631,12 @@ Terms::convertToString(String &s) const
 	return(s);
 }
 
-String
 Terms::operator String() const
 {
 	String tmp;
 	return(convertToString(tmp));
 }
 
-String
 Terms::operator String()
 {
 	return(convertToString(inputstring));
@@ -1300,13 +1298,11 @@ Literal::convertToString(String &s) const
 	return(s);
 }
 
-String
 Literal::operator String()
 {
 	return(convertToString(inputstring));
 }
 
-String
 Literal::operator String() const
 {
 	String tmp;

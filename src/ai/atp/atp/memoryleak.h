@@ -12,7 +12,6 @@
 #include <Debug.h>
 
 using namespace std;
-using namespace ombt;
 
 // forward declarations
 class MemoryLeak;

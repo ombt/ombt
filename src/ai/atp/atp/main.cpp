@@ -474,7 +474,7 @@ main(int argc, char **argv)
 	cout << "temp base directory: " << tempbase << endl;
 	cout << "extra include-directories: " << includedirs << endl;
 	dumpoptval("echo input", echo);
-	dumpoptval("debug mode (trace flag)", GETTRACE());
+	// dumpoptval("debug mode (trace flag)", GETTRACE());
 	dumpoptval("use verbose", verbose);
 	dumpoptval("report memory usage", reportmemoryusage);
 	cout << "maximum depth: ";
