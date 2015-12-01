@@ -1,35 +1,17 @@
-all:
-	-(cd pp; make all;)
-	-(cd fe; make all;)
-	-(cd split; make all;)
-	-(cd pr; make all;)
-	-(cd sh; make all;)
+#
+# Copyright (C) 2010, OMBT LLC and Mike A. Rumore
+# All rights reserved.
+# Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
+#
+# ROOT = /home/ombt/ombt
 
-mymk:
-	-(cd pp; mymk;)
-	-(cd fe; mymk;)
-	-(cd split; mymk;)
-	-(cd pr; mymk;)
-	-(cd sh; mymk;)
+ifndef ROOT
+ROOT = $(PWD)/../../..
+endif
 
-backup:
-	-(cd pp; make backup;)
-	-(cd fe; make backup;)
-	-(cd split; make backup;)
-	-(cd pr; make backup;)
-	-(cd sh; make backup;)
+include $(ROOT)/build/makefile.common
 
-clean:
-	-(cd pp; make clean;)
-	-(cd fe; make clean;)
-	-(cd split; make clean;)
-	-(cd pr; make clean;)
-	-(cd sh; make clean;)
+SUBDIRS = \
+	atp
 
-print:
-	-(cd pp; make print;)
-	-(cd fe; make print;)
-	-(cd split; make print;)
-	-(cd pr; make print;)
-	-(cd sh; make print;)
-
+include $(ROOT)/build/makefile.subdirs
