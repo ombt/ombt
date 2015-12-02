@@ -1,2 +1,2 @@
 # ombt
-General utilities application development and data analysis.
+General utilities for application development and data analysis.
