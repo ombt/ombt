@@ -665,7 +665,7 @@ addequalityaxioms()
 
 // remove subsumed clauses
 int
-removedSubsumed(Clause &cl1, Clause &cl2, List<Clause> &cl2rmv)
+removedSubsumed(const Clause &cl1, const Clause &cl2, List<Clause> &cl2rmv)
 {
 	// check if clause 1 subsumes clause 2.
 	Substitutions s;
@@ -940,7 +940,8 @@ dumpnewclause(const Clause &cl1, const Clause &cl2, const Clause &newcl)
 // resolve two clauses, if possible.
 int
 resolveClauses(Array<BinaryTree_AVL<Clause> > &clausesArray, 
-	Clause &cl1, Clause &cl2, int &clausesAdded, unsigned int currentDepth)
+	const Clause &cl1, const Clause &cl2, 
+	int &clausesAdded, unsigned int currentDepth)
 {
 	// check if any of the clauses are empty
 	statistics[ResolutionsAttempted] += 1;

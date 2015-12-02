@@ -1,6 +1,7 @@
 // A* best-first search for state-space graphs
 
 // local headers
+#include "globals.h"
 #include "search.h"
 #include "trace.h"
 

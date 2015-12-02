@@ -8,7 +8,7 @@
 
 // unify two term, if possible
 int
-unify(Terms &t1, Terms &t2, Substitutions &s)
+unify(const Terms &t1, const Terms &t2, Substitutions &s)
 {
 	// check if a variable or constant
 	if (t1.type != Terms::Function || t2.type != Terms::Function)
@@ -127,7 +127,7 @@ unify(Terms &t1, Terms &t2, Substitutions &s)
 }
 
 int
-unify(Literal &l1, Literal &l2, Substitutions &s)
+unify(const Literal &l1, const Literal &l2, Substitutions &s)
 {
 	// check if the literals are equivalent, at least.
 	if (l1.ne(l2))

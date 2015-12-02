@@ -14,6 +14,9 @@
 #include <adt/BinaryTree_AVL.h>
 #include <adt/Map.h>
 
+using namespace std;
+using namespace ombt;
+
 // define structure for tracking variable names
 extern BinaryTree_AVL<Tuple<String, String> > variableNames;
 

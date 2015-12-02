@@ -35,8 +35,8 @@ public:
 	friend class Clause;
 	friend class Substitution;
 	friend class Substitutions;
-	friend int unify(Terms &, Terms &, Substitutions &);
-	friend int unify(Literal &, Literal &, Substitutions &);
+	friend int unify(const Terms &, const Terms &, Substitutions &);
+	friend int unify(const Literal &, const Literal &, Substitutions &);
 	friend int equal(const Terms &, const Terms &);
 	friend int equal(const Literal &, const Literal &);
 
@@ -151,8 +151,8 @@ public:
 	friend class Clause;
 	friend class Substitution;
 	friend class Substitutions;
-	friend int unify(Terms &, Terms &, Substitutions &);
-	friend int unify(Literal &, Literal &, Substitutions &);
+	friend int unify(const Terms &, const Terms &, Substitutions &);
+	friend int unify(const Literal &, const Literal &, Substitutions &);
 	friend int equal(const Terms &, const Terms &);
 	friend int equal(const Literal &, const Literal &);
 

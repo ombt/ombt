@@ -14,8 +14,8 @@
 #include "substitution.h"
 
 // unification functions
-int unify(Terms &, Terms &, Substitutions &);
-int unify(Literal &, Literal &, Substitutions &);
+int unify(const Terms &, const Terms &, Substitutions &);
+int unify(const Literal &, const Literal &, Substitutions &);
 
 // unify lists of literals
 int unify(List<Literal> &, Substitutions &);

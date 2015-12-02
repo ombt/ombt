@@ -409,10 +409,8 @@ factor(Literal &fl, Clause &cl, Substitutions &flsubs)
 		}
 
 		// try to unify
-		Literal tmp_fl(fl);
-		Literal tmp_flit(flsetIter());
 		subs.clear();
-		if (unify(tmp_fl, tmp_flit, subs) == OK)
+		if (unify(fl, flsetIter(), subs) == OK)
 		{
 			// literals unified
 			factorfound++;

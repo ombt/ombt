@@ -239,8 +239,7 @@ BFSNode::isGoal(BinaryTree_AVL<Clause> &slist, BinaryTree_AVL<Clause> &olist)
 
 	// attempt to unify the clauses
 	Substitutions subs;
-	Literal negation_maxlit2(~maxlit2);
-	int status = unify(maxlit1, negation_maxlit2, subs);
+	int status = unify(maxlit1, ~maxlit2, subs);
 	switch (status)
 	{
 	case OK:
@@ -419,7 +418,7 @@ BFSNode::getNormalizedClauses() const
 			if (!mapvars.isInMap(oldvar))
 			{
 				char buf[BUFSIZ];
-				sprintf(buf, "_V%d", ++icounter);
+				sprintf(buf, "_V%ld", ++icounter);
 				mapvars[oldvar] = String(buf);
 			}
 			news = news + String(" ") + mapvars[oldvar];
