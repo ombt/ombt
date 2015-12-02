@@ -15,7 +15,6 @@ SUBDIRS = \
 	prop \
 	graphoverlap \
 	graphoverlap2 \
-	graphoverlap3 \
-	atp
+	graphoverlap3
 
 include $(ROOT)/build/makefile.subdirs
