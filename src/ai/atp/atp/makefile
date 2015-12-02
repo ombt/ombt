@@ -93,7 +93,6 @@ atp:		pryacc.o \
 		memoryleak.o \
 		options.o \
 		prover.o \
-		search.o \
 		semantic.o \
 		substitution.o \
 		symbol.o \
@@ -114,7 +113,6 @@ atp:		pryacc.o \
 			memoryleak.o \
 			options.o \
 			prover.o \
-			search.o \
 			semantic.o \
 			substitution.o \
 			symbol.o \
@@ -179,8 +177,6 @@ memoryleak.0:	memoryleak.cpp memoryleak.h
 options.o:	options.h 
 
 prover.o:	prover.cpp
-
-search.o:	search.cpp search.h
 
 semantic.o:	semantic.cpp semantic.h
 

@@ -8,6 +8,8 @@
 // headers 
 #include "pr.h"
 #include "trace.h"
+#include "deletion.h"
+#include "search.h"
 
 // add extra axioms for equality, etc.
 int
@@ -996,12 +998,14 @@ resolveClauses(Array<BinaryTree_AVL<Clause> > &clausesArray,
 
 	// factor clauses
 	Substitutions subs;
-	if (factor(maxlit1, cl1, subs) == NOTOK)
+	Clause tmp_cl1(cl1);
+	if (factor(maxlit1, tmp_cl1, subs) == NOTOK)
 	{
 		ERROR("factor failed.", errno);
 		return(NOTOK);
 	}
-	if (factor(maxlit2, cl2, subs) == NOTOK)
+	Clause tmp_cl2(cl2);
+	if (factor(maxlit2, tmp_cl2, subs) == NOTOK)
 	{
 		ERROR("factor failed.", errno);
 		return(NOTOK);

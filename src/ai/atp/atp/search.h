@@ -48,4 +48,6 @@ int
 IterativeDeepeningSearch(List<NodeType> &, 
 	BinaryTree_AVL<DataType> &, BinaryTree_AVL<DataType> &);
 
+#include "search.cpp"
+
 #endif

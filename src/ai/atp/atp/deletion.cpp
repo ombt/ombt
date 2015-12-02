@@ -423,7 +423,8 @@ factor(Literal &fl, Clause &cl, Substitutions &flsubs)
 	}
 
 	// key literal should be in the clause
-	if (cl.retrieve(fl) != OK)
+	Literal tmp_fl(fl);
+	if (cl.retrieve(tmp_fl) != OK)
 	{
 		// key literal was NOT found. not possible.
 		ERROR("key literal was not found.", errno);

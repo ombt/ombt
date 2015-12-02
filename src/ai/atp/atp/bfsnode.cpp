@@ -3,6 +3,7 @@
 // headers
 #include "bfsnode.h"
 #include "trace.h"
+#include "deletion.h"
 
 #ifdef MEMORYLEAK
 // static data

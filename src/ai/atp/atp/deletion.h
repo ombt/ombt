@@ -30,6 +30,6 @@ int equal(const Terms &, const Terms &);
 int equal(const Literal &, const Literal &);
 int subset(const Clause &, const Clause &);
 int groundSubstitutions(const Clause &, Substitutions &);
-int factor(const Literal &, const Clause &, Substitutions &);
+int factor(Literal &, Clause &, Substitutions &);
 
 #endif
