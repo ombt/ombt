@@ -33,8 +33,15 @@ forall(x)forall(y)forall(z)a(x, a(y, z)) = a(a(x, y), z);
 forall(x)forall(y)a(x, o(x, y)) = x;
 forall(x)forall(y)o(x, a(x, y)) = x;
 forall(x)forall(y)forall(z)a(x, o(y, z)) = o(a(x, y), a(x, z));
-forall(x)forall(z)o(x, n(z)) = 1;
-forall(x)forall(z)a(x, n(z)) = 0;
+#
+# forall(x)forall(z)o(x, n(z)) = 1;
+# forall(x)forall(z)a(x, n(z)) = 0;
+forall(x)o(x, n(x)) = 1;
+forall(x)a(x, n(x)) = 0;
+#
+n(0) = 1;
+n(1) = 0;
+#
 forall(x)o(x, 1) = 1;
 forall(x)a(x, 0) = 0;
 #
