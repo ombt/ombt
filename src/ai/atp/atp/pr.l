@@ -33,7 +33,7 @@ extern int echo;
 identifier		[a-z][a-zA-Z0-9_]*
 pidentifier		[A-Z][a-zA-Z0-9_]*
 number			[0-9]+
-negnumber		[0-9]+
+negnumber		-[0-9]+
 string			\"[^\"]*\"
 whitespace		[ \t]+
 pound			#[^\n]*"\n"
