@@ -1,0 +1,2 @@
+library(vcd)
+head(Arthritis)
