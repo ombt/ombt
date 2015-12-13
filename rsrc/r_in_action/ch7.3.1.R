@@ -50,8 +50,8 @@ cor(x,y)
 # the variables being partialed out). S is the covariance matrix
 # among the variables. An example will help clarify this:
 
-# library(ggm)
-# colnames(states)
-# pcor(c(1,5,2,3,6), cov(states))
+library(ggm)
+colnames(states)
+pcor(c(1,5,2,3,6), cov(states))
 
 
