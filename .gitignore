@@ -19,3 +19,4 @@ doxygen
 .FILES
 .DEPENDS
 .HDRS
+*.exe

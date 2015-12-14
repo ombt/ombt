@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -207,7 +207,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 43 "pr.y" /* yacc.c:355  */
@@ -219,6 +219,8 @@ union YYSTYPE
 
 #line 221 "y.tab.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -232,7 +234,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 236 "y.tab.c" /* yacc.c:358  */
+#line 238 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1397,7 +1399,7 @@ yyreduce:
 		variableNames.clear();
 		yyerrok;
 	}
-#line 1401 "y.tab.c" /* yacc.c:1646  */
+#line 1403 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
@@ -1410,7 +1412,7 @@ yyreduce:
 		variableNames.clear();
 		YYACCEPT;
 	}
-#line 1414 "y.tab.c" /* yacc.c:1646  */
+#line 1416 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1418,7 +1420,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1422 "y.tab.c" /* yacc.c:1646  */
+#line 1424 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1426,7 +1428,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1432 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1434,7 +1436,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1438 "y.tab.c" /* yacc.c:1646  */
+#line 1440 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
@@ -1442,7 +1444,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1446 "y.tab.c" /* yacc.c:1646  */
+#line 1448 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
@@ -1450,7 +1452,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1454 "y.tab.c" /* yacc.c:1646  */
+#line 1456 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
@@ -1458,7 +1460,7 @@ yyreduce:
     {
 		options[String((yyvsp[-3].cstring))] = String((yyvsp[-1].cstring));
 	}
-#line 1462 "y.tab.c" /* yacc.c:1646  */
+#line 1464 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
@@ -1529,7 +1531,7 @@ yyreduce:
 		ptrees.clear();
 		variableNames.clear();
 	}
-#line 1533 "y.tab.c" /* yacc.c:1646  */
+#line 1535 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
@@ -1537,7 +1539,7 @@ yyreduce:
     {
 		equality = 0;
 	}
-#line 1541 "y.tab.c" /* yacc.c:1646  */
+#line 1543 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
@@ -1559,7 +1561,7 @@ yyreduce:
 		/* save expression */
 		MustBeTrue(ptrees.insertAtEnd(pnegs) == OK);
 	}
-#line 1563 "y.tab.c" /* yacc.c:1646  */
+#line 1565 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
@@ -1571,7 +1573,7 @@ yyreduce:
 		/* save expression */
 		MustBeTrue(ptrees.insertAtEnd((yyvsp[0].psemantic)) == OK);
 	}
-#line 1575 "y.tab.c" /* yacc.c:1646  */
+#line 1577 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
@@ -1583,7 +1585,7 @@ yyreduce:
 		/* save expression */
 		MustBeTrue(ptrees.insertAtEnd((yyvsp[0].psemantic)) == OK);
 	}
-#line 1587 "y.tab.c" /* yacc.c:1646  */
+#line 1589 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
@@ -1591,7 +1593,7 @@ yyreduce:
     {
 		(yyval.flag) = 0;
 	}
-#line 1595 "y.tab.c" /* yacc.c:1646  */
+#line 1597 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1599,7 +1601,7 @@ yyreduce:
     {
 		(yyval.flag) = 1;
 	}
-#line 1603 "y.tab.c" /* yacc.c:1646  */
+#line 1605 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
@@ -1607,7 +1609,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1611 "y.tab.c" /* yacc.c:1646  */
+#line 1613 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
@@ -1615,7 +1617,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1619 "y.tab.c" /* yacc.c:1646  */
+#line 1621 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -1625,7 +1627,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::Biconditional, (yyvsp[-2].psemantic), (yyvsp[0].psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1629 "y.tab.c" /* yacc.c:1646  */
+#line 1631 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1633,7 +1635,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1637 "y.tab.c" /* yacc.c:1646  */
+#line 1639 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
@@ -1643,7 +1645,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::Conditional, (yyvsp[-2].psemantic), (yyvsp[0].psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1647 "y.tab.c" /* yacc.c:1646  */
+#line 1649 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
@@ -1651,7 +1653,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1655 "y.tab.c" /* yacc.c:1646  */
+#line 1657 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
@@ -1661,7 +1663,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::Or, (yyvsp[-2].psemantic), (yyvsp[0].psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1665 "y.tab.c" /* yacc.c:1646  */
+#line 1667 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
@@ -1669,7 +1671,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1673 "y.tab.c" /* yacc.c:1646  */
+#line 1675 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
@@ -1679,7 +1681,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::And, (yyvsp[-2].psemantic), (yyvsp[0].psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1683 "y.tab.c" /* yacc.c:1646  */
+#line 1685 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
@@ -1687,7 +1689,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1691 "y.tab.c" /* yacc.c:1646  */
+#line 1693 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
@@ -1697,7 +1699,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::Negation, NULL, (yyvsp[0].psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1701 "y.tab.c" /* yacc.c:1646  */
+#line 1703 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
@@ -1721,7 +1723,7 @@ yyreduce:
 			YYERROR;
 		}
 	}
-#line 1725 "y.tab.c" /* yacc.c:1646  */
+#line 1727 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
@@ -1745,7 +1747,7 @@ yyreduce:
 			YYERROR;
 		}
 	}
-#line 1749 "y.tab.c" /* yacc.c:1646  */
+#line 1751 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
@@ -1779,7 +1781,7 @@ yyreduce:
 		MustBeTrue(scope.insertAtFront(Symbol(String((yyvsp[-1].cstring)), 
 			Symbol::UniversalVariable)) == OK);
 	}
-#line 1783 "y.tab.c" /* yacc.c:1646  */
+#line 1785 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
@@ -1813,7 +1815,7 @@ yyreduce:
 		MustBeTrue(scope.insertAtFront(Symbol(String((yyvsp[-1].cstring)), 
 			Symbol::UniversalVariable)) == OK);
 	}
-#line 1817 "y.tab.c" /* yacc.c:1646  */
+#line 1819 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
@@ -1847,7 +1849,7 @@ yyreduce:
 		MustBeTrue(scope.insertAtFront(Symbol(String((yyvsp[-1].cstring)),
 			Symbol::ExistentialVariable)) == OK);
 	}
-#line 1851 "y.tab.c" /* yacc.c:1646  */
+#line 1853 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
@@ -1881,7 +1883,7 @@ yyreduce:
 		MustBeTrue(scope.insertAtFront(Symbol(String((yyvsp[-1].cstring)),
 			Symbol::ExistentialVariable)) == OK);
 	}
-#line 1885 "y.tab.c" /* yacc.c:1646  */
+#line 1887 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
@@ -1889,7 +1891,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 1893 "y.tab.c" /* yacc.c:1646  */
+#line 1895 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
@@ -1900,7 +1902,7 @@ yyreduce:
 				String(""), String("True"));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1904 "y.tab.c" /* yacc.c:1646  */
+#line 1906 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
@@ -1911,7 +1913,7 @@ yyreduce:
 				String(""), String("False"));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1915 "y.tab.c" /* yacc.c:1646  */
+#line 1917 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
@@ -1919,7 +1921,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[-1].psemantic);
 	}
-#line 1923 "y.tab.c" /* yacc.c:1646  */
+#line 1925 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
@@ -1949,7 +1951,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Predicate::Constant, String((yyvsp[0].cstring)), String(""));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1953 "y.tab.c" /* yacc.c:1646  */
+#line 1955 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
@@ -1992,7 +1994,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Predicate::Function, String((yyvsp[-3].cstring)), (yyvsp[-1].parguments), nargs);
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 1996 "y.tab.c" /* yacc.c:1646  */
+#line 1998 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
@@ -2017,7 +2019,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Predicate::Equal, String((yyvsp[-1].cstring)), pargs, nargs);
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 2021 "y.tab.c" /* yacc.c:1646  */
+#line 2023 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
@@ -2046,7 +2048,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Expression::Negation, NULL, (yyval.psemantic));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 2050 "y.tab.c" /* yacc.c:1646  */
+#line 2052 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
@@ -2059,7 +2061,7 @@ yyreduce:
 		/* insert an argument in the list */
 		MustBeTrue((yyval.parguments)->insertAtEnd((yyvsp[0].psemantic)) == OK);
 	}
-#line 2063 "y.tab.c" /* yacc.c:1646  */
+#line 2065 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
@@ -2068,7 +2070,7 @@ yyreduce:
 		/* insert an argument in the list */
 		MustBeTrue((yyval.parguments)->insertAtEnd((yyvsp[0].psemantic)) == OK);
 	}
-#line 2072 "y.tab.c" /* yacc.c:1646  */
+#line 2074 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
@@ -2076,7 +2078,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2080 "y.tab.c" /* yacc.c:1646  */
+#line 2082 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
@@ -2084,7 +2086,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2088 "y.tab.c" /* yacc.c:1646  */
+#line 2090 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
@@ -2092,7 +2094,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2096 "y.tab.c" /* yacc.c:1646  */
+#line 2098 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
@@ -2100,7 +2102,7 @@ yyreduce:
     {
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2104 "y.tab.c" /* yacc.c:1646  */
+#line 2106 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
@@ -2110,7 +2112,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Term::QuotedString, String((yyvsp[0].cstring)));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 2114 "y.tab.c" /* yacc.c:1646  */
+#line 2116 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
@@ -2120,7 +2122,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Term::Number, String((yyvsp[0].cstring)));
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 2124 "y.tab.c" /* yacc.c:1646  */
+#line 2126 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
@@ -2184,7 +2186,7 @@ yyreduce:
 			MustBeTrue((yyval.psemantic) != NULL);
 		}
 	}
-#line 2188 "y.tab.c" /* yacc.c:1646  */
+#line 2190 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
@@ -2227,7 +2229,7 @@ yyreduce:
 		(yyval.psemantic) = new Semantic(Term::Function, String((yyvsp[-3].cstring)), (yyvsp[-1].parguments), nargs);
 		MustBeTrue((yyval.psemantic) != NULL);
 	}
-#line 2231 "y.tab.c" /* yacc.c:1646  */
+#line 2233 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
@@ -2237,7 +2239,7 @@ yyreduce:
 		(yyvsp[0].psemantic)->setQuery(0);
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2241 "y.tab.c" /* yacc.c:1646  */
+#line 2243 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
@@ -2247,11 +2249,11 @@ yyreduce:
 		(yyvsp[0].psemantic)->setQuery(1);
 		(yyval.psemantic) = (yyvsp[0].psemantic);
 	}
-#line 2251 "y.tab.c" /* yacc.c:1646  */
+#line 2253 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2255 "y.tab.c" /* yacc.c:1646  */
+#line 2257 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
