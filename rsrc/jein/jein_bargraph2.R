@@ -67,6 +67,7 @@ colnames(data) = data_names
 ncol(data)
 
 new_data = data.frame()
+new_data_bar_names = ""
 
 for (i in 1:ncol(data))
 {
@@ -80,6 +81,9 @@ for (i in 1:ncol(data))
 
     new_data[1:length(v),2*i-1] = total
     new_data[1:length(v),2*i] = components
+
+    new_data_bar_names[2*i-1] = data_names[i]
+    new_data_bar_names[2*i]   = data_names[i]
 }
 
 rownames(new_data) = rownames(data)
@@ -88,7 +92,8 @@ new_data
 
 barplot(as.matrix(new_data),
         col=rainbow(nrow(new_data)),
-        legend=rownames(new_data))
+        legend=rownames(new_data),
+        names.arg=new_data_bar_names)
 
 # colnames(components) = data_names
 
