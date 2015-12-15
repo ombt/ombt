@@ -1,0 +1,25 @@
+SCRIPT: chart2.sql
+01/29/2015 08:00:00 1422493200 to 01/30/2015 08:00:00 1422579600
+equip_id	lane_no	stage_no	total_down_time	prev_proc_wait_time	next_proc_wait_time	singl_cycl_stop_time	chip_supp_wait_time	sldr_ctr_wait_time	sldr_snsr_wait_time	cln_paper_wait_time	brcg_time	cperr_count	dataedit	mente	othrstop_count	prodview	unitadjust	real_run_time
+1012	1	1	44335	3912	37216	750	666	0	0	0	0	0	0	0	0	0	0	61222
+1012	1	2	30401	3481	20602	512	4514	0	0	0	0	0	0	0	0	0	0	46142
+1014	1	1	44486	17630	6676	421	8847	0	0	0	0	0	0	0	0	0	0	63743
+1014	1	2	40757	25961	4390	379	725	0	0	0	0	0	0	0	0	0	0	33615
+Thu Jan 29 21:00:00 WIT 2015 1422540000 to Fri Jan 30 21:00:00 WIT 2015 1422626400
+equip_id	lane_no	stage_no	total_down_time	prev_proc_wait_time	next_proc_wait_time	singl_cycl_stop_time	chip_supp_wait_time	sldr_ctr_wait_time	sldr_snsr_wait_time	cln_paper_wait_time	brcg_time	cperr_count	dataedit	mente	othrstop_count	prodview	unitadjust	real_run_time
+1012	1	1	43156	9886	29694	447	1404	0	0	0	0	0	0	0	0	0	0	51296
+1012	1	2	35822	9069	22180	209	2564	0	0	0	0	0	0	0	0	0	0	36545
+1014	1	1	32797	14495	4287	631	7105	0	0	0	0	0	0	0	0	0	0	33527
+1014	1	2	42228	24702	3154	791	2811	0	0	0	0	0	0	0	0	0	0	25942
+01/29/2015 08:00:00 1422493200 to 01/30/2015 08:00:00 1422579600
+equip_id	lane_no	stage_no	total_down_time	prev_proc_wait_time	next_proc_wait_time	singl_cycl_stop_time	chip_supp_wait_time	sldr_ctr_wait_time	sldr_snsr_wait_time	cln_paper_wait_time	real_run_time
+1012	1	1	44335	3912	37216	750	666	0	0	0	61222
+1012	1	2	30401	3481	20602	512	4514	0	0	0	46142
+1014	1	1	44486	17630	6676	421	8847	0	0	0	63743
+1014	1	2	40757	25961	4390	379	725	0	0	0	33615
+Thu Jan 29 21:00:00 WIT 2015 1422540000 to Fri Jan 30 21:00:00 WIT 2015 1422626400
+equip_id	lane_no	stage_no	total_down_time	prev_proc_wait_time	next_proc_wait_time	singl_cycl_stop_time	chip_supp_wait_time	sldr_ctr_wait_time	sldr_snsr_wait_time	cln_paper_wait_time	real_run_time
+1012	1	1	43156	9886	29694	447	1404	0	0	0	51296
+1012	1	2	35822	9069	22180	209	2564	0	0	0	36545
+1014	1	1	32797	14495	4287	631	7105	0	0	0	33527
+1014	1	2	42228	24702	3154	791	2811	0	0	0	25942

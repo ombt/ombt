@@ -1,0 +1,5 @@
+equip_id,lane_no,stage_no,total_down_time,prev_proc_wait_time,next_proc_wait_time,singl_cycl_stop_time,chip_supp_wait_time,sldr_ctr_wait_time,sldr_snsr_wait_time,cln_paper_wait_time,brcg_time,cperr_count,dataedit,mente,othrstop_count,prodview,unitadjust,real_run_time
+1012,1,1,43156,9886,29694,447,1404,0,0,0,0,0,0,0,0,0,0,51296
+1012,1,2,35822,9069,22180,209,2564,0,0,0,0,0,0,0,0,0,0,36545
+1014,1,1,32797,14495,4287,631,7105,0,0,0,0,0,0,0,0,0,0,33527
+1014,1,2,42228,24702,3154,791,2811,0,0,0,0,0,0,0,0,0,0,25942
