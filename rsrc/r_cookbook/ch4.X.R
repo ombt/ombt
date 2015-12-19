@@ -98,6 +98,30 @@ system("cat /tmp/xxx")
 
 # reading file with non-standard formats, then use readLines or scan.
 
+u03 = readLines("test.u03", n=-1)
+u03
+
+# saving data to a file and reading it in.
+
+q = seq(from=0, to=3, by=0.5)
+
+test.data = data.frame(Quant=q, Lower=pnorm(-q), Upper=pnorm(q))
+
+save(test.data, file="test.data.out")
+
+rm(test.data)
+ls()
+
+load(file="test.data.out")
+
+ls()
+
+dput(test.data, file="ascii_test.data")
+dump("test.data2", file="ascii_test.data")
+
+
+
+
 
 
 
