@@ -1,12 +1,6 @@
 #
 opar=par(no.readonly=TRUE)
 #
-par(mfrow=c(3,1),
-    col.lab="blue",
-    col.main="red",
-    col.axis="black",
-    fg="green")
-#
 attach(csvd)
 #
 eq1001 = orig_chart8$equipment_id == 1001
@@ -32,9 +26,51 @@ sd_errc1001 = sd(errc1001)
 sd_errc1003 = sd(errc1003)
 sd_errc1009 = sd(errc1009)
 #
-norm_errc1001 = sqrt(((errc1001-mean_errc1001)/sd_errc1001)^2)
-norm_errc1003 = sqrt(((errc1003-mean_errc1003)/sd_errc1003)^2)
-norm_errc1009 = sqrt(((errc1009-mean_errc1009)/sd_errc1009)^2)
+# norm_errc1001 = sqrt(((errc1001-mean_errc1001)/sd_errc1001)^2)
+# norm_errc1003 = sqrt(((errc1003-mean_errc1003)/sd_errc1003)^2)
+# norm_errc1009 = sqrt(((errc1009-mean_errc1009)/sd_errc1009)^2)
+#
+norm_errc1001 = sqrt((errc1001-mean_errc1001)^2)/sd_errc1001
+norm_errc1003 = sqrt((errc1003-mean_errc1003)^2)/sd_errc1003
+norm_errc1009 = sqrt((errc1009-mean_errc1009)^2)/sd_errc1009
+#
+x11()
+par(mfrow=c(3,2),
+    col.lab="blue",
+    col.main="red",
+    col.axis="black",
+    fg="green")
+plot(puc1001,
+     xlab = "board",
+     ylab = "pickup",
+     main = "EQ-ID=1001, Summary Pickup Counts")
+plot(puc1003,
+     xlab = "board",
+     ylab = "pickup",
+     main = "EQ-ID=1003, Summary Pickup Counts")
+plot(puc1009,
+     xlab = "board",
+     ylab = "pickup",
+     main = "EQ-ID=1009, Summary Pickup Counts")
+plot(plc1001,
+     xlab = "board",
+     ylab = "place",
+     main = "EQ-ID=1001, Summary Placement Counts")
+plot(plc1003,
+     xlab = "board",
+     ylab = "place",
+     main = "EQ-ID=1003, Summary Placement Counts")
+plot(plc1009,
+     xlab = "board",
+     ylab = "place",
+     main = "EQ-ID=1009, Summary Placement Counts")
+#
+x11()
+par(mfrow=c(3,1),
+    col.lab="blue",
+    col.main="red",
+    col.axis="black",
+    fg="green")
 #
 plot(errc1001,
      xlab = "board",
