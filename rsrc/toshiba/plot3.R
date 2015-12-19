@@ -96,7 +96,7 @@ xvals = seq(from=1,
 yvals = seq(from=4.0*sd_errc1009,
             to=4.0*sd_errc1009,
             length.out=50)
-lines(xvals, yvals, col="red", lwd=2)
+lines(xvals, yvals, col="red", lty=2, lwd=2)
 #
 detach()
 #
