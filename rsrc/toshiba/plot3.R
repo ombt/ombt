@@ -34,7 +34,6 @@ norm_errc1001 = sqrt((errc1001-mean_errc1001)^2)/sd_errc1001
 norm_errc1003 = sqrt((errc1003-mean_errc1003)^2)/sd_errc1003
 norm_errc1009 = sqrt((errc1009-mean_errc1009)^2)/sd_errc1009
 #
-x11()
 par(mfrow=c(3,2),
     col.lab="blue",
     col.main="red",
@@ -64,6 +63,28 @@ plot(plc1009,
      xlab = "board",
      ylab = "place",
      main = "EQ-ID=1009, Summary Placement Counts")
+#
+x11()
+par(mfrow=c(3,1),
+    col.lab="blue",
+    col.main="red",
+    col.axis="black",
+    fg="green")
+plot(plc1001,
+     puc1001,
+     xlab = "place",
+     ylab = "pickup",
+     main = "EQ-ID=1001, Summary Place vs Pickup Counts")
+plot(plc1003,
+     puc1003,
+     xlab = "place",
+     ylab = "pickup",
+     main = "EQ-ID=1003, Summary Place vs Pickup Counts")
+plot(plc1009,
+     puc1009,
+     xlab = "place",
+     ylab = "pickup",
+     main = "EQ-ID=1009, Summary Place vs Pickup Counts")
 #
 x11()
 par(mfrow=c(3,1),
