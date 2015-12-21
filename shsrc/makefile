@@ -11,6 +11,6 @@ endif
 
 include $(ROOT)/build/makefile.common
 
-SHELLSCRIPTS = setenv_ombt get.make.implicit.rules
+SHELLSCRIPTS = setenv_ombt get.make.implicit.rules ff fd
 
 include $(ROOT)/build/makefile.sh
