@@ -145,4 +145,7 @@ v4 = c("v4-1", "v4-2", "v4-3", "v4-4")
 comb = stack(list(v1=v1, v2=v2, v3=v3, v4=v4))
 comb
 
+# 5.6 - creating a list
+
+
 
