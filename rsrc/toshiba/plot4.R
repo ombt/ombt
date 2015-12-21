@@ -75,30 +75,44 @@ plot(plc1001,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1001, Summary Place vs Pickup Counts")
-plot(plc1001,
-     puc1001,
+xxx=plc1001
+xxx[xxx<=0]=1
+yyy=puc1001
+yyy[yyy<=0]=1
+plot(xxx,
+     yyy,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1001, Summary Place vs Pickup Counts")
+#
 plot(plc1003,
      puc1003,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1003, Summary Place vs Pickup Counts")
-plot(plc1003,
-     puc1003,
+xxx=plc1003
+xxx[xxx<=0]=1
+yyy=puc1003
+yyy[yyy<=0]=1
+plot(xxx,
+     yyy,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1003, Summary Place vs Pickup Counts")
+#
 plot(plc1009,
      puc1009,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1009, Summary Place vs Pickup Counts")
-plot(plc1009,
-     puc1009,
+xxx=plc1009
+xxx[xxx<=0]=1
+yyy=puc1009
+yyy[yyy<=0]=1
+plot(xxx,
+     yyy,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
