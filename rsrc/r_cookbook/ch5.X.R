@@ -147,5 +147,60 @@ comb
 
 # 5.6 - creating a list
 
+# list positions are identified by the notation [[1]], [[2]], etc.
+# lists are linear data structures. lists are heterigensous, that is, 
+# they can contain data items of all types.
+#
 
+demolist = list(3.14159, "Moe", c(1,2,3,4), mean)
+demolist
 
+demolist = list()
+demolist
+
+demolist[[1]] = 3.14159
+demolist[[2]] = "Moe"
+demolist[[3]] = c(1,2,3,4)
+demolist[[4]] = mean
+
+demolist
+
+demolist = list(mid=0.5, right=0.841, far.right=0.977)
+demolist
+
+demolist$far.far.right =  1.5555
+demolist
+
+# 5.7 accessing list elements
+
+# list[[n]] to access the n-th element.
+# list[c(n1,n2,...,n3)] to access the n1, n2, ... elements
+#
+# very important, list[[n]] returns a one atomic element, but
+# list[n] returns a list with one element.
+#
+
+years = list(1957, 1962, 1996, 1998, 2008, 2014)
+years
+
+years[[1]]
+
+years[c(1,2)]
+
+class(years[[1]])
+class(years[1])
+
+# also remember, the cat() function can handle cat(list[[1]]) but
+# it fails for cat(list[1]) because the item returned has internal
+# structure, it is not atomic.
+#
+
+# 5.8 accessing list elements by name.
+
+# list[["name"]]
+# or
+# list$name
+# or
+# list[c(name,name2,...,namen)]
+
+ 
