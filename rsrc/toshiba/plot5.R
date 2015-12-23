@@ -67,6 +67,7 @@ plot(plc1009,
      main = "EQ-ID=1009, Summary Placement Counts")
 #
 # x11()
+#par(mfrow=c(3,3),
 par(mfrow=c(3,2),
     col.lab="blue",
     col.main="red",
@@ -87,6 +88,12 @@ plot(xxx,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1001, Log-Log Summary Place vs Pickup Counts")
+#plot(xxx,
+#     yyy,
+#     log = "y",
+#     xlab = "place",
+#     ylab = "pickup",
+#     main = "EQ-ID=1001, Lin-Log Summary Place vs Pickup Counts")
 #
 plot(plc1003,
      puc1003,
@@ -103,6 +110,12 @@ plot(xxx,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1003, Log-Log Summary Place vs Pickup Counts")
+#plot(xxx,
+#     yyy,
+#     log = "y",
+#     xlab = "place",
+#     ylab = "pickup",
+#     main = "EQ-ID=1003, Lin-Log Summary Place vs Pickup Counts")
 #
 plot(plc1009,
      puc1009,
@@ -119,6 +132,12 @@ plot(xxx,
      xlab = "place",
      ylab = "pickup",
      main = "EQ-ID=1009, Log-Log Summary Place vs Pickup Counts")
+#plot(xxx,
+#     yyy,
+#     log = "y",
+#     xlab = "place",
+#     ylab = "pickup",
+#     main = "EQ-ID=1009, Lin-Log Summary Place vs Pickup Counts")
 #
 # x11()
 par(mfrow=c(3,1),
