@@ -43,22 +43,22 @@ plot(puc1001,
      xlab = "board",
      ylab = "pickup",
      main = "EQ-ID=1001, Summary Pickup Counts")
-plot(puc1003,
-     xlab = "board",
-     ylab = "pickup",
-     main = "EQ-ID=1003, Summary Pickup Counts")
-plot(puc1009,
-     xlab = "board",
-     ylab = "pickup",
-     main = "EQ-ID=1009, Summary Pickup Counts")
 plot(plc1001,
      xlab = "board",
      ylab = "place",
      main = "EQ-ID=1001, Summary Placement Counts")
+plot(puc1003,
+     xlab = "board",
+     ylab = "pickup",
+     main = "EQ-ID=1003, Summary Pickup Counts")
 plot(plc1003,
      xlab = "board",
      ylab = "place",
      main = "EQ-ID=1003, Summary Placement Counts")
+plot(puc1009,
+     xlab = "board",
+     ylab = "pickup",
+     main = "EQ-ID=1009, Summary Pickup Counts")
 plot(plc1009,
      xlab = "board",
      ylab = "place",
@@ -84,7 +84,7 @@ plot(xxx,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
-     main = "EQ-ID=1001, Summary Place vs Pickup Counts")
+     main = "EQ-ID=1001, Log-Log Summary Place vs Pickup Counts")
 #
 plot(plc1003,
      puc1003,
@@ -100,7 +100,7 @@ plot(xxx,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
-     main = "EQ-ID=1003, Summary Place vs Pickup Counts")
+     main = "EQ-ID=1003, Log-Log Summary Place vs Pickup Counts")
 #
 plot(plc1009,
      puc1009,
@@ -116,7 +116,7 @@ plot(xxx,
      log = "xy",
      xlab = "place",
      ylab = "pickup",
-     main = "EQ-ID=1009, Summary Place vs Pickup Counts")
+     main = "EQ-ID=1009, Log-Log Summary Place vs Pickup Counts")
 #
 x11()
 par(mfrow=c(3,1),
