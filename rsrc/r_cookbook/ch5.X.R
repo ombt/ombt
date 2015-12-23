@@ -203,4 +203,96 @@ class(years[1])
 # or
 # list[c(name,name2,...,namen)]
 
- 
+years = list(kennedy=1960, johnson=1964, carter=1976, clinton=1992)
+
+years["kennedy"]
+
+years[["kennedy"]]
+
+years$kennedy
+
+(years["kennedy"])[1]
+
+class(years["kennedy"])
+
+class(years[["kennedy"]])
+
+class(years$kennedy)
+
+class((years["kennedy"])[1])
+
+# 5.9 - name-value table
+
+htbl = list(mid=0.5, right=0.841, left=0.977)
+htbl
+
+nms = c("mike", "inez", "mark", "jacob")
+vals = c("rumore", "rumore", "chicken", "duck")
+
+htbl2 = list()
+
+htbl2
+
+htbl2[nms] = vals
+htbl2
+
+# 5.10 deleting item in a list
+
+htbl2
+htbl2$mike = NULL
+htbl2
+
+# 5.11 = flattening a list to a vector.
+# use unlist function.
+
+iq.scores = list(a=103, b=110, c=90, d=145)
+iq.scores
+
+mean(iq.scores)
+
+mean(unlist(iq.scores))
+
+# to print list using cat, ...
+
+cat("IQ scores:", unlist(iq.scores), "\n")
+
+# 5.12 - removing NULLs from a list.
+
+tlist = list("moe", NULL, "larry", NULL, "curly", NULL, "shemp")
+
+tlist
+
+# remove nulls from list
+
+tlist[sapply(tlist, is.null)] = NULL
+
+tlist
+
+
+# 5.13 - removing elements from a list using a conditional
+
+iq.scores = list(a=103, b=110, c=90, d=145, e=75, f=180)
+iq.scores
+
+# remove scores below the average
+
+mean(unlist(iq.scores))
+
+iq.scores[iq.scores < mean(unlist(iq.scores))] = NULL
+iq.scores
+
+scores = as.list(runif(20, min=-50, max=50))
+scores
+
+abs(unlist(scores)) < 25
+
+scores[abs(unlist(scores)) < 25] <- NULL
+scores
+
+scores = as.list(runif(20, min=-50, max=50))
+scores
+
+scores[lapply(scores, abs) < 25] <- NULL
+scores
+
+
