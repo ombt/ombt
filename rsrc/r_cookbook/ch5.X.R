@@ -248,7 +248,8 @@ htbl2
 iq.scores = list(a=103, b=110, c=90, d=145)
 iq.scores
 
-mean(iq.scores)
+# the following will complain. must unlist as shown right below.
+# mean(iq.scores)
 
 mean(unlist(iq.scores))
 
@@ -294,5 +295,94 @@ scores
 
 scores[lapply(scores, abs) < 25] <- NULL
 scores
+
+# creating a matrix
+
+v = c(1,2,3,4,5,6)
+
+matrix(v, 2, 3)
+
+# uses repeat also
+
+z = 1:12
+z
+
+# by column is the default
+matrix(z,3,4)
+
+# try by row instead
+matrix(z,3,4, byrow=TRUE)
+
+matrix(0,3,2)
+
+matrix(NA,2,4)
+
+theData = c(1.1, 1.2, 1.3,
+            2.1, 2.2, 2.3)
+mat = matrix(theData, 2, 3, byrow=TRUE)
+mat
+
+v = c(1.1, 1.2, 1.3,
+      2.1, 2.2, 2.3)
+
+dim(v) = c(2,3)
+
+# notice it did it by column and not by row. not to good.
+v
+
+# 5.15 - matrix ops
+
+# t(A) - transpose
+
+m = matrix(c(1,2,3,
+             4,5,6,
+             7,8,9),
+           3,3,byrow=TRUE)
+m
+t(m)
+
+m2 = matrix(c(1,5,3,
+              4,3,6,
+              7,9,9),
+            3,3,byrow=TRUE)
+
+solve(m2)
+
+solve(t(m2))
+
+m %*% m2
+
+diag(4)
+
+diag(5)
+
+# 5.16 - row and col names for a matrix
+
+tech.corr = matrix(c(1.000, 0.566, 0.390,
+                     0.556, 1.000, 0.444,
+                     0.390, 0.444, 1.000),
+                   3,3,byrow=TRUE)
+tech.corr
+
+# add names
+rownames(tech.corr) = c("ibm", "msft", "goog")
+colnames(tech.corr) = c("ibm", "msft", "goog")
+tech.corr
+
+tech.corr["ibm","goog"]
+
+# 5.17 - dropping row or col from a matrix
+
+m = matrix(1:12, 3, 4, byrow=TRUE)
+m
+
+# converted to a vector
+m[2,]
+m[,2]
+
+# 1-row matrix or 1-col matrix
+m[2,,drop=FALSE]
+m[,2,drop=FALSE]
+
 
 
