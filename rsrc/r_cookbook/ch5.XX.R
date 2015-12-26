@@ -111,4 +111,154 @@ suburbs
 
 # 5.21 - preallocating data frames
 
+n=30
+dfrm = data.frame(c1=numeric(n), 
+                  c2=character(n), 
+                  c3=logical(n), 
+                  c4=factor(n, levels=c("L1", "L2", "L3")))
+dfrm
+
+# 5.22 selecting data frame columns by position
+#
+# dfrm[[n]] - selects one column
+#
+# to select one or more than one column:
+#
+# dfrm[n]
+# dfrm(c(n1,...,nk))
+# dfrm[,n]
+# dfrm[c(n1m,...,nk)]
+
+suburbs = data.frame(city=city,
+                     county=county,
+                     state=state,
+                     pop=pop)
+suburbs
+
+# returns a vector
+class(suburbs[[1]])
+suburbs[[1]]
+
+# returns a data frame
+class(suburbs[1])
+suburbs[1]
+class(suburbs[c(1,3)])
+suburbs[c(1,3)]
+
+# returns a vector
+class(suburbs[,1])
+suburbs[,1]
+
+# however this returns a data frame
+class(suburbs[,c(1,4)])
+suburbs[,c(1,4)]
+
+# force a data frame
+class(suburbs[,1,drop=FALSE])
+suburbs[,1,drop=FALSE]
+
+# 5.23 - selecting a data frame column by name
+
+# dfrm[["name"]] - selects one column
+# dfrm$name - selects one column
+#
+# to select one or more than one column:
+#
+# dfrm["name"]
+# dfrm(c("name",...,"name"))
+# dfrm[,"name"]
+# dfrm[c("name",...,'name")]
+
+# returns a vector
+class(suburbs[["city"]])
+suburbs[["city"]]
+class(suburbs$city)
+suburbs$city
+
+# returns a data frame
+class(suburbs["city"])
+suburbs["city"]
+class(suburbs[c("city","state")])
+suburbs[c("city","state")]
+
+# returns a vector
+class(suburbs[,"city"])
+suburbs[,"city"]
+
+# however this returns a data frame
+class(suburbs[,c("city","pop")])
+suburbs[,c("city","pop")]
+
+# force a data frame
+class(suburbs[,"city",drop=FALSE])
+suburbs[,"city",drop=FALSE]
+
+# 5.24 - selecting rows and cols more easily
+
+# use subset:
+# subset(dfrm, select=colname)
+# subset(dfrm, select=c(colname,...,colname))
+#
+# no quotes needed.
+#
+# can also give a logical expression to select 
+# specific values.
+#
+# subset(dfrm, subst=(logical-expr))
+# subset(dfrm, select=c(colname,...,colname), subst=(logical-expr))
+#
+
+library(MASS)
+data(Cars93)
+names(Cars93)
+
+subset(Cars93, 
+       select=Model, 
+       subset=(MPG.city>30))
+
+subset(Cars93, 
+       select=c(Model,Min.Price,Max.Price),
+       subset=(Cylinders==4 & Origin=="USA"))
+
+subset(Cars93, 
+       select=c(Manufacturer, Model),
+       subset=(MPG.highway > median(MPG.highway)))
+
+# 5.25 changing the name of a data frame column
+
+m = matrix(c(1,2,3,
+             4,5,6,
+             7,8,9,
+             10,11,12,
+             13,14,15),
+             ncol=3,
+             nrow=5,
+             byrow=TRUE)
+m
+
+as.data.frame(m)
+
+l = list(c(1,2,3), 
+         c(4,5,6), 
+         c(7,8,9), 
+         c(10,11,12), 
+         c(13,14,15))
+l
+as.data.frame(l)
+
+dfrm = as.data.frame(l)
+colnames(dfrm) = c("Moe", "Larry", "Curly", "Shemp", "Curly-Joe")
+dfrm
+
+# 5.26 - editing a data frame
+
+temp = edit(dfrm)
+dfrm = temp
+dfrm
+
+# 5.27 - removing NAs from a data frame
+
+dfrm = data.frame(x=c(1,2,NA,4,5), y=c(NA,2,3,NA,NA))
+
+
 
