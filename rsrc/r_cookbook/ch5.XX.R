@@ -46,8 +46,69 @@ dfrm[1]
 dfrm[[1]]
 dfrm$o1
 
+obs = list(list(o1=1.1, o2=1.2, o3=1.3, o4=1.4),
+           list(o1=2.1, o2=2.2, o3=2.3, o4=2.4),
+           list(o1=3.1, o2=3.2, o3=3.3, o4=3.4),
+           list(o1=4.1, o2=4.2, o3=4.3, o4=4.4))
+obs
 
+rbind(obs[[1]], obs[[2]])
 
+dfrm = do.call(rbind, Map(as.data.frame,obs))
+dfrm
 
+dfrm[1]
+dfrm[[1]]
+dfrm$o1
+
+# 5.20 - appending rows to a data frame.
+
+city = c("chicago", "kenosha", "aurora", "elgin", 
+         "gary", "joliet", "naperville", "arlington heights", 
+         "bolingbrook", "cicero", "evanston", "hammond", 
+         "palatine", "schaumburg", "skokie", "waukegan")
+
+county = c("cook", "kenosha", "kane", "elgin", 
+           "lake(in)", "kendall", "dupage", "cook", 
+           "will", "cook", "cook", "lake(in)", 
+           "cook", "cook", "cook", "lake(il)")
+
+state = c("il", "wi", "il", "il", 
+          "in", "il", "il", "il", 
+          "il", "il", "il", "in", 
+          "il", "il", "il", "il")
+
+pop = c(2853114, 90352, 171782, 94487, 
+        102746, 106221, 147779, 76031, 
+        70834, 72616, 74239, 83048, 
+        67232, 75386, 63348, 91452)
+
+suburbs = data.frame(city=city,
+                     county=county,
+                     state=state,
+                     pop=pop)
+suburbs
+
+newrow = data.frame(city="west dundee", 
+                    county="kane",
+                    state="il", 
+                    pop=5248)
+newrow
+
+suburbs = rbind(suburbs, newrow)
+suburbs
+
+suburbs = rbind(suburbs, 
+                data.frame(city="west dundee", 
+                           county="kane",
+                           state="il", 
+                           pop=5248),
+                data.frame(city="east dundee", 
+                           county="kane",
+                           state="il", 
+                           pop=2955))
+suburbs
+
+# 5.21 - preallocating data frames
 
 
