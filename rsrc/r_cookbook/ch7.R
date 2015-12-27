@@ -80,4 +80,38 @@ chickens = c("i'm/not/a/chicken",
 
 strsplit(chickens, "/")
 
-# 7.5 
+# 7.5 - replacing substrings
+#
+# sub(old, new, string) - replace first instance of old with new
+# gsub(old, new, string) - replace all instances of old with new
+
+s = "curly is the smart one; curly is funny, too"
+s
+sub("curly", "moe", s)
+gsub("curly", "moe", s)
+
+# old pattern is an RE by default. use fixed=TRUE to interprete old
+# as a regular string.
+#
+sub("r.*y", "moe", s)
+gsub("r.*y", "moe", s)
+
+# help(regexp)
+
+# 7.6 - seeing special characters in strings.
+#
+# use print to show them. cat will not show them.
+
+s = "first\rsecond\n"
+nchar(s)
+cat(s)
+print(s)
+
+
+
+
+
+
+
+
+
