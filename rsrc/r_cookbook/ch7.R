@@ -107,9 +107,137 @@ nchar(s)
 cat(s)
 print(s)
 
+# 7.7 - generating all pairwise combination of strings.
+#
+# m = outer(strings1, strings2, paste, sep="")
+#
+locations = c("ny","la","chi","hou")
+treatments = c("t1","t2","t3")
+o = outer(locations, treatments, paste, sep="-")
+o
 
+str(o)
+as.vector(o)
 
+outer(treatments, treatments, paste, sep="-")
+as.vector(outer(treatments, treatments, paste, sep="-"))
+sort(as.vector(outer(treatments, treatments, paste, sep="-")))
+unique(sort(as.vector(outer(treatments, treatments, paste, sep="-"))))
 
+o=outer(treatments, treatments, paste, sep="-")
+o[!lower.tri(o)]
+
+# 7.8 - get current date
+#
+# Sys.Date()
+
+today = Sys.Date()
+today
+
+class(today)
+mode(today)
+str(today)
+
+# 7.9 - convert a string to a date
+#
+# can use as.Date(...)
+#
+
+# default format is yyyy-mm-dd
+as.Date("2015-09-27")
+
+# other formats see man page for stftime()
+as.Date("12/31/2010", format="%m/%d/%Y")
+as.Date("12/31/10", format="%m/%d/%y")
+
+# 7.10 - convert Date to string.
+#
+# for format strings, can use these:
+#
+# %b - abbreviated month, "Jan", etc.
+# %B - full month name, "January", etc.
+# %d - day as 2-digit number
+# %m - month as 2-digit number
+# %y - year without century, (00-99)
+# %Y - year as yyyy.
+
+format(Sys.Date())
+
+as.character(Sys.Date())
+
+format(Sys.Date(), format="%m/%d/%Y")
+as.character(Sys.Date(), format="%m/%d/%Y")
+
+# 7.11 - convert year, month, date to a Date
+#
+# ISOdate(year, month, day)
+#
+# to create a POSIXct object which is
+# then converted using as.Date()
+#
+ISOdate(2015, 12, 27)
+
+# truncate time part
+as.Date(ISOdate(2015, 12, 27))
+
+years = c(2010, 2011, 2012, 2013, 2014)
+months = c(1,1,1,1,1)
+days = c(15, 21, 20, 18, 17)
+
+ISOdate(years, months, days)
+
+as.Date(ISOdate(years, months, days))
+
+# to handle date and times
+hours = c(12,17,01,02,23)
+minutes = c(1,10,12,40,48)
+seconds = c(10,20,30,40,50)
+
+ISOdatetime( years, months, days, hours, minutes, seconds)
+
+# 7.12 - getting the Julian date
+#
+
+d = as.Date("2015-12-28")
+d
+as.integer(d)
+julian(d)
+
+as.integer(as.Date("1970-01-01"))
+as.integer(as.Date("1970-01-02"))
+as.integer(as.Date("1970-01-03"))
+
+# 7.13 - extracting parts of a date
+#
+d = as.Date("2015-12-28")
+p = as.POSIXlt(d)
+
+str(p)
+class(p)
+mode(p)
+
+p$sec
+p$min
+p$hour
+p$mday
+p$mon
+1900+p$year
+p$wday
+p$yday
+p$idst
+
+# 7.14 - creating sequence of days
+
+start = as.Date("2015-11-20")
+end = as.Date("2015-12-24")
+
+seq(from=start, to=end, by=1)
+
+seq(from=start, by=1, length.out=14)
+
+seq(from=start, by="month", length.out=12)
+seq(from=start, by="3 months", length.out=4)
+seq(from=start, by="year", length.out=10)
 
 
 
