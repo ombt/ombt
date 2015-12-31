@@ -110,7 +110,7 @@ sqlite_exec_query_db <- function(db, query)
 # of these tables are: count, cycletime, index, information,
 # inspectiondata and time.
 #
-sqlite_load_nv_table_from_db <- function(db, table_name, nrows=0)
+sqlite_load_nv_table_from_db_old <- function(db, table_name, nrows=0)
 {
     if (nrows > 0)
         query = paste("select * from '", table_name,"' ", "limit ", nrows, sep="")
@@ -147,5 +147,47 @@ sqlite_load_nv_table_from_db <- function(db, table_name, nrows=0)
     }
     #
     lapply(sorted_unique_fids, by_fid, field_names, nv_tbl)
+}
+#
+sqlite_load_nv_table_from_db <- function(db, table_name, nrows=0)
+{
+    if (nrows > 0)
+        query = paste("select * from '", table_name,"' ", "limit ", nrows, sep="")
+    else
+        query = paste("select * from '", table_name,"'", sep="")
+    #
+    # get data for table.
+    #
+    nv_tbl = sqlite_exec_query_db(db, query)
+    #
+    # get column names
+    #
+    field_names = levels(as.factor(nv_tbl$NAME))
+    #
+    # get the number of FIDs.
+    #
+    nv_tbl$FID = as.integer(nv_tbl$FID)
+    sorted_unique_fids = sort(unique(nv_tbl$FID))
+    nfids = length(sorted_unique_fids)
+    #
+    # initialize the new data frame.
+    #
+    new_tbl = data.frame(FID=sorted_unique_fids)
+    for (fld in field_names)
+    {
+        # new_tbl[[fld]] = rep(c(""), times=1, len=nfids)
+        new_tbl[[fld]] = character(nfids)
+    }
+    #
+    for (irec in 1:nrow(nv_tbl))
+    {
+        FID   = nv_tbl[irec,"FID"] # already integer. see above.
+        NAME  = nv_tbl[irec,"NAME"]
+        VALUE = nv_tbl[irec,"VALUE"]
+        #
+        new_tbl[FID,NAME] = VALUE
+    }
+    #
+    new_tbl
 }
 
