@@ -10,7 +10,7 @@ using namespace ombt;
 using namespace std;
 
 int
-hash(const int &data)
+hash_func(const int &data)
 {
 	return(data);
 }
@@ -35,7 +35,7 @@ main(int argc, char **argv)
 	setKey(key);
 
 	// create sets
-	Set_HashTable<int> set1(hashsz, hash);
+	Set_HashTable<int> set1(hashsz, hash_func);
 	Set_HashTable<int> set2(set1);
 
 	// add members to sets

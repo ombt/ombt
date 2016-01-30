@@ -88,7 +88,8 @@ IterativeMSDatagramServerPerProcess::run()
             dbgprintf("Starting service %s in process %d.\n", 
                       sit->first.c_str(), iproc);
             proc_svcs.push_back(
-                std::pair<std::string, IterativeMSDatagramServer::Handler * >(
+                std::pair<std::string, 
+                          UseCntPtr<IterativeMSDatagramServer::Handler> >(
                     sit->first, sit->second));
         }
 
@@ -402,7 +403,7 @@ IterativeMSStreamServerPerProcess::run()
             dbgprintf("Starting service %s in process %d.\n", 
                       sit->first.c_str(), iproc);
             proc_svcs.push_back(
-                std::pair<std::string, IterativeMSStreamServer::Handler * >(
+                std::pair<std::string, UseCntPtr<IterativeMSStreamServer::Handler> >(
                     sit->first, sit->second));
         }
 

@@ -119,7 +119,7 @@ BestFirstSearch(List<NodeType> &startstatelist,
 	for ( ; !startstateIter.done(); startstateIter++)
 	{
 		// copy start state
-		Proxy<NodeType> pstart = startstateIter();
+		Proxy<NodeType> pstart = &startstateIter();
 
 		// set start node depth
 		pstart->setDepth(nodedepth);

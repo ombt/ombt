@@ -404,7 +404,7 @@ MultiProcMSStreamServerPerProcess::run()
             dbgprintf("Starting service %s in process %d.\n", 
                       sit->first.c_str(), iproc);
             proc_svcs.push_back(
-                std::pair<std::string, MultiProcMSStreamServer::Handler * >(
+                std::pair<std::string, UseCntPtr<MultiProcMSStreamServer::Handler > >(
                     sit->first, sit->second));
         }
 
