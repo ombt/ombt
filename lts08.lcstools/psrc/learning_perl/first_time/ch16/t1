@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+#
+print "call setpwent() ...\n";
+setpwent();
+#
+print "while loop () ...\n";
+while (@list = getpwent())
+{
+	($login, $home) = @list[0,7];
+	$home{$login} = $home;
+}
+#
+print "call endpwent() ...\n";
+endpwent();
+#
+print "call sort() ...\n";
+@keys = sort { $home{$a} cmp $home{$b} } keys %home;
+#
+print "print data ...\n";
+foreach $login (@keys)
+{
+	print "$login ==>> $home{$login}\n";
+}
+print "done ...\n";
+#
+exit 0;

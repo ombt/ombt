@@ -1,0 +1,50 @@
+#
+# reload scripts
+#
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/reload3
+}
+#
+# data
+#
+source <scriptsdir>/globals
+#
+# boot switch 
+#
+source <scriptsdir>/minmode
+source <scriptsdir>/appmode
+#
+# get hardware states
+#
+# source <scriptsdir>/rtrv_eqpt
+# source <scriptsdir>/iom_state
+# source <scriptsdir>/cpu_state
+#
+# reload operations
+#
+# source <scriptsdir>/removetarfiles
+# source <scriptsdir>/ftpload
+# source <scriptsdir>/removeload
+# source <scriptsdir>/installnewload
+#
+# clean up
+#
+# source <scriptsdir>/closestreams
+#
+# provisioning
+#
+# source <scriptsdir>/users
+# source <scriptsdir>/hardware1
+# source <scriptsdir>/hardware2
+# source <scriptsdir>/copymem_all
+#
+#########################################################
+#
+# testing of scripts
+#
+minmode exec {
+	call minmode <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> <scriptsdir>
+}
+appmode exec {
+	call appmode <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> 
+}

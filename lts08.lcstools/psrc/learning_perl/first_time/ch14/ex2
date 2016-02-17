@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my %passwd;
+#
+init();
+proc();
+#
+sub init {
+	open(PASSWD, "ypcat passwd|") || die("unable to read passwd file: $!");
+	my $buf;
+	while ($buf = <PASSWD>)
+	{
+		my ($login, $name) = (split(/:/, $buf))[0,4];
+		$name =~ s/^.*-//;
+		$name =~ s/\(.*$//;
+		$passwd{$login} = $name;
+	}
+	close(PASSWD);
+}
+#
+sub proc {
+	open(WHO, "who|") || die("unable to exec who: $!");
+	open(SORT, "|sort -u") || die("unable to exec sort: $!");
+	my $buf;
+	while ($buf = <WHO>)
+	{
+		my ($login) = (split(/ /, $buf))[0];
+		if ($passwd{$login})
+		{
+			print SORT "$login ==>> $passwd{$login}\n";
+		}
+		else
+		{
+			print SORT "$login ==>> UNKNOWN\n";
+		}
+	}
+	close(WHO);
+	close(SORT);
+}

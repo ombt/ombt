@@ -1,0 +1,56 @@
+ed-chassis-eqpt::com:::shelfid=3,chassistype=mg,emipspa=135.1.104.201,emipspb=135.1.104.202,sigaipspa=10.11.29.1,sigaipspb=10.11.29.2,sigcipspa=10.11.29.4,sigcipspb=10.11.29.5,sigaipchassis=10.11.29.3,emipmask=255.255.255.0,sigaipmask=255.255.255.0,sigcipmask=255.255.255.0
+#
+# T1/E1 IOMs here (414)
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-3:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+# ENA2 IOMs
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAA,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAA,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+# VSM-3 use in 6.X
+ent-eqpt::iom-12:::BAUIAA1EAB,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-9:::BAUIAA1EAB,sec,95,95,95,<vs3>:is
+# VSM-2 IOMs
+#ent-eqpt::iom-13:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+#DS3 STS1
+ent-eqpt::iom-6:::BA4A701FAA,pri,95,95,95,<octds3_2>:is
+ent-eqpt::iom-5:::BA4A701FAA,sec,95,95,95,<octds3_2>:is
+#OC3/STM1
+ent-eqpt-all::iom-14:::iomoduletype=BA4AW60FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+ent-eqpt-all::iom-15:::iomoduletype=BA4AW60FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+ent-eqpt-all::iom-16:::iomoduletype=BA4AW60FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+ent-eqpt-all::iom-17:::iomoduletype=BA4AW60FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+#Add partitioning data so t1s have the partition data assigned.
+ent-mg-partition::part0:::,maxctxt=4000
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-a-10.11.0.0-16:::gateway=10.11.29.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.29.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.29.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.29.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.29.254
+#
+ent-mg-mgcassoc::ihlcsgw7-part0:::mgctype=primary,ipaddr=10.11.17.3,rxport=2946,txport=2946,transprot=udp,mgcidletmr=8
+# T1s go here
+#
+ent-e1::iom-1-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.29.1,mateipaddr=10.175.29.2,subnetmask=255.255.255.0,defaultgateway=10.175.29.254:is
+#

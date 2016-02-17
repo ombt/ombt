@@ -1,0 +1,7 @@
+#!/usr/bin/perl -w
+#
+$SIG{INT} = sub { die "\ndie, you miserable curr !!!\n"; };
+#
+sleep(60);
+#
+exit 0;

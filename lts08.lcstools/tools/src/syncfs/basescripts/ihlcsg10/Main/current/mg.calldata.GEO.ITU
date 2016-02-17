@@ -1,0 +1,27 @@
+#calldata
+#MEGACO area
+ed-mg-mgcassoc::ihlcsgw7-part0::::is
+ed-mg-mgcassoc::ihlcsgw27-part0::::is
+#ISDN info for MG
+ent-iua-sys
+ent-iua-endptasp::1:::ipadest=10.11.17.3,port=53056
+ent-iua-endptasp::2:::ipadest=10.11.17.3,port=53288
+ent-iua-asp::1-1:::desc=gw7mgca
+ent-iua-asp::2-2:::desc=gw7mgcb
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+# Other MGC
+ent-iua-endptasp::3:::ipadest=10.11.54.3,port=53056
+ent-iua-endptasp::4:::ipadest=10.11.54.3,port=53288
+ent-iua-asp::3-3:::desc=gw27mgca
+ent-iua-asp::4-4:::desc=gw27mgcb
+ent-iua-as::1-3:::priority=200
+ent-iua-as::1-4:::priority=250
+sleep 10
+ent-m2ua-sgassoc::1-1:::remotesgtype=sg,ipadesta=10.11.28.4,ipadestb=10.11.28.5
+ent-m2ua-sgassoc::1-2:::remotesgtype=sg,ipadesta=10.11.56.4,ipadestb=10.11.56.5
+ent-prfl-slkl2::1
+ent-slk::7:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=7,termid=T/1/7/1,l2prflid=1
+set-sid:::::ihlcsgw10
+sleep 10
+init-sys:ihlcsgw10::::10

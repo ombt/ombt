@@ -1,0 +1,725 @@
+
+Reading Data File: gw23.in
+
+Contents of CfgData:
+
+cfgdata(globals,backup,dir): /tmp
+cfgdata(globals,backup,login): lcsinteg
+cfgdata(globals,backup,machine): 135.111.82.6
+cfgdata(globals,backup,passwd): plexus9000
+cfgdata(globals,email): mrumore@lucent.com
+cfgdata(globals,ihlcsgw23,login): root
+cfgdata(globals,ihlcsgw23,passwd): plexus9000
+cfgdata(globals,ihlcsgw23,spa,ip): 135.1.105.29
+cfgdata(globals,ihlcsgw23,spb,ip): 135.1.105.30
+cfgdata(globals,ihlcsgw23,tl1login): plexntmctrl
+cfgdata(globals,ihlcsgw23,tl1passwd): plexntmctrl
+cfgdata(globals,isafunction): 0
+cfgdata(globals,load,branch): Main
+cfgdata(globals,load,cpuload): 6.2.1.0.89
+cfgdata(globals,load,ftplogin): lcsinteg
+cfgdata(globals,load,ftpmachine): 135.111.82.6
+cfgdata(globals,load,ftppasswd): plexus9000
+cfgdata(globals,load,images,cm): /lcsl101/text/Main/cm/6.2.1.0.29_cm.tar.gz
+cfgdata(globals,load,images,cmload): 6.2.1.0.29
+cfgdata(globals,load,images,cpu): /lcsl101/text/Main/cpu/6.2.1.0.89_cpu.tar.gz
+cfgdata(globals,load,images,cpuload): 6.2.1.0.89
+cfgdata(globals,load,images,types): cm cpu
+cfgdata(globals,maxcmd): 0
+cfgdata(globals,scriptsdir): .
+cfgdata(globals,switchid): ihlcsgw23
+cfgdata(globals,type): data
+cfgdata(internal,data,1): globals
+cfgdata(internal,namesofsecs,data):  globals
+cfgdata(internal,namesofsecs,exec): 
+cfgdata(internal,namesofsecs,internal): internal
+cfgdata(internal,namesofsecs,script): 
+cfgdata(internal,namesofsecs,unknown): 
+cfgdata(internal,numberofsecs,data): 1
+cfgdata(internal,numberofsecs,exec): 0
+cfgdata(internal,numberofsecs,internal): 1
+cfgdata(internal,numberofsecs,script): 0
+cfgdata(internal,numberofsecs,unknown): 0
+cfgdata(internal,sectype,globals): data
+cfgdata(internal,sectype,internal): internal
+cfgdata(internal,type): internal
+
+P: creating lock /home/lcstools/tools/hug/queue/hugihlcsgw23 ...
+
+Get Switch State:
+
+vflag         : 0
+tmout         : 60
+spaip         : 135.1.105.29
+spareqcpustate: isact,isstbyh
+spalogin      : root
+spapasswd     : plexus9000
+spatl1login   : plexntmctrl
+spatl1passwd  : plexntmctrl
+spbip         : 135.1.105.30
+spbreqcpustate: isact,isstbyh
+spblogin      : root
+spbpasswd     : plexus9000
+spbtl1login   : plexntmctrl
+spbtl1passwd  : plexntmctrl
+IOM-1  ...
+IOM-1  ...
+IOM-1  ...
+IOM-1 OOS-MA,UAS ...
+IOM-2  ...
+IOM-2  ...
+IOM-2  ...
+IOM-2 OOS-MA,UAS ...
+IOM-3  ...
+IOM-3  ...
+IOM-3  ...
+IOM-3 OOS-AUMA,UEQ&UAS ...
+IOM-4  ...
+IOM-4  ...
+IOM-4  ...
+IOM-4 OOS-AUMA,UEQ&UAS ...
+IOM-5  ...
+IOM-5  ...
+IOM-5  ...
+IOM-5 OOS-AUMA,UEQ&UAS ...
+IOM-6  ...
+IOM-6  ...
+IOM-6  ...
+IOM-6 OOS-AUMA,UEQ&UAS ...
+IOM-7  ...
+IOM-7  ...
+IOM-7  ...
+IOM-7 OOS-AUMA,UEQ&UAS ...
+IOM-8  ...
+IOM-8  ...
+IOM-8  ...
+IOM-8 OOS-AUMA,UEQ&UAS ...
+IOM-9  ...
+IOM-9  ...
+IOM-9  ...
+IOM-9 OOS-AUMA,UEQ&UAS ...
+IOM-10  ...
+IOM-10  ...
+IOM-10  ...
+IOM-10 OOS-AUMA,UEQ&UAS ...
+IOM-11  ...
+IOM-11  ...
+IOM-11  ...
+IOM-11 OOS-AUMA,UEQ&UAS ...
+IOM-12  ...
+IOM-12  ...
+IOM-12  ...
+IOM-12 OOS-AUMA,UEQ&UAS ...
+IOM-13  ...
+IOM-13  ...
+IOM-13  ...
+IOM-13 OOS-AUMA,UEQ&UAS ...
+IOM-14  ...
+IOM-14  ...
+IOM-14  ...
+IOM-14 OOS-MA,UAS ...
+IOM-15  ...
+IOM-15  ...
+IOM-15  ...
+IOM-15 OOS-MA,UAS ...
+IOM-16  ...
+IOM-16  ...
+IOM-16  ...
+IOM-16 OOS-AUMA,UEQ&UAS ...
+IOM-17  ...
+IOM-17  ...
+IOM-17  ...
+IOM-17 OOS-AUMA,UEQ&UAS ...
+SP-A IS,ACT ...
+SP-B IS,STBYH ...
+0 - success
+0 - success
+0 - success
+0 - This is the PROTECTION System Processor (135.1.105.30).
+0 - success
+0 - success
+0 - success
+
+STATUS FOR THIS ITERATION: 0 - success
+
+Do cpuStatesMatch (sp reqst st) = (135.1.105.29 isact,isstbyh isact) ?
+Yes ...
+
+Do cpuStatesMatch (sp reqst st) = (135.1.105.30 isact,isstbyh isstbyh) ?
+Yes ...
+
+COMPLETED received ...
+
+Get Current and Old Loads:
+
+0 - success
+0 - success
+
+Contents of CfgData:
+
+cfgdata(135.1.105.29,reqspstate): isact,isstbyh
+cfgdata(135.1.105.29,spstate): isact
+cfgdata(135.1.105.29,spstatesetbyrtrveqpt): 1
+cfgdata(135.1.105.30,reqspstate): isact,isstbyh
+cfgdata(135.1.105.30,spstate): isstbyh
+cfgdata(135.1.105.30,spstatesetbyrtrveqpt): 1
+cfgdata(globals,backup,dir): /tmp
+cfgdata(globals,backup,login): lcsinteg
+cfgdata(globals,backup,machine): 135.111.82.6
+cfgdata(globals,backup,passwd): plexus9000
+cfgdata(globals,email): mrumore@lucent.com
+cfgdata(globals,ihlcsgw23,chassistype): MG
+cfgdata(globals,ihlcsgw23,login): root
+cfgdata(globals,ihlcsgw23,passwd): plexus9000
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2b,blksize): 2048
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2b,blocks): 1048304
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2b,free): 165496
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2b,percent): 84%
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2b,used): 882808
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2c,blksize): 2048
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2c,blocks): 1048320
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2c,free): 833169
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2c,percent): 20%
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2c,used): 215151
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2d,blksize): 2048
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2d,blocks): 1048320
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2d,free): 1031868
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2d,percent): 1%
+cfgdata(globals,ihlcsgw23,spa,/dev/hd2d,used): 16452
+cfgdata(globals,ihlcsgw23,spa,currrel): /Telica/swCPU/6.2.1.0.86
+cfgdata(globals,ihlcsgw23,spa,filesystems): /home/Telica /home1/Telica /Telica
+cfgdata(globals,ihlcsgw23,spa,harddisks): /dev/hd2b /dev/hd2c /dev/hd2d
+cfgdata(globals,ihlcsgw23,spa,ip): 135.1.105.29
+cfgdata(globals,ihlcsgw23,spa,softwarefs,/Telica): /Telica/swCM/6.2.1.0.28 /Telica/swCPU/6.2.1.0.86 /Telica/swCPU/CurrRel
+cfgdata(globals,ihlcsgw23,spa,softwarefs,/home/Telica): 
+cfgdata(globals,ihlcsgw23,spa,softwarefs,/home1/Telica): /home1/Telica/swCPU/core
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2b,blksize): 2048
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2b,blocks): 1048304
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2b,free): 167354
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2b,percent): 84%
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2b,used): 880950
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2c,blksize): 2048
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2c,blocks): 1048320
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2c,free): 833169
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2c,percent): 20%
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2c,used): 215151
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2d,blksize): 2048
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2d,blocks): 1048320
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2d,free): 1031867
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2d,percent): 1%
+cfgdata(globals,ihlcsgw23,spb,/dev/hd2d,used): 16453
+cfgdata(globals,ihlcsgw23,spb,currrel): /Telica/swCPU/6.2.1.0.86
+cfgdata(globals,ihlcsgw23,spb,filesystems): /home/Telica /home1/Telica /Telica
+cfgdata(globals,ihlcsgw23,spb,harddisks): /dev/hd2b /dev/hd2c /dev/hd2d
+cfgdata(globals,ihlcsgw23,spb,ip): 135.1.105.30
+cfgdata(globals,ihlcsgw23,spb,softwarefs,/Telica): /Telica/swCM/6.2.1.0.28 /Telica/swCPU/6.2.1.0.86 /Telica/swCPU/CurrRel
+cfgdata(globals,ihlcsgw23,spb,softwarefs,/home/Telica): 
+cfgdata(globals,ihlcsgw23,spb,softwarefs,/home1/Telica): /home1/Telica/swCPU/core
+cfgdata(globals,ihlcsgw23,tl1login): plexntmctrl
+cfgdata(globals,ihlcsgw23,tl1passwd): plexntmctrl
+cfgdata(globals,isafunction): 0
+cfgdata(globals,load,branch): Main
+cfgdata(globals,load,cpuload): 6.2.1.0.89
+cfgdata(globals,load,ftplogin): lcsinteg
+cfgdata(globals,load,ftpmachine): 135.111.82.6
+cfgdata(globals,load,ftppasswd): plexus9000
+cfgdata(globals,load,images,cm): /lcsl101/text/Main/cm/6.2.1.0.29_cm.tar.gz
+cfgdata(globals,load,images,cmload): 6.2.1.0.29
+cfgdata(globals,load,images,cpu): /lcsl101/text/Main/cpu/6.2.1.0.89_cpu.tar.gz
+cfgdata(globals,load,images,cpuload): 6.2.1.0.89
+cfgdata(globals,load,images,types): cm cpu
+cfgdata(globals,maxcmd): 0
+cfgdata(globals,scriptsdir): .
+cfgdata(globals,switchid): ihlcsgw23
+cfgdata(globals,type): data
+cfgdata(internal,data,1): globals
+cfgdata(internal,namesofsecs,data):  globals
+cfgdata(internal,namesofsecs,exec): 
+cfgdata(internal,namesofsecs,internal): internal
+cfgdata(internal,namesofsecs,script): 
+cfgdata(internal,namesofsecs,unknown): 
+cfgdata(internal,numberofsecs,data): 1
+cfgdata(internal,numberofsecs,exec): 0
+cfgdata(internal,numberofsecs,internal): 1
+cfgdata(internal,numberofsecs,script): 0
+cfgdata(internal,numberofsecs,unknown): 0
+cfgdata(internal,sectype,globals): data
+cfgdata(internal,sectype,internal): internal
+cfgdata(internal,type): internal
+cfgdata(iom,1,clei): 
+cfgdata(iom,1,iomstate): oosmauas
+cfgdata(iom,1,protection): 
+cfgdata(iom,1,version): 
+cfgdata(iom,10,clei): 
+cfgdata(iom,10,iomstate): oosaumauequas
+cfgdata(iom,10,protection): 
+cfgdata(iom,10,version): 
+cfgdata(iom,11,clei): 
+cfgdata(iom,11,iomstate): oosaumauequas
+cfgdata(iom,11,protection): 
+cfgdata(iom,11,version): 
+cfgdata(iom,12,clei): 
+cfgdata(iom,12,iomstate): oosaumauequas
+cfgdata(iom,12,protection): 
+cfgdata(iom,12,version): 
+cfgdata(iom,13,clei): 
+cfgdata(iom,13,iomstate): oosaumauequas
+cfgdata(iom,13,protection): 
+cfgdata(iom,13,version): 
+cfgdata(iom,14,clei): 
+cfgdata(iom,14,iomstate): oosmauas
+cfgdata(iom,14,protection): 
+cfgdata(iom,14,version): 
+cfgdata(iom,15,clei): 
+cfgdata(iom,15,iomstate): oosmauas
+cfgdata(iom,15,protection): 
+cfgdata(iom,15,version): 
+cfgdata(iom,16,clei): 
+cfgdata(iom,16,iomstate): oosaumauequas
+cfgdata(iom,16,protection): 
+cfgdata(iom,16,version): 
+cfgdata(iom,17,clei): 
+cfgdata(iom,17,iomstate): oosaumauequas
+cfgdata(iom,17,protection): 
+cfgdata(iom,17,version): 
+cfgdata(iom,2,clei): 
+cfgdata(iom,2,iomstate): oosmauas
+cfgdata(iom,2,protection): 
+cfgdata(iom,2,version): 
+cfgdata(iom,3,clei): 
+cfgdata(iom,3,iomstate): oosaumauequas
+cfgdata(iom,3,protection): 
+cfgdata(iom,3,version): 
+cfgdata(iom,4,clei): 
+cfgdata(iom,4,iomstate): oosaumauequas
+cfgdata(iom,4,protection): 
+cfgdata(iom,4,version): 
+cfgdata(iom,5,clei): 
+cfgdata(iom,5,iomstate): oosaumauequas
+cfgdata(iom,5,protection): 
+cfgdata(iom,5,version): 
+cfgdata(iom,6,clei): 
+cfgdata(iom,6,iomstate): oosaumauequas
+cfgdata(iom,6,protection): 
+cfgdata(iom,6,version): 
+cfgdata(iom,7,clei): 
+cfgdata(iom,7,iomstate): oosaumauequas
+cfgdata(iom,7,protection): 
+cfgdata(iom,7,version): 
+cfgdata(iom,8,clei): 
+cfgdata(iom,8,iomstate): oosaumauequas
+cfgdata(iom,8,protection): 
+cfgdata(iom,8,version): 
+cfgdata(iom,9,clei): 
+cfgdata(iom,9,iomstate): oosaumauequas
+cfgdata(iom,9,protection): 
+cfgdata(iom,9,version): 
+
+Generate HUG Cmds:
+
+
+Switch ID       : ihlcsgw23
+Branch          : Main
+Active SP       : spa
+Active SP IP    : 135.1.105.29
+Active SP State : isact
+Standby SP      : spb
+Standby SP IP   : 135.1.105.30
+Standby SP State: isstbyh
+
+Skipping IOM 1 ... no data.
+
+Skipping IOM 2 ... no data.
+
+Skipping IOM 3 ... no data.
+
+Skipping IOM 4 ... no data.
+
+Skipping IOM 5 ... no data.
+
+Skipping IOM 6 ... no data.
+
+Skipping IOM 7 ... no data.
+
+Skipping IOM 8 ... no data.
+
+Skipping IOM 9 ... no data.
+
+Skipping IOM 10 ... no data.
+
+Skipping IOM 11 ... no data.
+
+Skipping IOM 12 ... no data.
+
+Skipping IOM 13 ... no data.
+
+Skipping IOM 14 ... no data.
+
+Skipping IOM 15 ... no data.
+
+Skipping IOM 16 ... no data.
+
+Skipping IOM 17 ... no data.
+
+CPU Data:
+spdata(active): spa
+spdata(branch): Main
+spdata(spa,ip): 135.1.105.29
+spdata(spa,state): isact
+spdata(spb,ip): 135.1.105.30
+spdata(spb,state): isstbyh
+spdata(standby): spb
+spdata(switchid): ihlcsgw23
+
+IOM Data:
+
+
+Generate File Header: 
+First Cmd: 1
+Last Cmd: 3
+
+
+Generate Globals Header: 
+First Cmd: 1
+Last Cmd: 60
+
+
+Generate Functions Section: 
+First Cmd: 1
+Last Cmd: 7
+
+
+Generate PreHUG Cmds: 
+First Cmd: 1
+Last Cmd: 90
+
+
+Generate CpuHUG Cmds: 
+First Cmd: 1
+Last Cmd: 64
+
+
+Skipping IOM slots: 14 and 15.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 14 state: oosmauas
+IOM 15 state: oosmauas
+
+
+Skipping IOM slots: 1 and 2.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 1 state: oosmauas
+IOM 2 state: oosmauas
+
+
+Skipping IOM slots: 3 and 4.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 3 state: oosaumauequas
+IOM 4 state: oosaumauequas
+
+
+Skipping IOM slots: 5 and 6.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 5 state: oosaumauequas
+IOM 6 state: oosaumauequas
+
+
+Skipping IOM slots: 7 and 8.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 7 state: oosaumauequas
+IOM 8 state: oosaumauequas
+
+
+Skipping IOM slots: 10 and 11.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 10 state: oosaumauequas
+IOM 11 state: oosaumauequas
+
+
+Skipping IOM slots: 12 and 13.
+CM pair must exist and be IS,ACT or IS,STBYH
+IOM 12 state: oosaumauequas
+IOM 13 state: oosaumauequas
+
+
+Generate CmHUG Cmds: 
+First Cmd: 1
+Last Cmd: 2
+
+Generating IOM HUG Cmds:
+
+
+Generate IomHUG Cmds: 
+First Cmd: 1
+Last Cmd: 10
+
+
+Generate PostHUG Cmds: 
+First Cmd: 1
+Last Cmd: 11
+
+Print HUG Script:
+###### START OF SECTION file ######
+file script {
+	scriptsdir .
+}
+###### END OF SECTION file ######
+###### START OF SECTION globals ######
+globals data {
+switchid ihlcsgw23
+login root
+activesp spa
+standbysp spb
+passwd plexus9000
+tl1login plexntmctrl
+tl1passwd plexntmctrl
+spa {
+	ip 135.1.105.29
+	currrel /Telica/swCPU/6.2.1.0.86
+	newcurrrel /home1/
+}
+spb {
+	ip 135.1.105.30
+	currrel /Telica/swCPU/6.2.1.0.86
+	newcurrrel /home1/
+}
+ftpmachine 135.111.82.6
+ftplogin lcsinteg
+ftppasswd plexus9000
+branch Main
+cpuload 6.2.1.0.89
+images cm cpu
+bkupmachine 135.111.82.6
+bkuplogin lcsinteg
+bkuppasswd plexus9000
+bkupdir /tmp
+cm 6.2.1.0.29_cm.tar.gz
+cm_path /lcsl101/text/Main/cm/6.2.1.0.29_cm.tar.gz
+cm_load 6.2.1.0.29
+cpu 6.2.1.0.89_cpu.tar.gz
+cpu_path /lcsl101/text/Main/cpu/6.2.1.0.89_cpu.tar.gz
+cpu_load 6.2.1.0.89
+email mrumore@lucent.com
+# START OF REQUIRED DEFINITIONS
+hugscripts /home/lcstools/tools/src/hug/scripts
+interunixcmddelay 30
+preupgradedelay 300
+spa sp-a
+spb sp-b
+iom1 iom-1
+iom2 iom-2
+iom3 iom-3
+iom4 iom-4
+iom5 iom-5
+iom6 iom-6
+iom7 iom-7
+iom8 iom-8
+iom9 iom-9
+iom10 iom-10
+iom11 iom-11
+iom12 iom-12
+iom13 iom-13
+iom14 iom-14
+iom15 iom-15
+iom16 iom-16
+iom17 iom-17
+# END OF REQUIRED DEFINITIONS
+}
+###### END OF SECTION globals ######
+###### START OF SECTION functions ######
+checkforcpucores exec { spip login passwd } {
+telnet open telnetsp_cpucore <spip> <login> <passwd>
+telnet exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+telnet exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+telnet exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+telnet close telnetsp_cpucore
+}
+###### END OF SECTION functions ######
+###### START OF SECTION prehug ######
+prehug exec {
+ftp open prehugftp <<activesp>.ip> <login> <passwd>
+ftp put -a prehugftp <hugscripts>/findcpucores /bin/findcpucores
+ftp close prehugftp
+ftp open prehugftp <<standbysp>.ip> <login> <passwd>
+ftp put -a prehugftp <hugscripts>/findcpucores /bin/findcpucores
+ftp close prehugftp
+telnet open -t30 prehugtelnet <<activesp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+telnet exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+telnet exec prehugtelnet chmod 755 /bin/findcpucores
+telnet close prehugtelnet
+telnet open -t30 prehugtelnet <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+telnet exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+telnet exec prehugtelnet chmod 755 /bin/findcpucores
+telnet close prehugtelnet
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v prehugtl1 rtrv-eqpt
+tl1 exec -i -v prehugtl1 rtrv-chassis-eqpt
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -v prehugtl1 rmv-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 sw-toprotn-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v prehugtl1 rtrv-eqpt
+tl1 exec -i -v prehugtl1 rtrv-chassis-eqpt
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -v prehugtl1 rmv-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 rst-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -t900 -v prehugtl1 exec-ftp-get::com:::<ftpmachine>,<ftplogin>,<ftppasswd>,<cpu_path>,<<activesp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-cp-tostby:::::-rp,<<activesp>.newcurrrel>/<cpu>,<<standbysp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 close -t 30 prehugtl1
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -t900 -v prehugtl1 exec-cd:::::<<activesp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extract:::::<<activesp>.newcurrrel>/<cpu>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extractstby:::::<cpu>,<<standbysp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 close -t 30 prehugtl1
+telnet open -t30 prehugtelnetactivesp <<activesp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnetactivesp rm -f <<activesp>.newcurrrel>/<cpu>
+telnet close prehugtelnetactivesp
+telnet open -t30 prehugtelnetstandbysp <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnetstandbysp rm -f <<standbysp>.newcurrrel>/<cpu>
+telnet close prehugtelnetstandbysp
+}
+###### END OF SECTION prehug ######
+###### START OF SECTION cpuhug ######
+cpuhug exec {
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v cpuhugtl1 rtrv-eqpt
+tl1 exec -i -v cpuhugtl1 rtrv-call-captverbose
+tl1 exec -i -v cpuhugtl1 dlt-call-captverbose::1
+tl1 exec -i -v cpuhugtl1 rtrv-trafficstats
+tl1 exec -i -v cpuhugtl1 ed-trafficstats::::::oos
+tl1 exec -i -v cpuhugtl1 rtrv-sys-secu
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v -t30 cpuhugtl1 rtrv-pm-cc
+tl1 exec -v -t1800 cpuhugtl1 exec-backup-plexus::com:::<bkupmachine>,<bkuplogin>,<bkuppasswd>,<bkupdir>
+tl1 exec -v cpuhugtl1 ed-eqpt::<<activesp>>:::swversion=<cpuload>
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<activesp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+sleep <preupgradedelay>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v -t1200 cpuhugtl1 exec-run-upgrade:<switchid>:<<activesp>>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<activesp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 ed-eqpt::<<standbysp>>:::swversion=<cpuload>
+tl1 exec -i -v cpuhugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+tl1 exec -v cpuhugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+sleep 10
+waitforcpustate -t1800 <spa.ip> isactnbk <login> <passwd> <tl1login> <tl1passwd> <spb.ip> ignore <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<standbysp>>
+tl1 exec -i -v -t60 cpuhugtl1 rtrv-alm-all
+tl1 exec -i -v -t60 cpuhugtl1 rtrv-pm-cc
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+sleep <preupgradedelay>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v -t1200 cpuhugtl1 exec-run-upgrade:<switchid>:<<standbysp>>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v cpuhugtl1 rtrv-eqpt
+tl1 exec -i -v cpuhugtl1 rtrv-info-eqpt
+tl1 close -t 30 cpuhugtl1
+}
+###### END OF SECTION cpuhug ######
+###### START OF SECTION cmhug ######
+cmhug exec {
+}
+###### END OF SECTION cmhug ######
+###### START OF SECTION iomhug ######
+iomhug exec {
+tl1 open -t30 iomhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v iomhugtl1 rtrv-sys-secu
+tl1 exec -v -t1800 iomhugtl1 exec-backup-plexus::com:::<bkupmachine>,<bkuplogin>,<bkuppasswd>,<bkupdir>
+tl1 exec -i -v iomhugtl1 rtrv-status-mg
+tl1 exec -i -v iomhugtl1 rtrv-si-mgcassoc
+tl1 exec -i -v iomhugtl1 rtrv-eqpt
+tl1 exec -i -v iomhugtl1 rtrv-info-eqpt
+tl1 close -t 30 iomhugtl1
+}
+###### END OF SECTION iomhug ######
+###### START OF SECTION posthug ######
+posthug exec {
+telnet open -t30 posthugtelnet <<activesp>.ip> <login> <passwd>
+telnet exec -i -v -t120 posthugtelnet /bin/findcpucores
+telnet close posthugtelnet
+telnet open -t30 posthugtelnet <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v -t120 posthugtelnet /bin/findcpucores
+telnet close posthugtelnet
+tl1 open -t30 posthugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v posthugtl1 rtrv-eqpt
+tl1 close -t 30 posthugtl1
+}
+###### END OF SECTION posthug ######
+
+V: deleting lock /home/lcstools/tools/hug/queue/hugihlcsgw23 ...

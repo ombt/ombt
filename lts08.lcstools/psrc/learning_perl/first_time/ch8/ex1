@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my(@n2nm);
+@n2nm = qw(
+	zero one two three four five six seven eight nine 
+);
+#
+print "number to name ... @n2nm \n";
+#
+while (<STDIN>)
+{
+	chomp;
+	#
+	if ($_ < 0 || $_ > 9)
+	{
+		print "number is ... $_\n";
+	}
+	else
+	{
+		print "number is ... $n2nm[$_]\n";
+	}
+}
+

@@ -1,0 +1,6 @@
+#
+ed-chassis-eqpt::com:::shelfid=1,chassistype=SG_MGC_MG,emipspa=135.1.104.145,emipspb=135.1.104.146,sigaipspa=10.11.13.1,sigaipspb=10.11.13.2,sigaipchassis=10.11.13.3,emipmask=255.255.255.0,sigaipmask=255.255.255.0
+#
+sleep 10
+#
+init-sys:telica::::10

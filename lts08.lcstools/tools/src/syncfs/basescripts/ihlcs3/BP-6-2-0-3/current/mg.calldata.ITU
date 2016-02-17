@@ -1,0 +1,18 @@
+#calldata
+#MEGACO area
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.23.3,,RXPORT=2946,txport=2946,mgcidletmr=8
+ent-iua-sys
+ent-iua-endptasp::1:::ipadest=10.11.23.3,port=53008
+ent-iua-endptasp::2:::ipadest=10.11.23.3,port=53240
+ent-iua-asp::1-1:::desc=asp1gw3
+ent-iua-asp::2-2:::desc=asp2gw3
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+sleep 5
+ent-iua-lnk::12010:::asid=1,iomport=iom-12-port-10,isdnvariant=etsi,lnktype=user
+ent-iua-lnk::12011:::asid=1,iomport=iom-12-port-11,isdnvariant=etsi
+ent-iua-lnk::12007:::asid=1,iomport=iom-12-port-7,isdnvariant=etsi
+ent-iua-lnk::14001:::asid=1,iomport=iom-14-port-1,isdnvariant=etsi
+ent-iua-lnk::14007:::asid=1,iomport=iom-14-port-7,isdnvariant=etsi
+set-sid:::::ihlcs3
+init-sys:ihlcs3::::10

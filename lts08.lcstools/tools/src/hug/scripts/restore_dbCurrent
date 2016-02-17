@@ -1,0 +1,112 @@
+# restore dbCurrent as a directory instead of a link.
+set -x
+#
+sp=${1}
+spip=${2}
+spgw=${3}
+#
+if [[ -z "${spip}" ]]
+then
+	spip=$(ifconfig mgt0 | sed -n 's/^.*inet \([^ ]*\) .*$/\1/p')
+fi
+if [[ -z "${spgw}" ]]
+then
+	spgw="${spip%.*}.254"
+fi
+#
+rm -rf /Telica/dbCurrent
+#
+mkdir -p /Telica/dbCurrent
+mkdir -p /Telica/dbCurrent/backup
+mkdir -p /Telica/dbCurrent/backupSub
+mkdir -p /Telica/dbCurrent/ccfg
+mkdir -p /Telica/dbCurrent/dbCurrent
+mkdir -p /Telica/dbCurrent/dbCurrent/backup
+mkdir -p /Telica/dbCurrent/dbCurrent/backupSub
+mkdir -p /Telica/dbCurrent/dbCurrent/ccfg
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp/audioDigitMapData
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp/audioMsgData
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp/audioMsgData/default
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp/audioToneData
+mkdir -p /Telica/dbCurrent/dbCurrent/ftp/bin
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_1
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_10
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_11
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_12
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_13
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_14
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_15
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_16
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_17
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_2
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_3
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_4
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_5
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_6
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_7
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_8
+mkdir -p /Telica/dbCurrent/dbCurrent/Iom_9
+mkdir -p /Telica/dbCurrent/dbCurrent/SoftSwitch3.0
+mkdir -p /Telica/dbCurrent/dbCurrent/VoipRm
+mkdir -p /Telica/dbCurrent/ftp
+mkdir -p /Telica/dbCurrent/ftp/audioDigitMapData
+mkdir -p /Telica/dbCurrent/ftp/audioDigitMapData/megaco
+mkdir -p /Telica/dbCurrent/ftp/audioMsgData
+mkdir -p /Telica/dbCurrent/ftp/audioMsgData/defailt
+mkdir -p /Telica/dbCurrent/ftp/audioMsgData/default
+mkdir -p /Telica/dbCurrent/ftp/audioToneData
+mkdir -p /Telica/dbCurrent/ftp/bin
+mkdir -p /Telica/dbCurrent/Iom_1
+mkdir -p /Telica/dbCurrent/Iom_10
+mkdir -p /Telica/dbCurrent/Iom_11
+mkdir -p /Telica/dbCurrent/Iom_12
+mkdir -p /Telica/dbCurrent/Iom_13
+mkdir -p /Telica/dbCurrent/Iom_14
+mkdir -p /Telica/dbCurrent/Iom_15
+mkdir -p /Telica/dbCurrent/Iom_16
+mkdir -p /Telica/dbCurrent/Iom_17
+mkdir -p /Telica/dbCurrent/Iom_2
+mkdir -p /Telica/dbCurrent/Iom_3
+mkdir -p /Telica/dbCurrent/Iom_4
+mkdir -p /Telica/dbCurrent/Iom_5
+mkdir -p /Telica/dbCurrent/Iom_6
+mkdir -p /Telica/dbCurrent/Iom_7
+mkdir -p /Telica/dbCurrent/Iom_8
+mkdir -p /Telica/dbCurrent/Iom_9
+mkdir -p /Telica/dbCurrent/SoftSwitch3.0
+mkdir -p /Telica/dbCurrent/SoftSwitch3.0/savedLogFiles
+mkdir -p /Telica/dbCurrent/Telica
+mkdir -p /Telica/dbCurrent/VoipRm
+#
+find /Telica/dbCurrent -type d -print | xargs chmod 755
+#
+cat >/Telica/dbCurrent/Telica_IP <<EOF
+sig0_ip=none
+sig0_netmask=255.255.255.0
+mgt0_ip=${spip}
+mgt0_netmask=255.255.255.0
+rep0_ip=192.168.253.0
+rep0_netmask=255.255.255.0
+dec0_ip=none
+dec0_netmask=255.255.255.0
+sar0_ip=192.168.252.0
+sar0_netmask=255.255.255.0
+sar1_ip=none
+sar1_netmask=255.255.255.0
+dbg0_ip=192.168.251.0
+dbg0_netmask=255.255.255.0
+default_gw=${spgw}
+EOF
+#
+cat /Telica/dbCurrent/Telica_IP
+#
+echo "m76${sp}" >/Telica/dbCurrent/Telica_Hostname
+cat /Telica/dbCurrent/Telica_Hostname
+#
+echo '# template rc.local file' >/Telica/dbCurrent/rc.local
+cat /Telica/dbCurrent/rc.local
+#
+find /Telica/dbCurrent -type f -print | xargs chmod 755
+#
+exit 0

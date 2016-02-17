@@ -1,0 +1,72 @@
+users_spa exec {
+	tl1 open -t10 tl1spa <spa.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -v tl1spa ent-user-secu::user0000:::12345678,0,admin:page=0
+	tl1 exec -v tl1spa ent-user-secu::user0001:::12345678,0,admin:page=0
+	tl1 exec -v tl1spa ent-user-secu::kenlogin:::12345678,0,admin:page=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::noreen53:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::richbarry:::12345678,0,admin:page=0,tmout=0
+	tl1 exec -v tl1spa ent-user-secu::rhellman:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::mostrego:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::mmalfara:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::aarivers:::12345678,0,admin:page=0
+	tl1 exec -v tl1spa ent-user-secu::mikerumore:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::martinjose:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::tl1logger:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::jericksen:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::ddammann:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::rjgrimes:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::jeffreysands:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::wnix1234:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::yingli99:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::djswanson:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::changw123:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::cmwilson:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::glenmoore:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::smyth123:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::testvander:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::jbarillas:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::jacksonm:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::zygkowal:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::grmanley:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::gurusamy:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spa ent-user-secu::stwjding:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 exec -v tl1spa ent-user-secu::lucfanghe:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 exec -v tl1spa ent-user-secu::sreedhar:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 close tl1spa
+}
+users_spb exec {
+	tl1 open -t10 tl1spb <spb.ip> <spb.tl1login> <spb.tl1passwd>
+	tl1 exec -v tl1spb ent-user-secu::user0000:::12345678,0,admin:page=0
+	tl1 exec -v tl1spb ent-user-secu::user0001:::12345678,0,admin:page=0
+	tl1 exec -v tl1spb ent-user-secu::kenlogin:::12345678,0,admin:page=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::noreen53:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::richbarry:::12345678,0,admin:page=0,tmout=0
+	tl1 exec -v tl1spb ent-user-secu::rhellman:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::mostrego:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::mmalfara:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::aarivers:::12345678,0,admin:page=0
+	tl1 exec -v tl1spb ent-user-secu::mikerumore:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::martinjose:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::tl1logger:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::jericksen:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::ddammann:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::rjgrimes:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::jeffreysands:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::wnix1234:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::yingli99:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::djswanson:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::changw123:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::cmwilson:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::glenmoore:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::smyth123:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::testvander:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::jbarillas:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::jacksonm:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::zygkowal:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::grmanley:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::gurusamy:::12345678,0,admin:page=0,tmout=0,calea=y
+	tl1 exec -v tl1spb ent-user-secu::stwjding:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 exec -v tl1spb ent-user-secu::lucfanghe:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 exec -v tl1spb ent-user-secu::sreedhar:::12345678,0,admin:page=0,tmout=0,calea=n
+	tl1 close tl1spb
+}

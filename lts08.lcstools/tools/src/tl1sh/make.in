@@ -1,0 +1,17 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+tl1sh
+tl1sh.sh
+#
+telnetsp
+telnetsp.sh
+#
+ftpsp
+ftpsp.sh
+#
+pingsp
+pingsp.sh
+#
+mytl1
+mytl1.sh
+#

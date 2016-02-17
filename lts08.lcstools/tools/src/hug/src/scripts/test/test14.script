@@ -1,0 +1,13 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	ip ihgp.ih.lucent.com
+	login rumore
+	passwd 1972miami
+}
+prepare exec {
+	telnet open telnetid <ip> <login> <passwd>
+	sleep 10
+	telnet close telnetid
+}

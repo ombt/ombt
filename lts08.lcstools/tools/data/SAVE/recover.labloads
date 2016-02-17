@@ -1,0 +1,10 @@
+for labid in ihlcs4 ihlcsdv2 ihlcsdv3 ihlcsg10 ihlcsg11 ihlcsg12 ihlcsg13 ihlcsgw1 ihlcsgw2 ihlcsgw3 ihlcsgw4 ihlcsgw5 ihlcsgw6 ihlcsgw7 ihlcsgw8 ihlcsgw9 ihlnc1 ihlng1 ihlng3 ihlng4 ihlsg1
+do
+	echo "$labid	BRANCH-5-3	5.3.0.1.0"
+	echo "$labid	BRANCH-5-3	5.3.0.1.5"
+	echo "$labid	BRANCH-5-3	5.3.0.1.10"
+	echo "$labid	BP-5-3-0-1	5.3.0.1.SP.2"
+	echo "$labid	BP-5-3-0-1	5.3.0.1.SP.3"
+done
+#
+exit 0

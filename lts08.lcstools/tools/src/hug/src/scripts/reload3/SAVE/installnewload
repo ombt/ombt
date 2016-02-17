@@ -1,0 +1,50 @@
+installnewload exec { spaip spbip login passwd cpu_load images } {
+	telnet open telnetspa <spaip> <login> <passwd>
+	telnet open telnetspb <spbip> <login> <passwd>
+	#
+	telnet exec telnetspa cd /
+	#
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.ana>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.octds3>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.trids3_3>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.ena>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.voip>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.ena2>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.cm>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.cpu>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.ds1_2>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.octds3_2>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.trids3>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.octds3_3>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.voip6>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<<images>.tdmoc>
+	#
+	telnet exec telnetspb cd /
+	#
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.ana>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.octds3>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.trids3_3>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.ena>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.voip>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.ena2>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.cm>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.cpu>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.ds1_2>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.octds3_2>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.trids3>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.octds3_3>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.voip6>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<<images>.tdmoc>
+	#
+	telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	#
+	telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspa ./uprev.sh
+	#
+	telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspb ./uprev.sh
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}

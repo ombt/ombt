@@ -1,0 +1,56 @@
+ed-chassis-eqpt::com:::shelfid=3,chassistype=mg,emipspa=135.1.104.143,emipspb=135.1.104.144,sigaipspa=10.11.12.1,sigaipspb=10.11.12.2,sigbipspa=10.11.92.17,sigbipspb=10.11.92.18,sigcipspa=10.11.12.4,sigcipspb=10.11.12.5,sigdipspa=10.11.92.20,sigdipspb=10.11.92.21,sigaipchassis=10.11.12.3,sigbipchassis=10.11.92.19,emipmask=255.255.255.0,sigaipmask=255.255.255.0,sigbipmask=255.255.255.248,sigcipmask=255.255.255.0,sigdipmask=255.255.255.248
+#
+ent-eqpt-all::iom-12:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-14:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+# ENA2 ioms
+ent-eqpt-all::iom-8:::iomoduletype=BA2A30TGAB,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BA2A30TGAB,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+# VSM-2
+ent-eqpt::iom-16:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-9:::BA1AX60AAB,sec,95,95,95,<vs2>:is
+#
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#Add partitioning data so t1s have the partition data assigned.
+ent-mg-partition::part0:::,maxctxt=200
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-a-10.11.0.0-16:::gateway=10.11.12.254
+ent-iproute::sp-cpu-a-10.11.92.0-24:::gateway=10.11.92.22
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.12.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.12.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.12.254
+ent-iproute::sp-cpu-b-10.11.92.0-29:::gateway=10.11.92.22
+ent-iproute::sp-cpu-b-10.11.92.8-29:::gateway=10.11.92.22
+ent-iproute::sp-cpu-b-10.11.92.24-29:::gateway=10.11.92.22
+ent-iproute::sp-cpu-b-10.11.93.0-29:::gateway=10.11.92.22
+#
+ent-mg-mgcassoc::ihlcsgw3-part0:::mgctype=primary,ipaddr=10.11.23.3,rxport=2946,txport=2946,transprot=udp,mgcidletmr=8
+sleep 10
+# E1s
+ent-e1::iom-12-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-8:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-10:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-11:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-8:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.12.1,mateipaddr=10.175.12.2,subnetmask=255.255.255.0,defaultgateway=10.175.12.254:is
+#
+sleep 10
+init-sys:telica::::10

@@ -1,0 +1,5 @@
+rtrveqpt exec { spaip spbip tl1login tl1passwd } {
+	tl1 open2 -t30 rtrveqpt_tl1sp <spaip> <spbip> <tl1login> <tl1passwd>
+	tl1 exec -i -v rtrveqpt_tl1sp rtrv-eqpt
+	tl1 close rtrveqpt_tl1sp
+}

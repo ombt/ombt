@@ -1,0 +1,41 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+nsipsimtcp
+nsipsimtcp.PL
+install1 = -(rcp nsipsimtcp.PL root@135.1.235.58:/NSIPSIM/src)
+#
+nsipsimisup
+nsipsimisup.PL
+install1 = -(rcp nsipsimisup.PL root@135.1.235.58:/NSIPSIM/src)
+#
+myisup.pm
+myisup.PM
+install1 = -(rcp myisup.PM root@135.1.235.58:/NSIPSIM/src)
+#
+nsipsimadm
+nsipsimadm.PL
+install1 = -(rcp nsipsimadm.PL root@135.1.235.58:/NSIPSIM/src)
+#
+mypqueue.pm
+mypqueue.PM
+install1 = -(rcp mypqueue.PM root@135.1.235.58:/NSIPSIM/src)
+#
+mytimer.pm
+mytimer.PM
+install1 = -(rcp mytimer.PM root@135.1.235.58:/NSIPSIM/src)
+#
+tisup
+tisup.PL
+#
+prtisupmsgs
+prtisupmsgs.PL
+install1 = -(rcp prtisupmsgs.PL root@135.1.235.58:/NSIPSIM/src)
+#
+testisupmsgs
+testisupmsgs.PL
+install1 = -(rcp testisupmsgs.PL root@135.1.235.58:/NSIPSIM/src)
+#
+nsipsimhack
+nsipsimhack.PL
+install1 = -(rcp nsipsimhack.PL root@135.1.235.58:/NSIPSIM/src)
+#

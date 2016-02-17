@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my(@data);
+@data = qw(
+	zero one two three four five six seven eight nine 
+);
+#
+print "number to name ... @data \n";
+#
+while (<STDIN>)
+{
+	chomp;
+	#
+	n2nm($_);
+}
+#
+sub n2nm {
+	my ($num) = @_;
+	#
+	if ($num < 0 || $num > 9)
+	{
+		print "number is ... $num\n";
+	}
+	else
+	{
+		print "number is ... $data[$num]\n";
+	}
+}
+

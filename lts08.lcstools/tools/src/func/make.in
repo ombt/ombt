@@ -1,0 +1,10 @@
+SHELLBIN=$(LCSTOOLSFPATH)
+#
+cdtl1
+cdtl1.sh
+#
+cdbtl1
+cdbtl1.sh
+#
+lcslabid
+lcslabid.sh

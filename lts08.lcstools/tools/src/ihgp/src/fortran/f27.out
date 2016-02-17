@@ -1,0 +1,39 @@
+hrdcpy a.out
+ (D)EGREES OR (R)ADIANS? 
+F
+ OOPS!!! TRY AGAIN !!!
+ (D)EGREES OR (R)ADIANS? 
+D
+ ENTER START AND END ANGLES IN DEGREES             :
+10 20
+ SINE(  10) =    0.173648
+ SINE(  11) =    0.190809
+ SINE(  12) =    0.207912
+ SINE(  13) =    0.224951
+ SINE(  14) =    0.241922
+ SINE(  15) =    0.258819
+ SINE(  16) =    0.275637
+ SINE(  17) =    0.292371
+ SINE(  18) =    0.309017
+ SINE(  19) =    0.325568
+ SINE(  20) =    0.342020
+hrdcpy a.out
+ (D)EGREES OR (R)ADIANS? 
+G
+ OOPS!!! TRY AGAIN !!!
+ (D)EGREES OR (R)ADIANS? 
+R
+ ENTER START AND END ANGLES IN RADIANS             :
+1.0 2.0
+ SINE(    1.00000) =    0.841471
+ SINE(    1.10000) =    0.891207
+ SINE(    1.20000) =    0.932039
+ SINE(    1.30000) =    0.963558
+ SINE(    1.40000) =    0.985450
+ SINE(    1.50000) =    0.997495
+ SINE(    1.60000) =    0.999574
+ SINE(    1.70000) =    0.991665
+ SINE(    1.80000) =    0.973848
+ SINE(    1.90000) =    0.946300
+ SINE(    2.00000) =    0.909297
+hrdcpy exit

@@ -1,0 +1,13 @@
+#calldata
+#MEGACO area
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.23.3,,RXPORT=2946,txport=2946,mgcidletmr=8
+ent-mg-prflcas::1:::SIGMODEL=loop_start,CNTRLNG=Y,DIALPULSE=BOTH
+ed-t0::iom-1-port-26::::oos
+ed-t0::iom-1-port-26-t0-1:::mgcasprflid=1
+ed-t0::iom-1-port-26-t0-2:::mgcasprflid=1
+ed-t0::iom-1-port-26-t0-3:::mgcasprflid=1
+ed-t0::iom-1-port-26-t0-4:::mgcasprflid=1
+sleep 10
+ed-t0::iom-1-port-26::::is
+set-sid:::::ihlcsgw4
+init-sys:ihlcsgw4::::10

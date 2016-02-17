@@ -1,0 +1,50 @@
+# Set up timer for geo redundancy
+ed-sg-protn:::::protntmr=5
+#calldata
+ent-prfl-slkl2::1
+ent-stg-prflslkl3::1
+ent-stg-mtpnettype::1:::protocol=ansi,mtp3restart=on,ntwkssf=ssfnat,slsldsharebits=sls8bit,dmpriority=n
+ent-stg-pcown::234-60-1:::ntwkid=1
+ent-stg-pcalias::5-5-5:::ntwkid=1,usrtype=m3ua
+ent-stg-lset::1:::ownpc=234-60-1,adjpc=234-3-1,feclli=lset1,festp=even
+ent-stg-lset::2:::ownpc=234-60-1,adjpc=234-4-1,feclli=lset2,festp=even
+ent-stg-lset::3:::ownpc=234-60-1,adjpc=234-6-1,feclli=lset3,festp=even
+ent-stg-lset::4:::ownpc=234-60-1,adjpc=10-10-10,feclli=lset4,festp=even
+# Server
+ent-m2ua-sgassoc::1-2:::remotesgtype=sg,ipadesta=127.0.0.1,ipadestb=127.0.0.2
+ent-m2ua-sgassoc::1-1:::remotesgtype=sg,ipadesta=10.11.24.4,ipadestb=10.11.24.5,ipbdesta=10.11.92.12,ipbdestb=10.11.92.13,PRINETWORK=B
+# Client
+ent-sg-m2uaassoc::19:::ipadesta=127.0.0.1,ipadestb=127.0.0.2:is
+ent-sg-m2uaassoc::18:::ipadesta=10.11.24.4,ipadestb=10.11.24.5,ipbdesta=10.11.92.12,ipbdestb=10.11.92.13,PRINETWORK=B:is
+#local links
+ent-slk::7:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=7,termid=T/3/15/1,l2prflid=1
+ent-slk::8:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=8,termid=T/1/15/1,l2prflid=1
+ent-slk::9:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=9,termid=T/1/16/1,l2prflid=1
+ent-slk::10:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=10,termid=T/3/16/1,l2prflid=1
+ent-slk::11:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=11,termid=T/1/15/2,l2prflid=1
+ent-slk::12:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=12,termid=T/3/15/2,l2prflid=1
+#
+ent-stg-slk::7:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=7,lsetid=1,slc=1,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::8:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=8,lsetid=2,slc=1,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::9:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=9,lsetid=3,slc=2,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::10:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=10,lsetid=3,slc=3,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::11:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=11,lsetid=4,slc=2,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::12:::sigtype=narrowband,prim2uaassocid=19,m2uaiid=12,lsetid=4,slc=3,mtp3prflid=1,m2paassocid=0
+# remote links
+ent-stg-slk::1:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=1,lsetid=1,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::2:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=2,lsetid=2,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::3:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=3,lsetid=3,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::4:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=4,lsetid=3,slc=1,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::5:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=5,lsetid=4,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::6:::sigtype=narrowband,prim2uaassocid=18,m2uaiid=6,lsetid=4,slc=1,mtp3prflid=1,m2paassocid=0
+#
+ent-stg-routepriority::1:::normrte=1
+ent-stg-routepriority::2:::normrte=2
+ent-stg-routepriority::3:::normrte=3
+ent-stg-mtproute::234-3-1-MEMBER:::rpi=1
+ent-stg-mtproute::234-4-1-MEMBER:::rpi=2
+ent-stg-mtproute::234-6-1-MEMBER:::rpi=3
+#MEGACO area
+ent-sg-mgcassoc::1-1:::inservicesownpc=234-60-1,ipadest=10.11.23.3,ipbdest=10.11.92.3,prinetwork=B,staportrange=50000:is
+sleep 75
+set-sid:::::ihlcsgw29

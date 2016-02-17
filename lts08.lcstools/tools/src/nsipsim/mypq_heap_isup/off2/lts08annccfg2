@@ -1,0 +1,74 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 6061
+parameter myadminip 135.111.82.6
+parameter myadminport 10001
+parameter myrtpip 135.111.82.6
+parameter myrtpport 9002
+parameter myrtcpport 9003
+# parameter interreporttime 600
+#
+# specific user section
+#
+rdn = 6302201000 100
+codec = pcma
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+#
+dn = annc
+codec = pcma
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+#
+dn = __sip-annc
+codec = pcma
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+#
+rdn = 6302202000 100
+codec = pcma
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+reqanncuri = ;play=/provisioned/4003;param1=9084808001
+termination = terminationreqannc
+origination = origination
+announcement = originationreqannc
+#
+rdn = 6302203000 100
+codec = pcma
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+reqanncuri = ;play=/provisioned/4003;param1=9084808001
+termination = terminationsubscribe
+origination = origination
+announcement = originationreqannc
+#

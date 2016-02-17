@@ -1,0 +1,473 @@
+\documentclass[10pt]{article}
+\usepackage{noweb,multicol}
+\noweboptions{smallcode}
+% relax page breaking scheme
+\def\nwendcode{\endtrivlist \endgroup}
+\let\nwdocspar=\par
+\title{A Simple Tangler Program}
+\author{Andrew L. Johnson}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The following is a slightly modified excerpt from chapter 9 of my
+book \emph{Elements of Programming with Perl}, published by Manning
+Publications. It is reprinted here with permission of the publisher.
+This program is a simplified [[tangler]] program for use with single
+file literate programs written in the [[noweb]] syntax.
+\end{abstract}
+
+\section*{A Simple Tangler}
+\index{literate programming!example}
+\index{pqtangle}
+\noindent
+Now that we know what the chunk definition and reference syntax is,
+we can build a limited tangler program to allow us to write our perl
+programs using [[noweb]]'s syntax, intermixing code chunks and
+documentation chunks (we are in a documentation chunk right now)
+throughout the source file. 
+
+We want our tangler to operate similarly to [[notangle]], allowing a
+[[-R]] option to specify the root chunk and a [[-L]] option to
+include line directives. We will add two differences. The
+[[notangle]] program simply prints the tangled code to STDOUT so you
+have to redirect it to a file yourself. We will assume that the root
+chunk-name is also the filename you want to use for the tangled code.
+So, running our tangler program with a root option of [[-Rblah]]
+will create a file named `blah' and write the tangled code to it. The
+second difference is that if no [[-R]] option is given, our program
+will automatically find all root chunks and print them to their
+respective files based on their chunk-names (a root chunk will be any
+chunk that is not used inside another chunk definition).
+
+We shall call our tangler [[pqtangle]] for Perl Quick Tangler, and
+write it in a file named \emph{pqtangle.nw}. Our initial program outline
+(our root chunk) looks like:
+
+<<pqtangle>>=
+#!/usr/bin/perl -w
+use strict;
+<<declare variables>>
+<<get options>>
+<<open and parse file for chunks>>
+<<make array of root chunks>>
+<<print root chunks>>
+<<subroutine definitions>>
+@
+
+We will need variables to reflect the two options our program
+can accept (the [[-R]] and [[-L]] options for a root chunk and
+to turn on line directives respectively. We will also use variables
+to hold patterns containing double left angle brackets and double
+right angle brackets:
+
+<<declare variables>>=
+my $Root;     # root option 
+my $Line_dir; # format option
+my $la = '<' . '<';
+my $ra = '>' . '>';
+@ %def $Root $Line_dir $la $ra
+
+Notice that we've used the [[\%def]] syntax on the chunk-ending
+line to mark these two variables as defined in this chunk. These def
+lines are ignored by the tangler, but we have to recognize them if we
+want to recognize general [[noweb]] syntax---and we may as well use them
+so we can weave our documentation (and you can see what the
+cross-reference information available looks like if you visit the
+above mentioned site). We will consider other variables shortly.
+
+There is a simple technique for extracting options (and their
+\index{command line options}
+potential arguments) from the command line arguments. Recall that all
+the command line arguments are in the [[@ARGV]] array when the
+program runs. We can simply use a [[while]] loop to pull the first
+item out of this array if it starts with a dash, then we test that
+the option is valid (in this case, begins with either [[-R]] or
+[[-L]]) and set our option variables appropriately: For the root
+option, we simply capture everything following the [[-R]] into the
+[[\$1]] variable and assign it to the [[\$Root]] variable. For the
+line directive we assign a generic string to the variable that
+contains placeholders for the line number, filename, and newline
+that we will substitute in as needed during the program:
+
+<<get options>>=
+while ($ARGV[0] =~ m/^-/) {
+   $_ = shift @ARGV;
+   last                          if m/^--$/;
+   $Root   = $1                  if m/^-R(.*)/;
+   $Line_dir = '#line %L "%F"%N' if m/^-L/;
+}
+@
+
+The convention for command line options is that they must all come
+before any other arguments and that  anything after a [[--]]
+argument is not to be treated as an option (to allow you to pass
+other arguments that start with a dash but are not options). 
+
+We will need a few more variables declared at the file scope
+to allow us to store various bits of information relating to the
+chunks we find. We will need an array to hold the list of all the
+root chunks we find, a hash to mark which chunks are are used in
+other chunks, and a hash of arrays to store file and line number
+information where each chunk starts in the source file:
+
+<<declare variables>>=
+my (@roots, %used, %chunks, $file);
+@ %def @roots %used %chunks $file
+
+The next thing we need to do is open the source file and
+parse it for chunks, recording information about each chunk
+we find:
+
+<<open and parse file for chunks>>=
+<<open the source file>>
+while ( <FILE> ) {
+    <<find and parse chunks>>
+}
+@
+
+This is a simple tangling program, and we only allow one source file
+to be specified on the command line. Now that we have already pulled
+out any options from [[@ARGV]], we can simply test this array to 
+make sure there is still at least one more item in it (the filename)
+store that value in our [[\$file]] variable, and open the file:
+
+<<open the source file>>=
+unless (@ARGV) {die "no file given for processing\n"}
+$file = $ARGV[0];
+open(FILE,$file)||die "can't open $file $!";
+@
+
+We will declare two additional lexical variables to be used during
+our parsing loop on the file, one to hold each line in turn and one
+to hold the current line number (actually the current line number
+plus 1 so that if we find a chunk definition the line number points
+to the first line of code immediately following the chunk tag).
+
+<<find and parse chunks>>=
+my $line = $_;
+my $line_no = $. + 1;
+if ($line =~ m/^$la([^>]+)$ra=\s*$/) {
+    <<parse chunk>>
+}
+@ %def $line $line_no
+
+The regular expression above simply finds lines that have match
+the chunk definition tag and captures the chunk name into the
+[[\$1]] variable. This expression assumes that a [[>]] will not be
+part of the chunk name and that no chunk name will be entirely empty.
+
+The first thing we when parsing a chunk itself is to record where
+in the file the chunk begins. We do this using the [[tell()]]
+\index{tell()}
+function. This function returns the current byte offset into the file
+represented by the filehandle. Later we can use this value to
+[[seek()]] directly to this position in the file when we are
+\index{seek()}
+actually tangling out the code. Then we can continue looping through
+the chunk (while the current line does not match either a single [[@]]
+or one followed by a [[\%def]] list of identifiers. Inside this loop
+we grab the next line of the file, and see if it contains a reference
+to another chunk---if it does, we use that chunk name as a key in our
+[[\%used]] hash and add one to its value (this hash will thus be a
+record of every chunk that was used inside of another chunk).
+
+<<parse chunk>>=
+my $begin_offset = tell FILE;
+while (($line !~ m/^(\@\s*$|\@\s*\%def)/)) {
+   $line = <FILE>;
+   $used{$1} += 1 if $line =~ m/^\s*$la([^>]+)$ra\s*$/;
+}
+push @{$chunks{$1}}, "$begin_offset:$file:$line_no";
+@
+
+When we finished reading through the chunk, we used the `auto-vivification'
+syntax to push a string containing the offset, filename, and line number
+information of the chunk we just parsed. In other words, the 
+[[\%chunks]] hash contains keys which are chunk names and whose
+values hold an array of offset/information strings for every location
+where that chunk's definition is continued throughout the file.  The
+[[\$1]] variable here is the one matched in the outer [[if]]
+statement, the one matched inside the inner [[while]] loop was
+localized to that block which is now out of scope.
+
+At this point we know the byte offset location of where every chunk
+definition starts in the file, and the line number of the first line of
+code in that chunk definition. We also have a record of every chunk
+that was used in another chunk (and hence can not be a root chunk
+itself). We will now populate our [[@roots]] array with the root
+chunks we need to extract. If we were given the [[-R]] option, we
+will only store that one root chunk name in this array. If that
+option was not given we want to extract all the root chunks---we can
+do this by simply looping through the keys of the [[\%chunks]] hash
+(the keys are all the chunk definitions encountered) and pushing them
+onto the [[@roots]] array if they were not used (are not seen in the
+[[\%used]] hash).
+
+<<make array of root chunks>>=
+if ($Root) {
+    @roots = ($Root);
+} else {
+    foreach my $key (keys %chunks) {
+        push @roots, $key if not $used{$key};
+    }
+}
+@
+
+Printing out the root chunks is simply a matter of opening a file
+for writing for each root chunk name and printing out the tangled
+version of that chunk (which we do using a function called
+[[print\_chunk()]]):
+
+<<print root chunks>>=
+foreach my $root (@roots) {
+    open(PROGRAM, ">$root") || die "can't open $root: $!";
+    print_chunk($root,'');
+}
+close PROGRAM;
+@
+
+The [[print\_chunk()]] subroutine takes two arguments, the name of
+the chunk to print and a string representing the current indentation
+level (which is empty for the beginning of root chunks)---this
+indentation argument will be discussed shortly.
+
+Now we can start defining our chunk of subroutine definitions, which
+at the moment has only one:
+
+<<subroutine definitions>>=
+<<sub print_chunk>>
+@
+
+The subroutine to print the chunk begins by assigning the two
+arguments to lexical variables. This function will be called
+recursively to print out any chunks contained within the current
+chunk being printed. For this reason, we need to ensure that the
+current chunk name is actually defined in the [[\%chunks]] hash
+(there may have been a typo in the name of an embedded chunk
+reference). Then we may print the chunk.
+
+<<sub print_chunk>>=
+sub print_chunk {
+    my ($chunk,$whitespace) = @_;
+    <<make sure chunk is defined>>
+    <<print the chunk>>
+}
+@ %def $chunk $whitespace
+
+Testing whether the current chunk is defined is a simple matter
+of checking its name in the [[\%chunks]] hash---if we do not find it
+we issue a warning and return from the function (we should probably
+use [[die()]] here, but by using a warning we can continue and
+perhaps find other such errors which the user can then fix all at
+once).
+
+<<make sure chunk is defined>>=
+unless (exists $chunks{$chunk}) {
+    warn "undefined chunk name: $la$chunk$ra\n";
+    return;
+}
+@
+
+Printing out the chunk is a fairly complex task and we need to break
+this down into more manageable units before proceeding. First we will
+assign the list of chunk information strings (offsets and line
+numbers for chunk definitions) into a lexical array variable. Then
+we will seek to position to begin processing a chunk, set a shebang
+line flag (we will discuss this shortly), set up and print the line
+directive if necessary, and tangle out (print) the current chunk.
+
+<<print the chunk>>=
+my @locations = @{$chunks{$chunk}};
+foreach my $item (@locations) {
+    <<get location info and seek to offset>>
+    <<set flag for shebang line>>
+    <<set and print line directive>>
+    <<tangle out current chunk>>
+}
+@ %def $item @locations
+
+Remember that each chunk was assigned a list of strings, each of
+which was a colon separated list containing the offset into the
+file, the filename itself, and the line number. We simply split
+such a string at the colons into three lexical variables and
+then [[seek()]] to the offset in the file where the chunk definition
+begins (or is continued). The [[seek()]] function takes three
+arguments: A filehandle to seek on, a byte offset position, and a
+third argument which tells it to move to the position relative to a
+certain point (0 means move directly to that position, 1 means move
+that many bytes forward from the current position, and 2 means move
+to byte position given relative to the end of the file---in which case
+it usually only makes sense to use a negative byte offset). We use
+only the 0 flag for the third argument. The [[seek()]] function
+returns 1 if successful and 0 if it failed, so we can test it and
+[[die()]] just as we do for a call to the [[open()]] function.
+
+<<get location info and seek to offset>>=
+my ($offset, $filename, $line_number) = split /:/,$item;
+seek(FILE, $offset,0) || die "seek failed on $filename: $!";
+my $line=<FILE>;
+@ %def $offset $filename $line_number
+
+In a perl program, you often use a `shebang' line as the first
+line in the program. This line must be the first line in the file
+so we do not want a line directive emitted before this line. Instead,
+we would like to emit a line directive immediately following the
+shebang line and pointing to the next line in the code chunk. Here we
+merely test if the current code line is a shebang line and set a flag
+if it is.
+
+<<set flag for shebang line>>=
+my $shebang_special = 0;
+$shebang_special = 1 if $line =~ m/^#!/;
+@ %def $shebang_special
+
+At this point we need to create a formatted line directive,
+substituting in the correct information for the placeholders
+we used in the [[\$Line\_dir]] variable. We will format this
+line directive in a separate function. Then we need to print
+out this line directive, but only if the current line is not
+a shebang line, or an embedded chunk reference (in which case,
+we will want to print a line directive when processing that
+chunk). We use a simple set of logical ORs which will terminate at
+the first expression that is true, and thus only print out the line
+directive when it is needed.
+
+<<set and print line directive>>=
+my $line_dir;
+if ($Line_dir) {
+   $line_dir = make_line_dir($line_number,$filename);
+   $line =~ m/^\s*$la.*?$ra\s*$/ || 
+            $shebang_special   ||
+            print PROGRAM  "$line_dir";
+}
+@ %def $line_dir
+
+Since we have just used the [[make\_line\_dir()]] function, we should
+go ahead and define it here---this also illustrates the point about
+being able to write our literate source in the order that makes sense
+for discussion. First let's add to the subroutine definitions chunk:
+
+<<subroutine definitions>>=
+<<sub make_line_dir>>
+@
+
+Now, the function to format our line directive is a simple set of
+substitutions operations. The function is passed parameters for the
+current line number and the filename, which we immediately assign
+to lexical variables. We then declare a new lexical [[\$line\_dir]]
+variable and assign it the value of our file scoped [[\$Line\_dir]]
+variable which holds the line directive string with placeholders.
+Finally, we simply replace the placeholders with their proper values
+and return the value of the [[\$line\_dir]] variable.
+
+<<sub make_line_dir>>=
+sub make_line_dir {
+    my ($line_no,$file) = @_;
+    my $line_dir = $Line_dir;
+    $line_dir =~ s/\%L/$line_no/;
+    $line_dir =~ s/\%F/$file/;
+    $line_dir =~ s/\%\%/%/;
+    $line_dir =~ s/\%N/\n/;
+    return $line_dir;
+}    
+@
+
+In order to tangle out our chunk, we use a similar loop to that used
+when parsing the chunks in the first place---that is, we continually
+loop while the current line does not match a chunk terminating line
+(we must make sure we read in another line in both of blocks of the
+[[if/else]] statement or we would be looping forever on the same
+line). Inside the loop the current line might be an embedded chunk
+reference, in which case we will need to tangle out that embedded
+chunk. Note, we are capturing the leading whitespace if there is an
+embedded chunk reference, as well as the chunk name---this way we can
+call the [[print\_chunk()]] routine and pass it a string
+representing the current indentation level so our tangled code has
+the appropriate indentation. If the line does not contain a chunk
+reference, we will simply print the code line (and print out a line
+directive following it if it was a shebang line).
+
+<<tangle out current chunk>>=
+while ($line !~ m/^(\@\s*$|\@\s\%def)/) {
+    if ($line =~ m/^(\s*?)$la([^>]+)$ra\s*$/) {
+        <<tangle out embedded chunk>>
+    } else {
+        <<print out line>>
+        <<take care of shebang line>>
+    }
+}
+@
+
+To tangle out an embedded chunk, we first get the current offset
+into the file and calculate our new indentation level. Then we
+make a recursive call to the [[print\_chunk()]] function to deal
+with the embedded chunk. Following that we simply reset our
+indentation to its previous value, [[seek()]] back to where we left off
+in the file and read in a new line from the file. We will also have to
+print a new line directive indicating our position in the file again.
+
+<<tangle out embedded chunk>>=
+my $offset = tell FILE;
+my $addedspace = $1;
+$whitespace = $addedspace.$whitespace;
+&print_chunk($2,$whitespace);
+$whitespace = substr($whitespace,length($addedspace));
+seek(FILE,$offset,0) || die "can't seek on $filename: $!";
+$line_number += 1;
+$line = <FILE>;
+<<add returning line directive>>
+@
+
+We need to add a new line directive to indicate that we have returned
+back the position in the current chunk. We need only do this if the
+current line is not another chunk reference.
+
+<<add returning line directive>>=
+if ($Line_dir) {
+    $line_dir = make_line_dir($line_number,$filename);
+    print PROGRAM $line_dir if $line !~ /^\s*$la.*?$ra\s*$/;
+}
+@
+
+If the current line is not a chunk reference we simply need to
+print it out with the correct amount of leading whitespace, read
+in another line line from the file and increment our line number
+counter.
+
+<<print out line>>=
+print PROGRAM $whitespace,$line;
+$line = <FILE>;
+$line_number += 1;
+@
+
+Finally, if the current line is a shebang line then we want to add a
+line directive directly after it, and reset the shebang flag to 0.
+
+<<take care of shebang line>>=
+if ($Line_dir && $shebang_special) {
+    $line_dir = make_line_dir($line_number,$filename);
+    print PROGRAM "$line_dir" if $line !~ m/^\s*$la[^>]+$ra\s*$/;
+    $shebang_special = 0;
+}
+@
+
+That concludes the [[pqtangle]] program. The whole program is about
+95 lines of code and won't be listed here. Of course, you already
+have enough experience reading the chunk syntax that you can assemble
+it from the literate listing above. If you do not wish to enter the
+code manually, the tangled script is available at the site mentioned
+in the previous section.
+
+\newpage
+\subsection*{Identifier Index}
+\begin{multicols}{2}
+\nowebindex
+\end{multicols}
+
+\subsection*{Chunk Index}
+\begin{multicols}{2}
+\nowebchunks
+\end{multicols}
+\end{document}

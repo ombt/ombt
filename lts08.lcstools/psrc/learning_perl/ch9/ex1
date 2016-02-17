@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my(%data);
+@data{(-9 .. 9)} = (
+	"negative nine",
+	"negative eight",
+	"negative seven",
+	"negative six",
+	"negative five",
+	"negative four",
+	"negative three",
+	"negative two",
+	"negative one",
+	qw(zero one two three four five six seven eight nine)
+);
+#
+print "number to name ... %data \n";
+#
+{
+	my $num1 = <STDIN>;
+	chomp $num1;
+	last if ($num1 eq "end");
+	#
+	my $num2 = <STDIN>;
+	chomp $num2;
+	last if ($num2 eq "end");
+	#
+	print n2nm($num1) . "+" . n2nm($num2) . "=" . n2nm($num1+$num2);
+	print "\n";
+	#
+	redo;
+}
+#
+sub n2nm {
+	my ($num) = @_;
+	#
+	if ($data{$num})
+	{
+		return $data{$num};
+	}
+	else
+	{
+		return $num;
+	}
+}
+

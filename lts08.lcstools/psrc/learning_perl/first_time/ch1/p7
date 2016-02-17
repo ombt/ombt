@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+#
+%words = qw(
+	fred camel
+	barney llama
+	betty alpaca
+	wilma alpaca
+);
+#
+print "Enter your name: ";
+$name = <STDIN>;
+chomp $name;
+#
+# the \b indicates no alphanumeric and i mean ignore case.
+#
+if ($name =~ /^randall\b/i)
+{
+	print "Hello, Randall ... how is the world treating you?\n";
+}
+else
+{
+	print "Hello, $name ...\n";
+	$secretword = $words{$name};
+	if ($secretword eq "")
+	{
+		# default passwd
+		$secretword = "duck";
+	}
+	print "What is the secret passwd? ";
+	$guess = <STDIN>;
+	chomp $guess;
+	while ($guess ne $secretword)
+	{
+		print "Wrong, try again ... \n";
+		print "What is the secret passwd? ";
+		$guess = <STDIN>;
+		chomp $guess;
+	}
+	print "You're in, $name !!!\n";
+}

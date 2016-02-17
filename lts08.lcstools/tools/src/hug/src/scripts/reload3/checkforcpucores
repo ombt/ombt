@@ -1,0 +1,6 @@
+checkforcpucores exec { spip login passwd } {
+	#
+	telnet open telnetsp <spip> <login> <passwd>
+	telnet exec -v -r -i telnetspa find / -type f -name core -print
+	telnet close telnetspb
+}

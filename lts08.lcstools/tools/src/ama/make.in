@@ -1,0 +1,9 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+amagen-oper
+amagen-oper.sh
+#
+install1=-(rm $(HOME)/tools/bin/amagen-on)
+install2=-(rm $(HOME)/tools/bin/amagen-off)
+install3=ln $(HOME)/tools/bin/amagen-oper $(HOME)/tools/bin/amagen-on
+install4=ln $(HOME)/tools/bin/amagen-oper $(HOME)/tools/bin/amagen-off

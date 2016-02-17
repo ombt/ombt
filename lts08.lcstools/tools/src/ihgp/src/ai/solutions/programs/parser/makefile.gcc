@@ -1,0 +1,12 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = parser.o data.o run.o
+TARGETS = parser
+
+all:	parser
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+parser: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@ $(AILIB) $(UTILLIB)

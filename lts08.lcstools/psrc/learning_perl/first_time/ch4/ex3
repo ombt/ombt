@@ -1,0 +1,19 @@
+#!/usr/bin/perl 
+#
+$in = 0;
+$total = 0;
+#
+print "enter a number: ";
+$in = <STDIN>;
+chomp $in;
+#
+while ($in != 999)
+{
+	$total += $in;
+	print "enter a number: ";
+	$in = <STDIN>;
+	chomp $in;
+}
+#
+print "total is ... $total\n";
+#

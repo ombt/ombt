@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+#
+print "enter min: ";
+$min = <STDIN>;
+chomp $min;
+#
+print "enter max: ";
+$max = <STDIN>;
+chomp $max;
+#
+if ($max < $min)
+{
+	($min, $max) = ($max, $min);
+}
+#
+$total = sum(($min .. $max));
+#
+print "$min+...+$max = $total\n";
+#
+sub sum {
+	my $sum = 0;
+	foreach (@_)
+	{
+		$sum += $_;
+	}
+	return $sum;
+}

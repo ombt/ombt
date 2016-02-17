@@ -1,0 +1,18 @@
+#!/usr/bin/perl 
+#
+print "enter temperature: ";
+$temp = <STDIN>;
+chomp $temp;
+#
+if ($temp > 75)
+{
+	print "ugh ... too hot ...\n";
+} 
+elsif ($temp < 68)
+{
+	print "ugh ... too cold ...\n";
+}
+else
+{
+	print "ahhh ... just right ...\n";
+}

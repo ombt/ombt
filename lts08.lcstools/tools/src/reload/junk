@@ -1,0 +1,36 @@
+#!/opt/exp/bin/expect
+#
+set searchfor [lindex $argv 0];
+#
+set mylist { {a b} {c d} {d e} {f g} };
+#
+puts "My List: $mylist";
+#
+set searchforidx [lsearch -exact ${mylist} ${searchfor}];
+puts "EXACT Search Index: $searchforidx";
+if {$searchforidx >= 0} {
+	set mysublist [lindex $mylist $searchforidx];
+	puts "\tEXACT: $mysublist";
+	puts "\tEXACT: mysublist\[0] = [lindex $mysublist 0]";
+	puts "\tEXACT: mysublist\[1] = [lindex $mysublist 1]";
+}
+#
+set searchforidx [lsearch -glob ${mylist} ${searchfor}];
+puts "GLOB Search Index: $searchforidx";
+if {$searchforidx >= 0} {
+	set mysublist [lindex $mylist $searchforidx];
+	puts "\tGLOB: $mysublist";
+	puts "\tGLOB: mysublist\[0] = [lindex $mysublist 0]";
+	puts "\tGLOB: mysublist\[1] = [lindex $mysublist 1]";
+}
+#
+set searchforidx [lsearch -regexp ${mylist} ${searchfor}];
+puts "REGEXP Search Index: $searchforidx";
+if {$searchforidx >= 0} {
+	set mysublist [lindex $mylist $searchforidx];
+	puts "\tREGEXP: $mysublist";
+	puts "\tREGEXP: mysublist\[0] = [lindex $mysublist 0]";
+	puts "\tREGEXP: mysublist\[1] = [lindex $mysublist 1]";
+}
+#
+exit 0;

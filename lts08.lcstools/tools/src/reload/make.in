@@ -1,0 +1,32 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+reload
+reload.sh
+install1=-(rm $(HOME)/tools/bin/lcsreload)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsreload
+#
+reboot
+reboot.sh
+install1=-(rm $(HOME)/tools/bin/lcsreboot)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsreboot
+#
+comparefiles
+comparefiles.sh
+install1=-(rm $(HOME)/tools/bin/comparefiles)
+install2=cp $(HOME)/tools/src/reload/comparefiles $(HOME)/tools/bin/comparefiles
+#
+spaudit
+spaudit.sh
+install1=-(rm $(HOME)/tools/bin/lcsspaudit)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsspaudit
+#
+syslog
+syslog.sh
+install1=-(rm $(HOME)/tools/bin/lcssyslog)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcssyslog
+#
+nreload
+nreload.sh
+install1=-(rm $(HOME)/tools/bin/lcsnreload)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsnreload
+#

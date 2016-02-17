@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my($cutoff, $min, $max);
+my(@olist, @flist);
+#
+($cutoff, $min, $max) = getdata();
+#
+@olist = ($min .. $max);
+@flist = filter($cutoff, ($min .. $max));
+#
+print "original list ... @olist\n";
+print "filtered list ... @flist\n";
+#
+sub filter {
+	my $cutoff = 0;
+	my @flist = ();
+	#
+	($cutoff, @_) = @_;
+	#
+	foreach (@_)
+	{
+		if ($_ > $cutoff)
+		{
+			@flist = (@flist, $_);
+		}
+	}
+	return @flist;
+}
+#
+sub getdata {
+	my $min = 0;
+	my $max = 0;
+	my $cutoff = 0;
+	#
+	print "enter cut off: ";
+	$cutoff = <STDIN>;
+	chomp $cutoff;
+	#
+	print "enter min: ";
+	$min = <STDIN>;
+	chomp $min;
+	#
+	print "enter max: ";
+	$max = <STDIN>;
+	chomp $max;
+	#
+	if ($max < $min)
+	{
+		($min, $max) = ($max, $min);
+	}
+	#
+	return ($cutoff, $min, $max);
+}

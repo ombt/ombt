@@ -1,0 +1,6 @@
+# assume tl1 stream is already open to active processor.
+dlp701 exec { sp } {
+	tl1 exec -v <sp> exec-ls:::::-l,/Telica/swCPU/CurrRel
+	tl1 exec -v <sp> exec-ls:::::-l,/Telica/swCPU
+	tl1 exec -v <sp> exec-ls:::::-l,/home1/Telica/swCPU
+}

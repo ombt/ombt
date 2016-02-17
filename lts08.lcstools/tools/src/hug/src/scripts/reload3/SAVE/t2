@@ -1,0 +1,81 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/tl1
+}
+globals data {
+	spa {
+		ihlcs1 {
+			ip 135.1.104.113
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcs2 {
+			ip 135.1.104.141
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsgw7 {
+			ip 135.1.104.197
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsg14 {
+			ip 135.1.105.11
+			tl1login telica
+			tl1passwd telica
+		}
+	}
+	spb {
+		ihlcs1 {
+			ip 135.1.104.114
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcs2 {
+			ip 135.1.104.142
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsgw7 {
+			ip 135.1.104.198
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsg14 {
+			ip 135.1.105.12
+			tl1login telica
+			tl1passwd telica
+		}
+	}
+}
+logon_ihlcs1_spa exec {
+	tl1 open -t10 tl1spa <spa.ihlcs1.ip> <spa.ihlcs1.tl1login> <spa.ihlcs1.tl1passwd>
+	tl1 close tl1spa
+}
+logon_ihlcs1_spb exec {
+	tl1 open -t10 tl1spb <spb.ihlcs1.ip> <spb.ihlcs1.tl1login> <spb.ihlcs1.tl1passwd>
+	tl1 close tl1spb
+}
+logon_ihlcsgw7_spa exec {
+	tl1 open -t10 tl1spa <spa.ihlcsgw7.ip> <spa.ihlcsgw7.tl1login> <spa.ihlcsgw7.tl1passwd>
+	tl1 close tl1spa
+}
+logon_ihlcsgw7_spb exec {
+	tl1 open -t10 tl1spb <spb.ihlcsgw7.ip> <spb.ihlcsgw7.tl1login> <spb.ihlcsgw7.tl1passwd>
+	tl1 close tl1spb
+}
+logon_ihlcsg14_spa exec {
+	tl1 open -t10 tl1spa <spa.ihlcsg14.ip> <spa.ihlcsg14.tl1login> <spa.ihlcsg14.tl1passwd>
+	tl1 close tl1spa
+}
+logon_ihlcsg14_spb exec {
+	tl1 open -t10 tl1spb <spb.ihlcsg14.ip> <spb.ihlcsg14.tl1login> <spb.ihlcsg14.tl1passwd>
+	tl1 close tl1spb
+}
+logon_ihlcs2_spa exec {
+	tl1 open -t10 tl1spa <spa.ihlcs2.ip> <spa.ihlcs2.tl1login> <spa.ihlcs2.tl1passwd>
+	tl1 close tl1spa
+}
+logon_ihlcs2_spb exec {
+	tl1 open -t10 tl1spb <spb.ihlcs2.ip> <spb.ihlcs2.tl1login> <spb.ihlcs2.tl1passwd>
+	tl1 close tl1spb
+}

@@ -1,0 +1,21 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::100:::MTPVARIANT=itu1992
+ent-prfl-sgpc::1
+ent-sg-pc::3:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992
+ent-sg-pc::4:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992
+ent-sg-pc::2067:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992
+#signaling links here
+ent-lset::1:::OPC=100,ADJDPC=3
+ent-lset::2:::OPC=100,ADJDPC=4
+ent-lset::10:::OPC=100,ADJDPC=2067
+ent-route-ss7::3-1:::lsetpriority=0
+ent-route-ss7::4-2:::lsetpriority=0
+ent-route-ss7::2067-10:::lsetpriority=0
+ent-slk::1:::iomport=iom-1-e1-1,chan=1,lsetid=1,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::2:::iomport=iom-3-e1-1,chan=1,lsetid=2,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::10:::iomport=iom-1-e1-2,chan=1,lsetid=10,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+#MEGACO area
+ent-sg-mgcassoc::2:::OPCLIST=100,IPADDR=10.11.17.3,STAPORTRANGE=50000:is
+set-sid:::::ihlcsgw8

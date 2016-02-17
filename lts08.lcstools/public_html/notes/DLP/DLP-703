@@ -1,0 +1,35 @@
+<html>
+<head>
+<title> DLP-703 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-703 EXTRACTING SOFTWARE FOR AN SP SOFTWARE CHANGE </h3>
+<pre>
+
+1) Now to expand the CPU tar files on the active SP.
+
+If the active SP CurrRel points to /Telica/swCPU, then do this:
+
+	EXEC-CD:::::/home1/;
+	EXEC-TAR-EXTRACT::COM:::Y.Y.Y.Y.Y_cpu.tar.gz;
+
+If the active SP CurrRel points to /home1/Telica/swCPU, then do this:
+
+	EXEC-CD:::::/;
+	EXEC-TAR-EXTRACT::COM:::Y.Y.Y.Y.Y_cpu.tar.gz;
+
+2) Now to expand the CPU tar files on the standby SP.
+
+If the standby SP CurrRel points to /Telica/swCPU, then do this:
+
+	EXEC-TAR-EXTRACTSTBY::COM:::/home1/Y.Y.Y.Y.Y_cpu.tar.gz,/home1;
+
+If the standby SP CurrRel points to /home1/Telica/swCPU, then do this:
+
+	EXEC-TAR-EXTRACTSTBY::COM:::/Y.Y.Y.Y.Y_cpu.tar.gz,/;
+
+3) The CPU tar files should be expanded and in place on the standby partition
+on both SPs.
+
+</pre>
+</font></body>
+</html>

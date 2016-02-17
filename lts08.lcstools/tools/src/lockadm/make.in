@@ -1,0 +1,17 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+lockadm
+lockadm.sh
+install1=-(rm $(HOME)/tools/bin/lcslockadm)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcslockadm
+#
+lock
+lock.sh
+install1=-(rm $(HOME)/tools/bin/lcslock)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcslock
+#
+unlock
+unlock.sh
+install1=-(rm $(HOME)/tools/bin/lcsunlock)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsunlock
+#

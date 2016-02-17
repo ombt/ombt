@@ -1,0 +1,14 @@
+ftpputfile exec { sp from to } {
+	ftp put -i -t600 -b <sp> <from>> <to>>
+}
+#
+ftpload exec { spaip spbip login passwd textdir images} {
+	ftp open ftpspa <spaip> <login> <passwd>
+	call ftpputfile ftpspa <textdir>/octds3_3/<<images>.octds3_3> /home/<<images>.octds3_3>
+	ftp close ftpspa
+	#
+	ftp open ftpspb <spbip> <login> <passwd>
+	call ftpputfile ftpspb <textdir>/octds3_3/<<images>.octds3_3> /home/<<images>.octds3_3>
+	#
+	ftp close ftpspb
+}

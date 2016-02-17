@@ -1,0 +1,980 @@
+
+Executing Script File: reload.script
+
+Name : <file,scriptsdir>
+Value: </home/lcstools/tools/src/hug/src/scripts>
+
+Name : <globals,branch>
+Value: <BRANCH-5-3>
+
+Name : <globals,cpu_load>
+Value: <5.3.0.4.33>
+
+Name : <globals,spa,ip>
+Value: <135.1.105.11>
+
+Name : <globals,spa,login>
+Value: <root>
+
+Name : <globals,spa,passwd>
+Value: <plexus9000>
+
+Name : <globals,spa,tl1login>
+Value: <telica>
+
+Name : <globals,spa,tl1passwd>
+Value: <telica>
+
+Name : <globals,spb,ip>
+Value: <135.1.105.12>
+
+Name : <globals,spb,login>
+Value: <root>
+
+Name : <globals,spb,passwd>
+Value: <plexus9000>
+
+Name : <globals,spb,tl1login>
+Value: <telica>
+
+Name : <globals,spb,tl1passwd>
+Value: <telica>
+
+Name : <globals,ftp,textdir>
+Value: </l148/text/BRANCH-5-3/>
+
+Name : <globals,ftp,images,ana>
+Value: <5.3.0.4.1_ana.tar.gz>
+
+Name : <globals,ftp,images,octds3>
+Value: <5.3.0.4.8_octds3.tar.gz>
+
+Name : <globals,ftp,images,trids3_3>
+Value: <5.3.0.4.8_trids3_3.tar.gz>
+
+Name : <globals,ftp,images,ena>
+Value: <5.3.0.4.7_ena.tar.gz>
+
+Name : <globals,ftp,images,voip>
+Value: <5.3.0.4.7_voip.tar.gz>
+
+Name : <globals,ftp,images,ena2>
+Value: <5.3.0.4.7_ena2.tar.gz>
+
+Name : <globals,ftp,images,cm>
+Value: <5.3.0.4.7_cm.tar.gz>
+
+Name : <globals,ftp,images,cpu>
+Value: <5.3.0.4.33_cpu.tar.gz>
+
+Name : <globals,ftp,images,ds1_2>
+Value: <5.3.0.4.9_ds1_2.tar.gz>
+
+Name : <globals,ftp,images,octds3_2>
+Value: <5.3.0.4.8_octds3_2.tar.gz>
+
+Name : <globals,ftp,images,trids3>
+Value: <5.3.0.4.8_trids3.tar.gz>
+
+Name : <globals,ftp,images,octds3_3>
+Value: <5.3.0.4.8_octds3_3.tar.gz>
+
+Name : <globals,ftp,images,voip6>
+Value: <5.3.0.4.7_voip6.tar.gz>
+
+Name : <globals,ftp,images,tdmoc>
+Value: <5.3.0.4.9_tdmoc.tar.gz>
+
+Name : <globals,ftp,scriptsdir>
+Value: </home/lcstools/tools/src/hug/scripts>
+
+Name : <prepare,1>
+Value: <ftp open minmode_ftpspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <prepare,2>
+Value: <ftp put -a minmode_ftpspa <ftp.scriptsdir>/iprecover /net/rc.local>
+
+Name : <prepare,3>
+Value: <ftp close minmode_ftpspa>
+
+Name : <prepare,4>
+Value: <ftp open minmode_ftpspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <prepare,5>
+Value: <ftp put -a minmode_ftpspb <ftp.scriptsdir>/iprecover /net/rc.local>
+
+Name : <prepare,6>
+Value: <ftp close minmode_ftpspb>
+
+Name : <prepare,7>
+Value: <telnet open minmode_telnetspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <prepare,8>
+Value: <telnet exec minmode_telnetspa /bin/chmod 755 /net/rc.local>
+
+Name : <prepare,9>
+Value: <telnet exec minmode_telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network>
+
+Name : <prepare,10>
+Value: <telnet exec -i minmode_telnetspa reboot -aN>
+
+Name : <prepare,11>
+Value: <telnet open minmode_telnetspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <prepare,12>
+Value: <telnet exec minmode_telnetspb /bin/chmod 755 /net/rc.local>
+
+Name : <prepare,13>
+Value: <telnet exec minmode_telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network>
+
+Name : <prepare,14>
+Value: <telnet exec -i minmode_telnetspb reboot -aN>
+
+Name : <prepare,15>
+Value: <telnet close minmode_telnetspa>
+
+Name : <prepare,16>
+Value: <telnet close minmode_telnetspb>
+
+Name : <prepare,17>
+Value: <wait_for_boot -d -m <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <prepare,18>
+Value: <telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <prepare,19>
+Value: <telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <prepare,20>
+Value: <telnet exec telnetspa /bin/rm /*tar.gz>
+
+Name : <prepare,21>
+Value: <telnet exec telnetspb /bin/rm /*tar.gz>
+
+Name : <prepare,22>
+Value: <telnet exec telnetspa /bin/find /home -type f -print | /bin/xargs rm -f>
+
+Name : <prepare,23>
+Value: <telnet exec telnetspb /bin/find /home -type f -print | /bin/xargs rm -f>
+
+Name : <prepare,24>
+Value: <telnet close telnetspa>
+
+Name : <prepare,25>
+Value: <telnet close telnetspb>
+
+Name : <prepare,26>
+Value: <ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <prepare,27>
+Value: <ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <prepare,28>
+Value: <ftp put -b ftpspa <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>>
+
+Name : <prepare,29>
+Value: <ftp put -b ftpspa <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>>
+
+Name : <prepare,30>
+Value: <ftp put -b ftpspa <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>>
+
+Name : <prepare,31>
+Value: <ftp put -b ftpspa <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>>
+
+Name : <prepare,32>
+Value: <ftp put -b ftpspa <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>>
+
+Name : <prepare,33>
+Value: <ftp put -b ftpspa <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>>
+
+Name : <prepare,34>
+Value: <ftp put -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>>
+
+Name : <prepare,35>
+Value: <ftp put -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>>
+
+Name : <prepare,36>
+Value: <ftp put -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>>
+
+Name : <prepare,37>
+Value: <ftp put -b ftpspa <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>>
+
+Name : <prepare,38>
+Value: <ftp put -b ftpspa <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>>
+
+Name : <prepare,39>
+Value: <ftp put -b ftpspa <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>>
+
+Name : <prepare,40>
+Value: <ftp put -b ftpspa <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>>
+
+Name : <prepare,41>
+Value: <ftp put -b ftpspa <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>>
+
+Name : <prepare,42>
+Value: <ftp put -b ftpspb <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>>
+
+Name : <prepare,43>
+Value: <ftp put -b ftpspb <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>>
+
+Name : <prepare,44>
+Value: <ftp put -b ftpspb <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>>
+
+Name : <prepare,45>
+Value: <ftp put -b ftpspb <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>>
+
+Name : <prepare,46>
+Value: <ftp put -b ftpspb <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>>
+
+Name : <prepare,47>
+Value: <ftp put -b ftpspb <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>>
+
+Name : <prepare,48>
+Value: <ftp put -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>>
+
+Name : <prepare,49>
+Value: <ftp put -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>>
+
+Name : <prepare,50>
+Value: <ftp put -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>>
+
+Name : <prepare,51>
+Value: <ftp put -b ftpspb <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>>
+
+Name : <prepare,52>
+Value: <ftp put -b ftpspb <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>>
+
+Name : <prepare,53>
+Value: <ftp put -b ftpspb <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>>
+
+Name : <prepare,54>
+Value: <ftp put -b ftpspb <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>>
+
+Name : <prepare,55>
+Value: <ftp put -b ftpspb <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>>
+
+Name : <prepare,56>
+Value: <ftp close ftpspa>
+
+Name : <prepare,57>
+Value: <ftp close ftpspb>
+
+Name : <update,1>
+Value: <ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <update,2>
+Value: <ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <update,3>
+Value: <ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data>
+
+Name : <update,4>
+Value: <ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten>
+
+Name : <update,5>
+Value: <ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data>
+
+Name : <update,6>
+Value: <ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten>
+
+Name : <update,7>
+Value: <ftp close ftpspa>
+
+Name : <update,8>
+Value: <ftp close ftpspb>
+
+Name : <update,9>
+Value: <telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <update,10>
+Value: <telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <update,11>
+Value: <telnet exec telnetspa /bin/chmod 755 /home/remove_configuration_data>
+
+Name : <update,12>
+Value: <telnet exec telnetspb /bin/chmod 755 /home/remove_configuration_data>
+
+Name : <update,13>
+Value: <telnet exec telnetspa /bin/chmod 755 /home/remove_timesten>
+
+Name : <update,14>
+Value: <telnet exec telnetspb /bin/chmod 755 /home/remove_timesten>
+
+Name : <update,15>
+Value: <telnet exec telnetspa /home/remove_configuration_data>
+
+Name : <update,16>
+Value: <telnet exec telnetspb /home/remove_configuration_data>
+
+Name : <update,17>
+Value: <telnet exec telnetspa /home/remove_timesten>
+
+Name : <update,18>
+Value: <telnet exec telnetspb /home/remove_timesten>
+
+Name : <update,19>
+Value: <telnet exec telnetspa rm -rf /Telics/sw*/*>
+
+Name : <update,20>
+Value: <telnet exec telnetspb rm -rf /Telics/sw*/*>
+
+Name : <update,21>
+Value: <telnet exec telnetspa cd /Telica>
+
+Name : <update,22>
+Value: <telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1>
+
+Name : <update,23>
+Value: <telnet exec telnetspa mv dbCurrent SAVEdbCurrent>
+
+Name : <update,24>
+Value: <telnet exec telnetspa mkdir dbCurrent>
+
+Name : <update,25>
+Value: <telnet exec telnetspa cd SAVEdbCurrent>
+
+Name : <update,26>
+Value: <telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent>
+
+Name : <update,27>
+Value: <telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent>
+
+Name : <update,28>
+Value: <telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local>
+
+Name : <update,29>
+Value: <telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1>
+
+Name : <update,30>
+Value: <telnet exec telnetspa cd /Telica>
+
+Name : <update,31>
+Value: <telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1>
+
+Name : <update,32>
+Value: <telnet exec telnetspa mv restore SAVErestore>
+
+Name : <update,33>
+Value: <telnet exec telnetspa mkdir restore>
+
+Name : <update,34>
+Value: <telnet exec telnetspa cd SAVErestore>
+
+Name : <update,35>
+Value: <telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore>
+
+Name : <update,36>
+Value: <telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local>
+
+Name : <update,37>
+Value: <telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1>
+
+Name : <update,38>
+Value: <telnet exec telnetspa rm -f /.odbc.ini 1>/dev/null 1>&2>
+
+Name : <update,39>
+Value: <telnet exec telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2>
+
+Name : <update,40>
+Value: <telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf>
+
+Name : <update,41>
+Value: <telnet exec telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2>
+
+Name : <update,42>
+Value: <telnet exec telnetspb cd /Telica>
+
+Name : <update,43>
+Value: <telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1>
+
+Name : <update,44>
+Value: <telnet exec telnetspb mv dbCurrent SAVEdbCurrent>
+
+Name : <update,45>
+Value: <telnet exec telnetspb mkdir dbCurrent>
+
+Name : <update,46>
+Value: <telnet exec telnetspb cd SAVEdbCurrent>
+
+Name : <update,47>
+Value: <telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent>
+
+Name : <update,48>
+Value: <telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent>
+
+Name : <update,49>
+Value: <telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local>
+
+Name : <update,50>
+Value: <telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1>
+
+Name : <update,51>
+Value: <telnet exec telnetspb cd /Telica>
+
+Name : <update,52>
+Value: <telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1>
+
+Name : <update,53>
+Value: <telnet exec telnetspb mv restore SAVErestore>
+
+Name : <update,54>
+Value: <telnet exec telnetspb mkdir restore>
+
+Name : <update,55>
+Value: <telnet exec telnetspb cd SAVErestore>
+
+Name : <update,56>
+Value: <telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore>
+
+Name : <update,57>
+Value: <telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local>
+
+Name : <update,58>
+Value: <telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1>
+
+Name : <update,59>
+Value: <telnet exec telnetspb rm -f /.odbc.ini 1>/dev/null 1>&2>
+
+Name : <update,60>
+Value: <telnet exec telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2>
+
+Name : <update,61>
+Value: <telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf>
+
+Name : <update,62>
+Value: <telnet exec telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2>
+
+Name : <update,63>
+Value: <telnet exec telnetspa cd />
+
+Name : <update,64>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3_3>>
+
+Name : <update,65>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena>>
+
+Name : <update,66>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip>>
+
+Name : <update,67>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena2>>
+
+Name : <update,68>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cm>>
+
+Name : <update,69>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cpu>>
+
+Name : <update,70>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ds1_2>>
+
+Name : <update,71>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_2>>
+
+Name : <update,72>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3>>
+
+Name : <update,73>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_3>>
+
+Name : <update,74>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip6>>
+
+Name : <update,75>
+Value: <telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.tdmoc>>
+
+Name : <update,76>
+Value: <telnet exec telnetspb cd />
+
+Name : <update,77>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3_3>>
+
+Name : <update,78>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena>>
+
+Name : <update,79>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip>>
+
+Name : <update,80>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena2>>
+
+Name : <update,81>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cm>>
+
+Name : <update,82>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cpu>>
+
+Name : <update,83>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ds1_2>>
+
+Name : <update,84>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_2>>
+
+Name : <update,85>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3>>
+
+Name : <update,86>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_3>>
+
+Name : <update,87>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip6>>
+
+Name : <update,88>
+Value: <telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.tdmoc>>
+
+Name : <update,89>
+Value: <telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU>
+
+Name : <update,90>
+Value: <telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU>
+
+Name : <update,91>
+Value: <telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts>
+
+Name : <update,92>
+Value: <telnet exec telnetspa ./uprev.sh>
+
+Name : <update,93>
+Value: <telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts>
+
+Name : <update,94>
+Value: <telnet exec telnetspb ./uprev.sh>
+
+Name : <update,95>
+Value: <telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>>
+
+Name : <update,96>
+Value: <telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <update,97>
+Value: <telnet exec appmode_telnetspa cd />
+
+Name : <update,98>
+Value: <telnet exec appmode_telnetspa /bin/rm -f /net/rc.local>
+
+Name : <update,99>
+Value: <telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network>
+
+Name : <update,100>
+Value: <telnet exec -i appmode_telnetspa reboot -aN>
+
+Name : <update,101>
+Value: <telnet exec appmode_telnetspb cd />
+
+Name : <update,102>
+Value: <telnet exec appmode_telnetspb /bin/rm -f /net/rc.local>
+
+Name : <update,103>
+Value: <telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network>
+
+Name : <update,104>
+Value: <telnet exec -i appmode_telnetspb reboot -aN>
+
+Name : <update,105>
+Value: <telnet close appmode_telnetspa>
+
+Name : <update,106>
+Value: <telnet close appmode_telnetspb>
+
+Name : <update,107>
+Value: <wait_for_boot -d -a <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>>
+
+Name : <update,108>
+Value: <telnet close telnetspa>
+
+Name : <update,109>
+Value: <telnet close telnetspb>
+
+Contents of CfgData:
+cfgdata(file,maxcmd): 0
+cfgdata(file,scriptsdir): /home/lcstools/tools/src/hug/src/scripts
+cfgdata(file,type): script
+cfgdata(globals,branch): BRANCH-5-3
+cfgdata(globals,cpu_load): 5.3.0.4.33
+cfgdata(globals,ftp,images,ana): 5.3.0.4.1_ana.tar.gz
+cfgdata(globals,ftp,images,cm): 5.3.0.4.7_cm.tar.gz
+cfgdata(globals,ftp,images,cpu): 5.3.0.4.33_cpu.tar.gz
+cfgdata(globals,ftp,images,ds1_2): 5.3.0.4.9_ds1_2.tar.gz
+cfgdata(globals,ftp,images,ena): 5.3.0.4.7_ena.tar.gz
+cfgdata(globals,ftp,images,ena2): 5.3.0.4.7_ena2.tar.gz
+cfgdata(globals,ftp,images,octds3): 5.3.0.4.8_octds3.tar.gz
+cfgdata(globals,ftp,images,octds3_2): 5.3.0.4.8_octds3_2.tar.gz
+cfgdata(globals,ftp,images,octds3_3): 5.3.0.4.8_octds3_3.tar.gz
+cfgdata(globals,ftp,images,tdmoc): 5.3.0.4.9_tdmoc.tar.gz
+cfgdata(globals,ftp,images,trids3): 5.3.0.4.8_trids3.tar.gz
+cfgdata(globals,ftp,images,trids3_3): 5.3.0.4.8_trids3_3.tar.gz
+cfgdata(globals,ftp,images,voip): 5.3.0.4.7_voip.tar.gz
+cfgdata(globals,ftp,images,voip6): 5.3.0.4.7_voip6.tar.gz
+cfgdata(globals,ftp,scriptsdir): /home/lcstools/tools/src/hug/scripts
+cfgdata(globals,ftp,textdir): /l148/text/BRANCH-5-3/
+cfgdata(globals,maxcmd): 0
+cfgdata(globals,spa,ip): 135.1.105.11
+cfgdata(globals,spa,login): root
+cfgdata(globals,spa,passwd): plexus9000
+cfgdata(globals,spa,tl1login): telica
+cfgdata(globals,spa,tl1passwd): telica
+cfgdata(globals,spb,ip): 135.1.105.12
+cfgdata(globals,spb,login): root
+cfgdata(globals,spb,passwd): plexus9000
+cfgdata(globals,spb,tl1login): telica
+cfgdata(globals,spb,tl1passwd): telica
+cfgdata(globals,type): data
+cfgdata(internal,data,1): globals
+cfgdata(internal,exec,1): prepare
+cfgdata(internal,exec,2): update
+cfgdata(internal,namesofsecs,data):  globals
+cfgdata(internal,namesofsecs,exec):  prepare update
+cfgdata(internal,namesofsecs,internal): internal
+cfgdata(internal,namesofsecs,script):  file
+cfgdata(internal,namesofsecs,unknown): 
+cfgdata(internal,numberofsecs,data): 1
+cfgdata(internal,numberofsecs,exec): 2
+cfgdata(internal,numberofsecs,internal): 1
+cfgdata(internal,numberofsecs,script): 1
+cfgdata(internal,numberofsecs,unknown): 0
+cfgdata(internal,script,1): file
+cfgdata(internal,sectype,file): script
+cfgdata(internal,sectype,globals): data
+cfgdata(internal,sectype,internal): internal
+cfgdata(internal,sectype,prepare): exec
+cfgdata(internal,sectype,update): exec
+cfgdata(internal,type): internal
+cfgdata(prepare,1): ftp open minmode_ftpspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(prepare,10): telnet exec -i minmode_telnetspa reboot -aN
+cfgdata(prepare,11): telnet open minmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(prepare,12): telnet exec minmode_telnetspb /bin/chmod 755 /net/rc.local
+cfgdata(prepare,13): telnet exec minmode_telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cfgdata(prepare,14): telnet exec -i minmode_telnetspb reboot -aN
+cfgdata(prepare,15): telnet close minmode_telnetspa
+cfgdata(prepare,16): telnet close minmode_telnetspb
+cfgdata(prepare,17): wait_for_boot -d -m <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>
+cfgdata(prepare,18): telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(prepare,19): telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(prepare,2): ftp put -a minmode_ftpspa <ftp.scriptsdir>/iprecover /net/rc.local
+cfgdata(prepare,20): telnet exec telnetspa /bin/rm /*tar.gz
+cfgdata(prepare,21): telnet exec telnetspb /bin/rm /*tar.gz
+cfgdata(prepare,22): telnet exec telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+cfgdata(prepare,23): telnet exec telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+cfgdata(prepare,24): telnet close telnetspa
+cfgdata(prepare,25): telnet close telnetspb
+cfgdata(prepare,26): ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(prepare,27): ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(prepare,28): ftp put -b ftpspa <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+cfgdata(prepare,29): ftp put -b ftpspa <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+cfgdata(prepare,3): ftp close minmode_ftpspa
+cfgdata(prepare,30): ftp put -b ftpspa <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+cfgdata(prepare,31): ftp put -b ftpspa <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+cfgdata(prepare,32): ftp put -b ftpspa <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+cfgdata(prepare,33): ftp put -b ftpspa <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+cfgdata(prepare,34): ftp put -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+cfgdata(prepare,35): ftp put -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+cfgdata(prepare,36): ftp put -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+cfgdata(prepare,37): ftp put -b ftpspa <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+cfgdata(prepare,38): ftp put -b ftpspa <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+cfgdata(prepare,39): ftp put -b ftpspa <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+cfgdata(prepare,4): ftp open minmode_ftpspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(prepare,40): ftp put -b ftpspa <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+cfgdata(prepare,41): ftp put -b ftpspa <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+cfgdata(prepare,42): ftp put -b ftpspb <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+cfgdata(prepare,43): ftp put -b ftpspb <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+cfgdata(prepare,44): ftp put -b ftpspb <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+cfgdata(prepare,45): ftp put -b ftpspb <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+cfgdata(prepare,46): ftp put -b ftpspb <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+cfgdata(prepare,47): ftp put -b ftpspb <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+cfgdata(prepare,48): ftp put -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+cfgdata(prepare,49): ftp put -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+cfgdata(prepare,5): ftp put -a minmode_ftpspb <ftp.scriptsdir>/iprecover /net/rc.local
+cfgdata(prepare,50): ftp put -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+cfgdata(prepare,51): ftp put -b ftpspb <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+cfgdata(prepare,52): ftp put -b ftpspb <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+cfgdata(prepare,53): ftp put -b ftpspb <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+cfgdata(prepare,54): ftp put -b ftpspb <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+cfgdata(prepare,55): ftp put -b ftpspb <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+cfgdata(prepare,56): ftp close ftpspa
+cfgdata(prepare,57): ftp close ftpspb
+cfgdata(prepare,6): ftp close minmode_ftpspb
+cfgdata(prepare,7): telnet open minmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(prepare,8): telnet exec minmode_telnetspa /bin/chmod 755 /net/rc.local
+cfgdata(prepare,9): telnet exec minmode_telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cfgdata(prepare,maxcmd): 57
+cfgdata(prepare,type): exec
+cfgdata(update,1): ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(update,10): telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(update,100): telnet exec -i appmode_telnetspa reboot -aN
+cfgdata(update,101): telnet exec appmode_telnetspb cd /
+cfgdata(update,102): telnet exec appmode_telnetspb /bin/rm -f /net/rc.local
+cfgdata(update,103): telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cfgdata(update,104): telnet exec -i appmode_telnetspb reboot -aN
+cfgdata(update,105): telnet close appmode_telnetspa
+cfgdata(update,106): telnet close appmode_telnetspb
+cfgdata(update,107): wait_for_boot -d -a <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>
+cfgdata(update,108): telnet close telnetspa
+cfgdata(update,109): telnet close telnetspb
+cfgdata(update,11): telnet exec telnetspa /bin/chmod 755 /home/remove_configuration_data
+cfgdata(update,12): telnet exec telnetspb /bin/chmod 755 /home/remove_configuration_data
+cfgdata(update,13): telnet exec telnetspa /bin/chmod 755 /home/remove_timesten
+cfgdata(update,14): telnet exec telnetspb /bin/chmod 755 /home/remove_timesten
+cfgdata(update,15): telnet exec telnetspa /home/remove_configuration_data
+cfgdata(update,16): telnet exec telnetspb /home/remove_configuration_data
+cfgdata(update,17): telnet exec telnetspa /home/remove_timesten
+cfgdata(update,18): telnet exec telnetspb /home/remove_timesten
+cfgdata(update,19): telnet exec telnetspa rm -rf /Telics/sw*/*
+cfgdata(update,2): ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(update,20): telnet exec telnetspb rm -rf /Telics/sw*/*
+cfgdata(update,21): telnet exec telnetspa cd /Telica
+cfgdata(update,22): telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cfgdata(update,23): telnet exec telnetspa mv dbCurrent SAVEdbCurrent
+cfgdata(update,24): telnet exec telnetspa mkdir dbCurrent
+cfgdata(update,25): telnet exec telnetspa cd SAVEdbCurrent
+cfgdata(update,26): telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent
+cfgdata(update,27): telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent
+cfgdata(update,28): telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local
+cfgdata(update,29): telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cfgdata(update,3): ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+cfgdata(update,30): telnet exec telnetspa cd /Telica
+cfgdata(update,31): telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+cfgdata(update,32): telnet exec telnetspa mv restore SAVErestore
+cfgdata(update,33): telnet exec telnetspa mkdir restore
+cfgdata(update,34): telnet exec telnetspa cd SAVErestore
+cfgdata(update,35): telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore
+cfgdata(update,36): telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local
+cfgdata(update,37): telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+cfgdata(update,38): telnet exec telnetspa rm -f /.odbc.ini 1>/dev/null 1>&2
+cfgdata(update,39): telnet exec telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+cfgdata(update,4): ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+cfgdata(update,40): telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf
+cfgdata(update,41): telnet exec telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+cfgdata(update,42): telnet exec telnetspb cd /Telica
+cfgdata(update,43): telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cfgdata(update,44): telnet exec telnetspb mv dbCurrent SAVEdbCurrent
+cfgdata(update,45): telnet exec telnetspb mkdir dbCurrent
+cfgdata(update,46): telnet exec telnetspb cd SAVEdbCurrent
+cfgdata(update,47): telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent
+cfgdata(update,48): telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent
+cfgdata(update,49): telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local
+cfgdata(update,5): ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+cfgdata(update,50): telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cfgdata(update,51): telnet exec telnetspb cd /Telica
+cfgdata(update,52): telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+cfgdata(update,53): telnet exec telnetspb mv restore SAVErestore
+cfgdata(update,54): telnet exec telnetspb mkdir restore
+cfgdata(update,55): telnet exec telnetspb cd SAVErestore
+cfgdata(update,56): telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore
+cfgdata(update,57): telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local
+cfgdata(update,58): telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+cfgdata(update,59): telnet exec telnetspb rm -f /.odbc.ini 1>/dev/null 1>&2
+cfgdata(update,6): ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+cfgdata(update,60): telnet exec telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+cfgdata(update,61): telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf
+cfgdata(update,62): telnet exec telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+cfgdata(update,63): telnet exec telnetspa cd /
+cfgdata(update,64): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3_3>
+cfgdata(update,65): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena>
+cfgdata(update,66): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip>
+cfgdata(update,67): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena2>
+cfgdata(update,68): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cm>
+cfgdata(update,69): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cpu>
+cfgdata(update,7): ftp close ftpspa
+cfgdata(update,70): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ds1_2>
+cfgdata(update,71): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_2>
+cfgdata(update,72): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3>
+cfgdata(update,73): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_3>
+cfgdata(update,74): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip6>
+cfgdata(update,75): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.tdmoc>
+cfgdata(update,76): telnet exec telnetspb cd /
+cfgdata(update,77): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3_3>
+cfgdata(update,78): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena>
+cfgdata(update,79): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip>
+cfgdata(update,8): ftp close ftpspb
+cfgdata(update,80): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena2>
+cfgdata(update,81): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cm>
+cfgdata(update,82): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cpu>
+cfgdata(update,83): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ds1_2>
+cfgdata(update,84): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_2>
+cfgdata(update,85): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3>
+cfgdata(update,86): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_3>
+cfgdata(update,87): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip6>
+cfgdata(update,88): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.tdmoc>
+cfgdata(update,89): telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU
+cfgdata(update,9): telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(update,90): telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU
+cfgdata(update,91): telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts
+cfgdata(update,92): telnet exec telnetspa ./uprev.sh
+cfgdata(update,93): telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts
+cfgdata(update,94): telnet exec telnetspb ./uprev.sh
+cfgdata(update,95): telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+cfgdata(update,96): telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+cfgdata(update,97): telnet exec appmode_telnetspa cd /
+cfgdata(update,98): telnet exec appmode_telnetspa /bin/rm -f /net/rc.local
+cfgdata(update,99): telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cfgdata(update,maxcmd): 109
+cfgdata(update,type): exec
+
+Contents of CmdData:
+cmddata(1): ftp open minmode_ftpspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(2): ftp put -a minmode_ftpspa <ftp.scriptsdir>/iprecover /net/rc.local
+cmddata(3): ftp close minmode_ftpspa
+cmddata(4): ftp open minmode_ftpspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(5): ftp put -a minmode_ftpspb <ftp.scriptsdir>/iprecover /net/rc.local
+cmddata(6): ftp close minmode_ftpspb
+cmddata(7): telnet open minmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(8): telnet exec minmode_telnetspa /bin/chmod 755 /net/rc.local
+cmddata(9): telnet exec minmode_telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cmddata(10): telnet exec -i minmode_telnetspa reboot -aN
+cmddata(11): telnet open minmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(12): telnet exec minmode_telnetspb /bin/chmod 755 /net/rc.local
+cmddata(13): telnet exec minmode_telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cmddata(14): telnet exec -i minmode_telnetspb reboot -aN
+cmddata(15): telnet close minmode_telnetspa
+cmddata(16): telnet close minmode_telnetspb
+cmddata(17): wait_for_boot -d -m <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>
+cmddata(18): telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(19): telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(20): telnet exec telnetspa /bin/rm /*tar.gz
+cmddata(21): telnet exec telnetspb /bin/rm /*tar.gz
+cmddata(22): telnet exec telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+cmddata(23): telnet exec telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+cmddata(24): telnet close telnetspa
+cmddata(25): telnet close telnetspb
+cmddata(26): ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(27): ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(28): ftp put -b ftpspa <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+cmddata(29): ftp put -b ftpspa <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+cmddata(30): ftp put -b ftpspa <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+cmddata(31): ftp put -b ftpspa <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+cmddata(32): ftp put -b ftpspa <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+cmddata(33): ftp put -b ftpspa <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+cmddata(34): ftp put -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+cmddata(35): ftp put -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+cmddata(36): ftp put -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+cmddata(37): ftp put -b ftpspa <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+cmddata(38): ftp put -b ftpspa <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+cmddata(39): ftp put -b ftpspa <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+cmddata(40): ftp put -b ftpspa <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+cmddata(41): ftp put -b ftpspa <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+cmddata(42): ftp put -b ftpspb <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+cmddata(43): ftp put -b ftpspb <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+cmddata(44): ftp put -b ftpspb <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+cmddata(45): ftp put -b ftpspb <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+cmddata(46): ftp put -b ftpspb <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+cmddata(47): ftp put -b ftpspb <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+cmddata(48): ftp put -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+cmddata(49): ftp put -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+cmddata(50): ftp put -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+cmddata(51): ftp put -b ftpspb <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+cmddata(52): ftp put -b ftpspb <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+cmddata(53): ftp put -b ftpspb <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+cmddata(54): ftp put -b ftpspb <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+cmddata(55): ftp put -b ftpspb <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+cmddata(56): ftp close ftpspa
+cmddata(57): ftp close ftpspb
+cmddata(58): ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(59): ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(60): ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+cmddata(61): ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+cmddata(62): ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+cmddata(63): ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+cmddata(64): ftp close ftpspa
+cmddata(65): ftp close ftpspb
+cmddata(66): telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(67): telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(68): telnet exec telnetspa /bin/chmod 755 /home/remove_configuration_data
+cmddata(69): telnet exec telnetspb /bin/chmod 755 /home/remove_configuration_data
+cmddata(70): telnet exec telnetspa /bin/chmod 755 /home/remove_timesten
+cmddata(71): telnet exec telnetspb /bin/chmod 755 /home/remove_timesten
+cmddata(72): telnet exec telnetspa /home/remove_configuration_data
+cmddata(73): telnet exec telnetspb /home/remove_configuration_data
+cmddata(74): telnet exec telnetspa /home/remove_timesten
+cmddata(75): telnet exec telnetspb /home/remove_timesten
+cmddata(76): telnet exec telnetspa rm -rf /Telics/sw*/*
+cmddata(77): telnet exec telnetspb rm -rf /Telics/sw*/*
+cmddata(78): telnet exec telnetspa cd /Telica
+cmddata(79): telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cmddata(80): telnet exec telnetspa mv dbCurrent SAVEdbCurrent
+cmddata(81): telnet exec telnetspa mkdir dbCurrent
+cmddata(82): telnet exec telnetspa cd SAVEdbCurrent
+cmddata(83): telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent
+cmddata(84): telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent
+cmddata(85): telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local
+cmddata(86): telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cmddata(87): telnet exec telnetspa cd /Telica
+cmddata(88): telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+cmddata(89): telnet exec telnetspa mv restore SAVErestore
+cmddata(90): telnet exec telnetspa mkdir restore
+cmddata(91): telnet exec telnetspa cd SAVErestore
+cmddata(92): telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore
+cmddata(93): telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local
+cmddata(94): telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+cmddata(95): telnet exec telnetspa rm -f /.odbc.ini 1>/dev/null 1>&2
+cmddata(96): telnet exec telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+cmddata(97): telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf
+cmddata(98): telnet exec telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+cmddata(99): telnet exec telnetspb cd /Telica
+cmddata(100): telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cmddata(101): telnet exec telnetspb mv dbCurrent SAVEdbCurrent
+cmddata(102): telnet exec telnetspb mkdir dbCurrent
+cmddata(103): telnet exec telnetspb cd SAVEdbCurrent
+cmddata(104): telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent
+cmddata(105): telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent
+cmddata(106): telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local
+cmddata(107): telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+cmddata(108): telnet exec telnetspb cd /Telica
+cmddata(109): telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+cmddata(110): telnet exec telnetspb mv restore SAVErestore
+cmddata(111): telnet exec telnetspb mkdir restore
+cmddata(112): telnet exec telnetspb cd SAVErestore
+cmddata(113): telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore
+cmddata(114): telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local
+cmddata(115): telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+cmddata(116): telnet exec telnetspb rm -f /.odbc.ini 1>/dev/null 1>&2
+cmddata(117): telnet exec telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+cmddata(118): telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf
+cmddata(119): telnet exec telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+cmddata(120): telnet exec telnetspa cd /
+cmddata(121): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3_3>
+cmddata(122): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena>
+cmddata(123): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip>
+cmddata(124): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ena2>
+cmddata(125): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cm>
+cmddata(126): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.cpu>
+cmddata(127): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.ds1_2>
+cmddata(128): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_2>
+cmddata(129): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.trids3>
+cmddata(130): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.octds3_3>
+cmddata(131): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.voip6>
+cmddata(132): telnet exec telnetspa /bin/tar xzvf /home/<ftp.images.tdmoc>
+cmddata(133): telnet exec telnetspb cd /
+cmddata(134): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3_3>
+cmddata(135): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena>
+cmddata(136): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip>
+cmddata(137): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ena2>
+cmddata(138): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cm>
+cmddata(139): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.cpu>
+cmddata(140): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.ds1_2>
+cmddata(141): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_2>
+cmddata(142): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.trids3>
+cmddata(143): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.octds3_3>
+cmddata(144): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.voip6>
+cmddata(145): telnet exec telnetspb /bin/tar xzvf /home/<ftp.images.tdmoc>
+cmddata(146): telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU
+cmddata(147): telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU
+cmddata(148): telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts
+cmddata(149): telnet exec telnetspa ./uprev.sh
+cmddata(150): telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts
+cmddata(151): telnet exec telnetspb ./uprev.sh
+cmddata(152): telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+cmddata(153): telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+cmddata(154): telnet exec appmode_telnetspa cd /
+cmddata(155): telnet exec appmode_telnetspa /bin/rm -f /net/rc.local
+cmddata(156): telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cmddata(157): telnet exec -i appmode_telnetspa reboot -aN
+cmddata(158): telnet exec appmode_telnetspb cd /
+cmddata(159): telnet exec appmode_telnetspb /bin/rm -f /net/rc.local
+cmddata(160): telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+cmddata(161): telnet exec -i appmode_telnetspb reboot -aN
+cmddata(162): telnet close appmode_telnetspa
+cmddata(163): telnet close appmode_telnetspb
+cmddata(164): wait_for_boot -d -a <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>
+cmddata(165): telnet close telnetspa
+cmddata(166): telnet close telnetspb

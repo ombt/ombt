@@ -1,0 +1,4 @@
+ent-iproute::iom-8-10.14.0.0-16:::gateway=10.175.13.254
+ent-iproute::iom-8-10.10.0.0-16:::gateway=10.175.13.254
+#
+init-sys:telica::::10

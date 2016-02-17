@@ -1,0 +1,42 @@
+#.sym "qRaUOVLQg7HNKNZWoFPg" 
+	=SN "" 
+	=SC "" ;
+#.sym "NY6YeYvfU3rEf2f9_-XP" 
+	=SN "" 
+	=SC "" ;
+#.sym "5weuFI5b3w5PKAC3qjlG" 
+	=SN "" 
+	=SC "" ;
+#.sym "UCsRR1P8Qt406PMsPP2R" 
+	=SN "" 
+	=SC "" ;
+#.obj "/home/rumore/src/asn.1/src/asn1lex.o" 
+	+CS
+	"qRaUOVLQg7HNKNZWoFPg"
+	"NY6YeYvfU3rEf2f9_-XP"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/src/asn.1/src" 
+	=SO "/home/rumore/src/asn.1/src/asn1lex.c" 
+	=CM "-g -DDEBUG -c " ;
+#.obj "/home/rumore/src/asn.1/src/asn1pp.o" 
+	+CS
+	"qRaUOVLQg7HNKNZWoFPg"
+	"NY6YeYvfU3rEf2f9_-XP"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/src/asn.1/src" 
+	=SO "/home/rumore/src/asn.1/src/asn1pp.c" 
+	=CM "-g -DDEBUG -c " ;
+#.obj "/home/rumore/src/asn.1/src/asn1pp" 
+	+CO
+	""
+	=BP "/home/rumore/src/asn.1/src" 
+	=CM "asn1pp.o -o asn1pp " ;
+#.obj "" ;
+#.obj "/home/rumore/src/asn.1/src" ;
+#.obj "/home/rumore/src/asn.1/src/asn1l" 
+	+CO
+	""
+	=BP "/home/rumore/src/asn.1/src" 
+	=CM "asn1lex.o -ll -o asn1l " ;

@@ -1,0 +1,873 @@
+###### START OF SECTION file ######
+file script {
+	scriptsdir .
+}
+###### END OF SECTION file ######
+###### START OF SECTION globals ######
+globals data {
+	branch Main
+	cpu_load 6.2.0.0.305
+	spa {
+		ip 135.1.105.25
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	spb {
+		ip 135.1.105.26
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	osfiles /home/lcstools/tools/lynx/bin
+	mode duplex
+	activesp both
+	# maximum simultaneous cpy-mems allowed is 10
+	maxcpymems 10
+	ftp {
+		textdir /lcsl101/text/Main/
+		images {
+			ana 6.2.0.0.17_ana.tar.gz
+			ds1 6.0.0.0.4_ds1.tar.gz
+			octds3 6.2.0.0.56_octds3.tar.gz
+			ds3 6.0.0.0.10_ds3.tar.gz
+			vs2 6.2.0.0.47_vs2.tar.gz
+			trids3_3 6.2.0.0.52_trids3_3.tar.gz
+			vs3 6.2.0.0.47_vs3.tar.gz
+			atmds3 3.8.1.0.1_atmds3.tar.gz
+			ena2 6.2.0.0.18_ena2.tar.gz
+			cm 6.2.0.0.23_cm.tar.gz
+			cpu 6.2.0.0.305_cpu.tar.gz
+			octds3_2 6.2.0.0.56_octds3_2.tar.gz
+			ds1_2 6.2.0.0.53_ds1_2.tar.gz
+			trids3 6.2.0.0.52_trids3.tar.gz
+			octds3_3 6.2.0.0.56_octds3_3.tar.gz
+			e1 6.0.0.0.1_e1.tar.gz
+			pna 5.0.0.0.10_pna.tar.gz
+			tdmoc 6.2.0.0.51_tdmoc.tar.gz
+		}
+		scriptsdir /home/lcstools/tools/src/hug/scripts
+	}
+}
+###### END OF SECTION globals ######
+###### START OF SECTION preload ######
+preload exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put -b ftpspa <osfiles>/rm /bin/rm
+	ftp put -b ftpspb <osfiles>/rm /bin/rm
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/chmod 755 /bin/rm
+	telnet exec telnetspb /bin/chmod 755 /bin/rm
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}
+###### END OF SECTION preload ######
+###### START OF SECTION preload_spa ######
+preload_spa exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	ftp put -b ftpspa <osfiles>/rm /bin/rm
+	#
+	ftp close ftpspa
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec telnetspa /bin/chmod 755 /bin/rm
+	#
+	telnet close telnetspa
+}
+###### END OF SECTION preload_spa ######
+###### START OF SECTION preload_spb ######
+preload_spb exec {
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put -b ftpspb <osfiles>/rm /bin/rm
+	#
+	ftp close ftpspb
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspb /bin/chmod 755 /bin/rm
+	#
+	telnet close telnetspb
+}
+###### END OF SECTION preload_spb ######
+###### START OF SECTION minmode ######
+minmode exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp put -a ftpspa <ftp.scriptsdir>/iprecover /net/rc.local
+	ftp close ftpspa
+	#
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	ftp put -a ftpspb <ftp.scriptsdir>/iprecover /net/rc.local
+	ftp close ftpspb
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet exec telnetspa /bin/chmod 755 /net/rc.local
+	telnet exec telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspa reboot -aN
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	telnet exec telnetspb /bin/chmod 755 /net/rc.local
+	telnet exec telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspb reboot -aN
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+	#
+	waitforcpustate -t600 <spa.ip> minmode <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> minmode <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION minmode ######
+###### START OF SECTION minmode_spa ######
+minmode_spa exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp put -a ftpspa <ftp.scriptsdir>/iprecover /net/rc.local
+	ftp close ftpspa
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet exec telnetspa /bin/chmod 755 /net/rc.local
+	telnet exec telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspa reboot -aN
+	#
+	telnet close telnetspa
+	#
+	waitforcpustate -t600 <spa.ip> minmode <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION minmode_spa ######
+###### START OF SECTION minmode_spb ######
+minmode_spb exec {
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	ftp put -a ftpspb <ftp.scriptsdir>/iprecover /net/rc.local
+	ftp close ftpspb
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	telnet exec telnetspb /bin/chmod 755 /net/rc.local
+	telnet exec telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspb reboot -aN
+	#
+	telnet close telnetspb
+	#
+	waitforcpustate -t600 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> minmode <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION minmode_spb ######
+###### START OF SECTION appmode ######
+appmode exec {
+	# boot switch into duplex application mode
+	#
+	telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec appmode_telnetspa cd /
+	telnet exec -i appmode_telnetspa /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspa reboot -aN
+	#
+	telnet exec appmode_telnetspb cd /
+	telnet exec -i appmode_telnetspb /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspb reboot -aN
+	#
+	telnet close appmode_telnetspa
+	telnet close appmode_telnetspb
+	#
+	waitforcpustate -t1800 <spa.ip> isact,isstbyh <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isact,isstbyh <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION appmode ######
+###### START OF SECTION appmode_spa ######
+appmode_spa exec {
+	# boot switch into duplex application mode
+	#
+	telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec appmode_telnetspa cd /
+	telnet exec -i appmode_telnetspa /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspa reboot -aN
+	#
+	telnet close appmode_telnetspa
+	#
+	waitforcpustate -t1800 <spa.ip> isactnbk <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION appmode_spa ######
+###### START OF SECTION appmode_spb ######
+appmode_spb exec {
+	# boot switch into duplex application mode
+	#
+	telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec appmode_telnetspb cd /
+	telnet exec -i appmode_telnetspb /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspb reboot -aN
+	#
+	telnet close appmode_telnetspb
+	#
+	waitforcpustate -t1800 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isactnbk <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+}
+###### END OF SECTION appmode_spb ######
+###### START OF SECTION removetarfiles ######
+removetarfiles exec {
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/mv /*tar.gz /tmp
+	telnet exec -i telnetspa /bin/rm -f /tmp/*tar.gz
+	telnet exec telnetspb /bin/mv /*tar.gz /tmp
+	telnet exec -i telnetspb /bin/rm -f /tmp/*tar.gz
+	telnet exec -i telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspa /bin/find /home1 -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspb /bin/find /home1 -type f -print | /bin/xargs rm -f
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}
+###### END OF SECTION removetarfiles ######
+###### START OF SECTION removetarfiles_spa ######
+removetarfiles_spa exec {
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec telnetspa /bin/mv /*tar.gz /tmp
+	telnet exec -i telnetspa /bin/rm -f /tmp/*tar.gz
+	telnet exec -i telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspa /bin/find /home1 -type f -print | /bin/xargs rm -f
+	#
+	telnet close telnetspa
+}
+###### END OF SECTION removetarfiles_spa ######
+###### START OF SECTION removetarfiles_spb ######
+removetarfiles_spb exec {
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspb /bin/mv /*tar.gz /tmp
+	telnet exec -i telnetspb /bin/rm -f /tmp/*tar.gz
+	telnet exec -i telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspb /bin/find /home1 -type f -print | /bin/xargs rm -f
+	#
+	telnet close telnetspb
+}
+###### END OF SECTION removetarfiles_spb ######
+###### START OF SECTION removeload ######
+removeload exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspb /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspa /bin/chmod 755 /home/remove_timesten
+	telnet exec telnetspb /bin/chmod 755 /home/remove_timesten
+	#
+	# sleep 600
+	#
+	telnet exec -i telnetspa /home/remove_config_data
+	telnet exec -i telnetspb /home/remove_config_data
+	telnet exec -i telnetspa /home/remove_timesten
+	telnet exec -i telnetspb /home/remove_timesten
+	#
+	# remove old CPU/IOM loads
+	#
+	telnet exec -i telnetspa rm -rf /Telica/sw*/*
+	telnet exec -i telnetspb rm -rf /Telica/sw*/*
+	#
+	# clean up the old data that is saved from boot to boot.
+	#
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspa mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspa mkdir dbCurrent
+	telnet exec telnetspa cd SAVEdbCurrent
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspa mv restore SAVErestore
+	telnet exec telnetspa mkdir restore
+	telnet exec telnetspa cd SAVErestore
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspa mv /.odbc.ini /tmp 1>/dev/null 1>&2
+	telnet exec -i telnetspa rm -f /tmp/.odbc.ini 1>/dev/null 1>&2
+	telnet exec -i telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec -i telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	telnet exec -i telnetspa mkdir -p /home1/Telica/swCPU/core 1>/dev/null 2>&1
+	#
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspb mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspb mkdir dbCurrent
+	telnet exec telnetspb cd SAVEdbCurrent
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspb mv restore SAVErestore
+	telnet exec telnetspb mkdir restore
+	telnet exec telnetspb cd SAVErestore
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspb mv /.odbc.ini /tmp 1>/dev/null 1>&2
+	telnet exec -i telnetspb rm -f /tmp/.odbc.ini 1>/dev/null 1>&2
+	telnet exec -i telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec -i telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	telnet exec -i telnetspb mkdir -p /home1/Telica/swCPU/core 1>/dev/null 2>&1
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}
+###### END OF SECTION removeload ######
+###### START OF SECTION removeload_spa ######
+removeload_spa exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	#
+	ftp close ftpspa
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec telnetspa /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspa /bin/chmod 755 /home/remove_timesten
+	#
+	# sleep 600
+	#
+	telnet exec -i telnetspa /home/remove_config_data
+	telnet exec -i telnetspa /home/remove_timesten
+	#
+	# remove old CPU/IOM loads
+	#
+	telnet exec -i telnetspa rm -rf /Telica/sw*/*
+	#
+	# clean up the old data that is saved from boot to boot.
+	#
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspa mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspa mkdir dbCurrent
+	telnet exec telnetspa cd SAVEdbCurrent
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspa mv restore SAVErestore
+	telnet exec telnetspa mkdir restore
+	telnet exec telnetspa cd SAVErestore
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspa cd /Telica
+	telnet exec -i telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspa mv /.odbc.ini /tmp 1>/dev/null 1>&2
+	telnet exec -i telnetspa rm -f /tmp/.odbc.ini 1>/dev/null 1>&2
+	telnet exec -i telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec -i telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	telnet exec -i telnetspa mkdir -p /home1/Telica/swCPU/core 1>/dev/null 2>&1
+	#
+	telnet close telnetspa
+}
+###### END OF SECTION removeload_spa ######
+###### START OF SECTION removeload_spb ######
+removeload_spb exec {
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	#
+	ftp close ftpspb
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspb /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspb /bin/chmod 755 /home/remove_timesten
+	#
+	# sleep 600
+	#
+	telnet exec -i telnetspb /home/remove_config_data
+	telnet exec -i telnetspb /home/remove_timesten
+	#
+	# remove old CPU/IOM loads
+	#
+	telnet exec -i telnetspb rm -rf /Telica/sw*/*
+	#
+	# clean up the old data that is saved from boot to boot.
+	#
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspb mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspb mkdir dbCurrent
+	telnet exec telnetspb cd SAVEdbCurrent
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspb mv restore SAVErestore
+	telnet exec telnetspb mkdir restore
+	telnet exec telnetspb cd SAVErestore
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspb cd /Telica
+	telnet exec -i telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspb mv /.odbc.ini /tmp 1>/dev/null 1>&2
+	telnet exec -i telnetspb rm -f /tmp/.odbc.ini 1>/dev/null 1>&2
+	telnet exec -i telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec -i telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	telnet exec -i telnetspb mkdir -p /home1/Telica/swCPU/core 1>/dev/null 2>&1
+	#
+	telnet close telnetspb
+}
+###### END OF SECTION removeload_spb ######
+###### START OF SECTION ftpload ######
+ftpload exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put -t600 -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -t600 -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -t600 -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -t600 -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -t600 -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	ftp put -t600 -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	#
+	ftp close ftpspa 
+	ftp close ftpspb 
+}
+###### END OF SECTION ftpload ######
+###### START OF SECTION ftpload_spa ######
+ftpload_spa exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	ftp put -t600 -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -t600 -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -t600 -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	#
+	ftp close ftpspa 
+}
+###### END OF SECTION ftpload_spa ######
+###### START OF SECTION ftpload_spb ######
+ftpload_spb exec {
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put -t600 -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -t600 -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -t600 -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	#
+	ftp close ftpspb 
+}
+###### END OF SECTION ftpload_spb ######
+###### START OF SECTION installnewload ######
+installnewload exec {
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa cd /
+	telnet exec telnetspb cd /
+	#
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.cm>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.cm>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.ds1_2>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.ds1_2>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.cpu>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.cpu>
+	#
+	telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	#
+	telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspa ./uprev.sh
+	#
+	telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspb ./uprev.sh
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}
+###### END OF SECTION installnewload ######
+###### START OF SECTION installnewload_spa ######
+installnewload_spa exec {
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec telnetspa cd /
+	#
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.cm>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.ds1_2>
+	telnet exec -t600 -v telnetspa /bin/tar xzvf /home/<ftp.images.cpu>
+	#
+	telnet exec telnetspa /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	#
+	telnet exec telnetspa cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspa ./uprev.sh
+	#
+	telnet close telnetspa
+}
+###### END OF SECTION installnewload_spa ######
+###### START OF SECTION installnewload_spb ######
+installnewload_spb exec {
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspb cd /
+	#
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.cm>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.ds1_2>
+	telnet exec -t600 -v telnetspb /bin/tar xzvf /home/<ftp.images.cpu>
+	#
+	telnet exec telnetspb /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU/CurrRel
+	#
+	telnet exec telnetspb cd /Telica/swCPU/CurrRel/system/scripts
+	telnet exec -t600 -v telnetspb ./uprev.sh
+	#
+	telnet close telnetspb
+}
+###### END OF SECTION installnewload_spb ######
+###### START OF SECTION postreload ######
+postreload exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp put -a ftpspa <ftp.scriptsdir>/iprecover /bin/iprecover
+	ftp put -b ftpspa <osfiles>/rm /bin/rm
+	ftp put -a ftpspa <ftp.scriptsdir>/lf /bin/lf
+	ftp put -a ftpspa <ftp.scriptsdir>/postreload /bin/postreload
+	ftp close ftpspa
+	#
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	ftp put -a ftpspb <ftp.scriptsdir>/iprecover /bin/iprecover
+	ftp put -b ftpspb <osfiles>/rm /bin/rm
+	ftp put -a ftpspb <ftp.scriptsdir>/lf /bin/lf
+	ftp put -a ftpspb <ftp.scriptsdir>/postreload /bin/postreload
+	ftp close ftpspb
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet exec telnetspa /bin/chmod 755 /bin/iprecover
+	telnet exec telnetspa /bin/chmod 755 /bin/rm
+	telnet exec telnetspa /bin/chmod 755 /bin/lf
+	telnet exec telnetspa /bin/chmod 755 /bin/postreload
+	telnet exec telnetspa /bin/postreload -d -D -h -c <maxcpymems> -m "ihlcsg21 SP-A"
+	telnet exec telnetspa grep -v 'set.*-o.*emacs' /.profile >/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet exec telnetspa grep -v 'set.*-o.*vi' /.profile >/.profile.13264
+	telnet exec telnetspa echo 'set -o vi' >>/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet exec telnetspa grep -v 'date.*-d1.*-z360' /.profile >/.profile.13264
+	telnet exec telnetspa echo '/bin/date -d1 -z360' >>/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet close telnetspa
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	telnet exec telnetspb /bin/chmod 755 /bin/iprecover
+	telnet exec telnetspb /bin/chmod 755 /bin/rm
+	telnet exec telnetspb /bin/chmod 755 /bin/lf
+	telnet exec telnetspb /bin/chmod 755 /bin/postreload
+	telnet exec telnetspb /bin/postreload -d -D -h -c <maxcpymems> -m "ihlcsg21 SP-B"
+	telnet exec telnetspb grep -v 'set.*-o.*emacs' /.profile >/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet exec telnetspb grep -v 'set.*-o.*vi' /.profile >/.profile.13264
+	telnet exec telnetspb echo 'set -o vi' >>/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet exec telnetspb grep -v 'date.*-d1.*-z360' /.profile >/.profile.13264
+	telnet exec telnetspb echo '/bin/date -d1 -z360' >>/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet close telnetspb
+	#
+}
+###### END OF SECTION postreload ######
+###### START OF SECTION postreload_spa ######
+postreload_spa exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp put -a ftpspa <ftp.scriptsdir>/iprecover /bin/iprecover
+	ftp put -b ftpspa <osfiles>/rm /bin/rm
+	ftp put -a ftpspa <ftp.scriptsdir>/lf /bin/lf
+	ftp put -a ftpspa <ftp.scriptsdir>/postreload /bin/postreload
+	ftp close ftpspa
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet exec telnetspa /bin/chmod 755 /bin/iprecover
+	telnet exec telnetspa /bin/chmod 755 /bin/rm
+	telnet exec telnetspa /bin/chmod 755 /bin/lf
+	telnet exec telnetspa /bin/chmod 755 /bin/postreload
+	telnet exec telnetspa /bin/postreload -s -D -h -c <maxcpymems> -m "ihlcsg21 SP-A"
+	telnet exec telnetspa grep -v 'set.*-o.*emacs' /.profile >/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet exec telnetspa grep -v 'set.*-o.*vi' /.profile >/.profile.13264
+	telnet exec telnetspa echo 'set -o vi' >>/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet exec telnetspa grep -v 'date.*-d1.*-z360' /.profile >/.profile.13264
+	telnet exec telnetspa echo '/bin/date -d1 -z360' >>/.profile.13264
+	telnet exec telnetspa mv /.profile.13264 /.profile
+	telnet close telnetspa
+}
+###### END OF SECTION postreload_spa ######
+###### START OF SECTION postreload_spb ######
+postreload_spb exec {
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	ftp put -a ftpspb <ftp.scriptsdir>/iprecover /bin/iprecover
+	ftp put -b ftpspb <osfiles>/rm /bin/rm
+	ftp put -a ftpspb <ftp.scriptsdir>/lf /bin/lf
+	ftp put -a ftpspb <ftp.scriptsdir>/postreload /bin/postreload
+	ftp close ftpspb
+	#
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	telnet exec telnetspb /bin/chmod 755 /bin/iprecover
+	telnet exec telnetspb /bin/chmod 755 /bin/rm
+	telnet exec telnetspb /bin/chmod 755 /bin/lf
+	telnet exec telnetspb /bin/chmod 755 /bin/postreload
+	telnet exec telnetspb /bin/postreload -s -D -h -c <maxcpymems> -m "ihlcsg21 SP-B"
+	telnet exec telnetspb grep -v 'set.*-o.*emacs' /.profile >/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet exec telnetspb grep -v 'set.*-o.*vi' /.profile >/.profile.13264
+	telnet exec telnetspb echo 'set -o vi' >>/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet exec telnetspb grep -v 'date.*-d1.*-z360' /.profile >/.profile.13264
+	telnet exec telnetspb echo '/bin/date -d1 -z360' >>/.profile.13264
+	telnet exec telnetspb mv /.profile.13264 /.profile
+	telnet close telnetspb
+}
+###### END OF SECTION postreload_spb ######
+###### START OF SECTION rtrveqpt ######
+rtrveqpt exec {
+	waitforcpustate -t15 <spa.ip> isact,isstbyh <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isact,isstbyh <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 rtrveqpt_tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v rtrveqpt_tl1sp rtrv-eqpt
+	tl1 close rtrveqpt_tl1sp
+}
+###### END OF SECTION rtrveqpt ######
+###### START OF SECTION rtrveqpt_spa ######
+rtrveqpt_spa exec {
+	waitforcpustate -t15 <spa.ip> isactnbk <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 rtrveqpt_tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v rtrveqpt_tl1sp rtrv-eqpt
+	tl1 close rtrveqpt_tl1sp
+}
+###### END OF SECTION rtrveqpt_spa ######
+###### START OF SECTION rtrveqpt_spb ######
+rtrveqpt_spb exec {
+	waitforcpustate -t15 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isactnbk <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 rtrveqpt_tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v rtrveqpt_tl1sp rtrv-eqpt
+	tl1 close rtrveqpt_tl1sp
+}
+###### END OF SECTION rtrveqpt_spb ######
+###### START OF SECTION provision ######
+provision exec {
+	waitforcpustate -t15 <spa.ip> isact,isstbyh <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isact,isstbyh <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v tl1sp rtrv-eqpt
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/users
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.hardware1
+	tl1 close tl1sp
+	waitforcpustate -t1800 <spa.ip> isact,isstbyh <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isact,isstbyh <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.hardware2.ANSI
+	tl1 exec -v tl1sp rmv-eqpt::iom-1
+	tl1 exec -v tl1sp rmv-eqpt::iom-11
+	tl1 exec -v tl1sp rmv-eqpt::iom-13
+	tl1 exec -v tl1sp rmv-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 oosma,oos
+	waitforiomstate -t600 tl1sp 11 oosma,oos
+	waitforiomstate -t600 tl1sp 13 oosma,oos
+	waitforiomstate -t600 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp cpy-mem::iom-1
+	tl1 exec -v tl1sp cpy-mem::iom-11
+	tl1 exec -v tl1sp cpy-mem::iom-13
+	tl1 exec -v tl1sp cpy-mem::iom-14
+	waitforiomstate -t1200 tl1sp 1 oosma,oos
+	waitforiomstate -t1200 tl1sp 11 oosma,oos
+	waitforiomstate -t1200 tl1sp 13 oosma,oos
+	waitforiomstate -t1200 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp rst-eqpt::iom-1
+	tl1 exec -v tl1sp rst-eqpt::iom-11
+	tl1 exec -v tl1sp rst-eqpt::iom-13
+	tl1 exec -v tl1sp rst-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 11 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 13 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 14 isact,isstbyc,isstbyh,isactnbk
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.calldata1
+	tl1 close tl1sp
+	waitforcpustate -t1800 <spa.ip> isact,isstbyh <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isact,isstbyh <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.calldata2.ANSI
+	tl1 close tl1sp
+}
+###### END OF SECTION provision ######
+###### START OF SECTION provision_spa ######
+provision_spa exec {
+	waitforcpustate -t15 <spa.ip> isactnbk <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v tl1sp rtrv-eqpt
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/users
+	tl1 file -v tl1sp /tmp/mgcsg.hardware1.13264
+	tl1 close tl1sp
+	#
+	telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec appmode_telnetspa cd /
+	telnet exec -i appmode_telnetspa /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspa reboot -aN
+	#
+	telnet close appmode_telnetspa
+	#
+	waitforcpustate -t1800 <spa.ip> isactnbk <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.hardware2.ANSI
+	tl1 exec -v tl1sp rmv-eqpt::iom-1
+	tl1 exec -v tl1sp rmv-eqpt::iom-11
+	tl1 exec -v tl1sp rmv-eqpt::iom-13
+	tl1 exec -v tl1sp rmv-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 oosma,oos
+	waitforiomstate -t600 tl1sp 11 oosma,oos
+	waitforiomstate -t600 tl1sp 13 oosma,oos
+	waitforiomstate -t600 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp cpy-mem::iom-1
+	tl1 exec -v tl1sp cpy-mem::iom-11
+	tl1 exec -v tl1sp cpy-mem::iom-13
+	tl1 exec -v tl1sp cpy-mem::iom-14
+	waitforiomstate -t1200 tl1sp 1 oosma,oos
+	waitforiomstate -t1200 tl1sp 11 oosma,oos
+	waitforiomstate -t1200 tl1sp 13 oosma,oos
+	waitforiomstate -t1200 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp rst-eqpt::iom-1
+	tl1 exec -v tl1sp rst-eqpt::iom-11
+	tl1 exec -v tl1sp rst-eqpt::iom-13
+	tl1 exec -v tl1sp rst-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 11 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 13 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 14 isact,isstbyc,isstbyh,isactnbk
+	tl1 file -v tl1sp /tmp/mgcsg.calldata1.13264
+	tl1 close tl1sp
+	#
+	telnet open appmode_telnetspa <spa.ip> <spa.login> <spa.passwd>
+	#
+	telnet exec appmode_telnetspa cd /
+	telnet exec -i appmode_telnetspa /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspa reboot -aN
+	#
+	telnet close appmode_telnetspa
+	#
+	waitforcpustate -t1800 <spa.ip> isactnbk <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> ignore <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.calldata2.ANSI
+	tl1 close tl1sp
+}
+###### END OF SECTION provision_spa ######
+###### START OF SECTION provision_spb ######
+provision_spb exec {
+	waitforcpustate -t15 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isactnbk <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v tl1sp rtrv-eqpt
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/users
+	tl1 file -v tl1sp /tmp/mgcsg.hardware1.13264
+	tl1 close tl1sp
+	#
+	telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec appmode_telnetspb cd /
+	telnet exec -i appmode_telnetspb /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspb reboot -aN
+	#
+	telnet close appmode_telnetspb
+	#
+	waitforcpustate -t1800 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isactnbk <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.hardware2.ANSI
+	tl1 exec -v tl1sp rmv-eqpt::iom-1
+	tl1 exec -v tl1sp rmv-eqpt::iom-11
+	tl1 exec -v tl1sp rmv-eqpt::iom-13
+	tl1 exec -v tl1sp rmv-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 oosma,oos
+	waitforiomstate -t600 tl1sp 11 oosma,oos
+	waitforiomstate -t600 tl1sp 13 oosma,oos
+	waitforiomstate -t600 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp cpy-mem::iom-1
+	tl1 exec -v tl1sp cpy-mem::iom-11
+	tl1 exec -v tl1sp cpy-mem::iom-13
+	tl1 exec -v tl1sp cpy-mem::iom-14
+	waitforiomstate -t1200 tl1sp 1 oosma,oos
+	waitforiomstate -t1200 tl1sp 11 oosma,oos
+	waitforiomstate -t1200 tl1sp 13 oosma,oos
+	waitforiomstate -t1200 tl1sp 14 oosma,oos
+	tl1 exec -v tl1sp rst-eqpt::iom-1
+	tl1 exec -v tl1sp rst-eqpt::iom-11
+	tl1 exec -v tl1sp rst-eqpt::iom-13
+	tl1 exec -v tl1sp rst-eqpt::iom-14
+	waitforiomstate -t600 tl1sp 1 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 11 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 13 isact,isstbyc,isstbyh,isactnbk
+	waitforiomstate -t600 tl1sp 14 isact,isstbyc,isstbyh,isactnbk
+	tl1 file -v tl1sp /tmp/mgcsg.calldata1.13264
+	tl1 close tl1sp
+	#
+	telnet open appmode_telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec appmode_telnetspb cd /
+	telnet exec -i appmode_telnetspb /bin/rm -f /net/rc.local
+	telnet exec appmode_telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i appmode_telnetspb reboot -aN
+	#
+	telnet close appmode_telnetspb
+	#
+	waitforcpustate -t1800 <spa.ip> ignore <spa.login> <spa.passwd> <spa.tl1login> <spa.tl1passwd> <spb.ip> isactnbk <spb.login> <spb.passwd> <spb.tl1login> <spb.tl1passwd>
+	tl1 open2 -t30 tl1sp <spa.ip> <spb.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1sp /lcsl100/scripts/Main/6.2.0.0.305/ihlcsg21/mgcsg.calldata2.ANSI
+	tl1 close tl1sp
+}
+###### END OF SECTION provision_spb ######

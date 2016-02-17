@@ -1,0 +1,41 @@
+#!/usr/bin/perl -w
+#
+@words = qw(camel llama alpaca);
+#
+print "Enter your name: ";
+$name = <STDIN>;
+chomp $name;
+#
+if ($name eq "Randall")
+{
+	print "Hello, Randall ... how is the world treating you?\n";
+}
+else
+{
+	print "Hello, $name ...\n";
+	print "What is the secret passwd? ";
+	$guess = <STDIN>;
+	chomp $guess;
+	$i = 0;
+	$correct = "maybe";
+	while ($correct eq "maybe")
+	{
+		if ($words[$i] eq $guess)
+		{
+			$correct = "yes"
+		}
+		elsif ($i < 2)
+		{
+			$i = $i + 1;
+		}
+		else
+		{
+			print "Wrong, try again ... \n";
+			print "What is the secret passwd? ";
+			$guess = <STDIN>;
+			chomp $guess;
+			$i = 0;
+		}
+	}
+	print "You're in, $name !!!\n";
+}

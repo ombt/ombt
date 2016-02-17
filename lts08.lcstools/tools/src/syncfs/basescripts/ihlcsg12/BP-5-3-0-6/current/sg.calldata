@@ -1,0 +1,14 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::234-111-1:::mtpvariant=ansi
+ent-prfl-sgpc::1
+ent-sg-pc::234-3-1:::pcdir=adj,pcprflid=1,mtpvariant=ansi
+ent-lset::1:::opc=234-111-1,adjdpc=234-3-1
+ent-route-ss7::234-3-1-1:::lsetpriority=0
+ent-slk::1:::iomport=iom-1-port-15,chan=1,lsetid=1,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64k
+ent-slk::2:::iomport=iom-3-port-15,chan=1,lsetid=1,slc=1,mtp2prflid=1,mtp3prflid=1,lnkspeed=64k
+#MEGACO area
+ent-sg-mgcassoc::1:::opclist=234-111-1,ipaddr=10.11.34.3,staportrange=50000:is
+sleep 15
+set-sid:::::ihlcsgw12

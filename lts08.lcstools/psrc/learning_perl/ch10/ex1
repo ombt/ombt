@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+print "enter file name: ";
+my $fname = <STDIN>;
+chomp $fname;
+print "file name ... $fname\n";
+die("null file name given.\n") if ($fname eq "");
+#
+open(IN, $fname) || die("unable to open $fname: $!");
+#
+while (my $inbuf = <IN>)
+{
+	chomp $inbuf;
+	print "$fname: $inbuf\n";
+}
+#
+close(IN);

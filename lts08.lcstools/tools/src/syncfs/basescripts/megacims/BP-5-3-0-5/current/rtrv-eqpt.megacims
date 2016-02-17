@@ -1,0 +1,126 @@
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy tl1shj  -A
+connecting to megacims at SP-A-IP-ADDR 135.2.69.239 ...
+
+connecting to machine megacims at 135.2.69.239 ...
+
+attempt 0 to logon machine 135.2.69.239 ...
+Trying 135.2.69.239...
+Connected to 135.2.69.239.
+Escape character is '^]'.
+
+connected to 135.2.69.239 at port 2361 ...
+
+Telica Plexus 9000  1999-2004 Telica Inc.  TL1 Agent 5.3
+
+
+Telica> 
+TL1 prompt received ...
+act-user::telica:::******;
+
+   NORTHROCK 2006-09-25 15:01:30
+*  0 REPT EVT SESSION
+   "NORTHROCK:N,,
+/* NOTICE: This is a private computer system.
+Unauthorized access or use may lead to prosecution.
+Last login: Mon Sep 25 14:59:58 2006
+This is the WORKING System Processor */"
+   /* REPT-EVT-SESSION */
+;
+
+   NORTHROCK 2006-09-25 15:01:30
+M  0 COMPLD
+;
+Telica> 
+Telica> 
+COMPLETED received ...
+;
+Telica> 
+Telica> rtrv-eqpt;
+
+   NORTHROCK 2006-09-25 15:01:32
+M  0 COMPLD
+   "IOM-1:BA9AWX0FAA,PRI,95,95,95,5.3.0.5:OOS-AU,MEA"
+   "IOM-2:BA9AWX0FAA,PRI,95,95,95,5.3.0.5:OOS-AU,MEA"
+   "IOM-3:BA9AWX0FAA,PRI,95,95,95,5.3.0.5:OOS-AU,UEQ"
+   "IOM-4:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-5:BA9AWX0FAA,SEC,95,95,95,5.3.0.5:OOS-AU,MEA"
+   "IOM-6:,,0,0,0,:OOS-MA,UAS"
+   "IOM-7:,,0,0,0,:OOS-MA,UAS"
+   "IOM-8:BAUIADPEAA,PRI,95,95,95,5.3.0.5:OOS-AU,MEA"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BAUIADPEAA,SEC,95,95,95,5.3.0.5:OOS-AU,MEA"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-15:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,5.3.0.5:OOS-AU,FLT"
+   "IOM-17:BA1AX60AAB,PRI,95,95,95,5.3.0.5:OOS-AU,FLT"
+   "SP-A:BAUCAAEAAA,PRI,90,90,95,5.3.0.5.SP.2:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,5.3.0.5.SP.2:IS,ACT"
+   "SP-B:BAUCAAEAAA,SEC,90,90,95,5.3.0.5.SP.2:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,5.3.0.5.SP.2:IS,STBYH"
+   /* RTRV-EQPT */
+;
+Telica> rtrv-chassis-eqpt;
+
+   NORTHROCK 2006-09-25 15:01:36
+M  0 COMPLD
+   "COM:SHELFID=1,CHASSISTYPE=SG_MGC_MG,CLLI=,LOC=TELICAT1,CRAFTIPSPA=0.0.0.0,CRAFTIPSPB=0.0.0.0,EMIPSPA=135.2.69.239,EMIPSPB=135.2.69.240,EMIPCHASSIS=0.0.0.0,SIGACC0IPSPA=0.0.0.0,SIGACC1IPSPA=0.0.0.0,SIGACC0IPSPB=0.0.0.0,SIGACC1IPSPB=0.0.0.0,SIGACCIPSPA=0.0.0.0,SIGACCIPSPB=0.0.0.0,SIGACCCHASSIS=0.0.0.0,SIGCORE0IPSPA=0.0.0.0,SIGCORE1IPSPA=0.0.0.0,SIGCORE0IPSPB=0.0.0.0,SIGCORE1IPSPB=0.0.0.0,SIGCOREIPSPA=0.0.0.0,SIGCOREIPSPB=0.0.0.0,SIGCORECHASSIS=0.0.0.0,CRAFTIPMASK=0.0.0.0,EMIPMASK=255.255.255.224,SIGACCIPMASK=0.0.0.0,SIGCOREIPMASK=0.0.0.0,DNSIP1=0.0.0.0,DNSIP2=0.0.0.0,NTPSERVIP1=0.0.0.0,NTPSERVIP2=0.0.0.0,ACCPORTMODE=AUTONEG,COREPORTMODE=AUTONEG,EMPORTMODE=AUTONEG,ACCFAILOVERTMR=3,COREFAILOVERTMR=3,EMFAILOVERTMR=180,DNSNAME=NULL,SIGCORETOS=NULL,SIGACCTOS=NULL,EMTOS=NULL"
+   /* RTRV-CHASSIS-EQPT */
+;
+Telica> ;
+Telica> ;
+Telica> ;
+Telica> rtrv-info-eqpt;
+
+   NORTHROCK 2006-09-25 15:01:45
+M  0 COMPLD
+   "IOM-1:BA9AWX0FAA,\"Telica 3port DS3 w/ Tone Detect\",5.1.0.3,A-5,000005KB08007540,PASS,,0,0,1,N:0,0,0,0,0:BAA9TW0GAA,\"Telica 8-port DS3 Rear Module\",A-3,000005KB07006700,"
+   "IOM-2:BA9AWX0FAA,\"Telica 3port DS3 w/ Tone Detect\",5.1.0.3,A-5,000005KB08007532,PASS,,0,0,1,N:0,0,0,0,0:BAA9TW0GAA,\"Telica 8-port DS3 Rear Module\",A-3,000005KB07006711,"
+   "IOM-3:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-4:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-5:BA9AWX0FAA,\"Telica 3port DS3 w/ Tone Detect\",5.1.0.3,A-5,000005KB08007537,PASS,,0,0,1,N:0,0,0,0,0:BAA9TU0GAA,\"Telica 8-port DS3 Protect Mod\",A-2,000005KB12012630,"
+   "IOM-6:BA7ATP0FAA,\"Telica 28-port DS1_2 Front\",5.1.0.3,A-2,000006KB05023123,PASS,,0,1,0,N:0,0,0,0,0:BA7A1P0FAA,\"Telica 28-port DS1_2 Rear\",A-1,000006KB04020824,"
+   "IOM-7:BA7ATP0FAA,\"Telica 28-port DS1_2 Front\",5.1.0.3,A-2,000006KB05022677,PASS,,0,1,0,N:0,0,0,0,0:BA7A1P0FAA,\"Telica 28-port DS1_2 Rear\",A-1,000006KB04020898,"
+   "IOM-8:BAUIADPEAA,\"Telica ENA_II Module\",6.2.0.1,A-6,000006KB05024364,PASS,,0,0,1,N:0,0,0,0,0:BA2A20SGAA,\"Telica 4-port 1000 Base-T Rear\",A-1,000006KB07027886,"
+   "IOM-9:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-10:BAUIADPEAA,\"Telica ENA_II Module\",6.2.0.1,A-6,000006KB05024346,PASS,,0,0,1,N:0,0,0,0,0:BA2A20SGAA,\"Telica 4-port 1000 Base-T Rear\",A-1,000006KB07027889,"
+   "IOM-11:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-12:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-13:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-14:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-15:BA1AX60AAB,\"Telica HD Voice Processor\",,B-9,000006KB02016845,PASS,,0,0,1,N:0,0,0,0,0:,,,,"
+   "IOM-16:BA1AX60AAB,\"Telica HD Voice Processor\",,B-9,000006KB02016833,PASS,,0,0,1,N:0,0,0,0,0:,,,,"
+   "IOM-17:BA1AX60AAB,\"Telica HD Voice Processor\",,B-9,000006KB03018011,PASS,,0,0,1,N:0,0,0,0,0:,,,,"
+   "SP-A:BAUCAAEAAA,\"Telica Dual SP III Front Module\",5.3.0.5.SP.2,D-B,000006KB03018667,PASS,,0,0,0,Y:0,100,100,0,0:BA1C1W0HAA,\"Telica SP3 Rear Module (depop)\",A-3,000006KB02017109,"
+   "SF-A:BAC7W3YJAB,\"Telica 24-port Switch Fabric\",5.3.0.5.SP.2,D-A,000006KB03020038,PASS,,0,0,0,Y:0,100,100,0,0:,,,,"
+   "SP-B:BAUCAAEAAA,\"Telica Dual SP III Front Module\",5.3.0.5.SP.2,D-B,000006KB03018688,PASS,,0,0,0,Y:0,100,0,100,0:BA1C1W0HAA,\"Telica SP3 Rear Module (depop)\",A-3,000006KB02017147,"
+   "SF-B:BAC7W3YJAB,\"Telica 24-port Switch Fabric\",5.3.0.5.SP.2,D-A,000006KB03020079,PASS,,0,0,0,Y:0,100,0,100,0:Unknown,\"Unknown\",Unknown,Unknown,"
+   /* RTRV-INFO-EQPT */
+;
+Telica> ;
+Telica> ;
+Telica> ;
+Telica> a
+
+   NORTHROCK 2006-09-25 15:01:56
+M  0 DENY
+   IICT
+   /* Input, garbage */
+;
+Telica> canc-user;
+
+   NORTHROCK 2006-09-25 15:01:58
+M  0 COMPLD
+;
+Telica> Connection closed by foreign host.
+
+
+end-of-file ...
+
+
+hrdcpy exit

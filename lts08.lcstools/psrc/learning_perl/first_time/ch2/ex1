@@ -1,0 +1,8 @@
+#!/opt/exp/bin/perl -w
+$pi = 3.1415912654;
+#
+print "enter radius: ";
+$r = <STDIN>;
+chomp $r;
+print "circumference = " . 2.0*$pi*$r;
+print "\n";

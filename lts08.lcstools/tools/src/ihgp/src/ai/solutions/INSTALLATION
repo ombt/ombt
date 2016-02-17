@@ -1,0 +1,44 @@
+Compilation
+-----------
+
+AISearch II comes with 3 different sets of makefiles that support
+the following compilers:
+
+* GCC 2.5.8 and upwards (using GNU make)
+* BCC 3.1
+* MSC Visual C++
+
+Step by step instructions:
+
+1. In the top-level directory where you installed AISearch there
+   will be 3 makefiles, each supporting one of the compilers
+   mentioned above. Decide which one you need.
+2. The makefile in the top-level directory contains several settings
+   that will be passed to the makefiles in the other directories. Take
+   a look at these settings and modify them if necessary.
+3. Start the make utility by typing 'make -f <name of makefile>' which
+   will build the AISearch library and the executables (plus some extra
+   'utility' libraries).
+
+Note: if the compiler (or actually the linker) complains about
+'unresolved symbols' go back to the top-level makefile and check out
+the section about the flag -DNEED_CAST!
+
+Special instructions for MSC Visual C++:
+
+1. Open a DOS box.
+2. Make sure that the environment variables LIB and INCLUDE are set
+   to the correct values.
+3. Type 'nmake -f makefile.msc'.
+
+I chose to use makefiles because I'm not very familiar with project files.
+However, if there's enough demand for project files and someone would be
+willing to provide them they'll be included with a new version of AISearch II.
+
+Instructions for other compilers:
+
+If your system does not have any of the mentioned compilers it shouldn't
+be too hard to adjust the makefiles to your situation. If you do please
+send me a copy of the makefiles you're using and I'll include them with
+AIsearch II and put a new version of AISearch II on ftp.
+

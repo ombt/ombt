@@ -1,0 +1,6 @@
+AuthName "LCS Tools Authorization"
+AuthType Basic
+AuthUserFile /home/lcstools/.htpasswd
+
+require valid-user
+

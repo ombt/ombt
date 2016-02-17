@@ -1,0 +1,5 @@
+# assume tl1 stream is already open to active processor.
+dlp700 exec { sp } {
+	tl1 exec -v <sp> rtrv-eqpt
+	tl1 exec -v <sp> rtrv-chassis-eqpt
+}

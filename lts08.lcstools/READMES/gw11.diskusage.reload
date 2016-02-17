@@ -1,0 +1,76 @@
+disk usage on gw11 during a reload.
+
+1) after old load is removed.
+
+lts08-ihlcsg11-logfiles> telnetsp -A
+connecting to ihlcsg11 at SP-A-IP-ADDR 135.1.104.205 23 ...
+
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304  564583  483721  53%
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304  439253  609051  41%
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304   97434  950870   9%
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304   97434  950870   9%
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304   97434  950870   9%
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+unnamed_system#
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304   97434  950870   9% <<== swCPU, etc.
+/dev/hd2c        2048 1048320  252518  795802  24%
+/dev/hd2d        2048 1048320  209140  839180  19%
+
+lts08-ihlcsg11-logfiles> telnetsp -B
+connecting to ihlcsg11 at SP-B-IP-ADDR 135.1.104.206 23 ...
+
+unnamed_system#
+unnamed_system#
+unnamed_system# df
+Filesystem    BlkSize  Blocks    Used    Free    %
+/dev/hd2b        2048 1048304   99965  948339   9% <<== swCPU, etc.
+/dev/hd2c        2048 1048320  252505  795815  24%
+/dev/hd2d        2048 1048320  437611  610709  41%
+unnamed_system#
+
+2) after new load is installed:
+
+lts08-ihlcsg14-reload> telnetsp -A                            
+connecting to ihlcsg14 at SP-A-IP-ADDR 135.1.105.11 23 ...    
+                                                              
+unnamed_system# df                                            
+Filesystem    BlkSize  Blocks    Used    Free    %            
+/dev/hd2b        2048 1048304  765278  283026  73%            
+/dev/hd2c        2048 1048320  172249  876071  16%            
+/dev/hd2d        2048 1048320   16450 1031870   1%            
+
+lts08-ihlcsg14-reload> telnetsp -B                               
+connecting to ihlcsg14 at SP-B-IP-ADDR 135.1.105.12 23 ...       
+                                                                 
+unnamed_system#                                                  
+unnamed_system#                                                  
+unnamed_system# df                                               
+Filesystem    BlkSize  Blocks    Used    Free    %               
+/dev/hd2b        2048 1048304  766308  281996  73%               
+/dev/hd2c        2048 1048320  172249  876071  16%               
+/dev/hd2d        2048 1048320   16450 1031870   1%               
+unnamed_system# df                                               
+Filesystem    BlkSize  Blocks    Used    Free    %               
+/dev/hd2b        2048 1048304  766308  281996  73%               
+/dev/hd2c        2048 1048320  172249  876071  16%               

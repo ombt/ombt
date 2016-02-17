@@ -1,0 +1,4 @@
+TCLBIN=$(HOME)/bin
+#
+auto_mkindex
+auto_mkindex.TCL

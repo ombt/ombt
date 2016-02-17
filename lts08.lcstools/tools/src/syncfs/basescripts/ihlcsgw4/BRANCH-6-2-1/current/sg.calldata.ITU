@@ -1,0 +1,32 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::60:::MTPVARIANT=itu1992,pcssf=ssfnat
+ent-prfl-sgpc::1
+ent-sg-pc::3:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::4:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::5:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::6:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::7:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::8:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-sg-pc::9:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=itu1992,pcssf=ssfnat
+ent-lset::1:::OPC=60,ADJDPC=3
+ent-lset::2:::OPC=60,ADJDPC=4
+ent-lset::11:::OPC=60,ADJDPC=5
+ent-lset::12:::OPC=60,ADJDPC=6
+ent-route-ss7::3-1:::lsetpriority=0
+ent-route-ss7::4-2:::lsetpriority=0
+ent-route-ss7::5-11:::lsetpriority=0
+ent-route-ss7::6-12:::lsetpriority=0
+ent-slk::1:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/1/1,l2prflid=1
+ent-slk::2:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/1/1,l2prflid=1
+ent-slk::3:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/2/1,l2prflid=1
+ent-slk::4:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/2/1,l2prflid=1
+ent-sg-slk::1:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=1,slc=0,mtp3prflid=1
+ent-sg-slk::2:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=2,slc=0,mtp3prflid=1
+ent-sg-slk::3:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=11,slc=0,mtp3prflid=1
+ent-sg-slk::4:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=12,slc=0,mtp3prflid=1
+#MEGACO area
+ent-sg-mgcassoc::1-1:::inservicesownpc=60,ipadest=10.11.23.3,staportrange=50000:is
+sleep 75
+set-sid:::::ihlcsgw4

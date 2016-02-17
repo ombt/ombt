@@ -1,0 +1,10 @@
+CC = cc
+LD = cc
+# CC = gcc
+# LD = gcc
+#
+edcur
+edcur.c
+curplot.c
+-lm
+-lcurses

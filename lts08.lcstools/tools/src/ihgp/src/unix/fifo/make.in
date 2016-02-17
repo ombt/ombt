@@ -1,0 +1,17 @@
+CC = cc
+CCFLAGS = -g
+#
+LD = cc
+LDFLAGS = -g
+#
+dbms
+dbmsmain.c
+dbms.c
+fifomsgs.c
+syserr.c
+#
+user
+user.c
+dbmslib.c
+fifomsgs.c
+syserr.c

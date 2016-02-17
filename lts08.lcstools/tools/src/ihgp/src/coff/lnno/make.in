@@ -1,0 +1,10 @@
+CC = cc
+CCFLAGS = -g -DFLEXWARN
+LD = cc
+LDFLAGS = -g
+INCLDIRS=-I../include
+#
+lnno
+lnno.c
+#
+install1=cp lnno $(HOME)/bin/lnno

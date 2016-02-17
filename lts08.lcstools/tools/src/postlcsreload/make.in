@@ -1,0 +1,43 @@
+SHELLBIN=$(HOME)/tools/bin
+HUGSCRIPTS=$(HOME)/tools/src/hug/scripts
+#
+postlcsreload
+postlcsreload.sh
+#
+remotepostlcsreload
+remotepostlcsreload.sh
+install1 = cp remotepostlcsreload $(HUGSCRIPTS)/postreload
+#
+iprecover
+iprecover.sh
+install1 = cp iprecover $(HUGSCRIPTS)/iprecover
+#
+removedefaultgw
+removedefaultgw.sh
+install1 = cp removedefaultgw $(HUGSCRIPTS)/removedefaultgw
+#
+findcpucores
+findcpucores.sh
+install1 = cp findcpucores $(HUGSCRIPTS)/findcpucores
+#
+lf
+lf.sh
+install1 = chmod 644 lf
+install2 = chmod 644 $(SHELLBIN)/lf
+install3 = cp lf $(HUGSCRIPTS)/lf
+#
+iomsfui
+iomsfui.sh
+#
+mount_nfs
+mount_nfs.sh
+#
+mysfui
+mysfui.sh
+install1 = chmod 644 mysfui
+install2 = chmod 644 $(SHELLBIN)/mysfui
+install3 = cp mysfui $(HUGSCRIPTS)/mysfui
+#
+disablediskcleanup
+disablediskcleanup.sh
+install1 = cp disablediskcleanup $(HUGSCRIPTS)/disablediskcleanup

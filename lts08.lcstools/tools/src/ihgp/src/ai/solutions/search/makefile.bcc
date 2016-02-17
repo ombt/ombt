@@ -1,0 +1,12 @@
+MAKEFILE = makefile.bcc
+
+SUBDIRS = nodes aosear bisear unisear btrack
+
+all:    $(SUBDIRS)
+
+$(SUBDIRS):
+        cd $@
+        $(MAKE) -f$(MAKEFILE) -DCFLAGS="$(CFLAGS)"
+        cd ..
+
+

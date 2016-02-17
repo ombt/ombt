@@ -1,0 +1,69 @@
+
+CIS 255 MIDTERM EXAM			NAME:
+
+1) (30) Write down the CHI-squared expression for the following 
+   function and derive the linear least-squares expression for 
+   parameter A.
+
+	Y = cos(A*sin(X))
+
+
+2) (30) Convert the following program to a flowchart.
+
+	PROGRAM PROB2
+
+	INTEGER I, IMAX
+	REAL X,Y,X2,Y2
+
+   10	PRINT *, 'ENTER A POINT (X,Y): '
+	READ *, X2, Y2
+	IF (X2.LE.0.OR.Y2.LE.0) THEN
+		PRINT *, 'BOTH X AND Y MUST BE > 0. TRY AGAIN.'
+		GOTO 10
+	ENDIF
+
+	PRINT *, 'ENTER NUMBER OF POINTS'
+	READ *, IMAX
+
+	DO I=IMAX, 1, -1
+		PRINT *, 'ENTER X, Y: '
+		READ *, X, Y
+
+		IF (X.GT.X2.AND.Y.LE.Y2)
+			PRINT *, 'Y OUT OF RANGE'
+		ELSE IF (X.LE.X2.AND.Y.GT.Y2)
+			PRINT *, 'X OUT OF RANGE'
+		ELSE IF (X.LE.X2.AND.Y.LE.Y2)
+			PRINT *, 'Y AND X OUT OF RANGE'
+		ELSE
+			PRINT *, 'POINT IS OK'
+		ENDIF
+	ENDDO
+
+	END
+	
+
+3) (40) You are given the following circle centered on the origin.
+   The circle's equation is:
+
+	X**2 + Y**2 = R1**2
+
+   You are to write the flowchart and Fortran code for a program 
+   which reads in a list of points and determines the region which 
+   contains each point. Determine if the point is inside or outside
+   the circle, that is, 
+
+	0 <= R < R1
+	R1 <= R
+
+   where R = sqrt(X**2 + Y**2).
+
+   Also determine the quadrant in which the point lies. The 
+   4 quadrants are:
+
+	X >= 0, Y >= 0 for quadrant 1,
+	X < 0, Y >= 0 for quadrant 2,
+	X < 0, Y < 0 for quadrant 3,
+	X >= 0, Y < 0 for quadrant 4.
+
+

@@ -1,0 +1,30 @@
+Fixes since the beta version:
+-----------------------------
+* Added a do-nothing destructor to class StripsObject. Without
+  it gcc 2.7.x dies with "virtual memory" exhausted when compiling
+  the STRIPS-planner.
+  [Thanks to Larry Holder (holder@banzai.uta.edu) for pointing this out!]
+
+* Removed set_startnode() from class AStar because chances
+  are that when this function is called the goal node has not been
+  initialized yet: set_startnode() calls compute_h() and since
+  this function will usually need the goal node it will be accessing
+  a NULL computer if the goal node is not yet present.
+  Also, removed the 'virtual' attribute' from set_startnode() in
+  class Search and class BiSearch.
+  [Thanks to Jim Bander (Jim.Bander@umich.edu) and David Hibler
+   (dhibler@pcs.cnu.edu) for reporting bug!]
+
+* Made comparelt() in class List const. It is declared const in
+  all derived classes and must, therefore, be const in this class too.
+  Without this the new definition of the function in the derived
+  class won't overwrite the old one with some compilers.
+  [Thanks to David Hibler (dhibler@pcs.cnu.edu) for reporting this bug!]
+
+* Removed the empty constructor from class Puzzle in 8puzzle2. In
+  the old code this constructor was called from main(). This meant
+  that the private variable 'goal' was never initialized and this in turn
+  meant that compute_h() would try to dereference a NULL pointer when
+  it called get_board() on this variable.
+  [Thanks to David Hibler (dhibler@pcs.cnu.edu) for reporting this bug!]
+  

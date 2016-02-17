@@ -1,0 +1,4 @@
+ent-lset::23:::opc=80,adjdpc=8
+ent-route-ss7::8-23:::lsetpriority=0
+ent-slk::7:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/13/2/1,l2prflid=1
+ent-sg-slk::7:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=23,slc=0,mtp3prflid=1

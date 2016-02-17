@@ -1,0 +1,85 @@
+removeload exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put ftpspa <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspa <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	ftp put ftpspb <ftp.scriptsdir>/remove_config_data /home/remove_config_data
+	ftp put ftpspb <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspb /bin/chmod 755 /home/remove_config_data
+	telnet exec telnetspa /bin/chmod 755 /home/remove_timesten
+	telnet exec telnetspb /bin/chmod 755 /home/remove_timesten
+	#
+	# sleep 600
+	#
+	# telnet exec telnetspa /home/remove_config_data
+	# telnet exec telnetspb /home/remove_config_data
+	# telnet exec telnetspa /home/remove_timesten
+	# telnet exec telnetspb /home/remove_timesten
+	#
+	# remove old CPU/IOM loads
+	#
+	telnet exec telnetspa rm -rf /Telica/sw*/*
+	telnet exec telnetspb rm -rf /Telica/sw*/*
+	#
+	# clean up the old data that is saved from boot to boot.
+	#
+	telnet exec telnetspa cd /Telica
+	telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspa mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspa mkdir dbCurrent
+	telnet exec telnetspa cd SAVEdbCurrent
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspa cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspa echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspa rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspa cd /Telica
+	telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspa mv restore SAVErestore
+	telnet exec telnetspa mkdir restore
+	telnet exec telnetspa cd SAVErestore
+	telnet exec telnetspa find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspa echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspa rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspa rm -f /.odbc.ini 1>/dev/null 1>&2
+	telnet exec telnetspa rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspa echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec telnetspa rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	#
+	telnet exec telnetspb cd /Telica
+	telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+	telnet exec telnetspb mv dbCurrent SAVEdbCurrent
+	telnet exec telnetspb mkdir dbCurrent
+	telnet exec telnetspb cd SAVEdbCurrent
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../dbCurrent
+	telnet exec telnetspb cp Telica_IP Telica_Hostname ../dbCurrent
+	telnet exec telnetspb echo '# template rc.local file' >../dbCurrent/rc.local
+	telnet exec telnetspb rm -rf SAVEdbCurrent 1>/dev/null 2>&1
+        #
+	telnet exec telnetspb cd /Telica
+	telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	telnet exec telnetspb mv restore SAVErestore
+	telnet exec telnetspb mkdir restore
+	telnet exec telnetspb cd SAVErestore
+	telnet exec telnetspb find . -type d -print | cpio -pduvm ../restore
+	telnet exec telnetspb echo '# template rc.local file' >../restore/rc.local
+	telnet exec telnetspb rm -rf SAVErestore 1>/dev/null 2>&1
+	#
+	telnet exec telnetspb rm -f /.odbc.ini 1>/dev/null 1>&2
+	telnet exec telnetspb rm -rf /opt/TimesTen* 1>/dev/null 1>&2
+	telnet exec telnetspb echo '# over-written by reload' >/etc/resolv.conf
+	telnet exec telnetspb rm -rf /Telica/History/SavedLogs/* 1>/dev/null 1>&2
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}

@@ -1,0 +1,49 @@
+ed-mgc-protn:::::protntype=DUPLEX,peermgcip=10.11.46.3,mgregthresh=1,svcchngtmr=5
+ed-mgc-protn:::::mgmttmr=0
+#MEGACO area
+ent-mgc-prflmegaco::2:::mgvariant=lng,auditcallstate=n
+ent-mgc-prflmegaco::8:::mgvariant=ALCATEL_V1,dgtmapdwnld=n
+ent-mgc-mgassoc::ihisam1:::name=10.11.59.11,port=2948,megacoprflid=8:is
+sleep 75
+ent-mgc-mgassoc::simala2:::name=135.1.251.227,port=3102,megacoprflid=8
+sleep 75
+ed-dns-sys:::::dnsname=lucent.com,dnsip1=10.10.222.100
+ed-sip-sys:::::dnscachettl=0
+ent-prfl-sdp::77:::codec1=pcma,codec2=pcmu,codec3=g729,ptime=20,silsup=n,tonerelay=null,relayptype=101,g726enc=msb,g723bitrate=6.3k,faxaction=none,localt38=none,remotet38=none
+ent-prfl-sip::1:::PRIVACY=P_ASSERTID,REASONHDR=Y,CGPNIWPROC=Q19125,UUIIWPROC=Q19125,GNUMIWPROC=Q19125,ACMIWPROC=Q19125,SIP181IWPROC=Q19125,SIP182IWPROC=Q19125,SIP183IWPROC=Q19125,CAUSEIWPROC=Q19125,SIPFCIIWPROC=Q19125,SIPBCIIWPROC=Q19125,NCIIWPROC=Q19125,CANCELIWPROC=Q19125,CUGIWPROC=Q19125,CPGIWPROC=Q19125,CPG456IWPROC=Q19125
+ent-trkgrp::1021:::sipgm:name=sqafs1,tgprofile=1,sipplus=y,sipdstfqdn=pcsf-stdn.fs1.ims.fs5000lab.com
+ent-sip-tgmapaddr::135.1.251.14-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.15-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.16-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.17-IP-5060:::tgn=1021
+ent-list-aintrigger::TERMSIM-1:::category=subscribed,trigtype=OFF_HOOK_DELAY,serviceid=SIM:is
+sleep 30 
+ed-trkgrp::1021:::aintriglist=TERMSIM
+#Line data
+ent-mgc-prflcas::70:::callmodel=txrx,sigmodel=als70,txaddrinfo=none,rxaddrinfo=none,degradedmos=lockout,relsigtone=congestion
+ed-aag-sys::com:::country=NL,pripcscfaddr=pcsf-stdn.fs1.ims.fs5000lab.com,homedomain=ims.fs5000lab.com,regtmper=3000,reregonassoc=y:IS
+ent-cas-line::ihisam1-aln/0/1:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::ihisam1-aln/0/2:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::ihisam1-aln/0/3:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::ihisam1-aln/0/4:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/1:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/2:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/3:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/4:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/5:::casprflid=70,ECHOCTRL=20:is
+ent-cas-line::simala2-aln/0/6:::casprflid=70,ECHOCTRL=20:is
+sleep 5
+ent-aag-sub::31248675309:::password=newsys,lineintfid=CAS-ihisam1-aln/0/1,SDPPRFLID=77,PRIVATEID=31248675309:IS
+ent-aag-sub::31248675310:::password=newsys,lineintfid=CAS-ihisam1-aln/0/2,SDPPRFLID=77,PRIVATEID=31248675310:IS
+ent-aag-sub::31248675311:::password=newsys,lineintfid=CAS-ihisam1-aln/0/3,SDPPRFLID=77,PRIVATEID=31248675311:IS
+ent-aag-sub::31248675312:::password=newsys,lineintfid=CAS-ihisam1-aln/0/4,SDPPRFLID=77,PRIVATEID=31248675312:IS
+ent-aag-sub::31998675401:::password=newsys,lineintfid=CAS-simala2-aln/0/1,SDPPRFLID=77,PRIVATEID=31998675401:IS
+ent-aag-sub::31998675402:::password=newsys,lineintfid=CAS-simala2-aln/0/2,SDPPRFLID=77,PRIVATEID=31998675402:IS
+ent-aag-sub::31998675403:::password=newsys,lineintfid=CAS-simala2-aln/0/3,SDPPRFLID=77,PRIVATEID=31998675403:IS
+ent-aag-sub::31998675404:::password=newsys,lineintfid=CAS-simala2-aln/0/4,SDPPRFLID=77,PRIVATEID=31998675404:IS
+ent-aag-sub::31998675405:::password=newsys,lineintfid=CAS-simala2-aln/0/5,SDPPRFLID=77,PRIVATEID=31998675405:IS
+ent-aag-sub::31998675406:::password=newsys,lineintfid=CAS-simala2-aln/0/6,SDPPRFLID=77,PRIVATEID=31998675406:IS
+ent-treatment::TreatAnnc:::treattype=ANNC,anncid=53
+ent-prfl-failcnd::Emergency-EMRGNCY_UNRCHABLE-ISUP:::failtype=TREAT,treatment=TreatAnnc
+#ed-trans-plan::LINEDEFAULT:::RLSFAILCNDPRFL=Emergency
+set-sid:::::ihlcsgw27

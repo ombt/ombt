@@ -1,0 +1,60 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 5061
+parameter myadminip 135.111.82.6
+parameter myadminport 10002
+parameter myrtpip 135.111.82.6
+parameter myrtpport 8002
+parameter myrtcpport 8003
+# parameter interreporttime 120
+parameter isupversion itu
+#
+# specific user section
+#
+rdn = 6305510201 100
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 5060
+rtpip = 135.111.82.6
+rtpport = 8000
+rtcpport = 8001
+origpost100infomsgid = 1
+origpost180infomsgid = 1
+origpost183infomsgid = 1
+origpost200infomsgid = 1
+origpostackinfomsgid = 1
+termpost100infomsgid = 1
+termpost180infomsgid = 1
+termpost183infomsgid = 1
+termpost200infomsgid = 1
+termpostackinfomsgid = 1
+origination = originationisup
+termination = terminationisup
+#
+rdn = 6305520201 100
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+origpost100infomsgid = 1
+origpost180infomsgid = 1
+origpost183infomsgid = 1
+origpost200infomsgid = 1
+origpostackinfomsgid = 1
+termpost100infomsgid = 1
+termpost180infomsgid = 1
+termpost183infomsgid = 1
+termpost200infomsgid = 1
+termpostackinfomsgid = 1
+origination = originationisup
+termination = terminationisup
+#
+rcall 6305520201 6305510201 100

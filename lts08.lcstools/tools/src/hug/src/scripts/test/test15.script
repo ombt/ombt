@@ -1,0 +1,28 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	bldip chibuild.telica.com
+	bldlogin lcstools
+	bldpasswd plexus9000
+	gpip ihgp.ih.lucent.com
+	gplogin rumore
+	gppasswd 1972miami
+	spip 135.1.104.113
+	splogin root
+	sppasswd plexus9000
+	ltsip lts08.ih.lucent.com
+	ltslogin lcstools
+	ltspasswd st33l3rs
+}
+prepare exec {
+	telnet open telnetid <bldip> <bldlogin> <bldpasswd>
+	telnet exec -v telnetid ls -l
+	telnet close telnetid
+	telnet open telnetid <gpip> <gplogin> <gppasswd>
+	telnet exec -v telnetid ls -l
+	telnet close telnetid
+	telnet open telnetid <spip> <splogin> <sppasswd>
+	telnet exec -v telnetid ls -l
+	telnet close telnetid
+}

@@ -1,0 +1,1018 @@
+
+
+    1  AppendKeyStateMessag
+    2   \__strcpy
+    3   |__strcat
+    4   |__strlen
+    5   |__printf
+
+    1  EditingDrawFunc
+    2   \__UpdateWindowFromBitm
+    3       \__CopyPlane
+    4           \__XCopyPlane
+
+    1  EditingEventFunc
+    2   \__DrawShape
+    3   |   \__XDrawLine
+    4   |   |__XDrawPoint
+    5   |   |__XDrawRectangle
+    6   |   |__XFillRectangle
+    7   |   |__DrawOval
+    8   |   |   \__XDrawArc
+    9   |   |__FillOval
+   10   |   |   \__XFillArc
+   11   |   |__strlen
+   12   |   |__XDrawImageString
+   13   |__DrawItem
+   14   |   \__MaintainUndo
+   15   |   |   \__CopyPlane
+   16   |   |       \__XCopyPlane
+   17   |   |__DrawShape_____________[Line 2]
+   18   |__EditText
+   19       \__isprint
+   20       |__strcat
+   21       |__DrawItem______________[Line 13]
+   22       |__strlen
+   23       |__ToolRedraw
+   24       |   \__ID_OK
+   25       |   |__TWA
+   26       |   |__DispatchEvent
+   27       |   |   \__TWA
+   28       |   |   |__DecodeKeyPress
+   29       |   |   |   \__XLookupString
+   30       |   |   |   |__IsMetaQ
+   31       |   |   |       \__IsMetaKey
+   32       |   |   |__XRefreshKeyboardMapp
+   33       |   |__ERRORI
+   34       |       \__fprintf
+   35       |__DrawShape_____________[Line 2]
+
+    1  SetDrawingColor
+    2   \__ToolGetDisplay
+    3   |   \__ID_OK
+    4   |   |__TWA
+    5   |   |__ERRORI
+    6   |       \__fprintf
+    7   |__SetDrawAppColor
+    8       \__XSetForeground
+    9       |__XSetBackground
+
+    1  WipeOut
+    2   \__ToolGetDisplay
+    3   |   \__ID_OK
+    4   |   |__TWA
+    5   |   |__ERRORI
+    6   |       \__fprintf
+    7   |__SetDrawAppColor
+    8   |   \__XSetForeground
+    9   |   |__XSetBackground
+   10   |__DrawItem
+   11   |   \__MaintainUndo
+   12   |   |   \__CopyPlane
+   13   |   |       \__XCopyPlane
+   14   |   |__DrawShape
+   15   |       \__XDrawLine
+   16   |       |__XDrawPoint
+   17   |       |__XDrawRectangle
+   18   |       |__XFillRectangle
+   19   |       |__DrawOval
+   20   |       |   \__XDrawArc
+   21   |       |__FillOval
+   22   |       |   \__XFillArc
+   23   |       |__strlen
+   24   |       |__XDrawImageString
+   25   |__UnhighlightPushButto
+   26   |   \__ToolSetState
+   27   |   |   \__ID_OK
+   28   |   |   |__TWA
+   29   |   |__ToolHighlight
+   30   |       \__ID_OK
+   31   |       |__ToolSetForeground
+   32   |       |   \__ID_OK
+   33   |       |   |__XSetForeground
+   34   |       |   |__TWA
+   35   |       |   |__ERRORI________________[Line 5]
+   36   |       |__ToolDrawLine
+   37   |       |   \__ID_OK
+   38   |       |   |__XDrawLine
+   39   |       |   |__TWA
+   40   |       |   |__ERRORI________________[Line 5]
+   41   |       |__TWA
+   42   |__XFlush
+
+    1  PopUpLoadFile
+    2   \__SetDialogData
+    3   |   \__ToolSetName
+    4   |   |   \__ID_OK
+    5   |   |   |__strlen
+    6   |   |   |__strcpy
+    7   |   |   |__TWA
+    8   |   |   |__ERRORI
+    9   |   |       \__fprintf
+   10   |   |__ToolClear
+   11   |   |   \__ID_OK
+   12   |   |   |__XClearWindow
+   13   |   |   |__TWA
+   14   |   |   |__ERRORI________________[Line 8]
+   15   |   |__ToolRedraw
+   16   |       \__ID_OK
+   17   |       |__TWA
+   18   |       |__DispatchEvent
+   19   |       |   \__TWA
+   20   |       |   |__DecodeKeyPress
+   21   |       |   |   \__XLookupString
+   22   |       |   |   |__IsMetaQ
+   23   |       |   |       \__IsMetaKey
+   24   |       |   |__XRefreshKeyboardMapp
+   25   |       |__ERRORI________________[Line 8]
+   26   |__SetDialogPrompt
+   27   |   \__ToolSetName___________[Line 3]
+   28   |   |__ToolClear_____________[Line 10]
+   29   |   |__ToolRedraw____________[Line 15]
+   30   |__SetDialogCallback
+   31   |   \__ToolSetUserFunc
+   32   |       \__ID_OK
+   33   |       |__TWA
+   34   |       |__ERRORI________________[Line 8]
+   35   |__PopUpDialog
+   36   |   \__ToolGetDisplay
+   37   |   |   \__ID_OK
+   38   |   |   |__TWA
+   39   |   |   |__ERRORI________________[Line 8]
+   40   |   |__QueryPointer
+   41   |   |   \__DefaultScreen
+   42   |   |   |__XQueryPointer
+   43   |   |   |__RootWindow
+   44   |   |__XMoveWindow
+   45   |   |__XMapRaised
+   46   |   |__XMapSubwindows
+   47   |   |__XFlush
+   48   |__UnhighlightPushButto
+   49       \__ToolSetState
+   50       |   \__ID_OK
+   51       |   |__TWA
+   52       |__ToolHighlight
+   53           \__ID_OK
+   54           |__ToolSetForeground
+   55           |   \__ID_OK
+   56           |   |__XSetForeground
+   57           |   |__TWA
+   58           |   |__ERRORI________________[Line 8]
+   59           |__ToolDrawLine
+   60           |   \__ID_OK
+   61           |   |__XDrawLine
+   62           |   |__TWA
+   63           |   |__ERRORI________________[Line 8]
+   64           |__TWA
+
+    1  LoadFile
+    2   \__UnhighlightPushButto
+    3   |   \__ToolSetState
+    4   |   |   \__ID_OK
+    5   |   |   |__TWA
+    6   |   |__ToolHighlight
+    7   |       \__ID_OK
+    8   |       |__ToolSetForeground
+    9   |       |   \__ID_OK
+   10   |       |   |__XSetForeground
+   11   |       |   |__TWA
+   12   |       |   |__ERRORI
+   13   |       |       \__fprintf
+   14   |       |__ToolDrawLine
+   15   |       |   \__ID_OK
+   16   |       |   |__XDrawLine
+   17   |       |   |__TWA
+   18   |       |   |__ERRORI________________[Line 12]
+   19   |       |__TWA
+   20   |__PopDownDialog
+   21   |   \__UnhighlightPushButto__[Line 2]
+   22   |   |__ToolGetDisplay
+   23   |   |   \__ID_OK
+   24   |   |   |__TWA
+   25   |   |   |__ERRORI________________[Line 12]
+   26   |   |__XUnmapWindow
+   27   |   |__XFlush
+   28   |__GetDialogData
+   29   |   \__ToolGetName
+   30   |       \__ID_OK
+   31   |       |__strcpy
+   32   |       |__TWA
+   33   |__LoadDrawappFile
+   34   |   \__LoadBitmap
+   35   |   |   \__XReadBitmapFile
+   36   |   |__ERRORS
+   37   |   |   \__fprintf
+   38   |   |__DestroyUndoPixmap
+   39   |   |   \__XFreePixmap
+   40   |   |   |__XFreeGC
+   41   |   |__DestroyDrawPixmap
+   42   |   |   \__XFreePixmap
+   43   |   |   |__XFreeGC
+   44   |   |__CreateUndoPixmap
+   45   |   |   \__XCreatePixmap
+   46   |   |   |__CreateGC
+   47   |   |   |   \__XCreateGC
+   48   |   |   |__XFillRectangle
+   49   |   |   |__XSetForeground
+   50   |   |__CreateDrawingPixmap
+   51   |   |   \__XCreatePixmap
+   52   |   |   |__CreateGC______________[Line 46]
+   53   |   |   |__XFillRectangle
+   54   |   |   |__XSetForeground
+   55   |   |   |__XSetFont
+   56   |   |__ResizeEditingWindow
+   57   |   |   \__ToolResize
+   58   |   |       \__ID_OK
+   59   |   |       |__TWA
+   60   |   |       |__XResizeWindow
+   61   |   |       |__ERRORI________________[Line 12]
+   62   |   |__CopyPlane
+   63   |   |   \__XCopyPlane
+   64   |   |__XFlush
+   65   |   |__XFreePixmap
+   66   |   |__ToolRedraw
+   67   |   |   \__ID_OK
+   68   |   |   |__TWA
+   69   |   |   |__DispatchEvent
+   70   |   |   |   \__TWA
+   71   |   |   |   |__DecodeKeyPress
+   72   |   |   |   |   \__XLookupString
+   73   |   |   |   |   |__IsMetaQ
+   74   |   |   |   |       \__IsMetaKey
+   75   |   |   |   |__XRefreshKeyboardMapp
+   76   |   |   |__ERRORI________________[Line 12]
+   77   |   |__SetFileName
+   78   |       \__strncpy
+   79   |       |__SetDialogData
+   80   |       |   \__ToolSetName
+   81   |       |   |   \__ID_OK
+   82   |       |   |   |__strlen
+   83   |       |   |   |__strcpy
+   84   |       |   |   |__TWA
+   85   |       |   |   |__ERRORI________________[Line 12]
+   86   |       |   |__ToolClear
+   87   |       |   |   \__ID_OK
+   88   |       |   |   |__XClearWindow
+   89   |       |   |   |__TWA
+   90   |       |   |   |__ERRORI________________[Line 12]
+   91   |       |   |__ToolRedraw____________[Line 66]
+   92   |       |__sprintf
+   93   |       |__SetWindowName
+   94   |           \__XStoreName
+   95   |__ToolGetDisplay________[Line 22]
+
+    1  ReallyQuit
+    2   \__exit
+
+    1  Undo
+    2   \__ToolGetDisplay
+    3   |   \__ID_OK
+    4   |   |__TWA
+    5   |   |__ERRORI
+    6   |       \__fprintf
+    7   |__SetDrawAppColor
+    8   |   \__XSetForeground
+    9   |   |__XSetBackground
+   10   |__CopyPlane
+   11   |   \__XCopyPlane
+   12   |__UnhighlightPushButto
+   13   |   \__ToolSetState
+   14   |   |   \__ID_OK
+   15   |   |   |__TWA
+   16   |   |__ToolHighlight
+   17   |       \__ID_OK
+   18   |       |__ToolSetForeground
+   19   |       |   \__ID_OK
+   20   |       |   |__XSetForeground
+   21   |       |   |__TWA
+   22   |       |   |__ERRORI________________[Line 5]
+   23   |       |__ToolDrawLine
+   24   |       |   \__ID_OK
+   25   |       |   |__XDrawLine
+   26   |       |   |__TWA
+   27   |       |   |__ERRORI________________[Line 5]
+   28   |       |__TWA
+   29   |__XFlush
+
+    1  DUMPS
+    2   \__fprintf
+
+    1  DUMPL
+    2   \__fprintf
+
+    1  DUMPX
+    2   \__fprintf
+
+    1  DUMPI
+    2   \__fprintf
+
+    1  DUMPF
+    2   \__fprintf
+
+    1  RETURN
+    2   \__TRACE
+    3       \__fprintf
+
+    1  main
+    2   \__StartupX
+    3   |   \__CheckForHelp
+    4   |   |   \__FindParameter
+    5   |   |   |   \__strlen
+    6   |   |   |   |__strncmp
+    7   |   |   |__PrintUsageMessage
+    8   |   |       \__fprintf
+    9   |   |__exit
+   10   |   |__OpenDisplay
+   11   |   |   \__FindDisplayName
+   12   |   |   |   \__FindParameter_________[Line 4]
+   13   |   |   |   |__strcpy
+   14   |   |   |__ConnectToServer
+   15   |   |       \__XOpenDisplay
+   16   |   |       |__ERRORS
+   17   |   |       |   \__fprintf
+   18   |   |       |__XDisplayName
+   19   |   |       |__exit
+   20   |   |       |__DefaultScreen
+   21   |   |       |__RootWindow
+   22   |   |__SetErrorHandlers
+   23   |   |   \__XSetErrorHandler
+   24   |   |   |__XSetIOErrorHandler
+   25   |   |__BlackPixel
+   26   |   |__WhitePixel
+   27   |__strcpy
+   28   |__LoadFontName
+   29   |   \__FindParameter_________[Line 4]
+   30   |   |__strcpy
+   31   |   |__LoadFont
+   32   |       \__XLoadQueryFont
+   33   |       |__ERRORS________________[Line 16]
+   34   |       |__XCloseDisplay
+   35   |       |__exit
+   36   |__DefaultVisual
+   37   |__DefaultDepth
+   38   |__SetUpVisual
+   39   |   \__DefaultVisual
+   40   |   |__DefaultDepth
+   41   |   |__XGetVisualInfo
+   42   |   |__XFree
+   43   |__ERROR
+   44   |   \__fprintf
+   45   |__FontHeight
+   46   |__TopWindow
+   47   |   \__DefaultScreen
+   48   |   |__CheckGeometry
+   49   |   |   \__FindGeometry
+   50   |   |   |   \__FindParameter_________[Line 4]
+   51   |   |   |   |__strcpy
+   52   |   |   |__ParseGeometry
+   53   |   |       \__XParseGeometry
+   54   |   |__DisplayWidth
+   55   |   |__DisplayHeight
+   56   |   |__OpenWindow
+   57   |   |   \__XCreateWindow
+   58   |   |__SetSizeHints
+   59   |   |   \__FillSizeHints
+   60   |   |   |__XSetWMNormalHints
+   61   |   |   |__XSetNormalHints
+   62   |   |__SetClassHints
+   63   |   |   \__XSetClassHint
+   64   |   |__FindWindowName
+   65   |   |   \__strcpy
+   66   |   |   |__FindParameter_________[Line 4]
+   67   |   |   |__SetWindowName
+   68   |   |       \__XStoreName
+   69   |   |__FindInitialState
+   70   |   |   \__FindParameter_________[Line 4]
+   71   |   |__SetWMHints
+   72   |   |   \__XSetWMHints
+   73   |   |__XSetCommand
+   74   |__DefaultColormap
+   75   |__SetUpColormap
+   76   |   \__DefaultVisual
+   77   |   |__DefaultColormap
+   78   |   |__XCreateColormap
+   79   |   |__XSetWindowColormap
+   80   |__BlackPixel
+   81   |__WhitePixel
+   82   |__AllocNamedColor
+   83   |   \__XAllocNamedColor
+   84   |__LoadIcon
+   85   |   \__LoadBitmap
+   86   |   |   \__XReadBitmapFile
+   87   |   |__SetWindowIcon
+   88   |       \__XGetWMHints
+   89   |       |__malloc
+   90   |       |__XSetWMHints
+   91   |       |__XFree
+   92   |       |__XSetIconName
+   93   |__CreateGC
+   94   |   \__XCreateGC
+   95   |__XSetFont
+   96   |__CreateEditingWindow
+   97   |   \__FindParameter_________[Line 4]
+   98   |   |__sscanf
+   99   |   |__CreateToolWindow
+  100   |   |   \__ERRORI
+  101   |   |   |   \__fprintf
+  102   |   |   |__TWA
+  103   |   |   |__OpenWindow____________[Line 56]
+  104   |   |__ToolSetGroup
+  105   |   |   \__ID_OK
+  106   |   |   |__TWA
+  107   |   |   |__ERRORI________________[Line 100]
+  108   |   |__ToolSetFunctions
+  109   |   |   \__ID_OK
+  110   |   |   |__TWA
+  111   |   |   |__ERRORI________________[Line 100]
+  112   |   |__ToolGetWindow
+  113   |   |   \__ID_OK
+  114   |   |   |__TWA
+  115   |   |   |__ERRORI________________[Line 100]
+  116   |   |__CreateEditingGCs
+  117   |   |   \__CreateXorGC
+  118   |   |   |   \__XCreateGC
+  119   |   |   |__CreateGC______________[Line 93]
+  120   |   |   |__XSetFont
+  121   |   |__CreateDrawingPixmap
+  122   |   |   \__XCreatePixmap
+  123   |   |   |__CreateGC______________[Line 93]
+  124   |   |   |__XFillRectangle
+  125   |   |   |__XSetForeground
+  126   |   |   |__XSetFont
+  127   |   |__CreateUndoPixmap
+  128   |   |   \__XCreatePixmap
+  129   |   |   |__CreateGC______________[Line 93]
+  130   |   |   |__XFillRectangle
+  131   |   |   |__XSetForeground
+  132   |   |__ERROR_________________[Line 43]
+  133   |   |__XCloseDisplay
+  134   |   |__exit
+  135   |__CreateButtons
+  136   |   \__FontHeight
+  137   |   |__CreatePushButton
+  138   |   |   \__CreateToolWindow______[Line 99]
+  139   |   |   |__ToolSetName
+  140   |   |   |   \__ID_OK
+  141   |   |   |   |__strlen
+  142   |   |   |   |__strcpy
+  143   |   |   |   |__TWA
+  144   |   |   |   |__ERRORI________________[Line 100]
+  145   |   |   |__ToolSetGC
+  146   |   |   |   \__ID_OK
+  147   |   |   |   |__TWA
+  148   |   |   |   |__ERRORI________________[Line 100]
+  149   |   |   |__ToolSetForeground
+  150   |   |   |   \__ID_OK
+  151   |   |   |   |__XSetForeground
+  152   |   |   |   |__TWA
+  153   |   |   |   |__ERRORI________________[Line 100]
+  154   |   |   |__ToolSetBackground
+  155   |   |   |   \__ID_OK
+  156   |   |   |   |__XSetBackground
+  157   |   |   |   |__TWA
+  158   |   |   |   |__ERRORI________________[Line 100]
+  159   |   |   |__ToolSetFont
+  160   |   |   |   \__ID_OK
+  161   |   |   |   |__TWA
+  162   |   |   |   |__XSetFont
+  163   |   |   |   |__ERRORI________________[Line 100]
+  164   |   |   |__ToolSetFunctions______[Line 108]
+  165   |   |   |__ERRORI________________[Line 100]
+  166   |   |__ToolSetGroup__________[Line 104]
+  167   |   |__ToolSetState
+  168   |       \__ID_OK
+  169   |       |__TWA
+  170   |__CreateDialog
+  171   |   \__QueryPointer
+  172   |   |   \__DefaultScreen
+  173   |   |   |__XQueryPointer
+  174   |   |   |__RootWindow
+  175   |   |__FontHeight
+  176   |   |__CreateTransientWindo
+  177   |   |   \__OpenWindow____________[Line 56]
+  178   |   |   |__XSetTransientForHint
+  179   |   |   |__SetStandardHints
+  180   |   |   |   \__SetSizeHints__________[Line 58]
+  181   |   |   |   |__SetWindowName_________[Line 67]
+  182   |   |   |   |__SetWMHints____________[Line 71]
+  183   |   |   |__XSetWindowColormap
+  184   |   |   |__XSetWindowBackground
+  185   |   |__CreateGC______________[Line 93]
+  186   |   |__XSetFont
+  187   |   |__CreateTextLabel
+  188   |   |   \__CreateToolWindow______[Line 99]
+  189   |   |   |__ToolSetName___________[Line 139]
+  190   |   |   |__ToolSetGC_____________[Line 145]
+  191   |   |   |__ToolSetForeground_____[Line 149]
+  192   |   |   |__ToolSetBackground_____[Line 154]
+  193   |   |   |__ToolSetFont___________[Line 159]
+  194   |   |   |__ToolSetGroup__________[Line 104]
+  195   |   |   |__ToolSetFunctions______[Line 108]
+  196   |   |__CreateTextEntry
+  197   |   |   \__CreateToolWindow______[Line 99]
+  198   |   |   |__ToolSetName___________[Line 139]
+  199   |   |   |__ToolSetGC_____________[Line 145]
+  200   |   |   |__ToolSetForeground_____[Line 149]
+  201   |   |   |__ToolSetBackground_____[Line 154]
+  202   |   |   |__ToolSetFont___________[Line 159]
+  203   |   |   |__ToolSetGroup__________[Line 104]
+  204   |   |   |__ToolSetFunctions______[Line 108]
+  205   |   |__CreatePushButton______[Line 137]
+  206   |__SetFileName
+  207   |   \__strncpy
+  208   |   |__SetDialogData
+  209   |   |   \__ToolSetName___________[Line 139]
+  210   |   |   |__ToolClear
+  211   |   |   |   \__ID_OK
+  212   |   |   |   |__XClearWindow
+  213   |   |   |   |__TWA
+  214   |   |   |   |__ERRORI________________[Line 100]
+  215   |   |   |__ToolRedraw
+  216   |   |       \__ID_OK
+  217   |   |       |__TWA
+  218   |   |       |__DispatchEvent
+  219   |   |       |   \__TWA
+  220   |   |       |   |__DecodeKeyPress
+  221   |   |       |   |   \__XLookupString
+  222   |   |       |   |   |__IsMetaQ
+  223   |   |       |   |       \__IsMetaKey
+  224   |   |       |   |__XRefreshKeyboardMapp
+  225   |   |       |__ERRORI________________[Line 100]
+  226   |   |__sprintf
+  227   |   |__SetWindowName_________[Line 67]
+  228   |__CheckForFileLoad
+  229   |   \__FindParameter_________[Line 4]
+  230   |   |__LoadDrawappFile
+  231   |       \__LoadBitmap____________[Line 85]
+  232   |       |__ERRORS________________[Line 16]
+  233   |       |__DestroyUndoPixmap
+  234   |       |   \__XFreePixmap
+  235   |       |   |__XFreeGC
+  236   |       |__DestroyDrawPixmap
+  237   |       |   \__XFreePixmap
+  238   |       |   |__XFreeGC
+  239   |       |__CreateUndoPixmap______[Line 127]
+  240   |       |__CreateDrawingPixmap___[Line 121]
+  241   |       |__ResizeEditingWindow
+  242   |       |   \__ToolResize
+  243   |       |       \__ID_OK
+  244   |       |       |__TWA
+  245   |       |       |__XResizeWindow
+  246   |       |       |__ERRORI________________[Line 100]
+  247   |       |__CopyPlane
+  248   |       |   \__XCopyPlane
+  249   |       |__XFlush
+  250   |       |__XFreePixmap
+  251   |       |__ToolRedraw____________[Line 215]
+  252   |       |__SetFileName___________[Line 206]
+  253   |__XMapRaised
+  254   |__XMapSubwindows
+  255   |__XFlush
+  256   |__EventLoop
+  257   |   \__XNextEvent
+  258   |   |__ToolEvent
+  259   |   |   \__TWA
+  260   |   |   |__DispatchEvent_________[Line 218]
+  261   |   |   |__ERRORI________________[Line 100]
+  262   |   |__DecodeKeyPress________[Line 220]
+  263   |   |__IsMetaKey
+  264   |   |__HandleMetaKey
+  265   |       \__PushButtonEvent
+  266   |       |   \__ToolHighlightGroup
+  267   |       |   |   \__ToolGetGroup
+  268   |       |   |   |   \__ID_OK
+  269   |       |   |   |   |__TWA
+  270   |       |   |   |   |__ERRORI________________[Line 100]
+  271   |       |   |   |__ToolHighlight
+  272   |       |   |       \__ID_OK
+  273   |       |   |       |__ToolSetForeground_____[Line 149]
+  274   |       |   |       |__ToolDrawLine
+  275   |       |   |       |   \__ID_OK
+  276   |       |   |       |   |__XDrawLine
+  277   |       |   |       |   |__TWA
+  278   |       |   |       |   |__ERRORI________________[Line 100]
+  279   |       |   |       |__TWA
+  280   |       |   |__ToolGetGroup__________[Line 267]
+  281   |       |   |__ToolSetState__________[Line 167]
+  282   |       |   |__ToolHighlight_________[Line 271]
+  283   |       |   |__XFlush
+  284   |       |   |__ToolExec
+  285   |       |       \__ID_OK
+  286   |       |       |__TWA
+  287   |       |       |__ERRORI________________[Line 100]
+  288   |       |__ToolGetDisplay
+  289   |           \__ID_OK
+  290   |           |__TWA
+  291   |           |__ERRORI________________[Line 100]
+  292   |__Quit
+  293   |   \__SaveFile
+  294   |   |   \__ToolGetDisplay________[Line 288]
+  295   |   |   |__GetDialogData
+  296   |   |   |   \__ToolGetName
+  297   |   |   |       \__ID_OK
+  298   |   |   |       |__strcpy
+  299   |   |   |       |__TWA
+  300   |   |   |__SaveBitmap
+  301   |   |   |   \__XWriteBitmapFile
+  302   |   |   |__ERRORS________________[Line 16]
+  303   |   |   |__UnhighlightPushButto
+  304   |   |       \__ToolSetState__________[Line 167]
+  305   |   |       |__ToolHighlight_________[Line 271]
+  306   |   |__SetDialogData_________[Line 208]
+  307   |   |__SetDialogPrompt
+  308   |   |   \__ToolSetName___________[Line 139]
+  309   |   |   |__ToolClear_____________[Line 210]
+  310   |   |   |__ToolRedraw____________[Line 215]
+  311   |   |__SetDialogCallback
+  312   |   |   \__ToolSetUserFunc
+  313   |   |       \__ID_OK
+  314   |   |       |__TWA
+  315   |   |       |__ERRORI________________[Line 100]
+  316   |   |__SetDialogCancelCallb
+  317   |   |   \__ToolSetUserFunc_______[Line 312]
+  318   |   |__PopUpDialog
+  319   |   |   \__ToolGetDisplay________[Line 288]
+  320   |   |   |__QueryPointer__________[Line 171]
+  321   |   |   |__XMoveWindow
+  322   |   |   |__XMapRaised
+  323   |   |   |__XMapSubwindows
+  324   |   |   |__XFlush
+  325   |   |__exit
+  326   |__exit
+
+    1  DrawString
+    2   \__XDrawImageString
+    3   |__strlen
+
+    1  TextEntryEvent
+    2   \__ToolGetName
+    3   |   \__ID_OK
+    4   |   |__strcpy
+    5   |   |__TWA
+    6   |__isprint
+    7   |__strcat
+    8   |__ToolSetName
+    9   |   \__ID_OK
+   10   |   |__strlen
+   11   |   |__strcpy
+   12   |   |__TWA
+   13   |   |__ERRORI
+   14   |       \__fprintf
+   15   |__ToolSetForeground
+   16   |   \__ID_OK
+   17   |   |__XSetForeground
+   18   |   |__TWA
+   19   |   |__ERRORI________________[Line 13]
+   20   |__ToolDrawName
+   21   |   \__ToolGetName___________[Line 2]
+   22   |   |__ToolCenterText
+   23   |       \__ID_OK
+   24   |       |__FontHeight
+   25   |       |__TWA
+   26   |       |__XTextWidth
+   27   |       |__strlen
+   28   |       |__XDrawImageString
+   29   |       |__ERRORI________________[Line 13]
+   30   |__ToolExec
+   31   |   \__ID_OK
+   32   |   |__TWA
+   33   |   |__ERRORI________________[Line 13]
+   34   |__strlen
+   35   |__ToolClear
+   36   |   \__ID_OK
+   37   |   |__XClearWindow
+   38   |   |__TWA
+   39   |   |__ERRORI________________[Line 13]
+   40   |__ToolHighlight
+   41       \__ID_OK
+   42       |__ToolSetForeground_____[Line 15]
+   43       |__ToolDrawLine
+   44       |   \__ID_OK
+   45       |   |__XDrawLine
+   46       |   |__TWA
+   47       |   |__ERRORI________________[Line 13]
+   48       |__TWA
+
+    1  TextEntryDraw
+    2   \__ToolHighlight
+    3   |   \__ID_OK
+    4   |   |__ToolSetForeground
+    5   |   |   \__ID_OK
+    6   |   |   |__XSetForeground
+    7   |   |   |__TWA
+    8   |   |   |__ERRORI
+    9   |   |       \__fprintf
+   10   |   |__ToolDrawLine
+   11   |   |   \__ID_OK
+   12   |   |   |__XDrawLine
+   13   |   |   |__TWA
+   14   |   |   |__ERRORI________________[Line 8]
+   15   |   |__TWA
+   16   |__ToolSetForeground_____[Line 4]
+   17   |__ToolDrawName
+   18       \__ToolGetName
+   19       |   \__ID_OK
+   20       |   |__strcpy
+   21       |   |__TWA
+   22       |__ToolCenterText
+   23           \__ID_OK
+   24           |__FontHeight
+   25           |__TWA
+   26           |__XTextWidth
+   27           |__strlen
+   28           |__XDrawImageString
+   29           |__ERRORI________________[Line 8]
+
+    1  ErrorHandler
+    2   \__XGetErrorText
+    3   |__fprintf
+    4   |__DisplayString
+
+    1  FatalErrorHandler
+    2   \__fprintf
+    3   |__DisplayString
+    4   |__exit
+
+    1  LabelDraw
+    2   \__ToolSetForeground
+    3   |   \__ID_OK
+    4   |   |__XSetForeground
+    5   |   |__TWA
+    6   |   |__ERRORI
+    7   |       \__fprintf
+    8   |__ToolDrawName
+    9       \__ToolGetName
+   10       |   \__ID_OK
+   11       |   |__strcpy
+   12       |   |__TWA
+   13       |__ToolCenterText
+   14           \__ID_OK
+   15           |__FontHeight
+   16           |__TWA
+   17           |__XTextWidth
+   18           |__strlen
+   19           |__XDrawImageString
+   20           |__ERRORI________________[Line 6]
+
+    1  setSeed
+    2   \__srand48
+
+    1  PushButtonDraw
+    2   \__ToolGetState
+    3   |   \__ID_OK
+    4   |   |__TWA
+    5   |   |__ERRORI
+    6   |       \__fprintf
+    7   |__ToolHighlight
+    8   |   \__ID_OK
+    9   |   |__ToolSetForeground
+   10   |   |   \__ID_OK
+   11   |   |   |__XSetForeground
+   12   |   |   |__TWA
+   13   |   |   |__ERRORI________________[Line 5]
+   14   |   |__ToolDrawLine
+   15   |   |   \__ID_OK
+   16   |   |   |__XDrawLine
+   17   |   |   |__TWA
+   18   |   |   |__ERRORI________________[Line 5]
+   19   |   |__TWA
+   20   |__ToolSetForeground_____[Line 9]
+   21   |__ToolDrawName
+   22       \__ToolGetName
+   23       |   \__ID_OK
+   24       |   |__strcpy
+   25       |   |__TWA
+   26       |__ToolCenterText
+   27           \__ID_OK
+   28           |__FontHeight
+   29           |__TWA
+   30           |__XTextWidth
+   31           |__strlen
+   32           |__XDrawImageString
+   33           |__ERRORI________________[Line 5]
+
+    1  ProbDist
+    2   \__init
+
+    1  randomSample
+    2   \__drand48
+
+    1  errno
+    2   \_____errno
+
+    1  _POLY9
+    2   \___POLY8
+    3       \___POLY7
+    4           \___POLY6
+    5               \___POLY5
+    6                   \___POLY4
+    7                       \___POLY3
+    8                           \___POLY2
+    9                               \___POLY1
+
+    1  _bufsiz
+    2   \___bufend
+    3       \__fileno
+    4       |___realbufend
+
+    1  getchar
+    2   \__getc
+    3       \____filbuf
+    4       |___filbuf
+
+    1  putchar
+    2   \__putc
+    3       \____flsbuf
+    4       |___flsbuf
+
+    1  getchar_unlocked
+    2   \__getc_unlocked
+    3       \____filbuf
+    4       |___filbuf
+
+    1  putchar_unlocked
+    2   \__putc_unlocked
+    3       \____flsbuf
+    4       |___flsbuf
+
+    1  timercmp
+    2   \__cmp
+
+    1  MUTEX_NOT_HELD
+    2   \__mutex_owned
+
+    1  FD_ZERO
+    2   \__bzero
+    3   |__memset
+
+    1  WIFCONTINUED
+    2   \__WWORD
+
+    1  CLK_TCK
+    2   \___sysconf
+
+    1  getdate_err
+    2   \___getdate_err_addr
+
+    1  PID_HOLD
+    2   \__ASSERT
+    3   |__MUTEX_HELD
+    4       \__mutex_owned
+
+    1  PID_RELE
+    2   \__ASSERT
+    3   |__MUTEX_HELD
+    4   |   \__mutex_owned
+    5   |__pid_rele
+
+    1  tracing
+    2   \__sigismember
+    3       \__sigmask
+    4       |__sigword
+
+    1  ISSIG
+    2   \__ISSIG_FAST
+    3   |   \__ISSIG_PENDING
+    4   |   |__issig
+    5   |__ttolwp
+    6   |__ttoproc
+
+    1  ISSTOP
+    2   \__sigismember
+    3       \__sigmask
+    4       |__sigword
+
+    1  crhold
+    2   \__mutex_enter
+    3   |__mutex_exit
+
+    1  DISP_PRIO
+    2   \__INHERITED
+
+    1  SWAP_OK
+    2   \__LOCK_HELD
+
+    1  curthread
+    2   \__threadp
+
+    1  curproc
+    2   \__ttoproc
+
+    1  thread_unlock
+    2   \__disp_lock_exit
+
+    1  thread_unlock_high
+    2   \__disp_lock_exit_high
+
+    1  thread_unlock_nopree
+    2   \__disp_lock_exit_nopre
+
+    1  THREAD_LOCK_HELD
+    2   \__DISP_LOCK_HELD
+    3       \__LOCK_HELD
+
+    1  THREAD_TRANSITION
+    2   \__thread_transition
+
+    1  THREAD_RUN
+    2   \__THREAD_SET_STATE
+
+    1  THREAD_SWAP
+    2   \__THREAD_SET_STATE
+
+    1  THREAD_STOP
+    2   \__THREAD_SET_STATE
+    3   |__disp_lock_exit
+
+    1  THREAD_ZOMB
+    2   \__THREAD_SET_STATE
+
+    1  THREAD_ONPROC
+    2   \__THREAD_SET_STATE
+
+    1  THREAD_SLEEP
+    2   \__THREAD_SET_STATE
+    3   |__disp_lock_exit_high
+
+    1  CL_PARMSIN
+    2   \__cl_parmsin
+
+    1  CL_PARMSOUT
+    2   \__cl_parmsout
+
+    1  dkunit
+    2   \__minor
+
+    1  DELAY
+    2   \__drv_usecwait
+
+    1  CDELAY
+    2   \__drv_usecwait
+
+    1  HZ
+    2   \___sysconf
+
+    1  TICK
+    2   \___sysconf
+
+    1  PAGESIZE
+    2   \___sysconf
+
+    1  SIGRTMIN
+    2   \___sysconf
+
+    1  SIGRTMAX
+    2   \___sysconf
+
+    1  sigaddset
+    2   \__sigword
+    3   |__sigmask
+
+    1  sigdelset
+    2   \__sigword
+    3   |__sigmask
+
+    1  UNSAFE_DRIVER_LOCK_H
+    2   \__mutex_owned
+
+    1  UNSAFE_DRIVER_LOCK_N
+    2   \__mutex_owned
+
+    1  TS_NEW
+    2   \__kmem_zalloc
+
+    1  TSTILE_INSERT
+    2   \__sleepq_insert
+
+    1  TSTILE_WAKEONE
+    2   \__sleepq_wakeone
+
+    1  TSTILE_WAKEALL
+    2   \__sleepq_wakeall
+
+    1  TSTILE_SLEEPQ
+    2   \__SOBJ_QNUM
+
+    1  TSTILE_DEQ
+    2   \__sleepq_dequeue
+
+    1  TSTILE_UNSLEEP
+    2   \__sleepq_unsleep
+
+    1  SPIN_LOCK
+    2   \__ipltospl
+
+    1  RW_READ_HELD
+    2   \__rw_read_held
+
+    1  RW_WRITE_HELD
+    2   \__rw_write_held
+
+    1  RW_LOCK_HELD
+    2   \__rw_lock_held
+
+    1  RW_ISWRITER
+    2   \__rw_iswriter
+
+    1  SEMA_HELD
+    2   \__sema_held

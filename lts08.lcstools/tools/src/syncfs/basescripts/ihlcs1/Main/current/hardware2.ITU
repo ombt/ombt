@@ -1,0 +1,61 @@
+# E1/T1
+ent-eqpt-all::iom-12:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-14:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+# ENA
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAA,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAA,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+# VSM3s
+ent-eqpt::iom-15:::BAUIAA1EAC,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-9:::BAUIAA1EAC,sec,95,95,95,<vs3>:is
+# OC3/TDMOC
+ent-eqpt-all::iom-16:::iomoduletype=BA4AW60FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+ent-eqpt-all::iom-17:::iomoduletype=BA4AW60FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+# enter partition data here so the partition info will populate on t0
+ent-mg-partition::part0:::,maxctxt=200
+ent-mg-mgcassoc::ihlcs1-part0:::mgctype=primary,ipaddr=10.11.10.3,rxport=2944,txport=2944,transprot=udp,mgcidletmr=8
+sleep 60
+# E1s
+ent-e1::iom-12-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-8:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-9:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-10:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-12-e1-11:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-8:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-14-e1-9:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-stm1::iom-16-stm1-1:::stmfmt=ITU
+ent-stm1::iom-16-stm1-2:::stmfmt=ITU
+ent-stm1::iom-16-stm1-3:::stmfmt=ITU
+ent-tug3::iom-16-stm1-1-tug3-1
+ent-tug3::iom-16-stm1-1-tug3-2
+ent-tug3::iom-16-stm1-1-tug3-3
+ent-tug3::iom-16-stm1-2-tug3-1
+ent-tug3::iom-16-stm1-2-tug3-2
+ent-tug3::iom-16-stm1-2-tug3-3
+ent-tug3::iom-16-stm1-3-tug3-1
+ent-tug3::iom-16-stm1-3-tug3-2
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.10.1,mateipaddr=10.175.10.2,subnetmask=255.255.255.0,defaultgateway=10.175.10.254:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.10.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.10.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.10.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.10.254

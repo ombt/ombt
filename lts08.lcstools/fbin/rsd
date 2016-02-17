@@ -1,0 +1,141 @@
+#
+####################################################################
+#
+# Shell function RSD stores directories in symbols. It also allows
+# you to CD to one of the saved directories.
+#
+# Usage:
+#	$ rsd [-x] [-e] [-u or -s or -d] [symbol number] [directory] 
+#
+# Examples:
+#	$ rsd -s 1	store present directory in symbol 1
+#	$ rsd -s -e 1	store present directory in symbol 1 
+#			and export to subsequent subshells.
+#	$ rsd -u 1	unset symbol 1
+#	$ rsd -d 1	display directory stored in symbol 1
+#	$ rsd 1		CD to directory stored in symbol 1
+#	$ rsd		print list of symbols and directories
+#	$ rsd -x ...	debug flag
+#
+####################################################################
+#
+rsd () {
+#
+# typeset the following symbols as local.
+#
+typeset flag ptrS dIR i oprflag usage i
+#
+usage="usage: rsd [-x] [-e] [-u|-s|-d] [symbol number] [directory]"
+oprflag="change"		#change directories, default.
+expflag="no"			#don't export symbols.
+#
+# Parse command line
+#
+set -- `getopt ?xusde $*`
+if [ $? -ne 0 ]
+then
+	echo $usage
+	return
+fi
+#
+for i in $*
+do
+	case "$i" in
+	-x)
+		set -x			#debug mode
+		shift
+		;;
+	-u)
+		oprflag="unset"		#unset symbol
+		shift
+		;;
+	-s)
+		oprflag="set"		#set symbol
+		shift
+		;;
+	-d)
+		oprflag="display"	#display symbol
+		shift
+		;;
+	-e)
+		expflag="yes"		#export symbols
+		shift
+		;;
+	--)
+		shift
+		break
+		;;
+	esac
+done
+if [ $# -eq 0 ]
+then
+	oprflag="print"
+fi
+#
+# Do it!
+#
+case "$oprflag" in
+print)
+	i=1
+	while [ "$i" -le 10 ]
+	do
+		ptrS=SAVEDIR${i}
+		eval "dIR=\$$ptrS"
+		if [ "$dIR" != "" ]
+		then
+			echo "rsd $i --> "$dIR
+		fi
+		i=`expr $i + 1`
+	done
+	;;
+unset)
+	while [ "$1" != "" ]
+	do
+		ptrS=SAVEDIR${1}
+		eval "unset $ptrS"
+		shift
+	done
+	;;
+set)
+	ptrS=SAVEDIR${1}
+	if [ "$2" = "" ]
+	then
+		dIR="`pwd`"
+	else
+		dIR="$2"
+	fi
+	eval "$ptrS=$dIR"
+	if [ $expflag = "yes" ]
+	then
+		export SAVEDIR${1}
+	fi
+	eval "echo SAVEDIR${1} = \$$ptrS"
+	;;
+display)
+	ptrS=SAVEDIR${1}
+	eval " echo \$$ptrS"
+	;;
+change)
+	ptrS=SAVEDIR${1}
+	eval "dIR=\$$ptrS"
+	if [ "$dIR" != "" ]
+	then
+		if [ $# -eq 2 ]
+		then
+			dIR=$dIR/${2}
+		fi
+		if [ -d "$dIR" ]
+		then
+			cd $dIR
+			echo "$dIR"
+		else
+			echo "$dIR is not a directory."
+		fi
+	else
+		echo "$ptrS is not defined."
+	fi
+	;;
+esac
+#
+return
+}

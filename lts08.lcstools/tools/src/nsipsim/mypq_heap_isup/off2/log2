@@ -1,0 +1,268 @@
+
+==>> logfile = log2
+
+==>> config file = vanilla2
+PARAMETER: delta
+VALUE    : 5
+PARAMETER: minmsgsize
+VALUE    : 20
+PARAMETER: mysipip
+VALUE    : 135.111.82.6
+PARAMETER: mysipport
+VALUE    : 5061
+PARAMETER: myadminip
+VALUE    : 135.111.82.6
+PARAMETER: myadminport
+VALUE    : 10002
+PARAMETER: myrtpip
+VALUE    : 135.111.82.6
+PARAMETER: myrtpport
+VALUE    : 8002
+PARAMETER: myrtcpport
+VALUE    : 8003
+PARAMETER: interreporttime
+VALUE    : 120
+
+1000 ORIG-TERM DN pairs read.
+GIVEN SIP IP  : 135.111.82.6
+GIVEN SIP PORT: 5061
+ADMIN IP  : 135.111.82.6
+ADMIN PORT: 10002
+RTP IP  : 135.111.82.6
+RTP PORT: 8002
+RTCP PORT: 8003
+
+starttimer:
+	callid=CALL-REPORT
+	label=CALL-REPORT
+	delta=120
+	endtime=1129907060
+	id=187908246
+	callid = CALL-REPORT
+	expire = 1129907060
+	id     = 187908246
+	label  = CALL-REPORT
+V
+Verbose is OFF
+
+Call Statistics Report: Fri Oct 21 10:04:22 2005
+
+Statistics: 
+general:
+	starttimerenqueuecalled = 2035
+msgs-received:
+	ACK = 463
+	BYE = 443
+	CANCEL = 252
+	INVITE = 801
+	RETURNCODE200BYE = 2
+msgs-sent:
+	BYE = 3
+	RETURNCODE180INVITE = 801
+	RETURNCODE183INVITE = 801
+	RETURNCODE200BYE = 443
+	RETURNCODE200CANCEL = 252
+	RETURNCODE200INVITE = 767
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 697
+	send200OK = 443
+	send200OKCancel = 252
+	sendBye = 3
+	sendInvite180Ringing = 801
+	sendInvite183Ringing = 801
+	sendInvite200OK = 767
+	stable = 463
+	started = 801
+	timedout = 0
+	timedout-1 = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x126d4c)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x126db8)
+	origdnsz ==>> 1000
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Fri Oct 21 10:06:22 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4
+	handleSip-sendGratuitous200OK = 10
+	starttimerenqueuecalled = 4441
+msgs-received:
+	ACK = 985
+	BYE = 985
+	CANCEL = 548
+	INVITE = 1677
+	RETURNCODE200BYE = 17
+msgs-sent:
+	BYE = 110
+	RETURNCODE180INVITE = 1677
+	RETURNCODE183INVITE = 1677
+	RETURNCODE200BYE = 985
+	RETURNCODE200CANCEL = 538
+	RETURNCODE200CANCEL-GRATUITOUS = 10
+	RETURNCODE200INVITE = 1667
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 1589
+	send200OK = 985
+	send200OKCancel = 538
+	sendBye = 110
+	sendInvite180Ringing = 1677
+	sendInvite183Ringing = 1677
+	sendInvite200OK = 1667
+	stable = 985
+	started = 1677
+	timedout = 0
+	timedout-1 = 109
+	timedout-2 = 1
+	timedout-3 = 53
+
+Listing Call Load Data:
+	calls ==>> HASH(0x126d4c)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x126db8)
+	origdnsz ==>> 1000
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Fri Oct 21 10:08:27 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 11
+	handleSip-sendGratuitous200OK = 28
+	starttimerenqueuecalled = 6424
+msgs-received:
+	ACK = 1224
+	BYE = 1242
+	CANCEL = 1222
+	INVITE = 2716
+	RETURNCODE200BYE = 50
+msgs-sent:
+	BYE = 268
+	RETURNCODE180INVITE = 2715
+	RETURNCODE183INVITE = 2715
+	RETURNCODE200BYE = 1241
+	RETURNCODE200CANCEL = 1195
+	RETURNCODE200CANCEL-GRATUITOUS = 27
+	RETURNCODE200INVITE = 2214
+	RETURNCODE486INVITE = 1
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 2622
+	invalidtimers-1 = 1
+	send200OK = 1241
+	send200OKCancel = 1195
+	send486Busy = 1
+	sendBye = 268
+	sendInvite180Ringing = 2715
+	sendInvite183Ringing = 2715
+	sendInvite200OK = 2214
+	stable = 1223
+	started = 2715
+	timedout = 0
+	timedout-1 = 256
+	timedout-2 = 12
+	timedout-3 = 146
+	waitfor486ack = 1
+
+Listing Call Load Data:
+	calls ==>> HASH(0x126d4c)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x126db8)
+	origdnsz ==>> 1000
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Fri Oct 21 10:10:27 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 19
+	handleSip-sendGratuitous200OK = 33
+	starttimerenqueuecalled = 6629
+msgs-received:
+	ACK = 1261
+	BYE = 1314
+	CANCEL = 1274
+	INVITE = 2763
+	RETURNCODE200BYE = 62
+msgs-sent:
+	BYE = 296
+	RETURNCODE180INVITE = 2762
+	RETURNCODE183INVITE = 2762
+	RETURNCODE200BYE = 1313
+	RETURNCODE200CANCEL = 1242
+	RETURNCODE200CANCEL-GRATUITOUS = 32
+	RETURNCODE200INVITE = 2306
+	RETURNCODE486INVITE = 1
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 2762
+	invalidtimers-1 = 1
+	send200OK = 1313
+	send200OKCancel = 1242
+	send486Busy = 1
+	sendBye = 296
+	sendInvite180Ringing = 2762
+	sendInvite183Ringing = 2762
+	sendInvite200OK = 2306
+	stable = 1260
+	started = 2762
+	timedout = 0
+	timedout-1 = 276
+	timedout-2 = 20
+	timedout-3 = 163
+	waitfor486ack = 1
+
+Listing Call Load Data:
+	calls ==>> HASH(0x126d4c)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x126db8)
+	origdnsz ==>> 1000
+	state ==>> idle
+	tag ==>> -1
+q
+
+Quitting ...

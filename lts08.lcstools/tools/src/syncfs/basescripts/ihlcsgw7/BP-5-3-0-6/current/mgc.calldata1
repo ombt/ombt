@@ -1,0 +1,4 @@
+ed-mgc-sys::com:::sgtype=plus
+ed-sip-sys:::::sipport=60000
+#Need an init-sys:telica::::10 to allow next command
+init-sys:telica::::10

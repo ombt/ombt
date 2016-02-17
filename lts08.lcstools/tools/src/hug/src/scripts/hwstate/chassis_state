@@ -1,0 +1,99 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/cpustate
+}
+globals data {
+	# reqspastate isact
+	reqspastate isact,isstbyh
+	reqspbstate isact,isstbyh
+	badreqspastate duck
+	badreqspbstate penguin
+	spa {
+		ihlcs1 {
+			ip 135.1.104.113
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcs2 {
+			ip 135.1.104.141
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsgw7 {
+			ip 135.1.104.197
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsg14 {
+			ip 135.1.105.11
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+	}
+	spb {
+		ihlcs1 {
+			ip 135.1.104.114
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcs2 {
+			ip 135.1.104.142
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsgw7 {
+			ip 135.1.104.198
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+		ihlcsg14 {
+			ip 135.1.105.12
+			login root
+			passwd plexus9000
+			tl1login telica
+			tl1passwd telica
+		}
+	}
+}
+cpustate_ihlcs1_spa exec {
+	waitforcpustate -t900 <spa.ihlcs1.ip> <reqspastate> <spa.ihlcs1.login> <spa.ihlcs1.passwd> <spa.ihlcs1.tl1login> <spa.ihlcs1.tl1passwd> <spb.ihlcs1.ip> <reqspbstate> <spb.ihlcs1.login> <spb.ihlcs1.passwd> <spb.ihlcs1.tl1login> <spb.ihlcs1.tl1passwd>
+	# waitforcpustate -t900 <spa.ihlcs1.ip> <badreqspastate> <spa.ihlcs1.login> <spa.ihlcs1.passwd> <spa.ihlcs1.tl1login> <spa.ihlcs1.tl1passwd> <spb.ihlcs1.ip> <reqspbstate> <spb.ihlcs1.login> <spb.ihlcs1.passwd> <spb.ihlcs1.tl1login> <spb.ihlcs1.tl1passwd>
+}
+cpustate_ihlcsgw7_spa exec {
+	waitforcpustate -t900 <spa.ihlcsgw7.ip> <reqspastate> <spa.ihlcsgw7.login> <spa.ihlcsgw7.passwd> <spa.ihlcsgw7.tl1login> <spa.ihlcsgw7.tl1passwd> <spb.ihlcsgw7.ip> <reqspbstate> <spb.ihlcsgw7.login> <spb.ihlcsgw7.passwd> <spb.ihlcsgw7.tl1login> <spb.ihlcsgw7.tl1passwd>
+	# waitforcpustate -t900 <spa.ihlcsgw7.ip> <reqspastate> <spa.ihlcsgw7.login> <spa.ihlcsgw7.passwd> <spa.ihlcsgw7.tl1login> <spa.ihlcsgw7.tl1passwd> <spb.ihlcsgw7.ip> <badreqspbstate> <spb.ihlcsgw7.login> <spb.ihlcsgw7.passwd> <spb.ihlcsgw7.tl1login> <spb.ihlcsgw7.tl1passwd>
+}
+cpustate_ihlcsg14_spa exec {
+	waitforcpustate -t900 <spa.ihlcsg14.ip> <reqspastate> <spa.ihlcsg14.login> <spa.ihlcsg14.passwd> <spa.ihlcsg14.tl1login> <spa.ihlcsg14.tl1passwd> <spb.ihlcsg14.ip> <reqspbstate> <spb.ihlcsg14.login> <spb.ihlcsg14.passwd> <spb.ihlcsg14.tl1login> <spb.ihlcsg14.tl1passwd>
+}
+cpustate_ihlcsg14_minmode exec {
+	waitforcpustate -t900 <spa.ihlcsg14.ip> minmode <spa.ihlcsg14.login> <spa.ihlcsg14.passwd> <spa.ihlcsg14.tl1login> <spa.ihlcsg14.tl1passwd> <spb.ihlcsg14.ip> minmode <spb.ihlcsg14.login> <spb.ihlcsg14.passwd> <spb.ihlcsg14.tl1login> <spb.ihlcsg14.tl1passwd>
+}
+cpustate_ihlcsg14_appmode exec {
+	waitforcpustate -t900 <spa.ihlcsg14.ip> appmode <spa.ihlcsg14.login> <spa.ihlcsg14.passwd> <spa.ihlcsg14.tl1login> <spa.ihlcsg14.tl1passwd> <spb.ihlcsg14.ip> appmode <spb.ihlcsg14.login> <spb.ihlcsg14.passwd> <spb.ihlcsg14.tl1login> <spb.ihlcsg14.tl1passwd>
+}
+cpustate_ihlcs2_spa exec {
+	waitforcpustate -t900 <spa.ihlcs2.ip> <reqspastate> <spa.ihlcs2.login> <spa.ihlcs2.passwd> <spa.ihlcs2.tl1login> <spa.ihlcs2.tl1passwd> <spb.ihlcs2.ip> <reqspbstate> <spb.ihlcs2.login> <spb.ihlcs2.passwd> <spb.ihlcs2.tl1login> <spb.ihlcs2.tl1passwd>
+}
+bad_cpustate_ihlcs1_spa exec {
+	waitforcpustate -t900 <spa.ihlcs1.ip> <badreqspastate> <spa.ihlcs1.login> <spa.ihlcs1.passwd> <spa.ihlcs1.tl1login> <spa.ihlcs1.tl1passwd> <spb.ihlcs1.ip> <reqspbstate> <spb.ihlcs1.login> <spb.ihlcs1.passwd> <spb.ihlcs1.tl1login> <spb.ihlcs1.tl1passwd>
+}
+bad_cpustate_ihlcsgw7_spa exec {
+	waitforcpustate -t900 <spa.ihlcsgw7.ip> <reqspastate> <spa.ihlcsgw7.login> <spa.ihlcsgw7.passwd> <spa.ihlcsgw7.tl1login> <spa.ihlcsgw7.tl1passwd> <spb.ihlcsgw7.ip> <badreqspbstate> <spb.ihlcsgw7.login> <spb.ihlcsgw7.passwd> <spb.ihlcsgw7.tl1login> <spb.ihlcsgw7.tl1passwd>
+}
+ignore_cpustate_ihlcsgw7_spa exec {
+	waitforcpustate -t900 <spa.ihlcsgw7.ip> ignore <spa.ihlcsgw7.login> <spa.ihlcsgw7.passwd> <spa.ihlcsgw7.tl1login> <spa.ihlcsgw7.tl1passwd> <spb.ihlcsgw7.ip> ignore <spb.ihlcsgw7.login> <spb.ihlcsgw7.passwd> <spb.ihlcsgw7.tl1login> <spb.ihlcsgw7.tl1passwd>
+}

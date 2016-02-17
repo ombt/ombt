@@ -1,0 +1,20 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -ML -GX -DWIN32 -D_WINDOWS -DNEED_CAST
+
+INCPATH = ..\..\include
+LIBPATH = ..\..\lib
+INCFLAGS = -I. -I$(INCPATH)
+LIBS = $(LIBPATH)\aisearch.lib $(LIBPATH)\util.lib $(LIBPATH)\logic.lib
+
+TARGETS = planner.exe
+
+OBJS = frule.obj planner.obj strips.obj run.obj
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+all:	$(TARGETS)
+
+planner.exe:       $(OBJS)
+        $(CC) $(CFLAGS) -Feplanner.exe $** $(LIBS)
+

@@ -1,0 +1,224 @@
+Prolog-like interpreter
+=======================
+
+This program emulates a Prolog-interpreter: it checks whether
+a given statement or query follows from a set of other statements
+which may be both facts and rules. Substitutions may be needed to
+make the statement true. These substitutions represent the answer
+to the query. As in real Prolog multiple solutions can be generated.
+Note that only the "theorem proving part" of Prolog has been
+implemented. Prolog lists, for example, have not been implemented.
+
+A sample program has been included that shows how a simple 
+expert system can be built on top of the Prolog-like interpreter.
+
+The classes
+-----------
+
+The basic problem solving classes in the Prolog-like interpreter
+are class Prolog and class PrologNode. Class Prolog implements
+the search technique and class PrologNode represents the objects
+in the search tree. As in real Prolog the search technique in question
+is a backtracking algorithm:
+
+class Prolog : public BackTrack
+
+class PrologNode: public BackNode
+
+Class PrologNode consists of a stack of goals that must be solved,
+a subsitution to store the bindings introduced by the search process
+and a counter of the clause in the Prolog database that was visited.
+
+The facts and rules that a Prolog database usually consists of
+are represented by class PrologFact and class PrologRule respectively.
+Because we would like to store objects of both types in the same
+container class a common base class is defined from which these two
+classes are derived:
+
+class PrologBase
+
+class PrologFact : public PrologBase, public Complex
+
+class PrologRule : public PrologBase
+
+As can be seen from these definitions class PrologFact is little
+more than a specialized version of class Complex. An object of
+class PrologRule contains two data fields: a Complex object
+that represents the head of the rule and a list of Complex objects,
+PtrList<Complex>, for the body of the rule. Class PrologRule has
+its own parsing routine and an object of this class can be created
+in the following way:
+
+PrologRule test("isa(X, albatross):-
+			isa(X, bird) &
+			flieswell(X).");
+
+This is very much like "real" Prolog, but note the use of '&'
+instead of ','. The occurence of '&' is because delimiter other
+than ',' is needed since ',' is used as a delimiter in the
+parsing routines of class Complex.
+
+The prolog database, i.e. a collection of PrologRule and PrologFact
+objects, can most easily be created by use of a special container
+class:
+
+class PrologTable
+
+PrologTable is as its name suggests an array of Prolog objects (pointers
+to objects of type PrologBase to be precise).
+
+
+The algorithm
+-------------
+
+The Prolog engine is modelled after Bratko, "Prolog, Programming
+for Artificial Intelligence", page 49. In short this algorithm
+is as follows. Initially there is a list or stack of goals that
+must all be satisfied. To satisfy a goal the facts and rules in the
+Prolog database are scanned until a clause C if found such that
+the head of C matches the top of the goal stack. If C is a rule
+instead a of a plain fact new goals are introduced. These new goals are
+added to the goal stack on top of the existing ones so that they will be
+solved first. When a goal is satisfied (either by a fact or by a rule) it
+is be popped off the stack. This process terminates if the goal stack is
+empty. If a wrong turn is taken, i.e. if a clause was visited that did
+not lead to a successfull termination abandon this path and continue
+scanning with the clause that immediately follows clause C. During this
+search and match process all 'interesting' substitutions are remembered.
+The substitutions together make up the solution: the instantiation of the
+variables from the original goal stack. 'Interesting' means that only
+those substitutions are kept track of that are relevant to the problem,
+e.g. if parent(X, Y) must be solved it is sufficient to find and
+remember the bindings of X and Y and not any other substitutions that may
+be introduced on the way.
+
+The goal stack in class PrologNode is used to keep track of the goals
+that must be satisfied. A substitution object is used to keep track off
+the bindings we're looking for (this substitution is composed by
+the update() member routine from class Substitution so that only
+'interesting' bindings are stored). The process of scanning the database
+to find a clause that satisfies the top element of the stack is
+used to expand a node. Note that because a backtracking algorithm
+is selected only one successor a time must be generated. Because there
+is no fixed number of operators in this problem expand_one() instead
+of do_opeator() is implemented. Each time this function is called
+the database is scanned, starting at the clause that was visited
+last. To keep track of the clause where the scanning must be started
+a reference or counter is used, called 'lastdone' which is updated
+every time expand_one() is called. If lastdone reaches the end of
+the database all successors have been generated, meaning the object can
+not be expanded any further.
+
+
+Using the Prolog-like interpreter
+---------------------------------
+
+To use the Prolog-like interpreter first the prolog database
+must first be created. This is done by declaring an object
+of type PrologTable and passing it strings of information. This
+information must be passed to the PrologTable object by use of
+an array of strings (char *). These strings are then be parsed by the
+PrologTable object which will create the PrologFact and PrologRule
+objects accordingly:
+
+char *clauses[] =
+{
+        "parent(a, b).",
+        "parent(b, c).",
+        "parent(c, d).",
+        "parent(X, Y):- \
+                parent(X, Z) & \
+                parent(Z, Y)."
+        NULL,
+};
+
+void main()
+{
+    PrologTable table;
+    ...
+    ...
+
+    table.addclauses(table);
+    ...
+}
+
+Note the occurence of NULL as the last clause in the array of
+strings which tells the parsing routine that the end of the array
+has been reached. The contents of the array can optionally be
+examined by calling:
+
+table.listclauses();
+
+Next, an object of class Prolog must be created. This object must be
+passed a PrologTable object:
+
+Prolog prolog(table);
+
+Afther this a problem must be fed to the Prolog object so that the
+search can be started:
+
+prolog.set_query("parent(X, Y)");
+if (prolog.get_result(subst))
+    cout << "The solution is: " << subst << "\n";
+
+Funtion get_result() starts the search process and returns the result
+of the search: 1 means the search was succesfull, 0 means no solution
+could be found. Furthermore, any bindings that were needed to
+satisfy the query are returned in the supplied substitution.
+Multiple solutions can be found by calling get_next_result(), much
+like typing ';' in Prolog. It must remembered that if the same
+substitution is used to obtain the next solution the binding information
+it contains must be destroyed by calling clear():
+
+subst.clear();
+prolog.get_next_result(subst);
+
+A sample program that contains all off these steps is included below.
+Note that just as in Prolog certain queries may result in infinite
+recursion.
+
+#include "prolog.h"
+
+char *clauses[] =
+{
+	"parent(a, b).",
+	"parent(b, c).",
+	"parent(c, d).",
+	"parent(X, Y):- parent(X, Z) & parent(Z, Y).",
+	NULL
+};
+
+int main()
+{
+    Substitution subst;
+
+    /* Create Prolog database. */
+    PrologTable table;
+
+     /* Create search object, passing it the Prolog DB. */
+    Prolog prolog(table);
+
+    /* Fill the Prolog database. */
+    table.addclauses(clauses);
+
+    /* List clauses in the database. */
+    table.listclauses();
+
+    /* Enter a query. */
+    prolog.set_query("parent(X, Y)");
+
+    /* Start the search and extract the result. */
+    prolog.get_result(subst);
+    cout << subst << "\n";
+
+    /* Get next 4 answers. Any more will result in infinite recursion. */
+    for (int i = 1; i < 5; i++)
+    {
+	/* Important: clear the subsitution. */
+	subst.clear();
+
+	prolog.get_next_result(subst);
+	cout << subst << "\n";
+    }
+    return(1);
+}

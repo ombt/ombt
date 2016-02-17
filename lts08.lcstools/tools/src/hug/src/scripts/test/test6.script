@@ -1,0 +1,13 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	varname cpu_load
+	cpu_load dotted_name
+	dotted_name 5.3.0.4
+}
+
+prepare exec {
+
+	subs <<<varname>>>
+}

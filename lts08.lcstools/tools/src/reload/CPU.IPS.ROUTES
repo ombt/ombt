@@ -1,0 +1,148 @@
+GW27 IPS and ROUTES -
+
+m74a# netstat -rn
+Routing tables
+
+Internet:
+Destination      Gateway            Flags     Refs     Use  Interface
+default          135.1.105.254      UGS         5     2819  mgt0
+127.0.0.1        127.0.0.1          UH        140  2021745  lo0
+135.1.105        link#4             UC          0        0  mgt0
+135.1.105.39     0:30:fa:81:56:81   UHL         0        4  lo0
+135.1.105.199    8:0:87:f:f3:f4     UHL         0        1  mgt0
+135.1.105.254    0:90:69:32:9d:3a   UHL         2    11892  mgt0
+192.168.251      link#10            UC          0        0  fca0
+192.168.252      192.168.252.26     U          40  2480697  sar0
+192.168.253      link#8             UC          0        0  rep0
+192.168.253.27   0:30:fa:81:52:6a   UHL        14   344566  rep0
+m74a#
+m74a#
+m74a# ifconfig mgt0
+mgt0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 135.1.105.39 netmask 0xffffff00 broadcast 135.1.105.255
+m74a# ifconfig lo0
+lo0: flags=9<UP,LOOPBACK>
+        inet 127.0.0.1 netmask 0xff000000
+m74a# ifconfig fca0
+fca0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.251.26 netmask 0xffffff00 broadcast 192.168.251.255
+m74a# ifconfig sar0
+sar0: flags=861<UP,NOTRAILERS,RUNNING,SIMPLEX>
+        inet 192.168.252.26 netmask 0xffffff00
+m74a# ifconfig rep0
+rep0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.253.26 netmask 0xffffff00 broadcast 192.168.253.255
+m74a#
+m74a#
+m74a#
+
+SP-B -
+
+m74b# netstat -rn
+Routing tables
+
+Internet:
+Destination      Gateway            Flags     Refs     Use  Interface
+default          135.1.105.254      UGS         5      859  mgt0
+127.0.0.1        127.0.0.1          UH        138  2081014  lo0
+135.1.105        link#4             UC          0        0  mgt0
+135.1.105.40     0:30:fa:81:52:61   UHL         0        4  lo0
+135.1.105.199    8:0:87:f:f3:f4     UHL         0        1  mgt0
+135.1.105.254    0:90:69:32:9d:3a   UHL         2    12484  mgt0
+192.168.251      link#10            UC          0        0  fca0
+192.168.252      192.168.252.27     U          37   939779  sar0
+192.168.253      link#8             UC          0        0  rep0
+192.168.253.26   0:30:fa:81:56:8a   UHL        13   347302  rep0
+m74b#
+m74b#
+m74b# ifconfig mgt0
+mgt0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 135.1.105.40 netmask 0xffffff00 broadcast 135.1.105.255
+m74b# ifconfig lo0
+lo0: flags=9<UP,LOOPBACK>
+        inet 127.0.0.1 netmask 0xff000000
+m74b# ifconfig fca0
+fca0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.251.27 netmask 0xffffff00 broadcast 192.168.251.255
+m74b# ifconfig sar0
+sar0: flags=861<UP,NOTRAILERS,RUNNING,SIMPLEX>
+        inet 192.168.252.27 netmask 0xffffff00
+m74b# ifconfig rep0
+rep0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.253.27 netmask 0xffffff00 broadcast 192.168.253.255
+m74b#
+
+
+GW28 IPS and ROUTES -
+
+SP-A -
+
+m76a# netstat -rn
+Routing tables
+
+Internet:
+Destination      Gateway            Flags     Refs     Use  Interface
+default          135.1.105.254      UGS         6    15121  mgt0
+10.11            10.11.55.254       UGS         1   143860  mgt0
+127.0.0.1        127.0.0.1          UH        134 21203864  lo0
+135.1.105        link#4             UC          0        0  mgt0
+135.1.105.41     0:30:fa:81:52:81   UHL         0        4  lo0
+135.1.105.199    8:0:87:f:f3:f4     UHL         0        1  mgt0
+135.1.105.254    0:90:69:32:9d:3a   UHL         1   143861  mgt0
+192.168.251      link#10            UC          0        0  fca0
+192.168.252      192.168.252.26     U          39  8301176  sar0
+192.168.253      link#8             UC          0        0  rep0
+192.168.253.27   0:30:fa:81:52:a    UHL        12  3424980  rep0
+m76a# ifconfig sar0
+sar0: flags=861<UP,NOTRAILERS,RUNNING,SIMPLEX>
+        inet 192.168.252.26 netmask 0xffffff00
+m76a# ifconfig rep0
+rep0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.253.26 netmask 0xffffff00 broadcast 192.168.253.255
+m76a# ifconfig lo0
+lo0: flags=9<UP,LOOPBACK>
+        inet 127.0.0.1 netmask 0xff000000
+m76a# ifconfig fca0
+fca0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.251.26 netmask 0xffffff00 broadcast 192.168.251.255
+m76a# ifconfig mgt0
+mgt0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 135.1.105.41 netmask 0xffffff00 broadcast 135.1.105.255
+m76a#
+
+SP-B -
+
+m76b# netstat -rn
+Routing tables
+
+Internet:
+Destination      Gateway            Flags     Refs     Use  Interface
+default          135.1.105.254      UGS         6     3609  mgt0
+10.11            10.11.55.254       UGS         1   144210  mgt0
+127.0.0.1        127.0.0.1          UH        132 21133864  lo0
+135.1.105        link#4             UC          0        0  mgt0
+135.1.105.42     0:30:fa:81:52:1    UHL         0        4  lo0
+135.1.105.199    8:0:87:f:f3:f4     UHL         0        1  mgt0
+135.1.105.254    0:90:69:32:9d:3a   UHL         1   144211  mgt0
+192.168.251      link#10            UC          0        0  fca0
+192.168.252      192.168.252.27     U          36  7948426  sar0
+192.168.253      link#8             UC          0        0  rep0
+192.168.253.26   0:30:fa:81:52:8a   UHL        11  3419741  rep0
+m76b#
+m76b#
+m76b# ifconfig mgt0
+mgt0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 135.1.105.42 netmask 0xffffff00 broadcast 135.1.105.255
+m76b# ifconfig lo0
+lo0: flags=9<UP,LOOPBACK>
+        inet 127.0.0.1 netmask 0xff000000
+m76b# ifconfig fca0
+fca0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.251.27 netmask 0xffffff00 broadcast 192.168.251.255
+m76b# ifconfig sar0
+sar0: flags=861<UP,NOTRAILERS,RUNNING,SIMPLEX>
+        inet 192.168.252.27 netmask 0xffffff00
+m76b# ifconfig rep0
+rep0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST>
+        inet 192.168.253.27 netmask 0xffffff00 broadcast 192.168.253.255
+m76b#

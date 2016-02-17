@@ -1,0 +1,106 @@
+
+CIS 255 FINAL EXAM			NAME:__________________________
+
+1) (20) Write down the CHI-squared expression for the following 
+   function and derive the least-squares expressions for the 
+   parameter A:
+
+	Y = sin(A*tan(X**2)) + 1
+
+2) (20) List the steps and explain the method of gaussian elimination 
+   with pivoting. What does pivoting do?
+
+
+3) (15) Write a function implementing the secant method for finding
+   a root x in an interval given by a <= x <= b. Assume that a 
+   function f(x) is passed into your function.
+
+
+4) (15) Write a function implementing Newton's method for finding
+   a root x in an interval given by a <= x <= b. Assume that a 
+   function f(x) is passed into your function.
+
+
+5) (15) Write a function to calculate the following series to N terms 
+   where N is passed in as an argument (i.e. function parameter).
+   The series representation is given by:
+
+		   N
+		  ---
+	f(x) =    \	-1**n * x**(n+1)
+		  /     ----------------
+		  ---          n!
+		  n=0
+
+
+6) (15) The following program contains errors. Find the errors and
+   fix them. The program implements the sieve of Erastosthenes
+   for finding prime numbers.
+
+   C
+   C SIEVE OF ERASTOSTHENES FOR GENERATING PRIME NUMBERS.
+   C
+   C        1         2         3
+   C23456789012345678901234567890123456789
+   C
+         PROGRAM SIEVE
+   C
+   C DECLARE PARAMETERS
+   C
+         INT MAXPRIME
+         PARAMETER(MAXPRIME=1000)
+   C
+   C LOCAL VARIABLES.
+   C
+         INTEGER I, J, USERMX
+         INTEGER PRIME(MAXPRIME)
+   C
+   C GET MAXIMUM FROM USER AND VERIFY IT IS WITHIN RANGE.
+   C
+    50   PRINT 'ENTER MAXIMUM PRIME TO GENERATE'
+         READ USERMX
+         IF (USERMX.LT.1.AND.USERMX.GT.MAXPRIME) GOTO 60
+   C
+   C ASSUME ALL NUMBERS ARE PRIME.
+   C
+         DO 200 I=USERMX, 1, 1
+             PRIME[I] = .TRUE.
+    200  CONTINUE
+   C
+   C REMOVE ALL MULTIPLES OF NUMBERS THAT ARE KNOWN TO BE PRIME.
+   C
+         DO 300 I=2, USERMX, 1
+             IF (PRIME[I].EQ.TRUE) THEN
+                 PRINT *, 'PRIME NUMBER = I'
+                 DO 200 J=2*I, USERMX, I
+                     PRIME[J] = .TRUE.
+    200          CONTINUE
+             ENDIF
+    300  CONTINUE
+   C
+   C ALL DONE
+   C
+         END
+
+
+7) You are given the function LINEARFIT() which fits a straight line
+   to a series of (X, Y) points, that is, it determines the parameters
+   A and B for the following function:
+
+	Y = A + B*X
+
+   The function LINEARFIT has the following definition where X, Y are
+   arrays of X and Y points, SZ is the number of points, and A and B
+   are the parameters of the above equation and determined by LINEARFIT.
+
+	LOGICAL FUNCTION LINEARFIT(X, Y, SZ, A, B)
+
+	INTEGER SZ
+	REAL X(SZ), Y(SZ)
+	REAL A, B
+
+   Using LINEARFIT, write a function to determine A and B for the 
+   following functional form:
+
+	Y = A*B**X
+

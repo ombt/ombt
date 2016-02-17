@@ -1,0 +1,214 @@
+ed-mgc-protn:::::protntype=DUPLEX,peermgcip=10.11.54.3,mgregthresh=1,svcchngtmr=10
+ed-mgc-protn:::::mgmttmr=0
+#MEGACO area
+ent-mgc-prflmegaco::2:::mgvariant=lng,auditcallstate=n
+ent-mgc-mgassoc::ihlcsgw20:::name=10.11.47.3,port=2944,megacoprflid=2:is
+sleep 75
+ent-mgc-mgiua::ihlcsgw20:::ipadesta=10.11.47.4,mgiuaporta=9900,ipadestb=10.11.47.5,mgiuaportb=9900
+sleep 75
+#digitmods
+# Calling E164 (FS) to National (PSTN)
+ent-digitmod-dn::CDPN2NAT-CDPN-INTNATNUM-1-4-ISDN:::modtype=striponly,stripdirn=left,strippos=1,stripdgts=1,stripdest=null,newnai=natnum,newnp=isdn
+#
+# Called E164 (FS) to National (PSTN)
+ent-digitmod-dn::CGPN2NAT-CGPN-UNIINTNATNUM-1-1-ISDN:::modtype=striponly,stripdirn=left,strippos=1,stripdgts=1,stripdest=null,newnai=uninatnum,newnp=isdn
+#
+# Diversion in E164 (FS) to National RDN (PSTN) in SS7 or OCN
+#
+ent-digitmod-dn::RDN2NAT-RDN-UNIINTNATNUM-1-1-ISDN:::modtype=striponly,stripdirn=left,strippos=1,stripdgts=1,stripdest=null,newnai=uninatnum,newnp=isdn
+#
+ent-digitmod-dn::OCN2NAT-OCN-UNIINTNATNUM-1-1-ISDN:::modtype=striponly,stripdirn=left,strippos=1,stripdgts=1,stripdest=null,newnai=uninatnum,newnp=isdn
+#
+# Set Called to 911, REG-1 to ESRN, CPC to 14 (dec)
+# Used on ESRN incoming from FS5k
+ent-digitmod-DN::ESRN2911-CDPN-NATNUM-8162209110-10-ISDN:::modtype=stripinsertdgts,altmodtype=replace,maxdgts=31,stripdirn=left,strippos=1,stripdgts=10,stripdest=REG-1,insertdirn=left,insertpos=1,insertdgts=911,newnai=natnum,newnp=isdn,altparamvalue=CPC-e0
+#
+ent-digitmod-dn::9112911-CDPN-NATNUM-911-3-ISDN:::modtype=noaction,altmodtype=replace,maxdgts=31,stripdirn=left,strippos=1,stripdgts=10,altparamvalue=CPC-e0
+#
+# Set Called to 311, REG-1 to ESRN, CPC to e0
+ent-digitmod-dn::ESRN2311-CDPN-NATNUM-8162203110-10-ISDN:::modtype=stripinsertdgts,altmodtype=replace,maxdgts=31,stripdirn=left,strippos=1,stripdgts=10,stripdest=REG-2,insertdirn=left,insertpos=1,insertdgts=311,newnai=natnum,newnp=isdn,altparamvalue=CPC-e0
+#
+ENT-DIGITMOD-DN::3112311-CDPN-NATNUM-311-3-ISDN:::modtype=noaction,altmodtype=replace,maxdgts=31,stripdirn=left,strippos=1,stripdgts=10,altparamvalue=CPC-e0
+#
+# Dialed # GAP is 192
+ent-digitmod-gen::NAT2GAP-GAP-192-DEFAULT:::modtype=insertdgts,insertdirn=left,insertpos=1,insertdgts=1,newnai=intnatnum,newnp=isdn
+ent-digitmod-gen::NAT2GAP-GAP-192-NOTPRSNT:::modtype=noaction
+#
+# Calling National (PSTN) to E164 (FS) to be used for ROUTE to FS
+ent-digitmod-dn::NAT2CGPN-CGPN-UNINATNUM-DEFAULT-0-ISDN:::modtype=insertdgts,insertdirn=left,insertpos=1,insertdgts=1,newnai=uniintnatnum,newnp=isdn
+#
+# Called National (PSTN) to E164 (FS) to be used for ROUTE to FS
+ent-digitmod-dn::NAT2CDPN-CDPN-NATNUM-DEFAULT-0-ISDN:::modtype=insertdgts,insertdirn=left,insertpos=1,insertdgts=1,newnai=intnatnum,newnp=isdn
+#
+# OCN
+ent-digitmod-dn::NAT2OCN-OCN-UNINATNUM-DEFAULT-0-ISDN:::modtype=insertdgts,insertdirn=left,insertpos=1,insertdgts=1,newnai=uniintnatnum,newnp=isdn
+#
+# RDN
+ent-digitmod-dn::NAT2RDN-RDN-UNINATNUM-DEFAULT-0-ISDN:::modtype=insertdgts,insertdirn=left,insertpos=1,insertdgts=1,newnai=uniintnatnum,newnp=isdn
+#========================================
+# FS5K: Remove cicp in Dialaround scenarios
+#========================================
+# delete tns for direct toll office
+ent-digitmod-tns::cipdel-tns-default-default-isup:::modtype=noaction,altmodtype=delete,altparamvalue=cip
+#
+ent-digitmod-dn::DIALARD-CDPN-UNKNOWN-101-3-ISDN:::modtype=noaction,nextdgtmodkey=cipdel-tns
+ent-trans-plan::CDPN:::rtkeylist=DEFAULT-TNS,dialplan=y
+ent-trans-plan::E164PLAN:::rtkeylist=DEFAULT-TNS,dialplan=y,actninfocol=dgtmodkey-CDPN2NAT-CDPN&dgtmodkey-DIALARD-CDPN&dgtmodkey-RDN2NAT-RDN&dgtmodkey-OCN2NAT-OCN&dgtmodkey-CGPN2NAT-CGPN
+#SIP INFO
+ed-dns-sys:::::dnsname=lucent.com,dnsip1=10.10.222.100
+ed-sip-sys:::::dnscachettl=0
+ent-prfl-sip::1:::privacy=p_assertid,pcharging=y
+ent-trkgrp::1021:::sipgm:name=sqafs1,tgprofile=1,sipplus=y,sipdstfqdn=pcsf-stdn.fs1.ims.fs5000lab.com
+ent-trkgrp::1022:::sip:name=sipfs1,tgprofile=1,cnam=y,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw19.lucent.com,sipdstfqdn=icsf-stdn.fs1.ims.fs5000lab.com,sipdstfqdnport=5060,actntermattmpt=dgtmodkey-NAT2CDPN-CDPN&dgtmodkey-NAT2CGPN-CGPN&dgtmodkey-NAT2RDN-RDN&dgtmodkey-NAT2OCN-OCN&dgtmodkey-NAT2GAP-GAP-192,class=eo,ownclass=eo
+ent-sip-tgmapaddr::135.1.251.14-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.15-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.16-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.17-IP-5060:::tgn=1021
+ent-sip-tgmapaddr::135.1.251.14-IP-5070:::tgn=1022
+ent-sip-tgmapaddr::135.1.251.15-IP-5070:::tgn=1022
+ent-sip-tgmapaddr::135.1.251.16-IP-5070:::tgn=1022
+ent-sip-tgmapaddr::135.1.251.17-IP-5070:::tgn=1022
+ent-route-list::sipfs1
+ent-route::sipfs1-1:::bgn=tgn-1022
+ent-route-digits::DEFAULT-CDPN-natnum-333220:::rtdest=rtlist-sipfs1
+ent-route-digits::DEFAULT-CDPN-natnum-333221:::rtdest=rtlist-sipfs1
+ent-route-digits::DEFAULT-CDPN-natnum-333224:::rtdest=rtlist-sipfs1
+ent-route-digits::DEFAULT-CDPN-natnum-333495:::rtdest=rtlist-sipfs1
+#Line data
+ent-mgc-prflcas::1:::callmodel=txrx,sigmodel=loop_start
+ent-mgc-prflcas::2:::callmodel=txrx,sigmodel=gr303_loop_start
+ed-aag-sys::com:::pripcscfaddr=pcsf-stdn.fs1.ims.fs5000lab.com,homedomain=ims.fs5000lab.com,regtmper=3000,maxregrate=15:is
+ent-cas-line::ihlcsgw20-T/1/25/1:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/2:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/3:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/4:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/5:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/6:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/7:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/25/8:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/1:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/2:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/3:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/4:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/5:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/6:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/7:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/8:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/9:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/10:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/11:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/12:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/13:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/14:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/15:::casprflid=1:is
+ent-cas-line::ihlcsgw20-T/1/26/16:::casprflid=1:is
+ent-gr303-if::11:::mgname=ihlcsgw20,flwthr=y,pps=y
+ent-gr303-lnk::11-1:::termid=T/1/21,lnktype=pri,tmciuaid=100,eociuaid=200
+ent-gr303-lnk::11-2:::termid=T/3/21,lnktype=sec,tmciuaid=300,eociuaid=400
+ent-gr303-lnk::11-3:::termid=T/1/22,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::11-4:::termid=T/3/22,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::11-5:::termid=T/1/23,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::11-6:::termid=T/3/23,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::11-7:::termid=T/1/24,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::11-8:::termid=T/3/24,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ed-gr303-if::11::::is
+ent-gr303-if::12:::mgname=ihlcsgw20,flwthr=y,pps=y
+ent-gr303-lnk::12-1:::termid=T/1/27,lnktype=pri,tmciuaid=120,eociuaid=121
+ent-gr303-lnk::12-2:::termid=T/3/27,lnktype=sec,tmciuaid=122,eociuaid=123
+ent-gr303-lnk::12-3:::termid=T/1/28,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::12-4:::termid=T/3/28,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ed-gr303-if::12::::is
+sleep 15
+ent-gr303-crv::ihlcsgw20-11-1:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-2:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-3:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-4:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-5:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-6:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-7:::casprflid=2
+ent-gr303-crv::ihlcsgw20-11-8:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-1:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-2:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-3:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-4:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-61:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-62:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-63:::casprflid=2
+ent-gr303-crv::ihlcsgw20-12-64:::casprflid=2
+ent-aag-sub::13332240001:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/1,sdpprflid=1,privateid=3332240001:is
+ent-aag-sub::13332240002:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/2,sdpprflid=1,privateid=3332240002:is
+ent-aag-sub::13332240003:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/3,sdpprflid=1,privateid=3332240003:is
+ent-aag-sub::13332240004:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/4,sdpprflid=1,privateid=3332240004:is
+ent-aag-sub::13332240005:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/5,sdpprflid=1,privateid=3332240005:is
+ent-aag-sub::13332240006:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/6,sdpprflid=1,privateid=3332240006:is
+ent-aag-sub::13332240007:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/7,sdpprflid=1,privateid=3332240007:is
+ent-aag-sub::13332240008:::password=newsys,lineintfid=CAS-ihlcsgw20-T/1/26/8,sdpprflid=1,privateid=3332240008:is
+ent-aag-sub::13332200001:::password=newsys,lineintfid=GR303-ihlcsgw20-11-1,sdpprflid=1,privateid=3332200001:is
+ent-aag-sub::13332200002:::password=newsys,lineintfid=GR303-ihlcsgw20-11-2,sdpprflid=1,privateid=3332200002:is
+ent-aag-sub::13332200003:::password=newsys,lineintfid=GR303-ihlcsgw20-11-3,sdpprflid=1,privateid=3332200003:is
+ent-aag-sub::13332200004:::password=newsys,lineintfid=GR303-ihlcsgw20-11-4,sdpprflid=1,privateid=3332200004:is
+ent-aag-sub::13332200005:::password=newsys,lineintfid=GR303-ihlcsgw20-11-5,sdpprflid=1,privateid=3332200005:is
+ent-aag-sub::13332200006:::password=newsys,lineintfid=GR303-ihlcsgw20-11-6,sdpprflid=1,privateid=3332200006:is
+ent-aag-sub::13332200007:::password=newsys,lineintfid=GR303-ihlcsgw20-11-7,sdpprflid=1,privateid=3332200007:is
+ent-aag-sub::13332200008:::password=newsys,lineintfid=GR303-ihlcsgw20-11-8,sdpprflid=1,privateid=3332200008:is
+ent-aag-sub::13332200009:::password=newsys,lineintfid=GR303-ihlcsgw20-12-1,sdpprflid=1,privateid=3332200009:is
+ent-aag-sub::13332200010:::password=newsys,lineintfid=GR303-ihlcsgw20-12-2,sdpprflid=1,privateid=3332200010:is
+ent-aag-sub::13332200011:::password=newsys,lineintfid=GR303-ihlcsgw20-12-3,sdpprflid=1,privateid=3332200011:is
+ent-aag-sub::13332200012:::password=newsys,lineintfid=GR303-ihlcsgw20-12-4,sdpprflid=1,privateid=3332200012:is
+ent-aag-sub::13332200013:::password=newsys,lineintfid=GR303-ihlcsgw20-12-61,sdpprflid=1,privateid=3332200013:is
+ent-aag-sub::13332200014:::password=newsys,lineintfid=GR303-ihlcsgw20-12-62,sdpprflid=1,privateid=3332200014:is
+ent-aag-sub::13332200015:::password=newsys,lineintfid=GR303-ihlcsgw20-12-63,sdpprflid=1,privateid=3332200015:is
+ent-aag-sub::13332200016:::password=newsys,lineintfid=GR303-ihlcsgw20-12-64,sdpprflid=1,privateid=3332200016:is
+ent-treatment::TreatAnnc:::treattype=ANNC,anncid=53
+ent-prfl-failcnd::Emergency-EMRGNCY_UNRCHABLE-ISUP:::failtype=Treat,treatment=TreatAnnc
+#ed-trans-plan::LINEDFLT:::RLSFAILCNDPRFL=Emergency
+ent-list-aintrigger::TERMSIM-1:::category=subscribed,trigtype=OFF_HOOK_DELAY,serviceid=SIM:is
+sleep 30
+ed-trkgrp::1021:::aintriglist=TERMSIM
+ent-country::1
+ent-national-npa::1-973
+ent-national-npa::1-436
+ent-national-npa::1-406
+ent-national-npa::1-416
+ent-national-npa::1-426
+ent-national-npa::1-431
+ent-national-npa::1-432
+ent-national-npa::1-441
+ent-national-npa::1-442
+ent-national-npa::1-451
+ent-national-npa::1-452
+ent-national-npa::1-461
+ent-national-npa::1-462
+ent-national-npa::1-446
+ent-national-npa::1-456
+ent-national-npa::1-466
+ent-national-npa::1-476
+ent-national-npa::1-486
+ent-national-npa::1-496
+ent-national-npa::1-407
+ent-national-npa::1-417
+ent-national-npa::1-427
+ent-national-npa::1-437
+ent-national-npa::1-447
+ent-national-npa::1-457
+ent-national-npa::1-467
+ent-national-npa::1-477
+ent-national-npa::1-487
+ent-national-npa::1-497
+ent-national-npa::1-438
+ent-national-npa::1-448
+ent-national-npa::1-458
+ent-national-npa::1-468
+ent-national-npa::1-478
+ent-national-npa::1-449
+ent-national-npa::1-459
+ent-national-npa::1-469
+ent-national-npa::1-479
+ent-national-npa::1-488
+ent-national-npa::1-498
+ent-national-npa::1-489
+ent-national-npa::1-499
+ent-national-npa::1-333
+ent-national-npa::1-315
+ent-national-npa::1-319
+set-sid:::::ihlcsgw19

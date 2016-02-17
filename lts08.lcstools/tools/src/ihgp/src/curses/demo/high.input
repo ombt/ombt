@@ -1,0 +1,57 @@
+#include <curses.h>
+#define BACKSLASH '\\'
+
+\Bmain(argc, argv)
+int argc;
+char **argv;
+{
+    FILE *fd;
+\N    int c, c2;
+
+    if (argc != 2)
+    {
+	fprintf(stderr,"usage: highlight file\n");
+	exit(1);
+    }
+
+    if ((fd = \Ufopen(argv[1], \N"r")) == NULL)
+    {
+	perror(argv[1]);
+	exit(2);
+    }
+
+    initscr();
+    scrollok(stdscr, TRUE);
+
+    for ( ; ; )
+    {
+	c = getc(fd);
+ 	if (c == EOF) break;
+	if (c == BACKSLASH)
+	{
+	    c2 = getc(fd);
+	    switch (c2)
+	    {
+	    case 'B':
+		attrset(A_BOLD);
+		continue;
+	    case 'U':
+		attrset(A_UNDERLINE);
+		continue;
+	    case 'N':
+		attrset(0);
+		continue;
+	    }
+	    addch(c);
+	    addch(c2);
+	}
+	else
+	{
+	    addch(c);
+	}
+    }
+    fclose(fd);
+    refresh();
+    endwin();
+    exit(0);
+}

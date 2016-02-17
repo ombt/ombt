@@ -1,0 +1,331 @@
+
+IP address : 10.14.1.158
+IP port    : 5060
+Delta(secs): 10
+
+Reading data for DN sip:3367200001@10.14.1.158;user=phone ...
+$calldata{sip:3367200001@10.14.1.158;user=phone}{Call-ID} = 3367200001@10.14.1.158
+$calldata{sip:3367200001@10.14.1.158;user=phone}{Refer-To} = sip:3144223001@10.11.10.3
+$calldata{sip:3367200001@10.14.1.158;user=phone}{Scenario} = refersuccess
+$calldata{sip:3367200001@10.14.1.158;user=phone}{ToTag} = to5510000
+$calldata{sip:3367200001@10.14.1.158;user=phone}{FromTag} = from5510000
+$calldata{sip:3367200001@10.14.1.158;user=phone}{WaitFor202Timer} = 10
+
+delta      = 1
+minmsgsize = 20
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 10.11.10.1:5060
+line=<REFER sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<SIP/2.0 400 Bad Request>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for NONE defined.
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <WAITFOR202>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 10.11.10.1:5060
+line=<REFER sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<SIP/2.0 400 Bad Request>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for NONE defined.
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <WAITFOR202>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 10.11.10.1:5060
+line=<REFER sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<SIP/2.0 400 Bad Request>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for NONE defined.
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <WAITFOR202>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <1>
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <1>
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<INVITE sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>>
+line=<CSeq: 1 INVITE>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<Remote-Party-ID: <sip:3142223004@10.11.10.3;user=phone>;party=calling;id-type=subscriber;privacy=off;screen=yes>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 146>
+line=<v=0>
+line=<o=- 3321188988 3321188988 IN IP4 10.11.10.3>
+line=<s=->
+line=<c=IN IP4 10.175.10.1>
+line=<t=0 0>
+line=<m=audio 16012 RTP/AVP 0>
+line=<a=sendrecv>
+line=<a=ptime:20>
+line=<a=rtpmap:0 PCMU/8000>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <0>
+
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 10.11.10.1:5060
+line=<REFER sip:3367200001@10.14.1.158;user=phone SIP/2.0>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 10.11.10.1:5060
+line=<SIP/2.0 400 Bad Request>
+line=<Via: SIP/2.0/UDP 0.0.0.0;received=10.14.1.158>
+line=<From: <sip:3142223004@10.11.10.3;user=phone>;tag=10000000-0-1362621351>
+line=<To: <sip:3367200001@10.14.1.158;user=phone>;tag=to5510000>
+line=<Call-ID: 9967697@10.11.10.3>
+line=<CSeq: 1 INVITE>
+line=<Refer-To: sip:3144223001@10.11.10.3>
+line=<Max-Forwards: 70>
+line=<Contact: <sip:3142223004@10.11.10.3>>
+line=<Content-Length: 0>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for NONE defined.
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <WAITFOR202>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <1>
+
+Entry refersuccess: DN = <sip:3367200001@10.14.1.158;user=phone>
+
+Current State for sip:3367200001@10.14.1.158;user=phone = <INACTIVE>
+Timer Flag for sip:3367200001@10.14.1.158;user=phone = <1>
+
+Quitting ...

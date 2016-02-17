@@ -1,0 +1,145 @@
+sub registersuccess {
+	my ($dn, $timerflag, $current_time, $recvpaddr, 
+	    $rawmsg, $rawhdr, $rawdata, $phdrs, $ptimer) = @_;
+	#
+	printit "\nEntry registersuccess: DN = <$dn>\n";
+	#
+	if (!exists($calldata{$dn})) {
+		printit "\nNo calldata for DN $dn.\n";
+		return;
+	}
+	if (!exists(${$calldata{$dn}}{state})) {
+		printit "\nNo calldata state for DN $dn.\n";
+		return;
+	}
+	dumpCallData();
+	#
+	my $currstate = ${$calldata{$dn}}{state};
+	printit "\nCurrent State for $dn = <$currstate>\n";
+	printit "Timer Flag for $dn = <$timerflag>\n";
+	#
+	if ($currstate =~ /^INACTIVE/) {
+		if ($timerflag) {
+			printit "\nregistersuccess INACTIVE error:\n";
+			printit "Unexpected timer.\n";
+			printit "(dn=$dn).\n";
+			#
+			$ptimer = undef;
+			${$calldata{$dn}}{state} = "INACTIVE";
+			${$calldata{$dn}}{"TAG"} = 0;
+		} elsif ($phdrs->{MSGTYPE} =~ /REGISTER/) {
+			$ackmsg = "SIP/2.0 200 OK\r\n";
+			$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+			$ackmsg .= $parameters{myip}."\r\n";
+			$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+			if (defined(${$calldata{$dn}}{"ToTag"})) {
+				$ackmsg .= "To: ".$phdrs->{"To"}.";tag=";
+				$ackmsg .= ${$calldata{$dn}}{"ToTag"}."\r\n";
+			} else {
+				$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+			}
+			$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+			$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+			my $where = ${$calldata{$dn}}{"ExpiresForm"};
+			if ($where eq "InExpires") {
+				$ackmsg .= "Contact: ".$phdrs->{"Contact"}."\r\n";
+				$ackmsg .= "Expires: ";
+				$ackmsg .= ${$calldata{$dn}}{"Expires"}."\r\n";
+			} else {
+				$ackmsg .= "Contact: ".$phdrs->{"Contact"};
+				$ackmsg .= ";expires=";
+				$ackmsg .= ${$calldata{$dn}}{"Expires"}."\r\n";
+			}
+			$ackmsg .= "Content-Length: 0\r\n";
+			$ackmsg .= "\r\n";
+			#
+			dumpOutgoingMsg($recvpaddr, $ackmsg);
+			defined(send(SOCKET, $ackmsg, 0, $recvpaddr)) or 
+				die "send: $!";
+			#
+			my $endtime = time() + ${$calldata{$dn}}{"Expires"};
+			# make internal timer a little bit longer to 
+			# give the register msg a chance to come in.
+			$endtime += 2;
+			$newtimer{"DN"} = $dn;
+			$newtimer{"TAG"} = $endtime;
+			${$calldata{$dn}}{"TAG"} = $endtime;
+			mypqueue::enqueue($pq, $endtime, \%newtimer);
+			#
+			${$calldata{$dn}}{state} = "REGISTER";
+		} else {
+			printit "\nregistersuccess INACTIVE error:\n";
+			printit "Unexpected msg $phdrs->{MSGTYPE}\.\n";
+			printit "(dn=$dn).\n";
+			#
+			${$calldata{$dn}}{state} = "INACTIVE";
+		}
+	} elsif ($currstate =~ /^REGISTER/) {
+		if ($timerflag) {
+			my $calldatatag = ${$calldata{$dn}}{"TAG"};
+			my $timertag = $ptimer->{"TAG"};
+			if ($calldatatag != $timertag) {
+				printit "\nregistersuccess REGISTER warning:\n";
+				printit "Ignoring old timer (tag=$timertag).\n";
+				printit "(dn=$dn).\n";
+				$ptimer = undef;
+				next;
+			}
+			#
+			printit "\nregistersuccess REGISTER warning:\n";
+			printit "Registration timer expired. (tag=$timertag).\n";
+			printit "(dn=$dn).\n";
+			#
+			$ptimer = undef;
+			${$calldata{$dn}}{"TAG"} = 0;
+			${$calldata{$dn}}{state} = "INACTIVE";
+		} elsif ($phdrs->{MSGTYPE} =~ /^REGISTER/) {
+			$ackmsg = "SIP/2.0 200 OK\r\n";
+			$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+			$ackmsg .= $parameters{myip}."\r\n";
+			$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+			$ackmsg .= "To: ".$phdrs->{"To"}.";tag=";
+			$ackmsg .= ${$calldata{$dn}}{"ToTag"}."\r\n";
+			$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+			$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+			my $where = ${$calldata{$dn}}{"ExpiresForm"};
+			if ($where eq "InExpires") {
+				$ackmsg .= "Contact: ".$phdrs->{"Contact"}."\r\n";
+				$ackmsg .= "Expires: ";
+				$ackmsg .= ${$calldata{$dn}}{"Expires"}."\r\n";
+			} else {
+				$ackmsg .= "Contact: ".$phdrs->{"Contact"};
+				$ackmsg .= ";expires=";
+				$ackmsg .= ${$calldata{$dn}}{"Expires"}."\r\n";
+			}
+			$ackmsg .= "Content-Length: 0\r\n";
+			$ackmsg .= "\r\n";
+			#
+			dumpOutgoingMsg($recvpaddr, $ackmsg);
+			defined(send(SOCKET, $ackmsg, 0, $recvpaddr)) or 
+				die "send: $!";
+			#
+			my $endtime = time() + ${$calldata{$dn}}{"Expires"};
+			$newtimer{"DN"} = $dn;
+			$newtimer{"TAG"} = $endtime;
+			${$calldata{$dn}}{"TAG"} = $endtime;
+			mypqueue::enqueue($pq, $endtime, \%newtimer);
+			#
+			${$calldata{$dn}}{state} = "REGISTER";
+		} else {
+			printit "\nregistersuccess REGISTER error:\n";
+			printit "Unexpected msg $phdrs->{MSGTYPE}.\n";
+			printit "(dn=$dn).\n";
+			#
+			${$calldata{$dn}}{state} = "REGISTER";
+		}
+	} else {
+		printit "\nregistersuccess error:\n";
+		printit "Unexpected state $currstate.\n";
+		printit "(dn=$dn).\n";
+		#
+		${$calldata{$dn}}{state} = "INACTIVE";
+	}
+	return;
+}
+#

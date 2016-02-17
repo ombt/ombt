@@ -1,0 +1,311 @@
+###### START OF SECTION file ######
+file script {
+	scriptsdir .
+}
+###### END OF SECTION file ######
+###### START OF SECTION globals ######
+globals data {
+switchid ihlcsgw21
+login root
+activesp spa
+standbysp spb
+passwd plexus9000
+tl1login plexntmctrl
+tl1passwd plexntmctrl
+spa {
+	ip 135.1.105.25
+	currrel /Telica/swCPU/6.2.1.0.93
+	newcurrrel /home1/
+}
+spb {
+	ip 135.1.105.26
+	currrel /Telica/swCPU/6.2.1.0.93
+	newcurrrel /home1/
+}
+ftpmachine 135.111.82.6
+ftplogin lcsinteg
+ftppasswd plexus9000
+branch Main
+cpuload 6.2.1.0.89
+images cm cpu
+bkupmachine 135.111.82.6
+bkuplogin lcsinteg
+bkuppasswd plexus9000
+bkupdir /tmp
+cm 6.2.1.0.29_cm.tar.gz
+cm_path /lcsl101/text/Main/cm/6.2.1.0.29_cm.tar.gz
+cm_load 6.2.1.0.29
+cpu 6.2.1.0.89_cpu.tar.gz
+cpu_path /lcsl101/text/Main/cpu/6.2.1.0.89_cpu.tar.gz
+cpu_load 6.2.1.0.89
+email mrumore@lucent.com
+# START OF REQUIRED DEFINITIONS
+hugscripts /home/lcstools/tools/src/hug/scripts
+interunixcmddelay 30
+preupgradedelay 300
+spa sp-a
+spb sp-b
+iom1 iom-1
+iom2 iom-2
+iom3 iom-3
+iom4 iom-4
+iom5 iom-5
+iom6 iom-6
+iom7 iom-7
+iom8 iom-8
+iom9 iom-9
+iom10 iom-10
+iom11 iom-11
+iom12 iom-12
+iom13 iom-13
+iom14 iom-14
+iom15 iom-15
+iom16 iom-16
+iom17 iom-17
+# END OF REQUIRED DEFINITIONS
+}
+###### END OF SECTION globals ######
+###### START OF SECTION functions ######
+checkforcpucores exec { spip login passwd } {
+telnet open telnetsp_cpucore <spip> <login> <passwd>
+telnet exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+telnet exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+telnet exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+telnet close telnetsp_cpucore
+}
+###### END OF SECTION functions ######
+###### START OF SECTION prehug ######
+prehug exec {
+ftp open prehugftp <<activesp>.ip> <login> <passwd>
+ftp put -a prehugftp <hugscripts>/findcpucores /bin/findcpucores
+ftp close prehugftp
+ftp open prehugftp <<standbysp>.ip> <login> <passwd>
+ftp put -a prehugftp <hugscripts>/findcpucores /bin/findcpucores
+ftp close prehugftp
+telnet open -t30 prehugtelnet <<activesp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+telnet exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+telnet exec prehugtelnet chmod 755 /bin/findcpucores
+telnet close prehugtelnet
+telnet open -t30 prehugtelnet <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+telnet exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+telnet exec prehugtelnet chmod 755 /bin/findcpucores
+telnet close prehugtelnet
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v prehugtl1 rtrv-eqpt
+tl1 exec -i -v prehugtl1 rtrv-chassis-eqpt
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -v prehugtl1 rmv-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 sw-toprotn-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v prehugtl1 rtrv-eqpt
+tl1 exec -i -v prehugtl1 rtrv-chassis-eqpt
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+sleep <interunixcmddelay>
+tl1 exec -v prehugtl1 rmv-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 rst-eqpt::<<activesp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v prehugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 prehugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -t900 -v prehugtl1 exec-ftp-get::com:::<ftpmachine>,<ftplogin>,<ftppasswd>,<cpu_path>,<<activesp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-cp-tostby:::::-rp,<<activesp>.newcurrrel>/<cpu>,<<standbysp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 close -t 30 prehugtl1
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -t900 -v prehugtl1 exec-cd:::::<<activesp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extract:::::<<activesp>.newcurrrel>/<cpu>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extractstby:::::<cpu>,<<standbysp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 close -t 30 prehugtl1
+telnet open -t30 prehugtelnetactivesp <<activesp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnetactivesp rm -f <<activesp>.newcurrrel>/<cpu>
+telnet close prehugtelnetactivesp
+telnet open -t30 prehugtelnetstandbysp <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v prehugtelnetstandbysp rm -f <<standbysp>.newcurrrel>/<cpu>
+telnet close prehugtelnetstandbysp
+telnet open -t30 prehugtelnetactivesp <<activesp>.ip> <login> <passwd>
+telnet exec -v prehugtelnetactivesp df
+telnet open -t30 prehugtelnetstandbysp <<standbysp>.ip> <login> <passwd>
+telnet exec -v prehugtelnetstandbysp df
+tl1 open -t30 prehugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -t900 -v prehugtl1 exec-ftp-get::com:::<ftpmachine>,<ftplogin>,<ftppasswd>,<cm_path>,<<activesp>.newcurrrel>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-cp-tostby:::::-rp,<<activesp>.newcurrrel>/<cm>,<<standbysp>.newcurrrel>/
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extract:::::<<activesp>.newcurrrel>/<cm>
+sleep <interunixcmddelay>
+telnet exec -v prehugtelnetactivesp rm -f <<activesp>.newcurrrel>/<cm>
+sleep <interunixcmddelay>
+tl1 exec -t900 -v prehugtl1 exec-tar-extractstby:::::<cm>,<<standbysp>.newcurrrel>/
+sleep <interunixcmddelay>
+telnet exec -v prehugtelnetstandbysp rm -f <<standbysp>.newcurrrel>/<cm>
+sleep <interunixcmddelay>
+tl1 close -t 30 prehugtl1
+telnet close prehugtelnetactivesp
+telnet close prehugtelnetstandbysp
+}
+###### END OF SECTION prehug ######
+###### START OF SECTION cpuhug ######
+cpuhug exec {
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v cpuhugtl1 rtrv-eqpt
+tl1 exec -i -v cpuhugtl1 rtrv-call-captverbose
+tl1 exec -i -v cpuhugtl1 dlt-call-captverbose::1
+tl1 exec -i -v cpuhugtl1 rtrv-trafficstats
+tl1 exec -i -v cpuhugtl1 ed-trafficstats::::::oos
+tl1 exec -i -v cpuhugtl1 rtrv-sys-secu
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v -t30 cpuhugtl1 rtrv-pm-cc
+tl1 exec -v -t1800 cpuhugtl1 exec-backup-plexus::com:::<bkupmachine>,<bkuplogin>,<bkuppasswd>,<bkupdir>
+tl1 exec -v cpuhugtl1 ed-eqpt::<<activesp>>:::swversion=<cpuload>
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<activesp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+sleep <preupgradedelay>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v -t1200 cpuhugtl1 exec-run-upgrade:<switchid>:<<activesp>>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<activesp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 open -t30 cpuhugtl1 <<standbysp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 ed-eqpt::<<standbysp>>:::swversion=<cpuload>
+tl1 exec -i -v cpuhugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+tl1 exec -v cpuhugtl1 sw-toprotn-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+sleep 10
+waitforcpustate -t1800 <spa.ip> isactnbk <login> <passwd> <tl1login> <tl1passwd> <spb.ip> ignore <login> <passwd> <tl1login> <tl1passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cpuhugtl1 rmv-eqpt::<<standbysp>>
+tl1 exec -i -v -t60 cpuhugtl1 rtrv-alm-all
+tl1 exec -i -v -t60 cpuhugtl1 rtrv-pm-cc
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isactnbk,oosmahalt,oosma <login> <passwd> <tl1login> <tl1passwd>
+sleep <preupgradedelay>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v -t1200 cpuhugtl1 exec-run-upgrade:<switchid>:<<standbysp>>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 exec -v cpuhugtl1 rst-eqpt::<<standbysp>>
+tl1 close -t 30 cpuhugtl1
+waitforcpustate -t1800 <spa.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> <spb.ip> isact,isstbyh <login> <passwd> <tl1login> <tl1passwd>
+call checkforcpucores <<activesp>.ip> <login> <passwd>
+call checkforcpucores <<standbysp>.ip> <login> <passwd>
+tl1 open -t30 cpuhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v cpuhugtl1 rtrv-eqpt
+tl1 exec -i -v cpuhugtl1 rtrv-info-eqpt
+tl1 close -t 30 cpuhugtl1
+}
+###### END OF SECTION cpuhug ######
+###### START OF SECTION cmhug ######
+cmhug exec {
+tl1 open -t30 cmhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cmhugtl1 rmv-eqpt::<iom15>
+waitforiomstate -t300 cmhugtl1 15 oos,oosma
+tl1 exec -v cmhugtl1 ed-eqpt::<iom15>:::swversion=<cm_load>
+tl1 exec -v -t1200 cmhugtl1 cpy-mem::<iom15>
+waitforiomstate -t600 cmhugtl1 15 oos,oosma
+tl1 exec -v cmhugtl1 rst-eqpt::<iom15>
+waitforiomstate -t600 cmhugtl1 15 isstbyh
+tl1 exec -v cmhugtl1 sw-toprotn-eqpt::<iom14>
+waitforiomstate -t600 cmhugtl1 14 oos,oosma
+tl1 exec -v cmhugtl1 ed-eqpt::<iom14>:::swversion=<cm_load>
+tl1 exec -v -t1200 cmhugtl1 cpy-mem::<iom14>
+waitforiomstate -t600 cmhugtl1 14 isstbyh
+tl1 close -t 30 cmhugtl1
+tl1 open -t30 cmhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -v cmhugtl1 rmv-eqpt::<iom2>
+waitforiomstate -t300 cmhugtl1 2 oos,oosma
+tl1 exec -v cmhugtl1 ed-eqpt::<iom2>:::swversion=<cm_load>
+tl1 exec -v -t1200 cmhugtl1 cpy-mem::<iom2>
+waitforiomstate -t600 cmhugtl1 2 oos,oosma
+tl1 exec -v cmhugtl1 rst-eqpt::<iom2>
+waitforiomstate -t600 cmhugtl1 2 isstbyh
+tl1 exec -v cmhugtl1 sw-toprotn-eqpt::<iom1>
+waitforiomstate -t600 cmhugtl1 1 oos,oosma
+tl1 exec -v cmhugtl1 ed-eqpt::<iom1>:::swversion=<cm_load>
+tl1 exec -v -t1200 cmhugtl1 cpy-mem::<iom1>
+waitforiomstate -t600 cmhugtl1 1 isstbyh
+tl1 close -t 30 cmhugtl1
+}
+###### END OF SECTION cmhug ######
+###### START OF SECTION iomhug ######
+iomhug exec {
+tl1 open -t30 iomhugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v iomhugtl1 rtrv-sys-secu
+tl1 exec -v -t1800 iomhugtl1 exec-backup-plexus::com:::<bkupmachine>,<bkuplogin>,<bkuppasswd>,<bkupdir>
+tl1 exec -i -v iomhugtl1 rtrv-status-mg
+tl1 exec -i -v iomhugtl1 rtrv-si-mgcassoc
+tl1 exec -i -v iomhugtl1 rtrv-eqpt
+tl1 exec -i -v iomhugtl1 rtrv-info-eqpt
+tl1 close -t 30 iomhugtl1
+}
+###### END OF SECTION iomhug ######
+###### START OF SECTION posthug ######
+posthug exec {
+telnet open -t30 posthugtelnet <<activesp>.ip> <login> <passwd>
+telnet exec -i -v -t120 posthugtelnet /bin/findcpucores
+telnet close posthugtelnet
+telnet open -t30 posthugtelnet <<standbysp>.ip> <login> <passwd>
+telnet exec -i -v -t120 posthugtelnet /bin/findcpucores
+telnet close posthugtelnet
+tl1 open -t30 posthugtl1 <<activesp>.ip> <tl1login> <tl1passwd>
+tl1 exec -i -v posthugtl1 rtrv-eqpt
+tl1 close -t 30 posthugtl1
+}
+###### END OF SECTION posthug ######

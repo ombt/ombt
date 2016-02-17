@@ -1,0 +1,15 @@
+#!/usr/bin/perl 
+#
+print "enter min number: ";
+$min = <STDIN>;
+chomp $min;
+#
+print "enter min number: ";
+$max = <STDIN>;
+chomp $max;
+#
+foreach $i ($min ... $max)
+{
+	print "$i*$i = " . $i*$i . "\n";
+}
+#

@@ -1,0 +1,17 @@
+removetarfiles exec {
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/rm /*tar.gz
+	telnet exec telnetspb /bin/rm /*tar.gz
+	telnet exec -i telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspa /bin/find /home1 -type f -print | /bin/xargs rm -f
+	telnet exec -i telnetspb /bin/find /home1 -type f -print | /bin/xargs rm -f
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}

@@ -1,0 +1,6 @@
+SHELLBIN = $(HOME)/tools/bin
+#
+cronjobs
+cronjobs.sh
+# cronjobs changed. run it immediately to update the cron table.
+install1 = ./cronjobs

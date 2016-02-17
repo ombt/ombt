@@ -1,0 +1,25 @@
+# Compute Modules
+ent-eqpt::iom-1:::BA9ATS0FAB,pri,95,95,95,<cm>:is
+ent-eqpt::iom-2:::BA9ATS0FAB,sec,95,95,95,<cm>:is
+ent-eqpt::iom-14:::BA9ATS0FAB,pri,95,95,95,<cm>:is
+ent-eqpt::iom-15:::BA9ATS0FAB,sec,95,95,95,<cm>:is
+# T1/E1 IOMs here (414)
+ent-eqpt-all::iom-11:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-13:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+# T1s go here
+ent-t1::iom-11-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-11-port-16:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-11-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-13-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-13-port-16:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-13-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.105.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.40.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.40.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.40.254
+ent-iproute::sp-cpu-b-135.2.83.0-24:::gateway=10.11.40.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.40.254

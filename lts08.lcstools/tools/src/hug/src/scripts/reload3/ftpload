@@ -1,0 +1,36 @@
+ftpputfile exec { sp from to } {
+	ftp put -i -t600 -b <sp> <from> <to>
+}
+ftpputfiles exec { sp textdir images } {
+	call ftpputfile <sp> <textdir>/ana/<<images>.ana> /home/<<images>.ana>
+	call ftpputfile <sp> <textdir>/atmds3/<<images>.atmds3> /home/<<images>.atmds3>
+	call ftpputfile <sp> <textdir>/cm/<<images>.cm> /home/<<images>.cm>
+	call ftpputfile <sp> <textdir>/cpu/<<images>.cpu> /home/<<images>.cpu>
+	call ftpputfile <sp> <textdir>/ds1/<<images>.ds1> /home/<<images>.ds1>
+	call ftpputfile <sp> <textdir>/ds1_2/<<images>.ds1_2> /home/<<images>.ds1_2>
+	call ftpputfile <sp> <textdir>/ds3/<<images>.ds3> /home/<<images>.ds3>
+	call ftpputfile <sp> <textdir>/e1/<<images>.e1> /home/<<images>.e1>
+	call ftpputfile <sp> <textdir>/ena/<<images>.ena> /home/<<images>.ena>
+	call ftpputfile <sp> <textdir>/ena2/<<images>.ena2> /home/<<images>.ena2>
+	call ftpputfile <sp> <textdir>/octds3/<<images>.octds3> /home/<<images>.octds3>
+	call ftpputfile <sp> <textdir>/octds3_2/<<images>.octds3_2> /home/<<images>.octds3_2>
+	call ftpputfile <sp> <textdir>/octds3_3/<<images>.octds3_3> /home/<<images>.octds3_3>
+	call ftpputfile <sp> <textdir>/pna/<<images>.pna> /home/<<images>.pna>
+	call ftpputfile <sp> <textdir>/tdmoc/<<images>.tdmoc> /home/<<images>.tdmoc>
+	call ftpputfile <sp> <textdir>/trids3/<<images>.trids3> /home/<<images>.trids3>
+	call ftpputfile <sp> <textdir>/trids3_3/<<images>.trids3_3> /home/<<images>.trids3_3>
+	call ftpputfile <sp> <textdir>/voip/<<images>.voip> /home/<<images>.voip>
+	call ftpputfile <sp> <textdir>/voip6/<<images>.voip6> /home/<<images>.voip6>
+	call ftpputfile <sp> <textdir>/vs3/<<images>.vs3> /home/<<images>.vs3>
+}
+#
+ftpload exec { spaip spbip login passwd textdir images} {
+	#
+	ftp open ftpspa <spaip> <login> <passwd>
+	call ftpputfiles ftpspa <textdir> <images>
+	ftp close ftpspa
+	#
+	ftp open ftpspb <spbip> <login> <passwd>
+	call ftpputfiles ftpspb <textdir> <images>
+	ftp close ftpspb
+}

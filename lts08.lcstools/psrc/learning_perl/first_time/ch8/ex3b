@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my(%data);
+@data{(-9 .. 9)} = (
+	"negative nine",
+	"negative eight",
+	"negative seven",
+	"negative six",
+	"negative five",
+	"negative four",
+	"negative three",
+	"negative two",
+	"negative one",
+	qw(zero one two three four five six seven eight nine)
+);
+#
+print "number to name ... %data \n";
+#
+while (<STDIN>)
+{
+	chomp;
+	#
+	n2nm($_);
+}
+#
+sub n2nm {
+	my ($num) = @_;
+	#
+	if ($data{$_})
+	{
+		print "number is ... $data{$_}\n";
+	}
+	else
+	{
+		print "number is ... $num\n";
+	}
+}
+

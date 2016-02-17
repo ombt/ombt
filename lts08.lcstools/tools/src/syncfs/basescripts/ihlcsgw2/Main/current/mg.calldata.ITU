@@ -1,0 +1,14 @@
+#MEGACO area
+ed-mg-mgcassoc::ihlcsgw1-part0::::is
+ent-iua-sys
+ent-iua-endptasp::1:::ipadest=10.11.21.3,port=53008
+ent-iua-endptasp::2:::ipadest=10.11.21.3,port=53240
+ent-iua-asp::1-1:::desc=asp1gw2
+ent-iua-asp::2-2:::desc=asp2gw2
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+ent-iua-lnk::1010:::asid=1,iomport=iom-1-e1-10,lnktype=user
+ent-iua-lnk::1011:::asid=1,iomport=iom-1-e1-11,lnktype=network
+ent-iua-lnk::1007:::asid=1,iomport=iom-1-e1-7,lnktype=network
+set-sid:::::ihlcsgw2
+init-sys:ihlcsgw2::::10

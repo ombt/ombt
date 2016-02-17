@@ -1,0 +1,29 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -ML -GX -DWIN32 -D_WINDOWS -DNEED_CAST
+
+INCPATH = ..\..\include
+LIBPATH = ..\..\lib
+INCFLAGS = -I. -I$(INCPATH)
+AR = lib
+LOGICLIB = $(LIBPATH)\logic.lib
+LIBS = $(LIBPATH)\util.lib $(LIBPATH)\logic.lib
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+LIB_OBJS = logic.obj
+
+TARGETS = logiclib test1.exe test2.exe test3.exe
+
+all: $(TARGETS)
+
+logiclib:	$(LIB_OBJS)
+#        $(CC) $(CFLAGS) $(INCFLAGS) -c $**
+        $(AR) /out:$(LOGICLIB) $(LIB_OBJS)
+
+test1.exe:    test1.obj
+        $(CC) $(CFLAGS) $** $(LIBS)
+test2.exe:    test2.obj
+        $(CC) $(CFLAGS) $** $(LIBS)
+test3.exe:    test3.obj
+        $(CC) $(CFLAGS) $** $(LIBS)

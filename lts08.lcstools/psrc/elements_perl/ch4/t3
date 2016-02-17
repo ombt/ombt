@@ -1,0 +1,30 @@
+#!/usr/bin/perl -w
+#
+eatme();
+#
+print "pack : $pack\n";
+print "fname: $fname\n";
+print "lnno : $lnno\n";
+print "subr : $subr\n";
+#
+eatme2();
+#
+$size = @info;
+print "size is ... $size\n";
+$last = $#info;
+print "last is ... $last\n";
+#
+foreach (0..$#info)
+{
+	print "$_: $info[$_]\n";
+}
+#
+exit 0;
+#
+sub eatme {
+	($pack, $fname, $lnno, $subr) = caller(0);
+}
+#
+sub eatme2 {
+	@info = caller(0);
+}

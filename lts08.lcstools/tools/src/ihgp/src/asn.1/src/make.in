@@ -1,0 +1,16 @@
+CC = CC
+CCFLAGS = -g -DDEBUG
+LD = CC
+LDFLAGS = -g -DDEBUG
+#
+asn1cc
+asn1cc.sh
+#
+asn1pp
+asn1pp.c
+install1 = cp asn1pp $(HOME)/bin/asn1pp
+#
+asn1l
+asn1.l
+-ll
+install1 = cp asn1l $(HOME)/bin/asn1l

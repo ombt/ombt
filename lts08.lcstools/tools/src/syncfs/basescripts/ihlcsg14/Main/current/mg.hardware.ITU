@@ -1,0 +1,43 @@
+ed-chassis-eqpt::com:::shelfid=3,chassistype=MG,emipspa=135.1.105.11,emipspb=135.1.105.12,sigaipspa=10.11.41.1,sigaipspb=10.11.41.2,sigcipspa=10.11.41.4,sigcipspb=10.11.41.5,sigaipchassis=10.11.41.3,emipmask=255.255.255.0,sigaipmask=255.255.255.0,sigcipmask=255.255.255.0
+# VSM-3 use in 6.X
+ent-eqpt::iom-14:::BAUIAA1EAB,pri,95,95,95,<vs3>:is
+#ent-eqpt::iom-9:::BAUIAA1EAB,sec,95,95,95,<vs3>:is
+# T1/PORT IOMs here (414)
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-3:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+#
+# ENA2 IOMs
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAA,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAA,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+ent-mg-partition::part0:::,maxctxt=200
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.105.254
+ent-iproute::sp-cpu-a-10.11.0.0-16:::gateway=10.11.41.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.41.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.41.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.41.254
+#
+ent-mg-mgcassoc::ihlcsgw13-part0:::mgctype=primary,ipaddr=10.11.40.3,rxport=2947,txport=2947,transprot=udp,mgcidletmr=8:is
+# T1s go here
+#
+ent-e1::iom-1-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.41.1,mateipaddr=10.175.41.2,subnetmask=255.255.255.0,defaultgateway=10.175.41.254:is

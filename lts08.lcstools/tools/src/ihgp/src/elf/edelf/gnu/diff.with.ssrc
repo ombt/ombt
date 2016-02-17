@@ -1,0 +1,324 @@
+<<<<<<<<<<<<<<<< dasm.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< data.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< data.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< debug.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< dynamic.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< edelf.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< edelf.h >>>>>>>>>>>>>>>>>>>>
+28,29c28,29
+< #define MAXBUCKET(_eo, _csec) ((_eo).phashtbls((_csec))[0])
+< #define MAXCHAIN(_eo, _csec) ((_eo).phashtbls((_csec))[1])
+---
+> #define MAXBUCKET(_eo, _csec) (((_eo).phashtbls((_csec)))[0])
+> #define MAXCHAIN(_eo, _csec) (((_eo).phashtbls((_csec)))[1])
+<<<<<<<<<<<<<<<< elfobj.h >>>>>>>>>>>>>>>>>>>>
+25,32d24
+< // swab macros
+< #define EOSWABIT(_eo, _data) \
+< 	_eo.eoswabit((unsigned char *)(&_data), sizeof((_data)))
+< 
+< #define SWABIT(_data) { \
+< 	(_data) = swabit((unsigned char *)(&_data), sizeof((_data))); \
+< }
+< 
+51,52c43
+< 		showsec(-1), showstart(65565), showend(-1), showoffset(0),
+< 		_swabdata(-1)
+---
+> 		showsec(-1), showstart(65565), showend(-1), showoffset(0)
+74d64
+< 		_swabdata = -1;
+206,229d195
+< 		// check if we need to swab the data
+< 		if (_pehdr->e_ident[EI_DATA] == ELFDATA2LSB)
+< 			_swabdata = 1;
+< 		else
+< 			_swabdata = 0;
+< 
+< 		// do we swab the data?
+< 		if (isSwabable())
+< 		{
+< 			SWABIT(_pehdr->e_type);
+< 			SWABIT(_pehdr->e_machine);
+< 			SWABIT(_pehdr->e_version);
+< 			SWABIT(_pehdr->e_entry);
+< 			SWABIT(_pehdr->e_phoff);
+< 			SWABIT(_pehdr->e_shoff);
+< 			SWABIT(_pehdr->e_flags);
+< 			SWABIT(_pehdr->e_ehsize);
+< 			SWABIT(_pehdr->e_phentsize);
+< 			SWABIT(_pehdr->e_phnum);
+< 			SWABIT(_pehdr->e_shentsize);
+< 			SWABIT(_pehdr->e_shnum);
+< 			SWABIT(_pehdr->e_shstrndx);
+< 		}
+< 
+266,283d231
+< 		// do we need to swab?
+< 		if (isSwabable())
+< 		{
+< 			for (int s=0; s<_pehdr->e_shnum; s++)
+< 			{
+< 				SWABIT(_pshdrs[s].sh_name);
+< 				SWABIT(_pshdrs[s].sh_type);
+< 				SWABIT(_pshdrs[s].sh_flags);
+< 				SWABIT(_pshdrs[s].sh_addr);
+< 				SWABIT(_pshdrs[s].sh_offset);
+< 				SWABIT(_pshdrs[s].sh_size);
+< 				SWABIT(_pshdrs[s].sh_link);
+< 				SWABIT(_pshdrs[s].sh_info);
+< 				SWABIT(_pshdrs[s].sh_addralign);
+< 				SWABIT(_pshdrs[s].sh_entsize);
+< 			}
+< 		}
+< 
+367,382d314
+< 		// do we need to swab?
+< 		if (isSwabable())
+< 		{
+< 			for (int p=0; p<_pehdr->e_phnum; p++)
+< 			{
+< 				SWABIT(_pphdrs[p].p_type);
+< 				SWABIT(_pphdrs[p].p_offset);
+< 				SWABIT(_pphdrs[p].p_vaddr);
+< 				SWABIT(_pphdrs[p].p_paddr);
+< 				SWABIT(_pphdrs[p].p_filesz);
+< 				SWABIT(_pphdrs[p].p_memsz);
+< 				SWABIT(_pphdrs[p].p_flags);
+< 				SWABIT(_pphdrs[p].p_align);
+< 			}
+< 		}
+< 
+429,448d360
+< 			// check if swabable
+< 			if (isSwabable())
+< 			{
+< 				char *p0 = _pshdrdata[s];
+< 				char *pe = _pshdrdata[s]+_pshdrs[s].sh_size;
+< 				for (int y=0; 
+< 				    (p0+y*_pshdrs[s].sh_entsize)<pe; y++)
+< 				{
+< 					Elf32_Sym *psym = 
+< 						(Elf32_Sym *)(p0 + 
+< 						y*_pshdrs[s].sh_entsize);
+< 					SWABIT(psym->st_name);
+< 					SWABIT(psym->st_value);
+< 					SWABIT(psym->st_size);
+< 					SWABIT(psym->st_info);
+< 					SWABIT(psym->st_other);
+< 					SWABIT(psym->st_shndx);
+< 				}
+< 			}
+< 
+586c498,499
+< 					new char [_pshdrs[s].sh_size];
+---
+> 					new char [_pshdrs[s].sh_size]+
+> 						sizeof(Elf32_Word);
+1091c1004
+< 		return((Elf32_Word *)_pshdrdata[sec]);
+---
+> 		return((Elf32_Word *)(_pshdrdata[sec]));
+1144,1147d1056
+< 	inline int isSwabable() const {
+< 		MustBeTrue(_swabdata == 0 || _swabdata == 1);
+< 		return(_swabdata);
+< 	}
+1150,1210d1058
+< 	unsigned long
+< 	eoswabit(unsigned char *p, int szofp) {
+< 		unsigned long nval = 0;
+< 
+< 		if (!isSwabable())
+< 		{
+< 			switch (szofp)
+< 			{
+< 			case 1:
+< 				nval = *(unsigned char *)p;
+< 				break;
+< 			case 2:
+< 				nval = *(unsigned short *)p;
+< 				break;
+< 			case 4:
+< 				nval = *(unsigned long *)p;
+< 				break;
+< 			default:
+< 				MustBeTrue(szofp == 1 || szofp == 2 || szofp == 4);
+< 			}
+< 		}
+< 		else
+< 		{
+< 			switch (szofp)
+< 			{
+< 			case 1:
+< 				nval = p[0];
+< 				break;
+< 			case 2:
+< 				nval = p[0] | (p[1] << 8);
+< 				break;
+< 			case 4:
+< 				nval = p[0] | (p[1]<<8) | (p[2]<<16) | (p[3]<<24);
+< 				break;
+< 			default:
+< 				MustBeTrue(szofp == 1 || szofp == 2 || szofp == 4);
+< 			}
+< 		}
+< 		return(nval);
+< 	}
+< 	unsigned long
+< 	swabit(unsigned char *p, int szofp) {
+< 		unsigned long nval = 0;
+< 		
+< 		switch (szofp)
+< 		{
+< 		case 1:
+< 			nval = p[0];
+< 			break;
+< 		case 2:
+< 			nval = p[0] | (p[1] << 8);
+< 			break;
+< 		case 4:
+< 			nval = p[0] | (p[1]<<8) | (p[2]<<16) | (p[3]<<24);
+< 			break;
+< 		default:
+< 			MustBeTrue(szofp == 1 || szofp == 2 || szofp == 4);
+< 		}
+< 		return(nval);
+< 	}
+< 
+1282d1129
+< 	int _swabdata;
+<<<<<<<<<<<<<<<< fhdr.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< hash.c >>>>>>>>>>>>>>>>>>>>
+58,59c58,59
+< 	Elf32_Word *pchain = phash + EOSWABIT(eo, MAXBUCKET(eo, csec));
+< 	int maxb = EOSWABIT(eo, MAXBUCKET(eo, csec));
+---
+> 	Elf32_Word *pchain = phash + MAXBUCKET(eo, csec);
+> 	int maxb = MAXBUCKET(eo, csec);
+62,64c62,64
+< 		if (EOSWABIT(eo, phash[cbucket]) == STN_UNDEF) continue;
+< 		for (cchain = EOSWABIT(eo, phash[cbucket]); cchain != STN_UNDEF; 
+< 		     cchain = EOSWABIT(eo, pchain[cchain]))
+---
+> 		if (phash[cbucket] == STN_UNDEF) continue;
+> 		for (cchain = phash[cbucket]; cchain != STN_UNDEF; 
+> 		     cchain = pchain[cchain])
+79,80c79,80
+< 	Elf32_Word *pchain = phash + EOSWABIT(eo, MAXBUCKET(eo, csec));
+< 	int maxb = EOSWABIT(eo, MAXBUCKET(eo, csec));
+---
+> 	Elf32_Word *pchain = phash + MAXBUCKET(eo, csec);
+> 	int maxb = MAXBUCKET(eo, csec);
+85,86c85,86
+< 		for (cchain = EOSWABIT(eo, phash[cbucket]); cchain != STN_UNDEF; 
+< 		     cchain = EOSWABIT(eo, pchain[cchain]))
+---
+> 		for (cchain = phash[cbucket]; cchain != STN_UNDEF; 
+> 		     cchain = pchain[cchain])
+151,152c151
+< 					EOSWABIT(eo, MAXBUCKET(eo, csec)), 
+< 					EOSWABIT(eo, MAXCHAIN(eo, csec)));
+---
+> 					MAXBUCKET(eo, csec), MAXCHAIN(eo, csec));
+157,158c156
+< 				cchain = EOSWABIT(
+< 					eo, eo.phashtbls(csec)[cbucket+2]);
+---
+> 				cchain = eo.phashtbls(csec)[cbucket+2];
+172,173c170
+< 					EOSWABIT(eo, MAXBUCKET(eo, csec)), 
+< 					EOSWABIT(eo, MAXCHAIN(eo, csec)));
+---
+> 					MAXBUCKET(eo, csec), MAXCHAIN(eo, csec));
+178,179c175
+< 				cchain = EOSWABIT(
+< 					eo, eo.phashtbls(csec)[cbucket+2]);
+---
+> 				cchain = eo.phashtbls(csec)[cbucket+2];
+205,206c201,202
+< 		     cbucket < EOSWABIT(eo, MAXBUCKET(eo, csec)) && 
+< 		     (cchain = EOSWABIT(eo, eo.phashtbls(csec)[cbucket+2])) == STN_UNDEF;
+---
+> 		     cbucket < MAXBUCKET(eo, csec) && 
+> 		     (cchain = eo.phashtbls(csec)[cbucket+2]) == STN_UNDEF;
+208c204
+< 		if (cbucket >= EOSWABIT(eo, MAXBUCKET(eo, csec)))
+---
+> 		if (cbucket >= MAXBUCKET(eo, csec))
+245,247c241,242
+< 		     cbucket < EOSWABIT(eo, MAXBUCKET(eo, csec)) && 
+< 		     (cchain = EOSWABIT(
+< 				eo, eo.phashtbls(csec)[cbucket+2])) == STN_UNDEF;
+---
+> 		     cbucket < MAXBUCKET(eo, csec) && 
+> 		     (cchain = eo.phashtbls(csec)[cbucket+2]) == STN_UNDEF;
+249c244
+< 		if (cbucket >= EOSWABIT(eo, MAXBUCKET(eo, csec)))
+---
+> 		if (cbucket >= MAXBUCKET(eo, csec))
+307,309c302,303
+< 	Elf32_Word *pchain = eo.phashtbls(csec) + 
+< 		EOSWABIT(eo, MAXBUCKET(eo, csec)) + 2;
+< 	cchain = EOSWABIT(eo, pchain[cchain]);
+---
+> 	Elf32_Word *pchain = eo.phashtbls(csec) + MAXBUCKET(eo, csec) + 2;
+> 	cchain = pchain[cchain];
+315c309
+< 	for (cbucket++; cbucket < EOSWABIT(eo, MAXBUCKET(eo, csec)); cbucket++)
+---
+> 	for (cbucket++; cbucket < MAXBUCKET(eo, csec); cbucket++)
+317c311
+< 		if (EOSWABIT(eo, eo.phashtbls(csec)[cbucket+2]) == STN_UNDEF)
+---
+> 		if (eo.phashtbls(csec)[cbucket+2] == STN_UNDEF)
+319c313
+< 		cchain = EOSWABIT(eo, eo.phashtbls(csec)[cbucket+2]);
+---
+> 		cchain = eo.phashtbls(csec)[cbucket+2];
+331,332c325
+< 		for (cbucket=0; cbucket < EOSWABIT(eo, MAXBUCKET(eo, csec)); 
+< 			cbucket++)
+---
+> 		for (cbucket=0; cbucket < MAXBUCKET(eo, csec); cbucket++)
+334,335c327
+< 			if (EOSWABIT(eo, 
+< 				eo.phashtbls(csec)[cbucket+2]) == STN_UNDEF)
+---
+> 			if (eo.phashtbls(csec)[cbucket+2] == STN_UNDEF)
+337c329
+< 			cchain = EOSWABIT(eo, eo.phashtbls(csec)[cbucket+2]);
+---
+> 			cchain = eo.phashtbls(csec)[cbucket+2];
+375c367
+< 	cchain = EOSWABIT(eo, eo.phashtbls(csec)[cbucket+2]);
+---
+> 	cchain = eo.phashtbls(csec)[cbucket+2];
+407,408c399,400
+< 					EOSWABIT(eo, eo.phashtbls(sec)[0]), 
+< 					EOSWABIT(eo, eo.phashtbls(sec)[1]));
+---
+> 					eo.phashtbls(sec)[0], 
+> 					eo.phashtbls(sec)[1]);
+<<<<<<<<<<<<<<<< menu.c >>>>>>>>>>>>>>>>>>>>
+300d299
+< 				// edmenu(eo, input);
+<<<<<<<<<<<<<<<< overwriter.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< phdrs.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< reloc.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< returns.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< shdrs.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< spaces.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< spaces.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< stab.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< stabs.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< stabtokenizer.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< stabtokenizer.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< strings.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< symbols.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< tokenize.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< tokenize.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< trans.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< trans.h >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< util.c >>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<< versions.c >>>>>>>>>>>>>>>>>>>>

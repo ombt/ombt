@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>
+Source
+</title>
+</head>
+<body>
+
+<h1>Selected Sources from:<br>
+<em>Elements of Programming with Perl</em></h1>
+
+As promised, the literate sources for the <code>faqgrep</code> and
+<code>pqtangle</code> scripts are here along with postscript and PDF
+versions of the typeset documentation (resulting from
+<code>weaving</code> the literate source). As well, a couple of other
+plain source files from the book are provided here for your
+convenience.
+
+<h2>faqgrep</h2>
+<dl>
+
+<dt><a href="faqgrep/faqgrep.nw">faqgrep.nw</a>
+<dd>The literate source for the <code>faqgrep</code> program.
+
+<dt><a href="faqgrep/faqgrep.ps">faqgrep.ps</a>
+<dd>The typeset documentation in postscript format.
+
+<dt><a href="faqgrep/faqgrep.pdf">faqgrep.pdf</a>
+<dd>The typeset documentation in PDF format.
+
+</dl>
+
+<h2>pqtangle</h2>
+<dl>
+
+<dt><a href="pqtangle/pqtangle.nw">pqtangle.nw</a>
+<dd>The literate source for the <code>pqtangle</code> program.
+
+<dt><a href="pqtangle/pqtangle.ps">pqtangle.ps</a>
+<dd>The typeset documentation in postscript format.
+
+<dt><a href="pqtangle/pqtangle.pdf">faqgrep.pdf</a>
+<dd>The typeset documentation in PDF format.
+
+<dt><a href="pqtangle/pqtangle">pqtangle</a>
+<dd>The pqtangle script, already tangled and ready for use.
+
+</dl>
+
+If you want to test the <code>pqtangle</code> script, then
+grab a copy of the <code>faqgrep.nw</code> source and run
+the tangler on it like so:
+
+<pre>
+perl pqtangle -L faqgrep.nw
+</pre>
+
+This should result in a new <code>faqgrep</code> file being
+generated which contains the code with line directives inserted. You
+can now use the resulting <code>faqgrep</code> program as discussed
+in the book.
+
+<h2>Other</h2>
+
+<dl>
+
+<dt><a href="primes.pl">primes.pl</a>
+<dd>The prime number program given in chapter 5 of the book.
+
+<dt><a href="fibo.pl">fibo.pl</a>
+<dd>The closure example of a Fibonacci stream generator from
+chapter 8.
+
+<dt><a href="Stock.tar.gz">Stock.tar.gz</a>
+<dd>Gzipped tarfile of the stock-quote example in chapter 14.
+
+<dt><a href="Stock.zip">Stock.zip</a>
+<dd>Same as above in zip format (should work with either the
+zip or PKzip utility).
+
+<dt><a href="sorts.pl">sorts.pl</a>
+<dd>A script containing the various sorting algorithms given
+in chapter 17 of the book.
+
+<dt><a href="Stack.pm">Stack.pm</a>
+<dd>Perl module implementing a Stack class, from chapter 18.
+
+<dt><a href="Queue.pm">Queue.pm</a>
+<dd>Perl module implementing a Queue class, from chapter 18.
+
+<dt><a href="Heap.pm">Heap.pm</a>
+<dd>Perl module implementing a Heap class, from chapter 19.
+
+<dt><a href="Course.tar.gz">Course.tar.gz</a>
+<dd>A gzipped tarfile containing the Course example Classes, data
+files, and scripts from chapter 19.
+
+<dt><a href="Course.zip">Course.zip</a>
+<dd>Same as above, but in zip format (should work with zip and PKzip)..
+
+</dl>
+
+</body>
+</html>
+

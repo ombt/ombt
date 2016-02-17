@@ -1,0 +1,23 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+copyscripts
+copyscripts.sh
+#
+mkcurrdirs
+mkcurrdirs.sh
+#
+auditscripts
+auditscripts.sh
+#
+auditimages
+auditimages.sh
+#
+audittext
+audittext.sh
+#
+# distributescripts
+# distributescripts.sh
+#
+auditlabloads
+auditlabloads.sh
+#

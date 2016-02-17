@@ -1,0 +1,72 @@
+ed-chassis-eqpt::com:::shelfid=1,chassistype=mg,emipspa=135.1.104.203,emipspb=135.1.104.204,sigaipspa=10.11.33.1,sigaipspb=10.11.33.2,sigcipspa=10.11.33.4,sigcipspb=10.11.33.5,sigaipchassis=10.11.33.3,emipmask=255.255.255.0,sigaipmask=255.255.255.0,sigcipmask=255.255.255.0
+#
+# T1/E1 IOMs here (414)
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+# ENA2 IOMs
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAA,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAA,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+#DS3 IOM
+ent-eqpt::iom-2:::BA9AXY0FAA,pri,95,95,95,<octds3_2>:is
+ent-eqpt::iom-6:::BA4A701FAA,pri,95,95,95,<octds3_2>:is
+ent-eqpt::iom-5:::BA4A701FAA,sec,95,95,95,<octds3_2>:is
+# VSM2 use in 5.x
+ent-eqpt::iom-3:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-4:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-15:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-12:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-13:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-14:::BA1AX60AAB,pri,95,95,95,<vs2>:is
+ent-eqpt::iom-9:::BA1AX60AAB,sec,95,95,95,<vs2>:is
+#
+# TDMOC
+ent-eqpt-all::iom-16:::iomoduletype=BA4AW60FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+ent-eqpt-all::iom-17:::iomoduletype=BA4AW60FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<tdmoc>,rearmoduletype=BA4A50VFAA:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+ent-stm1::iom-16-stm1-1:::stmfmt=itu
+ent-stm1::iom-16-stm1-2:::stmfmt=itu
+ent-stm1::iom-16-stm1-3:::stmfmt=itu
+#
+ent-tug3::iom-16-stm1-1-tug3-1
+ent-tug3::iom-16-stm1-1-tug3-2
+ent-tug3::iom-16-stm1-1-tug3-3
+ent-tug3::iom-16-stm1-2-tug3-1
+ent-tug3::iom-16-stm1-2-tug3-2
+ent-tug3::iom-16-stm1-2-tug3-3
+ent-tug3::iom-16-stm1-3-tug3-1
+ent-tug3::iom-16-stm1-3-tug3-2
+#
+#Add partitioning data so t1s have the partition data assigned.
+ent-mg-partition::part0:::,maxctxt=4000
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-a-10.11.0.0-16:::gateway=10.11.33.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.33.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.33.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.33.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.33.254
+#
+ent-mg-mgcassoc::ihlcsgw7-part0:::mgctype=primary,ipaddr=10.11.17.3,rxport=2947,txport=2947,transprot=udp,mgcidletmr=8
+# T1s go here
+#
+ent-e1::iom-1-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-3:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-4:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-5:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-6:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-7:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet::iom-8-enet-2:::format=enet_dix_ii:is
+ent-enet::iom-8-enet-3:::format=enet_dix_ii:is
+ent-enet::iom-8-enet-4:::format=enet_dix_ii:is
+#
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.33.1,mateipaddr=10.175.33.2,subnetmask=255.255.255.0,defaultgateway=10.175.33.254:is
+ent-enet-endptvoip::iom-8-enet-2-endpt-1:::ipaddr=10.175.33.3,mateipaddr=10.175.33.4,subnetmask=255.255.255.0,defaultgateway=10.175.33.254:is
+ent-enet-endptvoip::iom-8-enet-3-endpt-1:::ipaddr=10.175.33.5,mateipaddr=10.175.33.6,subnetmask=255.255.255.0,defaultgateway=10.175.33.254:is
+ent-enet-endptvoip::iom-8-enet-4-endpt-1:::ipaddr=10.175.33.7,mateipaddr=10.175.33.8,subnetmask=255.255.255.0,defaultgateway=10.175.33.254:is
+#

@@ -1,0 +1,69 @@
+C
+C SIEVE OF ERASTOSTHENES FOR GENERATING PRIME NUMBERS.
+C
+C*********************************************************
+C
+C NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+C
+C this program has every do-loop converted to a 
+C while-loop.
+C
+C NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+C
+C*********************************************************
+C
+C        1         2         3
+C23456789012345678901234567890123456789
+C
+      PROGRAM SIEVE
+C
+C DECLARE PARAMETERS
+C
+      INTEGER MAXPRIME
+      PARAMETER(MAXPRIME=1000)
+C
+C LOCAL VARIABLES.
+C
+      INTEGER I, J, USERMX
+      LOGICAL PRIME(MAXPRIME)
+C
+C GET MAXIMUM FROM USER AND VERIFY IT IS WITHIN RANGE.
+C
+ 50   PRINT *, 'ENTER MAXIMUM PRIME TO GENERATE'
+      READ *, USERMX
+      IF (USERMX.LE.1.OR.USERMX.GT.MAXPRIME) GOTO 50
+C
+C ASSUME ALL NUMBERS ARE PRIME.
+C
+      I = 1
+100   IF (I.LE.USERMX) THEN
+          PRIME(I) = .TRUE.
+          I = I + 1
+          GOTO 100
+      END IF
+C
+C REMOVE ALL MULTIPLES OF NUMBERS THAT ARE KNOWN TO BE PRIME.
+C
+C START OF OUTER COUNTING LOOP
+C
+      I = 2
+ 200  IF (I.LE.USERMX) THEN
+          IF (PRIME(I)) THEN
+              PRINT *, 'PRIME NUMBER = ', I
+C
+C START OF INNER COUNTING LOOP
+C
+              J = 2*I
+ 300          IF (J.LE.USERMX) THEN
+                  PRIME(J) = .FALSE.
+                  J = J + I
+                  GOTO 300
+              END IF
+          END IF
+          I = I + 1
+          GOTO 200
+      END IF
+C
+C ALL DONE
+C
+      END

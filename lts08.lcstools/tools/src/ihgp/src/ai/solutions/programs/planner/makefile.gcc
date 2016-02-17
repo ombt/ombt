@@ -1,0 +1,12 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = frule.o planner.o strips.o run.o
+TARGETS = planner
+
+all:	$(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+planner:	$(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@ $(AILIB) $(UTILLIB) $(LOGICLIB)

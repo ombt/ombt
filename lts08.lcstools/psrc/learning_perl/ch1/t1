@@ -1,0 +1,23 @@
+#!/opt/exp/bin/perl -w
+print ("hollow, world!\n");
+print ("What is your name? ");
+$name = <STDIN>;
+chomp($name);
+#
+if ($name eq "Mike") {
+	print ("What is your quest? ");
+	$quest = <STDIN>;
+	chomp($quest);
+	#
+	print ("Hey $name, the quest is $quest ...\n");
+} else {
+	print ("What is the flying speed of an unladen sparrow? ");
+	$speed = <STDIN>;
+	chomp($speed);
+	#
+	print ("Hey $name, the flying speed is $speed ...\n");
+}
+#
+
+
+

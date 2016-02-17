@@ -1,0 +1,4 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+spectralog
+spectralog.PL

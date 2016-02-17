@@ -1,0 +1,19 @@
+Total Elapsed Time = 326.5835 Seconds
+         User Time = 17.54137 Seconds
+Exclusive Times
+%Time ExclSec CumulS #Calls sec/call Csec/c  Name
+ 50.3   8.829  8.148 454684   0.0000 0.0000  mytimer::cmp
+ 19.0   3.332  7.412   3481   0.0010 0.0021  mypqueue::remove
+ 17.5   3.084  6.642   4203   0.0007 0.0016  mypqueue::enqueue
+ 3.65   0.640  0.687   1489   0.0004 0.0005  main::parseSipMsg
+ 2.73   0.479 10.688   3982   0.0001 0.0027  main::origination
+ 2.51   0.440  0.429   7532   0.0001 0.0001  mytimer::new
+ 2.22   0.390  0.363  17742   0.0000 0.0000  main::incrstats
+ 1.60   0.280  0.279    400   0.0007 0.0007  Storable::dclone
+ 1.60   0.280  6.463   4051   0.0001 0.0016  main::starttimer
+ 1.42   0.249  5.501     69   0.0036 0.0797  main::handleCallLoad
+ 1.37   0.240  9.296   1489   0.0002 0.0062  main::handleSIP
+ 1.25   0.220  4.947   1000   0.0002 0.0049  main::queueOrig
+ 1.14   0.200  0.211   2483   0.0001 0.0001  main::makepaddr
+ 1.14   0.200  0.238   2767   0.0001 0.0001  mypqueue::dequeue
+ 1.08   0.190  7.995   2567   0.0001 0.0031  main::handleTimer

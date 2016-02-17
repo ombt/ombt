@@ -1,0 +1,217 @@
+
+IP address : 135.111.82.6
+IP port    : 5060
+Delta(secs): 10
+
+Reading data for DN sip:6305510200@135.111.82.6 ...
+$calldata{sip:6305510200@135.111.82.6}{Call-ID} = 6305510200@135.111.82.6
+$calldata{sip:6305510200@135.111.82.6}{Scenario} = registersuccess
+$calldata{sip:6305510200@135.111.82.6}{FromTag} = from5510200
+$calldata{sip:6305510200@135.111.82.6}{ExpiresForm} = InExpires
+$calldata{sip:6305510200@135.111.82.6}{Expires} = 600
+$calldata{sip:6305510200@135.111.82.6}{ReturnCode} = 200
+
+Reading data for DN sip:6305510400@135.111.82.6 ...
+$calldata{sip:6305510400@135.111.82.6}{Call-ID} = 6305510400@135.111.82.6
+$calldata{sip:6305510400@135.111.82.6}{Scenario} = registerfailure
+$calldata{sip:6305510400@135.111.82.6}{ToTag} = to5510400
+$calldata{sip:6305510400@135.111.82.6}{FromTag} = from5510400
+$calldata{sip:6305510400@135.111.82.6}{ExpiresForm} = InContact
+$calldata{sip:6305510400@135.111.82.6}{Expires} = 0
+$calldata{sip:6305510400@135.111.82.6}{ReturnCode} = 400
+
+Reading data for DN sip:6305510404@135.111.82.6 ...
+$calldata{sip:6305510404@135.111.82.6}{Call-ID} = 6305510404@135.111.82.6
+$calldata{sip:6305510404@135.111.82.6}{Scenario} = registerfailure
+$calldata{sip:6305510404@135.111.82.6}{ToTag} = to5510404
+$calldata{sip:6305510404@135.111.82.6}{FromTag} = from5510404
+$calldata{sip:6305510404@135.111.82.6}{ExpiresForm} = InContact
+$calldata{sip:6305510404@135.111.82.6}{Expires} = 0
+$calldata{sip:6305510404@135.111.82.6}{ReturnCode} = 404
+
+Reading data for DN sip:6305510423@135.111.82.6 ...
+$calldata{sip:6305510423@135.111.82.6}{Call-ID} = 6305510423@135.111.82.6
+$calldata{sip:6305510423@135.111.82.6}{Scenario} = registerfailure
+$calldata{sip:6305510423@135.111.82.6}{ToTag} = to5510423
+$calldata{sip:6305510423@135.111.82.6}{FromTag} = from5510423
+$calldata{sip:6305510423@135.111.82.6}{ExpiresForm} = InContact
+$calldata{sip:6305510423@135.111.82.6}{Expires} = 0
+$calldata{sip:6305510423@135.111.82.6}{ReturnCode} = 423
+
+Reading data for DN sip:6305510500@135.111.82.6 ...
+$calldata{sip:6305510500@135.111.82.6}{Call-ID} = 6305510500@135.111.82.6
+$calldata{sip:6305510500@135.111.82.6}{Scenario} = registerfailure
+$calldata{sip:6305510500@135.111.82.6}{ToTag} = to5510500
+$calldata{sip:6305510500@135.111.82.6}{FromTag} = from5510500
+$calldata{sip:6305510500@135.111.82.6}{ReturnCode} = 500
+
+Reading data for DN sip:6305520200@135.111.82.6 ...
+$calldata{sip:6305520200@135.111.82.6}{Call-ID} = 6305520200@135.111.82.6
+$calldata{sip:6305520200@135.111.82.6}{Scenario} = termination
+$calldata{sip:6305520200@135.111.82.6}{ToTag} = to5520200
+$calldata{sip:6305520200@135.111.82.6}{FromTag} = from5520200
+$calldata{sip:6305520200@135.111.82.6}{RingingTimer} = 2
+
+Reading data for DN sip:6305510000@135.111.82.6 ...
+$calldata{sip:6305510000@135.111.82.6}{Call-ID} = 6305510000@135.111.82.6
+$calldata{sip:6305510000@135.111.82.6}{Refer-To} = sip:6305510001@135.111.82.6
+$calldata{sip:6305510000@135.111.82.6}{Scenario} = refersuccess
+$calldata{sip:6305510000@135.111.82.6}{ToTag} = to5510000
+$calldata{sip:6305510000@135.111.82.6}{FromTag} = from5510000
+$calldata{sip:6305510000@135.111.82.6}{WaitFor202Timer} = 2
+
+delta      = 1
+minmsgsize = 20
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 135.185.166.210:5060
+line=<REGISTER sip:135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bKD5F5E153607946349578F2BDE295916C>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2216822819>
+line=<To: Mike Rumore <sip:6305510200@135.111.82.6>>
+line=<Contact: "Mike Rumore" <sip:6305510200@135.185.166.210:5060>>
+line=<Call-ID: ABFFA5AEC5174D7BA6FBA5E928D9E0BC@135.111.82.6>
+line=<CSeq: 4359 REGISTER>
+line=<Expires: 1800>
+line=<Max-Forwards: 70>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 0>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+Entry registersuccess: DN = <sip:6305510200@135.111.82.6>
+
+Current State for sip:6305510200@135.111.82.6 = <INACTIVE>
+Timer Flag for sip:6305510200@135.111.82.6 = <0>
+
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.185.166.210:5060
+line=<SIP/2.0 200 OK>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bKD5F5E153607946349578F2BDE295916C;received=135.111.82.6>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2216822819>
+line=<To: Mike Rumore <sip:6305510200@135.111.82.6>>
+line=<Call-ID: ABFFA5AEC5174D7BA6FBA5E928D9E0BC@135.111.82.6>
+line=<CSeq: 4359 REGISTER>
+line=<Contact: "Mike Rumore" <sip:6305510200@135.185.166.210:5060>>
+line=<Expires: 600>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 135.185.166.210:5060
+line=<INVITE sip:6305514762@135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bK651BA6F352B14F1FBB699BC5F672C8EB>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2335325664>
+line=<To: <sip:6305514762@135.111.82.6>>
+line=<Contact: <sip:6305510200@135.185.166.210:5060>>
+line=<Call-ID: 1856DF44-7446-44B4-8326-2629251193CC@135.185.166.210>
+line=<CSeq: 14285 INVITE>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 305>
+line=<v=0>
+line=<o=6305510200 94458183 94458333 IN IP4 135.185.166.210>
+line=<s=X-Lite>
+line=<c=IN IP4 135.185.166.210>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0 8 3 98 97 101>
+line=<a=rtpmap:0 pcmu/8000>
+line=<a=rtpmap:8 pcma/8000>
+line=<a=rtpmap:3 gsm/8000>
+line=<a=rtpmap:98 iLBC/8000>
+line=<a=rtpmap:97 speex/8000>
+line=<a=rtpmap:101 telephone-event/8000>
+line=<a=fmtp:101 0-15>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for sip:6305514762@135.111.82.6 defined.
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 135.185.166.210:5060
+line=<INVITE sip:6305514762@135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bK651BA6F352B14F1FBB699BC5F672C8EB>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2335325664>
+line=<To: <sip:6305514762@135.111.82.6>>
+line=<Contact: <sip:6305510200@135.185.166.210:5060>>
+line=<Call-ID: 1856DF44-7446-44B4-8326-2629251193CC@135.185.166.210>
+line=<CSeq: 14285 INVITE>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 305>
+line=<v=0>
+line=<o=6305510200 94458183 94458333 IN IP4 135.185.166.210>
+line=<s=X-Lite>
+line=<c=IN IP4 135.185.166.210>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0 8 3 98 97 101>
+line=<a=rtpmap:0 pcmu/8000>
+line=<a=rtpmap:8 pcma/8000>
+line=<a=rtpmap:3 gsm/8000>
+line=<a=rtpmap:98 iLBC/8000>
+line=<a=rtpmap:97 speex/8000>
+line=<a=rtpmap:101 telephone-event/8000>
+line=<a=fmtp:101 0-15>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for sip:6305514762@135.111.82.6 defined.
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 135.185.166.210:5060
+line=<INVITE sip:6305514762@135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bK651BA6F352B14F1FBB699BC5F672C8EB>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2335325664>
+line=<To: <sip:6305514762@135.111.82.6>>
+line=<Contact: <sip:6305510200@135.185.166.210:5060>>
+line=<Call-ID: 1856DF44-7446-44B4-8326-2629251193CC@135.185.166.210>
+line=<CSeq: 14285 INVITE>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 305>
+line=<v=0>
+line=<o=6305510200 94458183 94458333 IN IP4 135.185.166.210>
+line=<s=X-Lite>
+line=<c=IN IP4 135.185.166.210>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0 8 3 98 97 101>
+line=<a=rtpmap:0 pcmu/8000>
+line=<a=rtpmap:8 pcma/8000>
+line=<a=rtpmap:3 gsm/8000>
+line=<a=rtpmap:98 iLBC/8000>
+line=<a=rtpmap:97 speex/8000>
+line=<a=rtpmap:101 telephone-event/8000>
+line=<a=fmtp:101 0-15>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for sip:6305514762@135.111.82.6 defined.
+
+incoming msg <<<<<<<<<<<<<<<<<<
+FROM IP/PORT: 135.185.166.210:5060
+line=<INVITE sip:6305514762@135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.166.210:5060;rport;branch=z9hG4bK651BA6F352B14F1FBB699BC5F672C8EB>
+line=<From: Mike Rumore <sip:6305510200@135.111.82.6>;tag=2335325664>
+line=<To: <sip:6305514762@135.111.82.6>>
+line=<Contact: <sip:6305510200@135.185.166.210:5060>>
+line=<Call-ID: 1856DF44-7446-44B4-8326-2629251193CC@135.185.166.210>
+line=<CSeq: 14285 INVITE>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 305>
+line=<v=0>
+line=<o=6305510200 94458183 94458333 IN IP4 135.185.166.210>
+line=<s=X-Lite>
+line=<c=IN IP4 135.185.166.210>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0 8 3 98 97 101>
+line=<a=rtpmap:0 pcmu/8000>
+line=<a=rtpmap:8 pcma/8000>
+line=<a=rtpmap:3 gsm/8000>
+line=<a=rtpmap:98 iLBC/8000>
+line=<a=rtpmap:97 speex/8000>
+line=<a=rtpmap:101 telephone-event/8000>
+line=<a=fmtp:101 0-15>
+incoming msg <<<<<<<<<<<<<<<<<<
+
+No calldata for sip:6305514762@135.111.82.6 defined.

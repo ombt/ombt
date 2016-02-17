@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+#
+$kids{"Mike"} = [ "Jacob", "Mark" ];
+print "Mike's kids ... " . $kids{"Mike"} . "\n";
+print "Mike's kids ... " . $kids{"Mike"}[0] . "\n";
+print "Mike's kids ... " . $kids{"Mike"}[1] . "\n";
+#
+# $kids{"Clara"} = [ "Erica", "Christopher" ];
+# print "Clara's kids ... $kids{"Clara"}\n";
+#
+# $kids{"John"} = [ "Jennifer", "Jonathan" ];
+# print "John's kids ... $kids{"John"}\n";
+#
+# foreach $key (keys %kids)
+# {
+	# print "$key\'s kids are @$kids{$key}.\n";
+# }
+#
+exit 0

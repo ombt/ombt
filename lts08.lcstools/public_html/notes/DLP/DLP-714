@@ -1,0 +1,36 @@
+<html>
+<head>
+<title> DLP-714 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-714 EXTRACTING FILES FOR CHANGING IOM SOFTWARE</h3>
+<pre>
+
+1) The IOM tar files need to be expanded on the active SP. Use this
+command:
+
+	EXEC-TAR-EXTRACT:[TID]:[&lt;src>]:[CTAG]::
+		&lt;tarfile>,[&lt;suppressoutput>];
+
+Do this to extract an IOM tar file:
+
+	EXEC-TAR-EXTRACT::COM:::/Y.Y.Y.Y.Y_iom.tar.gz;
+
+2) Repeat for all IOM tar files.
+
+3) Now to extract the IOM tar files on the standby SP. Use this
+command:
+
+	EXEC-TAR-EXTRACTSTBY:[TID]:[&lt;src>]:[CTAG]::
+	&lt;tarfile>,&lt;path>,[&lt;suppressoutput>];
+
+Do this to extract an IOM tar file on the standby SP:
+
+	EXEC-TAR-EXTRACTTPSTBY::COM:::Y.Y.Y.Y.Y_iom.tar.gz,/;
+
+4) Repeat for all new IOM tar files.
+
+5) All the new IOM loads should now expanded on both active and standby SP.
+	
+</pre>
+</font></body>
+</html>

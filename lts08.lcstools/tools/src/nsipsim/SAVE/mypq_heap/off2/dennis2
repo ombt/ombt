@@ -1,0 +1,54 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 6061
+parameter myadminip 135.111.82.6
+parameter myadminport 10002
+parameter myrtpip 135.111.82.6
+parameter myrtpport 9002
+parameter myrtcpport 9003
+#
+# specific user section
+#
+dn = 6301111111
+expires = 1800
+termination = termination_busy
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+#
+dn = 6302222222
+expires = 1800
+termination = termination_busy
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+#
+rdn = 6305510201 200
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+#
+rdn = 6305520201 200
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+#
+rcall 6305520201 6305510201 200

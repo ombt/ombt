@@ -1,0 +1,161 @@
+scenario origination {
+state start {
+	send INVITE {
+		HDRS {
+			From: XXXX
+			To: XXXX
+			...
+		}
+		SDP {
+			...
+		}
+		ISUP ansi MSGID IAM {
+			...
+		}
+	}
+	starttimer WAITFOR200INVITE SECONDS;
+	next waitfor200invite;
+}
+state waitfor200invite {
+	expect {
+		timer WAITFOR200INVITE {
+			send CANCEL {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFOR200CANCEL SECONDS;
+			next waitfor200cancel;
+		}
+		100 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		180 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		183 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		200 INVITE {
+			send ACK {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer CALLDURATION SECONDS;
+			next talking;
+		}
+		486 INVITE {
+			send ACK {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		503 INVITE {
+			send ACK {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		CANCEL {
+			send 200 CANCEL {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+state talking {
+	expect {
+		timer CALLDURATION {
+			send BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFOR200BYE SECONDS;
+			next endofcall;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		200 NOTIFY {
+			next talking;
+		}
+		CANCEL {
+			send 200 CANCEL {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		SUBSCRIBE {
+			send NOTIFY {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next talking;
+		}
+	}
+}
+state endofcall {
+	expect {
+		timer WAITFOR200BYE {
+			next idle;
+		}
+		200 BYE {
+			next idle;
+		}
+		CANCEL {
+			send 200 CANCEL {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+state waitfor200cancel {
+	expect {
+		timer WAITFOR200CANCEL {
+			next idle;
+		}
+		200 CANCEL {
+			next idle;
+		}
+	}
+}
+}

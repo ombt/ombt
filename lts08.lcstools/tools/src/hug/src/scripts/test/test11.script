@@ -1,0 +1,11 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	A_Calls_B <B_Calls_A>
+	B_Calls_A <A_Calls_B>
+}
+
+prepare exec {
+	subs <A_Calls_B>
+}

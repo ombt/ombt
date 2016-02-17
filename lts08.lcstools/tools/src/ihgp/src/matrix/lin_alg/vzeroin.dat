@@ -1,0 +1,28 @@
+
+
+-------------------------------------------------------------------------------
+		Testing the Brent's root finder
+
+
+For function x^3 - 2*x - 5,
+the root over [2,3] is	2.094551482e+00
+Function value at the root found	-1.7764e-15
+No. of iterations		11
+Exact root is 		2.0945514815
+
+For function cos(x)-x,
+the root over [2,3] is	2.000000000e+00
+Function value at the root found	-2.4161e+00
+No. of iterations		52
+
+For function cos(x)-x,
+the root over [-1,3] is	7.390851332e-01
+Function value at the root found	0.0000e+00
+No. of iterations		11
+
+For function sin(x)-x,
+the root over [-1,3] is	-1.643737357e-08
+Function value at the root found	0.0000e+00
+No. of iterations		58
+
+Compilation finished at Thu Dec 21 13:31:54

@@ -1,0 +1,51 @@
+<html>
+<head>
+<title> DLP/DLP-700 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-700 - PREPARING FOR AN IN-SERVICE CHANGE OF SYSTEM PROCESSOR SOFTWARE </h3>
+<pre>
+
+SUMMARY: This procedure provides steps to prepare to change the software on the System
+Processors of the switch. This may include patch software, X.X.X.X.SP.X.
+
+The switch may be any of the switch types identified in the following table.
+
+chassisType returned by RTRV-CHASSIS-EQPT
+
+SG - Lucent Signaling Gateway Lucent SG
+MGC - Lucent Network Controller Lucent NC
+MG - Lucent Network Gateway Lucent NG
+SG_MGC_MG - Lucent Compact Switch Lucent CS
+SG_MGC - Lucent Compact Controller Lucent CC
+SG_MG - Combined Lucent Signaling Gateway and Network Gateway Lucent SG/NG
+
+In a distributed architecture, you should first change the software of the 
+Lucent SG, then the Lucent NC and finally the Lucent NG. If changing 
+software of a Lucent CC, it should be changed before the Lucent NG.
+
+Logon Tl1 and list the software versions for the IOMs and the SP, get the IPs
+from RTRV-CHASSIS-EQPT command and check where CurrRel points to: /Telica/swCPU
+or /home1/Telica/swCPU.
+
+Order for upgrading the software:
+
+	SG ==>> MGC ==>> MG
+or,
+	SG_MGC ==>> MG
+
+I assume you need to do the MGC before any MG, so:
+
+	MGC ==>> SG_MG
+
+Get this info also:
+
+	Software versions for SPs and IOMs.
+	IPs from RTRV-EQPT command.
+	Where CurrRel points to, either /Telica/swCPU or /home1/Telica/swCPU.
+	Determine the active SP, ether SP-A or SP-B.
+	Determine active IOMs, secondary IOMs, and IOM types.
+	Determine current disk usage on both SPs.
+
+</pre>
+</font></body>
+</html>

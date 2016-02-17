@@ -1,0 +1,3627 @@
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy . ~lcstools/tools/bin/setup_lcs
+
+LCSTOOLS=/home/lcstools
+LCSTOOLSBIN=/home/lcstools/tools/bin
+LCSTOOLSTL1SCRIPTS=/home/lcstools/tools/tl1scripts
+LCSTOOLSDATA=/home/lcstools/tools/data
+LCSTOOLSLIB=/home/lcstools/tools/lib
+
+PATH=/home/lcstools/tools/bin:/usr/sbin:/home/lcstools/tools/bin:/usr/sbin:/home/lcstools/bin:.:/usr/sbin:/usr/bin:/usr/lbin:/usr/ucb:/usr/exptools/bin:.:/opt/netscape:/usr/openwin/bin:/opt/unison/bin:/opt/dwb/bin:/opt/rds/bin:/usr/ccs/bin:/opt/SUNWspro/bin:/opt/SUNWss/bin:/opt/labapps/bin:/opt/avsadm/5e_avs/bin:/opt/2stpe/bin:/opt/sfa/bin:/opt/scantools/bin:/opt/mtg/bin:/opt/laby/lts/bin:/opt/ats/laby/tes/bin:/opt/exp/bin:/opt/exp/lib/unity/bin:/opt/exp/gnu/bin:/opt/exp/perl/bin:/opt/x11r6/bin:/opt/x11r5/bin:/usr/lbin:/opt/exp/bin:/opt/exp/lib/unity/bin:/opt/exp/bin:/opt/exp/lib/unity/bin
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy setlabid
+setlabid: Version 2003.5.1
+
+	     +-----------=======[ lts08	]=======-----------+
+
+		  ITEM	LABNAME	   CONFIG    LABID   Env
+		  ---- --------- ---------- -------- ----
+		    1) LCS1	 PX9000	    ihlcs1   3.11
+		    2) LCS2	 PX9000	    ihlcs2   3.11
+		    3) LCS3	 PX9000	    ihlcs3   3.11
+		    4) LCS4	 PX9000	    ihlcs4   5.2
+		    5) LCS5	 PX9000	    ihlcs5   5.x
+		    6) LCSDEV1	 PX9000	    ihlcsdv1 3.11
+		    7) LCSDEV2	 PX9000	    ihlcsdv2 3.11
+		    8) LCSGW1	 PX9000	    ihlcsgw1 5.x
+
+Consult	TEI for	detailed LABID descriptions!
+
+Current	LABID =	[ihlcs3]
+
+Please select a	LABID (Enter # or LABID	or 0 to	exit): 3
+
+LABID =	[ ihlcs3 ]   LTS = [ /opt/laby/lts ] LAB_NAME =	[ LCS3 ]
+
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy type lcsreload
+lcsreload is /home/lcstools/tools/bin/lcsreload
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcsreload
+
+Starting reload	of lab ihlcs3:
+
+  0: QUIT
+  1: BP-3-11-0-2	3.11.0.2.SP.1
+  2: BP-3-11-0-2	3.11.0.2.SP.2
+  3: BP-3-11-0-3	3.11.0.3.SP.0
+  4: BRANCH-3-10-1	3.10.1.6.SP.7
+  5: BRANCH-3-11	3.11.0.0.10
+  6: BRANCH-3-11	3.11.0.0.3
+  7: BRANCH-3-11	3.11.0.0.4
+  8: BRANCH-3-11	3.11.0.0.9
+  9: BRANCH-3-11	3.11.0.1
+ 10: BRANCH-3-11	3.11.0.1.0
+ 11: BRANCH-3-11	3.11.0.2.12
+ 12: BRANCH-3-11	3.11.0.3.0
+ 13: BRANCH-3-11	3.11.0.4
+ 14: BRANCH-3-11	3.11.0.4.SP.1
+ 15: BRANCH-3-11-1	3.11.1.0.27
+ 16: BRANCH-3-11-1	3.11.1.0.35
+Choose a load to reload:
+  0: QUIT
+  1: BP-3-11-0-2	3.11.0.2.SP.1
+  2: BP-3-11-0-2	3.11.0.2.SP.2
+  3: BP-3-11-0-3	3.11.0.3.SP.0
+  4: BRANCH-3-10-1	3.10.1.6.SP.7
+  5: BRANCH-3-11	3.11.0.0.10
+  6: BRANCH-3-11	3.11.0.0.3
+  7: BRANCH-3-11	3.11.0.0.4
+  8: BRANCH-3-11	3.11.0.0.9
+  9: BRANCH-3-11	3.11.0.1
+ 10: BRANCH-3-11	3.11.0.1.0
+ 11: BRANCH-3-11	3.11.0.2.12
+ 12: BRANCH-3-11	3.11.0.3.0
+ 13: BRANCH-3-11	3.11.0.4
+ 14: BRANCH-3-11	3.11.0.4.SP.1
+ 15: BRANCH-3-11-1	3.11.1.0.27
+ 16: BRANCH-3-11-1	3.11.1.0.35
+Choose a load to reload: 1414
+
+out-of-range choice.
+  0: QUIT
+  1: BP-3-11-0-2	3.11.0.2.SP.1
+  2: BP-3-11-0-2	3.11.0.2.SP.2
+  3: BP-3-11-0-3	3.11.0.3.SP.0
+  4: BRANCH-3-10-1	3.10.1.6.SP.7
+  5: BRANCH-3-11	3.11.0.0.10
+  6: BRANCH-3-11	3.11.0.0.3
+  7: BRANCH-3-11	3.11.0.0.4
+  8: BRANCH-3-11	3.11.0.0.9
+  9: BRANCH-3-11	3.11.0.1
+ 10: BRANCH-3-11	3.11.0.1.0
+ 11: BRANCH-3-11	3.11.0.2.12
+ 12: BRANCH-3-11	3.11.0.3.0
+ 13: BRANCH-3-11	3.11.0.4
+ 14: BRANCH-3-11	3.11.0.4.SP.1
+ 15: BRANCH-3-11-1	3.11.1.0.27
+ 16: BRANCH-3-11-1	3.11.1.0.35
+Choose a load to reload: 14
+Will reload load <BRANCH-3-11, 3.11.0.4.SP.1>.
+
+Reload this image <swVOIP	3.11.0.4.0_voip6.tar.gz>? [y/n/cr=n] n
+Will NOT reload	swVOIP	   3.11.0.4.0_voip6.tar.gz ...
+
+Reload this image <swVOIP	3.11.0.4.0_voip.tar.gz>? [y/n/cr=n] y
+Will reload swVOIP  3.11.0.4.0_voip.tar.gz ...
+
+Reload this image <swOCTDS3_3	3.11.0.4.0.P2_octds3_3.tar.gz>?	[y/n/cr=n] y
+Will reload swOCTDS3_3	     3.11.0.4.0.P2_octds3_3.tar.gz ...
+
+Reload this image <swDS3	3.11.0.4.0.P2_ds3.tar.gz>? [y/n/cr=n] y
+Will reload swDS3 3.11.0.4.0.P2_ds3.tar.gz ...
+
+Reload this image <swTRIDS3_3	3.11.0.4.0.P2_trids3_3.tar.gz>?	[y/n/cr=n] y
+Will reload swTRIDS3_3	     3.11.0.4.0.P2_trids3_3.tar.gz ...
+
+Reload this image <swENA	3.11.0.4.0_ena.tar.gz>?	[y/n/cr=n] y
+Will reload swENA    3.11.0.4.0_ena.tar.gz ...
+
+Reload this image <swOCTDS3	3.11.0.4.0.P2_octds3.tar.gz>? [y/n/cr=n] y
+Will reload swOCTDS3   3.11.0.4.0.P2_octds3.tar.gz ...
+
+Reload this image <swDS1	3.11.0.4.0_ds1.tar.gz>?	[y/n/cr=n] y
+Will reload swDS1    3.11.0.4.0_ds1.tar.gz ...
+
+Reload this image <swCPU	3.11.0.4.SP.1_cpu.tar.gz>? [y/n/cr=n] y
+Will reload swCPU 3.11.0.4.SP.1_cpu.tar.gz ...
+
+Reload this image <swTRIDS3	3.11.0.4.0.P2_trids3.tar.gz>? [y/n/cr=n] y
+Will reload swTRIDS3   3.11.0.4.0.P2_trids3.tar.gz ...
+
+Reload this image <swOCTDS3_2	3.11.0.4.0.P2_octds3_2.tar.gz>?	[y/n/cr=n] y
+Will reload swOCTDS3_2	     3.11.0.4.0.P2_octds3_2.tar.gz ...
+
+Reload this image <swTDMOC	3.11.0.3.0_tdmoc.tar.gz>? [y/n/cr=n] n
+Will NOT reload	swTDMOC	   3.11.0.3.0_tdmoc.tar.gz ...
+
+Reloading lab ihlcs3 SP-A 135.1.104.143.
+Is this	correct? [y/n/cr=n] y
+Will reload lab	ihlcs3 SP-A.
+
+
+Reloading lab ihlcs3 SP-B 135.1.104.144.
+Is this	correct? [y/n/cr=n] y
+Will reload lab	ihlcs3 SP-B.
+
+
+CPU-IP	  : 135.1.104.143
+Image Type: voip
+From file : /lcsl100/text/BRANCH-3-11/swVOIP/3.11.0.4.0_voip.tar.gz
+To file	  : /3.11.0.4.0_voip.tar.gz
+
+Removing file /*voip.tar.gz ...
+
+Loading	file /3.11.0.4.0_voip.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: octds3_3
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3_3/3.11.0.4.0.P2_octds3_3.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3_3.tar.gz
+
+Removing file /*octds3_3.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_octds3_3.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: ds3
+From file : /lcsl100/text/BRANCH-3-11/swDS3/3.11.0.4.0.P2_ds3.tar.gz
+To file	  : /3.11.0.4.0.P2_ds3.tar.gz
+
+Removing file /*ds3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_ds3.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: trids3_3
+From file : /lcsl100/text/BRANCH-3-11/swTRIDS3_3/3.11.0.4.0.P2_trids3_3.tar.gz
+To file	  : /3.11.0.4.0.P2_trids3_3.tar.gz
+
+Removing file /*trids3_3.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_trids3_3.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: ena
+From file : /lcsl100/text/BRANCH-3-11/swENA/3.11.0.4.0_ena.tar.gz
+To file	  : /3.11.0.4.0_ena.tar.gz
+
+Removing file /*ena.tar.gz ...
+
+Loading	file /3.11.0.4.0_ena.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: octds3
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3/3.11.0.4.0.P2_octds3.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3.tar.gz
+
+Removing file /*octds3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_octds3.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: ds1
+From file : /lcsl100/text/BRANCH-3-11/swDS1/3.11.0.4.0_ds1.tar.gz
+To file	  : /3.11.0.4.0_ds1.tar.gz
+
+Removing file /*ds1.tar.gz ...
+
+Loading	file /3.11.0.4.0_ds1.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: cpu
+From file : /lcsl100/text/BRANCH-3-11/swCPU/3.11.0.4.SP.1_cpu.tar.gz
+To file	  : /3.11.0.4.SP.1_cpu.tar.gz
+
+Removing file /*cpu.tar.gz ...
+
+Loading	file /3.11.0.4.SP.1_cpu.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: trids3
+From file : /lcsl100/text/BRANCH-3-11/swTRIDS3/3.11.0.4.0.P2_trids3.tar.gz
+To file	  : /3.11.0.4.0.P2_trids3.tar.gz
+
+Removing file /*trids3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_trids3.tar.gz ...
+
+CPU-IP	  : 135.1.104.143
+Image Type: octds3_2
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3_2/3.11.0.4.0.P2_octds3_2.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3_2.tar.gz
+
+Removing file /*octds3_2.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_octds3_2.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: voip
+From file : /lcsl100/text/BRANCH-3-11/swVOIP/3.11.0.4.0_voip.tar.gz
+To file	  : /3.11.0.4.0_voip.tar.gz
+
+Removing file /*voip.tar.gz ...
+
+Loading	file /3.11.0.4.0_voip.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: octds3_3
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3_3/3.11.0.4.0.P2_octds3_3.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3_3.tar.gz
+
+Removing file /*octds3_3.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_octds3_3.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: ds3
+From file : /lcsl100/text/BRANCH-3-11/swDS3/3.11.0.4.0.P2_ds3.tar.gz
+To file	  : /3.11.0.4.0.P2_ds3.tar.gz
+
+Removing file /*ds3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_ds3.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: trids3_3
+From file : /lcsl100/text/BRANCH-3-11/swTRIDS3_3/3.11.0.4.0.P2_trids3_3.tar.gz
+To file	  : /3.11.0.4.0.P2_trids3_3.tar.gz
+
+Removing file /*trids3_3.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_trids3_3.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: ena
+From file : /lcsl100/text/BRANCH-3-11/swENA/3.11.0.4.0_ena.tar.gz
+To file	  : /3.11.0.4.0_ena.tar.gz
+
+Removing file /*ena.tar.gz ...
+
+Loading	file /3.11.0.4.0_ena.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: octds3
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3/3.11.0.4.0.P2_octds3.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3.tar.gz
+
+Removing file /*octds3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_octds3.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: ds1
+From file : /lcsl100/text/BRANCH-3-11/swDS1/3.11.0.4.0_ds1.tar.gz
+To file	  : /3.11.0.4.0_ds1.tar.gz
+
+Removing file /*ds1.tar.gz ...
+
+Loading	file /3.11.0.4.0_ds1.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: cpu
+From file : /lcsl100/text/BRANCH-3-11/swCPU/3.11.0.4.SP.1_cpu.tar.gz
+To file	  : /3.11.0.4.SP.1_cpu.tar.gz
+
+Removing file /*cpu.tar.gz ...
+
+Loading	file /3.11.0.4.SP.1_cpu.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: trids3
+From file : /lcsl100/text/BRANCH-3-11/swTRIDS3/3.11.0.4.0.P2_trids3.tar.gz
+To file	  : /3.11.0.4.0.P2_trids3.tar.gz
+
+Removing file /*trids3.tar.gz ...
+
+Loading	file /3.11.0.4.0.P2_trids3.tar.gz ...
+
+CPU-IP	  : 135.1.104.144
+Image Type: octds3_2
+From file : /lcsl100/text/BRANCH-3-11/swOCTDS3_2/3.11.0.4.0.P2_octds3_2.tar.gz
+To file	  : /3.11.0.4.0.P2_octds3_2.tar.gz
+
+Removing file /*octds3_2.tar.gz	...
+
+Loading	file /3.11.0.4.0.P2_octds3_2.tar.gz ...
+Proceed	with installation? [y/n/cr=n] y
+Proceeding ...
+
+
+Killing	emf on 135.1.104.143 and 135.1.104.144.
+
+
+Removing load from 135.1.104.143.
+
+
+Removing type swVOP ...
+
+Removing type swOCTDS3_3 ...
+
+Removing type swDS3 ...
+
+Removing type swTRIDS3_3 ...
+
+Removing type swENA ...
+
+Removing type swOCTDS3 ...
+
+Removing type swDS1 ...
+
+Removing type swCPU ...
+
+Removing type swCraft ...
+
+Removing type swTRIDS3 ...
+
+Removing type swOCTDS3_2 ...
+
+Removing load from 135.1.104.144.
+
+
+Removing type swVOP ...
+
+Removing type swOCTDS3_3 ...
+
+Removing type swDS3 ...
+
+Removing type swTRIDS3_3 ...
+
+Removing type swENA ...
+
+Removing type swOCTDS3 ...
+
+Removing type swDS1 ...
+
+Removing type swCPU ...
+
+Removing type swCraft ...
+
+Removing type swTRIDS3 ...
+
+Removing type swOCTDS3_2 ...
+
+Expanding file /3.11.0.4.0_voip.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3_3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_ds3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_trids3_3.tar.gz ...
+
+Expanding file /3.11.0.4.0_ena.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3.tar.gz ...
+
+Expanding file /3.11.0.4.0_ds1.tar.gz ...
+
+Expanding file /3.11.0.4.SP.1_cpu.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_trids3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3_2.tar.gz ...
+
+Linking	3.11.0.4.SP.1 to CurrRel ...
+
+Running	uprev.sh ...
+
+Expanding file /3.11.0.4.0_voip.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3_3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_ds3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_trids3_3.tar.gz ...
+
+Expanding file /3.11.0.4.0_ena.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3.tar.gz ...
+
+Expanding file /3.11.0.4.0_ds1.tar.gz ...
+
+Expanding file /3.11.0.4.SP.1_cpu.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_trids3.tar.gz ...
+
+Expanding file /3.11.0.4.0.P2_octds3_2.tar.gz ...
+
+Linking	3.11.0.4.SP.1 to CurrRel ...
+
+Running	uprev.sh ...
+Exiting	reload.
+hrdcpy
+
+hrdcpy
+hrdcpy
+hrdcpy # logon each SP and enter reboot	-aN
+hrdcpy
+hrdcpy
+hrdcpy pxmonitor -t lynx-a
+pxmonitor: WARNING: Interface for [lynx-a] not found.
+Using [vt100] interface.
+
+HJpxmonitor Monitor
+vt100 Interface
+Sun Jul	24 18:33:48 2005
+Starting interactive mode...
+
+
+user name:
+
+user name:root
+password:
+
+**incorrect**
+
+user name:root
+password:
+
+ ******************************************************************************
+ *									      *
+ *		   @@@							      *
+ *		   @@@							      *
+ *		   @@@	     @@@     @@@   @@@@@@   @@@	@@@		      *
+ *		   @@@	      @@@   @@@	  @@@  @@@   @@	@@		      *
+ *		   @@@	       @@@ @@@	  @@@  @@@    @@@		      *
+ *		   @@@@@@@@	@@@@@	  @@@  @@@   @@	@@		      *
+ *		   @@@@@@@@	 @@@	  @@@  @@@  @@@	@@@		      *
+ *			     @@@@@@					      *
+ *			     @@@@@   REAL-TIME SYSTEMS,	INC.		      *
+ *									      *
+ *				 Welcome to LynxOS			      *
+ *		    ( 3.0.1  FCS  version:  110298 - G )		      *
+ *									      *
+ ******************************************************************************
+
+m76a# reboot -aN
+reboot:	resetting slave	CPU
+
+**** LynxOS is down ****
+** ide:	unload ok. trips=36174 S1=50 S2=50 E=0 **
+
+ Enabling the Virtual Terminal!
+
+Telica Startup Monitor
+Release	1.01
+Created	on Mon Mar 21 15:08:51 EST 2005
+boot loader version 01.01
+Loaded from: network.  Executed	from: 0x1fe00000.
+Board type: System Processor 3,	Master microprocessor
+seep device selects
+sf_front   = 0	sf_alarm   = 1
+sf_chassis = 2	my_front   = 3
+my_rear	   = 4	other_front = 5
+other_rear  = 6	 spa_eunuch = 7
+spb_eunuch = 8
+
+ -- SDRAM Size = 1024MB	(0x40000000)
+ -- FLASH Size = 32MB (0x02000000)
+ -- PVR	= 0x70020102
+ -- saved user boot & ddr setup	info is	valid --
+ -- DDR	initialization used default settings
+ -- vduart enable var address =	0x1ff1379c
+
+ ** interprocessor mailbox information **
+ -- num	processors   = 2
+ -- my processor     = 0(processor Master)
+ -- master processor = 0(processor Master)
+ -- processor Master mailbox addr = 0x4203f000
+ -- processor Slave mailbox addr = 0xf303f000
+ -- mbox_config	-> my mailbox address =	0x4203f000
+ -- mbox_config	-> my memory size = 0x40000000
+
+ Initializing Ethernet ... Done
+
+ -- Initializing PCI bus 1...
+
+ Initializing 21154 transparent	bridge .... done
+ Initializing hard disk	controller ........
+  Hard drive found at ctl0, bus1, drive0 done
+ Initializing Real Time	Clock ............. done
+ Initializing piix4 Power Management ...... done
+ Initializing USB Device .................. done
+
+ Initializing Qfalc ..
+ Waiting for Switch Fabric ..
+ Initializing Sycor ..
+ Slot: 26 (SP_A), Master_SP
+ Checking for presence of rear cards ..
+  SF_rear card present
+  SP_rear card present
+ Initializing SAR ..
+ Initializing ASXs and ACEs ..	(ASX ver 9)  (ACE ver 0)
+ Initializing APC .. version 7
+ Initializing security device ..
+
+ Environment Variables:
+  ether_addr	  00:30:fa:00:ac:d0
+  flags		  -
+  host_ip	  10.0.26.27
+  local_ip	  10.4.76.26
+  local_hostname  sp3M_N
+  boot_device	  flash
+  boot_file	  /telica/toaster/home/lynx/fs_images/sp3m.kdi
+  boot_timeout	  3
+  num_lines	  45
+  prompt	  (ibm750gx_m)->
+  rate		  996
+  com_enable	  6
+  ether_port	  Management
+ -- Unmasking ECC Error	Interrupt...
+ -- Enabling MSR EE bit...
+
+ Performing POST .. qfalc  regrct 0x00000000
+ -- Starting Slave Processor....
+ -- slave processor present, memory size=0x40000000
+ -- My rear card = 89-0417
+ -- Other rear card = 89-0417
+ -- disabling All Interrupts...
+ -- Disabling MSR EE bit...
+
+
+ Autoboot in 3 seconds:	boot -d	flash
+ Press spacebar	twice to abort ..
+setup boot parameters at 0x1ff39430
+boot_flash_preboot addr=0xff000000 len=56324
+ Hdisk spinning	up ..
+LynxOS Preboot 3.0.1 build 110298-G
+Copyright (C) 1987-1998	Lynx Real-Time Systems,	Inc.
+Telica preboot version 2, built	Oct 25 2003 09:22:58
+Command? <b h2b	/lynx.os.sp3m>Loading.../loaded
+mmuinit: change	hid2=00000005 => 00000005.
+mmuinit: MUM HID2 option 0x0. hid2 00000007 -> 00000007
+mmuinit: set HID0.MUM (ENABLE_MUM>0)
+PVR 0x70020102 cpu=0x7002 revision=0x102
+HID0(spr1008)=0x3002c024 l2cr(spr1017)=0x00000000
+pcibuslayer_init_conf_addr_data(0): addr=0xc0100cf8 data=0xc0100cfc
+pcibuslayer_init_conf_addr_data(1): addr=0xc0100c78 data=0xc0100c7c
+*** smConfig.flags = 0x00000000
+hw_init: l2 cache on
+ibm750_l2cache_setup: csize=0x100000
+ibm750_l2cache_setup: hid0=3002c024 hid1=62000000 hid2=00000007	l2cr=00000000
+ibm750_l2cache_setup: ecid=0x400710c1 '32E02'
+*** smConfig.flags = 0x00000000
+ibm750_l2cache_setup: L2 IO=0 DO=0 l2cr=c0000000
+ibm750_l2cache_setup: hid0=3002c024 hid1=62000000 hid2=00000007	l2cr=c0000000
+MUM note: lmw is lmw
+hw_pci:	pci_init
+hw_pci:	memsize	b=0x0 size=0x40000000
+atInit:	ATL_CPUCTL_FIFOBP_CLEAR=0 ATL_CPUCTL_SNPSTRM_CLEAR=0
+atInit:	ATL_PCICMD_ORDERING=0x0	ATL_DEADLOCK_CTL=1
+atInit:	ATL_WINDOW_PCIOR=1 ATL_SLAVE_PCIOR=0
+atInit:	ATL_PCIBRIDGE_SYNC=0 ATL_PCICMD_SLOW=1
+atInit:	ATL_CPUSYNC_BAR=1 ATL_CPUMASTER_604_MODE=0
+atInit:	ATL_PCI_PREFETCH_MODE=1
+atInit:	ATL_DEADLOCK_CTL_BITS=(0x00000100 | 0x00000080 | 0x00000040)
+atInit:	BASE_ADDR_ENABLE after disabling all PCI0/1: 000022ec -> 0007feec
+atInit:	CPU_MASTER_CONTROL 0x0004cb00 -> 0004cb00  [HID0=3002c024]
+atInit:	CPU_SYNC_BARRIER_CONTROL 0x00000000 -> 000001c0
+atInit:	D_UNIT_CONTROL_LOW c5000540 fp=3 fpp=1
+atInit:	pci0 command 0006e000 -> 00026000
+atInit:	pci1 command 0006e000 -> 00026000
+atInit:	ordering/deadlock ctl (2d0) 000000ff ->	000700ff
+PCI1 PIIX CMDSTS F0=0x02800007 F1=0x02800005
+atInit:	D3 ERRATUM. SDRAM_MMASK(0x14b0)	00000000 -> 00000002
+pci_init: disable master to slave Discovery register window!!
+pci_init: board	rev 5
+Board revision is 0x5
+ SIZE +	PCIOR =	0x3ffff000
+ SIZE +	PCIOR =	0x3ffff000
+atPciMapMemoryBank n=0 b=0 @0000000c s=536866816 cfg=0000000c -> 0000000c
+atPciMapMemoryBank n=0 b=1 @2000000c s=536866816 cfg=2000000c -> 2000000c
+atPciMapMemoryBank n=1 b=0 @0000000c s=536866816 cfg=0000000c -> 0000000c
+atPciMapMemoryBank n=1 b=1 @2000000c s=536866816 cfg=8000000c -> 2000000c
+ SIZE +	PCIOR =	0x1ffff000
+atPciSetSramConfigReg: reg (0x380) = 0x10, bit to set 0x2
+atPciSetSramConfigReg: reg (0x380) is set to 0x10
+mmuinit: registering unmanaged memory 0x30000000 - 0x3fffffff
+drm_init start
+pcibuslayer_init_conf_addr_data(0): addr=0xc0100cf8 data=0xc0100cfc
+pcibuslayer_init_conf_addr_data(1): addr=0xc0100c78 data=0xc0100c7c
+** pci_what_irq	slot=11	irq=99
+** pci_what_irq	slot=12	irq=98
+** pci_what_irq	slot=5 irq=83
+drm_init complete
+ioint_slevel=3
+atPciErrIntrCtrlInit: Warning: bus 0 error addr	0x200010
+atPciErrIntrCtrlInit: Warning: bus 1 error addr	0x80120
+atPciErrIntrCtrlInit: pci0 mask=00000000, cause=00000000
+atPciErrIntrCtrlInit: pci1 mask=00000000, cause=00000000
+atPciErrIntrCtrlInit: pci0 mask=00000000, cause=00000000
+atPciErrIntrCtrlInit: pci1 mask=00000000, cause=00000000
+atEthUnitIntrCtrlInit: allocated default address 0xd04e2000
+atEthUnitIntrCtrlInit: aligned default address 0xd04e2020
+hw_intr_i8259_init
+hw_intr_i8259_init: eoi_master_before_read_slave EOI_MASTER_BEFORE_READ_SLAVE
+hw_intr_i8259_init: master ctrl=0xc0000020 mask=0xc0000021, slave ctrl=0xc00000a0 mask=0xc00000a0
+forced root device 0x00000122
+hinitime: rate from startup monitor: 166000000,	timebase_ticks 41500000
+hinitime i=12 tbticks=41500000 delta=0
+hinitime: which_time=13.
+hw_time_setup_nvram: reg=0xc8 RTCCFG=0x25000000
+atTmrCntrStart:	start timer/counter 0 in mode 1	with intial value 0x144b50
+telica_sysinfo:	boot_clock: 5-7-24 22:36:13
+TTY: CPOþTTY: port 2 statics 0xb0436828
+TTY: HACK_INT_TIMEOUT 0
+TTY: CPORT_1 vector 91
+atGppIntrRegister: Warning try to register GPP ISR to an existing cuase	27
+TTY: port 1 statics 0xb0437420
+TTY: HACK_INT_TIMEOUT 0
+MLBA: installing.
+MLBA: SET USE_PHYS_NC
+MLBA: DRM Register ISR Called
+MLBA: BAR0 0xc2010008
+MLBA install: mlba_base=0xc5010000 (p=0xc2010000) statics=0xb0438038
+MLBA install: event reg(0x34) clear. 0x087d3000	-> 0x00000000
+MLBA: virtual UART installed.
+MLBA: ds1731 deivce initialized
+ide: ride_install info @b0140be4. metering=1. timeout=1000.
+ide: ride_install found=1 FI=0 initialized=1
+DRM READ 0: 71118086
+DRM READ 1: 02800005
+RIDE: DRM info:	handle=b03eb580	bus=0 dev=3 func=1 cmdstatus=02800005
+RIDE: DRM info after clear: handle=b03eb580 bus=0 dev=3	func=1 cmdstatus=02800005
+RIDE: MLT rn=0xd (3 8).	00000000 -> 00008000 vfy=00008000
+ide: ride_install bmide_registers(chan=0) at 0xc1000000	opmode=0
+ide: ride_install: ch=0	cp=b043a93c cmdp=0xc00003f6 u2s=0xc00001f7 vec=-1
+ide: ride_install bmide_registers(chan=1) at 0xc1000008	opmode=0
+ide: ride_install: ch=1	cp=b043d350 cmdp=0xc0000376 u2s=0xc0000177 vec=143
+hw_enable_i8259_intr SLAVE MPIC	hv=15 r1=0xff r2=0x7f
+hw_enable_i8259_intr: iointset for PIIX	v=110, h=0xb015f6c4
+ide: RIDE install done s=0xb043a928 cp[0]=0xb043a93c cp[1]=b043d350 prd=0xd050e000
+lynxfs_install:	PRIOFLOOR=42. USE_PI_SEM sem @b01706d0 = ffffffff
+sycor installing, statics=0xb0591130
+sycor map resource return=0x00000000 csr=0xc4801000
+sycor map resource return=0x0 csr_bar1=0xc4800000
+rs_install: ilb=0 elb=1
+rs_install: MEM_WRITE32_VERIFY_ENABLED=MEM_WRITE32_VERIFY_ENABLED
+rs_install: tfd_stack=16384 tx_stack=32768 rx_stack=32768
+rs_install: user id 0x550003, recv_q 0x7, xmit_q 0x6.
+slinstall: bsp.telica/info.c stub suppresses SLIP
+rs_if_attach  IF=sar, IfUnit=0 IfIndex=2
+[rs_install] Driver instance for board 0 successfully installed. Bus 1 Slot = 11, Big Endian = 0.
+ECC: installing.
+ECC: installed.	statics=0xb0ac0248.
+sharePtr = 0xd0b8e000, shareEnd	= 0xd138e000.nqEntry is	0xd0b8e014.
+Q starts at 0xd0b91d04:	Ends at	0xd0b92094.
+buf Counts are:	4096 325, 2048 1950, 1024 325, 512 325.
+ipdt_share_init	successfully allocated and inited buffers.
+bufPool	starts at 0xd0b92200, pool size	is 0x58de00.
+share: version 0x0. poolsize 0x58de00.
+at 1050.  Q: 0x3d04; qEntry 0x14; bufPool 0x4200.
+IPDT_Install: Successful. CPU Version =	3.11.0.4.SP.1. Board Type var =	__thp__.  Allocated 2925 buffers for 19	queues.
+if_atlantis_install: rca MAC 0:30:fa:0:ac:d0
+At 0, switch 0 is set in error count mode
+At 0, switch 0 is already set to discard excessive collision frames
+rca interface installed: statics = 0xb0ac0460, port info 0xb0ac0558
+if_atlantis_install: mgt MAC 0:30:fa:0:ac:d1
+mgt interface installed: statics = 0xb0acbcf0, port info 0xb0acbde8
+if_atlantis_install: sig MAC 0:30:fa:0:ac:d3
+sig interface installed: statics = 0xb0ad0148, port info 0xb0ad0240
+if_atlantis_install: rcb MAC 0:30:fa:0:ac:d8
+At 1, switch 1 is set in error count mode
+At 1, switch 1 is already set to discard excessive collision frames
+rcb interface installed: statics = 0xb0ad45a0, port info 0xb0ad4698
+if_atlantis_install: dec MAC 0:30:fa:0:ac:d9
+dec interface installed: statics = 0xb0adfe30, port info 0xb0adff28
+if_atlantis_install: rep MAC 0:30:fa:0:ac:da
+rep interface installed: statics = 0xb0ae4288, port info 0xb0ae4380
+if_atlantis_install: sigb MAC 0:30:fa:0:ac:db
+sigb interface installed: statics = 0xb0ae86e0,	port info 0xb0ae87d8
+if_atlantis_install: fca MAC 0:30:fa:0:ac:d6
+fca interface installed: statics = 0xb0aecb38, port info 0xb0aecc30
+if_atlantis_install: fcb MAC 0:30:fa:0:ac:de
+fcb interface installed: statics = 0xb0af0f90, port info 0xb0af1088
+if_atlantis_install: sigc MAC 0:30:fa:0:ac:d4
+sigc interface installed: statics = 0xb0af53e8,	port info 0xb0af54e0
+if_atlantis_install: sigd MAC 0:30:fa:0:ac:dc
+sigd interface installed: statics = 0xb0af9840,	port info 0xb0af9938
+flash_mtd_install: AMD chip found, statics=0xb0afef88 fbase=0xcdf00000
+at_ttyinstall: port 1 statics 0xb0aff290
+at_ttyinstall: port 2 statics 0xb0afff48
+IPFWD_Driver: ipfwd_install  Static: Ptr=0xb0b00c50 Size=1280K bytes
+IPFWD_Driver: Driver instance successfully installed.
+disabling ktrace scheduler + isr + misc
+SKDB kernel debugger installed.
+Number of seconds adjusted 7
+init_cache: BLOCK_LIST_PISEM *** @ b0170ae8
+Telica_kit_version: 3.11.0.4.SP.1 2005-07-05_15:46:51_EDT
+info_software_version: 3.11.0.4.SP.1
+
+LynxOS POWERPC Version 3.0.1
+Motorola PowerPlus board support package
+with Enhanced PCI services!
+Copyright 1998 Lynx Real-Time Systems Inc.
+All rights reserved.
+
+LynxOS (ppc) created Tue Jul  5	15:46:51 EDT 2005
+setup_nodetab: /etc/nodetab OK.
+
+LynxOS Startup:	 a
+
+Date set to  Sun Jul 24	18:36:20 EDT 2005
+Checking /dev/hd2c Filesystem Ok
+Checking /dev/hd2d Filesystem Ok
+Checking /dev/hd2b Filesystem Ok
+
+mounting all filesystems
+/dev/hd2c on /home rw
+/dev/hd2d on /home1 rw
+running	/Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+Configure network: mgt0	135.1.104.143 netmask 255.255.255.0
+Running	/bin/ifconfig
+Configure network: rep0	192.168.253.26 netmask 255.255.255.0
+Running	/bin/ifconfig
+Configure network: sar0	192.168.252.26 netmask 255.255.255.0
+Running	/bin/ifconfig
+rs_initialize: VBR PCR e/m 11/256 (11/256), SCR	e/m 12/448(13/476).
+interface 'fca0' is not	configured. default value is '192.168.251.0'
+Configure network: fca0	192.168.251.26
+Running	/bin/ifconfig
+interface 'dec0' is not	configured. default value is 'none'
+interface 'dec0' is not	configured.
+Configure default gateway: 135.1.104.254
+add net	default: gateway 135.1.104.254
+Network	interfaces configured.
+Running	/net/inetd
+Running	/net/unfsio
+Running	/net/portmap
+Running	/net/mountd
+exporting directories for remote mount
+Running	/bin/exportfs
+exported: /
+exported: /home1
+Running	/net/nfsd
+Running	/net/rpc.statd
+Running	/net/rpc.lockd.svc
+Running	/net/rpc.lockd.clnt
+TimesTen could not determine what file contains	your TimesTen log.
+Your /etc/syslog.conf may not be correctly configured for TimesTen.
+Please see the TimesTen	Installation Guide for assistance.
+
+TimesTen could not determine what file contains	your TimesTen log.
+Your /etc/syslog.conf may not be correctly configured for TimesTen.
+Please see the TimesTen	Installation Guide for assistance.
+
+The 32-bit daemon has started successfully.
+Starting calea_ipfwd_cfg From telica.rc.network
+cIPFWD_Driver: ipfwd_ioctl Enter  Cmd=1
+IPFWD_Driver: [ipfwd_ioctl_create_entry] num_entries=1
+alea_ipfwd_cfg - slot =	26
+Starting EMF From telica.rc.network
+Starting EMF: root
+[1] 142
+Gui Httpd NOT installed
+
+user name:root
+password:
+
+ ******************************************************************************
+ *									      *
+ *		   @@@							      *
+ *		   @@@							      *
+ *		   @@@	     @@@     @@@   @@@@@@   @@@	@@@		      *
+ *		   @@@	      @@@   @@@	  @@@  @@@   @@	@@		      *
+ *		   @@@	       @@@ @@@	  @@@  @@@    @@@		      *
+ *		   @@@@@@@@	@@@@@	  @@@  @@@   @@	@@		      *
+ *		   @@@@@@@@	 @@@	  @@@  @@@  @@@	@@@		      *
+ *			     @@@@@@					      *
+ *			     @@@@@   REAL-TIME SYSTEMS,	INC.		      *
+ *									      *
+ *				 Welcome to LynxOS			      *
+ *		    ( 3.0.1  FCS  version:  110298 - G )		      *
+ *									      *
+ ******************************************************************************
+
+m76a#
+m76a#
+m76a#
+m76a# exit
+logout
+
+
+user name:COMMANDS: <return> for no action.
+  q	(q)uit
+  l	(l)og user input (create a script)
+  r	(r)ead input from a file
+  s	(s)top logging user input
+  e	turn off (e)cho	to tty
+  n	don't convert (n)ewline	to <CR>
+  u	convert	to (u)ppercase letters
+  c	convert	to lower(c)ase letters
+  !	escape to SHELL
+Action:	  q
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy pwd
+/home/lcstools/tools/READMES
+hrdcpy lf
+ README.lcsreload
+hrdcpy
+hrdcpy
+hrdcpy nlcsstatt
+ihlcs3 SP_A_IP is alive.
+ihlcs3 SP_A_IP UNIX is active.
+ihlcs3 SP_A_IP TL1 port	is not responding.
+ihlcs3 SP_B_IP is alive.
+ihlcs3 SP_B_IP UNIX is active.
+ihlcs3 SP_B_IP TL1 port	is not responding.
+hrdcpy nlcsstat
+ihlcs3 SP_A_IP is alive.
+ihlcs3 SP_A_IP UNIX is active.
+ihlcs3 SP_A_IP TL1 port	is alive - IS,ACT,NBK.
+ihlcs3 SP_B_IP is alive.
+ihlcs3 SP_B_IP UNIX is active.
+ihlcs3 SP_B_IP TL1 port	is alive.
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 18:42:13
+M  0 COMPLD
+   "IOM-1:,,0,0,0,:OOS-MA,UAS"
+   "IOM-2:,,0,0,0,:OOS-MA,UAS"
+   "IOM-3:,,0,0,0,:OOS-MA,UAS"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:,,0,0,0,:OOS-MA,UAS"
+   "IOM-6:,,0,0,0,:OOS-MA,UAS"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-8:,,0,0,0,:OOS-MA,UAS"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:,,0,0,0,:OOS-MA,UAS"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:,,0,0,0,:OOS-MA,UAS"
+   "IOM-17:,,0,0,0,:OOS-MA,UAS"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT&NBK"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT&NBK"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYC"
+   "SF-B:Unknown,SEC,90,90,95,:IS,STBYC"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy # wait forrsync to starttand complete
+hrdcpy
+hrdcpy nlcsstat
+ihlcs3 SP_A_IP is alive.
+ihlcs3 SP_A_IP UNIX is active.
+ihlcs3 SP_A_IP TL1 port	is alive - IS,ACT,NBK.
+ihlcs3 SP_B_IP is alive.
+ihlcs3 SP_B_IP UNIX is active.
+ihlcs3 SP_B_IP TL1 port	is alive.
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 18:42:42
+M  0 COMPLD
+   "IOM-1:,,0,0,0,:OOS-MA,UAS"
+   "IOM-2:,,0,0,0,:OOS-MA,UAS"
+   "IOM-3:,,0,0,0,:OOS-MA,UAS"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:,,0,0,0,:OOS-MA,UAS"
+   "IOM-6:,,0,0,0,:OOS-MA,UAS"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-8:,,0,0,0,:OOS-MA,UAS"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:,,0,0,0,:OOS-MA,UAS"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&INIT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:,,0,0,0,:OOS-MA,UAS"
+   "IOM-17:,,0,0,0,:OOS-MA,UAS"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT&NBK"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT&NBK"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYC"
+   "SF-B:Unknown,SEC,90,90,95,:IS,STBYC"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy nlcsstatt
+ihlcs3 SP_A_IP is alive.
+ihlcs3 SP_A_IP UNIX is active.
+ihlcs3 SP_A_IP TL1 port	is alive - IS,ACT.
+ihlcs3 SP_B_IP is alive.
+ihlcs3 SP_B_IP UNIX is active.
+ihlcs3 SP_B_IP TL1 port	is alive - protection system processor.
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 18:56:44
+M  0 COMPLD
+   "IOM-1:,,0,0,0,:OOS-MA,UAS"
+   "IOM-2:,,0,0,0,:OOS-MA,UAS"
+   "IOM-3:,,0,0,0,:OOS-MA,UAS"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:,,0,0,0,:OOS-MA,UAS"
+   "IOM-6:,,0,0,0,:OOS-MA,UAS"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:,,0,0,0,:OOS-MA,UAS"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:,,0,0,0,:OOS-MA,UAS"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:,,0,0,0,:OOS-MA,UAS"
+   "IOM-17:,,0,0,0,:OOS-MA,UAS"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy # now topprovision
+hrdcpy
+hrdcpy
+hrdcpy cd /lcsl100/scripts
+hrdcpy lf
+[BP-3-11-0-2]	  [BRANCH-3-11]	    [BRANCH-5-0-0]    [BRANCH-5-3]
+[BP-3-11-0-3]	  [BRANCH-3-11-1]   [BRANCH-5-1]      [BRANCH-DEV-5-3]
+[BRANCH-3-10-1]	  [BRANCH-3-12]	    [BRANCH-5-2]
+hrdcpy cd BRANCH-3-11
+hrdcpy
+hrdcpy ;f
+sh: syntax error: `newline or ;' unexpected
+hrdcpy lf
+[3-11-0-0-0]	      [3-11-0-0-7]	    [3-11-0-2-12]
+[3-11-0-0-10]	      [3-11-0-0-8]	    [3-11-0-3-0]
+[3-11-0-0-3]	      [3-11-0-0-9]	    [3-11-0-4]
+[3-11-0-0-4]	      [3-11-0-1]	    [3-11-0-4-SP-1]
+[3-11-0-0-6]	      [3-11-0-2-10]	    [3-11-0-4-SP-1.0705]
+hrdcpy cd 3-11-0-4-SP-1
+hrdcpy lf
+[ihlcs1]    [ihlcs3]	[ihlcsdv1]
+hrdcpy cd ihlcs1
+hrdcpy lf
+[ofc]
+hrdcpy cd ofc
+hrdcpy lf
+*call.hot11		  copymem_octds3	   rmv_all
+ calldata		  hardware		   rmv_new
+*calldata.out		 *hardware.out		   rmv_octds3
+ copymem_1		  iproute		   rst_1
+ copymem_2		 *iproute.out		   rst_2
+ copymem_3		  new-iom-version	   rst_3
+ copymem_all		  new.sip2cas2sip.trunks   rst_all
+*copymem_all.out	 *prov.out		   rst_octds3
+ copymem_iom10		  prov_linefeats	   users
+ copymem_newiom		  rmv_1			  *users.out
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rm *.out
+hrdcpy lf
+*call.hot11		  copymem_octds3	   rmv_new
+ calldata		  hardware		   rmv_octds3
+ copymem_1		  iproute		   rst_1
+ copymem_2		  new-iom-version	   rst_2
+ copymem_3		  new.sip2cas2sip.trunks   rst_3
+ copymem_all		  prov_linefeats	   rst_all
+ copymem_iom10		  rmv_1			   rst_octds3
+ copymem_newiom		  rmv_all		   users
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy #cscripts to run: users,	hardware, iproute, calldata, prov_linefeats
+hrdcpy
+hrdcpy getspips
+ihlcs3 135.1.104.143 135.1.104.144
+ihlcs3 135.1.104.143 135.1.104.144
+hrdcpy nlcsstat
+ihlcs3 SP_A_IP is alive.
+ihlcs3 SP_A_IP UNIX is active.
+ihlcs3 SP_A_IP TL1 port	is alive - IS,ACT.
+ihlcs3 SP_B_IP is alive.
+ihlcs3 SP_B_IP UNIX is active.
+ihlcs3 SP_B_IP TL1 port	is alive - protection system processor.
+hrdcpy tl1exec -?>
+usage: tl1exec [-?] [-x] [-T] [-V] [-t tid] [-m	max_logon_attempts]
+	      [-S trace	level] [-l logfile] [-u	username] [-p passwd] [-i ip-addr] scriptname
+where:
+	-x - enable TCL	debugger
+	-T - enable trace messages
+	-V - enable verbose output
+	-D - exit upon first failure (DENY)
+	-S tracelevel -	set trace to given stack level
+
+	default	max_logon_attempts = 10
+	default	username = telica
+	default	passwd = telica
+	default	ip-addr	= 127.0.0.1
+	logging	is not enabled by default
+	if logging is enable with a -l cmd, all	cmds that are
+	executed will be logged	in five	files in the home directory.
+	the files are completed.tl1exec, denied.tl1exec, inprogress.tl1exec,
+	timedout.tl1exec and misc.tl1exec. outpur is appended to the files.
+	each new session starts	with a timestamp.
+hrdcpy tl1execr-l users.out -i 135.1.104.143 users
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile: users.out
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::user0000:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::user0001:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::kenlogin:::12345678,0,admin:page=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::noreen53:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::richbarry:::12345678,0,admin:page=0,tmout=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::zygkowal:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::rhellman:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::timfoley:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::mostrego:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::kmcbride:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::mikerumore:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::aarivers:::12345678,0,admin:page=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::mmalfara:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::jambruce:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::carpyman:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::martinjose:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::tl1logger:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::zlpan123:::12345678,0,admin:page=0,tmout=0> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::jericksen:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::djswanson:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::testvander:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::jbarillas:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-user-secu::jacksonm:::12345678,0,admin:page=0,tmout=0,calea=y> ...
+
+COMPLETED received ...
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 24
+COMMENTS     : 0
+EXECUTED     : 24
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 18:59:16
+M  0 COMPLD
+   "IOM-1:,,0,0,0,:OOS-MA,UAS"
+   "IOM-2:,,0,0,0,:OOS-MA,UAS"
+   "IOM-3:,,0,0,0,:OOS-MA,UAS"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:,,0,0,0,:OOS-MA,UAS"
+   "IOM-6:,,0,0,0,:OOS-MA,UAS"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:,,0,0,0,:OOS-MA,UAS"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:,,0,0,0,:OOS-MA,UAS"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:,,0,0,0,:OOS-MA,UAS"
+   "IOM-17:,,0,0,0,:OOS-MA,UAS"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy catthardware
+ent-eqpt::IOM-1:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-16:::BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS
+ent-eqpt::IOM-17:::BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS
+ent-eqpt::IOM-2:::BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-6:::BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-3:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-5:::BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt-all::IOM-8:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=PRI,MEMTHRESHOLD=95,BUSYTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:IS
+ent-eqpt-all::IOM-10:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=SEC,MEMTHRESHOLD=95,BUSYTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:IS
+ed-chassis-eqpt::com:::,CHASSISTYPE=BOTH,,,EMIPSPA=135.1.104.113,,SIGNALINGIPSPA=10.11.10.1,EMIPSPB=135.1.104.114,,SIGNALINGIPSPB=10.11.10.2,EMIPMASK=255.255.255.0,,SIGNALINGIPMASK=255.255.255.0,SIGNALINGIPCHASSIS=10.11.10.3,,,,
+ed-t1::tmg-A:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=PRI:IS
+ed-t1::tmg-B:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=SEC:IS
+ent-sts1::IOM-1-STS1-1::::IS
+ent-sts1::IOM-1-STS1-2::::IS
+ent-sts1::IOM-1-STS1-3::::IS
+ent-sts1::IOM-1-STS1-4::::IS
+ent-sts1::IOM-1-STS1-5::::IS
+ent-sts1::IOM-1-STS1-6::::IS
+ent-sts1::IOM-2-STS1-1::::IS
+ent-sts1::IOM-2-STS1-2::::IS
+ent-sts1::IOM-2-STS1-3::::IS
+ent-sts1::IOM-2-STS1-4::::IS
+ent-sts1::IOM-2-STS1-5::::IS
+ent-sts1::IOM-3-STS1-1::::IS
+ent-sts1::IOM-3-STS1-2::::IS
+ent-sts1::IOM-3-STS1-3::::IS
+ent-sts1::IOM-3-STS1-4::::IS
+ent-sts1::IOM-3-STS1-8::::IS
+ent-t3::IOM-6-T3-1::::IS
+ent-t3::IOM-6-T3-2::::IS
+ent-t1::IOM-1-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-22:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-23:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-24:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-25:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-26:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-27:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-1-port-28:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-25:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-26:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-27:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-2-port-28:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-3-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-3-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-3-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-3-port-22:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-4-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-5-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-1-STS1-6-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-1-port-25:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-3-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-4-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-4-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-2-STS1-5-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-3-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-3-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-3-STS1-8-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-3-STS1-8-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-1-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ent-t1::IOM-6-T3-2-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS
+ed-voip-sys::com:::DIFFSERV=101,AAL5ENC=VCMUX,CNG=70,VADTHRESH=6,JITBUFPLMOD=FIXED,JITBUFLOWTHRESH=10,JITBUFHIGHTHRESH=320,JITBUFRSPRT=127,ECDISABLE=G168,PINGHRTBTTMR=1,SIDTXINTERVAL=100,PKTFILTER=DISABLED,UDPCHKSUM=DISABLED,XTALKPERIOD=200,XTALKTHRESH=100,IDLEPATTERN=7e
+ent-enet::IOM-8-ENET-1:::MODE=AUTONEG,FORMAT=ENET_DIX_II:IS
+ent-enet-endptvoip::IOM-8-ENET-1:::IPADDR=10.175.10.1,MATEIPADDR=10.175.10.2,SUBNETMASK=255.255.255.0,DEFAULTGATEWAY=10.175.10.254,IPLNKMON=Y,LNKMONPER=1,LNKMAXTMOUTS=60,BWLMT=100,PKTLMT=0:IS"
+ent-iproute::sp-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-10.14.1.0-24:::gateway=10.11.10.254
+ent-iproute::sp-10.10.0.0-16:::gateway=10.11.10.254
+ent-iproute::sp-10.11.11.0-24:::gateway=10.11.10.254
+hrdcpy
+hrdcpy
+hrdcpy vihhardwaree
+40;1H"hardware"	197 lines, 15923 characters HJent-eqpt::IOM-1:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:ISH
+ent-eqpt::IOM-16:::BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS
+ent-eqpt::IOM-17:::BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS
+ent-eqpt::IOM-2:::BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-6:::BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-3:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt::IOM-5:::BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS
+ent-eqpt-all::IOM-8:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=PRI,MEMTHRESHOLD=95,BUS
+YTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:I
+S
+ent-eqpt-all::IOM-10:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=SEC,MEMTHRESHOLD=95,BU
+SYTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:
+IS
+ed-chassis-eqpt::com:::,CHASSISTYPE=BOTH,,,EMIPSPA=135.1.104.113,,SIGNALINGIPSPA
+=10.11.10.1,EMIPSPB=135.1.104.114,,SIGNALINGIPSPB=10.11.10.2,EMIPMASK=255.255.25
+5.0,,SIGNALINGIPMASK=255.255.255.0,SIGNALINGIPCHASSIS=10.11.10.3,,,,
+ed-t1::tmg-A:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=PRI:IS
+ed-t1::tmg-B:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=SEC:IS
+ent-sts1::IOM-1-STS1-1::::IS
+ent-sts1::IOM-1-STS1-2::::IS
+ent-sts1::IOM-1-STS1-3::::IS
+ent-sts1::IOM-1-STS1-4::::IS
+ent-sts1::IOM-1-STS1-5::::IS
+ent-sts1::IOM-1-STS1-6::::IS
+ent-sts1::IOM-2-STS1-1::::IS
+ent-sts1::IOM-2-STS1-2::::IS
+ent-sts1::IOM-2-STS1-3::::IS
+ent-sts1::IOM-2-STS1-4::::IS
+ent-sts1::IOM-2-STS1-5::::IS
+ent-sts1::IOM-3-STS1-1::::IS
+ent-sts1::IOM-3-STS1-2::::IS
+ent-sts1::IOM-3-STS1-3::::IS
+ent-sts1::IOM-3-STS1-4::::IS
+ent-sts1::IOM-3-STS1-8::::IS
+ent-t3::IOM-6-T3-1::::IS
+ent-t3::IOM-6-T3-2::::IS
+ent-t1::IOM-1-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NON
+E:IS
+Jhrdcpyalfware"	197 lines, 15923 charactersH39BK:q
+*call.hot11		  hardware		   rst_1
+ calldata		  iproute		   rst_2
+ copymem_1		  new-iom-version	   rst_3
+ copymem_2		  new.sip2cas2sip.trunks   rst_all
+ copymem_3		  prov_linefeats	   rst_octds3
+ copymem_all		  rmv_1			   users
+ copymem_iom10		  rmv_all		  *users.out
+ copymem_newiom		  rmv_new
+ copymem_octds3		  rmv_octds3
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy tl1exec -l hardware.out--i1135.1.104.143uhardware
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile: hardware.out
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-1:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-16:::BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-17:::BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-2:::BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-6:::BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-3:::BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt::IOM-5:::BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt-all::IOM-8:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=PRI,MEMTHRESHOLD=95,BUSYTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-eqpt-all::IOM-10:::IOMODULETYPE=BA2A30TGAA,REDUNDANCY=SEC,MEMTHRESHOLD=95,BUSYTHRESHOLD=95,NVMEMTHRESHOLD=95,SWVERSION=3.11.0.4.0,REARMODULETYPE=BA2A20SGAA:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ed-chassis-eqpt::com:::,CHASSISTYPE=BOTH,,,EMIPSPA=135.1.104.113,,SIGNALINGIPSPA=10.11.10.1,EMIPSPB=135.1.104.114,,SIGNALINGIPSPB=10.11.10.2,EMIPMASK=255.255.255.0,,SIGNALINGIPMASK=255.255.255.0,SIGNALINGIPCHASSIS=10.11.10.3,,,,> ...
+
+IN PROGRESS received ...
+
+TL1 cmd	<ed-t1::tmg-A:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=PRI:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ed-t1::tmg-B:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=SEC:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-1::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-2::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-3::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-4::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-5::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-1-STS1-6::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-2-STS1-1::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-2-STS1-2::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-2-STS1-3::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-2-STS1-4::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-2-STS1-5::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-3-STS1-1::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-3-STS1-2::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-3-STS1-3::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-3-STS1-4::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-sts1::IOM-3-STS1-8::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t3::IOM-6-T3-1::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t3::IOM-6-T3-2::::IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-22:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-23:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-24:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-25:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-26:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-27:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-1-port-28:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-25:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-26:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-27:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-2-port-28:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-3-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-3-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-3-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-3-port-22:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-4-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-5-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-1-STS1-6-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-1-port-25:::EQLZ=100,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-3-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-4-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-4-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-2-STS1-5-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS>	...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-3-STS1-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-3-STS1-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-3-STS1-8-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-3-STS1-8-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-1-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-1:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-2:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-3:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-4:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-5:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-6:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-7:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-8:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-9:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-10:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-11:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-12:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-13:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-14:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-15:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-16:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-17:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-18:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-19:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-t1::IOM-6-T3-2-port-20:::EQLZ=100,FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ed-voip-sys::com:::DIFFSERV=101,AAL5ENC=VCMUX,CNG=70,VADTHRESH=6,JITBUFPLMOD=FIXED,JITBUFLOWTHRESH=10,JITBUFHIGHTHRESH=320,JITBUFRSPRT=127,ECDISABLE=G168,PINGHRTBTTMR=1,SIDTXINTERVAL=100,PKTFILTER=DISABLED,UDPCHKSUM=DISABLED,XTALKPERIOD=200,XTALKTHRESH=100,IDLEPATTERN=7e> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-enet::IOM-8-ENET-1:::MODE=AUTONEG,FORMAT=ENET_DIX_II:IS> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-enet-endptvoip::IOM-8-ENET-1:::IPADDR=10.175.10.1,MATEIPADDR=10.175.10.2,SUBNETMASK=255.255.255.0,DEFAULTGATEWAY=10.175.10.254,IPLNKMON=Y,LNKMONPER=1,LNKMAXTMOUTS=60,BWLMT=100,PKTLMT=0:IS> ...
+
+IN PROGRESS received ...
+
+TL1 cmd	<ent-iproute::sp-0.0.0.0-0:::gateway=135.1.104.254> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-iproute::sp-10.14.1.0-24:::gateway=10.11.10.254> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-iproute::sp-10.10.0.0-16:::gateway=10.11.10.254> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-iproute::sp-10.11.11.0-24:::gateway=10.11.10.254> ...
+
+COMPLETED received ...
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 2
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 196
+COMMENTS     : 0
+EXECUTED     : 198
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+timeout	trying to get TL1 prompt ...
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rmstat
+RESOURCE	      HOST	 LOGIN	   PID	  APPLICATION	TIME
+lynx-b		      lts08	 lcstools  22645  pxmonitor	Jul 24 18:34:09
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy pxreset -t lynx-b
+You wish to shutdown all interactive PX	connections
+for target lynx-b in lab ihlcs3
+Is this	correct? (y/n):	y
+NOTE: All interactive PX connections for lynx-b	in lab ihlcs3 have been	shutdown
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqptt lynx-b
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:04:37
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:OOS-AU,MEA"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:OOS-AU,MEA"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:OOS-AU,MEA"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:05:32
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:OOS-AU,MEA"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:OOS-AU,MEA"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:OOS-AU,MEA"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3
+COMPLETED received ...
+YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-info-sys
+sh: rtrv-info-sys:  not	found
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lf
+*call.hot11		  hardware		   rmv_octds3
+ calldata		 *hardware.out		   rst_1
+ copymem_1		  iproute		   rst_2
+ copymem_2		  new-iom-version	   rst_3
+ copymem_3		  new.sip2cas2sip.trunks   rst_all
+ copymem_all		  prov_linefeats	   rst_octds3
+ copymem_iom10		  rmv_1			   users
+ copymem_newiom		  rmv_all		  *users.out
+ copymem_octds3		  rmv_new
+hrdcpy vi copymem_octds3
+40;1H"copymem_octds3" 5	lines, 75 characters HJcpy-mem::IOM-1H
+cpy-mem::IOM-2
+cpy-mem::IOM-3
+cpy-mem::IOM-5
+cpy-mem::IOM-6
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Jhrdcpyolfmem_octds3" 5	lines, 75 charactersH?5h?5l39BK:q
+*call.hot11		  hardware		   rmv_octds3
+ calldata		 *hardware.out		   rst_1
+ copymem_1		  iproute		   rst_2
+ copymem_2		  new-iom-version	   rst_3
+ copymem_3		  new.sip2cas2sip.trunks   rst_all
+ copymem_all		  prov_linefeats	   rst_octds3
+ copymem_iom10		  rmv_1			   users
+ copymem_newiom		  rmv_all		  *users.out
+ copymem_octds3		  rmv_new
+hrdcpy cp copymem_iom1-copymemm
+hrdcpy
+hrdcpy cp copymem_all copymem_iom5,6,17
+hrdcpy viccopymem_iom5,6,17iom5,6,17,17
+40;1H"copymem_iom5,6,17" 9 lines, 150 characters HJ# cpy-mem::IOM-1H
+# cpy-mem::IOM-2
+# cpy-mem::IOM-3
+# cpy-mem::IOM-5
+# cpy-mem::IOM-6
+# cpy-mem::IOM-8
+cpy-mem::IOM-10
+cpy-mem::IOM-16
+cpy-mem::IOM-17
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~H39B"copymem_iom5,6,17" 9 lines, 150 charactersH1M38B~KH1M38B~H1M38B~HPP
+
+APP
+1M36B~H
+
+1M36B~H
+
+1M36B~H
+
+hrdcpyymcopymem_iom5,6,17,17 46	characters
+sh: cpy-mem::IOM-5:  not found
+sh[2]: cpy-mem::IOM-6:	not found
+sh[3]: cpy-mem::IOM-17:	 not found
+sh[3]: copymem_iom5,6,17: cannot execute
+hrdcpy tl1exec -l hardware.out -i 135.1.104.143	hardware
+40;1H"/tmp/sh20404.1" 1	line, 50 characters HJtl1exec -l hardware.out -i 135.1.104.143 hardwareH
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+J#ttl1exec4-l.copymem.out5-ic135.1.104.143scopy*17 7C$8Dcopymemm.out -23C7DK4hcopy(1*1?5h?5l?5h?5l?5h?5lH4h# 4?5h?5l40;1HK:wq
+hrdcpy tl1exece-l-copymem.outu-i-135.1.104.1434copymem_iom5,6,17
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile: copymem.out
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+DENY received ...
+
+Not able to logon machine 135.1.104.143.
+retry act-user on machine 135.1.104.143.
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+DENY received ...
+
+Not able to logon machine 135.1.104.143.
+retry act-user on machine 135.1.104.143.
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+DENY received ...
+
+Not able to logon machine 135.1.104.143.
+retry act-user on machine 135.1.104.143.
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 3
+COMPLETED    : 0
+COMMENTS     : 0
+EXECUTED     : 3
+TIMEOUT	     : 0
+hrdcpy tl1exec -l copymem.out -i 135.1.104.143 copymem_iom5,6,17
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile: copymem.out
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<cpy-mem::IOM-5> ...
+
+IN PROGRESS received ...
+
+timeout	waiting	for a response ...
+
+TL1 cmd	<cpy-mem::IOM-6> ...
+
+IN PROGRESS received ...
+
+timeout	waiting	for a response ...
+
+TL1 cmd	<cpy-mem::IOM-17> ...
+
+IN PROGRESS received ...
+
+timeout	waiting	for a response ...
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 3
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 1
+COMMENTS     : 0
+EXECUTED     : 4
+TIMEOUT	     : 3
+hrdcpy tl1exec -l copymem.out -i 135.1.104.143 copymem_iom5,6,17
+hrdcpy
+hrdcpy /rt
+sh: /rt:  not found
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:15:34
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:OOS,UPDT"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:OOS,UPDT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:OOS,UPDT"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:18:49
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:OOS,UPDT"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:OOS,UPDT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:20:38
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT&NBK"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:OOS-AU,INIT"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:OOS-AU,INIT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+COMPLETED received ...
+
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:24:46
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:OOS,"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,WRK"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy tl1sh
+  0: QUIT
+  1: SP-A-IP-ADDR 135.1.104.143
+  2: SP-B-IP-ADDR 135.1.104.144
+Choose active SP-IP: 1
+connecting to SP-A-IP-ADDR 135.1.104.143 ...
+
+connecting to machine 135.1.104.143 ...
+
+attempt	0 to logon machine 135.1.104.143 ...
+Trying 135.1.104.143...
+Connected to 135.1.104.143.
+Escape character is '^]'.
+
+connected to 135.1.104.143 at port 2361	...
+
+
+Telica Plexus 9000  1999-2003 Telica Inc.
+
+
+Telica>
+TL1 prompt received ...
+act-user::telica:::******;
+
+   telica 2005-07-24 19:25:10
+*  0 REPT EVT SESSION
+   "telica:N,,
+/* NOTICE: This	is a private computer system.
+Unauthorized access or use may lead to prosecution.
+Last login: Sun	Jul 24 19:24:45	2005
+This is	the WORKING System Processor */"
+   /* REPT-EVT-SESSION */
+;
+
+   telica 2005-07-24 19:25:10
+M  0 COMPLD
+;
+Telica>
+COMPLETED received ...;
+
+   telica 2005-07-24 19:25:10
+M  0 DENY
+   IICT
+   /* Input, garbage */
+;
+Telica>	rst-eqpt::Iom-8;
+
+   telica 2005-07-24 19:25:15
+M  0 COMPLD
+   /* RST-EQPT */
+;
+
+   telica 2005-07-24 19:25:15
+A  1 REPT DBCHG
+   "DATE=2005-07-24,TIME=19-25-15,USERID=telica,DBCHGSEQ=220:rst-eqpt::Iom-8"
+;
+Telica>
+
+   telica 2005-07-24 19:25:15
+A  2 REPT ALM ENET
+   "IOM-8-ENET-1:CL,EXT,SA,2005-07-24,19-23-22,,,,,:\"IOM-8-ENET-1 Loss	of IP connectivity\",,,:,893"
+;canc-user;
+
+   telica 2005-07-24 19:25:27
+M  0 COMPLD
+;
+Telica>	Connection closed by foreign host.
+
+
+end-of-file ...
+
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:25:36
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:OOS-AU,INIT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,WRK"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:28:14
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,WRK"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+unknown	active SP found.
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:28:30
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,WRK"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+SP-A-IP=135.1.104.143
+SP-B-IP=135.1.104.144
+tid    : telica
+ipaddr : 135.1.104.144
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:28:31
+M  0 DENY
+   PICC
+   /* Host is in Standby Mode */
+;
+Telica>
+DENY received ...
+
+135.1.104.144 is the STANDBY MACHINE.
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:28:49
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:OOS-AU,INIT"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:30:47
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:OOS-AU,INIT"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:30:59
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT&NBK"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:OOS-AU,INIT"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:31:50
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy lf
+*call.hot11		  copymem_octds3	   rmv_octds3
+ calldata		  hardware		   rst_1
+*copymem.out		 *hardware.out		   rst_2
+ copymem_1		  iproute		   rst_3
+ copymem_2		  new-iom-version	   rst_all
+ copymem_3		  new.sip2cas2sip.trunks   rst_octds3
+ copymem_all		  prov_linefeats	   users
+ copymem_iom10		  rmv_1			  *users.out
+ copymem_iom5,6,17	  rmv_all
+ copymem_newiom		  rmv_new
+hrdcpy tl1exec -l iproute.out--i1135.1.104.143ciproute_iom5,6,17
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile: iproute.out
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-iproute::iom-8-10.14.1.0-24:::gateway=10.175.10.254> ...
+
+COMPLETED received ...
+
+TL1 cmd	<ent-iproute::iom-8-10.10.0.0-16:::gateway=10.175.10.254> ...
+
+COMPLETED received ...
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 3
+COMMENTS     : 0
+EXECUTED     : 3
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy #tl1cmd""init-sys:telica::::10"
+hrdcpy
+hrdcpy
+hrdcpy rtrv-eqpt
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<rtrv-eqpt> ...
+rtrv-eqpt;
+
+   telica 2005-07-24 19:32:29
+M  0 COMPLD
+   "IOM-1:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-2:BA4A701FAA,PRI,90,90,90,3.11.0.4.0.P2:IS,ACT"
+   "IOM-3:BA4A701FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-4:,,0,0,0,:OOS-MA,UAS"
+   "IOM-5:BA4A701FAA,SEC,95,95,95,3.11.0.4.0.P2:IS,STBYC"
+   "IOM-6:BA9AXY0FAA,PRI,95,95,95,3.11.0.4.0.P2:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-8:BA2A30TGAA,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:BA2A30TGAA,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:,,0,0,0,:OOS-AU,UAS&FLT"
+   "IOM-15:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-16:BA1AX60AAB,PRI,95,95,95,3.11.0.4.0:IS,ACT"
+   "IOM-17:BA1AX60AAB,SEC,95,95,95,3.11.0.4.0:IS,STBYC"
+   "SP-A:BA1CUV0HAC,PRI,90,90,95,:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,:IS,ACT"
+   "SP-B:BA1CUV0HAC,SEC,90,90,95,:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,:IS,STBYH"
+   /* RTRV-EQPT	*/
+;
+COMPLETED received ...
+
+Telica>
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy tl1cmdd"init-sys:telica::::10""
+SP-A-IP=135.1.104.143
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+TL1 cmd	<act-user::telica:::XXXXXX > ...
+
+COMPLETED received ...
+
+TL1 cmd	<init-sys:telica::::10>	...
+
+COMPLETED received ...
+
+
+CMD RESULTS SUMMARY:
+
+MISCELLANEOUS: 0
+INPROGRESS   : 0
+SLEEP	     : 0
+DENIED	     : 0
+COMPLETED    : 2
+COMMENTS     : 0
+EXECUTED     : 2
+TIMEOUT	     : 0
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy tl1cmd "init-sys:telica::::10"
+hrdcpy
+hrdcpy rtrv-eqpt
+unknown	active SP found.
+tid    : telica
+ipaddr : 135.1.104.143
+login  : telica
+passwd : XXXXXX
+logfile:
+
+timeout	during login ...
+SP-A-IP=135.1.104.143
+SP-B-IP=135.1.104.144
+tid    : telica
+ipaddr : 135.1.104.144
+login  : telica
+passwd : XXXXXX
+logfile:
+
+timeout	during login ...
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy nlcsstat
+ihlcs3 SP_A_IP is not responding.
+ihlcs3 SP_B_IP is not responding.
+hrdcpy edxit
+sh: edxit:  not	found
+hrdcpy exit

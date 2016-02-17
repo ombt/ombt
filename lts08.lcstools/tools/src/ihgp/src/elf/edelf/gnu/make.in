@@ -1,0 +1,32 @@
+CC = g++
+CCFLAGS = -g -DDEBUG -DUSEEXCEPTION -DGNUVERSION=1
+LD = g++
+LDFLAGS = -g -DDEBUG -DUSEEXCEPTION -DGNUVERSION=1
+#
+gedelf
+edelf.c
+data.c
+fhdr.c
+menu.c
+shdrs.c
+phdrs.c
+strings.c
+symbols.c
+reloc.c
+tokenize.c
+util.c
+overwriter.c
+trans.c
+hash.c
+versions.c
+dynamic.c
+dasm.c
+stabs.c
+spaces.c
+stabtokenizer.c
+-ldemangle
+#
+install1=chmod 755 gedelf
+install2=rm -f /home/rumore/bin/gedelf
+install3=ln -s `pwd`/gedelf /home/rumore/bin/gedelf 
+#

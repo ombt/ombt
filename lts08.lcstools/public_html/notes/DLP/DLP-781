@@ -1,0 +1,62 @@
+<html>
+<head>
+<title> DLP-781 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-781 </h3>
+<pre>
+
+1) Verify autonomous messages are allowed on your TL1 shell:
+
+	ALW-MSG-USER::&lt;username>;
+
+2) Check security. Do this:
+
+	RTRV-SYS-SECU;
+
+If SSH is enabled and the SP version is before 6.2.0.1, then do this:
+
+	ED-SYS-SECU:::::SSHENABLED=N;
+
+Details are in DLP-570.
+
+3) If SSH is enabled on the OMC-P, then disable it there. Do this:
+
+Right-click the switch name in the switch status panel and select Modify. Use 
+the pull-down menu of Secure Shell to select DISABLED. Then select Apply.
+
+4) Check if IP filtering is enabled. Do this:
+
+	RTRV-SYS-SECU;
+
+If IP filtering is enabled (IPFLTRENABLED=N), then do this:
+
+	ED-SYS-SECU::COM::: IPFLTRENABLED=N;
+
+Details are in DLP-778.
+
+5) If you are using the OMC-P, then unmanage the switch on the OMC-P. Do this.
+
+Un-manage the switch using the OMC-P Client. Right click the switch name in 
+the switch status panel and select Modify. Use the pull-down menu of Managed 
+to select NO. Then select Apply.
+
+6) Now remove the standby SP. Do this:
+
+	RMV-EQPT::&lt;standby-sp>;
+
+Wait for the remove to complete, then do this:
+
+	RST-EQPT::&lt;standby-sp>;
+
+Wait for the restore to complete, then do this:
+
+	SW-TOPROTN-EQPT::&lt;active-sp>
+
+Wait for the switch to complete. The SPs should have the states:
+
+	new active SP state = IS,ACT
+	new standby SP state = IS,STBYH
+
+</pre>
+</font></body>
+</html>

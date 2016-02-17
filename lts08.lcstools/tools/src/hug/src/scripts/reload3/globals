@@ -1,0 +1,68 @@
+globals data {
+	#
+	# lab to reload
+	#
+	labid ihlcsg10
+	#
+	ihlcsg10 {
+		spa {
+			ip 135.1.104.203
+		}
+		spb {
+			ip 135.1.104.204
+		}
+	}
+	#
+	# Lynx-OS user
+	#
+	login root
+	passwd plexus9000
+	#
+	# TL1 user
+	#
+	tl1login telica
+	tl1passwd telica
+	#
+	# branch and load to reload
+	#
+	branch BRANCH-5-3
+	cpuload 5.3.0.6.18
+	#
+	# load files location
+	#
+	basetextdir /l148/text/
+	textdir <basetextdir>/<branch>/
+	#
+	images {
+		#
+		ana 5.3.0.6.3_ana.tar.gz
+		atmds3 nothing
+		cm 5.3.0.6.3_cm.tar.gz
+		cpu 5.3.0.6.18_cpu.tar.gz
+		ds1 nothing
+		ds1_2 5.3.0.6.3_ds1_2.tar.gz
+		ds3 nothing
+		e1 nothing
+		ena 5.3.0.6.3_ena.tar.gz
+		ena2 5.3.0.6.3_ena2.tar.gz
+		octds3 5.3.0.6.3_octds3.tar.gz
+		octds3_2 5.3.0.6.3_octds3_2.tar.gz
+		octds3_3 5.3.0.6.3_octds3_3.tar.gz
+		pna nothing
+		tdmoc 5.3.0.6.3_tdmoc.tar.gz
+		trids3 5.3.0.6.3_trids3.tar.gz
+		trids3_3 5.3.0.6.3_trids3_3.tar.gz
+		voip 5.3.0.6.3_voip.tar.gz
+		voip6 5.3.0.6.3_voip6.tar.gz
+		vs3 nothing
+	}
+	#
+	# tl1 files location
+	#
+	basetl1dir /lcsl100/scripts/
+	tl1dir <basetl1dir>/<branch>/<cpuload>/<labid>
+	#
+	# misc scripts
+	#
+	scriptsdir /home/lcstools/tools/src/hug/scripts
+}

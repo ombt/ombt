@@ -1,0 +1,11 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+sipsim
+sipsim.PL
+install1 = -(sed "s?/opt/exp/bin/perl?/opt/OV/bin/Perl/bin/perl?" sipsim.PL >/tmp/remotesipsim.PL)
+install2 = -(rcp /tmp/remotesipsim.PL root@135.1.235.58:/SIPSIM/src/sipsim.PL)
+#
+mypqueue.pm
+mypqueue.PM
+install1 = -(rcp mypqueue.PM root@135.1.235.58:/SIPSIM/src)
+#

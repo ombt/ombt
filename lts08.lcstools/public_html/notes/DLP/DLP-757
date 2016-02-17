@@ -1,0 +1,31 @@
+<html>
+<head>
+<title> DLP-757 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-757 CHECKING FOR AND DISABLING SCHEDULED BACKUPS AND
+PROTECTION SWITCHES</h3>
+<pre>
+
+1) Check if any backups are scheduled. Do this:
+
+	RTRV-BKUPSCHED-EQPT;
+
+2) If backups are scheduled, then disable by doing this:
+
+	SCHED-BKUP-EQPT:::::::1-DAY,0-1,0-0;
+
+3) Check if periodic protection switches are scheduled per IOM. Do this:
+
+	RTRV-EXSCHED-EQPT::IOM-1;
+
+And repeat for each IOM.
+
+4) If any IOM has protection switches scheduled, then do this:
+
+	INH-EX-EQPT::IOM-1;
+
+Repeat for each IOM that has a switch scheduled.
+
+</pre>
+</font></body>
+</html>

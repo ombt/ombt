@@ -1,0 +1,25 @@
+print "<h4>Branch? ";
+print "<select name=branch>\n";
+#
+system("/opt/exp/lib/unity/bin/uprintf -q -f\"%s\\n\" branch in /home/lcstools/tools/data/buildmachines >/tmp/data.$$ 2>&1 ");
+open(LOADSFD, "/tmp/data.$$") or die "can't open /tmp/data.$$";
+while (defined($rec = <LOADSFD>)) {
+	chomp($rec);
+	if ($rec eq "ihlcs1") {
+		# highlight our machines
+		print "<option selected> ${rec}\n";
+	} else {
+		print "<option> ${rec}\n";
+	}
+}
+#
+close(LOADSFD);
+#
+unlink("/tmp/data.$$");
+#
+print "</select>\n";
+print "</h4>\n";
+#
+print "<input type=submit value=\"submit\">\n";
+print "<input type=reset value=\"reset\">\n";
+#

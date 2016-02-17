@@ -1,0 +1,145 @@
+Distributed system MGC
+-------  
+sigdbg:::::dest-b-slam dumpmem;
+sigdbg:::::dest-b-ccs-slot/cpu/inst dumpmem;    where slot is your active CM, cpu can be 1-4 and inst should be 1 since
+there is only 1 ccs per cpu. 
+sigdbg:::::dest-b-gdi-slot dumpmem;        where slot is the active active CM
+sigdbg:::::dest-b-rs-slot/cpu/inst dumpmem;            where slot is the 14 or 15 (CCM), cpu is 2 and inst 1
+ 
+Distributed system MG
+-------------
+sigdbg:::::dest-b-mg dumpmem;
+ 
+ 
+PLUS(5.0) SIGDBG COMMANDS
+=========================
+ 
+#MEGACO
+sigdbg:::::dest-b-ccs-5/1/1 mmsldbg startcapture;       // Start Megaco protocol capture on MGC, where 5/2/1 is the slot
+/cpu/instance
+sigdbg:::::dest-b-ccs-10/1/1 mmsldbg startcapture;       // Start Megaco protocol capture on MGC, where 5/2/1
+is the slo
+t/cpu/instance
+. Stored in /Telica/swCM/IOM-5/proc1/log/megaa_protocol_trace_CM5_PROC2_INST1.out
+sigdbg:::::dest-b-ccs-5/1/1 mmsldbg stopcapture;        // Stop Megaco protocol capture on MGC
+sigdbg:::::dest-b-ccs-10/1/1 mmsldbg stopcapture;        // Stop Megaco protocol capture on MGC
+####ON####
+sigdbg:::::dest-b-ccs-1/4/1 procLogMsgLevel 0x010070ff;
+sigdbg:::::dest-b-ccs-1/4/1 ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-14/4/1 procLogMsgLevel 0x010070ff;
+sigdbg:::::dest-b-ccs-14/4/1 ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-11/1/1 ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-10/2/1 ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-6/1/1  ficDbg 0;
+sigdbg:::::dest-b-ccs-6/4/1  ficDbg 0;
+sigdbg:::::dest-b-ccs-5/1/1 ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-11/1/1 ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-10/2/1 ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-6/1/1 rmDbg rmDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-5/1/1 bicc msgtrace 3;
+sigdbg:::::dest-b-ccs-5/1/1 bicc FsmTrace 7;
+sigdbg:::::dest-a-rs-14/2/1 rsDbg gen all high;
+
+#good one
+sigdbg:::::dest-b-ccs-6/1/1 isup msgtrace 3;
+sigdbg:::::dest-b-ccs-6/1/1 isup FsmTrace 7;
+sigdbg:::::dest-b-ccs-6/4/1 isup msgtrace 3;
+sigdbg:::::dest-b-ccs-6/4/1 isup FsmTrace 7;
+
+sigdbg:::::dest-b-ccs-6/1/1 isup rxmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-6/1/1 isup txmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-6/1/1 isup dbgMask 0xffffffff;
+sigdbg:::::dest-b-ccs-6/1/1 bicc rxmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-6/1/1 bicc txmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-6/1/1 bicc dbgMask 0xffffffff;
+
+sigdbg:::::dest-b-ccs-10/1/1 bicc rxmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-10/1/1 bicc txmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-10/1/1 bicc dbgMask 0xffffffff;
+#m3ua
+sigdbg:::::dest-b-ccs-5/1/1 m3ua dbgMask 0xFFFFFFFF;
+sigdbg:::::mgsig m3ua dbgMask 0xFFFFFFFF;
+
+#sctp
+sigdbg:::::dest-b-slam sctp 26/1/1/2 sctp-setdbg-F000000; #0 for off
+sigdbg:::::dest-b-slam sctp 27/1/1/2 sctp-setdbg-F000000; #0 for off
+
+sigdbg:::::dest-b-slam sctp 11/1/1/7 sctp-setdbg-F000000; #0 for off
+sigdbg:::::mgsig plmSetLogLevel -1 0xf;
+
+
+
+#TAD
+sigdbg:::::mgsig cs3tonep1 1;
+
+sigdbg:::::mgsig csmgDbg 3 1 1 24 1;
+sigdbg:::::mgsig csmgDbg 3 2 1 24 1;
+sigdbg:::::mgsig csmgDbg 4 1 1 24 1;
+sigdbg:::::mgsig csmgDbg 4 2 1 24 1;
+sigbdg:::::mgsig csmgDbg iom port startchannel number dbglevel;
+#Q931
+sigdbg:::::dest-a-ccs-10/1/1 q931 inDbgMask 0xffffffff;
+sigdbg:::::dest-a-ccs-6/1/1 q931 inDbgMask 0xffffffff;
+sigdbg:::::dest-a-ccs-6/4/1 q931 inDbgMask 0xffffffff;
+
+#IUA (on/off)
+
+sigdbg:::::dest-a-ccs-10/1/1 iuadbg idprint;  IUA layer printing
+sigdbg:::::dest-a-ccs-10/1/1 iuadbg ndprint;  IUA NIF layer printing
+sigdbg:::::dest-a-ccs-10/1/1 iuadbg sbprint;  SCTP layer printing
+sigdbg:::::dest-a-ccs-10/1/1 iuadbg pduon;
+sigdbg:::::dest-a-ccs-10/1/1 iuadbg pduoff;
+
+sigdbg:::::dest-a-ccs-5/1/1 iuadbg idprint;  IUA layer printing
+sigdbg:::::dest-a-ccs-5/1/1 iuadbg ndprint;  IUA NIF layer printing
+sigdbg:::::dest-a-ccs-5/1/1 iuadbg sbprint;  SCTP layer printing
+sigdbg:::::dest-a-ccs-5/1/1 iuadbg pduon;
+sigdbg:::::mgsig iua-idprint;
+
+#megaco
+sigdbg:::::dest-b-ccs-6/1/1 mmsldbg startcapture;
+sigdbg:::::dest-b-ccs-6/1/1 mmsldbg stopcapture;
+sigdbg:::::dest-b-ccs-6/1/1 mmsldbg  0000ffff;
+sigdbg:::::dest-b-ccs-6/4/1 mmsldbg startcapture;
+sigdbg:::::dest-b-ccs-6/4/1 mmsldbg stopcapture;
+sigdbg:::::dest-b-ccs-6/4/1 mmsldbg  0000ffff;
+sigdbg:::::dest-b-ccs-5/1/1 mmsldbg  stopheartbeat;
+sigdbg:::::dest-b-ccs-5/2/1 mmsldbg  stopheartbeat;
+sigdbg:::::dest-b-ccs-5/1/1 mmsldbg  startheartbeat;
+sigdbg:::::dest-b-ccs-5/1/1 mmsldbg  startheartbeat;
+
+#cas
+sigdbg:::::dest-b-ccs-6/1/1 mmsldbg startcapture;
+sigdbg:::::dest-b-ccs-6/1/1 csDbg debug 3;
+sigdbg:::::dest-b-ccs-6/4/1 csDbg debug 3;
+sigdbg:::::dest-b-ccs-5/1/1 csDbg dumpChanState pipes 3 1;
+sigdbg:::::dest-b-ccs-5/1/1 csDbg dumpChanState pipes 3 2;
+
+
+sigdbg:::::dest-b-ccs-6/1/1 ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-6/4/1 ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-5/1/1 ccDbg ccDbgMask 0x100;
+sigdbg:::::dest-b-ccs-6/1/1 ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-6/4/1 ccDbg ccDbgMask 0xFFFFFFFF;
+
+#CCRM
+sigdbg:::::mgsig ccrm context all;
+sigdbg:::::mgsig ccrm tdm BOSTON/TDM/I7/T1/C1;
+sigdbg:::::mgsig ccrm pce
+sigdbg:::::mgsig ccrm dbg4;   // dbg0, dbg1, dbg2.
+sigdbg:::::mgsig sedAgent dbg <IOM#> 0x0100ffff;
+
+#interworking
+sigdbg:::::dest-b-ccs-5/1/1 ccDbg ccIwDbgMask 0xFFFFFFFF;
+
+#MGI
+sigdbg:::::dest-b-ccs-5/1/1 mgidbg 1;
+
+
+sigdbg:::::dest-b-ccs-1/4/1 sipw0;
+sigdbg:::::dest-b-ccs-1/4/1 sipa dumpraw 1;
+sigdbg:::::dest-b-ccs-1/4/1 sipa dbglvl 0;
+sigdbg:::::dest-b-ccs-14/4/1 sipw0;
+sigdbg:::::dest-b-ccs-14/4/1 sipa dumpraw 1;
+sigdbg:::::dest-b-ccs-14/4/1 sipa dbglvl 0;
+

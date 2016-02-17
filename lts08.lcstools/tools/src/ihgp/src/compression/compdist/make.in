@@ -1,0 +1,13 @@
+CC = CC
+CCFLAGS = -g -DDEBUG
+#
+LD = CC
+LDFLAGS = -g -DDEBUG
+#
+compdist
+compdist.c
+#
+# install1=chmod 755 compdist
+# install2=rm -f /home/rumore/bin/compdist
+# install3=ln -s `pwd`/compdist /home/rumore/bin/compdist
+

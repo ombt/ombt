@@ -1,0 +1,28 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 26 wid 102 with .sw at 0,0
+"\fR\s10\&goto\fP\s0" at 51,19
+"\fR\s10\&start transmission state\fP\s0" at 51,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 88 with .sw at 0,0
+"\fR\s10\&queue for cable state\fP\s0" at 44,19
+"\fR\s10\&cable is idle event\fP\s0" at 44,6
+] |
+
+box invis ht 448 wid 320 with .sw at 0,0
+box ht 8 wid 0 with .nw at 224,96 
+ellipse ht 64 wid 160 at 152,32
+line -> from 152,96 to 152,64 
+ellipse ht 80 wid 144 at 152,216
+line -> from 152,176 to 152,144 
+t100 with .nw at 101,49
+"\fR\s10\&call state = start transmission\fP\s0" at 156,121
+box ht 48 wid 168 with .nw at 72,144 
+t102 with .nw at 108,229
+"\fR\s14\&QUEUE FOR CABLE FUNCTION FLOW CHART\fP\s0" at 160,433
+.PE
+.fi

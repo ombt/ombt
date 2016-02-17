@@ -1,0 +1,36 @@
+<html>
+
+<head>
+<title> LCS TOOLS </title>
+</head>
+
+<body bgcolor="E0E0E0">
+<font>
+
+<center>
+
+<h1>
+LCS TOOLS
+</h1>
+
+<hr>
+
+<ul>
+<li>
+<a href="reload/index.shtml">reload</a>
+<li>
+<a href="saveload/index.shtml">saveload</a>
+</ul>
+
+<hr>
+
+<!--#exec cmd="cgi-bin/showenvvars.cgi"-->
+<br>
+<!--#exec cmd="cgi-bin/counter.cgi LCSTOOLS cgi-bin/hits.dat"-->
+
+</center>
+
+</font>
+</body>
+
+</html>

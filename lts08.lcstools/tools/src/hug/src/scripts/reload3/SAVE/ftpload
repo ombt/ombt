@@ -1,0 +1,37 @@
+ftpload exec { spaip spbip login passwd textdir images} {
+	ftp open ftpspa <spaip> <login> <passwd>
+	ftp open ftpspb <spbip> <login> <passwd>
+	#
+	ftp put -t600  -b ftpspa <textdir>/ana/<<images>.ana> /home/<<images>.ana>
+	ftp put -t600  -b ftpspa <textdir>/octds3/<<images>.octds3> /home/<<images>.octds3>
+	ftp put -t600  -b ftpspa <textdir>/trids3/<<images>.trids3> /home/<<images>.trids3>
+	ftp put -t600  -b ftpspa <textdir>/ena/<<images>.ena> /home/<<images>.ena>
+	ftp put -t600  -b ftpspa <textdir>/voip/<<images>.voip> /home/<<images>.voip>
+	ftp put -t600  -b ftpspa <textdir>/ena2/<<images>.ena2> /home/<<images>.ena2>
+	ftp put -t600  -b ftpspa <textdir>/cm/<<images>.cm> /home/<<images>.cm>
+	ftp put -t600  -b ftpspa <textdir>/cpu/<<images>.cpu> /home/<<images>.cpu>
+	ftp put -t600  -b ftpspa <textdir>/ds1_2/<<images>.ds1_2> /home/<<images>.ds1_2>
+	ftp put -t600  -b ftpspa <textdir>/octds3_2/<<images>.octds3_2> /home/<<images>.octds3_2>
+	ftp put -t600  -b ftpspa <textdir>/trids3_3/<<images>.trids3_3> /home/<<images>.trids3_3>
+	ftp put -t600  -b ftpspa <textdir>/octds3_3/<<images>.octds3_3> /home/<<images>.octds3_3>
+	ftp put -t600  -b ftpspa <textdir>/voip6/<<images>.voip6> /home/<<images>.voip6>
+	ftp put -t600  -b ftpspa <textdir>/tdmoc/<<images>.tdmoc> /home/<<images>.tdmoc>
+	#
+	ftp put -t600  -b ftpspb <textdir>/ana/<<images>.ana> /home/<<images>.ana>
+	ftp put -t600  -b ftpspb <textdir>/octds3/<<images>.octds3> /home/<<images>.octds3>
+	ftp put -t600  -b ftpspb <textdir>/trids3/<<images>.trids3> /home/<<images>.trids3>
+	ftp put -t600  -b ftpspb <textdir>/ena/<<images>.ena> /home/<<images>.ena>
+	ftp put -t600  -b ftpspb <textdir>/voip/<<images>.voip> /home/<<images>.voip>
+	ftp put -t600  -b ftpspb <textdir>/ena2/<<images>.ena2> /home/<<images>.ena2>
+	ftp put -t600  -b ftpspb <textdir>/cm/<<images>.cm> /home/<<images>.cm>
+	ftp put -t600  -b ftpspb <textdir>/cpu/<<images>.cpu> /home/<<images>.cpu>
+	ftp put -t600  -b ftpspb <textdir>/ds1_2/<<images>.ds1_2> /home/<<images>.ds1_2>
+	ftp put -t600  -b ftpspb <textdir>/octds3_2/<<images>.octds3_2> /home/<<images>.octds3_2>
+	ftp put -t600  -b ftpspb <textdir>/trids3_3/<<images>.trids3_3> /home/<<images>.trids3_3>
+	ftp put -t600  -b ftpspb <textdir>/octds3_3/<<images>.octds3_3> /home/<<images>.octds3_3>
+	ftp put -t600  -b ftpspb <textdir>/voip6/<<images>.voip6> /home/<<images>.voip6>
+	ftp put -t600  -b ftpspb <textdir>/tdmoc/<<images>.tdmoc> /home/<<images>.tdmoc>
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+}

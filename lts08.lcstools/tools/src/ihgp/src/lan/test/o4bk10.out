@@ -1,0 +1,58 @@
+enter random number generator seed: 0
+enter maximum simulation time (secs): 10
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 20
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 256
+enter station [0] maximum backoffs: 10
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 20
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 256
+enter station [1] maximum backoffs: 10
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 20
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 256
+enter station [2] maximum backoffs: 10
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 20
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 256
+enter station [3] maximum backoffs: 10
+ 
+Number of Stations            : 4
+Actual Simulation Time        : 10000000 usecs
+Maximum Simulation Time       : 10000000 usecs
+Calls Transmitted Over Cable  : 38755
+Calls Queued Waiting For Cable: 21906
+Bits Transmitted Over Cable   : 54531952
+Transmission Rate             : 5.453 Mbps
+ 
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001   10111   6396    182    5587   3447  15530     97   9638     59
+000002    9871   6362    230    5432   3437  15476    122   9760     63
+000003   10041   6220    193    5436   3408  15298    105   9684     60
+000004   10101   6373    334    5451   3479  15540     91   9662     59
+-----------------------------------------------------------------------
+Totals   40124  25351    939   21906  13771  61844    415  38744    241
+ 
+Station   Total      Total      Total   Avg        Avg         Avg    Inter  
+          Station    Cable      Call    Station    Cable       Call   Arrival
+          Q Time     Q Time     Time    Q Time     Q Time      Time   Time   
+          (usec)     (usec)     (usec)  (usec)     (usec)      (usec) (usec) 
+-----------------------------------------------------------------------------
+000001   36770574    531299  43301806      3636        52      4282       989
+000002   40981493    507447  47703473      4151        51      4832      1013
+000003   34991423    510606  41469880      3484        50      4130       995
+000004   41163640    510532  47815806      4075        50      4733       990
+

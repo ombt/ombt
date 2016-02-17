@@ -1,0 +1,96 @@
+<html>
+<head>
+<title> DLP-722 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-722 UPGRADING SOFTWARE OF ENA IOMS </h3>
+<pre>
+
+Procedures for updating a ENA, ANA and Channelized OC3 IOMs are listed below.
+
+NOTE: ENA, ANA, and Channelized OC3 modules in switches with 6.1 and higher
+software will not automatically switch back after the working module has 
+been switched in order to change its software.
+
+1) Determine which IOM slots have ENA and their states.
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+2) If one of the installed IOMs has a state of UAS, then use 
+ENT-EQPT command to define it.
+
+3) Check files for the case that apply:
+
+	EXEC-CD:::::/Telica/swENA;
+	EXEC-LS:::::-l;
+	EXEC-CD:::::/Telica/swENA2;
+	EXEC-LS:::::-l;
+
+Verify files are there and software version is correct. The files are
+*_ena.tar.gz and *_ena2.tar.gz.
+
+4) Files should have already been FTPed and extracted before starting
+this procedure.
+
+5) First update the protection ENA IOM -- the protection ENA is either
+IOM-8 or IOM-10. Assume 10 for this example.
+
+	RMV-EQPT::IOM-10;
+
+6) Update software version:
+
+	ED-EQPT-ALL::IOM-10:::SWVERSION=x.x.x.x.x;
+
+7) Update flash:
+
+	CPY-MEM::IOM-7;
+
+8) Restore the protection IOM:
+
+	RST-EQPT::IOM-10;
+
+9) Verify the software was updated on the protection IOM (IOM-10):
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+10) Switch to protection IOM.
+
+	Command Syntax: SW-TOPROTN-EQPT:[TID]:<sw_id>:[CTAG];
+
+	Command Example: 
+
+		SW-TOPROTN-EQPT::IOM-8;
+
+11) Verify the protection IOM is IS,ACT&NBK.
+
+12) Check switch status on an sg_mgc_mg or mgc:
+
+	RTRV-PM-CC;
+
+On an mg or sg_mg, check this:
+
+	RTRV-STATUS-MG;
+
+13) Change software version on IOM to be upgraded:
+
+	ED-EQPT::IOM-8:::SWVERSION=x.x.x.x.x;
+
+14) Upgrade firmware:
+
+	CPY-MEM::IOM-1;
+
+15) After the CPY-MEM, the working IOM becomes active and IS, and the
+protection IOM becomes IS,STBYC.
+
+	RTRV-EQPT;
+
+16) Check upgraded IOM:
+
+	RTRV-INFO-EQPT;
+
+17) Done.
+
+</pre>
+</font></body>
+</html>

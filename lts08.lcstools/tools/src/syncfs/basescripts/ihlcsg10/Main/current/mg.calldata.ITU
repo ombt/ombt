@@ -1,0 +1,14 @@
+#calldata
+#MEGACO area
+ed-mg-mgcassoc::ihlcsgw7-part0::::is
+#ISDN info for MG
+ent-iua-sys
+ent-iua-endptasp::1:::ipadest=10.11.17.3,port=53056
+ent-iua-endptasp::2:::ipadest=10.11.17.3,port=53288
+ent-iua-asp::1-1:::desc=gw7mgca
+ent-iua-asp::2-2:::desc=gw7mgcb
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+set-sid:::::ihlcsgw10
+sleep 10
+init-sys:ihlcsgw10::::10

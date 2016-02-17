@@ -1,0 +1,15 @@
+#!/usr/bin/perl -w
+#
+exit 0 if ($#ARGV != 1);
+#
+($min, $max) = @ARGV;
+#
+print "min: $min, max: $max\n";
+#
+foreach (($min .. $max))
+{
+	$dir = "ch" . $_;
+	mkdir($dir,0755) || die("mkdir failed for $dir: $!");
+}
+#
+exit 0

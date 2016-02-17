@@ -1,0 +1,22 @@
+# T1/E1 IOMs here (414)
+ent-eqpt-all::iom-1:::IOMODULETYPE=BA7ATP0FAA,REDUNDANCY=PRI,MEMTHRESHOLD=90,NVMEMTHRESHOLD=90,BUSYTHRESHOLD=90,SWVERSION=<ds1_2>,REARMODULETYPE=BA7A1P0FAA:IS
+ent-eqpt-all::iom-3:::IOMODULETYPE=BA7ATP0FAA,REDUNDANCY=PRI,MEMTHRESHOLD=90,NVMEMTHRESHOLD=90,BUSYTHRESHOLD=90,SWVERSION=<ds1_2>,REARMODULETYPE=BA7A1P0FAA:IS
+#
+ed-t1::tmg-A:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=PRI:IS
+ed-t1::tmg-B:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=SEC:IS
+#
+ent-t1::iom-1-port-15:::FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE,IFTYPE=NETWORK:IS
+ent-t1::iom-1-port-16:::FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE,IFTYPE=NETWORK:IS
+ent-t1::iom-3-port-15:::FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE,IFTYPE=NETWORK:IS
+ent-t1::iom-3-port-16:::FMT=ESF,LINECDE=B8ZS,OMODE=AIS,TMGREF=NONE,IFTYPE=NETWORK:IS
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.105.254
+ent-iproute::sp-cpu-a-10.11.24.0-24:::gateway=10.11.56.254
+ent-iproute::sp-cpu-a-10.11.92.0-24:::gateway=10.11.95.6
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.56.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.56.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.56.254
+ent-iproute::sp-cpu-b-10.11.92.0-29:::gateway=10.11.95.6
+ent-iproute::sp-cpu-b-10.11.92.8-29:::gateway=10.11.95.6
+ent-iproute::sp-cpu-b-10.11.92.16-29:::gateway=10.11.95.6
+ent-iproute::sp-cpu-b-10.11.92.24-29:::gateway=10.11.95.6

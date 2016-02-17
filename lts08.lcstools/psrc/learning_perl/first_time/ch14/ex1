@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my %workdays;
+#
+@workdays{
+	qw( Sun Mon Tue Wed Thu Fri Sat ) } = 
+	qw( No  Yes Yes Yes Yes Yes No  );
+#
+open(DATE, "date|") || die("unable to exec 'date|': $!");
+#
+my $output = <DATE>;
+chomp $output;
+#
+print "DATE OUTPUT: $output\n";
+#
+(my $day) = split(/ /, $output);
+print "DAY: $day\n";
+#
+if ($workdays{$day}) {
+	print "workday ... $workdays{$day}\n";
+	if ($workdays{$day} eq "Yes")
+	{
+		print "Go to work !!!\n";
+	}
+	else
+	{
+		print "Go to play !!!\n";
+	}
+} else {
+	print "unknown day: $day\n";
+}

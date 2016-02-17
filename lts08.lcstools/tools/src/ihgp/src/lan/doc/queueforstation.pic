@@ -1,0 +1,34 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 26 wid 96 with .sw at 0,0
+"\fR\s10\&queue for station state\fP\s0" at 48,19
+"\fR\s10\&station is idle event\fP\s0" at 48,6
+] |
+
+define t101 |
+[ box invis ht 26 wid 102 with .sw at 0,0
+"\fR\s10\&goto\fP\s0" at 51,19
+"\fR\s10\&start transmission state\fP\s0" at 51,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 140 with .sw at 0,0
+"\fR\s10\&call state = start transmitting\fP\s0" at 70,19
+"\fR\s10\&station state = start transmitting\fP\s0" at 70,6
+] |
+
+box invis ht 440 wid 328 with .sw at 0,0
+t100 with .nw at 112,233
+box ht 8 wid 0 with .nw at 232,96 
+ellipse ht 64 wid 160 at 160,32
+line -> from 160,96 to 160,64 
+ellipse ht 80 wid 144 at 160,216
+line -> from 160,176 to 160,144 
+t101 with .nw at 109,49
+t102 with .nw at 94,137
+box ht 48 wid 168 with .nw at 80,144 
+"\fR\s14\&QUEUE FOR STATION FUNCTION FLOW CHART\fP\s0" at 164,429
+.PE
+.fi

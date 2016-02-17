@@ -1,0 +1,53 @@
+CCFLAGS = -g -DDEBUG 
+OBJS = cable.o \
+	call.o \
+	exponential.o \
+	item.o \
+	lan.o \
+	poisson.o \
+	probDist.o \
+	station.o \
+	uniform.o
+HDRS = cable.h \
+	call.h \
+	debug.h \
+	event.h \
+	exponential.h \
+	item.h \
+	poisson.h \
+	probDist.h \
+	returns.h \
+	station.h \
+	uniform.h
+
+lan:		$(OBJS)
+		-rm -f $(HOME)/bin/lan
+		CC $(CCFLAGS) -o lan $(OBJS) -lm
+		-ln lan $(HOME)/bin/lan
+
+lan.o:		lan.c $(HDRS)
+		CC $(CCFLAGS) -c  lan.c
+
+cable.o:	cable.c $(HDRS)
+		CC $(CCFLAGS) -c cable.c
+
+call.o:		call.c $(HDRS)
+		CC $(CCFLAGS) -c call.c
+
+exponential.o:	exponential.c $(HDRS)
+		CC $(CCFLAGS) -c exponential.c
+
+item.o:		item.c $(HDRS)
+		CC $(CCFLAGS) -c item.c
+
+poisson.o:	poisson.c $(HDRS)
+		CC $(CCFLAGS) -c poisson.c
+
+probDist.o:	probDist.c $(HDRS)
+		CC $(CCFLAGS) -c probDist.c
+
+station.o:	station.c $(HDRS)
+		CC $(CCFLAGS) -c station.c
+
+uniform.o:	uniform.c $(HDRS)
+		CC $(CCFLAGS) -c uniform.c

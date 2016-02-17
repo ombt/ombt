@@ -1,0 +1,73 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/tl1
+}
+globals data {
+	reqspastate isact,isstbyh
+	reqspbstate isact,isstbyh
+	# reqspastate isactnbk,appmode
+	# reqspbstate isactnbk,appmode
+	ihlcs1 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.113
+		}
+		spb {
+			ip 135.1.104.114
+		}
+	}
+	ihlcs2 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.141
+		}
+		spb {
+			ip 135.1.104.142
+		}
+	}
+	ihlcsgw7 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.197
+		}
+		spb {
+			ip 135.1.104.198
+		}
+	}
+	ihlcsg14 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.105.11
+		}
+		spb {
+			ip 135.1.105.12
+		}
+	}
+}
+cpustate_ihlcs1 exec {
+	waitforcpustate -t900 <ihlcs1.spa.ip> <reqspastate> <ihlcs1.login> <ihlcs1.passwd> <ihlcs1.tl1login> <ihlcs1.tl1passwd> <ihlcs1.spb.ip> <reqspbstate> <ihlcs1.login> <ihlcs1.passwd> <ihlcs1.tl1login> <ihlcs1.tl1passwd>
+}
+rtrv_eqpt_ihlcs1 exec {
+	tl1 open2 -t30 tl1sp <ihlcs1.spa.ip> <ihlcs1.spb.ip> <ihlcs1.tl1login> <ihlcs1.tl1passwd>
+	tl1 exec -v tl1sp rtrv-eqpt
+	tl1 close tl1sp
+}
+cpustate_ihlcsg14 exec {
+	waitforcpustate -t900 <ihlcsg14.spa.ip> <reqspastate> <ihlcsg14.login> <ihlcsg14.passwd> <ihlcsg14.tl1login> <ihlcsg14.tl1passwd> <ihlcsg14.spb.ip> <reqspbstate> <ihlcsg14.login> <ihlcsg14.passwd> <ihlcsg14.tl1login> <ihlcsg14.tl1passwd>
+}
+rtrv_eqpt_ihlcsg14 exec {
+	tl1 open2 -t30 tl1sp <ihlcsg14.spa.ip> <ihlcsg14.spb.ip> <ihlcsg14.tl1login> <ihlcsg14.tl1passwd>
+	tl1 exec -v tl1sp rtrv-eqpt
+	tl1 close tl1sp
+}

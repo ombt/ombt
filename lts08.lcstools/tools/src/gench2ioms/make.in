@@ -1,0 +1,7 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+gench2ioms
+gench2ioms.sh
+install1=-(rm $(HOME)/tools/bin/lcsgench2ioms)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsgench2ioms
+#

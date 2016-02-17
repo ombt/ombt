@@ -1,0 +1,12 @@
+mgc_hardware1_spa exec {
+	tl1 open -t10 tl1spa <spa.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -v tl1spa ed-chassis-eqpt::com:::shelfid=2,CHASSISTYPE=MGC,,,,,EMIPSPA=135.1.105.11,EMIPSPB=135.1.105.12,,,,,,,,,,,,SIGCOREIPSPA=10.11.41.1,SIGCOREIPSPB=10.11.41.2,SIGCORECHASSIS=10.11.41.3,,EMIPMASK=255.255.255.0,,SIGCOREIPMASK=255.255.255.0
+	tl1 exec -i -v tl1spa init-sys:telica::::10;
+	tl1 close tl1spa
+}
+mgc_hardware1_spb exec {
+	tl1 open -t10 tl1spb <spb.ip> <spb.tl1login> <spb.tl1passwd>
+	tl1 exec -v tl1spb ed-chassis-eqpt::com:::shelfid=2,CHASSISTYPE=MGC,,,,,EMIPSPA=135.1.105.11,EMIPSPB=135.1.105.12,,,,,,,,,,,,SIGCOREIPSPA=10.11.41.1,SIGCOREIPSPB=10.11.41.2,SIGCORECHASSIS=10.11.41.3,,EMIPMASK=255.255.255.0,,SIGCOREIPMASK=255.255.255.0
+	tl1 exec -i -v tl1spb init-sys:telica::::10;
+	tl1 close tl1spb
+}

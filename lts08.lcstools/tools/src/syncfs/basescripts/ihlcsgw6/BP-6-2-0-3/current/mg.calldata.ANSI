@@ -1,0 +1,59 @@
+#calldata
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.25.3,rxport=2946,txport=2946,mgcidletmr=8
+ent-iua-sys
+ent-iua-endptasp::1:::ipaddr1=10.11.25.3,port1=53008
+ent-iua-endptasp::2:::ipaddr1=10.11.25.3,port1=53240
+ent-iua-asp::1-1:::desc=gw5mgca
+ent-iua-asp::2-2:::desc=gw5mgcb
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+ent-mg-prflcas::1:::sigmodel=e_m
+ed-t0::iom-1-port-1::::oos
+sleep 10
+ed-t0::iom-1-port-1-t0-1:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-2:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-3:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-4:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-5:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-6:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-7:::mgcasprflid=1
+ed-t0::iom-1-port-1-t0-8:::mgcasprflid=1
+sleep 10
+ed-t0::iom-1-port-1::::is
+ed-t0::iom-1-port-2::::oos
+sleep 10
+ed-t0::iom-1-port-2-t0-1:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-2:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-3:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-4:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-5:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-6:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-7:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-8:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-9:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-10:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-11:::mgcasprflid=1
+ed-t0::iom-1-port-2-t0-12:::mgcasprflid=1
+sleep 10
+ed-t0::iom-1-port-2::::is
+ed-t0::iom-1-port-3::::oos
+sleep 10
+ed-t0::iom-1-port-3-t0-1:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-2:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-3:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-4:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-5:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-6:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-7:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-8:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-9:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-10:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-11:::mgcasprflid=1
+ed-t0::iom-1-port-3-t0-12:::mgcasprflid=1
+sleep 10
+ed-t0::iom-1-port-3::::is
+ent-iua-lnk::3001:::asid=1,iomport=iom-3-port-1,lnktype=network
+ent-iua-lnk::3002:::asid=1,iomport=iom-3-port-2,lnktype=user
+ent-iua-lnk::3003:::asid=1,iomport=iom-3-port-3,lnktype=network
+set-sid:::::ihlcsgw6
+init-sys:ihlcsgw6::::10

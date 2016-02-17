@@ -1,0 +1,65 @@
+
+SIP Simulator:
+
+==>> logfile = log1
+
+100 ORIG-TERM DN pairs read.
+SIP IP  : 135.111.82.6
+SIP PORT: 5060
+ADMIN IP  : 135.111.82.6
+ADMIN PORT: 10001
+RTP IP  : 135.111.82.6
+RTP PORT: 8000
+RTCP PORT: 8001
+
+starttimer:
+	callid=CALL-REPORT
+	label=CALL-REPORT
+	delta=900
+	endtime=1127712550
+	id=11164783
+	callid = CALL-REPORT
+	expire = 1127712550
+	id     = 11164783
+	label  = CALL-REPORT
+
+unknown cmd
+
+unknown cmd
+
+help text:
+	'?' - help text
+	'c cps holdtime' - start a call load (indefinite).
+	'c cps holdtime maxcalls' - start a call load.
+	'cl' - list call originator-terminator pairs.
+	'cls' - clear statistics.
+	'cs' - list call load data.
+	'ds' - dn call-load status counts.
+	'd' - list active dialogs.
+	'dp' - dump parameters.
+	'ep' - edit parameters.
+	'ep parameter' - edit specific parameter.
+	'D' - toggle debugging.
+	'dpq' - dump priority queue contents.
+	'cpq' - count of priority queue items.
+	'h' - stop call load gracefully.
+	'k' - kill call load (send BYE).
+	'k odn' - kill call for this originating DN.
+	'l' - list all DN parameters.
+	'l dn' - list DN parameters.
+	'e dn' - edit DN all parameters.
+	'e dn parameter' - edit specific DN parameter.
+	'o dn dialdn' - dn calls dialdn.
+	'o' - repeat last 'o dn dialdn' cmd.
+	'pwd' - show present working directory
+	'q' - quit
+	'r dn' - register dn.
+	's' - list statistics.
+	't' - print current time
+	'vi' - edit logfile..
+	'V' - toggle verbose.
+	'VR' - toggle RTP verbose (verbose must also be enabled).
+	'w' - write a line of '====' to stdout/logfile.
+	'w text' - write 'text' to stdout/logfile.
+
+Quitting ...

@@ -1,0 +1,12 @@
+#
+# this scripts removes old files from /Telica/sw*. This is
+# is simple for any sw* directory that is not swCPU, just
+# remove it. however, for swCPU, you have to be careful not 
+# to delete the currently active load. the link /Telica/swCPU/CurrRel
+# points to the currently active load. this cannot be deleted.
+#
+#########################################################################
+#
+# first determine where the current load is stored.
+#
+

@@ -1,0 +1,9 @@
+# remove /dev/hd2e partition. if it does not exist, no problem still return
+# success.
+#
+mkpart /dev/rhd2 <<EOF
+d e
+e
+EOF
+#
+exit 0

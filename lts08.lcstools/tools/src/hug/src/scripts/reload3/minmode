@@ -1,0 +1,24 @@
+minmode exec { spaip spbip login passwd scriptsdir } {
+	ftp open minmode_ftpspa <spaip> <login> <passwd>
+	ftp put -a minmode_ftpspa <scriptsdir>/iprecover /net/rc.local
+	ftp close minmode_ftpspa
+	#
+	ftp open minmode_ftpspb <spbip> <login> <passwd>
+	ftp put -a minmode_ftpspb <scriptsdir>/iprecover /net/rc.local
+	ftp close minmode_ftpspb
+	#
+	telnet open minmode_telnetspa <spaip> <login> <passwd>
+	telnet exec minmode_telnetspa /bin/chmod 755 /net/rc.local
+	telnet exec minmode_telnetspa /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i minmode_telnetspa reboot -aN
+	#
+	telnet open minmode_telnetspb <spbip> <login> <passwd>
+	telnet exec minmode_telnetspb /bin/chmod 755 /net/rc.local
+	telnet exec minmode_telnetspb /bin/chmod 644 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i minmode_telnetspb reboot -aN
+	#
+	telnet close minmode_telnetspa
+	telnet close minmode_telnetspb
+}
+
+

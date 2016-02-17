@@ -1,0 +1,5 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+make.auto.spfs
+make.auto.spfs.sh
+#

@@ -1,0 +1,79 @@
+# remove all references to extra partitions.
+#
+if [[ $# == 0 ]]
+then
+	# default set
+	partitions="e f g"
+else 
+	partitions="${*}"
+fi
+#
+echo
+echo "Removing all extended partitions:"
+#
+for partition in ${partitions}
+do
+	echo
+	echo "Checking for partition: ${partition}"
+	#
+	path="/home_${partition}"
+	device="/dev/hd2${partition}"
+	#
+	echo
+	echo "Path  : ${path}"
+	echo "Device: ${device}"
+	#
+	echo
+	echo "Stop exportfs from using ${path} (prevent 'Device busy' error):"
+	[ -d "${path}" ] && exportfs -u ${path};
+	#
+	echo
+	echo "Remove contents of ${path}:"
+	[ -d "${path}" ] && rm -rf ${path}/*;
+	#
+	echo
+	echo "Unmount device ${device} from path ${path}:"
+	[ -d "${path}" ] && umount ${path};
+	#
+	echo
+	echo "Delete path ${path}:"
+	[ -d "${path}" ] && rm -rf ${path};
+	#
+	echo
+	echo "Delete device ${device} from /etc/fstab:"
+	grep -v "${device}" /etc/fstab >/tmp/fstab.new
+	mv /tmp/fstab.new /etc/fstab
+	#
+	echo
+	echo "Delete path ${path} from /etc/xtab:"
+	grep -v "${path}" /etc/xtab >/tmp/xtab.new
+	mv /tmp/xtab.new /etc/xtab
+	#
+	echo
+	echo "Delete path ${path} from /etc/exports:"
+	grep -v "${path}" /etc/exports >/tmp/exports.new
+	mv /tmp/exports.new /etc/exports
+	#
+	echo
+	echo "Delete partition ${partition} using 'mkpart':"
+	mkpart /dev/rhd2 <<EOF
+p
+d ${partition}
+e
+EOF
+	#
+	echo
+	echo "Verify partition ${partition} was deleted using 'mkpart':"
+	mkpart /dev/rhd2 <<EOF
+p
+q
+EOF
+	#
+	echo
+	echo "Sleep for now ..."
+	sleep 5
+	echo
+	echo "I'm back !!!"
+done
+#
+exit 0

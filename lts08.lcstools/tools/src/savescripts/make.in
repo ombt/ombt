@@ -1,0 +1,8 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+savescripts
+savescripts.sh
+#
+install1=-(rm $(HOME)/tools/bin/lcssavescripts)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcssavescripts
+#install3=chmod 744 $(SHELLBIN)/savescripts

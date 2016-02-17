@@ -1,0 +1,32 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+
+nsbFile: 1
+generatedBy: NSBD version 1.6 patchlevel 2006/05/19 16:55:04
+generatedAt: Thu, 23 Aug 2007 23:51:41 GMT
+package: ocelf
+executableTypes:
+    solaris
+pathSubs:
+    ocelf.1 man/man1/ocelf.1
+    ocelf.toolnews lib/toolnews/ocelf
+regSubs:
+    ^ocelf.%E$ bin/ocelf
+paths:
+    ocelf.solaris
+	length: 270040
+	md5: e0354bf77372b7261d1c4bf7818cf6bf
+	mode: rwx
+    ocelf.1
+	length: 2166
+	md5: b8a9136ac390f40af418c853ba7fd351
+    ocelf.toolnews
+	length: 881
+	md5: d08bb517fe1f81fcc4d8a72e5fc8bd82
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7-exptools1 (SunOS)
+
+iD8DBQFGzh2NFe3nE5KI0XgRAirpAJ4+j8q5laLYbFfvP0u4o8isp9q1FgCg3knO
+1n+3hcQpS6Qut6XV9rhZ7KM=
+=qJBT
+-----END PGP SIGNATURE-----

@@ -1,0 +1,58 @@
+# Set up timer for geo redundancy
+ed-sg-protn:::::protntmr=5
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::100:::mtpvariant=itu1992,pcssf=ssfnat
+ent-prfl-sgpc::1
+ent-sg-pc::3:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+ent-sg-pc::4:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+ent-sg-pc::5:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+ent-sg-pc::6:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+ent-sg-pc::7:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+ent-sg-pc::8:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,pcssf=ssfnat
+#signaling links here
+ent-lset::1:::opc=100,adjdpc=3,actlnkreqd=2
+ent-lset::2:::opc=100,adjdpc=4,actlnkreqd=2
+ent-lset::11:::opc=100,adjdpc=5,actlnkreqd=2
+ent-lset::12:::opc=100,adjdpc=6,actlnkreqd=2
+ent-lset::13:::opc=100,adjdpc=7,actlnkreqd=2
+ent-lset::14:::opc=100,adjdpc=8,actlnkreqd=2
+ent-route-ss7::3-1:::lsetpriority=0
+ent-route-ss7::4-2:::lsetpriority=0
+ent-route-ss7::5-11:::lsetpriority=0
+ent-route-ss7::6-12:::lsetpriority=0
+ent-route-ss7::7-13:::lsetpriority=0
+ent-route-ss7::8-14:::lsetpriority=0
+# Server
+#ent-m2ua-sgassoc::1-1:::remotesgtype=sg,ipadesta=127.0.0.1,ipadestb=127.0.0.2
+#ent-m2ua-sgassoc::1-2:::remotesgtype=sg,ipadesta=10.11.56.4,ipadestb=10.11.56.5
+# Client
+ent-sg-m2uaassoc::18:::ipadesta=10.11.29.4,ipadestb=10.11.29.5:is
+ent-sg-m2uaassoc::19:::ipadesta=10.11.33.4,ipadestb=10.11.33.5:is
+#local links
+#ent-slk::1:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=1,termid=T/1/1/1,l2prflid=1
+#ent-slk::2:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=2,termid=T/3/1/1,l2prflid=1
+#ent-slk::3:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=3,termid=T/1/2/1,l2prflid=1
+#ent-slk::4:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=4,termid=T/3/2/1,l2prflid=1
+#ent-slk::5:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=5,termid=T/1/2/2,l2prflid=1
+#ent-slk::6:::sigtype=narrowband,prim2uaassocid=1,m2paassocid=0,m2uaiid=6,termid=T/3/2/2,l2prflid=1
+#
+ent-sg-slk::1:::sigtype=narrowband,m2uaassocid=18,m2uaiid=1,lsetid=1,slc=0,mtp3prflid=1,m2paassocid=0
+#ent-sg-slk::2:::sigtype=narrowband,m2uaassocid=18,m2uaiid=2,lsetid=2,slc=0,mtp3prflid=1
+#ent-sg-slk::3:::sigtype=narrowband,m2uaassocid=18,m2uaiid=3,lsetid=11,slc=0,mtp3prflid=1
+#ent-sg-slk::4:::sigtype=narrowband,m2uaassocid=18,m2uaiid=4,lsetid=12,slc=0,mtp3prflid=1
+#ent-sg-slk::5:::sigtype=narrowband,m2uaassocid=18,m2uaiid=5,lsetid=13,slc=0,mtp3prflid=1
+#ent-sg-slk::6:::sigtype=narrowband,m2uaassocid=18,m2uaiid=6,lsetid=14,slc=0,mtp3prflid=1
+#remote links
+ent-sg-slk::7:::sigtype=narrowband,m2uaassocid=19,m2uaiid=7,lsetid=1,slc=1,mtp3prflid=1,m2paassocid=0
+#ent-sg-slk::8:::sigtype=narrowband,m2uaassocid=19,m2uaiid=8,lsetid=2,slc=1,mtp3prflid=1
+#ent-sg-slk::9:::sigtype=narrowband,m2uaassocid=19,m2uaiid=9,lsetid=11,slc=1,mtp3prflid=1
+#ent-sg-slk::10:::sigtype=narrowband,m2uaassocid=19,m2uaiid=10,lsetid=12,slc=1,mtp3prflid=1
+#ent-sg-slk::11:::sigtype=narrowband,m2uaassocid=19,m2uaiid=11,lsetid=13,slc=1,mtp3prflid=1
+#ent-sg-slk::12:::sigtype=narrowband,m2uaassocid=19,m2uaiid=12,lsetid=14,slc=1,mtp3prflid=1
+#MEGACO area
+ent-sg-mgcassoc::1-1:::inservicesownpc=100,ipadest=10.11.17.3,staportrange=50000:is
+ent-sg-mgcassoc::1-2:::inservicesownpc=100,ipadest=10.11.54.3,staportrange=50000:is
+sleep 75
+set-sid:::::ihlcsgw8

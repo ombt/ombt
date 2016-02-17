@@ -1,0 +1,2204 @@
+.nr Hb 4
+.nr Cl 4
+.SA 1
+.ND "\*(DT"
+.TL 
+A Low-Level Simulation of an Ethernet LAN
+.AF ""
+.AU "Mike Rumore" CSC564
+.TM
+.AS 3
+.P
+A simulation program of an Ethernet-like LAN has been developed. The
+program includes options for controlling call-origination rates, maximum
+back-offs, bit-error rates, transmission delays, number of stations,
+call waiting queue size, and the size of messages transmitted. Reports list 
+data on calls originated, failed, queued, blocked, collided, terminated
+and corrupted. Also, averages for queuing times, backoff times, transmission
+times, call duration and inter-arrival times are calculated and printed.
+.AE
+.MT
+.H 1 "Introduction"
+.P
+A simulator for an Ethernet-like LAN was written. The program
+simulates the data-link layer, physical layer and media for a LAN
+which uses CSMA/CD. IEEE 802.3 
+\*(Rf
+.RS aA
+Stallings, W., Handbook of Computer-Communications Standards, Local
+Network Standards, Volume 2, page 84-114, Howard W. Sams and Company, 1987.
+.RF
+and Ethernet 
+\*(Rf
+.RS aB
+Naugle, M. G., Local Area Networks, pages 66-92, McGraw Hill, 1991.
+.RF
+were used as guide lines in 
+designing the simulator. The simulator includes options for controlling 
+call-origination rates, back-offs, bit-error rates, transmission delays, 
+number of stations, waiting queue size, and the size of messages transmitted. 
+Reports are generated which contain data on calls originated, failed, 
+queued, blocked, collided, terminated and corrupted. Also averages for 
+queuing times, call duration and inter-arrival times are calculated and
+listed. 
+.H 1 "High-Level Design"
+.P
+First, a description is given of the physical processes and algorithms
+that define the LAN. Then, a description is given of the implementation
+of these processes and algorithms. 
+.H 2 "Data-Link Definitions"
+.P
+Using IEEE 802.3 and Ethernet as examples, there are several algorithms
+and data structures that identify the LAN. These algorithms and data
+structures include the frame structure, error detection and correction,
+back-off routines, collision detection, and addressing modes. The following
+sections describe the algorithms and data structures used in the simulator.
+.H 3 "Frame Structure"
+.P
+The frame structure consists of a preamble (8 bytes),
+destination address (6 bytes), source address (6 bytes), type field
+(2 bytes), data field (up to 1500 bytes), and a CRC check sum (4 bytes).
+The 8 byte preamble is used by the physical layer to notify other
+stations that it is about to start broadcasting. It serves to detect
+collisions. The preamble is never seen by the data-link layer since
+the physical layer uses the preamble to detect collisions. 
+\*(Rf
+.RS aC
+Naugle, M. G., Local Area Networks, pages 55-92, McGraw Hill, 1991.
+.RF
+.H 3 "Addressing Scheme"
+.P
+An address field is separated into two fields: the first three bytes
+are the vendor ID, and the second 3 bytes are a node ID. The highest bit in
+the vendor ID determines if the address is a unique address or a 
+multicast address. If the destination address is FFFFFFFFFFF, then 
+the frame is being broadcast to all stations.
+.H 3 "Error Detection"
+.P
+Error detection is accomplished via a CRC value. There are 4 popular
+CRC systems: CRC-12, CRC-16, CRC-CCITT, and CRC-32.
+\*(Rf
+.RS aD
+Tannenbaum, A. S., Computer Networks, page 208-212, Prentice Hall, 1989.
+.RF
+This simulator uses a CRC-32 polynomial for CRC checks:
+\*(Rf
+.RS aE
+Stallings, W., Handbook of Computer-Communications Standards, The Open
+Systems (OSI) Model and OSI-related Standards, Volume 1, page 101-107, 
+Howard W. Sams and Company, 1990.
+.RF
+.SA 0
+.nf
+.DS
+
+CRC-32 = x**32 + x**26 + x**23 + x**22 + x**16 +
+         x**12 + x**11 + x**10 + x**8 + x**7 + 
+         x**5 + x**4 + x**2 + x**1 + 1
+
+.DE
+.fi
+.SA 1
+.H 3 "Transmission Algorithm"
+.P
+The physical medium for this simulator is assumed to be a single
+cable with multiple workstations connected to it. When station
+has to transmit a packet, it checks if the cable is busy. When the
+cable is quiet, then the station immediately begins to transmit.
+The initial transmission is the frame preamble. While transmitting
+the preamble, the station is monitoring the cable for collisions.
+A collision occurs when a signal 2 times or greater than the signal
+put out by one station is detected. Collisions can occur since
+there is a finite amount of time for the signal to travel between
+two stations connected to the cable. The 64 bit preamble is long enough
+in duration to ensure that the all stations connected to the network
+can detect the transmission request, i.e., the signal reaches all
+stations before actual data is transmitted. If no collision is 
+detected, then the packet is transmitted. 
+.P
+When a collision is detected, then the packet transmission is 
+immediately aborted. The transmitting station then sends a jamming
+signal (4 to 6 random bytes) to notify all other stations that 
+a collision has occurred. All transmitting or pending stations 
+will then execute their back-off algorithm and attempt to retransmit 
+at a later time. The maximum number of times that a station will 
+attempt to retransmit is 16 times.
+.H 3 "Receiver Algorithm"
+.P
+When a station detects that the cable has been activated, that a 
+signal is being transmitted, it first waits for the preamble to
+finish. If the transmission is aborted because of a collision, then the
+station ignores the packet and continues to monitor for new
+transmissions.
+.P
+If the packet is correctly received, then it checks the address fields
+to determine of the packet is sent to it. As stated before, there 
+three type of addresses: unique address, multicast, and broadcast.
+If the station determines that the packet is not for it, then it
+discards the packet and waits for new transmissions.
+.P
+If the packet is addressed to the station, then the packet is
+copied into an internal buffer and some basic sanity checks are
+executed on the packet. The minimum length of the packet is checked.
+It must be greater than or equal to 64 bytes. The packet boundary
+is checked since packets are constructed by bytes, but sent bit
+by bit; the packet size should be a multiple of 8.  Finally, the 
+CRC value is checked. The CRC value is calculated on the entire 
+packet, excluding the preamble and the CRC value itself. If the 
+calculated CRC value does not match the value sent, then the packet 
+is discarded. No type of negative acknowledgment is sent to the
+sender in this type of connectionless service.
+.H 3 "Back-off Routine"
+.P
+The back-off algorithm is a binary exponential backoff. The delay
+used in the back-off routine is measured in multiples of twice the 
+worst-case round-trip time of a signal on the cable; call this the 
+slot time. The algorithm is given below.
+\*(Rf
+.RS aF
+Stallings, W., Handbook of Computer-Communications Standards, Local
+Network Standards, Volume 2, page 91, Howard W. Sams and Company, 1987.
+.RF
+Variable backOffLimit is usually set to 16 times.
+.SA 0
+.nf
+.DS
+
+	attempts = 0
+	while attempts < backOffLimit
+	do
+		k = min(attempts, 10)
+		r = random(0, 2**k)
+		delay = r*slotTime
+		sleep(delay)
+		attempt to transmit and 
+			check for collisions
+	done
+
+.DE
+.fi
+.SA 1
+.H 3 "Call Origination"
+.P
+The simulator requires a method to originate calls. An exponential 
+probability density will be sampled to determine the gap between each
+call origination.
+\*(Rf
+.RS aG
+Tannenbaum, A. S., Computer Networks, page 121-130, 631-637, Prentice Hall, 
+1989.
+.RF
+Each "work station" linked to the "network" will have to sample an
+exponential distribution to determine whether it should originate a
+call. The size of a message will be obtained by sampling a uniform 
+distribution from 46 to 1500 bytes. The data-link layer will 
+automatically pad any messages that are less than 64 bytes in length.
+.H 2 "Physical Layer"
+.P
+The simulation of physical processes is done in the physical 
+layer. The physical processes which are simulated are listed next.
+.AL 1
+.LI
+Delay in sending packet from one station to another station. This is
+involved in determining if a collision has occur. Suppose a station
+begins to transmit the preamble, then if the second stations begins
+to transmit its preamble before it has received the first stations
+preamble, then a collision has occurred. A collision occurs when
+the difference between the start times of two separate transmissions 
+is less than the time it takes for a signal to get from the first station
+to the second station. This delay must be included in the simulation.
+.LI
+The occurrence of random errors in the cable must be simulated. These
+random errors should be detected by the CRC check and cause the packet
+to be discarded. A poisson distribution was sampled to determine
+the number of errors per frame.
+.LI
+Correct sequence of events must be maintained. The timing of 
+events is required for the simulation to be realistic.
+.LI
+Transmission delays and and transit times for pulses should be included
+in the simulation.
+.LE
+.H 2 "Finite State Machines"
+.P
+The transmitter and receiver can be described using two separate 
+finite state machines. The states and the events for the transmitter
+are described below. 
+.AL
+.LI
+State 1 - waiting for a message from the network layer.
+.LI
+State 2 - trying to gain access to a busy cable.
+.LI
+State 3 - waiting between attempts to access a busy cable.
+.LI
+State 4 - sending preamble and checking for collision.
+.LI
+State 5 - transmitting packet.
+.LI
+State 6 - sending jammer signal.
+.LI
+State 7 - waiting back-off time.
+.LE
+.DS
+.TS
+center,tab(%);
+c s s
+l l l
+l | l | l.
+Transmitter FSM
+_
+current state%event%next state
+_
+1%message from network layer%2
+2%cable is busy%3
+2%cable is accessed%4
+3%timer expires%2
+4%no collision is detected%5
+4%collision is detected%6
+5%finished transmission%1
+6%attempts > max attempts%1
+6%attempts <= max attempts%7
+7%timer expires%1
+_
+.TE
+.DE
+.P
+The states and events for the receiver are described below.
+.AL 1
+.LI
+State 1 - waiting for signal from cable.
+.LI
+State 2 - reading input and running sanity checks.
+.LE
+.DS
+.TS
+center,tab(%);
+c s s
+l l l
+l | l | l.
+Receiver FSM
+_
+current state%event%next state
+_
+1%message from physical layer%2
+2%error in reading%1
+2%finished reading%1
+_
+.TE
+.DE
+.H 1 "Implementation"
+.P
+The simulator architecture, internal data structures and functions 
+are described in the following sections. The object-oriented language
+C++ was used to write the simulator. Classes will be described in the
+following sections. Detail descriptions and examples of simulation
+methodologies can be found in the references.
+\*(Rf
+.RS aG
+Davies, R. M., and O'Keefe, R. M., Simulation Modeling with Pascal,
+Chapter 2, Prentice Hall, 1989.
+.RF
+\*(Rf
+.RS aH
+Law, A. M., and Kelton, W. D., Simulation Modeling and Analysis,
+Chapter 1, McGraw-Hill, Inc, 1992.
+.RF
+.H 2 "Simulation Model"
+.P
+The simulation program uses a LAN model consisting of work stations,
+a LAN cable, and calls. Each work station is divided into
+two types of entities: senders and receivers. The LAN cable and 
+individual calls are also entities and are manipulated by the simulator.
+The simulation program must originate calls and progress each call
+through the LAN from origination to termination. Also, the LAN model
+must simulate the LAN described in the previous sections (collisions,
+backoffs, etc.).
+.P
+The simulation program uses the event method to simulate a LAN.
+\*(Rf
+.RS aI
+Davies, R. M., and O'Keefe, R. M., Simulation Modeling with Pascal,
+page 26, Prentice Hall, 1989.
+.RF
+The event method consists of advancing the simulation clock to the 
+next event and performing the actions associated with the event. A
+priority queue is used to store events. Time is used to determine
+the priority of an event.
+.H 2 "Entities"
+.P
+Classes are defined for all the entities: call, station sender, station
+receiver, and cable. The classes for calls, station senders, and station 
+receivers are derived from the base class Item. The base class, Item,
+is used for entities which are queued for events. The class for cable is
+not derived from Item since it is never queued waiting for an event.
+.H 3 "Item Base Class"
+.P
+Appendix 1 contains the class definitions for Item and for the container
+class Queue. 
+\*(Rf
+.RS aJ
+Coplein, J. O., Advanced C++, page 195, Addison-Wesley Publishing Company,
+1992.
+.RF
+The queue class supports lists of Item objects. It provides three types
+of interfaces: FIFO, stack and priority queue. Class Iterator simplifies 
+access to a Queue object. The item class also contains fields for defining
+the type of an item (entity) and for the priority of the next event scheduled
+for the item.
+.H 3 "Call Derived Class"
+.P
+Appendix 2 contains the class definitions for a call entity. Calls objects
+are created when a call originates in a station and are deleted once the
+call data (frame) are transmitted. Call entities are one of two types
+of entities which are scheduled for events (receivers are also scheduled).
+The Call class has fields for call state, next event, number of back offs,
+and for start times. The start times are when the call started, when the
+call entered a queue waiting for the station sender to idle, when
+the call entered a queue waiting for the LAN cable to idle, when 
+message transmission started, and when a back off period started. Also, 
+there is a field which tracks which station sender originated the call.
+.H 3 "Station Derived Classes"
+.P
+Appendix 3 contains the class definitions for station senders which
+originate calls, station receivers which terminate calls, and a 
+static class for maintaining a list of all stations. The sender and
+receiver classes are derived from the Item class. Although, only
+the receiver objects can receive events in this simulation, in an
+earlier version, the station sender objects received events during
+a call, not a separate call object.
+.P
+The station sender class contains fields for the station sender state
+(idle or transmitting), the next event for the sender (not used), the
+station address, the call origination rate for the station (calls/second),
+an exponential probability distribution object for generating calls
+(described later), the maximum backoffs allowed, and a call waiting
+queue. When a call originates and the station is in the process of 
+transmitting a call, then the new call is queued. The queue
+is of finite size. A uniform probability distribution is used to
+generate the size of the frame transmitted for each call. 
+Finally, there are measurement fields associated with the station and 
+with calls. The measurements are described with the reports.
+.P
+The station receiver class contains fields for the receiver state,
+next event for the receiver, station address, and measurement fields.
+The measurements are described with the reports.
+.H 3 "Cable Class"
+.P
+Appendix 4 contains the entity class for the LAN cable. It is 
+not derived from Item since the cable is used as a resource and is 
+not subjected to events directly. Class Cable contains fields for 
+the cable state (idle, preamble, transmitting, jammed), next event 
+(not used), message size and message being transmitted, mean error
+rate, a Poisson distribution object for generating bit errors in 
+the message, transmission delay in bits/microsecond, a queue for
+calls (sender stations) waiting for the cable to become idle, and
+measurements. The measurements are described with the reports.
+.H 2 "Probability Distribution Classes"
+.P
+Inherent in any simulation is the necessity to sample continuous
+and discrete probability distributions. The base class ProbDist
+defines the interface for sampling a distribution. The derived
+classes Uniform, Poisson, and Exponential provide the actual algorithms
+for sampling these distributions. These classes are listed in appendices
+5 through 8.
+\*(Rf
+.RS aK
+Davies, R. M., and O'Keefe, R. M., Simulation Modeling with Pascal,
+Chapter 4, Prentice Hall, 1989.
+.RF
+.H 2 "Pseudo-Code"
+.P
+The following sections describe the pseudo-code for the LAN simulator. 
+.H 3 "Main Function"
+.P
+Appendix 9 contains a flow chart for the main entry point to the
+LAN simulator. The function consists of initialization routines,
+a function for creating initial calls, an event queue, routines
+for handling events, and a function for printing simulation results.
+The while-loop removes events from the event queue until the queue
+is empty (never) or until the simulation time exceeds the maximum
+time allowed for the simulation. Once the events are removed from the
+queue, then the current time is updated and the event is processed.
+.H 3 "FirstCalls Function"
+.P
+Appendix 10 contains the pseudo-code for firstCalls(). This function
+generates the very first call origination events for each station. Then
+the calls are queued in the event priority queue.
+.H 3 "Call Event Processing Functions"
+.P
+Appendix 11 lists the function process((Call *)item) which is called 
+from the main function to handle events for calls. The call processing
+functions execute the following finite-state machine. Appendices 12 to 
+19 display flow-charts for all the functions used in handling call
+processing events and for executing the following FSM.
+.AL
+.LI
+State 1 - call originates in sender station.
+.LI
+State 2 - start transmission.
+.LI
+State 3 - queue until station is idle.
+.LI
+State 4 - queue until cable is idle.
+.LI
+State 5 - retry transmission.
+.LI
+State 6 - start sending preamble.
+.LI
+State 7 - start sending frame.
+.LI
+State 8 - back off from collision.
+.LI
+State 9 - call dies.
+.LE
+.DS
+.TS
+center,tab(%);
+c s s
+l l l
+l | l | l.
+Sender FSM
+_
+current state%event/conditions%next state
+_
+1%station is busy/queue is full%9
+1%station is busy/queue is not full%3
+1%station is idle%2
+2%cable is transmitting%4
+2%cable is idle%6
+2%cable in preamble%5
+2%cable is jammed%5
+3%station is idle%2
+4%cable is idle%2
+5%backoffs < max backoffs%8
+5%backoffs >= max backoffs%9
+6%end of preamble/cable in preamble%7
+6%end of preamble/cable is jammed%5
+7%msg ends%9
+8%backoff ends%2
+_
+.TE
+.DE
+.SK
+.DS
+.so lan.pic
+.DE
+.P
+.H 3 "Generate Message Function and Frame Check Sequence"
+.P
+Appendix 20 lists the pseudo-code for the function generateMsg()
+which produces the message which is transmitted over the cable.
+The function chooses a data size by random, chooses a destination
+station by random, stores 0xff as the data, and finally calculates
+an FCS. There are two methods used for generating the the frame
+check sequence (FCS): a CRC-32 or a simple hash sum. The CRC-32
+calculation is so expensive in terms of CPU time that I chose to
+include a simple hashsum as an alternative. The code is #ifdef to
+allow either choice. I used the simple hash sum for testing. It
+is much faster. Appendix 21 lists the CRC-32 generating function
+and Appendix 22 lists the simple hash sum function.
+.H 3 "Receiver Event Processing Function"
+.P
+Appendix 23 lists the pseudo-code for handling events for a station
+receiver. First, the station checks that the message size is greater
+than the minimum size. Next, it checks the destination address to
+verify that the message is for it. Finally, a frame check sequence
+is generated to determine if there is any frame corruption. Two methods
+can be used: CRC-32 or a simple hashsum. If the call is corrupted, then
+a measurement is pegged.
+.H 3 "Sender Event Processing Function"
+.P
+The function process() does not do anything for station sender events 
+in this version of the simulator. In an earlier version this function
+executed much of the same actions that the Call event processing
+function does now. It is presently unused.
+.H 3 "Measurements and Reports"
+.P
+Of central importance for any simulation is the data that is produces 
+and reports. The LAN simulator reports the following measurements and
+average times (in microseconds).
+.AL 1
+.LI
+Call-specific measurements:
+.AL a
+.LI
+Average Time In Call Waiting Queue - average total time that a call spent in 
+a queue waiting for the station to become idle (stop transmitting).
+("Avg Station Q Time" in report)
+.LI
+Average Time In Cable Queue - average total time that a call spent in a queue
+waiting for the cable to become idle. ("Avg Cable Q Time" in report)
+.LI
+Average Call Duration - average duration of a call from origination
+to end of call (end of transmission, calls dies because it exceeded
+the maximum backoffs, etc.). ("Avg Call Time" in report)
+.LI
+Average Back Off Time - average total back off delay for a call. 
+("Avg Back Off Time" in report)
+.LI
+Average Transmission Time - average message transmission time for a call.
+("Avg Trans Time" in report)
+.LI
+Interarrival Time - average time between call originations.
+("Inter-Arrival Time" in report)
+.LE
+.LI
+Sender Station-specific measurements:
+.AL a
+.LI
+Calls Originated - the total number of calls originated. ("Orig Calls" in report)
+.LI
+Calls Queued For Station - the total number of call queued waiting
+for the station to idle.  ("QPass Calls" in report)
+.LI
+Calls Queued For Cable - the total number of call queued waiting
+for the cable to idle.  ("QCable Calls" in report)
+.LI
+Calls Queue Is Full - the total number of originating calls that 
+died because the queue for waiting for the station to idle was full.
+("QFail Calls" in report)
+.LI
+Calls Collided - the total number of calls that collided during the
+preamble.  ("Coll Calls" in report)
+.LI
+Calls Initially Blocked - the total number of originating calls that 
+were blocked because of collision.  ("Block Calls" in report)
+.LI
+Calls Failed Transmission - the total number of calls that failed
+because they exceeded their maximum allowed backoff attempts.
+("Fail Calls" in report)
+.LE
+.LI
+Receiver Station-specific measurements:
+.AL a
+.LI
+Calls Terminated - the total number of calls that reached the
+destination receiver station.  ("Term Calls" in report)
+.LI
+Calls Corrupted - the total number of calls that reached the destination
+receiver station but that failed the frame check sequence test.
+("Corr Calls" in report)
+.LE
+.LI
+Cable-specific measurements:
+.AL a
+.LI
+Total Calls Transmitted - the total number of calls transmitted
+over the cable. This is the total number of times a station was able
+to gain access to the cable and transmit a message without a collision.
+This number should ideally match the total number of calls originated
+by all stations. ("Calls Transmitted Over Cable" in report)
+.LI
+Total Calls Corrupted - the total number of calls (transmissions) that
+were corrupted via random errors in the cable, not including collisions.
+("Calls Actually Corrupted" in report)
+.LI
+Total Calls Queued - the total number of calls (stations) that 
+were queued waiting for the cable to become idle. ("Calls Queued
+Waiting For Cable" in report)
+.LI
+Total Bits Transmitted - the total number of bits transmitted over the
+cable not including preambles or jammers. This is the sum of all 
+frames transmitted over the cable. ("Bits Transmitted Over Cable"
+in report)
+.LE
+.LE
+.P
+The LAN report also calculates and reports the average station queue time,
+average cable queue time, average call duration, and interarrival times
+for call. The average call time and the interarrival time are very 
+important in determining if a network is overloaded.
+.P
+A sample report is given below.
+.SA 0
+.nf
+.DS
+
+Number of Stations            : 4
+Actual Simulation Time        : 1000009 usecs
+Maximum Simulation Time       : 1000000 usecs
+Calls Transmitted Over Cable  : 4096
+Calls Queued Waiting For Cable: 1404
+Calls Actually Corrupted      : 492
+Bits Transmitted Over Cable   : 2686976
+Transmission Rate             : 2.687 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001    1049    239      0     338    180    854      0   1016    120
+000002    1012    232      0     355    180    879      0   1031    111
+000003    1005    217      0     361    166    871      0    987    108
+000004    1041    213     11     350    188    853      0   1025    117
+-----------------------------------------------------------------------
+Totals    4107    901     11    1404    714   3457      0   4059    456
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001      233     13       87     75    442     953
+000002      306     14      109     75    539     988
+000003      202     14      113     75    440     995
+000004      580     13      101     75    803     960
+
+.DE
+.fi
+.SA 1
+.H 1 "Tests and Results"
+.P
+The results of five test cases are presented in appendices 25 to 29.
+These test cases are for four work stations running under different 
+call loads, different message sizes, and different maximum back off
+attempts.
+.P
+Appendix 24 lists the results for a LAN with four work stations
+operating at 1000 calls/second each. The call message contains 
+64 bytes of data. The report lists that during the 300 second 
+simulation 1198795 calls were originated and 1186884 calls reach their
+destination. 1338 calls failed because stations were busy and the
+queue was not large enough to handle the variations in the call load.
+No calls failed because of too many back off attempts (Fail Calls is 0);
+The average call time for all the stations was between 407 and 413
+microseconds, and the interarrival times are from 998 to 1002 microseconds.
+The important point is that if the interarrival times are smaller than
+the average call times, then calls are originating faster than they
+are being transmitted. This will overload the station queues and lead
+to failed calls.
+.P
+Appendix 25 lists the results for a LAN identical to the one described
+previously (1000 calls/sec, 64 byte message size), except that the
+maximum number of back offs is 10, not 16 as before. In this simulation,
+1201456 calls were originated and 1190661 calls reached their destination.
+The interesting point is that the number of calls failing to queue
+for the station (QFail Calls) has dropped from 1338 to 141, but the number
+of call failing because of too many back off attempts has gone up
+to 154 (from 0). The total number of failed calls has gone down. Reducing
+the amount of back off attempts causes the stations to be idled more 
+quickly since there are not as many attempts. This leads to the 
+average time waiting in the queue to drop about 30 microseconds for
+some stations. There is a trade off here, more failures because of
+back offs, but much less failures because of a full queue. A better
+solution might be to increase the size of the queue from 20 to about 100.
+Appendix 26 list the results for this case. There are no call failures
+(QFail Calls is 0, Fail Calls is 0). The difference between "Orig Calls"
+and "Term Calls" is because calls were in progress when the simulation
+ended. Again, in both these cases, the average call time is less than
+the interarrival time.
+.P
+Appendix 27 list the results for a LAN with 4 work stations 
+operating at 1000 calls/second each. The call message contains
+between 64 bytes and 256 bytes of data. The first thing to notice
+the enormous increase in calls failing (123741) because the queue
+is full. There are 52 call failures because of too many backoff
+attempts. Referring to the average call time, you can see that the
+average call time has increases by over 10 times from the previous
+cases. The largest increase is for the time waiting for the station
+to idle (average station Q time). The average call time is over
+5000 microseconds while the interarrival time is about 1000 microseconds.
+This immediately implies that increasing the size of the queue for 
+each station would have no effect. The queues would just fill up again.
+.P
+Referring to appendix 28, this report lists the results for a LAN 
+identical to the LAN of appendix 27, except the maximum backoff attempts
+was lowered from 16 to 10. The report in appendix 28 lists that
+the number of QFail Calls has dropped from 123741 to 30727. However, the
+Fail Calls has increased from 52 to 11306. The total number of failed calls
+has dropped from 123793 to 42033. A good improvement. The average call
+time has also dropped over 1000 microseconds. The situation is better, but
+still bad.
+.H 1 "Environment"
+.P
+This simulator was developed on a SUN workstation network. The AT&T
+C++ preprocessor, cfront, was used to convert the C++ code to C. The
+C code was then compiled with the SUN C-compiler. The make file used on 
+the SUN environment is listed in appendix 29.
+.H 1 "Conclusions"
+.P
+My final conclusions based on the testing of this simulator are
+that I required more information about transit delays. I can figure
+out propagation delays fairly easy, but the transit delays may
+present a problem. The simulator contains a field which allows
+a user to enter an estimate for the transit delay per bit. The 
+absolute numbers obtained from this simulator may not closely 
+agree with reality, but I believe the behavior is reasonable 
+when the parameters are changed. Also, the simulation of transmission
+delays assumes a random distribution over the length of the cable.
+This may not be the best compromise to giving exact locations for
+all stations attached to a LAB cable.
+.RP
+.nr Hu 1
+.SK
+.HU "Appendix 1 - Item Base Class"
+.SA 0
+.nf
+#ifndef __ITEM_H
+#define __ITEM_H
+/* definitions for simulation item base classes */
+
+/* required headers */
+#include "returns.h"
+
+/* define classes */
+class Item;
+class Queue;
+class Iterator;
+
+/* type of item */
+enum ItemType { CallerType, SenderType, ReceiverType, UnknownType };
+
+/* constants */
+#define MinQueuePriority -1
+
+/* simulation item class */
+class Item {
+	friend class Queue;
+
+public:
+	/* constructor and destructor */
+	Item();
+	Item(ItemType, long = MinQueuePriority);
+	virtual ~Item();
+
+	/* initialization */
+	int init(ItemType = UnknownType, long = MinQueuePriority);
+	int deleteAll();
+
+	/* handle event for item */
+	virtual int process();
+
+	/* other member functions */
+	inline int getStatus() { return(status); }
+	inline Item *getNext() { return(next); }
+	inline Item *getPrevious() { return(previous); }
+	inline long getPriority() { return(priority); }
+	inline void setPriority(long newp) { priority = newp; }
+	inline ItemType getType() { return(type); }
+
+private:
+	/* don't allow these */
+	Item(const Item &);
+	Item &operator=(const Item &);
+
+public:
+	/* internal data */
+	int status;
+	Item *next;
+	Item *previous;
+	long priority;
+	ItemType type;
+};
+
+/* simulation queue class */
+class Queue {
+	friend class Iterator;
+
+public:
+	/* constructor and destructor */
+	Queue();
+	virtual ~Queue();
+
+	/* initializations */
+	int init();
+	int deleteAll();
+
+	/* queue interface */
+	Item *enqueue(Item *);
+	Item *dequeue();
+	Item *remove(Item *);
+
+	/* stack interface */
+	Item *push(Item *);
+	Item *pop();
+
+	/* priority queue interface */
+	Item *priorityEnq(Item *);
+	Item *priorityDeq();
+
+	/* other member functions */
+	inline int getStatus() { return(status); }
+	inline int isEmpty() { return(first == (Item *)0); }
+
+private:
+	/* don't allow these */
+	Queue(const Queue &);
+	Queue &operator=(const Queue &);
+
+public:
+	/* internal data */
+	int status;
+	Item *first;
+	Item *last;
+};
+	
+/* iteration class */
+class Iterator {
+public:
+	/* constructor and destructor */
+	Iterator();
+	Iterator(const Iterator &);
+	Iterator(const Queue &);
+	virtual ~Iterator();
+
+	/* initialization */
+	int init();
+	int init(const Iterator &);
+	int init(const Queue &);
+	int deleteAll();
+
+	/* assignment */
+	Iterator &operator=(const Queue &);
+	Iterator &operator=(const Iterator &);
+
+	/* return next link */
+	Item *operator()();
+
+	/* other member functions */
+	inline int getStatus() { return(status); }
+
+public:
+	/* internal data */
+	int status;
+	Item *next;
+};
+
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 2 - Call Derived Class"
+.SA 0
+.nf
+#ifndef __CALL_H
+#define __CALL_H
+/* class for calls */
+
+/* headers */
+#include "returns.h"
+#include "item.h"
+#include "event.h"
+#include "station.h"
+
+/* declare class */
+class Call;
+
+/* states for work station  */
+enum CallState {
+	StartCall,
+	QueueForStation,
+	StartTransmission,
+	QueueForCable,
+	StartPreamble,
+	Retry,
+	BackOff,
+	StartMsg,
+	CallDies
+};
+
+/* class for a call */
+class Call: public Item {
+	friend int process(Call *);
+
+public:
+	/* constructor and destructor */
+	Call();
+	Call(StationSender *);
+	~Call();
+
+	/* initialization */
+	int init(StationSender * = 0);
+	int deleteAll();
+
+	/* other functions */
+	inline int getStatus() { return(status); }
+
+private:
+	/* do not allow these */
+	Call(const Call &);
+	Call &operator=(const Call &);
+
+public:
+	/* internal data */
+	int status;
+
+	/* call state */
+	CallState state; 
+
+	/* next event type */
+	Event event;
+
+	/* back off counter */
+	int backOff;
+
+	/* sender station */
+	StationSender *station;
+
+	/* start times */
+	long queuedForStationStart;
+	long queuedForCableStart;
+	long transmissionStart;
+	long backOffStart;
+	long callStart;
+};
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 3 - Station Derived Classes"
+.SA 0
+.nf
+#ifndef __STATION_H
+#define __STATION_H
+/* class for work stations */
+
+/* headers */
+#include "returns.h"
+#include "item.h"
+#include "exponential.h"
+#include "uniform.h"
+#include "event.h"
+#include "cable.h"
+
+/* declare class */
+class StationSender;
+class StationReceiver;
+
+/* states for work station  */
+enum StationState {
+	StationIdle,
+	StationTransmitting,
+	StationReceiving
+};
+
+/* size of LAN address */
+#define AddressSize 6
+
+/* station name */
+#define UnknownStation "000000"
+
+/* maximum times to attempt back-off */
+#define DefaultMaxBackOff 16
+
+/* maximum time to wait for a backoff */
+#define MaxBackOffInterval 10
+
+/* maximum size of call waiting queue */
+#define DefaultCallWaitingQueueSize 10
+
+/* size of destination address */
+#define DestAddrSize AddressSize
+#define DestAddrOffset 0
+
+/* size of source address */
+#define SrcAddrSize AddressSize
+#define SrcAddrOffset (DestAddrOffset + DestAddrSize)
+
+/* size of type field */
+#define TypeSize 2
+#define TypeOffset (SrcAddrOffset + SrcAddrSize)
+
+/* size of data field */
+#define MinimumDataSize 46
+#define MaximumDataSize 1500
+#define DataOffset (TypeOffset + TypeSize)
+
+/* size of CRC sum */
+#define CrcSize sizeof(long)
+#define CrcOffset(DataSize) (DataOffset + (DataSize))
+
+/* size of frame */
+#define MinimumMsgSize \
+	(DestAddrSize + SrcAddrSize + TypeSize + MinimumDataSize + CrcSize)
+#define MaximumMsgSize \
+	(DestAddrSize + SrcAddrSize + TypeSize + MaximumDataSize + CrcSize)
+#define MsgSize(DataSize) \
+	(DestAddrSize + SrcAddrSize + TypeSize + (DataSize) + CrcSize)
+
+/* bits in a byte */
+#define BitsPerByte 8
+
+/* speed of light in medium in km/sec */
+#define SpeedOfLight 200000.0
+
+/* time in microseconds for an EM signal to travel 2.5 km in a medium */
+#define EndToEndTime ((2.5/SpeedOfLight)*1.0e6)
+
+/* worst case time in microseconds for detecting a collision */
+#define WorstCaseTime (2.0*EndToEndTime)
+
+/* slot time in microseconds for backoffs */
+#define SlotTime WorstCaseTime
+
+/* preamble duration in microseconds */ 
+#define PreambleDuration WorstCaseTime
+
+/* time to transmit data */
+#define TransmissionDuration EndToEndTime
+
+/* class for a LAN work station transmitter */
+class StationSender: public Item {
+	friend int process(StationSender *);
+public:
+	/* constructor and destructor */
+	StationSender();
+	StationSender(double, char *, 
+		int = MinimumMsgSize, int = MaximumMsgSize,
+		int = DefaultCallWaitingQueueSize, int = DefaultMaxBackOff);
+	~StationSender();
+
+	/* initialization */
+	int init();
+	int init(double, char *, int, int, int, int);
+	int deleteAll();
+
+	/* generate next call origination */
+	long nextCall();
+
+	/* generate backoff time interval */
+	long backOffTime(int);
+
+	/* queue and dequeue for cable */
+	Item *enqueue(Item *);
+	Item *dequeue();
+	int isEmpty();
+	int isFull();
+
+	/* generate size of broadcast message */
+	inline msgSize() { return((((long)msgSizeDist.randomSample())/4)*4); }
+
+	/* other functions */
+	inline int getStatus() { return(status); }
+
+private:
+	/* do not allow these */
+	StationSender(const StationSender &);
+	StationSender &operator=(const StationSender &);
+
+public:
+	/* internal data */
+	int status;
+
+	/* sender FSM state */
+	StationState state; 
+
+	/* next event type */
+	Event event;
+
+	/* station address */
+	char address[AddressSize+1];
+
+	/* call origination rate */
+	double callRate;
+
+	/* interarrival-time distribution */
+	Exponential interArrivalDist;
+
+	/* number of backoff attempts */
+	int maxBackOff;
+
+	/* message size distribution */
+	Uniform msgSizeDist;
+
+	/* call queue waiting for station */
+	int maxCallsInQueue;
+	int callsInQueue;
+	Queue queue;
+
+public:
+	/* total times */
+	long totalTimeInCallWaitingQueue;
+	long totalTimeInCableQueue;
+	long totalCallDuration;
+	long totalBackOffTime;
+	long totalTransmissionTime;
+
+	/* measurements */
+	long callsOriginated;
+	long callsQueuedForStation;
+	long callsQueuedForCable;
+	long callsQueueIsFull;
+	long callsCollided;
+	long callsInitiallyBlocked;
+	long callsFailedTransmission;
+};
+
+/* class for a LAN work station receiver */
+class StationReceiver: public Item {
+	friend int process(StationReceiver *);
+public:
+	/* constructor and destructor */
+	StationReceiver();
+	StationReceiver(char *);
+	~StationReceiver();
+
+	/* initialization */
+	int init(char * = UnknownStation);
+	int deleteAll();
+
+	/* other functions */
+	inline int getStatus() { return(status); }
+
+private:
+	/* do not allow these */
+	StationReceiver(const StationReceiver &);
+	StationReceiver &operator=(const StationReceiver &);
+
+public:
+	/* internal data */
+	int status;
+
+	/* receiver FSM state */
+	StationState state; 
+
+	/* next event type */
+	Event event;
+
+	/* station address */
+	char address[AddressSize+1];
+
+public:
+	/* measurements */
+	long callsTerminated;
+	long callsCorrupted;
+};
+
+/* list of stations connected to LAN */
+class StationList {
+public:
+	/* lists of stations */
+	struct StationSenderList {
+		StationSender *station;
+		char address[AddressSize+1];
+	};
+	struct StationReceiverList {
+		StationReceiver *station;
+		char address[AddressSize+1];
+	};
+
+public:
+	/* initialize lists */
+	static void initLists();
+
+	/* store stations in lists */
+	static int registerSender(char *, StationSender *);
+	static int unregisterSender(char *);
+	static int registerReceiver(char *, StationReceiver *);
+	static int unregisterReceiver(char *);
+
+public:
+	/* list of sending stations */
+	static StationSenderList senders[MaxNumberOfStations];
+	static int numberOfSenders;
+
+	/* list of receiving stations */
+	static StationReceiverList receivers[MaxNumberOfStations];
+	static int numberOfReceivers;
+};
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 4 - Cable Class"
+.SA 0
+.nf
+#ifndef __CABLE_H
+#define __CABLE_H
+/* class for LAB cable */
+
+/* headers */
+#include "returns.h"
+#include "poisson.h"
+#include "item.h"
+#include "event.h"
+
+/* declare class */
+class Cable;
+
+/* cable states */
+enum CableState { Idle, Preamble, Jammed, Transmitting };
+
+/* local definitions */
+#define MaxNumberOfStations 512
+
+/* class for a LAN cable */
+class Cable {
+public:
+	/* constructors and destructor */
+	Cable();
+	Cable(double, long);
+	~Cable();
+
+	/* queue and dequeue for cable */
+	inline Item *enqueue(Item *item) { 
+		totalCallsQueued++;
+		return(queue.enqueue(item));
+	}
+	inline Item *dequeue() { 
+		return(queue.dequeue());
+	}
+	inline int isEmpty() {
+		return(queue.isEmpty());
+	}
+
+	/* sending and receiving msgs */
+	int sendMessage(char *, int);
+	int receiveMessage(char *, int &);
+	void deleteMessage();
+
+	/* other functions */
+	int init(double = 0.0, long = 1);
+	int deleteAll();
+	int errorsInMessage();
+	inline int getStatus() { return(status); }
+	inline int isIdle() { return(state == Idle); }
+
+private:
+	/* do not allow these */
+	Cable(const Cable &);
+	Cable &operator=(const Cable &);
+
+public:
+	/* internal data */
+	int status;
+
+	/* cable FSM state */
+	CableState state;
+
+	/* next event type */
+	Event event;
+
+	/* size of message and buffer */
+	int messageSize;
+	char *message;
+
+	/* rate of random errors in line */
+	double meanErrorRate;
+
+	/* random error distribution */
+	Poisson errorDist;
+
+	/* transmission delay in bits/microsecond */
+	long bpus;
+
+	/* processes waiting for an idle cable */
+	Queue queue;
+
+	/* measurements */
+	long totalCallsTransmitted;
+	long totalCallsCorrupted;
+	long totalCallsQueued;
+	long totalBitsTransmitted;
+};
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 5 - Probability Distribution Base Class"
+.SA 0
+.nf
+#ifndef __PROBDIST_H
+#define __PROBDIST_H
+/* base class for probability distributions */
+
+/* headers */
+#include "returns.h"
+
+/* declare class */
+class ProbDist;
+
+/* base class for sampling a probability distribution */
+class ProbDist {
+public:
+	/* constructors and destructor */
+	ProbDist();
+	ProbDist(const ProbDist &);
+	virtual ~ProbDist();
+
+	/* assignment */
+	ProbDist &operator=(const ProbDist &);
+
+	/* sampling routines */
+	virtual int setSeed(unsigned long);
+	virtual double randomSample();
+
+	/* other routines */
+	inline int getStatus() { return(status); }
+
+public:
+	/* internal data */
+	int status;
+};
+
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 6 - Uniform Distribution Derived Class"
+.SA 0
+.nf
+#ifndef __UNIFORM_H
+#define __UNIFORM_H
+/* class for a uniform probability distributions */
+
+/* headers */
+#include "returns.h"
+#include "probDist.h"
+
+/* declare class */
+class Uniform;
+
+/* class for a uniform probability distribution */
+class Uniform: public ProbDist {
+public:
+	/* constructors and destructor */
+	Uniform();
+	Uniform(double, double);
+	Uniform(const Uniform &);
+	~Uniform();
+
+	/* assignment */
+	Uniform &operator=(const Uniform &);
+
+	/* sampling routines */
+	double randomSample();
+
+	/* other routines */
+	int init(double = 0.0, double = 1.0);
+	int init(const Uniform &);
+	inline int getStatus() { return(status); }
+
+public:
+	/* internal data */
+	double minimum;
+	double maximum;
+};
+
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 7 - Exponential Distribution Derived Class"
+.SA 0
+.nf
+#ifndef __EXPONENTIAL_H
+#define __EXPONENTIAL_H
+/* class for an exponential probability distributions */
+
+/* headers */
+#include "returns.h"
+#include "probDist.h"
+
+/* declare class */
+class Exponential;
+
+/* class for an exponential probability distribution */
+class Exponential: public ProbDist {
+public:
+	/* constructors and destructor */
+	Exponential();
+	Exponential(double);
+	Exponential(const Exponential &);
+	~Exponential();
+
+	/* assignment */
+	Exponential &operator=(const Exponential &);
+
+	/* sampling routines */
+	double randomSample();
+
+	/* other routines */
+	int init(double = 1.0);
+	int init(const Exponential &);
+	inline int getStatus() { return(status); }
+
+public:
+	/* internal data */
+	double mean;
+};
+
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 8 - Poisson Distribution Derived Class"
+.SA 0
+.nf
+#ifndef __POISSON_H
+#define __POISSON_H
+/* class for a poisson probability distributions */
+
+/* headers */
+#include "returns.h"
+#include "probDist.h"
+
+/* declare class */
+class Poisson;
+
+/* class for a poisson probability distribution */
+class Poisson: public ProbDist {
+public:
+	/* constructors and destructor */
+	Poisson();
+	Poisson(double);
+	Poisson(const Poisson &);
+	~Poisson();
+
+	/* assignment */
+	Poisson &operator=(const Poisson &);
+
+	/* sampling routines */
+	double randomSample();
+
+	/* other routines */
+	int init(double = 1.0);
+	int init(const Poisson &);
+	inline int getStatus() { return(status); }
+
+public:
+	/* internal data */
+	double mean;
+};
+
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 9 - Main Function Float Chart"
+.DS
+.so main.pic
+.DE
+.SK
+.HU "Appendix 10 - Generate First Calls Function Pseudo-Code"
+.SA 0
+.nf
+/* generate first calls for LAN */
+int
+firstCalls()
+{
+    /* construct call originations for all stations */
+    for (int station = 0; station < numberOfStations; station++)
+    {
+        /* originate a call */
+        Call *newCall = new Call(senders[station]);
+
+        /* get time for first call */
+        newCall->priority = senders[station]->nextCall();
+        
+        /* queue up the event */
+        eventQueue.priorityEnq(newCall);
+    }
+    return(OK);
+}
+.fi
+.SA 1
+.SK
+.HU "Appendix 11 - Call Processing Function Pseudo-Code"
+.SA 0
+.nf
+/* process call events */
+int
+process(Call *call)
+{
+    /* check call state */
+    switch (call->state)
+    {
+    case StartCall:
+        /* start-call state event handler */
+        return(processStartCall(call));
+
+    case QueueForStation:
+        /* queue-for-station state event handler */
+        return(processQueueForStation(call));
+
+    case StartTransmission:
+        /* start-transmission state event handler */
+        return(processStartTransmission(call));
+
+    case QueueForCable:
+        /* queue-for-cable state event handler */
+        return(processQueueForCable(call));
+
+    case StartPreamble:
+        /* start-preamble state event handler */
+        return(processStartPreamble(call));
+
+    case Retry:
+        /* retry state event handler */
+        return(processRetry(call));
+
+    case BackOff:
+        /* backoff state event handler */
+        return(processBackOff(call));
+
+    case StartMsg:
+        /* start-msg state event handler */
+        return(processStartMsg(call));
+
+    case CallDies:
+        /* call-dies state event handler */
+        return(processCallDies(call));
+
+    default:
+        ERROR("unknown call state.");
+        return(NOTOK);
+    }
+}
+.fi
+.SA 1
+.SK
+.HU "Appendix 12 - Start Call Function Flow Chart"
+.DS
+.so startcall.pic
+.DE
+.SK
+.HU "Appendix 13 - Queue For Station Function Flow Chart"
+.DS
+.so queueforstation.pic
+.DE
+.SK
+.HU "Appendix 14 - Start Transmission Function Flow Chart"
+.DS
+.so starttransmission.pic
+.DE
+.SK
+.HU "Appendix 15 - Queue For Cable Function Flow Chart"
+.DS
+.so queueforcable.pic
+.DE
+.SK
+.HU "Appendix 16 - Start Preamble Function Flow Chart"
+.DS
+.so startpreamble.pic
+.DE
+.SK
+.HU "Appendix 17 - Retry Function Flow Chart"
+.DS
+.so retry.pic
+.DE
+.SK
+.HU "Appendix 18 - Back Off Function Flow Chart"
+.DS
+.so backoff.pic
+.DE
+.SK
+.HU "Appendix 19 - Start Message Function Flow Chart"
+.DS
+.so startmsg.pic
+.DE
+.SK
+.HU "Appendix 20 - Generate Message Function Flow Chart"
+.SA 0
+.nf
+/* generate a new msg */
+int
+generateMsg(char *mbuf, int &mbufsz, StationSender *sender)
+{
+    /* get size of data */
+    int dataSize = (int) (sender->msgSize());
+    mbufsz = MsgSize(dataSize);
+
+    /* get destination address, do it randomly for now */
+    int inum, idest;
+    for (inum = 1; inum <= 20; inum++)
+    {
+        idest = (int)(numberOfStations*drand48());
+        if (strncmp(receivers[idest]->address, 
+                sender->address, AddressSize) != 0)
+        {
+            /* found a destination */
+            break;
+        }
+    }
+    if (inum > 20)
+    {
+        /* send msg to first receiver in list by default */
+        memcpy(mbuf, receivers[0]->address, DestAddrSize);
+    }
+    else
+    {
+        /* send msg to receiver */
+        memcpy(mbuf+DestAddrOffset, receivers[idest]->address, 
+               DestAddrSize);
+    }
+
+    /* store source address */
+    memcpy(mbuf+SrcAddrOffset, sender->address, SrcAddrSize);
+
+    /* store type */
+    memcpy(mbuf+TypeOffset, DummyType, TypeSize);
+
+    /* store data */
+    for (int idata = DataOffset; idata < CrcOffset(dataSize); idata++)
+    {
+        mbuf[idata] = 0xff;
+    }
+
+    /* calculate and store CRC value */
+#ifdef CRC32
+    memset(mbuf+CrcOffset(dataSize), 0, CrcSize);
+    unsigned long crc = calculateCRC(mbuf, mbufsz);
+    memcpy(mbuf+CrcOffset(dataSize), (char *)&crc, CrcSize);
+#else
+    unsigned long crc = calculateCRC(mbuf, mbufsz-CrcSize);
+    memcpy(mbuf+CrcOffset(dataSize), (char *)&crc, CrcSize);
+#endif
+
+    /* all done */
+    return(OK);
+}
+.fi
+.SA 1
+.SK
+.HU "Appendix 21 - CRC-32 Function Pseudo-Code"
+.SA 0
+.nf
+#ifdef CRC32
+/* CRC-32 polynomial */
+#define CRCDIVISOR1 ((unsigned long)0x82408edb)
+#define CRCDIVISOR2 ((unsigned long)0x1)
+#define HIGHESTBIT ((unsigned long)0x80000000)
+
+/* get the next bit in a buffer */
+unsigned long
+nextBit(unsigned long *buf, int nbuf)
+{
+    static int maxbyte, byte, bit;
+    static unsigned long *pbuf;
+    if (buf != (unsigned long *)0)
+    {
+        pbuf = (unsigned long *)buf;
+        maxbyte = nbuf;
+        byte = 0;
+        bit = 31;
+        return((pbuf[byte] & (1L << bit--)) ? 1L : 0L);
+    }
+    if (bit < 0)
+    {
+        byte++;
+        bit = 31;
+    }
+    if (byte >= maxbyte)
+    {
+        return((unsigned long)NOTOK);
+    }
+    return((pbuf[byte] & (1L << bit--)) ? 1L : 0L);
+}
+
+/* calculate CRC */
+unsigned long
+crc32(unsigned long *buf, int nbuf)
+{
+    unsigned long d1, d2, bit;
+    bit = nextBit(buf, nbuf);
+    d1 = bit << 31;
+    for (int ibit = 30; ibit >= 0; ibit--)
+    {
+        bit = nextBit((unsigned long *)0, nbuf);
+        d1 |= (bit << ibit);
+    }
+    while ((d2 = nextBit((unsigned long *)0, nbuf)) != NOTOK)
+    {
+        if ((d1 & HIGHESTBIT) == HIGHESTBIT)
+        {
+            d1 ^= CRCDIVISOR1;
+            d2 ^= CRCDIVISOR2;
+        }
+        d1 <<= 1;
+        d1 += d2;
+    }
+    return(d1);
+}
+
+/* calculate CRC value for a msg */
+unsigned long
+calculateCRC(char *mbuf, int mbufsz)
+{
+    return(crc32((unsigned long *)mbuf, mbufsz));
+}
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 22 - Hash Sum Function Pseudo-Code"
+.SA 0
+.nf
+#ifndef CRC32
+/* calculate CRC value for a msg */
+unsigned long
+calculateCRC(char *mbuf, int mbufsz)
+{
+    register unsigned long sum = 0;
+    for (char *pmbuf = mbuf; pmbuf < (mbuf + mbufsz); pmbuf++)
+    {
+        register int c = *pmbuf;
+        if (sum & 01)
+            sum = (sum >> 1) + 0x8000;
+        else
+            sum >>= 1;
+        sum += c;
+        sum &= 0xffff;
+    }
+    return(sum);
+}
+#endif
+.fi
+.SA 1
+.SK
+.HU "Appendix 23 - Receiver Processing Function Pseudo-Code"
+.SA 0
+.nf
+/* receiver idle state event processing */
+int
+processReceiverIdle(StationReceiver *receiver)
+{
+    /* check event type */
+    switch (receiver->event)
+    {
+    case IncomingMsg:
+        /* check size of message */
+        if (cable->messageSize < MinimumMsgSize)
+        {
+            /* ignore message */
+            return(OK);
+        }
+
+        /* check destination address */
+        if (strncmp(cable->message + DestAddrOffset, 
+                receiver->address, DestAddrSize) != 0)
+        {
+            /* not for this station */
+            return(OK);
+        }
+
+        /* increment number of calls received by this station */
+        receiver->callsTerminated++;
+
+        /* check CRC value */
+#ifdef CRC32
+        unsigned long crc =
+            calculateCRC(cable->message, cable->messageSize);
+
+        /* check if we have a corrupted frame */
+        if (crc != 0) 
+            receiver->callsCorrupted++;
+#else
+        unsigned long crc = 
+            calculateCRC(cable->message, cable->messageSize-CrcSize);
+        unsigned long mcrc;
+        memcpy((char *)&mcrc, 
+               cable->message + cable->messageSize - CrcSize,
+               CrcSize);
+
+        /* check if we have a corrupted frame */
+        if (crc != mcrc) 
+            receiver->callsCorrupted++;
+#endif
+        return(OK);
+
+    default:
+        ERROR("unexpected event in receiver idle state.");
+        return(NOTOK);
+    }
+}
+
+/* process receiver station events */
+int
+process(StationReceiver *receiver)
+{
+    /* check receiver state */
+    switch (receiver->state)
+    {
+    case StationIdle:
+        return(processReceiverIdle(receiver));
+    default:
+        ERROR("unknown receiver state.");
+        return(NOTOK);
+    }
+}
+.fi
+.SA 1
+.SK
+.HU "Appendix 24 - Stations 4, BackOff 16, Qsize 20 Report"
+.SA 0
+.nf
+enter random number generator seed: 0
+enter maximum simulation time (secs): 600
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 20
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 64
+enter station [0] maximum backoffs: 16
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 20
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 64
+enter station [1] maximum backoffs: 16
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 20
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 64
+enter station [2] maximum backoffs: 16
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 20
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 64
+enter station [3] maximum backoffs: 16
+.SK 
+Number of Stations            : 4
+Actual Simulation Time        : 300000076 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1197448
+Calls Queued Waiting For Cable: 395519
+Calls Actually Corrupted      : 137242
+Bits Transmitted Over Cable   : 785525888
+Transmission Rate             : 2.618 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  299677  62514    383   98533  48543 240403      0 296730  31642
+000002  299605  62115    306   98890  48424 240131      0 296649  31607
+000003  299380  61797    327   98632  48344 240743      0 297408  31897
+000004  300133  62940    322   99464  48634 241240      0 296107  31436
+-----------------------------------------------------------------------
+Totals  1198795 249366   1338  395519 193945 962517      0 1186894 126582
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001      203     13       88     75    413    1001
+000002      198     13       87     75    407    1001
+000003      199     13       87     75    408    1002
+000004      202     13       87     75    411     999
+
+.fi
+.SA 1
+.SK
+.HU "Appendix 25 - Stations 4, BackOff 10, Qsize 20 Report"
+.SA 0
+.nf
+enter random number generator seed: 0
+enter maximum simulation time (secs): 600
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 20
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 64
+enter station [0] maximum backoffs: 10
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 20
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 64
+enter station [1] maximum backoffs: 10
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 20
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 64
+enter station [2] maximum backoffs: 10
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 20
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 64
+enter station [3] maximum backoffs: 10
+.SK 
+Number of Stations            : 4
+Actual Simulation Time        : 300000196 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1201160
+Calls Queued Waiting For Cable: 399337
+Calls Actually Corrupted      : 137463
+Bits Transmitted Over Cable   : 787960960
+Transmission Rate             : 2.627 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  300539  63074     26   99990  49124 243884     41 297998  31830
+000002  299995  63277     28  100128  49562 244561     52 298026  31638
+000003  300128  62914     66   99518  48908 242363     30 297616  31631
+000004  300794  62396     21   99701  48965 242575     31 297021  31722
+-----------------------------------------------------------------------
+Totals  1201456 251661    141  399337 196559 973383    154 1190661 126821
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001      172     13       86     75    381     998
+000002      174     13       88     75    384    1000
+000003      182     13       87     75    391     999
+000004      165     13       85     75    372     997
+
+.fi
+.SA 1
+.SK
+.HU "Appendix 26 - Stations 4, BackOff 16, Qsize 100 Report"
+.SA 0
+.nf
+enter random number generator seed: 0
+enter maximum simulation time (secs): 600
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 100
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 64
+enter station [0] maximum backoffs: 16
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 100
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 64
+enter station [1] maximum backoffs: 16
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 100
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 64
+enter station [2] maximum backoffs: 16
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 100
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 64
+enter station [3] maximum backoffs: 16
+.SK 
+Number of Stations            : 4
+Actual Simulation Time        : 300000049 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1201359
+Calls Queued Waiting For Cable: 398733
+Calls Actually Corrupted      : 136979
+Bits Transmitted Over Cable   : 788091504
+Transmission Rate             : 2.627 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  299493  63914      0   99792  49085 244207      0 297796  31479
+000002  300884  64140      0   99761  49171 242909      0 297561  31803
+000003  300416  63711      0   99477  49064 243149      0 297559  31505
+000004  300566  64288      0   99703  49053 242941      0 297928  31553
+-----------------------------------------------------------------------
+Totals  1201359 256053      0  398733 196373 973206      0 1190844 126340
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001      257     13       91     75    471    1001
+000002      263     13       90     75    475     997
+000003      259     13       89     75    471     998
+000004      274     13       90     75    486     998
+
+.fi
+.SA 1
+.SK
+.HU "Appendix 27 - Stations 4, BackOff 16, Overload Report"
+.SA 0
+.nf
+enter random number generator seed: 0
+enter maximum simulation time (secs): 600
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 20
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 256
+enter station [0] maximum backoffs: 16
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 20
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 256
+enter station [1] maximum backoffs: 16
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 20
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 256
+enter station [2] maximum backoffs: 16
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 20
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 256
+enter station [3] maximum backoffs: 16
+.SK 
+Number of Stations            : 4
+Actual Simulation Time        : 300000026 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1076924
+Calls Queued Waiting For Cable: 550199
+Calls Actually Corrupted      : 123287
+Bits Transmitted Over Cable   : 1516735520
+Transmission Rate             : 5.056 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  300493 149664  31826  137283  81055 366837     15 267669  29580
+000002  300647 149959  29913  137736  80851 367493     21 266683  29584
+000003  300459 148801  33571  136593  80087 363354     11 269743  29836
+000004  299131 149348  28431  138587  80836 367275      5 267999  29360
+-----------------------------------------------------------------------
+Totals  1200730 597772 123741  550199 322829 1464959     52 1072094 118360
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001     5188     47      438    150   5862     998
+000002     4957     47      429    150   5621     997
+000003     5317     47      445    150   5998     998
+000004     4870     47      424    150   5530    1002
+
+.fi
+.SA 1
+.SK
+.HU "Appendix 28 - Stations 4, BackOff 10, Overload Report"
+.SA 0
+.nf
+enter random number generator seed: 0
+enter maximum simulation time (secs): 600
+enter cable error rate (errors per bit): 1.0e-5
+enter transmission delay (bits/microsecond): 10
+enter number of work stations: 4
+enter station [0] address: 000001
+enter station [0] call rate (calls/sec): 1000
+enter station [0] call waiting queue size: 20
+enter station [0] minimum data size (bytes): 64
+enter station [0] maximum data size (bytes): 256
+enter station [0] maximum backoffs: 10
+enter station [1] address: 000002
+enter station [1] call rate (calls/sec): 1000
+enter station [1] call waiting queue size: 20
+enter station [1] minimum data size (bytes): 64
+enter station [1] maximum data size (bytes): 256
+enter station [1] maximum backoffs: 10
+enter station [2] address: 000003
+enter station [2] call rate (calls/sec): 1000
+enter station [2] call waiting queue size: 20
+enter station [2] minimum data size (bytes): 64
+enter station [2] maximum data size (bytes): 256
+enter station [2] maximum backoffs: 10
+enter station [3] address: 000004
+enter station [3] call rate (calls/sec): 1000
+enter station [3] call waiting queue size: 20
+enter station [3] minimum data size (bytes): 64
+enter station [3] maximum data size (bytes): 256
+enter station [3] maximum backoffs: 10
+.SK 
+Number of Stations            : 4
+Actual Simulation Time        : 300000062 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1159083
+Calls Queued Waiting For Cable: 646291
+Calls Actually Corrupted      : 133260
+Bits Transmitted Over Cable   : 1631922480
+Transmission Rate             : 5.440 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  299905 185825   7360  161750 101062 455071   2755 287964  31966
+000002  300192 185675   7967  161426 100780 454590   2857 288372  31892
+000003  301201 187302   7835  161570 100887 455189   2853 288266  32011
+000004  299834 186069   7565  161545 100403 453726   2841 289201  31999
+-----------------------------------------------------------------------
+Totals  1201132 744871  30727  646291 403132 1818576  11306 1153803 127868
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001     3837     51      420    149   4496    1000
+000002     3864     51      423    149   4525     999
+000003     3894     51      423    149   4556     996
+000004     3898     51      425    149   4562    1000
+
+.fi
+.SA 1
+.SK
+.HU "Appendix 29 - Makefile"
+.SA 0
+.nf
+CCFLAGS = -g -DDEBUG 
+OBJS = cable.o \
+	call.o \
+	exponential.o \
+	item.o \
+	lan.o \
+	poisson.o \
+	probDist.o \
+	station.o \
+	uniform.o
+HDRS = cable.h \
+	call.h \
+	debug.h \
+	event.h \
+	exponential.h \
+	item.h \
+	poisson.h \
+	probDist.h \
+	returns.h \
+	station.h \
+	uniform.h
+
+lan:		$(OBJS)
+		CC $(CCFLAGS) -o lan $(OBJS) -lm
+
+lan.o:		lan.c $(HDRS)
+		CC $(CCFLAGS) -c  lan.c
+
+cable.o:	cable.c $(HDRS)
+		CC $(CCFLAGS) -c cable.c
+
+call.o:		call.c $(HDRS)
+		CC $(CCFLAGS) -c call.c
+
+exponential.o:	exponential.c $(HDRS)
+		CC $(CCFLAGS) -c exponential.c
+
+item.o:		item.c $(HDRS)
+		CC $(CCFLAGS) -c item.c
+
+poisson.o:	poisson.c $(HDRS)
+		CC $(CCFLAGS) -c poisson.c
+
+probDist.o:	probDist.c $(HDRS)
+		CC $(CCFLAGS) -c probDist.c
+
+station.o:	station.c $(HDRS)
+		CC $(CCFLAGS) -c station.c
+
+uniform.o:	uniform.c $(HDRS)
+		CC $(CCFLAGS) -c uniform.c
+.fi
+.SA 1
+.TC

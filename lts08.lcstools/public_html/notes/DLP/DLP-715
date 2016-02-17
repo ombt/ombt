@@ -1,0 +1,87 @@
+<html>
+<head>
+<title> DLP-715 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-715 UPGRADING IOM SOFTWARE OF A LUCENT SIGNALING GATEWAY
+</h3>
+<pre>
+
+Procedures for upgrading the IOMs on an SG are given here.
+
+1) Complete these procedures before continuing.
+
+	DLP-712 Preparing for Changing IOM Software
+	DLP-713 FTPing Files for Changing IOM Software
+	DLP-714 Extracting File for Changing IOM Software
+
+	DLP-757 Checking for and Disabling Scheduled Backups and 
+		Protection Switches
+	DLP-781 Preparing to Change System Software
+
+2) Do a backup. Use this:
+
+	EXEC-BACKUP-PLEXUS:[TID]:[&lt;src>]:[CTAG]::
+	&lt;desthost>,&lt;username>,&lt;password>,&lt;destdir>,
+	[&lt;suppressoutput>],[&lt;tmout>];
+
+3) Verify MGC-SG association is in service. Do this:
+
+	RTRV-SG-MGCASSOC;
+
+4) Determine installed IOM, software level, status and if they
+are primary or backup.
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+5) These are the supported IOM types.
+
+PART #  I/O MODULE       CLEI       software
+89-0397 Triple DS3       BA9IX04AAA x.x.x.x.x_trids3.tar.gz
+89-0398 Octal DS3        BAA9UVXGAA x.x.x.x.x_octds3.tar.gz
+89-0410 Triple DS3 STS-1 BA4A60ZFAA x.x.x.x.x_trids3.tar.gz
+89-0411 Octal DS3 STS-1  BA4A701FAA x.x.x.x.x_octds3_2.tar.gz
+89-0414 DS1/E1/J1        BA7ATP0FAA x.x.x.x.x_ds1_2.tar.gz
+89-0424 Triple DS3       BA9AWX0FAA x.x.x.x.x_trids3_3.tar.gz
+89-0425 Octal DS3        BA9AXY0FAA x.x.x.x.x_octds3_3.tar.gz
+
+6) Determine which IOMs have signaling links. Do this and 
+determine the links and the IOMs.
+
+	RTRV-SLK;
+
+Here is a sample output.
+
+Telica> rtrv-slk;
+
+   ihlcsgw8 2007-05-26 23:46:31
+M  0 COMPLD
+   "10:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/1/1/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   "11:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/3/1/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   "12:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/1/2/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   "13:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/3/2/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   "23:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/1/3/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   "24:SIGTYPE=NARROWBAND,PRIM2UAASSOCID=NULL,M2PAASSOCID=NULL,M2UAIID=NULL,TERMID=T/3/3/1,L2PRFLID=20,SECM2UAASSOCID=NULL,LNKSPEED=64K,LSSULEN=2"
+   /* RTRV-SLK */
+;
+Telica>
+
+7) Determine if sing.aing links are active on IOM other than that ones 
+you are going to upgrade using this command:
+
+	Telica> RTRV-STATUS-SGSLK::10;
+
+   ihlcsgw8 2007-05-26 23:48:53
+M  0 COMPLD
+   "10:SS7LNKSTARSLT=SUCCESS,SS7LNKSTASTATE=ACTIVE,SS7LNKSTALOCBLKD=N,SS7LNKSTAR
+EMBLKD=N,SS7LNKSTALOCINHBT=N,SS7LNKSTARMTINHBT=N,SS7LNKSTAUNINHBT=N,SS7LNKSTACON
+G=PRIORITY0,SS7LNKSTAEMRG=N"
+   /* RTRV-STATUS-SGSLK */
+;
+Telica>
+
+
+
+</pre>
+</font></body>
+</html>

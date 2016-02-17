@@ -1,0 +1,76 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 6060
+parameter myadminip 135.111.82.6
+parameter myadminport 10002
+parameter myrtpip 135.111.82.6
+parameter myrtpport 9000
+parameter myrtcpport 9001
+# parameter interreporttime 600
+#
+# specific user section
+#
+rdn = 6302201000 100
+codec = pcma
+expires = 1800
+maxcallduration = 60
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+origination = origination
+termination = termination
+#
+dn = annc
+codec = pcma
+expires = 1800
+maxcallduration = 60
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+origination = origination
+termination = termination
+#
+dn = __sip-annc
+codec = pcma
+expires = 1800
+maxcallduration = 60
+sipip = 135.111.82.6
+sipport = 6060
+rtpip = 135.111.82.6
+rtpport = 9000
+rtcpport = 9001
+origination = origination
+termination = termination
+#
+rdn = 6302202000 100
+codec = pcma
+expires = 1800
+maxcallduration = 60
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+#
+rdn = 6302203000 100
+codec = pcma
+expires = 1800
+maxcallduration = 60
+sipip = 135.111.82.6
+sipport = 6061
+rtpip = 135.111.82.6
+rtpport = 9002
+rtcpport = 9003
+#
+# announcements only
+# rcall 6302201000 6302202000 100
+# subcribe/announcements
+rcall 6302201000 6302203000 100

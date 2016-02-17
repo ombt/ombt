@@ -1,0 +1,32 @@
+#!/opt/exp/bin/perl -w
+#
+if ($#ARGV < 0) {
+	print "usage: sieve maxprime\n";
+	exit 2;
+}
+#
+$maxprime = $ARGV[0];
+print "MAXPRIME = $maxprime\n";
+#
+for (my $prime=0; $prime<$maxprime; $prime++)
+{
+	$primes[$prime] = 1;
+}
+#
+$primes[0] = 0;
+$primes[1] = 0;
+#
+for (my $prime=0; $prime<$maxprime; $prime++)
+{
+	if (!$primes[$prime]) {
+		next;
+	}
+	print "$prime\n";
+	for (my $notprime=2*$prime; $notprime<$maxprime; $notprime += $prime)
+	{
+		$primes[$notprime] = 0;
+	}
+}
+#
+exit 0
+

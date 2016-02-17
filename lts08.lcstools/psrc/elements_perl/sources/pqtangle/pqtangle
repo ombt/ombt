@@ -1,0 +1,128 @@
+#!/usr/bin/perl -w
+#line 50 "pqtangle.nw"
+use strict;
+#line 66 "pqtangle.nw"
+my $Root;     # root option 
+my $Line_dir; # format option
+my $la = '<' . '<';
+my $ra = '>' . '>';
+#line 116 "pqtangle.nw"
+my (@roots, %used, %chunks, $file);
+#line 95 "pqtangle.nw"
+while ($ARGV[0] =~ m/^-/) {
+   $_ = shift @ARGV;
+   last                          if m/^--$/;
+   $Root   = $1                  if m/^-R(.*)/;
+   $Line_dir = '#line %L "%F"%N' if m/^-L/;
+}
+#line 137 "pqtangle.nw"
+unless (@ARGV) {die "no file given for processing\n"}
+$file = $ARGV[0];
+open(FILE,$file)||die "can't open $file $!";
+#line 125 "pqtangle.nw"
+while ( <FILE> ) {
+#line 149 "pqtangle.nw"
+    my $line = $_;
+    my $line_no = $. + 1;
+    if ($line =~ m/^$la([^>]+)$ra=\s*$/) {
+#line 177 "pqtangle.nw"
+        my $begin_offset = tell FILE;
+        while (($line !~ m/^(\@\s*$|\@\s*\%def)/)) {
+           $line = <FILE>;
+           $used{$1} += 1 if $line =~ m/^\s*$la([^>]+)$ra\s*$/;
+        }
+        push @{$chunks{$1}}, "$begin_offset:$file:$line_no";
+#line 153 "pqtangle.nw"
+    }
+#line 127 "pqtangle.nw"
+}
+#line 209 "pqtangle.nw"
+if ($Root) {
+    @roots = ($Root);
+} else {
+    foreach my $key (keys %chunks) {
+        push @roots, $key if not $used{$key};
+    }
+}
+#line 224 "pqtangle.nw"
+foreach my $root (@roots) {
+    open(PROGRAM, ">$root") || die "can't open $root: $!";
+    print_chunk($root,'');
+}
+close PROGRAM;
+#line 252 "pqtangle.nw"
+sub print_chunk {
+    my ($chunk,$whitespace) = @_;
+#line 267 "pqtangle.nw"
+    unless (exists $chunks{$chunk}) {
+        warn "undefined chunk name: $la$chunk$ra\n";
+        return;
+    }
+#line 282 "pqtangle.nw"
+    my @locations = @{$chunks{$chunk}};
+    foreach my $item (@locations) {
+#line 308 "pqtangle.nw"
+        my ($offset, $filename, $line_number) = split /:/,$item;
+        seek(FILE, $offset,0) || die "seek failed on $filename: $!";
+        my $line=<FILE>;
+#line 322 "pqtangle.nw"
+        my $shebang_special = 0;
+        $shebang_special = 1 if $line =~ m/^#!/;
+#line 338 "pqtangle.nw"
+        my $line_dir;
+        if ($Line_dir) {
+           $line_dir = make_line_dir($line_number,$filename);
+           $line =~ m/^\s*$la.*?$ra\s*$/ || 
+                    $shebang_special   ||
+                    print PROGRAM  "$line_dir";
+        }
+#line 393 "pqtangle.nw"
+        while ($line !~ m/^(\@\s*$|\@\s\%def)/) {
+            if ($line =~ m/^(\s*?)$la([^>]+)$ra\s*$/) {
+#line 412 "pqtangle.nw"
+                my $offset = tell FILE;
+                my $addedspace = $1;
+                $whitespace = $addedspace.$whitespace;
+                &print_chunk($2,$whitespace);
+                $whitespace = substr($whitespace,length($addedspace));
+                seek(FILE,$offset,0) || die "can't seek on $filename: $!";
+                $line_number += 1;
+                $line = <FILE>;
+#line 428 "pqtangle.nw"
+                if ($Line_dir) {
+                    $line_dir = make_line_dir($line_number,$filename);
+                    print PROGRAM $line_dir if $line !~ /^\s*$la.*?$ra\s*$/;
+                }
+#line 421 "pqtangle.nw"
+#line 396 "pqtangle.nw"
+            } else {
+#line 440 "pqtangle.nw"
+                print PROGRAM $whitespace,$line;
+                $line = <FILE>;
+                $line_number += 1;
+#line 449 "pqtangle.nw"
+                if ($Line_dir && $shebang_special) {
+                    $line_dir = make_line_dir($line_number,$filename);
+                    print PROGRAM "$line_dir" if $line !~ m/^\s*$la[^>]+$ra\s*$/;
+                    $shebang_special = 0;
+                }
+#line 399 "pqtangle.nw"
+            }
+        }
+#line 288 "pqtangle.nw"
+    }
+#line 256 "pqtangle.nw"
+}
+#line 241 "pqtangle.nw"
+#line 366 "pqtangle.nw"
+sub make_line_dir {
+    my ($line_no,$file) = @_;
+    my $line_dir = $Line_dir;
+    $line_dir =~ s/\%L/$line_no/;
+    $line_dir =~ s/\%F/$file/;
+    $line_dir =~ s/\%\%/%/;
+    $line_dir =~ s/\%N/\n/;
+    return $line_dir;
+}    
+#line 354 "pqtangle.nw"
+#line 57 "pqtangle.nw"

@@ -1,0 +1,3240 @@
+#!/opt/exp/bin/perl -w 
+#!/opt/exp/bin/perl -w -d:DProf
+#
+# SIP simulator.
+#
+########################################################################
+#
+# path for finding modules
+#
+use lib "/home/lcstools/tools/bin";
+#
+# modules
+#
+use Carp;
+use Fcntl;
+use Storable qw(dclone);
+use IO::Socket;
+use Getopt::Std;
+#
+use mytimer;
+use mypqueue;
+#
+#########################################################################
+#
+# global data
+#
+$debugflag = 0;
+$logflag = 0;
+$rtplogflag = 0;
+$verboseflag = 0;
+#
+# any parameter or dndata must have a default value defined below. if not,
+# when it is detected, the simulator will report it and exit.
+#
+%parameters = (
+	branch => "z9hG4bk",
+	delta => 10,
+	minmsgsize => 10,
+	logfile => "",
+	rtplogfile => "",
+	mysipip => "127.0.0.1",
+	mysipport => 5060,
+	myrtpip => "127.0.0.1",
+	myrtpport => 8000,
+	myrtcpport => 8001,
+	myadminip => "127.0.0.1",
+	myadminport => 10001,
+	maxforwards => 70,
+	supportrtp => 1,
+);
+#
+%dndata = (
+	DEFAULT => {
+		dn => undef,
+		dnstate => "INACTIVE",
+		callloadstate => "INACTIVE",
+		codec => "pcmu",
+		state => {
+			registration => "INACTIVE",
+			origination => "INACTIVE",
+			termination => "INACTIVE",
+		},
+		registrar => "registrar",
+		registration => "registration",
+		origination => "origination",
+		termination => "termination",
+		ipaddress => "127.0.0.1",
+		sipip => "127.0.0.1",
+		sipport => 5060,
+		rtpip => "127.0.0.1",
+		rtpport => 8000,
+		rtcpip => "127.0.0.1",
+		rtcpport => 8001,
+		expires => 600,
+		interregistertime => 120,
+		maxcallduration => 60,
+		waitingforackduration => 10,
+		waitingfor200duration => 10,
+		waitingfor202duration => 10,
+		ringingduration => 1,
+		prerefercallduration => 10,
+	},
+);
+#
+%dialogs = (
+	DEFAULT => {
+		dn => undef,
+		cseq => undef,
+		timertag => undef,
+		handler => undef,
+		contact => undef,
+	},
+);
+#
+%statistics = (
+	origination => {
+		started => 0,
+		stable => 0,
+		abandoned => 0,
+		timedout => 0,
+	},
+	termination => {
+		started => 0,
+		stable => 0,
+		abandoned => 0,
+		timedout => 0,
+	},
+);
+#
+%loaddata = (
+	state => "idle",
+	callspersec => 0.0,
+	maxcalls => 0,
+	callsstarted => 0,
+	holdtime => 0,
+	calls => { },
+	origdns => [ ],
+	currentorigdn => 0,
+	origdnsz => 0,
+	tag => -1,
+);
+#
+use subs qw(printit);
+use subs qw(dprint);
+use subs qw(vprint);
+#
+########################################################################
+#
+# functions
+#
+sub usage {
+	printit "\n";
+	printit "usage: sipsim [-?xV] [-l logfile] [configfile]\n";
+	printit "\n";
+	printit "if a configfile is not given, then the default config\n";
+	printit "file 'sipsimcfg' is read from the current directory.\n";
+}
+#
+sub dprint {
+	my ($msg) = @_;
+	if ($debugflag) {
+		printit $msg;
+	}
+}
+sub vprint {
+	my ($msg) = @_;
+	if ($verboseflag) {
+		printit $msg;
+	}
+}
+sub printit {
+	my ($msg) = @_;
+	#
+	if ($logflag) {
+		print LOGFILE ${msg};
+	}
+	print STDERR ${msg};
+}
+#
+sub dumpdndata {
+	#
+	return unless ($verboseflag);
+	#
+	vprint "\n";
+	vprint "Dumping DN-Data structure:\n";
+	foreach $key (sort keys %dndata) {
+		vprint "dn = $key\n";
+		foreach $key2 (sort keys %{$dndata{$key}}) {
+			vprint "\t$key2 = ";
+			if (defined($dndata{$key}{$key2})) {
+				vprint "$dndata{$key}{$key2}\n";
+			} else {
+				vprint "====>>>> UNDEFINED <<<<====\n";
+			}
+		}
+	}
+}
+#
+sub dumpparams {
+	#
+	return unless ($verboseflag);
+	#
+	vprint "\n";
+	vprint "Parameters:\n";
+	foreach $param (sort keys %parameters) {
+		vprint "\t$param = $parameters{$param}\n";
+	}
+}
+#
+sub dumphdrs {
+	my ($phdrs) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	vprint "\nHeader Fields:\n";
+	foreach $key (sort keys %{$phdrs}) {
+		if (defined($phdrs->{$key})) {
+			vprint "$key = $phdrs->{$key}\n";
+		} else {
+			vprint "$key NOT DEFINED.\n";
+		}
+	}
+}
+#
+sub dumpPQ {
+	my ($pq) = @_;
+	printit "\nPriority Queue Contents:\n";
+	$pq->dump();
+}
+#
+sub dumpIncomingMsg {
+	my ($recvpaddr, $msg) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	my ($recvport, $recvipaddr) = sockaddr_in($recvpaddr);
+	$recvipaddr = inet_ntoa($recvipaddr);
+	my $recvaddr = "$recvipaddr:$recvport";
+	#
+	vprint "\n";
+	vprint "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg\n";
+	vprint "FROM IP/PORT: $recvaddr\n";
+	my @newmsg = split /[\r\n]+/, $msg;
+	foreach $line (@newmsg) {
+		vprint "line=<$line>\n";
+	}
+	vprint "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg\n";
+}
+#
+sub dumpOutgoingMsg {
+	my ($recvpaddr, $msg) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	my ($recvport, $recvipaddr) = sockaddr_in($recvpaddr);
+	$recvipaddr = inet_ntoa($recvipaddr);
+	my $recvaddr = "$recvipaddr:$recvport";
+	#
+	vprint "\n";
+	vprint ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg\n";
+	vprint "TO IP/PORT: $recvaddr\n";
+	my @newmsg = split /[\r\n]+/, $msg;
+	foreach $line (@newmsg) {
+		vprint "line=<$line>\n";
+	}
+	vprint ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg\n";
+}
+#
+sub dumptimer {
+	my ($timerflag, $ptimer) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	vprint "\nTimer data:\n";
+	vprint "\ttimer flag = ${timerflag}\n";
+	vprint "\tcallid = ".$ptimer->{callid}."\n";
+	vprint "\texpire = ".$ptimer->{expire}."\n";
+	vprint "\tid     = ".$ptimer->{id}."\n";
+	vprint "\tlabel  = ".$ptimer->{label}."\n";
+}
+#
+sub incrstats {
+	my ($state, $type) = @_;
+	#
+	if (defined($statistics{$state}{$type})) {
+		$statistics{$state}{$type} += 1;
+	} else {
+		$statistics{$state}{$type} = 1;
+	}
+}
+#
+sub bitval {
+	my ($v, $lowbit, $highbit) = @_;
+	#
+	my $v2 = (($v >> $lowbit) << $lowbit); 
+	my $v3 = (($v2 << (31-$highbit)) >> (31-$highbit)); 
+	my $v4 = ($v3 >> (31-$highbit));
+	#
+	return($v4);
+}
+sub rbitval {
+	my ($v, $lowbit, $highbit) = @_;
+	#
+	my $v2 = (($v >> (31-$highbit)) << (31-$highbit)); 
+	my $v3 = (($v2 << $lowbit) >> $lowbit); 
+	my $v4 = ($v3 >> (31-$highbit));
+	#
+	return($v4);
+}
+#
+sub readconfigfile {
+	my ($configfile) = @_;
+	#
+	my $dntype = "individual";
+	my $nodefaults = 0;
+	my $syntaxerrors = 0;
+	my $dn = "UNKNOWNDN";
+	open(CONFIGFILE, $configfile) or die "can't open $configfile: $!";
+	while (defined($crec = <CONFIGFILE>)) {
+		# remove newline
+		chomp($crec);
+		# skip comments
+		if ($crec =~ /^[\s]*#/) {
+			next;
+		}
+		# is it a parameter?
+		if ($crec =~ /^parameter/i) {
+			my ($dummy, $parameter, $value) = split /\s+/, $crec, 3;
+			if (!defined($dummy) || !defined($parameter) ||
+			    !defined($value)) {
+				printit "\n";
+				printit "skipping record <$crec>.\n";
+				printit "not in a 'parameter key value' format.\n";
+				$syntaxerrors += 1;
+				next;
+			}
+			if (!exists($parameters{$parameter}))
+			{
+				$nodefaults += 1;
+				printit "\n";
+				printit "parameter $parameter has NO default value.\n";
+			}
+			$parameters{$parameter} = $value;
+			next;
+		}
+		# is it a ORIGDN CNT pair?
+		if ($crec =~ /^rcall/) {
+			my ($dummy, $origdn, $termdn, $cnt) = split /\s+/, $crec, 4;
+			if (!defined($dummy) || !defined($origdn) ||
+			    !defined($termdn) || !defined($cnt)) {
+				printit "\n";
+				printit "skipping record <$crec>.\n";
+				printit "not in a 'rcall origdn termdn count' format.\n";
+				$syntaxerrors += 1;
+				next;
+			}
+			for (my $i=0; $i<$cnt; ${i}++) {
+				my $odn = $origdn + $i;
+				my $tdn = $termdn + $i;
+				$loaddata{calls}{$odn} = $tdn;
+				if (!exists($dndata{$odn})) {
+					printit "$odn has NO dndata.\n";
+					$syntaxerrors += 1;
+				}
+				if (!exists($dndata{$tdn})) {
+					printit "$tdn has NO dndata.\n";
+					$syntaxerrors += 1;
+				}
+			}
+			next;
+		}
+		# get name-value pair
+		my ($key, $value) = split /\s*=\s*/, $crec, 2;
+		if (!defined($key) || !defined($value)) {
+			printit "\n";
+			printit "skipping record <$crec>.\n";
+			printit "not in a 'key=value' format.\n";
+			$syntaxerrors += 1;
+			next;
+		}
+		#
+		if ($key =~ /^dn/) {
+			$dn = $value;
+			$dndata{$dn} = dclone($dndata{DEFAULT});
+			$dndata{$dn}{dn} = $dn;
+			$dntype = "individual";
+		} elsif ($key =~ /^rdn/) {
+			($mindn, $dncnt) = split /\s+/, $value, 2;
+			if (!defined($mindn) || !defined($dncnt)) {
+				printit "\n";
+				printit "skipping record <$crec>.\n";
+				printit "not in a 'rdn startdn cnt' format.\n";
+				$syntaxerrors += 1;
+				next;
+			}
+			for (my $i=0; $i<$dncnt; ${i}++) {
+				$dn = $mindn + $i;
+				$dndata{$dn} = dclone($dndata{DEFAULT});
+				$dndata{$dn}{dn} = $dn;
+			}
+			$dntype = "range";
+		} else {
+			if (!exists($dndata{DEFAULT}{$key}))
+			{
+				$nodefaults += 1;
+				printit "\n";
+				printit "field $key has NO default value.\n";
+			}
+			if ($dntype eq "individual") {
+				$dndata{$dn}{$key} = $value;
+			} elsif ($dntype eq "range") {
+				for (my $i=0; $i<$dncnt; ${i}++) {
+					$dn = $mindn + $i;
+					$dndata{$dn}{$key} = $value;
+				}
+			} else {
+				printit "readconfigfile: invalid dntype: $dntype\n";
+				exit 2;
+			}
+		}
+	}
+	close(CONFIGFILE);
+	#
+	if ($nodefaults) {
+		printit "\n";
+		printit "$nodefaults field(s) found with NO defaults.\n";
+	}
+	if ($syntaxerrors) {
+		printit "\n";
+		printit "$syntaxerrors syntax error(s) found in config file.\n";
+	}
+	if ($nodefaults || $syntaxerrors) {
+		printit "exiting.\n";
+		exit 2;
+	}
+	#
+	# generate list of originating DNs.
+	#
+	my $odncnt = scalar(keys %{$loaddata{calls}});
+	if ($odncnt > 0) {
+		printit "\n$odncnt ORIG-TERM DN pairs read.\n";
+		@{$loaddata{origdns}} = sort keys %{$loaddata{calls}};
+		$loaddata{origdnsz} = @{$loaddata{origdns}};
+	}
+	#
+	return;
+}
+#
+sub dumpfld {
+	my ($fldname, $phdrs) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	my $maxi = $#{$phdrs->{$fldname}};
+	for (my $i = 0; $i <= $maxi; ${i}++) {
+		vprint "$fldname\[$i\] = $phdrs->{$fldname}[$i]\n";
+	}
+}
+#
+sub dn2mysipuri {
+	my ($dn) = @_;
+	my $myip = $parameters{mysipip};
+	my $myport = $parameters{mysipport};
+	my $mycontact = "sip:${dn}\@${myip}";
+	return($mycontact);
+}
+#
+sub dn2contact {
+	my ($dn) = @_;
+printit "dn2contact: dn=$dn\n";
+	#
+	my $ip = $dndata{$dn}{sipip};
+	my $port = $dndata{$dn}{sipport};
+	my $contact = "sip:${dn}\@${ip}:${port}";
+	#
+printit "dn2contact: contact=$contact\n";
+	return($contact);
+}
+#
+sub getCseqNo {
+	my ($cseq) = @_;
+	$cseq =~ /^[\s]*([0-9]+)[\s]+/;
+	return($1);
+}
+sub getCseqMethod {
+	my ($cseq) = @_;
+	$cseq =~ /^[\s]*[0-9]+[\s]+([^\s]+)/;
+	return($1);
+}
+#
+sub makerequesturi {
+	my ($callid, $field) = @_;
+	#
+	my $from = $dialogs{$callid}{$field};
+	$from =~ /^.*sip:([^@]+)@([0-9\.]+).*$/;
+	#
+	my $dn = $1;
+	my $ip = $2;
+	#
+	my $requesturi = "sip:${dn}\@${ip}";
+	return($requesturi);
+}
+#
+sub dumpSDP {
+	my ($psdp) = @_;
+	#
+	return unless ($verboseflag);
+	#
+	vprint "\n";
+	vprint "SDP CONTENTS: \n";
+	foreach $line (@{${psdp}}) {
+		vprint "$line\n";
+	}
+}
+#
+sub makeSDP {
+	my ($dn, $psdp) = @_;
+	#
+	$$psdp = "";
+	$$psdp .= "v=0\n";
+	$$psdp .= "o=$dn 0 $dndata{$dn}{rtpport} IN IP4 $dndata{$dn}{rtpip}\n";
+	$$psdp .= "s=-\n";
+	$$psdp .= "c=IN IP4 $dndata{$dn}{rtpip}\n";
+	$$psdp .= "t=0 0\n";
+	if ($dndata{$dn}{codec} eq "pcma") {
+		# a-law
+		$$psdp .= "m=audio $dndata{$dn}{rtpport} RTP/AVP 8\n";
+		$$psdp .= "a=rtpmap:8 pcma/$dndata{$dn}{rtpport}\n";
+	} else {
+		# default is mu-law
+		$$psdp .= "m=audio $dndata{$dn}{rtpport} RTP/AVP 0\n";
+		$$psdp .= "a=rtpmap:0 pcmu/$dndata{$dn}{rtpport}\n";
+	}
+
+}
+#
+sub parseSipMsg {
+	my ($rawmsg, $prawhdr, $prawdata, $phdrs, $pdatablocks) = @_;
+	#
+	# separate the hdr from the payload.
+	#
+	($$prawhdr, $$prawdata) = split /[\r\n]{4,4}/, $rawmsg, 2;
+	return unless (defined($$prawhdr));
+	#
+	# split fields in header. each header field is 
+	# separated by CRLF. each header in turn is separated
+	# by commas first, then semicolons. also, headers can 
+	# be repeated. each repeated header field can be combined
+	# into one header field separated by commas. each header field
+	# can contain parameters which are separated by semicolons.
+	#
+	my @fldhdrs = split /[\r\n]+/, $$prawhdr;
+	#
+	# get the type of msg
+	#
+	my ($fld1, $fld2) = split /\s+/, $fldhdrs[0];
+	$phdrs->{msgtype} = $fld1;
+	if ($phdrs->{msgtype} =~ /^SIP\/2.0/) {
+		$phdrs->{msgtype} = "RETURNCODE";
+		$phdrs->{returncode} = $fld2;
+	}
+	#
+	# split the remaining flds. combine multiple lines
+	# into one line.
+	#
+	my $nflds = scalar @fldhdrs;
+	for (my $ifld = 1; $ifld < $nflds; ${ifld}++) {
+		my ($fldname, $fldvalue) = 
+			split /\s*:\s*/, $fldhdrs[$ifld], 2;
+		if (!exists($phdrs->{$fldname})) {
+			$phdrs->{$fldname} = $fldvalue;
+		} else {
+			$phdrs->{$fldname} .= ",".$fldvalue;
+		}
+	}
+	#
+	# get data specific to msg type.
+	#
+	my $dummy = undef;
+	if ($phdrs->{msgtype} =~ /^REGISTER/) {
+		$dummy = $phdrs->{"To"};
+		$dummy =~ /^.*[<]*sip:([0-9]+)@.*$/;
+		$dummy = $1;
+		if (defined($dummy)) {
+			$phdrs->{"dn"} = $dummy;
+		}
+		my $callid = $phdrs->{"Call-ID"};
+		if (!defined($dialogs{$callid})) {
+			# first time, create dialog
+			$dialogs{$callid}{dn} = $phdrs->{"dn"};
+			$dialogs{$callid}{contact} = $phdrs->{"Contact"};
+			$dialogs{$callid}{mycontact} = 
+				dn2contact($phdrs->{"dn"});
+			$dialogs{$callid}{cseq} = 
+				getCseqNo($phdrs->{"CSeq"});
+			$dialogs{$callid}{handler} = 
+				$dndata{$phdrs->{"dn"}}{registrar};
+			$dialogs{$callid}{"timertag"} = 0;
+			$dialogs{$callid}{"mytag"} = int(rand(1000000000));
+			$dialogs{$callid}{"mytag"} .= "mytag";
+			# save additional fields when timers expire and
+			# we need to send msgs.
+			$dialogs{$callid}{peer} = $phdrs->{"From"};
+			$dialogs{$callid}{from} = $phdrs->{"From"};
+			$dialogs{$callid}{to} = $phdrs->{"To"};
+			# assign the tag at this point.
+			$dialogs{$callid}{local} = $phdrs->{"To"};
+			$dialogs{$callid}{local} .= ";tag=".$dialogs{$callid}{mytag};
+			$dialogs{$callid}{via} = $phdrs->{"Via"};
+			$dialogs{$callid}{maxforwards} = 
+				$phdrs->{"Max-Forwards"};
+			$dialogs{$callid}{requesturi} = 
+				makerequesturi($callid, "contact");
+		}
+	} elsif ($phdrs->{msgtype} =~ /^INVITE/) {
+		$dummy = $phdrs->{"To"};
+		$dummy =~ /^.*[<]*sip:([0-9]+)@.*$/;
+		$dummy = $1;
+		if (defined($dummy)) {
+			$phdrs->{"dn"} = $dummy;
+		}
+		my $callid = $phdrs->{"Call-ID"};
+		if (!defined($dialogs{$callid})) {
+			# first time, create dialog
+			$dialogs{$callid}{dn} = $phdrs->{"dn"};
+			$dialogs{$callid}{contact} = $phdrs->{"Contact"};
+			$dialogs{$callid}{mycontact} = 
+				dn2contact($phdrs->{"dn"});
+			$dialogs{$callid}{cseq} = 
+				getCseqNo($phdrs->{"CSeq"});
+			$dialogs{$callid}{handler} = 
+				$dndata{$phdrs->{"dn"}}{termination};
+			$dialogs{$callid}{"timertag"} = 0;
+			$dialogs{$callid}{"mytag"} = int(rand(1000000000));
+			$dialogs{$callid}{"mytag"} .= "mytag";
+			# save additional fields when timers expire and
+			# we need to send msgs.
+			$dialogs{$callid}{peer} = $phdrs->{"From"};
+			$dialogs{$callid}{from} = $phdrs->{"From"};
+			$dialogs{$callid}{to} = $phdrs->{"To"};
+			# assign the tag at this point.
+			$dialogs{$callid}{local} = $phdrs->{"To"};
+			$dialogs{$callid}{local} .= ";tag=".$dialogs{$callid}{mytag};
+			$dialogs{$callid}{via} = $phdrs->{"Via"};
+			$dialogs{$callid}{maxforwards} = 
+				$phdrs->{"Max-Forwards"};
+			$dialogs{$callid}{requesturi} = 
+				makerequesturi($callid, "contact");
+		}
+	}
+	#
+	if ($phdrs->{msgtype} =~ /^RETURNCODE/) {
+		# grab the To: URI for future msgs.
+		my $callid = $phdrs->{"Call-ID"};
+		$dialogs{$callid}{peer} = $phdrs->{"To"};
+		#
+		my $cseqmeth = undef;
+		if (defined($phdrs->{"CSeq"})) {
+			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+		} 
+		if (!defined($cseqmeth)) {
+			$cseqmeth = "UNKNOWNMETHOD";
+		}
+		incrstats("msgs-received", 
+			"RETURNCODE".$phdrs->{returncode}.$cseqmeth);
+	} else {
+		incrstats("msgs-received", $phdrs->{msgtype});
+	}
+	#
+	# any data blocks?
+	#
+	if ($phdrs->{"Content-Length"} == 0) {
+		# no data
+		return;
+	}
+	#
+	# split blocks
+	#
+	if ($phdrs->{"Content-Type"} =~ /^multipart\/mixed/) {
+		$phdrs->{"Content-Type"} =~ 
+			/^multipart\/mixed;boundary=\"([^\"]+)\"/;
+		my $dbdelimiter = $1;
+		die "delimiter not found in Content-Type = mixed." unless 
+			defined($dbdelimiter);
+		@{$pdatablocks} = split /${dbdelimiter}/, $$prawdata;
+	} else {
+		# only one data block.
+		@{$pdatablocks} = [ $$prawdata ];
+		# check if we have an SDP block
+		if ($phdrs->{"Content-Type"} =~ /application\/sdp/) {
+			@{$phdrs->{sdp}} = [];
+			@{$phdrs->{sdp}[0]} = split /[\r\n]+/, $$prawdata;
+			dumpSDP($phdrs->{sdp}[0]);
+		}
+	}
+	return;
+}
+#
+sub changeDnState {
+	my ($dn, $dnstate, $newstate) = @_;
+	#
+	my $olddnstate = $dndata{$dn}{state}{$dnstate};
+	$dndata{$dn}{state}{$dnstate} = $newstate;
+	if ($newstate eq "INACTIVE") {
+		$dndata{$dn}{callloadstate} = "INACTIVE";
+	}
+	return unless ($verboseflag);
+	vprint("\nOLD $dnstate STATE FOR $dn: ${olddnstate}\n");
+	vprint("NEW $dnstate STATE FOR $dn: $dndata{$dn}{state}{$dnstate}\n");
+}
+#
+sub dumpDnState {
+	my ($dn, $handler) = @_;
+	#
+	return unless ($verboseflag);
+	#
+confess "dumpDnState: $!" if (!defined($dn));
+confess "dumpDnState: $!" if (!defined($handler));
+	vprint("\nCURRENT $handler STATE FOR $dn: $dndata{$dn}{state}{$handler}\n");
+}
+#
+sub isMyTimer {
+	my ($callid, $ptimer) = @_;
+	#
+	my $dialogtag = $dialogs{$callid}{"timertag"};
+	my $timertag = $ptimer->{expire};
+	#
+	my $dialogid = $dialogs{$callid}{"timerid"};
+	my $timerid = $ptimer->{id};
+	#
+	if ($dialogtag != $timertag || $dialogid != $timerid) {
+		# it is not my timer
+		if ($verboseflag) {
+			vprint "\nTimer label: ".$ptimer->{label}."\n";
+			vprint "Ignoring old timer (tag=$timertag).\n";
+			vprint "(callid=$callid).\n";
+		}
+		return(0);
+	} else {
+		# it is my timer
+		return(1);
+	}
+}
+#
+########################################################################
+#
+# utility functions to make msgs
+#
+sub removetimer {
+	my ($callid) = @_;
+	#
+	if (defined($dialogs{$callid}{"ptimer"})) {
+		my $ptimer = $dialogs{$callid}{"ptimer"};
+		$pq->remove($ptimer);
+		$ptimer = undef;
+	}
+}
+#
+sub starttimer {
+	my ($callid, $delta, $label) = @_;
+	#
+	my $endtime = time() + $delta;
+	my $timerid = int(rand(1000000000));
+	if ($delta <= 0) {
+		printit "\n\n\n";
+		printit "starttimer: ZERO LENGTH TIMER FOR CALL-ID $callid.\n";
+		printit "\n\n\n";
+	}
+	#
+	if ($verboseflag) {
+		vprint "\nstarttimer:\n";
+		vprint "\tcallid=${callid}\n";
+		vprint "\tlabel=${label}\n";
+		vprint "\tdelta=${delta}\n";
+		vprint "\tendtime=$endtime\n";
+		vprint "\tid=$timerid\n";
+	}
+	#
+	my $ptimer = "mytimer"->new($callid, $endtime, $timerid, $label);
+	#
+	$dialogs{$callid}{"timertag"} = $endtime;
+	$dialogs{$callid}{"timerid"} = $timerid;
+	$dialogs{$callid}{"ptimer"} = $ptimer;
+	#
+	if ($verboseflag) {
+		vprint "\tcallid = ".$ptimer->{callid}."\n";
+		vprint "\texpire = ".$ptimer->{expire}."\n";
+		vprint "\tid     = ".$ptimer->{id}."\n";
+		vprint "\tlabel  = ".$ptimer->{label}."\n";
+	}
+	#
+	$pq->enqueue($ptimer);
+	incrstats("general","starttimerenqueuecalled");
+}
+#
+sub makepaddr {
+	my ($contact, $callid) = @_;
+	#
+	my $dn;
+	my $ip;
+	my $port;
+	#
+	my $dcontact = $dialogs{$callid}{$contact};
+	if ($dcontact =~ /^.*<*sip:([^@]+)@([^:]+):([0-9]+).*$/) {
+		$dn = $1;
+		$ip = $2;
+		$port = $3;
+	} elsif ($dcontact =~ /^.*<*sip:([^@]+)@([0-9\.]+).*$/) {
+		$dn = $1;
+		$ip = $2;
+		$port = 5060;
+	} else {
+		printit "makepaddr: unable to get IP addr from contact !!!\n";
+		printit "contact = ${dcontact}\n";
+		exit 2;
+	}
+	#
+	my $ipaddr = gethostbyname($ip);
+	defined($ipaddr) or die "gethostbyname: $!";
+	my $paddr = sockaddr_in($port, $ipaddr);
+	defined($paddr) or die "getprotobyname: $!";
+	#
+	return($paddr);
+}
+#
+sub sendRegister {
+	my ($callid, $contact) = @_;
+	#
+	return;
+}
+#
+sub sendRefer {
+	my ($callid, $contact) = @_;
+	#
+	return;
+}
+#
+sub sendRegister200OK {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	#
+	my $ackmsg = "SIP/2.0 200 OK\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+	$ackmsg .= $parameters{mysipip}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Contact: ".$phdrs->{"Contact"}."\r\n";
+	$ackmsg .= "Expires: ".$dndata{$dn}{"expires"}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	#
+	my $cseqmeth = undef;
+	if (defined($phdrs->{"CSeq"})) {
+		$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+	} 
+	if (!defined($cseqmeth)) {
+		$cseqmeth = "UNKNOWNMETHOD";
+	}
+	incrstats("msgs-sent", "RETURNCODE200".$cseqmeth);
+	return;
+}
+#
+sub sendInvite180Ringing {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	#
+	my $ackmsg = "SIP/2.0 180 Ringing\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$dialogs{$callid}{local}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	#
+	my $cseqmeth = undef;
+	if (defined($phdrs->{"CSeq"})) {
+		$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+	} 
+	if (!defined($cseqmeth)) {
+		$cseqmeth = "UNKNOWNMETHOD";
+	}
+	incrstats("msgs-sent", "RETURNCODE180".$cseqmeth);
+	return;
+}
+#
+sub sendInvite200OK {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	#
+	my $ackmsg = "SIP/2.0 200 OK\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$dialogs{$callid}{local}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	#
+	my $sdp = "";
+	makeSDP($dn, \$sdp);
+	# dprint "OFFER SDP: $sdp\n";
+	#
+	my $sdplen = length($sdp);
+	$ackmsg .= "Content-Type: application/sdp\r\n";
+	$ackmsg .= "Content-Length: $sdplen\r\n";
+	$ackmsg .= "\r\n";
+	$ackmsg .= "$sdp";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	#
+	my $cseqmeth = undef;
+	if (defined($phdrs->{"CSeq"})) {
+		$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+	} 
+	if (!defined($cseqmeth)) {
+		$cseqmeth = "UNKNOWNMETHOD";
+	}
+	incrstats("msgs-sent", "RETURNCODE200".$cseqmeth);
+	return;
+}
+#
+sub sendBye {
+	my ($callid, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $requesturi = $dialogs{$callid}{requesturi};
+	my $brand = int(rand(1000000000));
+	my $newbranch = ${parameters}{branch}.$brand;
+	#
+	my $ackmsg = "BYE ${requesturi} SIP/2.0\r\n";
+	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+	$ackmsg .= "From: ".$dialogs{$callid}{local}."\r\n";
+	$ackmsg .= "To: ".$dialogs{$callid}{peer}."\r\n";
+	$ackmsg .= "Call-ID: ".${callid}."\r\n";
+	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." BYE\r\n";
+	$ackmsg .= "Max-Forwards: ".$dialogs{$callid}{maxforwards}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	incrstats("msgs-sent", "BYE");
+	return;
+}
+#
+sub sendAck {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $requesturi = $dialogs{$callid}{requesturi};
+	#
+	my $ackmsg = "ACK ${requesturi} SIP/2.0\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	#
+	my $sdp = "";
+	makeSDP($dn, \$sdp);
+	# dprint "OFFER SDP: $sdp\n";
+	#
+	my $sdplen = length($sdp);
+	$ackmsg .= "Content-Type: application/sdp\r\n";
+	$ackmsg .= "Content-Length: $sdplen\r\n";
+	$ackmsg .= "\r\n";
+	$ackmsg .= "$sdp";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	incrstats("msgs-sent", "ACK");
+	return;
+}
+#
+sub sendCancel {
+	my ($callid, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $requesturi = $dialogs{$callid}{requesturi};
+	my $brand = int(rand(1000000000));
+	my $newbranch = ${parameters}{branch}.$brand;
+	#
+	# flip To and From fields in the BYE msg.
+	#
+	my $ackmsg = "CANCEL ${requesturi} SIP/2.0\r\n";
+	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+	$ackmsg .= "From: ".$dialogs{$callid}{local}."\r\n";
+	$ackmsg .= "To: ".$dialogs{$callid}{peer}."\r\n";
+	$ackmsg .= "Call-ID: ".${callid}."\r\n";
+	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." CANCEL\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	$ackmsg .= "Max-Forwards: ".$dialogs{$callid}{maxforwards}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	incrstats("msgs-sent", "CANCEL");
+	return;
+}
+#
+sub sendInvite {
+	my ($callid, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $requesturi = $dialogs{$callid}{requesturi};
+	my $brand = int(rand(1000000000));
+	my $newbranch = ${parameters}{branch}.$brand;
+	#
+	my $ackmsg = "INVITE ${requesturi} SIP/2.0\r\n";
+	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+	$ackmsg .= "From: ".$dialogs{$callid}{local}."\r\n";
+	$ackmsg .= "To: ".$dialogs{$callid}{peer}."\r\n";
+	$ackmsg .= "Call-ID: ".${callid}."\r\n";
+	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." INVITE\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	$ackmsg .= "Max-Forwards: ".$dialogs{$callid}{maxforwards}."\r\n";
+	#
+	my $sdp = "";
+	makeSDP($dn, \$sdp);
+	# dprint "OFFER SDP: $sdp\n";
+	#
+	my $sdplen = length($sdp);
+	$ackmsg .= "Content-Type: application/sdp\r\n";
+	$ackmsg .= "Content-Length: $sdplen\r\n";
+	$ackmsg .= "\r\n";
+	$ackmsg .= "$sdp";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	incrstats("msgs-sent", "INVITE");
+	return;
+}
+#
+sub sendGratuitous200OK {
+	# sometime we get BYE or CANCEL msgs after a call
+	# dies. this keeps up until the other side times out
+	# or until the maximum retries is reached. to shut these
+	# msgs up, we take the CANCEL or BYE and return a 200 OK.
+	#
+	my ($phdrs) = @_;
+	#
+	if (!(($phdrs->{msgtype} =~ /BYE/) ||
+	      ($phdrs->{msgtype} =~ /CANCEL/))) {
+		# not a BYE or CANCEL
+		return;
+	}
+	#
+	my $ackmsg = "SIP/2.0 200 OK\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+	$ackmsg .= $parameters{mysipip}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $contact = $phdrs->{"Contact"};
+	return unless defined($contact);
+	$contact =~ /^.*<*sip:([^@]+)@([^:]+):([0-9]+).*$/;
+	#
+	my $dn = $1;
+	return unless defined($dn);
+	my $ip = $2;
+	return unless defined($ip);
+	my $port = $3;
+	return unless defined($port);
+	#
+	my $ipaddr = gethostbyname($ip);
+	return unless defined($ipaddr);
+	my $paddr = sockaddr_in($port, $ipaddr);
+	return unless defined($paddr);
+	#
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	incrstats("msgs-sent", "RETURNCODE200".$phdrs->{msgtype}."-GRATUITOUS");
+	return;
+}
+#
+sub send200OK {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	#
+	my $ackmsg = "SIP/2.0 200 OK\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+	$ackmsg .= $parameters{mysipip}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	#
+	my $cseqmeth = undef;
+	if (defined($phdrs->{"CSeq"})) {
+		$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+	} 
+	if (!defined($cseqmeth)) {
+		$cseqmeth = "UNKNOWNMETHOD";
+	}
+	incrstats("msgs-sent", "RETURNCODE200".$cseqmeth);
+	return;
+}
+#
+sub send486Busy {
+	my ($callid, $phdrs, $contact) = @_;
+	#
+	my $dn = $dialogs{$callid}{dn};
+	#
+	my $ackmsg = "SIP/2.0 486 Busy\r\n";
+	$ackmsg .= "Via: ".$phdrs->{"Via"}.";received=";
+	$ackmsg .= $parameters{mysipip}."\r\n";
+	$ackmsg .= "From: ".$phdrs->{"From"}."\r\n";
+	$ackmsg .= "To: ".$phdrs->{"To"}."\r\n";
+	$ackmsg .= "Call-ID: ".$phdrs->{"Call-ID"}."\r\n";
+	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+	$ackmsg .= "Content-Length: 0\r\n";
+	$ackmsg .= "\r\n";
+	#
+	my $paddr = makepaddr($contact, $callid);
+	dumpOutgoingMsg($paddr, $ackmsg);
+	#
+	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+	#
+	my $cseqmeth = undef;
+	if (defined($phdrs->{"CSeq"})) {
+		$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+	} 
+	if (!defined($cseqmeth)) {
+		$cseqmeth = "UNKNOWNMETHOD";
+	}
+	incrstats("msgs-sent", "RETURNCODE486".$cseqmeth);
+	return;
+}
+#
+##########################################################################
+#
+# high-level msg handlers
+#
+sub registration_INACTIVE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# only registration event timers are allowed
+	if ($timerflag == 3) {
+		# check if my timer
+		if (!isMyTimer($callid, $ptimer)) {
+			$ptimer = undef;
+			return;
+		}
+		# send a register msg
+		$dialogs{$callid}{cseq} += 1;
+		sendRegister($callid, "mycontact");
+		starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 REGISTER");
+		changeDnState($dn, $handler, "WAITFOR200");
+	} else {
+		vprint "\n${handler} ${state}:\n";
+		vprint "Unexpected timer.\n";
+		vprint "(callid=$callid).\n";
+	}
+	$ptimer = undef;
+}
+#
+sub registration_INACTIVE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub registration_WAITFOR200_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		$ptimer = undef;
+		return;
+	}
+	# timed out, schedule another register attempt.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	queueReg($dn, $dndata{$dn}{interregistertime});
+}
+#
+sub registration_WAITFOR200_RETURNCODE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	my $label = "";
+	removetimer($callid);
+	if ($phdrs->{returncode} == 200) {
+		starttimer($callid, $dndata{$dn}{"expires"},
+			"REGISTRATION EXPIRES");
+		changeDnState($dn, $handler, "REGISTERED");
+	} else {
+		# registration denied. try again.
+		delete $dialogs{$callid};
+		changeDnState($dn, $handler, "INACTIVE");
+		queueReg($dn, $dndata{$dn}{interregistertime});
+	}
+}
+#
+sub registration_WAITFOR200_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub registration_REGISTERED_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		$ptimer = undef;
+		return;
+	}
+	# send a re-register msg
+	$dialogs{$callid}{cseq} += 1;
+	sendRegister($callid, "mycontact");
+	starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 REGISTER");
+	changeDnState($dn, $handler, "WAITFOR200");
+}
+#
+sub registration_REGISTERED_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub registration_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub registration_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub registrar_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	if (!isMyTimer($callid, $ptimer)) {
+		$ptimer = undef;
+		return;
+	}
+	#
+	$ptimer = undef;
+	$dialogs{$callid}{"timertag"} = 0;
+	changeDnState($dn, $handler, "UNREGISTER");
+}
+#
+sub registrar_DEFAULT_REGISTER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	sendRegister200OK($callid, $phdrs, "contact");
+	removetimer($callid);
+	starttimer($callid, $dndata{$dn}{"expires"}, "REGISTRATION TIME OUT");
+	changeDnState($dn, $handler, "REGISTER");
+}
+#
+sub registrar_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_INACTIVE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# only call orig timers are allowed.
+	if ($timerflag == 2) {
+		# check if my timer
+		if (!isMyTimer($callid, $ptimer)) {
+			dumptimer($timerflag, $ptimer);
+			incrstats("origination","invalidtimers-1");
+			$ptimer = undef;
+			return;
+		}
+		# start up a call, send an INVITE
+		$dialogs{$callid}{cseq} += 1;
+		sendInvite($callid, "contact");
+		incrstats("origination","started");
+		incrstats("origination","sendInvite");
+		starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 INVITE");
+		changeDnState($dn, $handler, "WAITFOR200");
+	} else {
+		dumptimer($timerflag, $ptimer);
+		incrstats("origination","invalidtimers-2");
+		#
+		vprint "\n${handler} ${state}:\n";
+		vprint "Unexpected timer.\n";
+		vprint "(callid=$callid).\n";
+		$ptimer = undef;
+	}
+}
+#
+sub origination_INACTIVE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-1");
+	incrstats("origination-unexpectedmsgs-1", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_WAITFOR200_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("origination","invalidtimers-3");
+		if ($timerflag == 2) {
+			incrstats("origination","notreadyfororig");
+		}
+		$ptimer = undef;
+		return;
+	}
+	# cancel call.
+	$ptimer = undef;
+	$dialogs{$callid}{cseq} += 1;
+	sendCancel($callid, "contact");
+	incrstats("origination","sendCancel");
+	incrstats("origination","timedout-1");
+	starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+		"WAIT FOR 200 CANCEL");
+	changeDnState($dn, $handler, "WAITFOR200CANCEL");
+}
+#
+sub origination_WAITFOR200_RETURNCODE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	my $label = "";
+	# now we have the far-end URI.
+	$dialogs{$callid}{peer} = $phdrs->{"To"};
+	#
+	if ($phdrs->{returncode} == 100) {
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 INVITE (after 100)");
+		changeDnState($dn, $handler, "WAITFOR200");
+		incrstats("origination","received100Invite");
+	} elsif ($phdrs->{returncode} == 180) {
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 INVITE (after 180)");
+		changeDnState($dn, $handler, "WAITFOR200");
+		incrstats("origination","received180Invite");
+	} elsif ($phdrs->{returncode} == 183) {
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+			"WAIT FOR 200 INVITE (after 183)");
+		changeDnState($dn, $handler, "WAITFOR200");
+		incrstats("origination","received183Invite");
+	} elsif ($phdrs->{returncode} == 200) {
+		sendAck($callid, $phdrs, "contact");
+		incrstats("origination","sendAck");
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"maxcallduration"},
+			"TALKING MAX CALL LENGTH");
+		changeDnState($dn, $handler, "TALKING");
+		incrstats("origination","stable");
+		incrstats("origination","received200Invite");
+	} elsif ($phdrs->{returncode} == 486) {
+		incrstats("origination", "received486busy");
+		sendAck($callid, $phdrs, "contact");
+		incrstats("origination","send486Ack");
+		# call ends.
+		removetimer($callid);
+		delete $dialogs{$callid};
+		changeDnState($dn, $handler, "INACTIVE");
+		incrstats("origination", "inactive");
+	} elsif ($phdrs->{returncode} == 503) {
+		incrstats("origination", "received503serviceunavailable");
+		sendAck($callid, $phdrs, "contact");
+		incrstats("origination","send503Ack");
+		# call ends.
+		removetimer($callid);
+		delete $dialogs{$callid};
+		changeDnState($dn, $handler, "INACTIVE");
+		incrstats("origination", "inactive");
+	} else {
+		# call ends.
+		removetimer($callid);
+		delete $dialogs{$callid};
+		changeDnState($dn, $handler, "INACTIVE");
+		incrstats("origination", "inactive");
+	}
+}
+#
+sub origination_WAITFOR200_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+sub origination_WAITFOR200_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# other side is gone.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_WAITFOR200_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-2");
+	incrstats("origination-unexpectedmsgs-2", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_TALKING_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("origination","invalidtimers-4");
+		if ($timerflag == 2) {
+			incrstats("origination","notreadyfororig");
+		}
+		$ptimer = undef;
+		return;
+	}
+	# call ends, send bye.
+	$dialogs{$callid}{cseq} += 1;
+	sendBye($callid, "contact");
+	incrstats("origination","sendBye");
+	incrstats("origination","timedout-2");
+	#
+	starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+		"WAIT FOR 200 BYE");
+	changeDnState($dn, $handler, "WAITFOR200BYE");
+}
+#
+sub origination_TALKING_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# onhook received
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_TALKING_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_TALKING_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-3");
+	incrstats("origination-unexpectedmsgs-3", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_WAITFOR200BYE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("origination","invalidtimers-5");
+		if ($timerflag == 2) {
+			incrstats("origination","notreadyfororig");
+		}
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+	incrstats("origination","timedout-3");
+}
+#
+sub origination_WAITFOR200BYE_RETURNCODE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# call ends. the return code should be
+	# 200OK, but really we are ending the call
+	# whether it is or not.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_WAITFOR200BYE_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_WAITFOR200BYE_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# onhook received
+	send200OK($callid, $phdrs, "contact");
+	incrstats("origination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+}
+#
+sub origination_WAITFOR200BYE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-4");
+	incrstats("origination-unexpectedmsgs-4", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_WAITFOR200CANCEL_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("origination","invalidtimers-6");
+		if ($timerflag == 2) {
+			incrstats("origination","notreadyfororig");
+		}
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+	incrstats("origination","timedout-4");
+}
+#
+sub origination_WAITFOR200CANCEL_RETURNCODE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# call ends. the return code should be
+	# 200OK, but really we are ending the call
+	# whether it is or not.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("origination","inactive");
+	incrstats("origination","waitfor200cancel-received200OK");
+}
+#
+sub origination_WAITFOR200CANCEL_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-5");
+	incrstats("origination-unexpectedmsgs-5", 
+			$phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub origination_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","invalidtimers-7");
+	if ($timerflag == 2) {
+		incrstats("origination","notreadyfororig");
+	}
+	#
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub origination_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("origination","unexpectedmsgs-6");
+	incrstats("origination-unexpectedmsgs-6", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_INACTIVE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","invalidtimers-1");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_INACTIVE_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","started");
+	sendInvite180Ringing($callid, $phdrs, "contact");
+	incrstats("termination","sendInvite180Ringing");
+	#
+	if ($dndata{$dn}{"ringingduration"} > 0) {
+		# wait for ringing
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"ringingduration"}, 
+			"RINGING");
+		changeDnState($dn, $handler, "RINGING");
+		$dialogs{$callid}{lastphdrs} = $phdrs;
+	} else {
+		# just send 200OK immediately
+		sendInvite200OK($callid, $phdrs, "contact");
+		incrstats("termination","sendInvite200OK");
+		#
+		removetimer($callid);
+		starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+			"WAIT FOR ACK");
+		changeDnState($dn, $handler, "WAITFORACK");
+	}
+}
+#
+sub termination_INACTIVE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-1");
+	incrstats("termination-unexpectedmsgs-1", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_RINGING_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination","invalidtimers-6");
+		$ptimer = undef;
+		return;
+	}
+	$phdrs = $dialogs{$callid}{lastphdrs};
+	sendInvite200OK($callid, $phdrs, "contact");
+	incrstats("termination","sendInvite200OK");
+	#
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+		"WAIT FOR ACK");
+	changeDnState($dn, $handler, "WAITFORACK");
+}
+#
+sub termination_RINGING_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination","send486Busy");
+	# wait for 486 ACK.
+	removetimer($callid);
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+		"WAIT FOR 486 ACK");
+	incrstats("termination","waitfor486ack");
+}
+#
+sub termination_RINGING_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+}
+#
+sub termination_RINGING_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_RINGING_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-2");
+	incrstats("termination-unexpectedmsgs-2", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_WAITFORACK_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination","invalidtimers-2");
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+	incrstats("termination","timedout-1");
+}
+#
+sub termination_WAITFORACK_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination","send486Busy");
+	# wait for 486 ACK.
+	removetimer($callid);
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+		"WAIT FOR 486 ACK");
+	incrstats("termination","waitfor486ack");
+}
+#
+sub termination_WAITFORACK_ACK {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	removetimer($callid);
+	starttimer($callid, $dndata{$dn}{"maxcallduration"},
+		"TALKING MAX CALL LENGTH");
+	changeDnState($dn, $handler, "TALKING");
+	incrstats("termination","stable");
+}
+#
+sub termination_WAITFORACK_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFORACK_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFORACK_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-3");
+	incrstats("termination-unexpectedmsgs-3", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_TALKING_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination","invalidtimers-3");
+		$ptimer = undef;
+		return;
+	}
+	# call ends, send bye.
+	$dialogs{$callid}{cseq} += 1;
+	sendBye($callid, "contact");
+	incrstats("termination","sendBye");
+	#
+	starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+		"WAIT FOR 200 BYE");
+	changeDnState($dn, $handler, "WAITFOR200BYE");
+	incrstats("termination","timedout-2");
+}
+#
+sub termination_TALKING_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination","send486Busy");
+	# wait for 486 ACK.
+	removetimer($callid);
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+		"WAIT FOR 486 ACK");
+	incrstats("termination","waitfor486ack");
+}
+#
+sub termination_TALKING_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# onhook received
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_TALKING_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_TALKING_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-4");
+	incrstats("termination-unexpectedmsgs-4", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_WAITFOR200BYE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination","invalidtimers-4");
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+	incrstats("termination","timedout-3");
+}
+#
+sub termination_WAITFOR200BYE_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination","send486Busy");
+	# wait for 486 ACK.
+	removetimer($callid);
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+		"WAIT FOR 486 ACK");
+	incrstats("termination","waitfor486ack");
+}
+#
+sub termination_WAITFOR200BYE_RETURNCODE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# call ends. the return code should be
+	# 200OK, but really we are ending the call
+	# whether it is or not.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFOR200BYE_CANCEL {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# last request was canceled. end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OKCancel");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFOR200BYE_BYE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# end call.
+	send200OK($callid, $phdrs, "contact");
+	incrstats("termination","send200OK");
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFOR200BYE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-5");
+	incrstats("termination-unexpectedmsgs-5", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_WAITFOR486ACK_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination","invalidtimers-7");
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+	incrstats("termination","timedout-5");
+}
+#
+sub termination_WAITFOR486ACK_ACK {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination","inactive");
+}
+#
+sub termination_WAITFOR486ACK_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-6");
+	incrstats("termination-unexpectedmsgs-6", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","invalidtimers-5");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination","unexpectedmsgs-7");
+	incrstats("termination-unexpectedmsgs-7", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_busy_INACTIVE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+printit "termination_busy_INACTIVE_TIMER entry ...\n";
+	incrstats("termination_busy","invalidtimers-1");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_busy_INACTIVE_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_INACTIVE_INVITE entry ...\n";
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination_busy","send486Busy");
+	# wait for 486 ACK.
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"},
+		"WAIT FOR 486 ACK");
+	incrstats("termination_busy","waitfor486ack");                 
+}
+#
+sub termination_busy_INACTIVE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime,
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_INACTIVE_DEFAULT entry ...\n";
+	#
+	incrstats("termination_busy","unexpectedmsgs-1");
+	incrstats("termination_busy-unexpectedmsgs-1", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_busy_WAITFOR486ACK_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_WAITFOR486ACK_TIMER entry ...\n";
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination_busy","invalidtimers-7");
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination_busy","inactive");
+	incrstats("termination_busy","timedout-5");
+}
+#
+sub termination_busy_WAITFOR486ACK_ACK {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_WAITFOR486ACK_ACK entry ...\n";
+	#
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination_busy","inactive");
+}
+#
+sub termination_busy_WAITFOR486ACK_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_WAITFOR486ACK_DEFAULT entry ...\n";
+	#
+	incrstats("termination_busy","unexpectedmsgs-6");
+	incrstats("termination_busy-unexpectedmsgs-6", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_busy_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_DEFAULT_TIMER entry ...\n";
+	#
+	incrstats("termination_busy","invalidtimers-5");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_busy_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+printit "termination_busy_DEFAULT_DEFAULT entry ...\n";
+	#
+	incrstats("termination_busy","unexpectedmsgs-7");
+	incrstats("termination_busy-unexpectedmsgs-7", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+# FSM contains call-backs for different states and events (msgs, timers).
+#
+%fsm = (
+	registration => {
+		INACTIVE => {
+			TIMER => \&registration_INACTIVE_TIMER,
+			DEFAULT => \&registration_INACTIVE_DEFAULT,
+		},
+		WAITFOR200 => {
+			TIMER => \&registration_WAITFOR200_TIMER,
+			RETURNCODE => \&registration_WAITFOR200_TIMER,
+			DEFAULT => \&registration_WAITFOR200_TIMER,
+		},
+		REGISTERED => {
+			TIMER => \&registration_REGISTERED_TIMER,
+			DEFAULT => \&registration_REGISTERED_TIMER,
+		},
+		DEFAULT => {
+			TIMER => \&registration_DEFAULT_TIMER,
+			DEFAULT => \&registration_DEFAULT_DEFAULT,
+		},
+	},
+	registrar => {
+		DEFAULT => {
+			TIMER => \&registrar_DEFAULT_TIMER,
+			REGISTER => \&registrar_DEFAULT_REGISTER,
+			DEFAULT => \&registrar_DEFAULT_DEFAULT,
+		},
+	},
+	origination => {
+		INACTIVE => {
+			TIMER => \&origination_INACTIVE_TIMER,
+			DEFAULT => \&origination_INACTIVE_DEFAULT,
+		},
+		WAITFOR200 => {
+			TIMER => \&origination_WAITFOR200_TIMER,
+			RETURNCODE => \&origination_WAITFOR200_RETURNCODE,
+			CANCEL => \&origination_WAITFOR200_CANCEL,
+			BYE => \&origination_WAITFOR200_BYE,
+			DEFAULT => \&origination_WAITFOR200_DEFAULT,
+		},
+		TALKING => {
+			TIMER => \&origination_TALKING_TIMER,
+			BYE => \&origination_TALKING_BYE,
+			CANCEL => \&origination_TALKING_CANCEL,
+			DEFAULT => \&origination_TALKING_DEFAULT,
+		},
+		WAITFOR200BYE => {
+			TIMER => \&origination_WAITFOR200BYE_TIMER,
+			RETURNCODE => \&origination_WAITFOR200BYE_RETURNCODE,
+			CANCEL => \&origination_WAITFOR200BYE_CANCEL,
+			BYE => \&origination_WAITFOR200BYE_BYE,
+			DEFAULT => \&origination_WAITFOR200BYE_DEFAULT,
+		},
+		WAITFOR200CANCEL => {
+			TIMER => \&origination_WAITFOR200CANCEL_TIMER,
+			RETURNCODE => \&origination_WAITFOR200CANCEL_RETURNCODE,
+			DEFAULT => \&origination_WAITFOR200CANCEL_DEFAULT,
+		},
+		DEFAULT => {
+			TIMER => \&origination_DEFAULT_TIMER,
+			DEFAULT => \&origination_DEFAULT_DEFAULT,
+		},
+	},
+	termination => {
+		INACTIVE => {
+			TIMER => \&termination_INACTIVE_TIMER,
+			INVITE => \&termination_INACTIVE_INVITE,
+			DEFAULT => \&termination_INACTIVE_DEFAULT,
+		},
+		RINGING => {
+			TIMER => \&termination_RINGING_TIMER,
+			INVITE => \&termination_RINGING_INVITE,
+			CANCEL => \&termination_RINGING_CANCEL,
+			BYE => \&termination_RINGING_BYE,
+			DEFAULT => \&termination_RINGING_DEFAULT,
+		},
+		WAITFORACK => {
+			TIMER => \&termination_WAITFORACK_TIMER,
+			INVITE => \&termination_WAITFORACK_INVITE,
+			ACK => \&termination_WAITFORACK_ACK,
+			CANCEL => \&termination_WAITFORACK_CANCEL,
+			BYE => \&termination_WAITFORACK_BYE,
+			DEFAULT => \&termination_WAITFORACK_DEFAULT,
+		},
+		TALKING => {
+			TIMER => \&termination_TALKING_TIMER,
+			INVITE => \&termination_TALKING_INVITE,
+			BYE => \&termination_TALKING_BYE,
+			CANCEL => \&termination_TALKING_CANCEL,
+			DEFAULT => \&termination_TALKING_DEFAULT,
+		},
+		WAITFOR200BYE => {
+			TIMER => \&termination_WAITFOR200BYE_TIMER,
+			INVITE => \&termination_WAITFOR200BYE_INVITE,
+			RETURNCODE => \&termination_WAITFOR200BYE_RETURNCODE,
+			CANCEL => \&termination_WAITFOR200BYE_CANCEL,
+			BYE => \&termination_WAITFOR200BYE_BYE,
+			DEFAULT => \&termination_WAITFOR200BYE_DEFAULT,
+		},
+		WAITFOR486ACK => {
+			TIMER => \&termination_WAITFOR486ACK_TIMER,
+			ACK => \&termination_WAITFOR486ACK_ACK,
+			DEFAULT => \&termination_WAITFOR486ACK_DEFAULT,
+		},
+		DEFAULT => {
+			TIMER => \&termination_DEFAULT_TIMER,
+			DEFAULT => \&termination_DEFAULT_DEFAULT,
+		},
+	},
+	termination_busy => {
+		INACTIVE => {
+			TIMER => \&termination_busy_INACTIVE_TIMER,
+			INVITE => \&termination_busy_INACTIVE_INVITE,
+			DEFAULT => \&termination_busy_INACTIVE_DEFAULT,
+		},
+		WAITFOR486ACK => {
+			TIMER => \&termination_busy_WAITFOR486ACK_TIMER,
+			ACK => \&termination_busy_WAITFOR486ACK_ACK,
+			DEFAULT => \&termination_busy_WAITFOR486ACK_DEFAULT,
+		},
+		DEFAULT => {
+			TIMER => \&termination_busy_DEFAULT_TIMER,
+			DEFAULT => \&termination_busy_DEFAULT_DEFAULT,
+		},
+	},
+);
+#
+##########################################################################
+#
+# general msg handlers
+#
+sub haltcallload {
+	$loaddata{state} = "idle";
+}
+#
+sub startcallload {
+	my ($cps, $holdtime, $maxcalls) = @_;
+	# calculate max simultaneous calls.
+	my $ok = 1;
+	if ($cps < 1) {
+		printit "startcallload: CPS < 1.\n";
+		$ok = 0;
+	}
+	if ($holdtime < 1) {
+		printit "startcallload: HOLDTIME < 1.\n";
+		$ok = 0;
+	}
+	if ($maxcalls < 1) {
+		printit "startcallload: MAXCALLS < 1.\n";
+		$ok = 0;
+	}
+	if (!$ok) {
+		printit "startcallload: call load not started.\n";
+		return;
+	}
+	my $simcalls = $cps*$holdtime;
+	if ($simcalls > $loaddata{origdnsz}) {
+		printit "Requested number of simultaneous calls > number of ORIG DNs.\n";
+		return;
+	}
+	# check if a call load is already running
+	if ($loaddata{state} ne "idle") {
+		printit "startcallload: call load already running or halted.\n";
+		return;
+	}
+	#
+	$loaddata{callspersec} = $cps;
+	$loaddata{holdtime} = $holdtime;
+	$loaddata{maxcalls} = $maxcalls;
+	$loaddata{callsstarted} = 0;
+	$loaddata{currentorigdn} = 0;
+	$loaddata{state} = "running";
+	$loaddata{tag} = int(rand(1000000000));
+	#
+	my $newcalls = 0;
+	#
+	for (my $o=0; $o<$loaddata{origdnsz}; ${o}++) {
+		my $i = ($loaddata{currentorigdn}+$o)%$loaddata{origdnsz};
+		my $odn = $loaddata{origdns}[$i];
+		my $tdn = $loaddata{calls}{$odn};
+		#
+		if ($verboseflag) {
+			vprint "startcallload: ORID DN - TRYING $odn.\n";
+			vprint "startcallload: TERM DN - TRYING $tdn.\n";
+		}
+		#
+		if ($dndata{$odn}{callloadstate} ne "INACTIVE") {
+			# skip this orig dn.
+			if ($verboseflag) {
+				vprint "\tstartcallload: ORID DN - SKIPPING $odn.\n";
+				vprint "\tstartcallload: TERM DN - SKIPPING $tdn.\n";
+			}
+			next;
+		}
+		if ($verboseflag) {
+			vprint "\tstartcallload: ORID DN - USING $odn (state=$dndata{$odn}{callloadstate}).\n";
+			vprint "\tstartcallload: TERM DN - USING $tdn.\n";
+		}
+		# set max length of call.
+		$dndata{$odn}{"maxcallduration"} = $holdtime;
+		# we found a dn to start a call.
+		queueOrig($odn, $tdn, 1);
+		$dndata{$odn}{callloadstate} = "SCHEDULED";
+		incrstats("origination","queueOrigCalled");
+		# 
+		${newcalls}++;
+		$loaddata{callsstarted}++;
+		#
+		if ((${newcalls} >= $cps) || 
+		    ($loaddata{callsstarted} >= $loaddata{maxcalls})) {
+			# done with starting calls for now.
+			last;
+		}
+	}
+	#
+	if ($verboseflag) {
+		vprint "startcallload: $newcalls new calls queue.\n";
+	}
+	# queue up next event to startup a call load.
+	starttimer("CALL-LOAD", 2, "CALL-LOAD");
+}
+#
+sub queueOrig {
+	my ($odn, $tdn, $delta) = @_;
+	#
+	# verify both DNs exist
+	#
+	my $ok = 1;
+	if (!exists($dndata{$odn})) {
+		vprint "Unknown Orig DN $odn.\n";
+		incrstats("origination","queueOrigUnknownOrigDN");
+		$ok = 0;
+	}
+	if (!exists($dndata{$tdn})) {
+		vprint "Unknown Term DN $tdn.\n";
+		incrstats("origination","queueOrigUnknownTermDN");
+		$ok = 0;
+	}
+	if (!$ok) {
+		vprint "returning without starting call.\n";
+		incrstats("origination","queueOrigCallNotStarted");
+		return;
+	}
+	#
+	# create call id
+	#
+	my $callid = int(rand(1000000000));
+	$callid = "${callid}${odn}\@$parameters{mysipip}";
+	#
+	# create a dialog
+	#
+	$dialogs{$callid}{dn} = $odn;
+	$dialogs{$callid}{origdn} = $odn;
+	$dialogs{$callid}{termdn} = $tdn;
+	$dialogs{$callid}{handler} = $dndata{$odn}{origination};
+	$dialogs{$callid}{contact} = dn2contact($tdn);
+	$dialogs{$callid}{mycontact} = dn2contact($odn);
+	$dialogs{$callid}{cseq} = int(rand(1000000000));
+	$dialogs{$callid}{"timertag"} = 0;
+	$dialogs{$callid}{"mytag"} = int(rand(1000000000));
+	$dialogs{$callid}{"mytag"} .= "mytag";
+	$dialogs{$callid}{maxforwards} = $parameters{"maxforwards"};
+	#
+	my $odnip = $dndata{$odn}{sipip};
+	my $odnport = $dndata{$odn}{sipport};
+	$dialogs{$callid}{"from"} = "sip:${odn}\@${odnip}:${odnport}";
+	# assign tag here for local dn. 
+	$dialogs{$callid}{"local"} = $dialogs{$callid}{"from"};
+	$dialogs{$callid}{"local"} .= ";tag=".$dialogs{$callid}{"mytag"};
+	#
+	my $tdnip = $dndata{$tdn}{sipip};
+	my $tdnport = $dndata{$tdn}{sipport};
+	$dialogs{$callid}{"requesturi"} = "sip:${tdn}\@${tdnip}:${tdnport}";
+	$dialogs{$callid}{"to"} = "sip:${tdn}\@${tdnip}:${tdnport}";
+	# default peer has no tag. the response to the INVITE should
+	# have the tag.
+	$dialogs{$callid}{"peer"} = $dialogs{$callid}{"to"};
+	#
+	# queue up a timer request
+	#
+	incrstats("origination","queueOrigStartTimerCalled");
+	starttimer($callid, $delta, "ORIGINATION");
+	return;
+}
+#
+sub queueReg {
+	my ($rdn, $delta) = @_;
+	#
+}
+#
+$previousorigdn = undef;
+$previoustermdn = undef;
+#
+sub parseAndExecInput {
+	my ($line, $pdone) = @_;
+	#
+	if ($line =~ /^q[\s]*$/i) {
+		printit "\nQuitting ...\n";
+		$$pdone = 1;
+	} elsif ($line =~ /^w/) {
+		printit "\n$line\n";
+	} elsif ($line =~ /^cls[\s]*$/) {
+		printit "\nClear Statistics: \n";
+		foreach my $key (sort keys %statistics) {
+			printit "${key}:\n";
+			foreach my $key2 (sort keys %{$statistics{$key}}) {
+				$statistics{$key}{$key2} = 0;
+			}
+		}
+	} elsif ($line =~ /^dp[\s]*$/) {
+		printit "\nParameters: \n";
+		foreach my $key (sort keys %parameters) {
+			printit "\t${key} = $parameters{$key}\n";
+		}
+	} elsif ($line =~ /^s[\s]*$/) {
+		printit "\nStatistics: \n";
+		foreach my $key (sort keys %statistics) {
+			printit "${key}:\n";
+			foreach my $key2 (sort keys %{$statistics{$key}}) {
+				printit "\t${key2} = $statistics{$key}{$key2}\n";
+			}
+		}
+	} elsif ($line =~ /^D[\s]*$/) {
+		$debugflag = !$debugflag;
+		if ($debugflag) {
+			printit "Debugging is ON\n";
+		} else {
+			printit "Debugging is OFF\n";
+		}
+	} elsif ($line =~ /^V[\s]*$/) {
+		$verboseflag = !$verboseflag;
+		if ($verboseflag) {
+			printit "Verbose is ON\n";
+		} else {
+			printit "Verbose is OFF\n";
+		}
+	} elsif ($line =~ /^cl[\s]*$/) {
+		printit "\nListing Call Originator-Terminator Pairs:\n";
+		foreach my $key (sort keys %{$loaddata{calls}}) {
+			printit "\tORIG $key ==>> TERM $loaddata{calls}{$key}\n";
+		}
+	} elsif ($line =~ /^cs[\s]*$/) {
+		printit "\nListing Call Load Data:\n";
+		foreach my $key (sort keys %{loaddata}) {
+			printit "\t$key ==>> $loaddata{$key}\n";
+		}
+	} elsif ($line =~ /^e[\s]+([^\s]+)/) {
+		my $listdn = $1;
+		if (!exists($dndata{$listdn})) {
+			printit "DN $listdn not found.\n";
+			return;
+		}
+		printit "\nEditting DN $listdn data:\n";
+		my $saveflags = 0;
+		fcntl(STDIN, F_GETFL, $saveflags);
+		my $newflags = $saveflags & ~O_NONBLOCK;
+		fcntl(STDIN, F_SETFL, $newflags);
+		foreach my $key (sort keys %{$dndata{$listdn}}) {
+			if (defined($dndata{$listdn}{$key})) {
+				printit "\t$key => $dndata{$listdn}{$key}\n";
+			} else {
+				printit "\t\$dndata{$listdn}{$key} undefined\n";
+			}
+			printit "enter new value [<CR>=current value]: ";
+			$line = <STDIN>;
+			chomp($line);
+			if ($line =~ /^[\s]*$/) {
+				printit "keeping current value.\n";
+			} else {
+				$dndata{$listdn}{$key} = $line;
+				printit "\tnew value for $key => $dndata{$listdn}{$key}\n";
+			}
+		}
+		fcntl(STDIN, F_SETFL, $saveflags);
+	} elsif ($line =~ /^l[\s]+([^\s]+)/) {
+		my $listdn = $1;
+		if (!exists($dndata{$listdn})) {
+			printit "DN $listdn not found.\n";
+			return;
+		}
+		printit "\nListing DN $listdn data:\n";
+		foreach my $key (sort keys %{$dndata{$listdn}}) {
+			if (defined($dndata{$listdn}{$key})) {
+				printit "\t$key => $dndata{$listdn}{$key}\n";
+			} else {
+				printit "\t\$dndata{$listdn}{$key} undefined\n";
+			}
+		}
+	} elsif ($line =~ /^l[\s]*$/) {
+		printit "\nListing DNs:\n";
+		foreach my $dn (sort keys %dndata) {
+			printit "DN $dn\n";
+			printit "\tregistrationstate => $dndata{$dn}{registrationstate}\n";
+			printit "\toriginationstate => $dndata{$dn}{originationstate}\n";
+			printit "\tterminationstate => $dndata{$dn}{terminationstate}\n";
+		}
+	} elsif ($line =~ /^d[\s]*$/) {
+		printit "\nListing Dialogs:\n";
+		foreach my $callid (sort keys %dialogs) {
+			printit "Call-ID $callid\n";
+		}
+	} elsif ($line =~ /^r[\s]+([^\s]+)/) {
+		my $regdn = $1;
+		printit "\nRegistering DN $regdn.\n";
+		queueReg($regdn, 0);
+	} elsif ($line =~ /^h[\s]*$/) {
+		haltcallload();
+	} elsif ($line =~ /^dpq[\s]*$/) {
+		dumpPQ($pq);
+	} elsif ($line =~ /^cpq[\s]*$/) {
+		printit "\nPQ count = ".$pq->count()."\n";
+	} elsif ($line =~ /^o[\s]*$/) {
+		if (defined($previousorigdn) && defined($previoustermdn)) {
+			printit "\nDN $previousorigdn calling DN $previoustermdn.\n";
+			queueOrig($previousorigdn, $previoustermdn, 0);
+			incrstats("origination","queueOrigCalled");
+		} else {
+			printit "Previous orig/term DNs not defined.\n";
+		}
+	} elsif ($line =~ /^o[\s]+([^\s]+)[\s]+([^\s]+)/) {
+		my $origdn = $previousorigdn = $1;
+		my $termdn = $previoustermdn = $2;
+		printit "\nDN $origdn calling DN $termdn.\n";
+		queueOrig($origdn, $termdn, 0);
+		incrstats("origination","queueOrigCalled");
+	} elsif ($line =~ /^c[\s]+([\d]+)[\s]+([\d]+)[\s]*$/) {
+		my $cps = $1;
+		my $holdtime = $2;
+		# give it BIG number to make it run forever.
+		my $maxcalls = 4000000000;
+		#
+		printit "\nStart call load:\n";
+		printit "\tCalls Per Sec = $cps\n";
+		printit "\tHold Time (secs) = $holdtime\n";
+		#
+		startcallload($cps, $holdtime, $maxcalls);
+	} elsif ($line =~ /^c[\s]+([\d]+)[\s]+([\d]+)[\s]+([\d]+)[\s]*$/) {
+		my $cps = $1;
+		my $holdtime = $2;
+		my $maxcalls = $3;
+		#
+		printit "\nStart call load:\n";
+		printit "\tCalls Per Sec = $cps\n";
+		printit "\tHold Time (secs) = $holdtime\n";
+		printit "\tMaximum Number of Calls  = $maxcalls\n";
+		#
+		startcallload($cps, $holdtime, $maxcalls);
+	} elsif ($line =~ /^\?/) {
+		printit "\nhelp text:\n";
+		printit "\t'?' - help text\n";
+		printit "\t'c cps holdtime' - start a call load (indefinite).\n";
+		printit "\t'c cps holdtime maxcalls' - start a call load.\n";
+		printit "\t'cl' - list call originator-terminator pairs.\n";
+		printit "\t'cls' - clear statistics.\n";
+		printit "\t'cs' - list call load data.\n";
+		printit "\t'd' - list active dialogs.\n";
+		printit "\t'dp' - dump parameters.\n";
+		printit "\t'D' - toggle debugging.\n";
+		printit "\t'dpq' - dump priority queue contents.\n";
+		printit "\t'cpq' - count of priority queue items.\n";
+		printit "\t'h' - stop call load gracefully.\n";
+		printit "\t'l' - list all DN data.\n";
+		printit "\t'l dn' - list DN data.\n";
+		printit "\t'e dn' - edit DN data.\n";
+		printit "\t'o dn dialdn' - dn calls dialdn.\n";
+		printit "\t'q' - quit\n";
+		printit "\t'r dn' - register dn.\n";
+		printit "\t's' - list statistics.\n";
+		printit "\t'V' - toggle verbose.\n";
+		printit "\t'w text' - write 'text' to stdout/logfile.\n";
+	} else {
+		printit "\nunknown cmd\n";
+	}
+	return;
+}
+#
+sub handleAdminInput {
+	my ($pdone) = @_;
+	#
+	my $line = <ADMIN>;
+	if (!defined($line)) {
+		return;
+	}
+	chomp($line);
+	#
+	parseAndExecInput($line, $pdone);
+	return;
+}
+#
+sub handleInput {
+	my ($pdone) = @_;
+	#
+	my $line = <STDIN>;
+	if (!defined($line)) {
+		return;
+	}
+	chomp($line);
+	#
+	parseAndExecInput($line, $pdone);
+	return;
+}
+#
+sub handleRTP {
+	my ($currtime, $recvpaddr, $rawmsg) = @_;
+	#
+	my $msglen = length($rawmsg);
+	printit "\nRTP msg received: length=$msglen\n";
+	#
+	my @rtpdata = unpack "N*", $rawmsg;
+	#
+	my $v = rbitval($rtpdata[0], 0, 1);
+	my $p = rbitval($rtpdata[0], 2, 2);
+	my $x = rbitval($rtpdata[0], 3, 3);
+	my $cc = rbitval($rtpdata[0], 4, 7);
+	my $m = rbitval($rtpdata[0], 8, 8);
+	my $pt = rbitval($rtpdata[0], 9, 15);
+	my $seqno = rbitval($rtpdata[0], 16, 31);
+	my $tstamp = $rtpdata[1];
+	my $ssrc = $rtpdata[2];
+	#
+	printit "v=$v \n";
+	printit "p=$p \n";
+	printit "x=$x \n";
+	printit "cc=$cc \n";
+	printit "m=$m \n";
+	printit "pt=$pt \n";
+	printit "seqno=$seqno \n";
+	printit "tstamp=$tstamp \n";
+	printit "ssrc=$ssrc \n";
+	#
+	if ($rtplogflag) {
+		print RTPLOGFILE "===START RTP===\n";
+		print RTPLOGFILE @rtpdata;
+		print RTPLOGFILE "\n===END RTP===\n";
+	}
+	return;
+}
+#
+sub handleRTCP {
+	my ($currtime, $recvpaddr, $rawmsg) = @_;
+	#
+	my $msglen = length($rawmsg);
+	printit "\nRTCP msg received: length=$msglen\n";
+	#
+	my @rtcpdata = unpack "N*", $rawmsg;
+	#
+	my $v = rbitval($rtcpdata[0], 0, 1);
+	my $p = rbitval($rtcpdata[0], 2, 2);
+	my $ic = rbitval($rtcpdata[0], 3, 7);
+	my $pt = rbitval($rtcpdata[0], 8, 15);
+	my $length = rbitval($rtcpdata[0], 16, 31);
+	#
+	printit "v=$v \n";
+	printit "p=$p \n";
+	printit "ic=$ic \n";
+	printit "pt=$pt \n";
+	printit "length=$length \n";
+	#
+	if ($rtplogflag) {
+		print RTPLOGFILE "===START RTCP===\n";
+		print RTPLOGFILE @rtcpdata;
+		print RTPLOGFILE "\n===END RTCP===\n";
+	}
+	return;
+}
+#
+sub handleCallLoad {
+	my ($ptimer) = @_;
+	#
+	if (!isMyTimer("CALL-LOAD", $ptimer)) {
+		$ptimer = undef;
+		return;
+	}
+	if (($loaddata{callsstarted} >= $loaddata{maxcalls}) ||
+	    ($loaddata{state} ne "running")) {
+		# done with starting calls for now.
+		if ($loaddata{callsstarted} >= $loaddata{maxcalls}) {
+			printit "\n\thandleCallLoad: Call load done.\n";
+		} elsif ($loaddata{state} ne "running") {
+			printit "\n\thandleCallLoad: Halting call load.\n";
+		}
+		#
+		$loaddata{state} = "idle";
+		#
+		printit "\nListing Call Load Data:\n";
+		foreach my $key (sort keys %{loaddata}) {
+			printit "\t$key ==>> $loaddata{$key}\n";
+		}
+		#
+		printit "\nStatistics: \n";
+		foreach my $key (sort keys %statistics) {
+			printit "${key}:\n";
+			foreach my $key2 (sort keys %{$statistics{$key}}) {
+				printit "\t${key2} = $statistics{$key}{$key2}\n";
+			}
+		}
+		return;
+	}
+	#
+	my $newcalls = 0;
+	#
+	for (my $o=0; $o<$loaddata{origdnsz}; ${o}++) {
+		my $i = ($loaddata{currentorigdn}+$o)%$loaddata{origdnsz};
+		my $odn = $loaddata{origdns}[$i];
+		my $tdn = $loaddata{calls}{$odn};
+		#
+		if ($verboseflag) {
+			vprint "handleCallLoad: ORID DN - TRYING $odn.\n";
+			vprint "handleCallLoad: TERM DN - TRYING $tdn.\n";
+		}
+		#
+		if ($dndata{$odn}{callloadstate} ne "INACTIVE") {
+			# skip this orig dn.
+			if ($verboseflag) {
+				vprint "\thandleCallLoad: ORID DN - SKIPPING $odn.\n";
+				vprint "\thandleCallLoad: TERM DN - SKIPPING $tdn.\n";
+			}
+
+			next;
+		}
+		if ($verboseflag) {
+			vprint "\thandlecallload: ORID DN - USING $odn (state=$dndata{$odn}{callloadstate}).\n";
+			vprint "\thandlecallload: TERM DN - USING $tdn.\n";
+		}
+		# set max length of call.
+		$dndata{$odn}{"maxcallduration"} = $loaddata{holdtime};
+		# we found a dn to start a call.
+		queueOrig($odn, $tdn, 1);
+		$dndata{$odn}{callloadstate} = "SCHEDULED";
+		incrstats("origination","queueOrigCalled");
+		# 
+		${newcalls}++;
+		$loaddata{callsstarted}++;
+		#
+		if ((${newcalls} >= $loaddata{callspersec}) ||
+		    ($loaddata{callsstarted} >= $loaddata{maxcalls})) {
+			# done with starting calls for now.
+			last;
+		}
+	}
+	#
+	if ($verboseflag) {
+		vprint "handleCallLoad: $newcalls new calls queue.\n";
+	}
+	# queue up next event to startup a call load.
+	if ($loaddata{callsstarted} >= $loaddata{maxcalls}) {
+		# done with starting calls for now.
+		$loaddata{state} = "idle";
+		printit "\thandleCallLoad: Call load done.\n";
+		#
+		printit "\nListing Call Load Data:\n";
+		foreach my $key (sort keys %{loaddata}) {
+			printit "\t$key ==>> $loaddata{$key}\n";
+		}
+		#
+		printit "\nStatistics: \n";
+		foreach my $key (sort keys %statistics) {
+			printit "${key}:\n";
+			foreach my $key2 (sort keys %{$statistics{$key}}) {
+				printit "\t${key2} = $statistics{$key}{$key2}\n";
+			}
+		}
+	} else {
+		# schedule next call load event
+		starttimer("CALL-LOAD", 1, "CALL-LOAD");
+	}
+	return;
+}
+#
+sub handleTimer {
+	my ($currtime, $ptimer) = @_;
+	#
+	if ($verboseflag) {
+		vprint "\nTimer expired: \n";
+	}
+	# check if call id data exits
+	if (!defined($ptimer->{callid})) {
+		vprint "\nNo Call-ID defined in timer.\n";
+		$ptimer = undef;
+		return;
+	}
+	my $callid = $ptimer->{callid};
+	if (!defined($dialogs{$callid})) {
+		vprint "\nNo timer dialog data for $callid defined.\n";
+		vprint "Call-ID: ".$ptimer->{callid}."\n";
+		vprint "Tag    : ".$ptimer->{expire}."\n";
+		vprint "Label  : ".$ptimer->{label}."\n";
+		$ptimer = undef;
+		return;
+	}
+	# check for call load event.
+	if ($ptimer->{callid} eq "CALL-LOAD") {
+		# start a call load.
+		handleCallLoad($ptimer);
+		return;
+	}
+	#
+	my $timertype = 0;
+	if ($ptimer->{label} =~ /^ORIGINATION$/) {
+		# call origination event
+		$timertype = 2;
+	} elsif ($ptimer->{label} =~ /^REGISTRATION$/) {
+		# registration event
+		$timertype = 3;
+	} else {
+		# regular timer
+		$timertype = 1;
+	}
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $handler = $dialogs{$callid}{handler};
+	my $state = $dndata{$dn}{state}{$handler};
+	my $hstate = undef;
+	#
+	dumpDnState($dn, $handler);
+	#
+	if (defined($fsm{$handler}{$state})) {
+		$hstate = $state;
+	} else {
+		$hstate = "DEFAULT";
+	}
+	#
+	vprint "\nEntry ${handler}-${hstate}-TIMER: Call-ID = <$callid>\n";
+	#
+	$fsm{$handler}{$hstate}{TIMER}->($dn, $state, $handler,
+		$callid, $timertype, $currtime, 
+		undef, undef, undef, $ptimer);
+	return;
+}
+#
+sub handleSIP {
+	my ($currtime, $recvpaddr, $rawmsg) = @_;
+	#
+	my $msglen = length($rawmsg);
+	if ($msglen < $parameters{minmsgsize}) {
+		# garbage msg, skip it ...
+		return;
+	}
+	if ($verboseflag) {
+		vprint "\nSIP msg received: length=$msglen\n";
+		dumpIncomingMsg($recvpaddr, $rawmsg);
+	}
+	#
+	my %hdrs = ();
+	my @datablocks = ();
+	my $rawhdr = undef;
+	my $rawdata = undef;
+	#
+	parseSipMsg($rawmsg, \$rawhdr, \$rawdata, \%hdrs, \@datablocks);
+	if ($verboseflag) {
+		dumphdrs(\%hdrs);
+	}
+	#
+	my $callid = undef;
+	if (defined($hdrs{"Call-ID"}) && 
+	    defined($dialogs{$hdrs{"Call-ID"}})) {
+		$callid = $hdrs{"Call-ID"};
+	} else {
+		if ($verboseflag) {
+			vprint "\nNo dialog data found.\n";
+		}
+		incrstats("general", "handleSip-sendGratuitous200OK");
+		sendGratuitous200OK(\%hdrs);
+		return;
+	}
+	if (!defined($dialogs{$callid}{handler})) {
+		vprint "\nNo handler for $callid defined.\n";
+		incrstats("general", "handleSip-no-handler-for-call-id");
+		return;
+	}
+	#
+	my $dn = $dialogs{$callid}{dn};
+	my $handler = $dialogs{$callid}{handler};
+	my $state = $dndata{$dn}{state}{$handler};
+	my $msgtype = $hdrs{msgtype};
+	my $hstate = undef;
+	my $hmsgtype = undef;
+	#
+	dumpDnState($dn, $state);
+	#
+	if (defined($fsm{$handler}{$state})) {
+		$hstate = $state;
+		if (defined($fsm{$handler}{$state}{$msgtype})) {
+			$hmsgtype = $msgtype;
+		} else {
+			$hmsgtype = "DEFAULT";
+		}
+	} else {
+		$hstate = "DEFAULT";
+		$hmsgtype = "DEFAULT";
+	}
+	vprint "\nEntry ${handler}-${hstate}-${hmsgtype}: Call-ID = <$callid>\n";
+	$fsm{$handler}{$hstate}{$hmsgtype}->($dn, $state, $handler,
+			$callid, 0, $currtime, $recvpaddr, 
+			\@datablocks, \%hdrs, undef);
+	return;
+}
+#
+#############################################################################
+#
+printit "\nSIP Simulator:\n";
+#
+# get cmd line options
+#
+my %opts;
+getopts('?xVl:r:', \%opts);
+foreach my $opt (%opts) {
+	if ($opt eq "l") {
+		$parameters{logfile} = $opts{$opt};
+		printit "\n==>> logfile = $parameters{logfile}\n";
+		open(LOGFILE, ">".$parameters{logfile}) or 
+			die "can't open $parameters{logfile}: $!";
+		LOGFILE->autoflush(1);
+		$logflag = 1;
+	} elsif ($opt eq "r") {
+		$parameters{rtplogfile} = $opts{$opt};
+		printit "\n==>> RTP logfile = $parameters{rtplogfile}\n";
+		open(RTPLOGFILE, ">".$parameters{rtplogfile}) or 
+			die "can't open $parameters{rtplogfile}: $!";
+		# binmode(RTPLOGFILE);
+		RTPLOGFILE->autoflush(1);
+		$rtplogflag = 1;
+	} elsif ($opt eq "x") {
+		$debugflag = 1;
+		printit "\n==>> debugflag = $debugflag\n";
+	} elsif ($opt eq "V") {
+		$verboseflag = 1;
+		printit "\n==>> verboseflag = $verboseflag\n";
+	} elsif ($opt eq "?") {
+		usage();
+		exit 0;
+	}
+}
+#
+# read in config file
+#
+my ($configfile) = @ARGV;
+if (!defined($configfile)) {
+	$configfile = "sipsimcfg";
+}
+readconfigfile($configfile);
+#
+dumpparams();
+dumpdndata();
+#
+# set up socket connections
+#
+my $proto = getprotobyname('udp');
+defined($proto) or die "getprotobyname: $!";
+#
+socket(SIP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+my $ipaddr = gethostbyname($parameters{mysipip});
+defined($ipaddr) or die "gethostbyname: $!";
+my $paddr = sockaddr_in($parameters{mysipport}, $ipaddr);
+defined($paddr) or die "getprotobyname: $!";
+bind(SIP, $paddr) or die "bind: $!";
+#
+socket(ADMIN, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+my $admin_ipaddr = gethostbyname($parameters{myadminip});
+defined($admin_ipaddr) or die "gethostbyname: $!";
+my $admin_paddr = sockaddr_in($parameters{myadminport}, $admin_ipaddr);
+defined($admin_paddr) or die "getprotobyname: $!";
+bind(ADMIN, $admin_paddr) or die "bind: $!";
+#
+if ($parameters{supportrtp}) {
+	socket(RTP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+	my $rtp_ipaddr = gethostbyname($parameters{myrtpip});
+	defined($rtp_ipaddr) or die "gethostbyname: $!";
+	my $rtp_paddr = sockaddr_in($parameters{myrtpport}, $rtp_ipaddr);
+	defined($rtp_paddr) or die "getprotobyname: $!";
+	bind(RTP, $rtp_paddr) or die "bind: $!";
+	#
+	socket(RTCP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+	my $rtcp_paddr = sockaddr_in($parameters{myrtcpport}, $rtp_ipaddr);
+	defined($rtcp_paddr) or die "getprotobyname: $!";
+	bind(RTCP, $rtcp_paddr) or die "bind: $!";
+}
+#
+my $rin = '';
+my $rout = '';
+#
+vec($rin, fileno(STDIN), 1) = 1;
+vec($rin, fileno(SIP), 1) = 1;
+vec($rin, fileno(ADMIN), 1) = 1;
+if ($parameters{supportrtp}) {
+	vec($rin, fileno(RTP), 1) = 1;
+	vec($rin, fileno(RTCP), 1) = 1;
+}
+#
+# we don't want to I/O block. if no input, just return.
+#
+fcntl(STDIN, F_SETFL, O_NONBLOCK);
+fcntl(SIP, F_SETFL, O_NONBLOCK);
+fcntl(ADMIN, F_SETFL, O_NONBLOCK);
+if ($parameters{supportrtp}) {
+	fcntl(RTP, F_SETFL, O_NONBLOCK);
+	fcntl(RTCP, F_SETFL, O_NONBLOCK);
+}
+#
+my $done = 0;
+my $start_time = time();
+my $current_time = $start_time;
+my $elapsed_time= 0;
+my $previous_time= 0;
+my $total_elapsed_time= 0;
+#
+# priority queue for timer events
+#
+$pq = "mypqueue"->new();
+defined($pq) or die "unable to create priority queue.";
+#
+# event loop for simulation. 
+#
+my $mydelta;
+my $key;
+my $pdata;
+my $nf;
+my $timeleft;
+#
+while ( ! $done) {
+	$previous_time = $current_time;
+	#
+	# determine how long to sleep.
+	#
+	if ($pq->isEmpty()) {
+		# no timers, just use default value.
+		$mydelta = $parameters{delta};
+	} elsif ($pq->front(\$pdata) == 1) {
+		# sleep until next scheduled event.
+		$mydelta = $pdata->{expire} - $current_time;
+		$mydelta = 0 if ($mydelta < 0);
+	} else {
+		printit "ERROR: event queue corruption, unable to calculate delta !!!\n";
+		exit 2;
+	}
+	#
+	# wait for input or timer to expire.
+	#
+	($nf, $timeleft) = select($rout=$rin, undef, undef, $mydelta);
+	#
+	# update internal clocks
+	#
+	$current_time = time();
+	$elapsed_time = $current_time-$previous_time;
+	$total_elapsed_time = $current_time-$start_time;
+	#
+	# handle any expired timers
+	#
+	if ($timeleft <= 0) {
+		while ($pq->dequeue(\$pdata) != 0) {
+			if ($pdata->{expire} > $current_time) {
+				$pq->enqueue($pdata);
+				last;
+			} 
+			handleTimer($current_time, $pdata);
+		}
+	}
+	#
+	# my $pqcnt = $pq->count();
+	# dprint "\nPQ count = $pqcnt\n";
+	#
+	# handle any input from user.
+	#
+	if (vec($rout, fileno(STDIN), 1)) {
+		handleInput(\$done);
+	}
+	if (vec($rout, fileno(ADMIN), 1)) {
+		handleAdminInput(\$done);
+	}
+	#
+	# handle any msgs from sockets: RTP, RTCP, SIP.
+	#
+	if (vec($rout, fileno(SIP), 1)) {
+		while (defined($recvpaddr = recv(SIP, my $msg, 8*1024, 0))) {
+			handleSIP($current_time, $recvpaddr, $msg);
+		}
+	}
+	if ($parameters{supportrtp}) {
+		if (vec($rout, fileno(RTCP), 1)) {
+			while (defined($recvpaddr = 
+				recv(RTCP, my $msg, 8*1024, 0))) {
+				handleRTCP($current_time, $recvpaddr, $msg);
+			}
+		}
+		if (vec($rout, fileno(RTP), 1)) {
+			while (defined($recvpaddr = 
+				recv(RTP, my $msg, 8*1024, 0))) {
+				handleRTP($current_time, $recvpaddr, $msg);
+			}
+		}
+	}
+}
+#
+close(SIP);
+if ($parameters{supportrtp}) {
+	close(RTP);
+	close(RTCP);
+}
+close(LOGFILE) if (exists($parameters{logfile}));
+close(RTPLOGFILE) if (exists($parameters{rtplogfile}));
+#
+exit 0;
+

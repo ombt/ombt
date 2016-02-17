@@ -1,0 +1,4 @@
+#calldata
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.25.3,rxport=2946,txport=2946,mgcidletmr=8
+set-sid:::::ihlcsgw6
+init-sys:ihlcsgw6::::10

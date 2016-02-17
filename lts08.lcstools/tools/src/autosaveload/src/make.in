@@ -1,0 +1,10 @@
+SHELLBIN=../bin
+#
+autosaveload
+autosaveload.sh
+#
+getloads
+getloads.sh
+#
+installcrontab
+installcrontab.sh

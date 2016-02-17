@@ -1,0 +1,30 @@
+MAKEFILE = makefile.msc
+
+SUBDIRS = nodes aosear bisear unisear btrack
+
+all:    nodes_dir aosear_dir bisear_dir unisear_dir btrack_dir
+
+nodes_dir:
+        cd nodes
+        $(MAKE) -f$(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+aosear_dir:
+        cd aosear
+        $(MAKE) -f$(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+bisear_dir:
+        cd bisear
+        $(MAKE) -f$(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+unisear_dir:
+        cd unisear
+        $(MAKE) -f$(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+btrack_dir:
+        cd btrack
+        $(MAKE) -f$(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..

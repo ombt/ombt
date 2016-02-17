@@ -1,0 +1,55 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+rtrv-eqpt-oper
+rtrv-eqpt-oper.sh
+#
+install1=-(rm $(HOME)/tools/bin/rtrv-eqpt)
+install2=-(rm $(HOME)/tools/bin/rtrv-eqpt-all)
+install3=-(rm $(HOME)/tools/bin/rtrv-alm-all)
+install4=-(rm $(HOME)/tools/bin/rtrv-chassis-eqpt)
+install5=-(rm $(HOME)/tools/bin/rtrv-info-eqpt)
+install6=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-eqpt
+install7=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-eqpt-all
+install8=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-alm-all
+install9=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-chassis-eqpt
+install10=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-info-eqpt
+install11=-(rm $(HOME)/tools/bin/rtrv-enet)
+install12=ln $(HOME)/tools/bin/rtrv-eqpt-oper $(HOME)/tools/bin/rtrv-enet
+#
+init-sys10
+init-sys10.sh
+#
+init-sys30
+init-sys30.sh
+#
+lynx-a
+lynx-a.sh
+#
+lynx-b
+lynx-b.sh
+#
+tl1-a
+tl1-a.sh
+#
+tl1-b
+tl1-b.sh
+#
+lcslabloads
+lcslabloads.sh
+#
+nrtrv-eqpt-oper
+nrtrv-eqpt-oper.sh
+#
+install1=-(rm $(HOME)/tools/bin/nrtrv-eqpt)
+install2=-(rm $(HOME)/tools/bin/nrtrv-eqpt-all)
+install3=-(rm $(HOME)/tools/bin/nrtrv-alm-all)
+install4=-(rm $(HOME)/tools/bin/nrtrv-chassis-eqpt)
+install5=-(rm $(HOME)/tools/bin/nrtrv-info-eqpt)
+install6=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-eqpt
+install7=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-eqpt-all
+install8=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-alm-all
+install9=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-chassis-eqpt
+install10=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-info-eqpt
+install11=-(rm $(HOME)/tools/bin/nrtrv-enet)
+install12=ln $(HOME)/tools/bin/nrtrv-eqpt-oper $(HOME)/tools/bin/nrtrv-enet
+#

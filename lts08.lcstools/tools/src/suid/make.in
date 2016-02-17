@@ -1,0 +1,19 @@
+CC=gcc
+CCFLAGS=-g
+LD=gcc
+LDFLAGS=-g
+SHELLBIN=$(HOME)/tools/bin
+#
+suid
+suid.c
+mydebug.c
+#
+install1=-(rm $(HOME)/tools/bin/suid)
+install2=cp suid $(HOME)/tools/bin/suid
+install3=chmod 6755 $(HOME)/tools/bin/suid
+#
+suidcmd
+suidcmd.sh
+#
+install1=-(rm -rf $(HOME)/tools/bin/suidtools)
+install2=-(mkdir -p $(HOME)/tools/bin/suidtools)

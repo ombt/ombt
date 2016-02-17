@@ -1,0 +1,7 @@
+#!/opt/exp/bin/perl -w
+#
+@fred = ();
+print "last element of (fred) = $#fred \n";
+$#fred = 2;
+print "last element of (fred) = $#fred \n";
+#

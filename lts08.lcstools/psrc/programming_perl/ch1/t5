@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+#
+%kids = (
+	"Mike" => [ "Jacob", "Mark" ],
+	"Clara" => [ "Erica", "Christopher" ],
+	"John" => [ "Jennifer", "Jonathan" ]
+);
+#
+foreach $key (keys %kids)
+{
+	@mykids = @$kids{$key};
+	$imax = $#mykids;
+	print "imax is ... $imax\n";
+	print "$key\'s kids are: ";
+	foreach $kid ((0..$imax))
+	{
+		print " $kid: $mykids[$kid]";
+	}
+	print "\n";
+}
+#
+exit 0

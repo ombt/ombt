@@ -1,0 +1,13 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS =	biter.o blist.o string.o
+
+all:	$(OBJS)
+	$(AR) $(UTILLIB) $(OBJS)
+ifdef RANLIB
+	$(RANLIB) $(UTILLIB)
+endif
+
+clean:
+	rm -rf $(OBJS) $(UTILLIB)
+

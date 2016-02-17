@@ -1,0 +1,208 @@
+MGC CM HUG:
+
+1) RTRV-CALL-CAPTVERBOSE;
+
+2) DLT-CALL-CAPTVERBOSE::1;
+
+3) RTRV-TRAFFICSTATS;
+
+4) ED-TRAFFICSTATS:::::OOS;
+
+5) RTRV-EQPT;
+
+6) RTRV-PM-CC;
+
+7) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+8) RTRV-EQPT;
+
+9) If the there is a new CM load, then do the following. If no new CM
+load, then go to step 30.
+
+10) Update CCM first. These are IOMs 14 and 15.
+
+11) RMV-EQPT::<standbyccm>; 
+
+12) Wait for CCM to be OOS,MA.
+
+13) ED-EQPT-ALL::<standbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+14) CPY-MEM::<standbyccm>;
+
+15) Wait for update to complete.
+
+16) RST-EQPT::<standbyccm>;
+
+17) Wait for standby CCM to restore IS,STBYH.
+
+18) RTRV-EQPT;
+
+19) RTRV-EQPT-ALL;
+
+20) SW-TOPROTN-EQPT::<activeccm>;
+
+21) Verify the new standby CCM (old active CCM) is OOS.
+
+22) RTRV-EQPT;
+
+23) ED-EQPT-ALL::<newstandbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+24) RTRV-EQPT;
+
+25) CPY-MEM::<newstandbyccm>;
+
+26) Wait for update to complete. the standby CCM should be IS,STBYH.
+
+27) RTRV-EQPT;
+
+28) RTRV-EQPT-ALL;
+
+29) Repeat steps 10 to 29 for every CM pair until done, then go to step 43.
+
+30) If there is no new CM load, but the CPU did change, then you still
+need to update the CMs. Update the CCMs first, then the remaining CM pairs.
+
+31) RTRV-EQPT;
+
+32) RMV-EQPT::<standbyccm>;
+
+33) ED-EQPT-ALL::<standbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+34) RST-EQPT::<standbyccm>;
+
+35) standby CCM should be IS,STBYH.
+
+36) RTRV-EQPT-ALL;
+
+37) SW-TOPROTN-EQPT::<activeccm>;
+
+38) ED-EQPT-ALL::<newstandbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+39) RST-EQPT::<newstandbyccm>;
+
+40) Wait for standby CCM to be IS,STBYH.
+
+41) RTRV-EQPT-ALL;
+
+42) Repeat steps 30 to 42 for every CM pair.
+
+43) RTRV-EQPT;
+
+44) RTRV-INFO-EQPT;
+
+45) ED-TRAFFICSTATS::::::IS;
+
+46) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG CM HUG:
+
+	NOT APPLICABLE 
+
+MG CM HUG:
+
+	NOT APPLICABLE 
+
+SG_MGC_MG CM HUG:
+
+	NOT APPLICABLE 
+
+SG_MGC CM HUG:
+
+1) RTRV-CALL-CAPTVERBOSE;
+
+2) DLT-CALL-CAPTVERBOSE::1;
+
+3) RTRV-TRAFFICSTATS;
+
+4) ED-TRAFFICSTATS:::::OOS;
+
+5) RTRV-EQPT;
+
+6) RTRV-PM-CC;
+
+7) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+8) RTRV-EQPT;
+
+9) If the there is a new CM load, then do the following. If no new CM
+load, then go to step 30.
+
+10) Update CCM first. These are IOMs 14 and 15.
+
+11) RMV-EQPT::<standbyccm>; 
+
+12) Wait for CCM to be OOS,MA.
+
+13) ED-EQPT-ALL::<standbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+14) CPY-MEM::<standbyccm>;
+
+15) Wait for update to complete.
+
+16) RST-EQPT::<standbyccm>;
+
+17) Wait for standby CCM to restore IS,STBYH.
+
+18) RTRV-EQPT;
+
+19) RTRV-EQPT-ALL;
+
+20) SW-TOPROTN-EQPT::<activeccm>;
+
+21) Verify the new standby CCM (old active CCM) is OOS.
+
+22) RTRV-EQPT;
+
+23) ED-EQPT-ALL::<newstandbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+24) RTRV-EQPT;
+
+25) CPY-MEM::<newstandbyccm>;
+
+26) Wait for update to complete. the standby CCM should be IS,STBYH.
+
+27) RTRV-EQPT;
+
+28) RTRV-EQPT-ALL;
+
+29) Repeat steps 10 to 29 for every CM pair until done, then go to step 43.
+
+30) If there is no new CM load, but the CPU did change, then you still
+need to update the CMs. Update the CCMs first, then the remaining CM pairs.
+
+31) RTRV-EQPT;
+
+32) RMV-EQPT::<standbyccm>;
+
+33) ED-EQPT-ALL::<standbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+34) RST-EQPT::<standbyccm>;
+
+35) standby CCM should be IS,STBYH.
+
+36) RTRV-EQPT-ALL;
+
+37) SW-TOPROTN-EQPT::<activeccm>;
+
+38) ED-EQPT-ALL::<newstandbyccm>:::SWVERSION=<newcmswversion>,APPSWVERSION=<newcpuswversion>.
+
+39) RST-EQPT::<newstandbyccm>;
+
+40) Wait for standby CCM to be IS,STBYH.
+
+41) RTRV-EQPT-ALL;
+
+42) Repeat steps 30 to 42 for every CM pair.
+
+43) RTRV-EQPT;
+
+44) RTRV-INFO-EQPT;
+
+45) ED-TRAFFICSTATS::::::IS;
+
+46) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG_MG CM HUG:
+
+	NOT APPLICABLE 
+

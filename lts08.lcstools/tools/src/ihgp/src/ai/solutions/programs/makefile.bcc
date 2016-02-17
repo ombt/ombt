@@ -1,0 +1,12 @@
+MAKEFILE = makefile.bcc
+
+SUBDIRS = 8puzzle logic parser prolog prover route tictac planner
+
+all:    $(SUBDIRS)
+
+$(SUBDIRS):
+        cd $@
+        $(MAKE) -f$(MAKEFILE) -DCFLAGS="$(CFLAGS)"
+        cd ..
+
+

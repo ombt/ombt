@@ -1,0 +1,7 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+load2images
+load2images.sh
+#
+# nload2images
+# nload2images.sh

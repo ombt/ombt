@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+foreach (@ARGV)
+{
+	if ( ! -e $_ )
+	{
+		print "$_ does not exit.\n";
+		next;
+	}
+	if ( -r $_ )
+	{
+		print "$_ is readable.\n";
+	}
+	if ( -w $_ )
+	{
+		print "$_ is writeable.\n";
+	}
+	if ( -x $_ )
+	{
+		print "$_ is excutable.\n";
+	}
+}

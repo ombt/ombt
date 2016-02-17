@@ -1,0 +1,34 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::234-100-1:::MTPVARIANT=ANSI
+ent-prfl-sgpc::1
+ent-sg-pc::10-10-10:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::10-20-10:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::234-30-10:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::234-6-1:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::220-192-0:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::234-100-2:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::234-100-3:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi
+#signaling links here
+ent-lset::1:::OPC=234-100-1,ADJDPC=10-10-10
+ent-lset::2:::OPC=234-100-1,ADJDPC=10-20-10
+ent-lset::3:::OPC=234-100-1,ADJDPC=234-30-10
+ent-lset::4:::OPC=234-100-1,ADJDPC=234-6-1
+ent-route-ss7::10-10-10-1:::lsetpriority=0
+ent-route-ss7::10-20-10-2:::lsetpriority=0
+ent-route-ss7::220-192-0-2:::lsetpriority=0
+ent-route-ss7::234-30-10-3:::lsetpriority=0
+ent-route-ss7::234-6-1-4:::lsetpriority=0
+ent-route-ss7::234-100-2-1:::lsetpriority=0
+ent-route-ss7::234-100-3-1:::lsetpriority=0
+ent-slk::1:::iomport=iom-1-port-17,chan=1,lsetid=1,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::2:::iomport=iom-3-port-17,chan=1,lsetid=1,slc=1,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::3:::iomport=iom-1-port-16,chan=1,lsetid=2,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::4:::iomport=iom-1-port-15,chan=1,lsetid=3,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::5:::iomport=iom-3-port-15,chan=1,lsetid=3,slc=1,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::6:::iomport=iom-1-port-18,chan=1,lsetid=4,slc=0,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+ent-slk::7:::iomport=iom-3-port-18,chan=1,lsetid=4,slc=1,mtp2prflid=1,mtp3prflid=1,lnkspeed=64K
+#MEGACO area
+ent-sg-mgcassoc::2:::OPCLIST=234-100-1,IPADDR=10.11.17.3,STAPORTRANGE=50000:is
+set-sid:::::ihlcsgw8

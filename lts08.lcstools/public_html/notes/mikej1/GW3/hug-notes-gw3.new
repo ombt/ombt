@@ -1,0 +1,119 @@
+rtrv-status-mgcproc:ihlcsgw3:ihlcsgw14:::;
+rtrv-status-mgcproc:ihlcsgw3:ihlcs3:::;
+
+=============LOGIN to lcsbld for privates================
+rlogin lcsbld1
+login: lcstools
+passwd: plexus9000
+
+### BTS INFO GW3 #####
+
+telnet 135.1.104.71
+
+btsadm
+plexus9000
+
+cd /opt/PlexDC
+BindIp=135.1.104.73
+GdiHost=135.1.104.104
+
+cd /opt/PlexDC/ihlcsgw5+6-gw3+4+lcs3/Bill_data/baf
+cdrsearch *.ama (file searched)
+
+
+tarsplogs -A/B
+/home/lcstools/tools/bin/untarsplogs ihlcsgw3_SP-A_log.tar.gz
+/home/lcstools/tools/bin/untarsplogs ihlcsgw3_SP-B_log.tar.gz
+
+RTRV-TRAFFICSTATS;
+ED-TRAFFICSTATS::::::IS;
+ED-TRAFFICSTATS::::::OOS;
+RTRV-BILLSYS:::::;
+ED-BILLSYS:ihlcsgw3::100::AMAGEN=ON,SWITCHNAME=ihlcsgw3;
+ED-BILLSYS:ihlcsgw3::100::AMAGEN=OFF,SWITCHNAME=ihlcsgw3;
+RTRV-DATASERVER-HOSTCFG;
+SET-DATASERVERHOSTCFG:IHLCSGW3::DATASERVERANET1=135.1.104.73;
+
+#lcsfiles 6.2.1.2.86 -> official path to files for a given load
+
+RTRV-EQPT;
+RTRV-INFO-EQPT;
+RTRV-EQPT-ALL;
+RTRV-PM-CC;
+RTRV-ALM-ALL;
+INIT-SYS:TELICA::::10;
+RTRV-CHASSIS-EQPT;
+RTRV-CALL-CAPTVERBOSE;
+ED-SYS-SECU:::::SSHENABLED=n;
+ED-SYS-SECU:::::SSHENABLED=y;
+
+===================EXTRACT FILES================================
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.SP.3.6_cpu.tar.gz;
+EXEC-TAR-EXTRACTSTBY::COM:::/home1/6.2.1.2.SP.3.6_cpu.tar.gz,/home1/;
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2_cm.tar.gz;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2_cm.tar.gz,/;
+
+===================BACKUP ======================================
+
+EXEC-BACKUP-PLEXUS::COM:::135.1.104.137,root,plexus9000,/FTPRoot;
+EXEC-BACKUP-PLEXUS::COM:::135.1.104.138,root,plexus9000,/FTPRoot;
+
+=====================UPGRADE SP-A/B=============================
+
+----------------------SP-A (active)-----------------------------
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.SP.3
+CPY-MEM::SP-B;
+RMV-EQPT::SP-B;
+wait 5 minutes
+EXEC-RUN-UPGRADE:ihlcsgw3:SP-B
+RST-EQPT::SP-B;
+
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.SP.3
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+CPY-MEM::SP-A;
+SW-TOPROTN-EQPT::SP-A:::norst;
+RTRV-ALM-ALL;
+RTRV-PM-CC;
+EXEC-RUN-UPGRADE:ihlcsgw3:SP-A
+RST-EQPT::SP-A;
+
+=====================UPGRADE CM/CCM STANDYBYS============================
+
+RMV-EQPT::IOM-15;
+RMV-EQPT::IOM-2;
+RMV-EQPT::IOM-4;
+
+ED-EQPT-ALL::IOM-15:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+ED-EQPT-ALL::IOM-2:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+ED-EQPT-ALL::IOM-4:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+
+CPY-MEM::IOM-15;
+CPY-MEM::IOM-2;
+CPY-MEM::IOM-4;
+
+RST-EQPT::IOM-15;
+RST-EQPT::IOM-2;
+RST-EQPT::IOM-4;
+
+=====================UPGRADE CM/CCM ACTIVE ================================
+
+SW-TOPROTN-EQPT::IOM-14;
+ED-EQPT-ALL::IOM-14:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+CPY-MEM::IOM-14;
+
+SW-TOPROTN-EQPT::IOM-1;
+ED-EQPT-ALL::IOM-1:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+CPY-MEM::IOM-1;
+
+SW-TOPROTN-EQPT::IOM-3;
+ED-EQPT-ALL::IOM-3:::SWVERSION=6.2.1.2,APPSWVERSION=6.2.1.2.SP.3;
+CPY-MEM::IOM-3;

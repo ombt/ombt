@@ -1,0 +1,14 @@
+#calldata
+#MEGACO area
+ed-mgc-assoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.25.3,,RXPORT=2947
+#ISDN info for MG
+ent-iua-sys
+ent-iua-endptasp::1:::ipaddr1=10.11.25.3,port1=53008
+ent-iua-endptasp::2:::ipaddr1=10.11.25.3,port1=53240
+ent-iua-asp::1-1:::desc=gw5mgca
+ent-iua-asp::2-2:::desc=gw5mgcb
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+ent-iua-lnk::1017:::asid=1,iomport=iom-1-port-17,lnktype=network
+ent-iua-lnk::1018:::asid=1,iomport=iom-1-port-18,lnktype=network
+set-sid:::::ihlcsgw12

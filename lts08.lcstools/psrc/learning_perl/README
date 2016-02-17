@@ -1,0 +1,25 @@
+There are 69 exercise solutions from Learning Perl, Appendix A, provided
+in the examples.tar.gz file, and also in examples.zip, as shown below.
+In this list, ex_nn-m refers to the solution for exercise m, chapter nn.
+
+ex_02-1     ex_04-5a    ex_07-1d    ex_09-1     ex_13-1     ex_15-3
+ex_02-2     ex_04-5b    ex_07-1d2   ex_09-2     ex_13-2     ex_15-4a
+ex_02-3     ex_05-1a    ex_07-1e    ex_10-1     ex_13-3     ex_15-4b
+ex_02-4     ex_05-1b    ex_07-2a    ex_10-2     ex_13-4     ex_16-1
+ex_03-1a    ex_05-2     ex_07-2b    ex_10-3     ex_13-5     ex_17-1
+ex_03-1b    ex_06-1     ex_07-2c    ex_10-4     ex_14-1     ex_17-2
+ex_03-2     ex_06-2     ex_07-3     ex_11-1     ex_14-2     ex_18-1
+ex_03-3     ex_06-3     ex_07-4     ex_11-2     ex_14-3     ex_19-1
+ex_04-1     ex_06-4     ex_07-5     ex_11-3     ex_14-4     ex_19-2
+ex_04-2     ex_07-1a    ex_08-1     ex_12-1     ex_14-5
+ex_04-3     ex_07-1b    ex_08-2     ex_12-2a    ex_15-1
+ex_04-4     ex_07-1c    ex_08-3     ex_12-2b    ex_15-2
+
+Also included in examples.tar.gz and examples.zip are the following
+examples from Chapter 1 and Chapter 19:
+
+ch01_hello	ch19_guestbook
+ch01_last	ch19_icecream_4
+ch01_secret	ch19_sort_uniq_links
+
+If you have any questions, please send email to: bookquestions@ora.com.

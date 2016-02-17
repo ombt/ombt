@@ -1,0 +1,60 @@
+PROTOCOL: itu
+MSG: Initial Address (IAM)
+	FIXED: 
+		nature of connection indicators:6: ff
+		forward call indicators:7: ffff
+		calling partys category:9: ff
+		transmission medium requirement:2: ff
+	VARIABLE: 
+		called party number:4: ffffffffff
+	OPTIONAL: 
+		call reference:1: 
+		calling party number:10: 
+		correlation id:101: 
+		SCF id:102: 
+		redirecting number:11: 
+		called IN number:111: 
+		call offering treatment indicators:112: 
+		conference treatment indicators:114: 
+		UID capability indicators:117: 
+		redirect counter:119: 
+		application transport:120: 
+		collect call request:121: 
+		pivot capability:123: 
+		called directgory number:125: 
+		original called IN number:127: 
+		calling geodetic location:129: 
+		connection request:13: 
+		network routing number:132: 
+		quality on release capability:133: 
+		pivot counter:135: 
+		pivot routing forward indicator:136: 
+		redirect status:138: 
+		redirect forward information:139: 
+		number portability forward information:141: 
+		redirection information:19: 
+		generic number:192: 
+		generic digits:193: 
+		closed user group interlock code:26: 
+		user service information:29: 
+		access transport:3: 
+		user-to-user information:32: 
+		transit network selection:35: 
+		circuit assignment map:37: 
+		original called number:40: 
+		user-to-user indicators:42: 
+		origination ISC point code:43: 
+		generic notification indicator:44: 
+		network specific facility:47: 
+		user service information prime:48: 
+		propagation delay counter:49: 
+		service activation:50: 
+		user teleservice information:52: 
+		call diversion information:54: 
+		echo control information:55: 
+		parameter compatibility information:57: 
+		hop counter:61: 
+		redirect capability:78: 
+		optional forward call indicators:8: 
+END MSG: Initial Address (IAM)
+END PROTOCOL: itu

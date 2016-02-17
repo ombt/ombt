@@ -1,0 +1,183 @@
+1) amagen-off
+	turn-off AMA record generation.
+2) amagen-on
+	turn-on AMA record generation.
+3) auditimages
+	looks for duplicate entries per cpuload in images relation.
+4) auditscripts
+	compares existing TL1 scripts to loads available for reload.
+	old TL1 scripts that point to loads no longer available
+	can be removed.
+5) audittext
+	compare files in text directories agains images relation.
+6) checkloads
+	verifies every file listed in images relation exists in a
+	text directory.
+8) copyscripts
+	copies current official Tl1 scripts to users scripts directory
+	on a per-load basis. updates software version in hardware
+	scripts.
+9) cronjobs
+	installs overnight saveload cronjobs.
+10) dbquery
+	allows queries of all lcstools Unity relations:
+		basebranch binary buildmachines chassis
+		filesystems hwchassis hwenet hwioms
+		hwtdm images labloads labs
+		loads notification parameters scripts
+11) ftpsp
+	FTP between lts08 and a Plexus CPU (A or B).
+12) getspips
+	queuies chassis relation and returns SP IPs for a given labid.
+13) gnutar
+	short-cut which points to GNU version of tar.
+14) hw2chassis
+	script which creates hwchassis relation using data from TL1 scripts.
+15) hw2enet
+	script which creates hwenet relation using data from TL1 scripts.
+16) hw2ioms
+	script which creates hwioms relation using data from TL1 scripts.
+17) hw2tdm
+	script which creates hwtdm relation using data from TL1 scripts.
+18) init-sys10
+	executes TL1 init-sys:10 command.
+19) init-sys30
+	executes TL1 init-sys:30 command.
+20) ip2bip
+	converts an IP and mask to broadcast IP.
+21) iprecover
+	script to recover IP interface on an SP. used by lcsreboot
+	and other tools.
+22) lcsconfigure
+	enables/disables/lists loads for reload.
+23) lcscopytl1
+	copies current official Tl1 scripts to users scripts directory
+	on a per-load basis. updates software version in hardware
+	scripts. used by saveload.
+24) lcsdf
+	returns total disk usage for lcstools file systems.
+25) lcsdu
+	returns file usage for lcstools directories.
+26) lcslabloads
+	list loads available for reload for a given labid.
+27) lcsloads
+	list load/image data.
+28) lcslockadm
+	creates/deletes/lists current active locks (semaphores). locks 
+	are used to prevent collisions between reload of labs and saveload.
+29) lcslocks
+	lists current active locks.
+30) lcsreboot
+	reboots a Plexus (SP-A or SP-B, or both). allows users to boot
+	into min-mode (OS-only) and into application mode (all apps 
+	are running). before a reload, the switch MUST be in min-mode.
+31) lcsreload
+	reload a lab with a given load. you can also boot the lab after
+	the reload. can be done interactively or via command-line and 
+	in the background.
+32) lcsremoveload
+	remove old loads consistently. all text files are removed and 
+	relations are updated.
+33) lcssaveload
+	copy a load from Marlboro build machine to local lts08 repository.
+	if requested, it will copy Tl1 scripts for a given list of labids
+	and enable the load for reload of the same labs. can run in a 
+	cronjobs.
+34) lcssendemail
+	send email for specific events. uses relation notification to 
+	determine the list of email recipients.
+35) lcsshowvars
+	show current lcstools shell variables.
+36) lcsspaudit
+	audits all application files on an SP. compares the files on an SP
+	to the official list of files stored in the load tarfiles.
+37) lcsstat
+	returns status of a Plexus.
+38) lf
+	lf-like shell script. installed on every SP.
+39) load2images
+	return the list of images associated with a load.
+40) lynx-a
+	short-cut script, calls pxmonitor for lynx-a interface.
+41) lynx-b
+	short-cut script, calls pxmonitor for lynx-b interface.
+42) mkcurrdirs
+	make Tl1 scripts directories. driven by chassis relation.
+43) mkhwscripts
+	creates hardware Tl1 scripts using hardware relations.
+44) nlcsstat
+	returns status of a Plexus.
+45) nsipsimadm
+	SIPSIM admin tool.
+46) nsipsimisup
+	SIPSIM SIP call simulator (supports encapsulated ISUP).
+47) postlcsreload
+	sets up environment on an SP after a reload (allows splitting a 
+	lab, setting time, update /etc/motd, max cpymems, ...).
+48) prtisupmsgs
+	SIPSIM tools, print out ISUP messages.
+49) pts.hogs
+	returns the number of pts used by all logins.
+50) rtrv-alm-all
+	remote Tl1 command.
+51) rtrv-chassis-eqpt
+	remote Tl1 command.
+52) rtrv-enet
+	remote Tl1 command.
+53) rtrv-eqpt
+	remote Tl1 command.
+54) rtrv-eqpt-all
+	remote Tl1 command.
+55) save3.11
+	saveload script for 3.11.
+56) save5.3
+	saveload script for 5.3.
+57) save6.1
+	saveload script for 6.1
+58) save6.2
+	saveload script for 6.2
+59) savemg5.4
+	saveload script for MG 5.4.
+60) savemgc5.4
+	saveload script for MGC 5.4.
+61) sendudp
+	send UDP messages for SIPSIM
+62) set-bts-server
+	remote Tl1 command.
+63) setup_lcs
+	script to set up LCSTOOLS environment. used by ALL users 
+	of lcstools.
+64) sndrcvudp
+	send/receive UDP messages for SIPSIM
+65) suid
+	set-uid tool for lcstools.
+66) suidcmd
+	set-uid shell script for lcstools.
+67) tarcmcores
+	creates tar file containing all core files from a CM or
+	a list of CMs. 
+68) tarcmlogs
+	creates tar file containing all log files from a CM or
+	a list of CMs. 
+69) telnetsp
+	telnet to either SP-A or SP-B. uses chassis relation
+	to get IPs.
+70) testisupmsgs
+	test SIPSIM IUSP messages.
+71) tl1-a
+	telnet to TL1 port on SP-A.
+72) tl1-b
+	telnet to TL1 port on SP-B.
+73) tl1cmd
+	remotely execute one TL1 command.
+74) tl1exec
+	remotely execute a file containing TL1 commands. this is primary
+	interface for provisioning a lab.
+75) tl1sh
+	access TL1 interface via telnet.
+76) tl1tailer
+	tails a TL1 port and saves output in a log file.
+77) untarcmcores
+	expand tar file created by tarcmcores.
+78) untarcmlogs
+	expand tar file created by tarcmlogs.

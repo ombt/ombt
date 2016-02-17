@@ -1,0 +1,13 @@
+./sample_adv
+
+Donsample matrices using traditional and non-traditional methods
+
+Make sure that both methods give the same results
+
+Clock the traditional downsampling
+	It took 4.64 sec to complete the test
+
+Clock the 'new style' downsampling (with lazy matrices)
+	It took 2.22 sec to complete the test
+
+Compilation finished at Thu Dec 21 13:20:17

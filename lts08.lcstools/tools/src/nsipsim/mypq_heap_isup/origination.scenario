@@ -1,0 +1,97 @@
+scenario origination {
+state start {
+	send INVITE {
+		From: XXXX
+		To: XXXX
+			...
+		sdp {
+			...
+		}
+	}
+	starttimer WAITFOR200INVITE SECONDS;
+	next waitfor200invite;
+}
+state waitfor200invite {
+	expect {
+		timer WAITFOR200INVITE {
+			send CANCEL {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFOR200CANCEL SECONDS;
+			next waitfor200cancel;
+		}
+		100 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		180 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		183 INVITE {
+			starttimer WAITFOR200INVITE SECONDS;
+			next waitfor200invite;
+		}
+		200 INVITE {
+			send ACK {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer CALLDURATION SECONDS;
+			next talking;
+		}
+	}
+}
+state talking {
+	expect {
+		timer CALLDURATION {
+			send BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFOR200BYE SECONDS;
+			next waitfor200bye;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+state waitfor200bye {
+	expect {
+		timer WAITFOR200BYE {
+			next idle;
+		}
+		200 BYE {
+			next idle;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+state waitfor200cancel {
+	expect {
+		timer WAITFOR200CANCEL {
+			next idle;
+		}
+		200 CANCEL {
+			next idle;
+		}
+	}
+}
+}

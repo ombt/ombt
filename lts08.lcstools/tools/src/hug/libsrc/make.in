@@ -1,0 +1,93 @@
+TCLBIN=$(LCSHUGLIB)
+#
+db.tcl
+db.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+checkenv.tcl
+checkenv.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+getoptval.tcl
+getoptval.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+cfgdata.tcl
+cfgdata.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+checkretval.tcl
+checkretval.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+scripts.tcl
+scripts.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+oscripts.tcl
+oscripts.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hugftp.tcl
+hugftp.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hugtelnet.tcl
+hugtelnet.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hugtl1.tcl
+hugtl1.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+lock.tcl
+lock.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+chooseone.tcl
+chooseone.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hughardware.tcl
+hughardware.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+cleis.tcl
+cleis.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hwmaint.tcl
+hwmaint.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+flashparts.tcl
+flashparts.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+iomips.tcl
+iomips.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+iomfps.tcl
+iomfps.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+hugmisc.tcl
+hugmisc.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+ncleis.tcl
+ncleis.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+dequeue.tcl
+dequeue.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+local.tcl
+local.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'
+#
+nhwmaint.tcl
+nhwmaint.TCL
+install1=pkg_mkindex $(LCSHUGLIB) '*.tcl'

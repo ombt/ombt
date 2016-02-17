@@ -1,0 +1,7 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+tl1exec
+tl1exec.sh
+#
+tl1cmd
+tl1cmd.sh

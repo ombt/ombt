@@ -1,0 +1,13 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = route.o
+TARGETS = route
+
+all:	$(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+route:	$(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(AILIB) $(UTILLIB) -o $@
+

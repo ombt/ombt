@@ -1,0 +1,13 @@
+ent-mgc-mgassoc::ihlcsgw14:::name=10.11.41.3,port=2947,megacoprflid=2,cpupercent=75
+sleep 75
+ent-mgc-mgiua::ihlcsgw14:::ipadesta=10.11.41.4,mgiuaporta=9900,ipadestb=10.11.41.5,mgiuaportb=9900
+sleep 75
+ent-ss7-trk::3-1&&-24:::mgname=ihlcsgw14,termid=t/1/4/1:is
+ent-ss7-trk::4-101&&-124:::mgname=ihlcsgw14,termid=t/1/5/1:is
+ent-ss7-trk::5-201&&-224:::mgname=ihlcsgw14,termid=t/1/6/1:is
+ent-ss7-trk::6-301&&-324:::mgname=ihlcsgw14,termid=t/3/5/1:is
+ent-ss7-trk::10-1&&-2:::mgname=ihlcsgw14,termid=t/1/7/1:is
+ent-ss7-trk::11-100&&-102:::mgname=ihlcsgw14,termid=t/1/7/4:is
+#
+ent-list-aintrigger::TERMSIM-1:::category=subscribed,trigtype=OFF_HOOK_DELAY,SERVICEID=SIM:is
+ed-trkgrp::1021:::AINTRIGLIST=TERMSIM

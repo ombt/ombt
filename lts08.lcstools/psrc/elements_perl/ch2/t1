@@ -1,0 +1,11 @@
+#!/usr/bin/perl -w
+#
+use strict;
+#
+my $foo = 1;
+my $bar = 2;
+$foo = $bar + 1;
+#
+print "foo is ... $foo\n";
+#
+exit 0

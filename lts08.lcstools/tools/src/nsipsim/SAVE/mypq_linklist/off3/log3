@@ -1,0 +1,107 @@
+
+200 ORIG-TERM DN pairs read.
+
+Start call load:
+	Calls Per Sec = 20
+	Hold Time (secs) = 10
+	Maximum Number of Calls  = 10000
+	handleCallLoad: Call load done.
+
+Statistics: 
+general:
+	handleSip-sendGratuitous200OK = 235
+	starttimerenqueuecalled = 47923
+msgs-received:
+	BYE = 378
+	RETURNCODE180INVITE = 8213
+	RETURNCODE200BYE = 6946
+	RETURNCODE200CANCEL = 411
+	RETURNCODE200INVITE = 9225
+	RETURNCODE486INVITE = 170
+msgs-sent:
+	ACK = 9208
+	BYE = 9208
+	CANCEL = 622
+	INVITE = 10000
+origination:
+	abandoned = 0
+	inactive = 10000
+	queueOrigCalled = 10000
+	queueOrigStartTimerCalled = 10000
+	received180Invite = 8213
+	received200Invite = 9208
+	sendAck = 9208
+	sendBye = 9208
+	sendCancel = 622
+	sendInvite = 10000
+	stable = 9208
+	started = 10000
+	timedout = 0
+	timedout-1 = 622
+	timedout-2 = 9208
+	timedout-3 = 2262
+	timedout-4 = 211
+	unexpectedmsgs-4 = 160
+	waitfor200cancel-received200OK = 411
+termination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+
+Listing Call Load Data:
+	calls ==>> HASH(0x32a714)
+	callspersec ==>> 20
+	callsstarted ==>> 10000
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 10000
+	origdns ==>> ARRAY(0x32a780)
+	origdnssz ==>> 0
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> 45198240
+
+Statistics: 
+general:
+	handleSip-sendGratuitous200OK = 235
+	starttimerenqueuecalled = 47923
+msgs-received:
+	BYE = 378
+	RETURNCODE180INVITE = 8213
+	RETURNCODE200BYE = 6946
+	RETURNCODE200CANCEL = 411
+	RETURNCODE200INVITE = 9225
+	RETURNCODE486INVITE = 170
+msgs-sent:
+	ACK = 9208
+	BYE = 9208
+	CANCEL = 622
+	INVITE = 10000
+origination:
+	abandoned = 0
+	inactive = 10000
+	queueOrigCalled = 10000
+	queueOrigStartTimerCalled = 10000
+	received180Invite = 8213
+	received200Invite = 9208
+	sendAck = 9208
+	sendBye = 9208
+	sendCancel = 622
+	sendInvite = 10000
+	stable = 9208
+	started = 10000
+	timedout = 0
+	timedout-1 = 622
+	timedout-2 = 9208
+	timedout-3 = 2262
+	timedout-4 = 211
+	unexpectedmsgs-4 = 160
+	waitfor200cancel-received200OK = 411
+termination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+
+Quitting ...

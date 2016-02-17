@@ -1,0 +1,41 @@
+#
+# global data used by reload script.
+#
+globals data {
+	branch BRANCH-5-3
+	cpu_load 5.3.0.4.33
+	spa {
+		ip 135.1.105.11
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	spb {
+		ip 135.1.105.12
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	ftp {
+		textdir /l148/text/BRANCH-5-3/
+		images {
+			ana 5.3.0.4.1_ana.tar.gz
+			octds3 5.3.0.4.8_octds3.tar.gz
+			trids3_3 5.3.0.4.8_trids3_3.tar.gz
+			ena 5.3.0.4.7_ena.tar.gz
+			voip 5.3.0.4.7_voip.tar.gz
+			ena2 5.3.0.4.7_ena2.tar.gz
+			cm 5.3.0.4.7_cm.tar.gz
+			cpu 5.3.0.4.33_cpu.tar.gz
+			ds1_2 5.3.0.4.9_ds1_2.tar.gz
+			octds3_2 5.3.0.4.8_octds3_2.tar.gz
+			trids3 5.3.0.4.8_trids3.tar.gz
+			octds3_3 5.3.0.4.8_octds3_3.tar.gz
+			voip6 5.3.0.4.7_voip6.tar.gz
+			tdmoc 5.3.0.4.9_tdmoc.tar.gz
+		}
+		scriptsdir /home/lcstools/tools/src/hug/scripts
+	}
+}

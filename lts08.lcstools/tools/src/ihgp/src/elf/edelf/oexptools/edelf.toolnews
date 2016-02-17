@@ -1,0 +1,59 @@
+09/03/04
+========
+Installed Version 1.3.1 of edelf
+
+Added further support for STABS and some bug fixes. STABS parsing
+is off by default; it can be enabled using the 'P' command under
+the STABS menu.
+
+07/14/04
+========
+Installed Version 1.3 of edelf
+
+Added basic support for editting STABS debug data. Use the "S" option
+to review/update the STABS data. STABS data are produced by a 
+compiler when the "-g" option is used. It is the default storage
+mechanism for debug data. An alternative method is "DWARF", which
+is not supported as of now. Both the Solaris 5.0 CC and GNU g++
+compilers support STABS. 
+
+In the near future, I hope to add a parser for the STABS strings data.
+
+01/17/04
+========
+Installed Version 1.2 of edelf
+
+Added paging to disassembler output. Use the "P" command to set
+the number of lines per page. A value of 0 means no paging.
+
+08/05/03
+========
+Installed Version 1.1 of edelf.
+
+Added a 32-bit PPC disassembler, in addition to the existing 32-bit
+SPARC disassembler.
+
+01/15/03
+========
+Currently edelf only works with 32-bit ELF files. A new check prevents
+the usage of edelf with 64-bit ELF files. 64-bit support will be added
+in the future.
+
+09/10/02
+========
+Installed Version 1.0 of edelf.
+
+Edelf is an ELF (Executable and Linking Format) file editor. It allows a user 
+to view and update parts of an ELF file. All executables, object files 
+and shared libraries on Solaris machines have an internal format
+described by ELF.
+
+Comments, complaints and suggestions are welcomed. Please send all
+email to:
+
+	mrumore@lucent.com
+
+For a quick online tutorial, please go to:
+
+	http://ihgpweb.ih.lucent.com/~rumore/edelf/index.html
+

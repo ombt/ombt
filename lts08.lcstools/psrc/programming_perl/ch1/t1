@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+#
+%longname = (
+	"Sun" => "Sunday",
+	"Mon" => "Monday",
+	"Tue" => "Tuesday",
+	"Wed" => "Wednesday",
+	"Thu" => "Thursday",
+	"Fri" => "Friday",
+	"Sat" => "Saturday"
+);
+#
+foreach (keys %longname)
+{
+	print "key: $_ value: $longname{$_}\n";
+}
+#
+foreach (@ARGV)
+{
+	if ($longname{$_})
+	{
+		print "$_ ==>> $longname{$_}\n";
+	}
+	else
+	{
+		print "$_ ==>> Unknown\n";
+	}
+}
+#
+exit 0

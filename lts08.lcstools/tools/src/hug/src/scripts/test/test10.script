@@ -1,0 +1,13 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	max_sleep_time 10
+	sleep_time <max_sleep_time>
+	sleep_time_variable <sleep_time>
+}
+
+prepare exec {
+
+	sleep <sleep_time_variable>
+}

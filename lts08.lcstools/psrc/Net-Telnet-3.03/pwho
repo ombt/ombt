@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+use Net::Telnet ();
+$t = new Net::Telnet (Timeout => 10, Prompt => '/bash\$ $/');
+$t->open("ihlsb1.ih.lucent.com");
+$t->login("integ", "maxima66");
+@lines = $t->cmd("who");
+print @lines;
+

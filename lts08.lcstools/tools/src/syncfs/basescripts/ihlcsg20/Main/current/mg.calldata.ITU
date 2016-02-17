@@ -1,0 +1,4 @@
+ed-mg-mgcassoc::ihlcsgw19-part0::::is
+sleep 10
+set-sid:::::ihlcsgw20
+init-sys:ihlcsgw20::::10

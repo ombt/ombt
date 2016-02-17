@@ -1,0 +1,81 @@
+.nf
+.PS
+scale=100
+define t101 |
+[ box invis ht 26 wid 78 with .sw at 0,0
+"\fR\s10\&process events for\fP\s0" at 39,19
+"\fR\s10\&a call\fP\s0" at 39,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 78 with .sw at 0,0
+"\fR\s10\&process events for\fP\s0" at 39,19
+"\fR\s10\&station receiver\fP\s0" at 39,6
+] |
+
+define t103 |
+[ box invis ht 26 wid 84 with .sw at 0,0
+"\fR\s10\&process event for\fP\s0" at 42,19
+"\fR\s10\&station transmitter\fP\s0" at 42,6
+] |
+
+define t107 |
+[ box invis ht 26 wid 82 with .sw at 0,0
+"\fR\s10\&dequeue next event\fP\s0" at 41,19
+"\fR\s10\&from queue\fP\s0" at 41,6
+] |
+
+box invis ht 624 wid 496 with .sw at 0,0
+"\fR\s10\&start program\fP\s0" at 248,569
+line -> from 0,304 to 192,304 
+t101 with .nw at 369,72
+line -> from 0,0 to 0,304 
+box ht 40 wid 104 with .nw at 200,248 
+line -> from 408,0 to 0,0 
+line -> from 312,304 to 384,304 
+box ht 40 wid 96 with .nw at 360,80 
+line -> from 408,40 to 408,0 
+t102 with .nw at 213,76
+line -> from 248,40 to 248,0 
+box ht 40 wid 104 with .nw at 200,80 
+line -> from 112,40 to 112,0 
+box ht 24 wid 104 with .nw at 200,136 
+line -> from 304,128 to 408,80 
+line -> from 248,112 to 248,80 
+line -> from 200,128 to 112,80 
+box ht 40 wid 104 with .nw at 64,80 
+line -> from 248,160 to 248,136 
+t103 with .nw at 78,76
+"\fR\s10\&check type of event\fP\s0" at 252,125
+line -> from 248,208 to 248,184 
+box ht 32 wid 88 with .nw at 208,440 
+box ht 24 wid 120 with .nw at 192,184 
+line -> from 432,288 to 432,256 
+"\fR\s10\&current time = event time\fP\s0" at 256,173
+box ht 32 wid 88 with .nw at 392,256 
+"\fR\s10\&yes\fP\s0" at 344,317
+t107 with .nw at 207,240
+"\fR\s10\&initialize stations\fP\s0" at 256,425
+line -> from 248,288 to 248,248 
+"\fR\s10\&no\fP\s0" at 272,269
+box ht 32 wid 88 with .nw at 208,488 
+line -> from 248,352 to 248,320 
+"\fR\s10\&initialize system\fP\s0" at 256,521
+box ht 32 wid 120 with .nw at 192,320 
+"\fR\s10\&is event queue empty ?\fP\s0" at 248,309
+box ht 32 wid 88 with .nw at 208,536 
+line -> from 248,408 to 248,392 
+"\fR\s10\&initialize cable\fP\s0" at 252,473
+line -> from 248,456 to 248,440 
+box ht 32 wid 88 with .nw at 208,584 
+line -> from 248,504 to 248,488 
+box ht 40 wid 104 with .nw at 200,392 
+box ht 32 wid 112 with .nw at 384,320 
+line -> from 248,552 to 248,536 
+"\fR\s10\&program ends\fP\s0" at 432,241
+"\fR\s10\&generate initial calls\fP\s0" at 256,373
+"\fR\s10\&print call data reports\fP\s0" at 440,305
+"\fR\s10\&get next event in queue\fP\s0" at 92,285
+"\fR\s14\&MAIN FUNCTION FLOW CHART\fP\s0" at 260,609
+.PE
+.fi

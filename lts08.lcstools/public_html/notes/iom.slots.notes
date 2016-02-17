@@ -1,0 +1,60 @@
+<html>
+
+<head>
+<title> HUG Notes </title>
+</head>
+
+<body bgcolor="E0E0E0">
+<font>
+
+<pre>
+
+6/2007 - IOM slots notes - 6/13/2007 - BP-6-2-1-2
+
+
+The maximum number of SS7 A-links on an IOM is 8 for:
+
+89-0414 DS1/E1 IOMs
+89-0410 and 89-0424 Triple DS3 IOMs
+89-0411 and 89-0425 Octal DS3 IOMS
+
+The maximum number of low-speed SS7 A-links for a Lucent SG is 128.
+Primary and secondary A-Links should not be on the same IOM.
+
+Module slots
+
+A protected pair of OC-3c Network Adapter Interface Module (ANA), 89-0388-C,
+can only be installed in I/O-1 and I/O-2. It cannot be provisioned unless 
+the card in its mated pair I/O slot is also an ANA module.
+
+A channelized OC-3 module, 89-0400-A, requires a channelized OC-3 rear module
+(89-0402- A). The rear module can terminate four OC-3 lines. Only the first 
+eight STS-1 can be provisioned. STS-1 through STS-6 can be bulk provisioned. 
+STS-7 and STS-8 cannot be bulk provisioned, but must be provisioned 
+individually. A maximum of four protected pairs of Channelized OC-3 modules 
+are supported. It cannot be provisioned unless the card in its mated pair 
+I/O slot is also a Channelized OC-3 module.
+
+OC3 TDM slots are:
+I/O-1 and I-O-2
+I/O-3 and I-O-4
+I/O-14 and I-O-15
+I/O-16 and I-O-17
+
+ENAs must be in I/O-8 and I/O-10. If all 4 GigE ports on the ENA are used, 
+then I/O-11 cannot be used for an IOM.
+
+DS1/E1 modules can be installed in any slot and I/O-7 is the protection 
+slot for DS1/E1 modules.
+
+DS3/STS1 modules can be installed in any slot and I/O-5 and I/O-13 for are the
+protection slots. I/O-5 protects I/O-1 to 4 and I/O-6 to 8 and I/O-13 
+protects I/O-9 to 12 and I/O-14 to 17.
+
+Voice Server (VS) modules can be installed in any slot and the protection 
+slot is I/O-9.
+
+</pre>
+</font>
+</body>
+</html>

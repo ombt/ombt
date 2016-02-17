@@ -1,0 +1,16 @@
+hrdcpy stat
+ enter the number of points
+5
+ enter point
+23
+ enter point
+32
+ enter point
+44
+ enter point
+55
+ enter point
+22
+ mean =     35.2000
+ standard deviation  =     200.700
+hrdcpy exit

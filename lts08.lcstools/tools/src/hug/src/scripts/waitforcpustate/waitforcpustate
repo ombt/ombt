@@ -1,0 +1,8 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/waitforcpustate
+}
+source <scriptsdir>/waitforcpustate.globals
+source <scriptsdir>/waitforcpustate.minmode
+source <scriptsdir>/waitforcpustate.appmode
+source <scriptsdir>/waitforcpustate.rtrv_eqpt
+source <scriptsdir>/waitforcpustate.waiting

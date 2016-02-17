@@ -1,0 +1,7 @@
+#!/bin/sh
+#	GNU C++ linking
+gcc -O -pipe -W -Wall -Wpointer-arith -Wenum-clash -Woverloaded-virtual \
+-Wstrict-prototypes -Wmissing-prototypes \
+-finline-functions  -fforce-mem -funsigned-char \
+-fforce-addr -fomit-frame-pointer \
+$* -liberty -liostream -lg++ -lm

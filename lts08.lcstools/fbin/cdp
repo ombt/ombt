@@ -1,0 +1,93 @@
+#
+# allow user to cd to any directory stored in a path-type variable.
+#
+# usage: cdp [-x] [-p path] [directory number] [relative directory]
+#
+#########################################################################
+#
+cdp () {
+#
+typeset dollar1 rd n i j dirs p usage _cdp
+integer j n jmax
+#
+usage="usage: cdp [-x] [-p path] [directory number] [relative directory]"
+p=
+rd=
+#
+set -- `getopt ?xp: $*`
+if [ $? -ne 0 ]
+then
+    echo $usage >&2
+    return
+fi
+#
+for i in $*
+do
+    case $i in
+    -x)
+	set -x		# debug mode
+	shift
+	;;
+    -p)
+	p=$2		# path variable
+	shift 2
+	;;
+    --)
+	shift
+	break
+	;;
+    esac
+done
+#
+p=${p:-${CDPDEF:-"STSINC"}}	# default path variable
+rd=
+#
+if [ $# -ge 2 ]
+then
+    dollar1=${1}
+    rd="/${2}"
+    shift 2
+    set -- $dollar1
+fi
+#
+# get path variable
+#
+eval p=\$${p}
+p=`echo $p | sed 's/^:/.:/; s/:::*/:.:/g; s/:$/:./; s/:/ /g;'`
+#
+# get directories in path
+#
+j=1
+for i in $p
+do
+    _cdp[j]=${i}
+    if [ $# -eq 0 ]
+    then
+	echo "cdp ${j} --> ${_cdp[j]}"
+    fi
+    let "jmax = j"
+    let "j = j + 1"
+done
+#
+# cd to given directory
+#
+if [ $# -ne 0 ]
+then
+    n=${1}
+    shift
+    if [ n -lt 1 -o n -gt jmax ]
+    then
+	echo "Directory number $n is out of range." >&2
+	return
+    fi
+    if [ -d "${_cdp[n]}${rd}" ]
+    then
+	cd ${_cdp[n]}${rd}
+	echo ${_cdp[n]}${rd}
+    else
+	echo "${_cdp[n]}${rd} is not a directory."
+    fi
+fi
+#
+return
+}

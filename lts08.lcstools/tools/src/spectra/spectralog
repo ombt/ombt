@@ -1,0 +1,198 @@
+#!/opt/exp/bin/perl -w 
+#
+# SPECTRA API logging program
+#
+########################################################################
+#
+# modules
+#
+use Cwd;
+use Carp;
+use Fcntl;
+use Storable qw(dclone);
+use IO::Socket;
+use Getopt::Std;
+use Time::Local;
+#
+# functions
+#
+sub printit {
+	my ($msg) = @_;
+	print LOGFILE ${msg};
+	print STDERR ${msg};
+}
+#
+sub usage {
+	printit "\n";
+	printit "usage: spectralog [-?] [-l logfile] MYIP MYPORT\n";
+	printit "\n";
+}
+#
+sub handleInput {
+	my ($pdone) = @_;
+	#
+	my $line = <STDIN>;
+	if (!defined($line)) {
+		return;
+	}
+	chomp($line);
+	#
+	if ($line =~ /^q[\s]*$/i) {
+		printit "\nQuitting.\n";
+		$$pdone = 1;
+	} else {
+		printit "\nUnknown command: $line \n";
+	}
+	#
+	return;
+}
+#
+sub handleSpectra {
+	my ($rawmsg, $current_time, $recv_paddr, $minmsgsize) = @_;
+	#
+	#my $msglen = length($rawmsg);
+	#if ($msglen < $minmsgsize) {
+		#printit "\nSkipping msg: sizeof(msg) < minmsgsize.\n";
+		#return;
+	#}
+	#
+	print LOGFILE "DATE: $current_time \n";
+	print LOGFILE "START OF MSG:\n";
+	print LOGFILE "$rawmsg";
+	print LOGFILE "\nEND OF MSG:\n";
+	return;
+}
+#
+#############################################################################
+#
+# redirect STDERR to STDOUT.
+#
+# open STDERR, ">&STDOUT";
+#
+print "\nSPECTRA API Logging:\n";
+#
+# default values
+#
+$spectralog = "/tmp/spectralog.out$$";
+#
+# get cmd line options
+#
+my %opts;
+getopts('?xl:', \%opts);
+#
+foreach my $opt (%opts) {
+	if ($opt eq "l") {
+		$spectralog = $opts{$opt};
+	} elsif ($opt eq "?") {
+		usage();
+		exit 0;
+	}
+}
+#
+# log files
+#
+open(LOGFILE, ">".$spectralog) or die "can't open $spectralog: $!";
+LOGFILE->autoflush(1);
+#
+printit "\nSpectra Log File: $spectralog \n";
+#
+# check IP and port.
+#
+my $errors = 0;
+my ($spectraip, $spectraport)= @ARGV;
+if (!defined($spectraip) || $spectraip eq "") {
+	$errors = 1;
+	printit "\nERROR: Spectra IP not given.\n";
+}
+if (!defined($spectraport) || $spectraport eq "") {
+	$errors = 1;
+	printit "\nERROR: Spectra PORT not given.\n";
+}
+if ($errors) {
+	printit "\nERROR: Exiting.\n";
+	usage();
+	exit 2;
+}
+printit "Spectra IP  : $spectraip\n";
+printit "Spectra Port: $spectraport\n";
+#
+# set up socket connections
+#
+my $proto = getprotobyname('udp');
+if (!defined($proto)) {
+	printit "ERROR: getprotobyname failed: $! \n";
+	exit 2;
+}
+#
+my $retval = socket(SPECTRALOG, PF_INET, SOCK_DGRAM, $proto);
+if (!defined($retval) || !$retval) {
+	printit "ERROR: socket failed: $! \n";
+	exit 2;
+}
+my $ipaddr = gethostbyname($spectraip);
+if (!defined($ipaddr)) {
+	printit "ERROR: gethostbyname failed: $! \n";
+	exit 2;
+}
+my $paddr = sockaddr_in($spectraport, $ipaddr);
+if (!defined($paddr)) {
+	printit "ERROR: sockaddr_in failed: $! \n";
+	exit 2;
+}
+#
+$retval = bind(SPECTRALOG, $paddr);
+if (!defined($retval) || !$retval) {
+	printit "ERROR: bind failed: $! \n";
+	exit 2;
+}
+#
+my $rin = '';
+my $rout = '';
+#
+vec($rin, fileno(STDIN), 1) = 1;
+vec($rin, fileno(SPECTRALOG), 1) = 1;
+#
+# we don't want to I/O block. if no input, just return.
+#
+fcntl(STDIN, F_SETFL, O_NONBLOCK);
+fcntl(SPECTRALOG, F_SETFL, O_NONBLOCK);
+#
+my $done = 0;
+my $start_time = time();
+my $current_time = $start_time;
+my $mydelta = 10;
+#
+# ignore death-of-child signal
+#
+$SIG{CHLD} = "IGNORE";
+#
+# wait for API messages or input from user
+#
+while ( ! $done) {
+	# wait for input or timer to expire.
+	($nf, $timeleft) = select($rout=$rin, undef, undef, $mydelta);
+	# update internal clocks
+	$nf = $nf;
+	$timeleft = $timeleft;
+	$current_time = time();
+	# handle any input from user.
+	if (vec($rout, fileno(STDIN), 1)) {
+		# we have input from the user.
+		handleInput(\$done);
+	}
+	# handle any msgs from sockets.
+	if (vec($rout, fileno(SPECTRALOG), 1)) {
+		# we have one or more messages from the spectra.
+		while (defined($recvpaddr = recv(SPECTRALOG, my $msg, 8*1024, 0))) {
+			handleSpectra($msg, $current_time, $recvpaddr, 50);
+		}
+	}
+}
+#
+# clean up
+#
+close(SPECTRALOG);
+close(LOGFILE);
+#
+exit 0;
+

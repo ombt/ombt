@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+use strict;
+#
+my $input;
+print "enter name: ";
+$input = <STDIN>;
+print "name is ... $input";
+#
+exit 0

@@ -1,0 +1,88 @@
+scenario termination {
+state start {
+	expect {
+		INVITE {
+			send 100 INVITE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			send 180 INVITE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			send 183 INVITE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer RINGING SECONDS:
+			next ringing;
+		}
+	}
+}
+state ringing {
+	expect {
+		timer RINGING {
+			send 200 INVITE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFORACK SECONDS;
+			next waitforack;
+		}
+	}
+}
+state waitforack {
+	expect {
+		timer WAITFORACK {
+			next idle;
+		}
+		ACK {
+			starttimer TALKING SECONDS;
+			next talking;
+		}
+	}
+}
+state talking {
+	expect {
+		timer TALKING {
+			send BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			starttimer WAITFOR200BYE SECONDS;
+			next waitfor200bye;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+state waitfor200bye {
+	expect {
+		timer WAITFOR200BYE {
+			next idle;
+		}
+		200 BYE {
+			next idle;
+		}
+		BYE {
+			send 200 BYE {
+				From: XXXX
+				To: XXXX
+				...
+			}
+			next idle;
+		}
+	}
+}
+}

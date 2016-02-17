@@ -1,0 +1,21 @@
+lts08:off1> /opt/exp/perl/bin/dprofpp -u                                   
+Total Elapsed Time = 142.4460 Seconds                                      
+         User Time = 7.075791 Seconds                                      
+Exclusive Times                                                            
+%Time ExclSec CumulS #Calls sec/call Csec/c  Name                          
+ 46.6   3.299  2.706 169685   0.0000 0.0000  mytimer::cmp                  
+ 21.0   1.487  2.920   2126   0.0007 0.0014  mypqueue::enqueue             
+ 20.1   1.428  1.552   2512   0.0006 0.0006  main::parseSipMsg             
+ 10.6   0.756  1.518   2059   0.0004 0.0007  mypqueue::remove              
+ 5.23   0.370  6.472   2512   0.0001 0.0026  main::handleSIP               
+ 4.52   0.320  0.319    401   0.0008 0.0008  Storable::dclone              
+ 3.80   0.269  4.507   2512   0.0001 0.0018  main::termination             
+ 3.53   0.250  0.325   2544   0.0001 0.0001  main::makepaddr               
+ 3.11   0.220  0.175  12984   0.0000 0.0000  main::incrstats               
+ 2.83   0.200  0.398    999   0.0002 0.0004  main::sendInvite200OK         
+ 2.54   0.180  0.167   3572   0.0001 0.0000  mytimer::new                  
+ 1.70   0.120  1.700   2059   0.0001 0.0008  main::removetimer             
+ 1.41   0.100  0.109   3000   0.0000 0.0000  Socket::sockaddr_in           
+ 1.27   0.090  0.195    546   0.0002 0.0004  main::send200OK               
+ 1.13   0.080  0.063   4994   0.0000 0.0000  mypqueue::isEmpty             
+lts08:off1>                                                                

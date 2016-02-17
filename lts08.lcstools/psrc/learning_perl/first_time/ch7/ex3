@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+#
+while (<STDIN>)
+{
+	chomp;
+	($login, $user) = (split(/:/))[0,4];
+	print "1: login: $login, user: $user\n";
+	$user =~ s/^[^-]*-([^\(]*)\(.*$/\1/;
+	print "2: login: $login, user: $user\n";
+}

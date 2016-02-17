@@ -1,0 +1,39 @@
+#!/opt/exp/bin/perl -w
+#
+$ifile = "t1_input_file";
+open(INFD, $ifile) || die "unable to open $ifile: $!";
+#
+while (defined($a = <INFD>)) {
+	(defined($b = <INFD>)) || die "unable to read 'b': $!";
+	(defined($c = <INFD>)) || die "unable to read 'c': $!";
+	(defined($d = <INFD>)) || die "unable to read 'd': $!";
+	#
+	# $b = <INFD>;
+	# $c = <INFD>;
+	# $d = <INFD>;
+	#
+	chomp($a);
+	chomp($b);
+	chomp($c);
+	chomp($d);
+	#
+	@results = (
+		$a, $b, $c, $d,
+		$a*$b, $a+$b, $a-$b,
+		$c*$d, $c+$d, $c-$d
+		);
+	#
+	#foreach $idx (sort @results) {
+		#print "$idx: $results[$idx] ...\n";
+	#}
+	#
+	$maxidx = @results;
+	$idx = 0;
+	while ($idx < $maxidx) {
+		print "$idx: $results[$idx]\n";
+		$idx++;
+	}
+}
+#
+close(INFD);
+

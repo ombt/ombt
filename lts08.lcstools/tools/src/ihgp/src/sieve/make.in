@@ -1,0 +1,8 @@
+CC = cc
+CCFLAGS = -g
+LD = cc
+LDFLAGS = -g
+#
+sieve
+sieve.c
+install1=cp sieve $(HOME)/bin

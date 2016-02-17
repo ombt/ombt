@@ -1,0 +1,7 @@
+CC=CC
+CCFLAGS = -g 
+LD = CC
+LDFLAGS = -g
+#
+sears
+sears.c

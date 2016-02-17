@@ -1,0 +1,14 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+syncfs
+syncfs.sh
+install1=-(rm $(HOME)/tools/bin/lcssyncfs)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcssyncfs
+# install3=chmod 750 syncfs
+# install4=chmod 750 $(SHELLBIN)/syncfs
+#
+syncfscrontab
+syncfscrontab.sh
+install1=-(rm $(HOME)/tools/bin/syncfscrontab)
+install2=cp syncfscrontab $(HOME)/tools/bin/syncfscrontab
+#

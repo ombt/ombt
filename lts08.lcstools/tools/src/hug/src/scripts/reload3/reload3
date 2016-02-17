@@ -1,0 +1,111 @@
+#
+# reload scripts
+#
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/reload3
+}
+#
+# data
+#
+source <scriptsdir>/globals
+#
+# boot switch functions
+#
+source <scriptsdir>/minmode
+source <scriptsdir>/appmode
+#
+# get hardware states
+#
+source <scriptsdir>/rtrveqpt
+source <scriptsdir>/iomstate
+source <scriptsdir>/cpustate
+#
+# reload operations
+#
+source <scriptsdir>/removetarfiles
+source <scriptsdir>/ftpload
+source <scriptsdir>/removeload
+source <scriptsdir>/installnewload
+#
+# run tl1 file
+#
+source <scriptsdir>/runtl1file
+#
+# clean up
+#
+# source <scriptsdir>/closestreams
+#
+#########################################################
+#
+# testing of scripts
+#
+min_mode exec {
+	call minmode <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> <scriptsdir>
+}
+app_mode exec {
+	call appmode <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> 
+}
+#
+rtrv_eqpt exec {
+	call rtrveqpt <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 
+}
+#
+cpu_state_isact_isstbyh exec {
+	call cpustate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> isact,isstbyh isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> 
+}
+cpu_state_minmode exec {
+	call cpustate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> minmode minmode <login> <passwd> <tl1login> <tl1passwd> 
+}
+#
+iom_state_1 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 1 isact,isstbyh
+}
+iom_state_2 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 2 isact,isstbyh
+}
+iom_state_3 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 3 isact,isstbyh
+}
+iom_state_4 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 4 isact,isstbyh
+}
+iom_state_5 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 5 isact,isstbyh
+}
+iom_state_6 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 6 isact,isstbyh
+}
+iom_state_14 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 14 isact,isstbyh
+}
+iom_state_15 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 15 isact,isstbyh
+}
+#
+remove_tar_files exec {
+	call removetarfiles <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd>
+}
+remove_load exec {
+	call removeload <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> <scriptsdir>
+}
+ftp_load exec {
+	call ftpload <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> <textdir> images
+}
+install_new_load exec {
+	call installnewload <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <login> <passwd> <cpuload> images
+}
+users exec {
+	call runtl1file users
+}
+mgchardware1 exec {
+	call runtl1file mgc.hardware1
+}
+mgchardware2 exec {
+	call runtl1file mgc.hardware2
+}
+mgccalldata1 exec {
+	call runtl1file mgc.calldata1
+}
+mgccalldata2 exec {
+	call runtl1file mgc.calldata2
+}

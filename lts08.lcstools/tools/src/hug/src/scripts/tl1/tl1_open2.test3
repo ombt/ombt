@@ -1,0 +1,78 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/tl1
+}
+globals data {
+	reqspastate isact,isstbyh
+	reqspbstate isact,isstbyh
+	#
+	ihlcs1 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.113
+		}
+		spb {
+			ip 135.1.104.114
+		}
+	}
+	ihlcs2 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.141
+		}
+		spb {
+			ip 135.1.104.142
+		}
+	}
+	ihlcsgw7 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.197
+		}
+		spb {
+			ip 135.1.104.198
+		}
+	}
+	ihlcsg14 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.105.11
+		}
+		spb {
+			ip 135.1.105.12
+		}
+	}
+	#
+	inproglogfile /tmp/tl1.inprog.logfile
+	denylogfile /tmp/tl1.deny.logfile
+	misclogfile /tmp/tl1.misc.logfile
+}
+ihlcs1 exec {
+	call rtrv_eqpt ihlcs1
+}
+ihlcs2 exec {
+	call rtrv_eqpt ihlcs2
+}
+ihlcsgw7 exec {
+	call rtrv_eqpt ihlcsgw7
+}
+ihlcsg14 exec {
+	call rtrv_eqpt ihlcsg14
+}
+rtrv_eqpt exec { labid } {
+	waitforcpustate -t900 <<labid>.spa.ip> <reqspastate> <<labid>.login> <<labid>.passwd> <<labid>.tl1login> <<labid>.tl1passwd> <<labid>.spb.ip> <reqspbstate> <<labid>.login> <<labid>.passwd> <<labid>.tl1login> <<labid>.tl1passwd>
+	tl1 open2 -t30 tl1sp <<labid>.spa.ip> <<labid>.spb.ip> <<labid>.tl1login> <<labid>.tl1passwd>
+	tl1 exec -v tl1sp rtrv-eqpt
+	tl1 close tl1sp
+}

@@ -1,0 +1,63 @@
+<html>
+<head>
+<title> DLP/DLP-702 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-702 FTPING SOFTWARE FOR AN SP SOFTWARE CHANGE </h3>
+<pre>
+
+1) Determine the partitions where CurrRel points. CurrRel can point
+to /Telica/swCPU or /home1/Telica/swCPU.
+
+2) Next, FTP the load files to the switch. Use the command EXEC-FTP-GET.
+
+	EXEC-FTP-GET:[TID]:[&lt;src>]:[CTAG]::
+	&lt;srchost>,&lt;username>,&lt;password>,&lt;srcfile>,
+	[&lt;destdir>],[&lt;suppressoutput>],[&lt;tmout>];
+
+If CurrRel points to /Telica/swCPU, then the following command will 
+put the tar files in the /home1 partitions:
+
+	EXEC-FTP_GET::COM:::ftp.server.ip,ftplogin,ftppasswd,
+		/ftp/full/path/Y.Y.Y.Y.Y_cpu.tar.gz,/home1;
+
+If CurrRel points to /home1/Telica/swCPU, then the following command will 
+put the tar files in the /home1 partitions:
+
+	EXEC-FTP_GET::COM:::ftp.server.ip,ftplogin,ftppasswd,
+		/ftp/full/path/Y.Y.Y.Y.Y_cpu.tar.gz,/;
+
+3) Now the software must be copied from the active processor to the
+standby processor. Use the EXDC-CP-TOSTBY command.
+
+	EXEC-CP-TOSTBY:[TID]:[&lt;src>]:[CTAG]::
+	[&lt;switches>],&lt;source>,&lt;dest>,[&lt;suppressoutput>];
+
+4) To copy the software from active SP to standby SP, you need to 
+indicate where the software is located in the active processor, and 
+when to place the software in the standby processor:
+
+If active SP CurrRel points to /Telica/swCPU and standby SP
+CurrRel points to /Telica/swCPU, then do this:
+
+	EXEC-CP-TOSTBY::COM::-rp,/home1/Y.Y.Y.Y.Y_cpu.tar.gz,/home1/;
+
+If active SP CurrRel points to /Telica/swCPU and standby SP
+CurrRel points to /home1/Telica/swCPU, then do this:
+
+	EXEC-CP-TOSTBY::COM::-rp,/home1/Y.Y.Y.Y.Y_cpu.tar.gz,/;
+
+If active SP CurrRel points to /home1/Telica/swCPU and standby SP
+CurrRel points to /home1/Telica/swCPU, then do this:
+
+	EXEC-CP-TOSTBY::COM::-rp,/Y.Y.Y.Y.Y_cpu.tar.gz,/;
+
+If active SP CurrRel points to /home1/Telica/swCPU and standby SP
+CurrRel points to /Telica/swCPU, then do this:
+
+	EXEC-CP-TOSTBY::COM::-rp,/Y.Y.Y.Y.Y_cpu.tar.gz,/home1/;
+
+5) The CPU tar files are now on both SPs.
+
+</pre>
+</font></body>
+</html>

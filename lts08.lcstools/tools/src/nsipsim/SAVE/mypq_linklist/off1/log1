@@ -1,0 +1,106 @@
+
+Statistics: 
+general:
+	handleSip-sendGratuitous200OK = 209
+	starttimerenqueuecalled = 5515
+msgs-received:
+	ACK = 1668
+	BYE = 1641
+	CANCEL = 163
+	INVITE = 1913
+msgs-sent:
+	BYE = 189
+	RETURNCODE180INVITE = 1830
+	RETURNCODE200BYE = 1565
+	RETURNCODE200CANCEL = 20
+	RETURNCODE200CANCEL-GRATUITOUS = 139
+	RETURNCODE200INVITE = 1830
+	RETURNCODE486INVITE = 83
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 1830
+	invalidtimers-1 = 83
+	send200OK = 1565
+	send200OKCancel = 20
+	send486Busy = 83
+	sendBye = 189
+	sendInvite180Ringing = 1830
+	sendInvite200OK = 1830
+	stable = 1666
+	started = 1830
+	timedout = 0
+	timedout-1 = 144
+	timedout-2 = 189
+	timedout-3 = 18
+	unexpectedmsgs-1 = 12
+
+Listing Call Load Data:
+	calls ==>> HASH(0x32c334)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x32c3a0)
+	origdnssz ==>> 0
+	state ==>> idle
+	tag ==>> -1
+
+Listing Call Load Data:
+	calls ==>> HASH(0x32c334)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x32c3a0)
+	origdnssz ==>> 0
+	state ==>> idle
+	tag ==>> -1
+
+Statistics: 
+general:
+	handleSip-sendGratuitous200OK = 209
+	starttimerenqueuecalled = 5515
+msgs-received:
+	ACK = 1668
+	BYE = 1641
+	CANCEL = 163
+	INVITE = 1913
+msgs-sent:
+	BYE = 189
+	RETURNCODE180INVITE = 1830
+	RETURNCODE200BYE = 1565
+	RETURNCODE200CANCEL = 20
+	RETURNCODE200CANCEL-GRATUITOUS = 139
+	RETURNCODE200INVITE = 1830
+	RETURNCODE486INVITE = 83
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 1830
+	invalidtimers-1 = 83
+	send200OK = 1565
+	send200OKCancel = 20
+	send486Busy = 83
+	sendBye = 189
+	sendInvite180Ringing = 1830
+	sendInvite200OK = 1830
+	stable = 1666
+	started = 1830
+	timedout = 0
+	timedout-1 = 144
+	timedout-2 = 189
+	timedout-3 = 18
+	unexpectedmsgs-1 = 12
+
+Quitting ...

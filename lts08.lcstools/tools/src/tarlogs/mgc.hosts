@@ -1,0 +1,156 @@
+127.0.0.1 localhost mailhost loghost plx_database_host
+
+# standard internal hosts for all IOMs, CMs, SPs (sp_system/standard_hosts).
+
+# iom-1
+192.168.252.1 iom-1-cpu-a iom-1
+192.168.252.33 iom-1-cpu-b
+192.168.252.65 iom-1-cpu-c
+192.168.252.97 iom-1-cpu-d
+
+# iom-2
+192.168.252.2 iom-2-cpu-a iom-2
+192.168.252.34 iom-2-cpu-b
+192.168.252.66 iom-2-cpu-c
+192.168.252.98 iom-2-cpu-d
+
+# iom-3
+192.168.252.3 iom-3-cpu-a iom-3
+192.168.252.35 iom-3-cpu-b
+192.168.252.67 iom-3-cpu-c
+192.168.252.99 iom-3-cpu-d
+
+# iom-4
+192.168.252.4 iom-4-cpu-a iom-4
+192.168.252.36 iom-4-cpu-b
+192.168.252.68 iom-4-cpu-c
+192.168.252.100 iom-4-cpu-d
+
+# iom-5
+192.168.252.5 iom-5-cpu-a iom-5
+192.168.252.37 iom-5-cpu-b
+192.168.252.69 iom-5-cpu-c
+192.168.252.101 iom-5-cpu-d
+
+# iom-6
+192.168.252.6 iom-6-cpu-a iom-6
+192.168.252.38 iom-6-cpu-b
+192.168.252.70 iom-6-cpu-c
+192.168.252.102 iom-6-cpu-d
+
+# iom-7
+192.168.252.7 iom-7-cpu-a iom-7
+192.168.252.39 iom-7-cpu-b
+192.168.252.71 iom-7-cpu-c
+192.168.252.103 iom-7-cpu-d
+
+# iom-8
+192.168.252.8 iom-8-cpu-a iom-8
+192.168.252.40 iom-8-cpu-b
+192.168.252.72 iom-8-cpu-c
+192.168.252.104 iom-8-cpu-d
+
+# iom-9, CM not permitted
+192.168.252.9 iom-9-cpu-a iom-9
+
+# iom-10
+192.168.252.10 iom-10-cpu-a iom-10
+192.168.252.42 iom-10-cpu-b
+192.168.252.74 iom-10-cpu-c
+192.168.252.106 iom-10-cpu-d
+
+# iom-11
+192.168.252.11 iom-11-cpu-a iom-11
+192.168.252.43 iom-11-cpu-b
+192.168.252.75 iom-11-cpu-c
+192.168.252.107 iom-11-cpu-d
+
+# iom-12
+192.168.252.12 iom-12-cpu-a iom-12
+192.168.252.44 iom-12-cpu-b
+192.168.252.76 iom-12-cpu-c
+192.168.252.108 iom-12-cpu-d
+
+# iom-13
+192.168.252.13 iom-13-cpu-a iom-13
+192.168.252.45 iom-13-cpu-b
+192.168.252.77 iom-13-cpu-c
+192.168.252.109 iom-13-cpu-d
+
+# iom-14
+192.168.252.14 iom-14-cpu-a iom-14
+192.168.252.46 iom-14-cpu-b
+192.168.252.78 iom-14-cpu-c
+192.168.252.110 iom-14-cpu-d
+
+# iom-15
+192.168.252.15 iom-15-cpu-a iom-15
+192.168.252.47 iom-15-cpu-b
+192.168.252.79 iom-15-cpu-c
+192.168.252.111 iom-15-cpu-d
+
+# iom-16
+192.168.252.16 iom-16-cpu-a iom-16
+192.168.252.48 iom-16-cpu-b
+192.168.252.80 iom-16-cpu-c
+192.168.252.112 iom-16-cpu-d
+
+# iom-17
+192.168.252.17 iom-17-cpu-a iom-17
+192.168.252.49 iom-17-cpu-b
+192.168.252.81 iom-17-cpu-c
+192.168.252.113 iom-17-cpu-d
+
+# SP-A
+192.168.252.26 sp-a-cpu-a
+192.168.252.30 sp-a-cpu-b
+
+# SP-B
+192.168.252.27 sp-b-cpu-a
+192.168.252.31 sp-b-cpu-b
+
+# SP-A replication
+192.168.253.26 sp-a-cpu-a-rep
+192.168.253.30 sp-a-cpu-b-rep
+
+# SP-B replication
+192.168.253.27 sp-b-cpu-a-rep
+192.168.253.31 sp-b-cpu-b-rep
+
+# SP-A intra-board ethernet
+192.168.251.26 sp-a-cpu-a-local
+192.168.251.30 sp-a-cpu-b-local
+
+# SP-B intra-board ethernet
+192.168.251.27 sp-b-cpu-a-local
+192.168.251.31 sp-b-cpu-b-local
+
+# end of standard internal hosts for all IOMs, CMs, SPs
+
+135.1.104.203 m78a
+192.168.253.26 m78a m78a-rep0
+192.168.252.26 m78a m78a-sar0
+192.168.251.26 m78a m78a-fca0
+135.111.82.6	lts08 lts08.ih.lucent.com
+135.1.218.100	ihgp ihgp.ih.lucent.com
+135.4.64.50	chibuild chibuild.telica.com
+135.111.82.15	lcsbld1 lcsbld1.ih.lucent.com
+135.4.64.50	chibuild chibuild.telica.com
+135.4.64.49	ohbuild ohbuild.telica.com
+135.1.64.31	build2 build2.telica.com
+135.1.64.33	build3 build3.telica.com
+192.168.38.5	xtm800
+192.168.38.6	xtm801
+192.168.38.7	xtm802
+192.168.38.8	xtm803
+192.168.38.9	xtm804
+192.168.38.10	xtm805
+192.168.38.11	xtm806
+192.168.38.12	xtm807
+192.168.38.13	xtm808
+192.168.38.14	xtm809
+192.168.38.15	xtm810
+192.168.38.16	xtm811
+192.168.38.17	xtm812
+192.168.38.18	xtm813
+192.168.38.19	xtm814

@@ -1,0 +1,7 @@
+ent-iproute::spsig-10.11.80.0-24:::gateway=10.11.25.254
+ent-trkgrp::1230:::sip:name=ceast1,tgprofile=1,sipdstfqdn=10.11.80.1,sipdstfqdnport=5060
+ent-sip-tgmapaddr::10.11.80.1-IP-DEFAULT:::tgn=1230
+ent-route-list::ceast1
+ent-route::ceast-1:::bgn=tgn-1230
+ent-route-digits::DEFAULT-CDPN-natnum-736:::rtdest=rtlist-ceast1
+ent-national-npa::1-736

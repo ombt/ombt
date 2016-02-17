@@ -1,0 +1,856 @@
+information about lcsbld1.ih.lucent.com:
+
+$ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:11:43:E4:5B:49
+          inet addr:135.111.82.15  Bcast:135.111.82.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2567870 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:15646124 errors:539634 dropped:0 overruns:0 carrier:539634
+          collisions:801343 txqueuelen:100
+          RX bytes:1361287644 (1298.2 Mb)  TX bytes:3856528431 (3677.8 Mb)
+          Base address:0xecc0 Memory:dfae0000-dfb00000
+
+eth1      Link encap:Ethernet  HWaddr 00:11:43:E4:5B:4A
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Base address:0xdcc0 Memory:df8e0000-df900000
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:1176 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1176 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:80856 (78.9 Kb)  TX bytes:80856 (78.9 Kb)
+
+$ route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+135.111.82.0    *               255.255.255.0   U     0      0        0 eth0
+169.254.0.0     *               255.255.0.0     U     0      0        0 eth0
+default         135.111.82.254  0.0.0.0         UG    0      0        0 eth0
+
+$ cat resolv.conf
+nameserver 135.1.1.110
+nameserver 135.1.1.111
+search ih.lucent.com
+
+add this to the end of /etc/bashrc
+export VISUAL
+export EDITOR
+export FCEDIT
+
+VISUAL=vi
+EDITOR=vi
+FCEDIT=vi
+
+stty erase ^H intr ^C
+set -o vi
+
+# set display ...
+if [[ $(id -u) == 0 ]]
+then
+        export DISPLAY="$(/usr/bin/who am i | sed 's/^.*(\([^)]*\)).*$/\1:0.0/;'"
+fi
+
+export TOOLS=/opt/exp
+PATH=${PATH}:${TOOLS}/bin:${TOOLS}/gnu/bin:${TOOLS}/tcl/bin:${TOOLS}/sbin:${TOOLS}/java/bin:${TOOLS}/perl/bin:${TOOLS}/python/bin:${TOOLS}/lib/unity/bin
+
+===========================================================================
+
+directions to setup a backup partition using a meta-device from lcsm2.ih.lucent.com.
+
+to mount locally on lcsbld1, do this:
+
+mount 135.1.104.93:/telica/toaster/home /backup
+
+to share out the meta-device from lcsm2.ih.lucent.com, do this:
+
+update /etc/dfs/dfstab to look like this:
+
+# cat dfstab
+
+#       Place share(1M) commands here for automatic execution
+#       on entering init state 3.
+#
+#       Issue the command 'svcadm enable network/nfs/server' to
+#       run the NFS daemon processes and the share commands, after adding
+#       the very first entry to this file.
+#
+#       share [-F fstype] [ -o options] [-d "<text>"] <pathname> [resource]
+#       .e.g,
+#       share  -F nfs  -o rw=engineering  -d "home dirs"  /export/home2
+share -F nfs -o rw,anon=0 /telica/toaster/home
+
+then run this on lcsm1:
+
+	$ shareall
+
+==========================================================================
+
+when reading in the 4 Linux disks, you will be asked the following 
+questions. here are some of answers:
+
+eth0 - 
+	active on boot 
+	IP 135.111.82.15 
+	netmask 255.255.255.0
+
+hostname - 
+	set manually
+	lcsbld1.ih.lucent.com
+
+
+gateway -
+	IP 135.111.82.254
+	netmask 255.255.255.0
+
+dns -
+	dns1 - 135.1.1.110
+	dns2 - 135.1.1.111
+
+firewall -
+	none
+
+language:
+	english/usa
+
+time -
+	america/chicago central time
+
+customize packages -
+	yes and choose all. we can always turn what we don't need off.
+
+partitioning -
+	choose auto
+	set swap space to 2GIG.
+
+===========================================================================
+
+directions for installing linux on build server:
+
+1) install redhat linux enterprise ver 3.0 from disks. there are
+4 disks. the disks are in my office. 
+
+2) update /etc/securetty file. add pts/0 to pts/200 to this file. this
+allows root logins that are not on the console.
+
+3) enable ftp and telnet. 
+
+update the file /etc/xinetd.d/telnet. change "disable = yes" to 
+"disable = no".
+
+update the file /etc/xinetd.d/gssftp. change "server_args = -l -a" to
+"server_args = -l" and "disable = yes" to "disable = no".
+
+restart xinetd service, or just boot the machine. this restarts the
+xinetd service:
+
+	$ service xinetd restart
+
+4) remove any DNS server:
+
+	$ /etc/rc.d/init.d/named stop
+	$ rpm -e caching-nameserver
+	$ rpm -e bind	# this may fail because of dependencies. leave it.
+
+5) enable DNS queries. the /etc/resolv.conf file should look like this:
+
+	nameserver 135.1.1.110
+	nameserver 135.1.1.111
+	search ih.lucent.com
+
+6) enable other xinetd services: rsh, rlogin and sgi_fam. under
+the directory /etc/xinetd.d, change the "disable = yes" line to 
+"disable = no" in the files:
+
+	/etc/xinetd.d/rsh
+	/etc/xinetd.d/rcp
+	/etc/xinetd.d/sgi_fam
+
+and reboot the machine or do this:
+
+	$ service xinetd restart
+
+7) now share out /build to the SPs. update /etc/exports like this:
+
+/build  135.1.105.0/255.255.255.0(ro,async) 135.1.104.0/255.255.255.0(ro,async)
+
+then start up NFS:
+
+	$ service nfs start
+
+8) to turn on apache. you need to change the config /etc/httpd/conf/httpd.conf.
+do this:
+
+Update to this:
+
+<IfModule mod_userdir.c>
+    #
+    # UserDir is disabled by default since it can confirm the presence
+    # of a username on the system (depending on home directory
+    # permissions).
+    #
+    # UserDir disable
+
+    #
+    # To enable requests to /~user/ to serve the user's public_html
+    # directory, remove the "UserDir disable" line above, and uncomment
+    # the following line instead:
+    #
+    UserDir public_html
+
+</IfModule>
+
+Add this:
+
+<Directory /build/*/public_html>
+    AllowOverride FileInfo AuthConfig Limit
+    Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+    <Limit GET POST OPTIONS>
+        Order allow,deny
+        Allow from all
+    </Limit>
+    <LimitExcept GET POST OPTIONS>
+        Order deny,allow
+        Deny from all
+    </LimitExcept>
+</Directory>
+
+Add this:
+
+#ServerName new.host.name:80
+ServerName lcsbld1.ih.lucent.com:80
+
+then start up Apache:
+
+	$ service httpd start
+
+or,
+
+	$ service httpd restart
+
+9) set hostname in the file /etc/sysconfig/network. set tis:
+
+	HOSTNAME=lcsbld1.ih.lucent.com
+
+10) setup printers:
+
+	export DISPLAY=your.laptop.ip:0.0
+	$ /usr/sbin/redhat-config-printer-gui
+
+then add a new printer:
+
+	click new
+	click forward
+
+	enter a printer name (aisle)
+	enter a "short description"
+	click forward
+
+	select a queue type from drop-down:
+		choose "Networked UNIX (LPD)"
+		enter server "ihprint2.ih.lucent.com"
+		enter queue "aisle name"
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	the queue determines which printer gets the print job. so it is
+	very important to have the correct aisle/room number which labels
+	the printer.
+
+	for the printer in IH 1D401, i entered this exactly:
+
+	Server: ihprint2.ih.lucent.com
+	Queue: ih1d401
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	click forward
+
+	choose postscript printer
+	click forward
+
+to list all printers: 
+
+	$ lpstat -a
+
+to list default printer:
+
+	$ lpstat -d
+
+to print to a specific printer:
+
+	$ lpr -P <printer> <file_name>
+
+or, do this:
+
+	$ export PRINTER=<printer>
+	$ lpr <file_name>
+
+the printers that need to be added are:
+
+ih1d401	Printer in room IH1D401
+ih5a418	Printer in room IH5A418
+ih6h442	Printer in room IH6H442
+ih7b325	Printer in room IH7B325
+ih7b425	Printer in room IH7B425
+ih7b326	Printer in room IH7H326
+ih7h426	Printer in room IH7H426
+ih9b425	Printer in room IH9B425
+ih9h426	Printer in room IH9B426
+
+example of the data to enter:
+
+queue name:
+	name: ih5a418
+	short description: Printer in room IH5A418
+queue type:
+	queue type: Networked UNIX (LPD)
+	server: ihprint2.ih.lucent.com
+	queue: ih5a418
+queue options:
+	use the defaults.
+printer driver:
+	printer manufacture/model: Postscript Printer
+driver options:
+	use the defaults.
+
+repeat the above for each printer, if you have to do it by hand.
+
+11) To turn on samba so file systems can be shared to PCs, do this:
+
+	$ /sbin/chkconfig smb on
+	$ /sbin/service smb start
+
+before starting samba you need to set these parameters in the
+[global] section of the /etc/samba/smb.conf file 
+
+[global]
+	workgroup = NA02.LUCENT.COM
+	server string = lcsbld1 samba server
+
+you can set these parameters by hand, using swat or using redhat-config-samba.
+
+To start up web-based config tool swat, update /etc/xinetd.d/swat. 
+change "disable = yes" to "disable = no". add this line to the file:
+
+only_from = 127.0.0.1 mrumore-c1.ih.lucent.com mrumore.lra.lucent.com
+
+then do this for start up:
+
+	$ /sbin/service xinetd start
+
+access the swat tool from a web browser like this if you run the browser
+directly on lcsbld1:
+
+	http://127.0.0.1:901
+
+or access it like this if you are running from one the "only_from" 
+machines:
+
+	http://lcsbld1.ih.lucent.com:901
+
+you can also configure sambs using the tool redhat-config-samba. do this:
+
+	export DISPLAY=X.X.X.x:0.0
+	/usr/bin/redhat-config-samba
+
+this program is simpler than swat and more limited.
+
+you can add new samba users by adding a group of lines likes this
+at the bottom of the /etc/samba/smb.conf file:
+
+[<username>]
+        comment = share out <username> to owner
+        path = <username home in /etc/passwd>
+        read list = <username>
+        write list = <username>
+        read only = No
+
+Here's an example:
+
+[mrumore]
+        comment = share out mrumore to owner
+        path = /build/mrumore
+        read list = mrumore
+        write list = mrumore
+        read only = No
+
+Then restart samba:
+
+	$ service smb restart
+
+Then add a passwd to the new user:
+
+	$ smbpasswd <username>
+
+for example:
+
+	$ smbpasswd mrumore
+
+If the above fails, then try this to add a new smb user:
+
+	$ smbpasswd -a <username>
+
+On your laptop or pc, add a new network place with the resource set
+to this:
+
+	\\lcsbld1.ih.lucent.com\<username>
+
+and use the login/passd of <username>/<smb username passwd>
+
+for example:
+
+	\\lcsbld1.ih.lucent.com\mrumore
+
+login mrumore, passwd XXXXXXX
+
+A user can reset the SMB passwd like this:
+
+	$ smbpasswd <username>
+
+or for this example:
+
+	$ smbpasswd mrumore
+	
+I have a tool called myaddsmbuser that will add a new user. It does NOT
+set the default passwd though. Here is how you can add a new user:
+
+	$ myaddsmbuser <newusername>
+
+or,
+
+	$ myaddsmbuser mrumore
+
+This tool can only be executed from root.
+
+12) There are two more sets of files/directories that need to be copied from 
+chibuild.telica.com to lcsbld1. First, login as builder on chibuild.telica.com
+and do this:
+
+	# logged in as builder on chibuild
+	$ cd /telica/toaster/home/times10
+	$ tar czvf /tmp/times10.tar.gz $PWD
+	$ cd /telica/toater/home/gdixit/local/splint
+	$ tar czvf /tmp/splint.tar.gz $PWD
+
+Now FTP these files to lcsbld1. Login as root on lcsbld1 and do as a follows.
+Assuming both the above tar files are under /, then do this:
+
+	# login as root on lcsbld1.
+	$ cd /
+	$ tar xzvf /times10.tar.gz
+	$ cd /telica/toaster/home/times10
+	$ find . print | xargs chown root
+	$ find . print | xargs chmod 775
+	$ cd /
+	$ tar xzvf /splint.tar.gz
+	$ cd /telica/toaster/home/gdixit
+	$ find . print | xargs chown root
+	$ find . print | xargs chmod 775
+
+That's it. These files are required when building the CPU tar file.
+
+Done.
+
+-------------------------------------------------------------------------------
+
+the directions here are for building the build server (as per an email
+from Vinh Cao):
+
+1) copy lynx.tar.gz under chibuild:/lynx.tar.gz, then extract under / on
+your server.
+
+2) Make two dir path on your server:
+
+	/telica/stein/cvs/logs
+	/telica/stein/cvs/bin
+
+All you have to do it, rcp them from chibuild:/telica/stein/cvs/* or tar
+them up and ftp over.
+
+3) Copy these two files under /usr/bin/as and ld (assembler and linker)
+put into:
+
+/usr/lib/gcc-lib/i386-redhat-linux/3.2.3/ (if your gcc version is 3.4,
+then put it under 3.4) Do this:
+
+	$ cp /usr/bin/as /usr/lib/gcc-lib/i386-redhat-linux/3.2.3/
+	$ cp /usr/bin/ld /usr/lib/gcc-lib/i386-redhat-linux/3.2.3/
+
+4) Also copy one more file into lynx dir on your server:
+
+/usr/lynx/3.1.0/ppc/cdk/linux-xcoff-ppc/usr/bin/as.440. This is a new
+file add on after first lynx was make.
+
+
+5) you need to add the group cvsuser:
+
+	$ groupadd -g 500 cvsusers
+
+6) add builder login:
+
+	$ useradd -u 524 -g 500 -d /build/builder -s /bin/bash builder
+	$ passwd builder
+
+give it the super-secret, "I have to shoot you, if you know it." passwd.
+
+7) CALEA tools need to be installed for builds to work. Call Steve Cook.
+
+8) install /telica/toaster/home/builder/lynx_tools on lcsbld1. copy from 
+chibuild. create a tar file and just expand tar file on lcsbld1 in the
+same directory. 
+
+also, create a link for builder:
+
+	$ ln -s /build/builder /telica/toaster/home/builder
+
+9) for saveloads to work we need two logins:
+
+	lcsinteg/plexus9000
+	lcstools/plexus9000
+
+also, change the PS1 variable in the lcstools .bashrc to this:
+
+	export PS1
+	PS1="lcsbld1# "
+
+---------------------------------------------------------------------------
+
+how to add file system quotas to lcsbld1. this is different than
+most procedures since we are adding quotas to /.
+
+the url which has this procedure is:
+
+http://www.yolinux.com/TUTORIALS/LinuxTutorialQuotas.html
+
+this is what i did:
+
+1) edit /etc/fstab and add usrquota,grpquota to / line. see below:
+
+LABEL=/                 /                       ext3    defaults,usrquota,grpquota        1 1
+LABEL=/boot             /boot                   ext3    defaults        1 2
+none                    /dev/pts                devpts  gid=5,mode=620  0 0
+none                    /proc                   proc    defaults        0 0
+none                    /dev/shm                tmpfs   defaults        0 0
+/dev/sda3               swap                    swap    defaults        0 0
+/dev/cdrom              /mnt/cdrom              udf,iso9660 noauto,owner,kudzu,ro 0 0
+/dev/fd0                /mnt/floppy             auto    noauto,owner,kudzu 0 0
+
+2) create these files:
+
+	$ touch /aquota.user
+	$ touch /aquota.group
+	$ chmod 600 /aquota.user
+	$ chmod 600 /aquota.group
+
+3) boot machine:
+
+	$ sync
+	$ sync
+	$ reboot
+
+wait for machine to come up. if it does not come up, then check console
+in the LSP room (6D2 aisle).
+
+4) update quota files:
+
+	$ quotacheck -vguma
+
+this will take a while. you'll get output that looks similar to this:
+
+quotacheck: WARNING -  Quotafile //aquota.user was probably truncated. ...
+quotacheck: WARNING -  Quotafile //aquota.group was probably truncated. ...
+quotacheck: Scanning /dev/sda2 [/] done
+quotacheck: Checked 9998 directories and 179487 files
+    
+5) to enable quotas:
+
+	$ quotaon -av
+
+to turn off quotas:
+
+	$ quotaoff -av
+
+6) to add quotas to a user:
+
+	$ edquota -u <username>
+
+for example:
+
+	$ edquota -u mrumore
+
+then enter the soft and hard limits in terms of 1k blocks. for a 20Gig
+limits, user 20,000,000. also, a value of zero (0) turns off a quota. so,
+leave the remaining quotas as zero.
+
+7) to check quotas for a user:
+
+	$ quota -u <username>
+
+for example:
+
+	$ quota -u mrumore
+
+Disk quotas for user mrumore (uid 9820):
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+      /dev/sda2      60  20000000 20000000              15       0       0
+
+8) to have hard quota work, then you must set the time limit:
+
+	$ edquota -t
+
+set block grace period to '1hour'.
+
+here's how the file will look:
+
+Grace period before enforcing soft limits for users:
+Time units may be: days, hours, minutes, or seconds
+  Filesystem             Block grace period     Inode grace period
+  /dev/sda2                    1hours                  7days
+
+
+-------------------------------------------------------------------------
+
+how to add a new user on lcsbld1:
+
+1) on ihgp get the login user id:
+
+	# on ihgp
+	$ ypcat /etc/passwd | grep <username>
+
+get the user id. for example:
+
+	ihgp> ypcat passwd | grep rumore
+rumore:ktsIOjGunfDr6:9820:9820:jr1a0a000-Rumore,M.A.(mrumore)1050:/home/rumore:/bin/ksh
+
+the user id is 9820.
+
+2) login as root on lcsbld1 and run this command:
+
+	/root/bin/myuseradd <username> <userid>
+
+the script will ask you for a passwd. enter the default passwd.
+
+3) add quotas to the new user:
+
+	$ edquota -u <username>
+
+set soft and hard block limits to 20Gig in 1K blocks (20000000).
+
+verify the quotas were taken:
+
+	$ quota -u <username>
+
+4) to delete a user:
+
+	$ userdel -r <username> 
+
+or, do this:
+
+	$ myuserdel <username>
+
+----------------------------------------------------------------------------
+
+the script /root/bin/myuseradd look like this:
+
+#
+# add a new user to lcsbld1.
+#
+if [[ "${1}" == "-?" ]]
+then
+        echo "${0} [-?] username userid" >&2
+        exit 0;
+fi
+#
+if [[ $# != 2 ]]
+then
+        echo "ERROR: wrong number of parameters." >&2
+        echo >&2
+        echo "${0} [-?] username userid" >&2
+        exit 2;
+fi
+#
+username=${1}
+userid=${2}
+#
+cvsusers_groupid=500
+#
+useradd -u ${userid} -g ${cvsusers_groupid} -d /build/${username} -s /bin/bash ${username}
+if [[ ${?} != 0 ]]
+then
+        echo "ERROR: useradd failed." >&2
+        exit 2
+fi
+#
+passwd ${username}
+#
+exit ${?}
+
+-----------------------------------------------------------------------------
+
+to get CVS to work:
+
+1) set up CVSROOT shell env:
+
+	export CVSROOT
+	CVSROOT=:pserver:<username>@stein.telica.com:/cvs/cvsroot/Repository
+
+for example,
+
+	export CVSROOT
+	CVSROOT=:pserver:mrumore@stein.telica.com:/cvs/cvsroot/Repository
+
+2) now to set up the CVS login:
+
+	$ cvs login
+
+and enter your passwd on stein.
+
+3) do your regular check out ...
+	
+-----------------------------------------------------------------------------
+
+mounting SP file systems on the lcsbld1 -
+
+CPU-A for each SP (SP-A and SP-B) has the following file systems shared:
+
+	/
+	/home1
+
+the file systems are shared so that CPU-B can access them. the file
+/etc/exports on each SP controls the nfs sharing. it looks like this 
+on each SP:
+
+	$ cat /etc/exports
+# nfs exports here
+# / is required by SP second CPU (if present).
+/
+/home1
+
+the net result of this file -- we can mount both / and /home1 from 
+any SP on lcsbld1, that is, assuming lcsbld1 and the SP management 
+ports are on the network.
+
+to mount the SP file systems on the lcsbld1 we can do it two ways --
+hard mount using "mount" command, or dynamically, as needed, using the
+automounter, autofs. here's the procedure for both methods.
+
+to mount a specific file system from an SP on lcsbld1, do this:
+
+1) get the SP IPs. you can use getspips on lts08. for this example, 
+suppose we are using ihlcsg27:
+
+	# on lts08
+	$ setlabid ihlcsg27
+	$ getspips
+ihlcsg27 135.1.105.39 135.1.105.40
+...
+
+2) logon as root on lcsbld1 and do this:
+
+	#
+	# create the mount base directory
+	#
+	$ mkdir -p /labs
+	$ chmod 755 /labs
+	#
+	# create mount points for each SP file system
+	#
+	$ mkdir -p /labs/ihlcsg27_spa_root
+	$ mkdir -p /labs/ihlcsg27_spa_home1
+	$ mkdir -p /labs/ihlcsg27_spb_root
+	$ mkdir -p /labs/ihlcsg27_spb_home1
+	#
+	# mount each file system
+	#
+	$ mount 135.1.105.39:/ /labs/ihlcsg27_spa__root
+	$ mount 135.1.105.39:/home1 /labs/ihlcsg27_spa_home1
+	$ mount 135.1.105.40:/ /labs/ihlcsg27_spb_root
+	$ mount 135.1.105.40:/home1 /labs/ihlcsg27_spb_home1
+
+3) the above commands assume the SPs are up and running.
+
+to mount the file systems using the automounter, autofs, do this:
+
+1) modify the existing /etc/auto.master file. add this line
+to the /etc/auto.master:
+
+/labs   /etc/auto.spfs  --timeout=60
+
+2) create the directory /labs:
+
+	$ mkdir /labs
+	$ chmod 755 /labs
+
+3) create the file auto.spfs. on lts08, run the lcstools command, 
+make.auto.spfs. you can get the file here: /lcsl100/tmp/auto.spfs.
+
+4) ftp the file /lcsl100/tmp/auto.spfs from lts08 to lcsbld1 and install
+it as /etc/auto.spfs. make sure /etc/auto.master has been modified as
+shown above.
+
+5) to turn on autofs at boot time, do this:
+
+	$ chkconfig --add autofs
+
+6) to start up, restart or check status of autofs, do one of these:
+
+	# restart
+	$ /sbin/service autofs restart
+	# to get status
+	$ /sbin/service autofs status
+	# to reload auto.master file
+	$ /sbin/service autofs reload
+
+7) now you can cd to any the any either the / or /home1 directory
+for any ihlcs* lab and SP. for example, to access / on SP-A for lab
+ihlcsg21, do this on lcsbld1:
+
+	$ cd /labs/ihlcsg21_spa_root
+
+here are the four commands to access / and /home1 on either SP-A or 
+SP-B for a specific lab. for this example, let the labid be ihlcsg21:
+
+	# access ihlcsg21 SP-A / directory
+	$ cd /labs/ihlcsg21_spa_root
+	# access ihlcsg21 SP-A /home1 directory
+	$ cd /labs/ihlcsg21_spa_home1
+	# access ihlcsg21 SP-B / directory
+	$ cd /labs/ihlcsg21_spb_root
+	# access ihlcsg21 SP-B /home1 directory
+	$ cd /labs/ihlcsg21_spb_home1
+
+to access other labs, just change the labid. the labid is identical
+to the labid on lts08, ie, use ihlcsg21, NOT ihlcsgw21.
+
+one thing, if you run an ls or lf on the directory /labs on lcsbld1, then
+you most likely will see NOTHING. the remote file systems are mounted
+dynamically (on-demand) as needed. this is why you have to cd to the specific
+directory so you can see it. 
+
+there is a handy little script called /usr/bin/mountlabs that does a simple
+cd to every directory listed in the /etc/auto.spfs file. the net result from
+running this script -- all the remote directories are mounted locally under
+/labs. it's a cheap way to mount the directories if you don't remember or 
+care to remember the directory name structure. i sure don't.
+	
+here's part of the /etc/auto.spfs file:
+
+ihlcs1_spa_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.113:/
+ihlcs1_spa_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.113:/home1
+ihlcs1_spb_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.114:/
+ihlcs1_spb_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.114:/home1
+ihlcs2_spa_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.141:/
+ihlcs2_spa_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.141:/home1
+ihlcs2_spb_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.142:/
+ihlcs2_spb_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.142:/home1
+ihlcs3_spa_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.143:/
+ihlcs3_spa_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.143:/home1
+ihlcs3_spb_root	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.144:/
+ihlcs3_spb_home1	-ro,soft,intr,noexec,rsize=8192,wsize=8192 135.1.104.144:/home1
+...

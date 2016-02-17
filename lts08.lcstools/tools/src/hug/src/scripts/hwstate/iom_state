@@ -1,0 +1,85 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/cpustate
+}
+globals data {
+	# reqspastate isact
+	reqspastate isact,isstbyh
+	reqspbstate isact,isstbyh
+	badreqspastate duck
+	badreqspbstate penguin
+	#
+	login root
+	passwd plexus9000
+	tl1login telica
+	tl1passwd telica
+	#
+	ihlcs1 {
+		spa {
+			ip 135.1.104.113
+		}
+		spb {
+			ip 135.1.104.114
+		}
+	}
+	ihlcsg10 {
+		spa {
+			ip 135.1.104.203
+		}
+		spb {
+			ip 135.1.104.204
+		}
+	}
+	ihlcsg13 {
+		spa {
+			ip 135.1.105.9
+		}
+		spb {
+			ip 135.1.105.10
+		}
+	}
+	ihlcsg14 {
+		spa {
+			ip 135.1.105.11
+		}
+		spb {
+			ip 135.1.105.12
+		}
+	}
+}
+cpustate exec { spaip spbip } {
+	waitforcpustate -t900 <spaip> <reqspastate> <login> <passwd> <tl1login> <tl1passwd> <spbip> <reqspbstate> <login> <passwd> <tl1login> <tl1passwd>
+}
+iomstate exec { spaip spbip } {
+	waitforcpustate -t900 <spaip> <reqspastate> <login> <passwd> <tl1login> <tl1passwd> <spbip> <reqspbstate> <login> <passwd> <tl1login> <tl1passwd>
+	tl1 open2 -t30 tl1sp <spaip> <spbip> <tl1login> <tl1passwd>
+	tl1 exec -v tl1sp rtrv-eqpt
+	waitforiomstate -t6000 tl1sp 1 isact,isstbyh
+	tl1 close tl1sp
+}
+close_tl1sp exec {
+	tl1 close tl1sp
+}
+call_cpustate_ihlcs1 exec {
+	call cpustate <ihlcs1.spa.ip> <ihlcs1.spb.ip>
+}
+call_cpustate_ihlcsg10 exec {
+	call cpustate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip>
+}
+call_cpustate_ihlcsg13 exec {
+	call cpustate <ihlcsg13.spa.ip> <ihlcsg13.spb.ip>
+}
+call_cpustate_ihlcsg14 exec {
+	call cpustate <ihlcsg14.spa.ip> <ihlcsg14.spb.ip> 
+}
+call_iomstate_ihlcs1 exec {
+	call iomstate <ihlcs1.spa.ip> <ihlcs1.spb.ip>
+}
+call_iomstate_ihlcsg10 exec {
+	call iomstate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip>
+}
+call_iomstate_ihlcsg13 exec {
+	call iomstate <ihlcsg13.spa.ip> <ihlcsg13.spb.ip>
+}
+call_iomstate_ihlcsg14 exec {
+	call iomstate <ihlcsg14.spa.ip> <ihlcsg14.spb.ip> 
+}

@@ -1,0 +1,93 @@
+Dr. Burris:
+
+I work for Lucent Technologies in Naperville, IL, USA and I am currently 
+working through your book (Logic for Mathematics and Computer Science) for 
+a project that I have at work. I was doing problem 4.5.10 on page 280,
+and I have the following results (or maybe I should say, non-results).
+
+The problem says (on page 280), and I quote:
+
+4.5.10 Let L = { f, r, c }, where f is a unary function symbol, r is
+a binary relation symbol, and c is a constant symbol. Let S consist
+of a single clause { rfxy, ~rxfy } (~ = negation).
+
+	a) Find S/S2.
+	b) Determine if S/S2 is p-satisfiable.
+
+The solution that I have for part a) is as follows.
+
+	S0 = { c } 
+	S1 = S0 union { fc } = { c, fc }
+	S2 = S1 union ( fc, ffc } = { c, fc, ffc }
+
+Now to get S/S2, I evaluate the clauses in S using S2 as the universe.
+I get the following terms and clauses for S/S2.
+
+	S = { rfxy, ~rxfy }
+
+	x	y	|	rfxy		~rxfy
+	--------------------------------------------------------
+	--------------------------------------------------------
+	c	c	| 	rfcc		~rcfc
+	--------------------------------------------------------
+	c	fc	|	rfcfc		~rcffc
+	--------------------------------------------------------
+	c	ffc	|	rfcffc		~rcfffc
+	--------------------------------------------------------
+	fc	c	|	rffcc		~rfcfc
+	--------------------------------------------------------
+	fc	fc	|	rffcfc 		~rfcffc
+	--------------------------------------------------------
+	fc	ffc	|	rffcffc		~rfcfffc
+	--------------------------------------------------------
+	ffc	c	|	rfffcc		~rffcfc
+	--------------------------------------------------------
+	ffc	fc	|	rfffcfc		~rffcffc
+	--------------------------------------------------------
+	ffc	ffc	|	rfffcffc	~rffcfffc
+	--------------------------------------------------------
+
+The clauses can be read right off from the last two columns. They are:
+
+	S/S2 = {
+		{ rfcc, ~rcfc },
+		{ rfcfc, ~rcffc },
+		{ rfcffc, ~rcfffc },
+		{ rffcc, ~rfcfc },
+		{ rffcfc, ~rfcffc },
+		{ rffcffc, ~rfcfffc },
+		{ rfffcc, ~rffcfc },
+		{ rfffcfc, ~rffcffc },
+		{ rfffcffc, rffcfffc }
+	}
+
+Now assuming everything above is correct (A BIG assumption). At this
+point I should be able to identify the above terms with propostional
+variables and I should try to satisfy the resulting clauses. Once the
+clauses are satisfied, then I should be able to define relation r and
+get a structure that satisfies the original clause.
+
+The problem that I have is that if I write out the above binary
+relation using a table, I get the following:
+
+	r	|	c	fc	ffc	fffc
+	---------------------------------------------
+	c	|  to be filled !!!
+	fc	|
+	ffc	|
+	fffc	|
+
+Without knowing f, I have to write out the row and column values
+from c to fffc, however, the universe S2 is { c, fc, ffc }. Either
+I need f to evaluate fffc, or I need to extend S2 (???). Neither of 
+these options appears correct, so I must be doing something wrong. I 
+was hoping you could tell me what I am doing wrong.
+
+
+Thank you very much for your time and help.
+
+Mike Rumore 	(email: mrumore@lucent.com)
+
+Lucent Technologies
+Napervile, IL, USA
+

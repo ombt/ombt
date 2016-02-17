@@ -1,0 +1,19 @@
+appmode exec {
+	# boot switch into duplex application mode
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa cd /
+	telnet exec telnetspa /bin/rm -f /net/rc.local
+	telnet exec telnetspa /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspa reboot -aN
+	#
+	telnet exec telnetspb cd /
+	telnet exec telnetspb /bin/rm -f /net/rc.local
+	telnet exec telnetspb /bin/chmod 755 /Telica/swCPU/CurrRel/system/scripts/telica.rc.network
+	telnet exec -i telnetspb reboot -aN
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+}

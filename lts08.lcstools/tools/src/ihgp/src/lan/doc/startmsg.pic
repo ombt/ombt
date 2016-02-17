@@ -1,0 +1,49 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 26 wid 136 with .sw at 0,0
+"\fR\s10\&start message state\fP\s0" at 68,19
+"\fR\s10\&message transmission ends event\fP\s0" at 68,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 140 with .sw at 0,0
+"\fR\s10\&queue all stations (calls) waiting\fP\s0" at 70,19
+"\fR\s10\&for cable is idle events\fP\s0" at 70,6
+] |
+
+define t103 |
+[ box invis ht 38 wid 160 with .sw at 0,0
+"\fR\s10\&dequeue a call from call waiting queue\fP\s0" at 80,31
+"\fR\s10\&and schedule call for a station is idle\fP\s0" at 80,18
+"\fR\s10\&event\fP\s0" at 80,5
+] |
+
+box invis ht 512 wid 408 with .sw at 0,0
+t100 with .nw at 36,366
+line -> from 184,136 to 272,136 
+box ht 32 wid 152 with .nw at 32,152 
+line -> from 104,184 to 104,152 
+"\fR\s10\&is call waiting queue empty\fP\s0" at 108,133
+ellipse ht 64 wid 192 at 104,344
+line -> from 104,248 to 104,224 
+line -> from 192,32 to 280,72 
+box ht 32 wid 104 with .nw at 48,280 
+line -> from 104,120 to 104,64 
+box ht 40 wid 168 with .nw at 24,224 
+box ht 64 wid 176 with .nw at 16,64 
+t102 with .nw at 38,222
+t103 with .nw at 24,53
+line -> from 104,312 to 104,280 
+"\fR\s10\&no\fP\s0" at 128,97
+"\fR\s10\&yes\fP\s0" at 208,149
+ellipse ht 48 wid 96 at 328,72
+line -> from 328,120 to 328,96 
+"\fR\s10\&call dies\fP\s0" at 324,73
+"\fR\s10\&cable state = idle\fP\s0" at 100,265
+box ht 32 wid 104 with .nw at 272,152 
+"\fR\s10\&station state = idle\fP\s0" at 324,137
+"\fR\s14\&START MESSAGE TRANSMISSION FUNCTION FLOW CHART\fP\s0" at 204,497
+.PE
+.fi

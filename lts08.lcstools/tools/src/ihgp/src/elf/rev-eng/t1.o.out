@@ -1,0 +1,96 @@
+
+t1.o:
+ ***** PROGRAM EXECUTION HEADER *****
+Type        Offset      Vaddr       Paddr
+Filesz      Memsz       Flags       Align
+
+
+     **** STRING TABLE INFORMATION ****
+
+.shstrtab:
+   <offset>  	Name
+   <0>  	
+   <1>  	.shstrtab
+   <11>  	.text
+   <17>  	.bss
+   <22>  	.data
+   <28>  	.rodata
+   <36>  	.stab.index
+   <48>  	.stab.indexstr
+   <63>  	.stab.excl
+   <74>  	.stab.exclstr
+   <88>  	.strtab
+   <96>  	.symtab
+
+.stab.indexstr:
+   <offset>  	Name
+   <0>  	
+   <1>  	t1.c
+   <6>  	/home/rumore/src/elf/rev-eng/
+   <36>  	t1.c
+   <41>  	
+   <42>  	
+   <43>  	ptf;ptx;ptk;g -c ;g;s;V=5.0;R=<<C++ 5.0 Patch 107311-16 (ccfe 5.0) 01/12/04>>;G=$XAkpdAHdHE7Am6z.;A=2;
+   <146>  	/home/rumore/src/elf/rev-eng/; /opt/SUNWspro/bin/../SC5.0/bin/CC -g -c  t1.c -Qoption ccfe -prefix -Qoption ccfe \$XAkpdAHdHE7Am6z.
+   <278>  	main
+   <283>  	main
+
+.stab.exclstr:
+   <offset>  	Name
+   <0>  	
+   <1>  	t1.c
+   <6>  	/home/rumore/src/elf/rev-eng/
+   <36>  	t1.c
+   <41>  	
+   <42>  	
+   <43>  	ptf;ptx;ptk;g -c ;g;s;V=5.0;R=<<C++ 5.0 Patch 107311-16 (ccfe 5.0) 01/12/04>>;G=$XAkpdAHdHE7Am6z.;A=2;
+   <146>  	char:t(0,1)=bsc1;0;8;
+   <168>  	short:t(0,2)=bs2;0;16;
+   <191>  	int:t(0,3)=bs4;0;32;
+   <212>  	long:t(0,4)=bs4;0;32;
+   <234>  	long long:t(0,5)=bs8;0;64;
+   <261>  	unsigned char:t(0,6)=buc1;0;8;
+   <292>  	unsigned short:t(0,7)=bu2;0;16;
+   <324>  	unsigned:t(0,8)=bu4;0;32;
+   <350>  	unsigned long:t(0,9)=bu4;0;32;
+   <381>  	unsigned long long:t(0,10)=bu8;0;64;
+   <418>  	signed char:t(0,11)=bsc1;0;8;
+   <448>  	wchar_t:t(0,12)=buc4;0;32;
+   <475>  	void:t(0,13)=bs0;0;0
+   <496>  	float:t(0,14)=R1;4;
+   <516>  	double:t(0,15)=R2;8;
+   <537>  	long double:t(0,16)=R6;16;
+   <564>  	...:t(0,17)=buv4;0;32
+   <586>  	bool:t(0,18)=bub1;0;8;
+   <609>  	true:l(0,18);1
+   <624>  	false:l(0,18);0
+   <640>  	t1.c
+   <645>  	main:F(0,3)
+   <657>  	main
+   <662>  	__1cEmain6G_i1ABb_:(0,18)
+   <688>  	__1cEmain6G_i1ACuc_:(0,6)
+   <714>  	__1cEmain6G_i1ABc_:(0,1)
+   <739>  	__1cEmain6G_i1ACus_:(0,7)
+   <765>  	__1cEmain6G_i1ABs_:(0,2)
+   <790>  	__1cEmain6G_i1ACul_:(0,9)
+   <816>  	__1cEmain6G_i1ABl_:(0,4)
+   <841>  	__1cEmain6G_i1AElval_:(0,4)
+   <869>  	__1cEmain6G_i1AFlval2_:(0,4)
+   <898>  	__1nDstd_:T(0,19)=Yn0std;
+   <924>  	__1nG__Crun_:T(0,20)=Yn0__Crun;
+   <956>  	
+
+.strtab:
+   <offset>  	Name
+   <0>  	
+   <1>  	t1.c
+   <6>  	Bbss.bss
+   <15>  	Ddata.data
+   <26>  	Drodata.rodata
+   <41>  	main
+   <46>  	__fsr_init_value
+
+
+    **** RELOCATION INFORMATION ****
+
+  **** DYNAMIC SECTION INFORMATION ****

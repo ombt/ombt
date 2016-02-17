@@ -1,0 +1,151 @@
+=============LOGIN to lcsbld for privates================
+rlogin lcsbld1
+login: lcstools
+passwd: plexus9000
+
+### BTS INFO GW3 #####
+
+telnet 135.1.104.71
+
+btsadm
+plexus9000
+
+cd /opt/PlexDC
+BindIp=135.1.104.73
+GdiHost=135.1.104.104
+
+cd /opt/PlexDC/ihlcsgw5+6-gw3+4+lcs3/Bill_data/baf
+cdrsearch *.ama (file searched)
+cdrsearch *20070218_1526* > hug.out
+(search for dailed number string ex. 648)
+
+RTRV-TRAFFICSTATS;
+ED-TRAFFICSTATS::::::IS;
+ED-TRAFFICSTATS::::::OOS;
+RTRV-BILLSYS:::::;
+ED-BILLSYS:ihlcsgw3::100::AMAGEN=ON,SWITCHNAME=ihlcsgw3;
+ED-BILLSYS:ihlcsgw3::100::AMAGEN=OFF,SWITCHNAME=ihlcsgw3;
+RTRV-DATASERVER-HOSTCFG;
+SET-DATASERVERHOSTCFG:IHLCSGW3::DATASERVERANET1=135.1.104.73; 
+
+
+#lcsfiles 6.2.1.2.78 -> official path to files for a given load
+
+
+RTRV-EQPT;
+RTRV-INFO-EQPT;
+RTRV-SG-MGCASSOC;
+RTRV-ALM-ALL;
+INIT-SYS:TELICA::::10;
+RTRV-CHASSIS-EQPT;
+ED-SYS-SECU:::::SSHENABLED=n;
+ED-SYS-SECU:::::SSHENABLED=y;
+
+
+
+===================EXTRACT FILES================================
+FTP files to SP-A/SP-B
+===================EXTRACT FILES================================
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.78_cpu.tar.gz;
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.28_ds1_2.tar.gz;
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACTSTBY::COM:::/home1/6.2.1.2.78_cpu.tar.gz,/home1/;
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.28_ds1_2.tar.gz,/;
+
+===================BACKUP ======================================
+Verify FTPRoot directory is on SP-A/B if not
+mkdir FTPRoot on SP-A/B
+
+EXEC-BACKUP-PLEXUS::COM:::135.1.104.191,root,plexus9000,/FTPRoot;
+EXEC-BACKUP-PLEXUS::COM:::135.1.104.192,root,plexus9000,/FTPRoot;
+
+=====================UPGRADE SP-A/B=============================
+
+----------------------SP-A (active)-----------------------------
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.78
+RMV-EQPT::SP-B;
+wait 5 minutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw4:SP-B
+RST-EQPT::SP-B;
+
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.78
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+SW-TOPROTN-EQPT::SP-A;
+RMV-EQPT::SP-A;
+wait 5 miniutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw4:SP-A
+RST-EQPT::SP-A;
+
+----------------------SP-B (active)-----------------------------
+
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.78
+RMV-EQPT::SP-A;
+wait 5 minutes
+
+EXEC-CD:::::/home1/;
+EXEC-RUN-UPGRADE:ihlcsgw4:SP-A
+RST-EQPT::SP-A;
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.78
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+SW-TOPROTN-EQPT::SP-B;
+RMV-EQPT::SP-B;
+wait 5 miniutes
+
+EXEC-CD:::::/home1/;
+EXEC-RUN-UPGRADE:ihlcsgw4:SP-B
+RST-EQPT::SP-B;
+
+=================UPDATING DS1_2 IOMs=================
+
+--------------------------IOM-1-------------------
+ED-STATE-SGSLK::1:::INH;
+ED-STATE-SGSLK::3:::INH;
+ED-STATE-SGSLK::5:::INH;
+
+##If this does not work try next step###
+
+ED-STATE-SGSLK::1:::OOS;
+ED-STATE-SGSLK::3:::OOS;
+ED-STATE-SGSLK::5:::OOS;
+
+RMV-EQPT::IOM-1;
+ED-EQPT::IOM-1:::SWVERSION=6.2.1.2.28;
+CPY-MEM::IOM-1;
+RST-EQPT::IOM-1;
+--------------------------IOM-3-------------------
+RTRV-STATUS-SGSLK::3;
+ED-STATE-SGSLK::2:::INH;
+ED-STATE-SGSLK::4:::INH;
+ED-STATE-SGSLK::6:::INH;
+
+##If this does not work try next step###
+
+ED-STATE-SGSLK::2:::OOS;
+ED-STATE-SGSLK::4:::OOS;
+ED-STATE-SGSLK::6:::OOS;
+
+RMV-EQPT::IOM-3;
+ED-EQPT::IOM-3:::SWVERSION=6.2.1.2.28;
+CPY-MEM::IOM-3;
+RST-EQPT::IOM-3;

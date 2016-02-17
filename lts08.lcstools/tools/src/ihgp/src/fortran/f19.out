@@ -1,0 +1,73 @@
+ enter number of angles
+ enter angle in degrees:
+ enter precision:
+ cosine(  0.) =     1.00000
+ precision used =     1.00000E-03
+ number of terms used =   2
+ sine(  0.) =   0.
+ precision used =     1.00000E-03
+ number of terms used =   1
+ enter angle in degrees:
+ enter precision:
+ cosine(   10.00000) =    0.984769
+ precision used =     1.00000E-02
+ number of terms used =   3
+ sine(   10.00000) =    0.174533
+ precision used =     1.00000E-02
+ number of terms used =   2
+ enter angle in degrees:
+ enter precision:
+ cosine(   10.00000) =    0.984769
+ precision used =     2.00000E-03
+ number of terms used =   3
+ sine(   10.00000) =    0.174533
+ precision used =     2.00000E-03
+ number of terms used =   2
+ enter angle in degrees:
+ enter precision:
+ cosine(   10.00000) =    0.984769
+ precision used =     3.00000E-04
+ number of terms used =   3
+ sine(   10.00000) =    0.173647
+ precision used =     3.00000E-04
+ number of terms used =   3
+ enter angle in degrees:
+ enter precision:
+ cosine(    15.0000) =    0.965731
+ precision used =     1.00000E-03
+ number of terms used =   3
+ sine(    15.0000) =    0.258809
+ precision used =     1.00000E-03
+ number of terms used =   3
+ enter angle in degrees:
+ enter precision:
+ cosine(    15.0000) =    0.965731
+ precision used =     2.00000E-04
+ number of terms used =   3
+ sine(    15.0000) =    0.258809
+ precision used =     2.00000E-04
+ number of terms used =   3
+ enter angle in degrees:
+ enter precision:
+ cosine(    30.0000) =    0.862922
+ precision used =     1.00000E-02
+ number of terms used =   3
+ sine(    30.0000) =    0.499674
+ precision used =     1.00000E-02
+ number of terms used =   3
+ enter angle in degrees:
+ enter precision:
+ cosine(    30.0000) =    0.866054
+ precision used =     1.00000E-03
+ number of terms used =   4
+ sine(    30.0000) =    0.499674
+ precision used =     1.00000E-03
+ number of terms used =   3
+ enter angle in degrees:
+ enter precision:
+ cosine(    30.0000) =    0.866054
+ precision used =     1.00000E-04
+ number of terms used =   4
+ sine(    30.0000) =    0.500002
+ precision used =     1.00000E-04
+ number of terms used =   4

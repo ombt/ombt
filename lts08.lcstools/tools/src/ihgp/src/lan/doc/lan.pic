@@ -1,0 +1,131 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 30 wid 92 with .sw at 0,0
+"\fR\s12\&preamble ends\fP\s0" at 46,22
+"\fR\s12\&cable in preamble\fP\s0" at 46,7
+] |
+
+define t101 |
+[ box invis ht 30 wid 84 with .sw at 0,0
+"\fR\s12\&preamble ends\fP\s0" at 42,22
+"\fR\s12\&cable is jammed\fP\s0" at 42,7
+] |
+
+define t102 |
+[ box invis ht 44 wid 50 with .sw at 0,0
+"\fR\s12\&too many\fP\s0" at 25,36
+"\fR\s12\&times  \fP\s0" at 25,21
+"\fR\s12\&\fP\s0" at 25,6
+] |
+
+define t103 |
+[ box invis ht 44 wid 128 with .sw at 0,0
+"\fR\s12\&attempts < max backoffs\fP\s0" at 64,36
+"\fR\s12\&try again\fP\s0" at 64,21
+"\fR\s12\&\fP\s0" at 64,6
+] |
+
+define t110 |
+[ box invis ht 30 wid 42 with .sw at 0,0
+"\fR\s12\&cable is\fP\s0" at 21,22
+"\fR\s12\&idle\fP\s0" at 21,7
+] |
+
+define t112 |
+[ box invis ht 30 wid 66 with .sw at 0,0
+"\fR\s12\&cable \fP\s0" at 33,22
+"\fR\s12\&transmitting\fP\s0" at 33,7
+] |
+
+define t113 |
+[ box invis ht 44 wid 44 with .sw at 0,0
+"\fR\s12\&cable is\fP\s0" at 22,36
+"\fR\s12\&jammed\fP\s0" at 22,21
+"\fR\s12\&\fP\s0" at 22,6
+] |
+
+define t115 |
+[ box invis ht 30 wid 50 with .sw at 0,0
+"\fR\s12\&cable in\fP\s0" at 25,22
+"\fR\s12\&preamble\fP\s0" at 25,7
+] |
+
+define t120 |
+[ box invis ht 30 wid 66 with .sw at 0,0
+"\fR\s12\&station\fP\s0" at 33,22
+"\fR\s12\&transmitting\fP\s0" at 33,7
+] |
+
+define t121 |
+[ box invis ht 30 wid 50 with .sw at 0,0
+"\fR\s12\&queue for\fP\s0" at 25,22
+"\fR\s12\&station\fP\s0" at 25,7
+] |
+
+define t124 |
+[ box invis ht 44 wid 104 with .sw at 0,0
+"\fR\s12\&station transmitting\fP\s0" at 52,36
+"\fR\s12\&\fP\s0" at 52,21
+"\fR\s12\&queue full\fP\s0" at 52,6
+] |
+
+box invis ht 568 wid 600 with .sw at 0,0
+ellipse ht 64 wid 144 at 336,472
+line -> from 480,352 to 480,264 
+t100 with .nw at 2,206
+t101 with .nw at 170,282
+t102 with .nw at 191,203
+ellipse ht 64 wid 144 at 320,104
+t103 with .nw at 324,195
+"\fR\s12\&backoff period ends\fP\s0" at 512,124
+line -> from 432,360 to 296,264 
+ellipse ht 64 wid 144 at 96,32
+line -> from 416,368 to 104,272 
+"\fR\s12\&call dies\fP\s0" at 96,36
+"\fR\s12\&back off\fP\s0" at 324,108
+"\fR\s12\&start message\fP\s0" at 96,140
+ellipse ht 64 wid 144 at 96,136
+ellipse ht 64 wid 144 at 496,232
+ellipse ht 64 wid 144 at 312,232
+line -> from 176,240 to 240,240 
+ellipse ht 64 wid 144 at 104,240
+spline -> from 392,112\
+to 392,112\
+to 592,176\
+to 600,328\
+to 552,376
+line -> from 232,384 to 408,384 
+line -> from 528,256 to 528,360 
+ellipse ht 64 wid 144 at 480,384
+line -> from 320,200 to 320,136 
+line -> from 400,456 to 440,408 
+line -> from 272,208 to 144,56 
+ellipse ht 64 wid 144 at 160,392
+line -> from 104,104 to 104,64 
+"\fR\s12\&queue for cable\fP\s0" at 504,236
+"\fR\s12\&retry\fP\s0" at 312,236
+t110 with .nw at 531,306
+"\fR\s12\&start preamble\fP\s0" at 100,244
+t112 with .nw at 415,306
+t113 with .nw at 350,307
+"\fR\s12\&message ends\fP\s0" at 64,84
+t115 with .nw at 295,330
+"\fR\s12\&cable is idle\fP\s0" at 212,324
+"\fR\s12\&station idle\fP\s0" at 392,428
+"\fR\s12\&station idle\fP\s0" at 320,392
+"\fR\s12\&start transmission\fP\s0" at 484,388
+t120 with .nw at 167,474
+t121 with .nw at 135,414
+line -> from 456,352 to 376,248 
+"\fR\s12\&call dies\fP\s0" at 536,476
+"\fR\s12\&start call\fP\s0" at 340,472
+line -> from 272,456 to 200,416 
+line -> from 104,208 to 104,168 
+t124 with .nw at 404,499
+line -> from 408,472 to 504,472 
+ellipse ht 48 wid 64 at 536,472
+"\fR\s24\&FSM for LAN Station Transmitter\fP\s0" at 328,547
+.PE
+.fi

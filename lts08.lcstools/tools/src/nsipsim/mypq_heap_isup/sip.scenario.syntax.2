@@ -1,0 +1,183 @@
+scenario origination {
+state start {
+	send invite {
+		hdrs {
+			from: xxxx
+			to: xxxx
+			...
+		}
+		sdp {
+			...
+		}
+		isup ansi msgid iam {
+			...
+		}
+	}
+	starttimer waitfor200invite seconds;
+	next waitfor200invite;
+}
+state waitfor200invite {
+	expect {
+		timer waitfor200invite {
+			send cancel {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			starttimer waitfor200cancel seconds;
+			next waitfor200cancel;
+		}
+		100 invite {
+			starttimer waitfor200invite seconds;
+			next waitfor200invite;
+		}
+		180 invite {
+			starttimer waitfor200invite seconds;
+			next waitfor200invite;
+		}
+		183 invite {
+			starttimer waitfor200invite seconds;
+			next waitfor200invite;
+		}
+		200 invite {
+			send ack {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			starttimer callduration seconds;
+			next talking;
+		}
+		486 invite {
+			send ack {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		503 invite {
+			send ack {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		bye {
+			send 200 bye {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		cancel {
+			send 200 cancel {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+	}
+}
+state talking {
+	expect {
+		timer callduration {
+			send bye {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			starttimer waitfor200bye seconds;
+			next endofcall;
+		}
+		bye {
+			send 200 bye {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		200 notify {
+			next talking;
+		}
+		cancel {
+			send 200 cancel {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		subscribe {
+			send notify {
+				from: xxxx
+				to: xxxx
+				...
+			}
+			next talking;
+		}
+	}
+}
+state endofcall {
+	expect {
+		timer waitfor200bye {
+			idle;
+		}
+		200 bye {
+			idle;
+		}
+		cancel {
+			send 200 cancel {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+		bye {
+			send 200 bye {
+				hdrs {
+					from: xxxx
+					to: xxxx
+					...
+				}
+			}
+			idle;
+		}
+	}
+}
+state waitfor200cancel {
+	expect {
+		timer waitfor200cancel {
+			idle;
+		}
+		200 cancel {
+			idle;
+		}
+	}
+}
+}

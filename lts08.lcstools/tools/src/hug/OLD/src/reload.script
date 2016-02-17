@@ -1,0 +1,30 @@
+# define variables used in script portion
+parameters {
+	# comments start with '#' sign
+	sp_a_ip = 126.0.0.1;
+	sp_b_ip = 126.0.0.2;
+	#
+	telnet_login = root;
+	telnet_passwd = plexus9000;
+	telnet_port = 23;
+	#
+	tl1_login = telica;
+	tl1_passwd = telica;
+	tl1_port = 2361;
+}
+# script describing actions
+script {
+	# ensure sp-a is active.
+	must_be_active(<sp_a_ip>);
+	# open telnet session
+	spa_id = telnet <sp_a_ip> <telnet_port>;
+	spb_id = telnet <sp_b_ip> <telnet_port>;
+	# send over IP recover script
+	ftp <sp_a_ip> "/tmp/iprecover" "/net/rc.local";
+	exec <spa_id> "cd /";
+	check_exec <spa_id>;
+	exec <spa_id> "/bin/chmod 755 /net/rc.local";
+	
+}
+
+

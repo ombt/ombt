@@ -1,0 +1,47 @@
+#
+# sample global data used by HUG preprocessor.
+#
+globals data {
+	scriptsdir .
+	#
+	switchid ihlcsgw21
+	#
+	email mrumore@lucent.com
+	#
+	ihlcsgw21 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.105.25
+		}
+		spb {
+			ip 135.1.105.26
+		}
+	}
+	#
+	load {
+		ftpmachine 135.111.82.6
+		ftplogin lcsinteg
+		ftppasswd plexus9000
+		textdir /lcsl101/text/BRANCH-DEV-6-2-1
+		branch BRANCH-DEV-6-2-1
+		cpuload dev6.2.1.0.0.36
+		# delete the IOM types that are NOT updated.
+		images {
+			types cm cpu 
+			cm 5.3.0.6_cm.tar.gz
+			cpu 5.3.0.6_cpu.tar.gz
+			cmload 5.3.0.6
+			cpuload 5.3.0.6
+		}
+	}
+	#
+	backup {
+		machine 135.111.82.6
+		login lcsinteg
+		passwd plexus9000
+		dir /tmp
+	}
+}

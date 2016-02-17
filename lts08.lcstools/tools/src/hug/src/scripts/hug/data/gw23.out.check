@@ -1,0 +1,795 @@
+
+Executing Script File: gw23.out
+
+Verifying section prehug
+
+EMAIL address is mrumore@lucent.com
+
+Calling execftp to execute cmd: 
+open prehugftp 135.1.105.29 root plexus9000
+
+Calling execftp to execute cmd: 
+put -a prehugftp /home/lcstools/tools/src/hug/scripts/findcpucores /bin/findcpucores
+
+Calling execftp to execute cmd: 
+close prehugftp
+
+Calling execftp to execute cmd: 
+open prehugftp 135.1.105.30 root plexus9000
+
+Calling execftp to execute cmd: 
+put -a prehugftp /home/lcstools/tools/src/hug/scripts/findcpucores /bin/findcpucores
+
+Calling execftp to execute cmd: 
+close prehugftp
+
+Calling exectelnet to execute cmd: 
+open -t30 prehugtelnet 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+
+Calling exectelnet to execute cmd: 
+exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+
+Calling exectelnet to execute cmd: 
+exec prehugtelnet chmod 755 /bin/findcpucores
+
+Calling exectelnet to execute cmd: 
+close prehugtelnet
+
+Calling exectelnet to execute cmd: 
+open -t30 prehugtelnet 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -i -v prehugtelnet find / -type f -name core -print | xargs rm -f
+
+Calling exectelnet to execute cmd: 
+exec -i -v prehugtelnet find / -type f -name *oldCore* -print | grep /Telica | xargs rm -f
+
+Calling exectelnet to execute cmd: 
+exec prehugtelnet chmod 755 /bin/findcpucores
+
+Calling exectelnet to execute cmd: 
+close prehugtelnet
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 rtrv-chassis-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 rmv-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica 135.1.105.30 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 rst-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 sw-toprotn-eqpt::sp-a
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 rtrv-chassis-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/Telica/swCPU/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-ls:::::-l,/home1/Telica/swCPU/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/home1/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/home/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -i -v prehugtl1 exec-rm:::::-f,/*.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 rmv-eqpt::sp-a
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica 135.1.105.30 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 rst-eqpt::sp-a
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v prehugtl1 sw-toprotn-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-ftp-get::com:::135.111.82.6,lcsinteg,plexus9000,/lcsl101/text/Main/cpu/6.2.1.0.66_cpu.tar.gz,/home1/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-cp-tostby:::::-rp,/home1//6.2.1.0.66_cpu.tar.gz,/home1/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-cd:::::/home1/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-tar-extract:::::/home1//6.2.1.0.66_cpu.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-tar-extractstby:::::6.2.1.0.66_cpu.tar.gz,/home1/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+Calling exectelnet to execute cmd: 
+open -t30 prehugtelnet 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v prehugtelnet df
+
+Calling exectelnet to execute cmd: 
+close prehugtelnet
+
+Calling exectelnet to execute cmd: 
+open -t30 prehugtelnet 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v prehugtelnet df
+
+Calling exectelnet to execute cmd: 
+close prehugtelnet
+
+Calling exectl1 to execute cmd: 
+open -t30 prehugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-ftp-get::com:::135.111.82.6,lcsinteg,plexus9000,/lcsl101/text/Main/cm/6.2.1.0.21_cm.tar.gz,/home
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-cp-tostby:::::-rp,/home/6.2.1.0.21_cm.tar.gz,/home
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-tar-extract:::::/home/6.2.1.0.21_cm.tar.gz
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+exec -t900 -v prehugtl1 exec-tar-extractstby:::::6.2.1.0.21_cm.tar.gz,/home/
+
+Calling execsleep to execute cmd: 
+30
+
+Calling exectl1 to execute cmd: 
+close -t 30 prehugtl1
+
+execScript passed for section prehug: 
+0 - success
+
+Verifying section cpuhug
+
+EMAIL address is mrumore@lucent.com
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-call-captverbose
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 dlt-call-captverbose::1
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-trafficstats
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 ed-trafficstats::::::oos
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-sys-secu
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rmv-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica 135.1.105.30 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rst-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 sw-toprotn-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v -t30 cpuhugtl1 rtrv-pm-cc
+
+Calling exectl1 to execute cmd: 
+exec -v -t1800 cpuhugtl1 exec-backup-plexus::com:::135.111.82.6,lcsinteg,plexus9000,/tmp
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 ed-eqpt::sp-a:::swversion=6.2.1.0.66
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rmv-eqpt::sp-a
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica 135.1.105.30 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica
+
+Calling execsleep to execute cmd: 
+300
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cpuhugtl1 exec-run-upgrade:ihlcsg23:sp-a
+
+Calling execcall to execute cmd: 
+checkforcpucores <<activesp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<activesp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling execcall to execute cmd: 
+checkforcpucores <<standbysp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<standbysp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rst-eqpt::sp-a
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling execcall to execute cmd: 
+checkforcpucores <<activesp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<activesp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling execcall to execute cmd: 
+checkforcpucores <<standbysp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<standbysp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.30 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 ed-eqpt::sp-b:::swversion=6.2.1.0.66
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 exec-ls:::::-l,/Telica/swCPU/CurrRel
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 sw-toprotn-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rmv-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+exec -i -v -t60 cpuhugtl1 rtrv-alm-all
+
+Calling exectl1 to execute cmd: 
+exec -i -v -t60 cpuhugtl1 rtrv-pm-cc
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica 135.1.105.30 isact,isactnbk,oosmahalt,oosma root plexus9000 telica telica
+
+Calling execsleep to execute cmd: 
+300
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cpuhugtl1 exec-run-upgrade:ihlcsg23:sp-b
+
+Calling execcall to execute cmd: 
+checkforcpucores <<activesp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<activesp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling execcall to execute cmd: 
+checkforcpucores <<standbysp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<standbysp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling exectl1 to execute cmd: 
+exec -v cpuhugtl1 rst-eqpt::sp-b
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+Calling execwaitforcpustate to execute cmd: 
+-t1800 135.1.105.29 isact,isstbyh root plexus9000 telica telica 135.1.105.30 isact,isstbyh root plexus9000 telica telica
+
+Calling execcall to execute cmd: 
+checkforcpucores <<activesp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<activesp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling execcall to execute cmd: 
+checkforcpucores <<standbysp>.ip> <login> <passwd>
+FORMAL ARG: spip ==>> ACTUAL ARG: <<standbysp>.ip>
+FORMAL ARG: login ==>> ACTUAL ARG: <login>
+FORMAL ARG: passwd ==>> ACTUAL ARG: <passwd>
+
+Calling exectelnet to execute cmd: 
+open telnetsp_cpucore 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name core -print | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *core -print | grep Telica | grep core
+
+Calling exectelnet to execute cmd: 
+exec -v -r telnetsp_cpucore find / -type f -name *oldCore* -print | grep Telica | grep oldCore
+
+Calling exectelnet to execute cmd: 
+close telnetsp_cpucore
+
+Calling exectl1 to execute cmd: 
+open -t30 cpuhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v cpuhugtl1 rtrv-info-eqpt
+
+Calling exectl1 to execute cmd: 
+close -t 30 cpuhugtl1
+
+execScript passed for section cpuhug: 
+0 - success
+
+Verifying section cmhug
+
+EMAIL address is mrumore@lucent.com
+
+Calling exectl1 to execute cmd: 
+open -t30 cmhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 rmv-eqpt::iom-14
+
+Calling execwaitforiomstate to execute cmd: 
+-t300 cmhugtl1 14 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 ed-eqpt::iom-14:::swversion=6.2.1.0.21
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cmhugtl1 cpy-mem::iom-14
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 14 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 rst-eqpt::iom-14
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 14 isstbyh
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 sw-toprotn-eqpt::iom-15
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 15 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 ed-eqpt::iom-15:::swversion=6.2.1.0.21
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cmhugtl1 cpy-mem::iom-15
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 15 isstbyh
+
+Calling exectl1 to execute cmd: 
+close -t 30 cmhugtl1
+
+Calling exectl1 to execute cmd: 
+open -t30 cmhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 rmv-eqpt::iom-2
+
+Calling execwaitforiomstate to execute cmd: 
+-t300 cmhugtl1 2 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 ed-eqpt::iom-2:::swversion=6.2.1.0.21
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cmhugtl1 cpy-mem::iom-2
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 2 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 rst-eqpt::iom-2
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 2 isstbyh
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 sw-toprotn-eqpt::iom-1
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 1 oos,oosma
+
+Calling exectl1 to execute cmd: 
+exec -v cmhugtl1 ed-eqpt::iom-1:::swversion=6.2.1.0.21
+
+Calling exectl1 to execute cmd: 
+exec -v -t1200 cmhugtl1 cpy-mem::iom-1
+
+Calling execwaitforiomstate to execute cmd: 
+-t600 cmhugtl1 1 isstbyh
+
+Calling exectl1 to execute cmd: 
+close -t 30 cmhugtl1
+
+execScript passed for section cmhug: 
+0 - success
+
+Verifying section iomhug
+
+EMAIL address is mrumore@lucent.com
+
+Calling exectl1 to execute cmd: 
+open -t30 iomhugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v iomhugtl1 rtrv-sys-secu
+
+Calling exectl1 to execute cmd: 
+exec -v -t1800 iomhugtl1 exec-backup-plexus::com:::135.111.82.6,lcsinteg,plexus9000,/tmp
+
+Calling exectl1 to execute cmd: 
+exec -i -v iomhugtl1 rtrv-status-mg
+
+Calling exectl1 to execute cmd: 
+exec -i -v iomhugtl1 rtrv-si-mgcassoc
+
+Calling exectl1 to execute cmd: 
+exec -i -v iomhugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+exec -i -v iomhugtl1 rtrv-info-eqpt
+
+Calling exectl1 to execute cmd: 
+close -t 30 iomhugtl1
+
+execScript passed for section iomhug: 
+0 - success
+
+Verifying section posthug
+
+EMAIL address is mrumore@lucent.com
+
+Calling exectelnet to execute cmd: 
+open -t30 posthugtelnet 135.1.105.29 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -i -v -t120 posthugtelnet /bin/findcpucores
+
+Calling exectelnet to execute cmd: 
+close posthugtelnet
+
+Calling exectelnet to execute cmd: 
+open -t30 posthugtelnet 135.1.105.30 root plexus9000
+
+Calling exectelnet to execute cmd: 
+exec -i -v -t120 posthugtelnet /bin/findcpucores
+
+Calling exectelnet to execute cmd: 
+close posthugtelnet
+
+Calling exectl1 to execute cmd: 
+open -t30 posthugtl1 135.1.105.29 telica telica
+
+Calling exectl1 to execute cmd: 
+exec -i -v posthugtl1 rtrv-eqpt
+
+Calling exectl1 to execute cmd: 
+close -t 30 posthugtl1
+
+execScript passed for section posthug: 
+0 - success
+
+Done.

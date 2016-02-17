@@ -1,0 +1,28 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	branch BRANCH-5-3
+	cpu_load 5.3.0.4.33
+	spa {
+		ip 135.1.105.11
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	spb {
+		ip 135.1.105.12
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+}
+prepare exec {
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+}

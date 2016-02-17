@@ -1,0 +1,7 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+setup_lcs
+setup_lcs.sh
+#
+setup_lcshug
+setup_lcshug.sh

@@ -1,0 +1,13 @@
+#!/opt/exp/bin/perl
+#
+# simple grep ...
+#
+$pattern = shift(@ARGV);
+#
+while (<>)
+{
+	if (/$pattern/)
+	{
+		print $_
+	}
+}

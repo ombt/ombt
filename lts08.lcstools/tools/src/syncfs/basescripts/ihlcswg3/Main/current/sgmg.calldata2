@@ -1,0 +1,6 @@
+ent-sg-m3uanettype::1:::netapp=8,ssf=ssfnat,dpclen=24bit,slslen=8bit,m3uanetvariant=ansi
+ent-sg-m3uaassoc::1:::netid=1,ipadest=10.11.93.36,port=2905:is
+ent-sg-m3uaassocmap::1-1
+ent-sg-m3uaroute::opc-234-1-1-dpc-234-2-1:::routectxt=1
+sleep 10
+set-sid:::::ihlcswag3

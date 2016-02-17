@@ -1,0 +1,42 @@
+.h 1 "Chapter 1 Summary"
+.H 2 "Introduction"
+.P
+In this class, we will learn the programming language Fortran. Fortran
+is primarily, if not solely, used in engineering and scientific 
+applications. Examples of these applications are: weather forcasting,
+data visualization (graphing), statistical analysis, etc. 
+.P
+Why Fortran? There are other languages which support, or can support,
+mathmatical constructs (complex numbers, exponentiation) and functions
+(sine, cosine, etc.), but for some reason or another they have never
+obtained the wides-spread use of Fortran. The language Algol is
+used in Europe, but very little in the US. PL/1 contains Fortran-like
+capabilities, but it is also a difficult language to learn. C does not 
+contain complex numbers and exponentiation as part of the language.
+C++ has many of same problems as C, but they can be circumvented
+by defining a complex class and using inline functions (C++ compilers
+have finally caught up with Fortran when it comes to speed).
+.P
+Fortran is great for engineering applications (for example, solving 
+differential equations), but it is not very good for other types
+of programming (operating systems, databases, etc.). A current
+approach to using Fortran is to write the actual code which does
+the numerical calculations in Fortran, and the rest of the program
+in a more friendly language, C or C++. 
+.P
+Fortran has not remained static since it's creation the mid-1950's.
+It has expanded and evolved to include modern programmimg constructs
+(if-then-else statements, while-loops, data structures). The Fortran
+compiler that we have here is a Fortran 77 compiler. It supports 
+what is known as structure programming constructs. We will cover this
+in more detail later.
+.H 2 "Program Design"
+.P
+There are four basic steps in designing and writing a program. The first
+step is the problem statement, that is, the description of the problem.
+the second step is development of the algorithm, or steps to solve the
+problem. The third step is translating the algorithm to a computing
+language, and the last step is debugging, removing errors from the
+program.
+.P
+

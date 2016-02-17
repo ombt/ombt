@@ -1,0 +1,70 @@
+<?XML version "1.0"?>
+
+<!-- Copyright Telica Software 1999-2000 -->
+
+
+<!-- If you add any entries to this file you must do the following. -->
+<!-- 1. Add an entry to the table DebugCfgTable ga_dev/solution/system/src/sysDebugCfg.c -->
+<!-- 2. Add an entry to the DEBUG_CFG_LOAD_t structure in ga_dev/include/solPack.h -->
+<!-- 3. Add a constant to telica_common/inc/db_const.h for the new column name -->
+
+
+
+<GOAHEAD><DB name="debugDb" version="1.0" time="945976756">
+
+<TBL name="DebugTbl" title="Timer Configuration">
+ <ROW>
+<!-- SP Configuration Bits -->
+     <COL name="AllowReset"            title="Allow Reset of Partner SP"            type="integer">1</COL>
+     <COL name="AllowReboot"           title="Allow Reboot on Shutdown"             type="integer">1</COL>
+     <COL name="DisableLogSaving"      title="Disable Old Log Saving"               type="integer">0</COL>
+     <COL name="DisableDiskCleanup"    title="Disable Disk Cleanup"                 type="integer">1</COL>
+     <COL name="EnableQuickSpBoot"     title="Enable Short WaitForPartner Delay"    type="integer">0</COL>
+     <COL name="BootAsMasterSp"        title="Boot as Master SP"                    type="integer">0</COL>
+     <COL name="IgnorePartnerSp"       title="Ignore Partner SP"                    type="integer">0</COL>
+     <COL name="CpuStartMode"          title="Disable Slave Processor"              type="integer">0</COL>
+     <COL name="IgnorePersistDbs"      title="Ignore Persistent Databases"          type="integer">0</COL>
+     <COL name="IgnoreSpFailures"      title="Ignore SP Failures"                   type="integer">0</COL>
+
+<!-- IOM Debug Bits -->
+     <COL name="AutoRestoreIom"        title="IOM Auto Restore Enable"              type="integer">1</COL>
+     <COL name="AutoRestoreIomTimer"   title="IOM Auto Restore Timer"               type="integer">120000</COL>
+     <COL name="NumAutoRestores"       title="Number of IOM Auto Restores"          type="integer">5</COL>
+     <COL name="SkipIomSkdbDebug"      title="Skip IOM SKDB Debug"                  type="integer">0</COL>
+     <COL name="ResetIomOnFailover"    title="Reset IOM on Failover"                type="integer">1</COL>
+     <COL name="FailIomGeneralError"   title="Fail Iom on General Failure"          type="integer">1</COL>
+     <COL name="SkipIomFailures"       title="Skip Iom Failures Mask"               type="integer">0</COL>
+     <COL name="DisableIomResetMask"   title="Disable Iom Reset Mask (Slot 1=0x01)" type="integer">0</COL>
+     <COL name="IgnoreMidplaneIomCfg"  title="Ignore Midlane IOM Config Errors"     type="integer">0</COL>
+
+<!-- Relay Debug Bits -->
+     <COL name="RelayHostHostTx"       title="Relay Host to Host Tx Val"            type="integer">1000</COL>
+     <COL name="RelayHostIomTx"        title="Relay Host to Iom Tx Val"             type="integer">0</COL>
+     <COL name="RelayHostHostRx"       title="Relay Host to Host Rx Val"            type="integer">5000</COL>
+     <COL name="RelayHostIomRx"        title="Relay Host to Iom Rx Val"             type="integer">5000</COL>
+     <COL name="KillOnRelayError"      title="Kill Slot on Relay Error"             type="integer">1</COL>
+     <COL name="FaultOnRelayCongError" title="Fault Slot on Relay Cong Error"       type="integer">0</COL>
+
+<!-- Application (signaling) Debug Bits -->
+     <COL name="SigCoreAppFailure"     title="Core Applications on Failure"         type="integer">0</COL>
+     <COL name="CoreSigOnShutdown"     title="Core Signaling on Shutdown"           type="integer">0</COL>
+     <COL name="CoreSigOnFSUErr_CNE"   title="Core Signaling on FSU CNE Erorr"      type="integer">0</COL>
+
+<!-- Alarm/Event Debug Bits -->
+     <COL name="IgnoreBitsAlarms"      title="Ignore Unprovisioned Bits Alarms"     type="integer">0</COL>
+     <COL name="DisableSfdFaults"      title="Disable SF Fault/Alarms"              type="integer">0</COL>
+     <COL name="FailOnEventLookup"     title="Fail SP on Event Lookup Failure"      type="integer">1</COL>
+     <COL name="AllowFailover"         title="Allow SP Failover (Dangerous !!!)"    type="integer">1</COL>
+
+<!--  Bit 0x01 - Disable MLBA Parity errors -->
+<!--  Bit 0x02 - Disable TSU/FSU error      -->
+     <COL name="DisableModuleIntMask"  title="Disable Module Interrupt Mask"        type="integer">1</COL>
+
+     <COL name="CoreProcessHog"        title="Core Process If Cpu Hog"              type="string"></COL> 
+     <COL name="CoreThreadHog"         title="Core Thread If Cpu Hog"               type="string"></COL> 
+     <COL name="MinCpuToCore"          title="Minimum CPU Usage to Core"            type="integer">0</COL>
+
+</ROW>
+</TBL>
+
+</DB></GOAHEAD>

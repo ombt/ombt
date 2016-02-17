@@ -1,0 +1,72 @@
+BP-3-11-2-2	chassistypes	both mg mgc mgm sg
+BP-3-13-0-1	chassistypes	both mg mgc mgm sg
+BP-3-13-0-2	chassistypes	both mg mgc mgm sg
+BP-5-1-2-3	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BP-5-3-0-5	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BP-5-3-0-6	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BP-6-2-0-3	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BP-6-2-1-2	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BRANCH-3-11	chassistypes	both mg mgc mgm sg
+BRANCH-3-13	chassistypes	both mg mgc mgm sg
+BRANCH-5-1-2	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BRANCH-5-3	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BRANCH-5-4	chassistypes	mg mgc sg sg_mgc sg_mgc_mg
+BRANCH-6-2-0	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BRANCH-6-2-1	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+Main	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BRANCH-6-3-1	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BRANCH-DEV-6-4	chassistypes	mg mgc sg sg_mg sg_mgc sg_mgc_mg
+BP-3-11-2-2	hugsections	prehug sphug iomhug posthug
+BP-3-13-0-1	hugsections	prehug sphug iomhug posthug
+BP-3-13-0-2	hugsections	prehug sphug iomhug posthug
+BP-5-1-2-3	hugsections	prehug sphug cmhug iomhug posthug
+BP-5-3-0-5	hugsections	prehug sphug cmhug iomhug posthug
+BP-5-3-0-6	hugsections	prehug sphug cmhug iomhug posthug
+BP-6-2-0-3	hugsections	prehug sphug cmhug iomhug posthug
+BP-6-2-1-2	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-3-11	hugsections	prehug sphug iomhug posthug
+BRANCH-3-13	hugsections	prehug sphug iomhug posthug
+BRANCH-5-1-2	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-5-3	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-5-4	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-6-2-0	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-6-2-1	hugsections	prehug sphug cmhug iomhug posthug
+Main	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-6-3-1	hugsections	prehug sphug cmhug iomhug posthug
+BRANCH-DEV-6-4	hugsections	prehug sphug cmhug iomhug posthug
+BP-3-11-2-2	iomtypes	ds1 ds1_2 ds3 e1 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 voip voip6
+BP-3-13-0-1	iomtypes	ds1 ds1_2 ds3 e1 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 voip voip6
+BP-3-13-0-2	iomtypes	ds1 ds1_2 ds3 e1 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 voip voip6
+BP-5-1-2-3	iomtypes	cm ds1_2 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 ena ena2 tdmoc
+BP-5-3-0-5	iomtypes	ana cm ds1_2 ena ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 voip voip6
+BP-5-3-0-6	iomtypes	tdmoc ds1_2 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 cm voip voip6 ana
+BP-6-2-0-3	iomtypes	ena cm ds1_2 octds3 octds3_2 octds3_3 trids3 trids3_3 vs2 vs3 tdmoc
+BP-6-2-1-2	iomtypes	ena ana cm ds1_2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 vs2 vs3 
+BRANCH-3-11	iomtypes	ana ds1 ds1_2 ds3 e1 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 voip voip6 
+BRANCH-3-13	iomtypes	ds1 ds1_2 ds3 ena ena2 octds3 octds3_2 octds3_3 trids3 trids3_3 voip voip6 
+BRANCH-5-1-2	iomtypes	cm ds1_2 ena ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 voip voip6
+BRANCH-5-3	iomtypes	ana cm ds1_2 ena ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 voip voip6 
+BRANCH-5-4	iomtypes	ana cm ds1_2 ena ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 voip voip6 
+BRANCH-6-2-0	iomtypes	ana cm ds1_2 ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 vs2 vs3
+BRANCH-6-2-1	iomtypes	ana cm ds1_2 ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 vs2 vs3
+Main	iomtypes	ana cm ds1_2 ds1_c e1 ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 tr1ds3_d vs2 vs3
+BRANCH-6-3-1	iomtypes	ana cm ds1_2 ds1_c e1 ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 tr1ds3_d vs2 vs3
+BRANCH-DEV-6-4	iomtypes	ana cm ds1_2 ds1_c e1 ena2 octds3 octds3_2 octds3_3 tdmoc trids3 trids3_3 tr1ds3_d vs2 vs3
+BP-3-11-2-2	sptypes	sp-a sp-b
+BP-3-13-0-1	sptypes	sp-a sp-b
+BP-3-13-0-2	sptypes	sp-a sp-b
+BP-5-1-2-3	sptypes	sp-a sp-b
+BP-5-3-0-5	sptypes	sp-a sp-b
+BP-5-3-0-6	sptypes	sp-a sp-b
+BP-6-2-0-3	sptypes	sp-a sp-b
+BP-6-2-1-2	sptypes	sp-a sp-b
+BRANCH-3-11	sptypes	sp-a sp-b
+BRANCH-3-13	sptypes	sp-a sp-b
+BRANCH-5-1-2	sptypes	sp-a sp-b
+BRANCH-5-3	sptypes	sp-a sp-b
+BRANCH-5-4	sptypes	sp-a sp-b
+BRANCH-6-2-0	sptypes	sp-a sp-b
+BRANCH-6-2-1	sptypes	sp-a sp-b
+Main	sptypes	sp-a sp-b
+BRANCH-6-3-1	sptypes	sp-a sp-b
+BRANCH-DEV-6-4	sptypes	sp-a sp-b

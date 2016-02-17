@@ -1,0 +1,1101 @@
+
+directions for building an testing automation server:
+
+1) some notes -
+
+- sas or sata drives - server uses serial scsi drives (sas) - 5x75Gig
+and 2x300Gig.
+- sas - scsi over serial - high reliability.
+- ata - lower costs, lower spinning rates, higher capacity.
+- ata cheaper than scsi.
+
+this machine has 5x73GIG and 2x300GIG drives. configure the 5x73GIG
+drives as a RAID5 and the 2x300GIG drives as a RAID1. to do this, boot 
+the machine enter control-r to configure the RAID. choose the 2x300GIG
+drives as the first meta device. this device will contain the boot 
+partition, swap, /usr, etc. the second meta device (5x73GIG RAID) will
+be mounted as /home.
+
+2) Linux enumeration of NICs is different. udev kernel enumerates the
+NIC interfaces different than previous devfs kernel. for Red Hat Linux
+(ver 4) -
+	NIC1 = eth1
+	NIC2 = eth0
+
+reverse of what it was before. there is a way to change this. see here
+for details:
+
+Network Interface Card Naming" white paper available at linux.dell.com.
+
+3) install Red Hat Enterprise Linux ES Version 4.5 X86_64. there are 
+five CDs in my office labeled as:
+
+	Red Hat Enterprise Linux
+	ES Version 4.5
+	X86_64
+	DISK XX of 5
+
+install disk 1, boot the Dell PowerEdge 2900 and wait. when the first 
+messages come out, on the top right hand side a message is printed saying
+to enter F11 to enter "Boot mode". Quickly, hit the F11 key. The message
+should change indicating that Boot mode will be entered. Once the Boot
+mode menu comes up, choose to boot from a IDE/CD drive. Make sure the first
+CD is already installed and ready to read (green light on CD reader is OFF).
+
+follow the instructions on the screen and the following steps.
+
+when installing red hat, first choose auto partition, then choose manual 
+partitioning. look at what the auto partition suggests for the size of 
+/boot and swap. when doing the manual partitioning, enter these 
+values at least. by default, LVM groups are made. delete them, unless
+you want to use them. then using the free space on the two meta devices,
+create these:
+
+	/dev/sdb1	/boot	ext3	100Meg
+	/dev/sdb3	none	swap	8GIG
+	/dev/sdb2	/	ext3	remaining space on device /dev/sdb
+	/dev/sdc1	/home	ext3	all space on device /dev/sdc
+
+4) when asked to choose the packages to be install, install everything. you 
+can always disable any service that you do not want or need. once the 
+installation is done (all 5 CDs are read), then boot. when the machine
+comes up, it will ask if you have another disk to read. put in disk
+6 from the original Red Hat Linux set of CDs. Choose everything, except
+some the Intel packages under Misc.
+
+5) The network data are:
+
+	interface: eth0	
+	IP: 10.11.96.25	
+	mask: 255.255.255.248(29)
+	default gateway: 10.11.96.30
+
+	interface: eth1
+	IP: 135.1.104.227
+	mask: 255.255.255.0
+	default gateway: 135.1.104.254
+
+also, choose to statically assign the IP and activate device on boot.
+
+6) DNS servers:
+
+	hostname: ihapps1
+	primary DNS: 135.1.1.110
+	secondary DNS: 135.1.1.111
+	domain: ih.lucent.com
+
+once machine is up, then update the /etc/resolv.conf file to look like 
+this:
+
+	[root@ihapps1 sbin]# cat /etc/resolv.conf
+	domain ih.lucent.com
+	nameserver 135.1.1.110
+	nameserver 135.1.1.111
+
+7) finish installation and boot. once the machine boots, then we 
+want to setup the terminal server connections on COM1 and COM2.
+
+8) adding terminal server to COM1 or COM2. connect terminal server
+to COM1 or COM2. make these changes on the ihapps1:
+
+check that COM1 and COM2 are there:
+
+	$ dmesg | grep tty
+
+you should see entries for ttyS0 (irq=4) and ttyS1 (irq=3). now do 
+this:
+
+	$ setserial -g /dev/ttyS0
+	$ setserial -g /dev/ttyS1
+
+add these lines to /etc/inittab:
+
+# Run agetty for COM1/ttyS0 and COM2/ttyS1
+s0:2345:respawn:/sbin/agetty -L 9600 ttyS0 vt100
+s1:2345:respawn:/sbin/agetty -L 9600 ttyS1 vt100
+
+restart init process:
+
+	$ init q
+
+verify agetty are running:
+
+	$ ps -ef | grep agetty
+
+you should see two agetty entries, one for ttyS0 and one for ttyS1.
+
+add these lines to /etc/securetty so you can login as root:
+
+	ttyS0
+	ttyS1
+
+here is what the top of the file looks like:
+
+	$ cat /etc/securetty
+	console
+	ttyS0
+	ttyS1
+	vc/1
+	vc/2
+	vc/3
+	vc/4
+	vc/5
+	vc/6
+	vc/7
+	...
+
+while adding lines to /etc/securetty, also add these lines at the bottom:
+
+	pts/0
+	pts/1
+	pts/2
+	pts/3
+	pts/4
+	pts/5
+	pts/6
+	pts/7
+	pts/8
+	pts/9
+	pts/10
+	pts/11
+	pts/12
+	.
+	.
+	.
+	pts/97
+	pts/98
+	pts/99
+
+8) turn on certain xinetd services (ftp, rsh, telnet, etc). update
+the line 'disable = yes' to 'disable = no' in all these files:
+
+/etc/xinetd.d/auth:     disable = no
+/etc/xinetd.d/cups-lpd: disable = no
+/etc/xinetd.d/finger:   disable = no
+/etc/xinetd.d/gssftp:   disable = no
+/etc/xinetd.d/rexec:    disable = no
+/etc/xinetd.d/rlogin:   disable = no
+/etc/xinetd.d/rsh:      disable = no
+/etc/xinetd.d/rsync:    disable = no
+/etc/xinetd.d/swat:     disable = no
+/etc/xinetd.d/telnet:   disable = no
+/etc/xinetd.d/tftp:     disable = no
+
+also, in the file /etc/xinetd.d/gssftp, change this line:
+
+	server_args     = -l -a
+
+to this:
+
+	server_args     = -l
+
+start up the xinetd server:
+
+	$ service xinetd restart
+
+this should start up the basic services, for example, ftp and telnet.
+
+9) setup printers:
+
+	export DISPLAY=your.laptop.ip:0.0
+	$ /usr/sbin/system-config-printer-gui
+
+then add a new printer:
+
+	click new
+	click forward
+
+	enter a printer name (aisle)
+	enter a "short description"
+	click forward
+
+	select a queue type from drop-down:
+		choose "Networked UNIX (LPD)"
+		enter server "ihprint2.ih.lucent.com"
+		enter queue "aisle name"
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	the queue determines which printer gets the print job. so it is
+	very important to have the correct aisle/room number which labels
+	the printer.
+
+	for the printer in IH 1D401, i entered this exactly:
+
+	Server: ihprint2.ih.lucent.com
+	Queue: ih1d401
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	click forward
+
+	choose postscript printer
+	click forward
+
+to list all printers: 
+
+	$ lpstat -a
+
+to list default printer:
+
+	$ lpstat -d
+
+to print to a specific printer:
+
+	$ lpr -P <printer> <file_name>
+
+or, do this:
+
+	$ export PRINTER=<printer>
+	$ lpr <file_name>
+
+
+10) Make two dir path on the server:
+
+	/telica/stein/cvs/logs
+	/telica/stein/cvs/bin
+
+All you have to do it, rcp them from chibuild:/telica/stein/cvs/* or tar
+them up and ftp over.
+
+11) you need to add the group cvsuser:
+
+	$ groupadd -g 500 cvsusers
+
+12) add builder login:
+
+	$ useradd -u 524 -g 500 -d /build/builder -s /bin/bash builder
+	$ passwd builder
+
+13) set owner to builder and group to cvsusers for all files under /telica:
+
+	$ cd /telica
+	$ find /telica -print | xargs chgrp cvsusers
+	$ find /telica -print | xargs chown builder
+
+14) any user that wants to check out code must run:
+
+	$ cvs login
+
+and enter the stein passwd for his login.
+
+define the CVSROOT shell variable first. use your login.
+
+	# accessing CVS
+	export CVSROOT=:pserver:mrumore@stein.telica.com:/cvs/cvsroot/Repository
+
+the commands for checking out code are:
+
+	$ cd sandbox
+	$ cd <branch>
+	$ cvs co -r <branch> TelicaRoot/TelicaUpdate
+	$ TelicaRoot/TelicaUpdate -r <branch>
+
+15) you need these tools/libraries for the auto server:
+
+1. Development library
+	jdk 1.5.0
+	tcl-devel 8.4.13
+	expect-devel 5.43.0
+
+2. Compilation tool
+	apache ant 1.6.5
+	swig 1.3.31
+	gcc 3.4.6
+
+3. Tcl & expect
+	tcl 8.4.14
+	expect 5.43.0
+
+4. Web server
+	apache tomcat 5.5.20
+
+5. DBMS 
+	mysql 4.1.20
+
+you can list the RPM packages which were installed like this:
+
+	$ rpm -qa
+
+it gives a long list. here's a few to check:
+
+	$ rpm -qa | 
+	  egrep -i '(jdk|tcl|tcl-devel|expect-devel|ant|swig|gcc|tomcat|mysql)'
+
+here are the results:
+
+
+swig-1.3.21-6
+gcc-java-3.4.6-8
+tcl-html-8.4.7-2
+gcc-c++-3.4.6-8
+mysql-devel-4.1.20-2.RHEL4.1
+expect-devel-5.42.1-1
+perl-DBD-MySQL-2.9004-3.1
+mod_auth_mysql-2.6.1-2.2
+mysqlclient10-3.23.58-4.RHEL4.1
+libgcc-3.4.6-8
+tcl-8.4.7-2
+gcc-3.4.6-8
+gcc4-gfortran-4.1.1-53.EL4
+compat-gcc-32-3.2.3-47.3
+libdbi-dbd-mysql-0.6.5-10.RHEL4.1
+mysqlclient10-devel-3.23.58-4.RHEL4.1
+mysql-4.1.20-2.RHEL4.1
+gcc-objc-3.4.6-8
+compat-libgcc-296-2.96-132.7.2
+mysql-server-4.1.20-2.RHEL4.1
+tcl-devel-8.4.7-2
+mysql-4.1.20-2.RHEL4.1
+tclx-8.3.5-4
+gcc-g77-3.4.6-8
+kdeaddons-atlantikdesigner-3.3.1-2
+libgcc-3.4.6-8
+tcl-8.4.7-2
+gcc4-c++-4.1.1-53.EL4
+compat-gcc-32-c++-3.2.3-47.3
+postgresql-tcl-7.4.16-1.RHEL4.1
+ruby-tcltk-1.8.1-7.EL4.8
+tclx-devel-8.3.5-4
+gcc4-java-4.1.1-53.EL4
+mysqlclient10-3.23.58-4.RHEL4.1
+MySQL-python-1.2.1_p2-1.el4.1
+wpa_supplicant-0.4.9-1.1.el4
+mysql-bench-4.1.20-2.RHEL4.1
+db4-tcl-4.2.52-7.1
+gcc4-4.1.1-53.EL4
+tclx-doc-8.3.5-4
+freeradius-mysql-1.0.1-3.RHEL4.3
+php-mysql-4.3.9-3.22.4
+tclx-8.3.5-4
+gcc-gnat-3.4.6-8
+qt-MySQL-3.3.3-10.RHEL4
+
+these need to be updated or installed:
+
+	==>> jdk 1.5.0 - missing
+	==>> tcl-devel - update to 8.4.13
+	==>> expect-devel - update to 5.43.0
+	==>> apache ant 1.6.5 - missing
+	==>> swig - update to 1.3.31
+	gcc - 3.4.6 found
+	==>> tcl - update to 8.4.14
+	==>> expect - update to 5.43.0
+	==>> apache tomcat 5.5.20 - missing
+	mysql - 4.1.20 found
+
+16) we need to download the RPM packages to update the above tools.
+logon ihapps1 as root and run mozilla. set the DISPLAY to point 
+to your laptop (mrumore.lra.lucent.com:0.0 or mrumore-c1.lucent.com).
+
+goto wwww.redhat.com and click on 'login'. login using
+the username 'mrumore@alcatel-lucent.com' and the usual favorite
+passwd. clock on support, then on downloads under support tab. under
+Red Hat Enterprise Linux, choose 'Download your software here'.
+In the list of Linux OS, look for 'Red Hat Enterprise Linux ES v.4
+for AMD64/Intel EM64T'. Expand the plus-sign to get the list of
+child products. choose these for download:
+
+Red Hat Developer Suite v. 3 (ES v. 4 for x86_64)
+
+and
+
+Red Hat Application Server v. 2 (ES v. 4 for x86_64)
+
+save them under /root or anywhere there is room. these are ISO
+files which can be mounted and read. do this:
+
+	$ mkdir /mnt/rhaps2
+	$ mkdir /mnt/rhds3
+	$ mount -o loop -t iso9660 \
+		/root/RHEL4-RHAPS2-x86_64.iso /mnt/rhaps2
+	$ mount -o loop -t iso9660 \
+		/root/RHEL4-RHDS3-x86_64-disc1.iso /mnt/rhds3
+	$ cd /mnt/rhds3
+	$ ./autorun
+
+make sure DISPLAY is set. choose all the software packages and install
+all. to install the app server software:
+
+	$ cd /mnt/rhaps2
+	$ ./autorun
+
+choose tomcat ... don't do this unless you need to have it installed.
+
+17) the following notes are from an email from Bill Zhao.
+
+***********************************************************
+*        PLEXUS TEST AUTOMATION INSTALLATION GUIDE        *
+*                                                         *
+*    Author: BILL ZHAO, pzhao@alcatel-lucent.com          *   
+*    2007/7/4                                             *
+***********************************************************
+
+Software packages are available at qdplexa server, 
+IP address : 135.252.132.249
+Ftp username/password: tester/plexus9000
+You will see two folders: software and Automation once you ftp in. 
+
+
+1. Operating System and Tools Installation:
+
+	1.1 Install Linux (Fedora or Red Hat Linux)
+	        -- After installation, open TCP and UDP port 3306 for mysql DB if there is firewall.
+
+    1.2 Install java-1.5 JDK
+	        -- Package available on qdplexa: software/jdk/jdk-1_5_0_12-linux-i586-rpm.bin
+	        -- Install it to /usr/java
+	        -- After installation, path structure is:
+		        - /usr/java/jdk1.5.0_12
+			    + bin
+			    + lib
+			    ... ...
+		
+    1.3 Install tomcat-5.5.20
+	        -- Package available on qdplexa: software/apache-tomcat-5.5.20/apache-tomcat-5.5.20.tar.gz
+	        -- Untar this package to /usr 
+	        -- After installation, path structure is:
+		        - /usr/apache-tomcat-5.5.20
+			    + bin
+			    + conf
+			    ... ...
+			
+    1.4 Install mysql DB: (If you want to use the DB in MA, skip this step)
+		    -- Package available on qdplexa: software/mysql/mysql-5.0.18-2.1.i386.rpm
+		    -- After installation, start the service and add a new user and DB by following commands: 
+		       [root@qdplexa ~#]  service mysqld start
+		       [root@qdplexa ~#]  mysql
+		       mysql> GRANT ALL PRIVILEGES ON *.* TO 'tester'@'localhost' IDENTIFIED BY 'tester' WITH GRANT OPTION;
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'tester'@'%' IDENTIFIED BY 'tester' WITH GRANT OPTION;
+			   mysql> CREATE DATABASE TestAuto2; 	
+			   mysql> exit
+			-- Create tables in new DB TestAuto2 
+			   Ftp get TestAuto2.out from qdplexa: Automation to current folder, and then run command:
+			   [root@qdplexa ~#]  mysql TestAuto2 < TestAuto2.out
+2. AUTOMATION PACKAGES INSTALLATION
+
+    2.1 Install Web Service Package
+		    -- Backup old ROOT directory
+			    [root@qdplexa ~#]  cd /usr/apache-tomcat-5.5.20/webapps/
+			    [root@qdplexa webapps]#  mv ROOT ROOT2
+		    -- Install new package
+			    Ftp get ROOT.war from qdplexa: Automation to /usr/apache-tomcat-5.5.20/webapps/
+				
+    2.2 Install Control Layer Application Package
+		    -- Install package
+			   [root@qdplexa webapps]# mkdir -p /build/tester
+			   [root@qdplexa webapps]# cd /build/tester
+		       Ftp get PlexusTestAutomation.tar.gz from qdplexa: Automation to /build/tester
+		       tar -xvzf PlexusTestAutomation.tar.gz
+		
+    2.3 Install Legacy Tcl library and build path
+		    -- mount /telica/toaster/home/ in Marlborough to your local system with the same path structure. 
+		      Please ask help from Veeresh to mount this path, If you can't do this step,Send me email please. 
+		      We may need to copy some legacy tcl library and the new Plexus builds to this folder.
+			
+3. CONFIGURATION FOR WEB SERVICE
+ 
+    3.1 Get bash_profile from qdplexa: Automation , rename it to .bash_profile, then override /root/.bash_profile
+	
+    3.2 Get context.xml from  qdplexa: Automation , then override /usr/apache-tomcat-5.5.20/conf/context.xml
+	
+    3.3 Get server.xml from  qdplexa: Automation , then override /usr/apache-tomcat-5.5.20/conf/server.xml
+
+    3.4 Setup the Database connection for web sevice. (If you use DB in MA, skip this step).
+	
+	3.5 open /usr/apache-tomcat-5.5.20/conf/server.xml, 
+		Edit line: url="jdbc:mysql://135.4.70.19/TestAuto2" to url="jdbc:mysql://127.0.0.1/TestAuto2"
+	
+	3.6 Copy all the jar file from qdplexa: Automation/jars to /usr/apache-tomcat-5.5.20/common/lib
+	
+    3.7 Initialize the session id count by running command: 
+
+	echo 10000 > /build/tester/PlexusTestAutomation/data/count.txt
+
+    3.8 Make links between files by following commands:
+			cd software/apache-tomcat-5.5.20/bin
+			ln -s /build/tester/PlexusTestAutomation/data data
+			ln -s /build/tester/PlexusTestAutomation/etc etc
+			ln -s /build/tester/PlexusTestAutomation/log log
+			ln -s /build/tester/PlexusTestAutomation/scripts scripts
+
+4. Start Tomcat service
+    (Notes: if one of your path structure is different from this guide, please edit the system variable in /root/.bash_profile before running following commands)
+	run following commands:
+		cd /root
+		. ./.bash_profile   
+		cd /usr/apache-tomcat-5.5.20/bin
+		./startup.sh
+		
+
+
+
+
+
+
+
+	
+
+ 
+
+
+
+
+
+
+
+=============================================================================
+directions for installing linux on build server:
+
+1) install redhat linux enterprise ver 3.0 from disks. there are
+4 disks. the disks are in my office. 
+
+2) update /etc/securetty file. add pts/0 to pts/200 to this file. this
+allows root logins that are not on the console.
+
+3) enable ftp and telnet. 
+
+update the file /etc/xinetd.d/telnet. change "disable = yes" to 
+"disable = no".
+
+update the file /etc/xinetd.d/gssftp. change "server_args = -l -a" to
+"server_args = -l" and "disable = yes" to "disable = no".
+
+restart xinetd service, or just boot the machine. this restarts the
+xinetd service:
+
+	$ service xinetd restart
+
+4) remove any DNS server:
+
+	$ /etc/rc.d/init.d/named stop
+	$ rpm -e caching-nameserver
+	$ rpm -e bind	# this may fail because of dependencies. leave it.
+
+5) enable DNS queries. the /etc/resolv.conf file should look like this:
+
+	nameserver 135.1.1.110
+	nameserver 135.1.1.111
+	search ih.lucent.com
+
+6) enable other xinetd services: rsh, rlogin and sgi_fam. under
+the directory /etc/xinetd.d, change the "disable = yes" line to 
+"disable = no" in the files:
+
+	/etc/xinetd.d/rsh
+	/etc/xinetd.d/rcp
+	/etc/xinetd.d/sgi_fam
+
+and reboot the machine or do this:
+
+	$ service xinetd restart
+
+7) now share out /build to the SPs. update /etc/exports like this:
+
+/build  135.1.105.0/255.255.255.0(ro,async) 135.1.104.0/255.255.255.0(ro,async)
+
+then start up NFS:
+
+	$ service nfs start
+
+8) to turn on apache. you need to change the config /etc/httpd/conf/httpd.conf.
+do this:
+
+Update to this:
+
+<IfModule mod_userdir.c>
+    #
+    # UserDir is disabled by default since it can confirm the presence
+    # of a username on the system (depending on home directory
+    # permissions).
+    #
+    # UserDir disable
+
+    #
+    # To enable requests to /~user/ to serve the user's public_html
+    # directory, remove the "UserDir disable" line above, and uncomment
+    # the following line instead:
+    #
+    UserDir public_html
+
+</IfModule>
+
+Add this:
+
+<Directory /build/*/public_html>
+    AllowOverride FileInfo AuthConfig Limit
+    Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+    <Limit GET POST OPTIONS>
+        Order allow,deny
+        Allow from all
+    </Limit>
+    <LimitExcept GET POST OPTIONS>
+        Order deny,allow
+        Deny from all
+    </LimitExcept>
+</Directory>
+
+Add this:
+
+#ServerName new.host.name:80
+ServerName lcsbld1.ih.lucent.com:80
+
+then start up Apache:
+
+	$ service httpd start
+
+or,
+
+	$ service httpd restart
+
+9) set hostname in the file /etc/sysconfig/network. set tis:
+
+	HOSTNAME=lcsbld1.ih.lucent.com
+
+10) setup printers:
+
+	export DISPLAY=your.laptop.ip:0.0
+	$ /usr/sbin/redhat-config-printer-gui
+
+then add a new printer:
+
+	click new
+	click forward
+
+	enter a printer name (aisle)
+	enter a "short description"
+	click forward
+
+	select a queue type from drop-down:
+		choose "Networked UNIX (LPD)"
+		enter server "ihprint2.ih.lucent.com"
+		enter queue "aisle name"
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	the queue determines which printer gets the print job. so it is
+	very important to have the correct aisle/room number which labels
+	the printer.
+
+	for the printer in IH 1D401, i entered this exactly:
+
+	Server: ihprint2.ih.lucent.com
+	Queue: ih1d401
+
+NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
+	click forward
+
+	choose postscript printer
+	click forward
+
+to list all printers: 
+
+	$ lpstat -a
+
+to list default printer:
+
+	$ lpstat -d
+
+to print to a specific printer:
+
+	$ lpr -P <printer> <file_name>
+
+or, do this:
+
+	$ export PRINTER=<printer>
+	$ lpr <file_name>
+
+11) To turn on samba so file systems can be shared to PCs, do this:
+
+	$ /sbin/chkconfig smb on
+	$ /sbin/service smb start
+
+before starting samba you need to set these parameters in the
+[global] section of the /etc/samba/smb.conf file 
+
+[global]
+	workgroup = NA02.LUCENT.COM
+	server string = lcsbld1 samba server
+
+you can set these parameters by hand, using swat or using redhat-config-samba.
+
+To start up web-based config tool swat, update /etc/xinetd.d/swat. 
+change "disable = yes" to "disable = no". add this line to the file:
+
+only_from = 127.0.0.1 mrumore-c1.ih.lucent.com mrumore.lra.lucent.com
+
+then do this for start up:
+
+	$ /sbin/service xinetd start
+
+access the swat tool from a web browser like this if you run the browser
+directly on lcsbld1:
+
+	http://127.0.0.1:901
+
+or access it like this if you are running from one the "only_from" 
+machines:
+
+	http://lcsbld1.ih.lucent.com:901
+
+you can also configure sambs using the tool redhat-config-samba. do this:
+
+	export DISPLAY=X.X.X.x:0.0
+	/usr/bin/redhat-config-samba
+
+this program is simpler than swat and more limited.
+
+you can add new samba users by adding a group of lines likes this
+at the bottom of the /etc/samba/smb.conf file:
+
+[<username>]
+        comment = share out <username> to owner
+        path = <username home in /etc/passwd>
+        read list = <username>
+        write list = <username>
+        read only = No
+
+Here's an example:
+
+[mrumore]
+        comment = share out mrumore to owner
+        path = /build/mrumore
+        read list = mrumore
+        write list = mrumore
+        read only = No
+
+Then restart samba:
+
+	$ service smb restart
+
+Then add a passwd to the new user:
+
+	$ smbpasswd <username>
+
+for example:
+
+	$ smbpasswd mrumore
+
+If the above fails, then try this to add a new smb user:
+
+	$ smbpasswd -a <username>
+
+On your laptop or pc, add a new network place with the resource set
+to this:
+
+	\\lcsbld1.ih.lucent.com\<username>
+
+and use the login/passd of <username>/<smb username passwd>
+
+for example:
+
+	\\lcsbld1.ih.lucent.com\mrumore
+
+login mrumore, passwd XXXXXXX
+
+A user can reset the SMB passwd like this:
+
+	$ smbpasswd <username>
+
+or for this example:
+
+	$ smbpasswd mrumore
+	
+I have a tool called myaddsmbuser that will add a new user. It does NOT
+set the default passwd though. Here is how you can add a new user:
+
+	$ myaddsmbuser <newusername>
+
+or,
+
+	$ myaddsmbuser mrumore
+
+This tool can only be executed from root.
+
+12) There are two more sets of files/directories that need to be copied from 
+chibuild.telica.com to lcsbld1. First, login as builder on chibuild.telica.com
+and do this:
+
+	# logged in as builder on chibuild
+	$ cd /telica/toaster/home/times10
+	$ tar czvf /tmp/times10.tar.gz $PWD
+	$ cd /telica/toater/home/gdixit/local/splint
+	$ tar czvf /tmp/splint.tar.gz $PWD
+
+Now FTP these files to lcsbld1. Login as root on lcsbld1 and do as a follows.
+Assuming both the above tar files are under /, then do this:
+
+	# login as root on lcsbld1.
+	$ cd /
+	$ tar xzvf /times10.tar.gz
+	$ cd /telica/toaster/home/times10
+	$ find . print | xargs chown root
+	$ find . print | xargs chmod 775
+	$ cd /
+	$ tar xzvf /splint.tar.gz
+	$ cd /telica/toaster/home/gdixit
+	$ find . print | xargs chown root
+	$ find . print | xargs chmod 775
+
+That's it. These files are required when building the CPU tar file.
+
+Done.
+
+-------------------------------------------------------------------------------
+
+the directions here are for building the build server (as per an email
+from Vinh Cao):
+
+1) copy lynx.tar.gz under chibuild:/lynx.tar.gz, then extract under / on
+your server.
+
+2) Make two dir path on your server:
+
+	/telica/stein/cvs/logs
+	/telica/stein/cvs/bin
+
+All you have to do it, rcp them from chibuild:/telica/stein/cvs/* or tar
+them up and ftp over.
+
+3) Copy these two files under /usr/bin/as and ld (assembler and linker)
+put into:
+
+/usr/lib/gcc-lib/i386-redhat-linux/3.2.3/ (if your gcc version is 3.4,
+then put it under 3.4) Do this:
+
+	$ cp /usr/bin/as /usr/lib/gcc-lib/i386-redhat-linux/3.2.3/
+	$ cp /usr/bin/ld /usr/lib/gcc-lib/i386-redhat-linux/3.2.3/
+
+4) Also copy one more file into lynx dir on your server:
+
+/usr/lynx/3.1.0/ppc/cdk/linux-xcoff-ppc/usr/bin/as.440. This is a new
+file add on after first lynx was make.
+
+
+5) you need to add the group cvsuser:
+
+	$ groupadd -g 500 cvsusers
+
+6) add builder login:
+
+	$ useradd -u 524 -g 500 -d /build/builder -s /bin/bash builder
+	$ passwd builder
+
+give it the super-secret, "I have to shoot you, if you know it." passwd.
+
+7) CALEA tools need to be installed for builds to work. Call Steve Cook.
+
+8) install /telica/toaster/home/builder/lynx_tools on lcsbld1. copy from 
+chibuild. create a tar file and just expand tar file on lcsbld1 in the
+same directory. 
+
+also, create a link for builder:
+
+	$ ln -s /build/builder /telica/toaster/home/builder
+
+9) for saveloads to work we need two logins:
+
+	lcsinteg/plexus9000
+	lcstools/plexus9000
+
+also, change the PS1 variable in the lcstools .bashrc to this:
+
+	export PS1
+	PS1="lcsbld1# "
+
+---------------------------------------------------------------------------
+
+how to add file system quotas to lcsbld1. this is different than
+most procedures since we are adding quotas to /.
+
+the url which has this procedure is:
+
+http://www.yolinux.com/TUTORIALS/LinuxTutorialQuotas.html
+
+this is what i did:
+
+1) edit /etc/fstab and add usrquota,grpquota to / line. see below:
+
+LABEL=/                 /                       ext3    defaults,usrquota,grpquota        1 1
+LABEL=/boot             /boot                   ext3    defaults        1 2
+none                    /dev/pts                devpts  gid=5,mode=620  0 0
+none                    /proc                   proc    defaults        0 0
+none                    /dev/shm                tmpfs   defaults        0 0
+/dev/sda3               swap                    swap    defaults        0 0
+/dev/cdrom              /mnt/cdrom              udf,iso9660 noauto,owner,kudzu,ro 0 0
+/dev/fd0                /mnt/floppy             auto    noauto,owner,kudzu 0 0
+
+2) create these files:
+
+	$ touch /aquota.user
+	$ touch /aquota.group
+	$ chmod 600 /aquota.user
+	$ chmod 600 /aquota.group
+
+3) boot machine:
+
+	$ sync
+	$ sync
+	$ reboot
+
+wait for machine to come up. if it does not come up, then check console
+in the LSP room (6D2 aisle).
+
+4) update quota files:
+
+	$ quotacheck -vguma
+
+this will take a while. you'll get output that looks similar to this:
+
+quotacheck: WARNING -  Quotafile //aquota.user was probably truncated. ...
+quotacheck: WARNING -  Quotafile //aquota.group was probably truncated. ...
+quotacheck: Scanning /dev/sda2 [/] done
+quotacheck: Checked 9998 directories and 179487 files
+    
+5) to enable quotas:
+
+	$ quotaon -av
+
+to turn off quotas:
+
+	$ quotaoff -av
+
+6) to add quotas to a user:
+
+	$ edquota -u <username>
+
+for example:
+
+	$ edquota -u mrumore
+
+then enter the soft and hard limits in terms of 1k blocks. for a 20Gig
+limits, user 20,000,000. also, a value of zero (0) turns off a quota. so,
+leave the remaining quotas as zero.
+
+7) to check quotas for a user:
+
+	$ quota -u <username>
+
+for example:
+
+	$ quota -u mrumore
+
+Disk quotas for user mrumore (uid 9820):
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+      /dev/sda2      60  20000000 20000000              15       0       0
+
+8) to have hard quota work, then you must set the time limit:
+
+	$ edquota -t
+
+set block grace period to '1hour'.
+
+here's how the file will look:
+
+Grace period before enforcing soft limits for users:
+Time units may be: days, hours, minutes, or seconds
+  Filesystem             Block grace period     Inode grace period
+  /dev/sda2                    1hours                  7days
+
+
+-------------------------------------------------------------------------
+
+how to add a new user on lcsbld1:
+
+1) on ihgp get the login user id:
+
+	# on ihgp
+	$ ypcat /etc/passwd | grep <username>
+
+get the user id. for example:
+
+	ihgp> ypcat passwd | grep rumore
+rumore:ktsIOjGunfDr6:9820:9820:jr1a0a000-Rumore,M.A.(mrumore)1050:/home/rumore:/bin/ksh
+
+the user id is 9820.
+
+2) login as root on lcsbld1 and run this command:
+
+	/root/bin/myuseradd <username> <userid>
+
+the script will ask you for a passwd. enter the default passwd.
+
+3) add quotas to the new user:
+
+	$ edquota -u <username>
+
+set soft and hard block limits to 20Gig in 1K blocks (20000000).
+
+verify the quotas were taken:
+
+	$ quota -u <username>
+
+4) to delete a user:
+
+	$ userdel -r <username> 
+
+or, do this:
+
+	$ myuserdel <username>
+
+----------------------------------------------------------------------------
+
+the script /root/bin/myuseradd look like this:
+
+#
+# add a new user to lcsbld1.
+#
+if [[ "${1}" == "-?" ]]
+then
+        echo "${0} [-?] username userid" >&2
+        exit 0;
+fi
+#
+if [[ $# != 2 ]]
+then
+        echo "ERROR: wrong number of parameters." >&2
+        echo >&2
+        echo "${0} [-?] username userid" >&2
+        exit 2;
+fi
+#
+username=${1}
+userid=${2}
+#
+cvsusers_groupid=500
+#
+useradd -u ${userid} -g ${cvsusers_groupid} -d /build/${username} -s /bin/bash ${username}
+if [[ ${?} != 0 ]]
+then
+        echo "ERROR: useradd failed." >&2
+        exit 2
+fi
+#
+passwd ${username}
+#
+exit ${?}
+
+-----------------------------------------------------------------------------
+
+to get CVS to work:
+
+1) set up CVSROOT shell env:
+
+	export CVSROOT
+	CVSROOT=:pserver:<username>@stein.telica.com:/cvs/cvsroot/Repository
+
+for example,
+
+	export CVSROOT
+	CVSROOT=:pserver:mrumore@stein.telica.com:/cvs/cvsroot/Repository
+
+2) now to set up the CVS login:
+
+	$ cvs login
+
+and enter your passwd on stein.
+
+3) do your regular check out ...
+	
+

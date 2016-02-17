@@ -1,0 +1,58 @@
+mgc_hardware2_spa exec {
+	tl1 open -t10 tl1spa <spa.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-1:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-2:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-3:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-4:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-14:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-eqpt::IOM-15:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -i -v tl1spa ent-iproute::spmgt-0.0.0.0-0:::gateway=135.1.105.254
+	tl1 exec -i -v tl1spa ent-iproute::spsig-10.14.1.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.10.0.0-16:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.32.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.30.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.27.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.26.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.31.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.35.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.40.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.11.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.3.0.0-16:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-135.2.67.0-26:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-135.2.67.64-26:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.80.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.90.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.20.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spa ent-iproute::spsig-10.11.19.0-24:::gateway=10.11.41.254
+	tl1 close tl1spa
+}
+mgc_hardware2_spb exec {
+	tl1 open -t10 tl1spb <spb.ip> <spb.tl1login> <spb.tl1passwd>
+	tl1 exec -v tl1spb ent-eqpt::IOM-1:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb ent-eqpt::IOM-2:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb ent-eqpt::IOM-3:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb ent-eqpt::IOM-4:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb ent-eqpt::IOM-14:::BA9ATS0FAB,PRI,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb ent-eqpt::IOM-15:::BA9ATS0FAB,SEC,95,95,95,5.3.0.4:IS
+	tl1 exec -v tl1spb #ed-t1::tmg-A:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=PRI:IS
+	tl1 exec -v tl1spb #ed-t1::tmg-B:::EQLZ=0,FMT=SF,LINECDE=AMI,OMODE=AIS,TMGREF=SEC:IS
+	tl1 exec -v tl1spb ent-iproute::spmgt-0.0.0.0-0:::gateway=135.1.105.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.14.1.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.10.0.0-16:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.32.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.30.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.27.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.26.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.31.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.35.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.40.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.11.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.3.0.0-16:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-135.2.67.0-26:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-135.2.67.64-26:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.80.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.90.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.20.0-24:::gateway=10.11.41.254
+	tl1 exec -v tl1spb ent-iproute::spsig-10.11.19.0-24:::gateway=10.11.41.254
+	tl1 close tl1spb
+}

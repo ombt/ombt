@@ -1,0 +1,59 @@
+prepare exec {
+	#
+	# boot both switches to min-mode
+	#
+	source <scriptsdir>/reload.boot_to_minmode
+	#
+	# built-in function
+	#
+	wait_for_boot -d -m <spa.ip> <spa.login> <spa.passwd> <spb.ip> <spb.login> <spb.passwd>
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open telnetspa <spa.ip> <spa.login> <spa.passwd>
+	telnet open telnetspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	telnet exec telnetspa /bin/rm /*tar.gz
+	telnet exec telnetspb /bin/rm /*tar.gz
+	telnet exec telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+	#
+	telnet close telnetspa
+	telnet close telnetspb
+	#
+	ftp open ftpspa <spa.ip> <spa.login> <spa.passwd>
+	ftp open ftpspb <spb.ip> <spb.login> <spb.passwd>
+	#
+	ftp put -b ftpspa <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+	ftp put -b ftpspa <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+	ftp put -b ftpspa <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+	ftp put -b ftpspa <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+	ftp put -b ftpspa <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+	ftp put -b ftpspa <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+	ftp put -b ftpspa <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -b ftpspa <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	ftp put -b ftpspa <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -b ftpspa <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+	ftp put -b ftpspa <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+	ftp put -b ftpspa <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+	ftp put -b ftpspa <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+	ftp put -b ftpspa <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+	#
+	ftp put -b ftpspb <ftp.textdir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+	ftp put -b ftpspb <ftp.textdir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+	ftp put -b ftpspb <ftp.textdir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+	ftp put -b ftpspb <ftp.textdir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+	ftp put -b ftpspb <ftp.textdir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+	ftp put -b ftpspb <ftp.textdir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+	ftp put -b ftpspb <ftp.textdir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put -b ftpspb <ftp.textdir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	ftp put -b ftpspb <ftp.textdir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put -b ftpspb <ftp.textdir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_2>
+	ftp put -b ftpspb <ftp.textdir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+	ftp put -b ftpspb <ftp.textdir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+	ftp put -b ftpspb <ftp.textdir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+	ftp put -b ftpspb <ftp.textdir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+	#
+	ftp close ftpspa
+	ftp close ftpspb
+}

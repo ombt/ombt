@@ -1,0 +1,14 @@
+CC = cc
+CCFLAGS = -g -DSYSTEM5
+#
+LD = cc
+LDFLAGS = -g -DSYSTEM5
+#
+dir
+dir.c
+regcmp.c
+regex.c
+install1 = chmod 755 dir
+install2 = rcp dir eeinteg@ihees1:/home/eeinteg/rumore/bin/dir
+install3 = rcp dir integ@ihlbs22/home/integ/bin/dir
+install4 = rcp dir lcstools@lts08:/home/lcstools/bin/dir

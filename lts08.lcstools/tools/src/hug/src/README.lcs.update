@@ -1,0 +1,283 @@
+
+OLD -- VERY OLD -- 
+
+1) summary of commands available in scripts:
+
+cmd options are:
+
+	-v = verbose
+	-t<tmout> = time out value
+
+cmds syntax and options:
+
+ftp open [-v] [-t<tmout>] streamid <ip> <login> <passwd>
+	(open sets streamid to expect spawn_id)
+ftp put [-v] [-t<tmout>] [ascii|binary] <streamid> <frompath> <topath>
+ftp get [-v] [-t<tmout>] [ascii|binary] <streamid> <frompath> <topath>
+ftp close [-v] [-t<tmout>] <streamid>
+
+store data in internal section:
+ftp,<streamid>,state = non-existent
+ftp,<streamid>,state = { open, closed, timeout, eof, unknown, error }
+
+rsh [-v] [-t<tmout>] <ip> <login> <passwd> <cmd> (executes only one command)
+
+no internal state for rsh, it runs only one command at a time.
+
+telnet open [-v] [-t<tmout>] streamid <ip> <login> <passwd> 
+	(open sets streamid to spawn_id)
+telnet exec [-v] [-t<tmout>] <streamid> cmd
+telnet close [-v] [-t<tmout>] <streamid>
+
+store data in internal section:
+telnet,<streamid>,state = non-existent
+telnet,<streamid>,state = { open, closed, timeout, eof, unknown, error }
+
+tl1 open [-v] [-t<tmout>] streamid <ip> <login> <passwd> 
+	(open sets streamid to spawn_id)
+tl1 exec [-v] [-t<tmout>] <streamid> <tl1cmd> 
+	(expects tagid in command, requires it)
+tl1 close [-v] [-t<tmout>] <streamid> 
+
+store data in internal section:
+tl1,<streamid>,state = non-existent
+tl1,<streamid>,state = { open, closed, timeout, eof, unknown, error }
+
+builtin [-v] [-t<tmout>] <param1> <param2> ...
+
+2) script template file and configuration data structure.
+#
+# template for upgrade scripts.
+#
+###########################################################################
+#
+# file-specific information. section is required.
+#
+file {
+	type script	<<== given - type of file
+}
+#
+# this section is generated.
+#
+section {
+	type data			<<== generated
+	# list of sections
+	names data prepare update	<<== generated
+	# data specific to the section
+	globals {
+		type data
+		startcmd 0	<<== generated
+		lastcmd 0	<<== generated
+	}
+	prepare {
+		type exec
+		startcmd 1	<<== generated
+		lastcmd N	<<== generated
+	}
+	update {
+		type exec
+		startcmd 1	<<== generated
+		lastcmd N	<<== generated
+	}
+}
+#
+# internal data - generated used to track script execution,
+#
+internal {
+	ftp {
+		number_of_streams
+		defaulttimeout
+		<streamid> {
+			state
+			ip
+			login
+			passwd
+			defaulttimeout
+		}
+		...
+	}
+	telnet {
+		number_of_streams
+		defaulttimeout
+		<streamid> {
+			state
+			ip
+			login
+			passwd
+			defaulttimeout
+		}
+		...
+	}
+	tl1 {
+		number_of_streams
+		defaulttimeout
+		<streamid> {
+			state
+			ip
+			login
+			passwd
+			defaulttimeout
+		}
+		...
+	}
+	rsh {
+		defaulttimeout
+	}
+}
+#
+# this is a given section - contains data for executable sections.
+#
+globals {
+	type data
+	from_branch 3.11.2.2
+	to_branch 3.11.2.2.SP.2
+	cpu_load 5.3.0.4.31
+	spa {
+		ip 10.10.1.1
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	spb {
+		ip 10.10.1.2
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	ftp {
+		ip 10.10.1.2
+		login root
+		passwd plexus9000
+		textdir /l148/text/BRANCH-5-3/
+		images {
+			ana 5.3.0.4.1_ana.tar.gz           
+			octds3 5.3.0.4.8_octds3.tar.gz        
+			trids3_3 5.3.0.4.8_trids3_3.tar.gz      
+			ena 5.3.0.4.7_ena.tar.gz           
+			voip 5.3.0.4.7_voip.tar.gz          
+			ena2 5.3.0.4.7_ena2.tar.gz          
+			cm 5.3.0.4.7_cm.tar.gz            
+			cpu 5.3.0.4.31_cpu.tar.gz          
+			ds1_2 5.3.0.4.9_ds1_2.tar.gz         
+			octds3_2 5.3.0.4.8_octds3_2.tar.gz      
+			trids3 5.3.0.4.8_trids3.tar.gz        
+			octds3_3 5.3.0.4.8_octds3_3.tar.gz      
+			voip6 5.3.0.4.7_voip6.tar.gz         
+			tdmoc 5.3.0.4.9_tdmoc.tar.gz         
+		}
+		scriptsdir /home/lcstools/tools/bin/hug
+	}
+}
+#
+# this is a given section
+#
+prepare {
+	type exec
+	#
+	local {
+		type data	<<== implied
+	}
+	#
+	reboot -m <spa.ip> <spa.login> <spa.passwd>
+	reboot -m <spb.ip> <spb.login> <spb.passwd>
+	#
+	rsh <spa.ip> <spa.login> <spa.passwd> rm -rf /*tar.gz
+	rsh <spa.ip> <spa.login> <spa.passwd> rm -rf /home/*tar.gz
+	#
+	rsh <spb.ip> <spb.login> <spb.passwd> rm -rf /*tar.gz
+	rsh <spb.ip> <spb.login> <spb.passwd> rm -rf /home/*tar.gz
+	#
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.basedir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+	#
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/ana/<ftp.images.ana> /home/<ftp.images.ana>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/octds3/<ftp.images.octds3> /home/<ftp.images.octds3>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/trids3_3/<ftp.images.trids3_3> /home/<ftp.images.trids3_3>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/ena/<ftp.images.ena> /home/<ftp.images.ena>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/voip/<ftp.images.voip> /home/<ftp.images.voip>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/ena2/<ftp.images.ena2> /home/<ftp.images.ena2>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/cm/<ftp.images.cm> /home/<ftp.images.cm>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/cpu/<ftp.images.cpu> /home/<ftp.images.cpu>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/ds1_2/<ftp.images.ds1_2> /home/<ftp.images.ds1_2>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/octds3_2/<ftp.images.octds3_2> /home/<ftp.images.octds3_>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/trids3/<ftp.images.trids3> /home/<ftp.images.trids3>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/octds3_3/<ftp.images.octds3_3> /home/<ftp.images.octds3_3>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/voip6/<ftp.images.voip6> /home/<ftp.images.voip6>
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.basedir>/tdmoc/<ftp.images.tdmoc> /home/<ftp.images.tdmoc>
+}
+#
+update {
+	type exec
+	local {
+		type data	<<== implied
+	}
+	#
+	# kill emf, just in case.
+	#
+	rsh <spa.ip> <spa.login> <spa.passwd> ps xf | grep './emf' | cud -d' ' -f1 | xargs kill -9
+	rsh <spb.ip> <spb.login> <spb.passwd> ps xf | grep './emf' | cud -d' ' -f1 | xargs kill -9
+	# 
+	# remove configuration data.
+	#
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.scriptsdir>/remove_configuration_data /home/remove_configuration_data
+	rsh <spa.ip> <spa.login> <spa.passwd> chmod 755 /home/remove_configuration_data
+	rsh <spa.ip> <spa.login> <spa.passwd> /home/remove_configuration_data
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.scriptsdir>/remove_configuration_data /home/remove_configuration_data
+	rsh <spb.ip> <spb.login> <spb.passwd> chmod 755 /home/remove_configuration_data
+	rsh <spb.ip> <spb.login> <spb.passwd> /home/remove_configuration_data
+	#
+	# remove timesten database
+	#
+	ftp put <spa.ip> <spa.login> <spa.passwd> <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	rsh <spa.ip> <spa.login> <spa.passwd> chmod 755 /home/remove_timesten
+	rsh <spa.ip> <spa.login> <spa.passwd> /home/remove_timesten
+	ftp put <spb.ip> <spb.login> <spb.passwd> <ftp.scriptsdir>/remove_timesten /home/remove_timesten
+	rsh <spb.ip> <spb.login> <spb.passwd> chmod 755 /home/remove_timesten
+	rsh <spb.ip> <spb.login> <spb.passwd> /home/remove_timesten
+
+
+	#
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.trids3_3>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.ena>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.voip>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.ena2>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.cm>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.cpu>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.ds1_2>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.octds3_>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.trids3>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.octds3_3>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.voip6>
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/tar xzvf /home/<ftp.images.tdmoc>
+	#
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.ana>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.octds3>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.trids3_3>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.ena>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.voip>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.ena2>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.cm>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.cpu>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.ds1_2>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.octds3_>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.trids3>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.octds3_3>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.voip6>
+	rsh <spb.ip> <spb.login> <spb.passwd> /bin/tar xzvf /home/<ftp.images.tdmoc>
+	#
+	rsh <spa.ip> <spa.login> <spa.passwd> /bin/ln -s /Telica/swCPU/<cpu_load> /Telica/swCPU
+}

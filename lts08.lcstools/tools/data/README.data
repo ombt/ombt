@@ -1,0 +1,75 @@
+Descriptor files MUST alway have the following form:
+
+field	t\t	l10
+lastfield	t\n	l10
+
+where the type and delimiter is either t\t or t\n. the db.sh library
+expects this. also, the white space between the fields in the Dfile
+should be single tabs.
+
+the relations are used as follows:
+
+1) load-only relations - relations that only concerned with the
+loads that are built and not related to lab details.
+
+buildmachines - contains branch, build machine and path to where
+tar files are stored. UPDATED by hand.
+
+images - contains a list of images that makes up a "load". it contains
+the branch, cpuload, IOM type and name of tar file. UPDATED via saveload 
+and removeloads
+
+loads - contains data for branch, cpu load and basedir for text tar
+files. filesystems says where different types of files for given 
+branches are stored, but loads says specifically where to find
+a specific branch,cpuload for text. UPDATED via saveload and removeloads.
+
+2) lab-only relations - 
+
+binary - location of binary backups for labs, keyed by labid, branch and
+cpuload. contains directory where binary backup is stored. not currently
+used.
+
+chassis - contains the ip addresses for SP-A and SP-B for a chassis.
+type field describes the type of chassis: lcs, mg, mgc, sg. contains
+the labid for the chassis and the branch that supports this configuration.
+
+chassis2ioms - contains a list of IOMs associated for a chassis. the data
+are keyed by branch and labid. used by reload to determine which IOM
+images are required.
+
+labloads - list of loads available for each lab. keyed by labid, branch and
+cpuload. updated by saveload, lcsconfigure and removeloads. used by reload.
+
+labs - list of labs and branches supported for each lab. contains a flag
+to indicate if lab is distributed. this information can also be obtained
+from the chassis relation. relations chassis and labs are almost
+redundant. not used.
+
+scripts - tl1 scripts for given lab, branch and cpuload. assigns a script
+name, sequence number and base path. not used.
+
+3) load and lab-related relations -
+
+filesystems - contains base directories where to store text tar files,
+TL1 scripts for labs and binary backups for labs for a given branch
+and file type: text, scripts, binary. UPDATED by hand.
+
+parameters - miscellaneous name=value pairs. keyed by name, returns
+value. not used as of now.
+
+4) hardware-related relations - 
+
+hwioms - describes the ioms in each chassis. it contains the data
+for ent-eqpt and ent-eqpt-all TL1 cmds. the tool hw2ioms generates
+this relation from the Tl1 scripts. the relation chassis2ioms is 
+built using the data in this relation.
+
+hwchassis - contains the data for ed-chassis-eqpt TL1 cmds. the field
+data are contained as name-value pairs, rather than having a separate
+field for each parameter and having most of the fields be empty.
+the tool hw2chassis generates this relation from the Tl1 scripts.
+
+hwenet - contains enet information.
+
+hwtdm - contains trunking information.

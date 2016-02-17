@@ -1,0 +1,39 @@
+globals data {
+	login root
+	passwd plexus9000
+	tl1login telica
+	tl1passwd telica
+	#
+	branch BRANCH-5-3
+	cpu_load 5.3.0.6.18
+	#
+	basedir textdir /l148/text/
+	textdir <basedir>/<branch>/<cpu_load>/
+	scriptsdir /home/lcstools/tools/src/hug/scripts
+	#
+	images {
+		#
+		ana 5.3.0.6.3_ana.tar.gz
+		octds3 5.3.0.6.3_octds3.tar.gz
+		trids3_3 5.3.0.6.3_trids3_3.tar.gz
+		ena 5.3.0.6.3_ena.tar.gz
+		voip 5.3.0.6.3_voip.tar.gz
+		ena2 5.3.0.6.3_ena2.tar.gz
+		cm 5.3.0.6.3_cm.tar.gz
+		cpu 5.3.0.6.18_cpu.tar.gz
+		ds1_2 5.3.0.6.3_ds1_2.tar.gz
+		octds3_2 5.3.0.6.3_octds3_2.tar.gz
+		trids3 5.3.0.6.3_trids3.tar.gz
+		octds3_3 5.3.0.6.3_octds3_3.tar.gz
+		voip6 5.3.0.6.3_voip6.tar.gz
+		tdmoc 5.3.0.6.3_tdmoc.tar.gz
+	}
+	ihlcsg10 {
+		spa {
+			ip 135.1.104.203
+		}
+		spb {
+			ip 135.1.104.204
+		}
+	}
+}

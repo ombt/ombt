@@ -1,0 +1,22 @@
+#!/usr/bin/perl 
+#
+@junk = ();
+#
+if (@junk == ())
+{
+	print "empty list test passed ...\n";
+}
+else
+{
+	print "empty list test failed ...\n";
+}
+#
+if (@junk != ())
+{
+	print "NOT empty list test passed ...\n";
+}
+else
+{
+	print "NOT empty list test failed ...\n";
+}
+#

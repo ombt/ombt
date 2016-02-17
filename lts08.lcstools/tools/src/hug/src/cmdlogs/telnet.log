@@ -1,0 +1,289 @@
+hrdcpy telnet 135.1.104.141 -l root 
+Usage: telnet  [-8] [-E] [-L] [-a] [-d] [-e char] [-l user] [-n tracefile]
+        [-r] [host-name [port]]
+hrdcpy telnet 135.1.104.141 -l roothrdcpy telnet -135.1.104.141 -l roothrdcpy telnet -l135.1.104.141 -l roothrdcpy telnet -l 135.1.104.141 -l roothrdcpy telnet -l r135.1.104.141 -l roothrdcpy telnet -l ro135.1.104.141 -l roothrdcpy telnet -l roo135.1.104.141 -l roothrdcpy telnet -l root135.1.104.141 -l root 135.1.104.141 -l root 135.1.104.141 -        
+Trying 135.1.104.141...
+Connected to 135.1.104.141.
+Escape character is '^]'.
+
+
+ LynxOS (m76a)
+
+
+user name:root
+password:
+
+ ******************************************************************************
+ *                                                                            *
+ *                 @@@                                                        *
+ *                 @@@                                                        *
+ *                 @@@       @@@     @@@   @@@@@@   @@@ @@@                   *
+ *                 @@@        @@@   @@@   @@@  @@@   @@ @@                    *
+ *                 @@@         @@@ @@@    @@@  @@@    @@@                     *
+ *                 @@@@@@@@     @@@@@     @@@  @@@   @@ @@                    *
+ *                 @@@@@@@@      @@@      @@@  @@@  @@@ @@@                   *
+ *                           @@@@@@                                           *
+ *                           @@@@@   REAL-TIME SYSTEMS, INC.                  *
+ *                                                                            *
+ *                               Welcome to LynxOS                            *
+ *                  ( 3.0.1  FCS  version:  110298 - G )                      *
+ *                                                                            *
+ ******************************************************************************
+
+ihlcs2 SP-A
+
+3.11.0.5.SP.8
+
+
+m76a# exit
+Connection closed by foreign host.
+hrdcpy telnet -l root 135.1.104.141hrdcpy 
+Trying 135.1.104.141...
+Connected to 135.1.104.141.
+Escape character is '^]'.
+
+
+ LynxOS (m76a)
+
+
+user name:root
+password:
+
+**incorrect**
+
+user name:^DConnection closed by foreign host.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy telnet -l ihgp    rumore
+telnet> exit
+?Invalid command
+telnet> quit
+hrdcpy telnet
+telnet> 
+telnet> 
+telnet> 
+telnet> ?
+Commands may be abbreviated.  Commands are:
+
+close           close current connection
+logout          forcibly logout remote user and close the connection
+display         display operating parameters
+mode            try to enter line or character mode ('mode ?' for more)
+open            connect to a site
+quit            exit telnet
+send            transmit special characters ('send ?' for more)
+set             set operating parameters ('set ?' for more)
+unset           unset operating parameters ('unset ?' for more)
+status          print status information
+toggle          toggle operating parameters ('toggle ?' for more)
+slc             change state of special charaters ('slc ?' for more)
+z               suspend telnet
+!               invoke a subshell
+environ         change environment variables ('environ ?' for more)
+?               print help information
+telnet> open ihgp
+Trying 135.1.218.100...
+Connected to ihgp.
+Escape character is '^]'.
+
+
+SunOS 5.8
+
+login: ^DConnection closed by foreign host.
+hrdcpy telnet
+telnet> open 135.1.104.142
+Trying 135.1.104.142...
+Connected to 135.1.104.142.
+Escape character is '^]'.
+
+
+ LynxOS (m76b)
+
+
+user name:^DConnection closed by foreign host.
+hrdcpy 
+hrdcpy 
+hrdcpy telnettelnet -l rumorehrdcpy telnet -l rumore ihgp
+Trying 135.1.218.100...
+Connected to ihgp.
+Escape character is '^]'.
+
+
+SunOS 5.8
+
+login: ^DConnection closed by foreign host.
+hrdcpy telnbet   et ihgp
+Trying 135.1.218.100...
+Connected to ihgp.
+Escape character is '^]'.
+
+
+SunOS 5.8
+
+login: ^DConnection closed by foreign host.
+hrdcpy telnet telica.c        chibuild.telica.com
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+
+Login incorrect
+
+login: 
+Password: 
+
+
+Login incorrect
+Connection closed by foreign host.
+hrdcpy tellnet chibuild.telica.comhrdcpy telnet                    hrdcpy telnet
+telnet> open chibuild.telica.com
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+
+Login incorrect
+
+login: 
+Password: 
+
+
+Login incorrect
+Connection closed by foreign host.
+hrdcpy telnettelnet chibuild.telica.comhrdcpy telnet ihgp               hrdcpy telnet -l rumore ihgphrdcpy telnet -l rumore ihg     mrumore mrumore  chibuild.telica.com
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+Last login: Fri Feb 24 10:44:29 from 152.174.11.192.in-addr.arpa
+chibuild:mrumore> exit
+logout
+[H[JConnection closed by foreign host.
+hrdcpy 
+hrdcpy 
+hrdcpy telnet -l mrumore  chibuild.telica.comhrdcpy telnet -l   chibuild.telica.com       hrdcpy telnet -l l  chibuild.telica.comhrdcpy telnet -l lc  chibuild.telica.comhrdcpy telnet -l lcs  chibuild.telica.comhrdcpy telnet -l lcst  chibuild.telica.como  chibuild.telica.como  chibuild.telica.coml  chibuild.telica.coms  chibuild.telica.com
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+Last login: Fri Feb 24 22:23:15 from 6.82.111.135.in-addr.arpa
+chibuild:lcstools> exit
+logout
+[H[JConnection closed by foreign host.
+hrdcpy telnet -l mrumore teli    cibuild.       hibuild.telica.com
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+Last login: Fri Feb 24 23:58:08 from 6.82.111.135.in-addr.arpa
+chibuild:mrumore> exit
+logout
+[H[JConnection closed by foreign host.
+hrdcpy telnet -l mrumore chibuild.telica.comhrdcpy 
+Trying 135.4.64.50...
+Connected to chibuild.telica.com.
+Escape character is '^]'.
+Password: 
+Login incorrect
+
+login: Login timed out after 60 seconds
+Connection closed by foreign host.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy telnet ihg   -l rumore ihgp
+Trying 135.1.218.100...
+Connected to ihgp.
+Escape character is '^]'.
+
+
+SunOS 5.8
+
+login: rumore
+Password: 
+Login incorrect
+login: rumore
+Password: 
+Last login: Fri Feb 24 22:35:20 from lts08.ih.lucent
+Sun Microsystems Inc.   SunOS 5.8       Generic Patch   October 2001
+
+-----------------------------------------------------------------
+                         Warning Notice
+
+This system is restricted solely to Lucent Technologies authorized users
+for legitimate business purposes only. The actual or attempted unauthorized
+access, use, or modification of this system is strictly prohibited by Lucent
+Technologies. Unauthorized users are subject to Company disciplinary
+proceedings and/or criminal and civil penalties under state, federal, or
+other applicable domestic and foreign laws. The use of this system may be
+monitored and recorded for administrative and security reasons. Anyone
+accessing this system expressly consents to such monitoring and is advised
+that if monitoring reveals possible evidence of criminal activity, Lucent
+Technologies may provide the evidence of such activity to law enforcement
+officials. All users must comply with Lucent Technologies Corporate
+Instructions regarding the protection of Lucent Technologies information
+assets.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+   On the Saturday after the first and third Friday of every month 
+   all IHGP workstations will be rebooted between 02:00am and 04:00am.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>  
+         <<<<<                                            >>>>> 
+         <<<<< US Export Controls and DSS WARNING MESSAGE >>>>>
+         <<<<<                                            >>>>>
+         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>
+                                                    
+This server permits you to access information, some of which under certain 
+circumstances may require an export license from the U.S. Government. 
+                                                                            
+If you are a citizen of Afghanistan, Cuba, Iran, Iraq, Libya, North Korea, 
+Serbia, Sudan, or Syria, you may not access or use the information available
+through this server, unless Lucent has first obtained authorization from 
+the U.S. Government.
+
+For all other individuals accessing information through this server, please 
+note the following:
+                                                                          
+1. You may not disclose any of information that you have accessed through
+this server in Afghanistan, Cuba, Iran, Iraq, Libya, North Korea, Serbia, 
+Sudan, or Syria, or to citizens of these countries.                                                
+
+2. You may not access this server while you are residing in or traveling 
+through Afghanistan, Cuba, Iran, Iraq, Libya, North Korea, Serbia, Sudan,
+or Syria.  This restriction applies regardless of your citizenship.                                                         
+
+If you believe that business requirements necessitate the disclosure of 
+information to these countries or their citizens, you are requested to 
+contact the Global Trade Organization.  Information about the Global Trade 
+Organization can be found at http://globaltrade.web.lucent.com
+                                                                                              
+By continuing to use this server, you agree that you will comply with the 
+restrictions described above. Individuals who do not comply are subject to 
+dismissal and can expose Lucent to fines and penalties. Criminal penalties 
+such as fines and imprisonment may be imposed as well.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TERM set, default terminal options selected
+ihgp:rumore> 
+ihgp:rumore> 
+ihgp:rumore> lf
+[LTS00]             [docs]              [ns_imap]           [rje]
+ PUTTY.RND          [flash_solaris]     [nsmail]            [rop]
+[ROP.CLASS]         [info]              [plexus]            [src]
+[Temp]              [javadecomp]        [provers]           [sysconfig]
+ _viminfo           [jsrc]              [psrc]              [tclsrc]
+[bin]               [lib]               [public_html]       [webstart101]
+[cuj]               [mail]              [readmes]
+[diagnostic.tests]  [mylibs]             relo5.ovrld
+ihgp:rumore> exit
+Connection closed by foreign host.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy exit

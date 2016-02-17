@@ -1,0 +1,3 @@
+#!/opt/exp/bin/expect
+puts [info script];
+exit 0;

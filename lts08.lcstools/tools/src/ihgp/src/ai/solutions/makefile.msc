@@ -1,0 +1,39 @@
+#This makefile was written for the make utility that comes with Microsoft
+#Visual C. It may or may not work with other make utilities.
+
+#Compiler flags. This includes the memory model used to compile the libraries.
+CFLAGS = -O2 #-Ac
+
+#If you get unresolved symbols on linking try adding or removing
+#-DNEED_CAST below. MSC Visual C++ needs it.
+#Adding the -DDEBUG directive results in the compilation of extra code
+#that will help debugging your programs.
+
+EXTRA_FLAGS = -DNEED_CAST #-DDEBUG
+
+##############################################################################
+#Do not change anything below this line                                      #
+##############################################################################
+
+MSCFLAGS = -ML -GX -DWIN32 -D_WINDOWS
+CFLAGS = $(CFLAGS) $(EXTRA_FLAGS) $(MSCFLAGS)
+MAKEFILE = makefile.msc
+
+
+all:    util_dir search_dir programs_dir
+        echo OK
+
+util_dir:
+        cd util
+        $(MAKE) -f $(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+search_dir:
+        cd search
+        $(MAKE) -f $(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..
+
+programs_dir:
+        cd programs
+        $(MAKE) -f $(MAKEFILE) CFLAGS="$(CFLAGS)"
+        cd ..

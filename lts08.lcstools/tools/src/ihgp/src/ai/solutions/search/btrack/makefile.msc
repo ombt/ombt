@@ -1,0 +1,15 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -ML -GX -DWIN32 -D_WINDOWS -DNEED_CAST
+
+AR = lib 
+AILIB = ..\..\lib\aisearch.lib
+INCFLAGS = -I..\..\include
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+OBJS =  btrack.obj
+
+all:	$(OBJS)
+        $(AR) /out:$(AILIB) $(AILIB) $(OBJS)
+

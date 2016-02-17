@@ -1,0 +1,158 @@
+<html>
+<head>
+<title> DLP/DLP-701 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-701 CHECKING MEMORY FOR A CHANGE OF SYSTEM PROCESSOR SOFTWARE </h3>
+<pre>
+
+1) Determine the active SP using RTRV-EQPT.
+
+2) Determine which partition CurrRel points to:
+
+	EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+If the response is ../../Telica/swCPU/X.X.X.X.X, then / is the 
+active partition.
+
+If the response is ../../home1/Telica/swCPU/X.X.X.X.X, then /home1 is the 
+active partition.
+
+3) Determine if there are older releases in the other partition. 
+
+If CurrRel points to /Telica/swCPU, then check of there are old CPU loads
+under /home1/Telica/swCPU:
+
+	EXEC-LS:::::-l,/home1/Telica/swCPU
+
+If CurrRel points to /home1/Telica/swCPU, then check if there are old CPU 
+loads under /Telica/swCPU:
+
+	EXEC-LS:::::-l,/Telica/swCPU
+	
+
+4) If there are older CPU loads, then remove them. 
+
+If an older load, say /home1/Telica/swCPU/Y.Y.Y.Y.Y exists, then do
+this:
+
+	EXEC-RM:::::-r,/home1/Telica/swCPU/Y.Y.Y.Y.Y
+
+If an older load, say /Telica/swCPU/Y.Y.Y.Y.Y exists, then do
+this:
+
+	EXEC-RM:::::-r,/Telica/swCPU/Y.Y.Y.Y.Y
+
+Verify the load is missing as follows:
+
+For old load /Telica/swCPU/Y.Y.Y.Y.Y, do this:
+
+	EXEC-LS:::::-l,/Telica/swCPU/Y.Y.Y.Y.Y
+
+Nothing should be listed if he directory was delete. 
+
+For old load /home1/Telica/swCPU/Y.Y.Y.Y.Y, do this:
+
+	EXEC-LS:::::-l,/home1/Telica/swCPU/Y.Y.Y.Y.Y
+
+Nothing should be listed if he directory was delete. 
+
+Repeat this procedure until all old loads are removed. 
+
+5) Remove the standby processor by using the RMV-EQPT command.
+
+If SP-A is standby, then enter:
+
+	RMV-EQPT::SP-A;
+
+If SP-B is standby, then enter:
+
+	RMV-EQPT::SP-B;
+
+6) Restore the standby SP using the RST-EQPT command.
+
+
+If SP-A is standby, then enter:
+
+	RST-EQPT::SP-A;
+
+If SP-B is standby, then enter:
+
+	RST-EQPT::SP-B;
+
+7) Verify the standby SP has the state, IS,STBYH when the restore
+is done. Use RTRV-EQPT to verify.
+
+8) Now switch to the protection processor.
+
+If SP-A is active, enter this:
+
+	SW-TOPROTN-EQPT::SP-A
+
+If SP-B is active, enter this:
+
+	SW-TOPROTN-EQPT::SP-B
+
+Use RTRV-EQPT to verify the new processor becomes IS,ACT. 
+
+If SP-A was standby, now it should be active with a state of IS,ACT.
+If SP-B was standby, now it should be active with a state of IS,ACT.
+
+Now, repeat the above procedure with the new active processor.
+
+9) Determine which partition CurrRel points to:
+
+	EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+If the response is ../../Telica/swCPU/X.X.X.X.X, then / is the 
+active partition.
+
+If the response is ../../home1/Telica/swCPU/X.X.X.X.X, then /home1 is the 
+active partition.
+
+10) Determine if there are older releases in the other partition. 
+
+If CurrRel points to /Telica/swCPU, then check of there are old CPU loads
+under /home1/Telica/swCPU:
+
+	EXEC-LS:::::-l,/home1/Telica/swCPU
+
+If CurrRel points to /home1/Telica/swCPU, then check if there are old CPU 
+loads under /Telica/swCPU:
+
+	EXEC-LS:::::-l,/Telica/swCPU
+	
+
+11) If there are older CPU loads, then remove them. 
+
+If an older load, say /home1/Telica/swCPU/Y.Y.Y.Y.Y exists, then do
+this:
+
+	EXEC-RM:::::-r,/home1/Telica/swCPU/Y.Y.Y.Y.Y
+
+If an older load, say /Telica/swCPU/Y.Y.Y.Y.Y exists, then do
+this:
+
+	EXEC-RM:::::-r,/Telica/swCPU/Y.Y.Y.Y.Y
+
+Verify the load is missing as follows:
+
+For old load /Telica/swCPU/Y.Y.Y.Y.Y, do this:
+
+	EXEC-LS:::::-l,/Telica/swCPU/Y.Y.Y.Y.Y
+
+Nothing should be listed if he directory was delete. 
+
+For old load /home1/Telica/swCPU/Y.Y.Y.Y.Y, do this:
+
+	EXEC-LS:::::-l,/home1/Telica/swCPU/Y.Y.Y.Y.Y
+
+Nothing should be listed if he directory was delete. 
+
+Repeat this procedure until all old loads are removed. 
+
+12) You are done. The active SP should be the SP that was initially
+standby before this procedure was started.
+
+</pre>
+</font></body>
+</html>

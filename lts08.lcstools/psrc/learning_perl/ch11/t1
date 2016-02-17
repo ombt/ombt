@@ -1,0 +1,7 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my $oldhandle = select STDOUT;
+#
+print "old handle was ... $oldhandle\n";

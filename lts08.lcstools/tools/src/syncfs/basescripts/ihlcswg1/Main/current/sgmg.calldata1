@@ -1,0 +1,24 @@
+ent-mg-partition::part0:::rlscalls=y
+ent-oc3::iom-1-oc3-1
+ent-sts1::iom-1-oc3-1-sts1-1::::is
+ent-sts1::iom-1-oc3-1-sts1-2::::is
+ent-sts1::iom-1-oc3-1-sts1-3::::is
+ent-t1::iom-1-oc3-1-sts1-1::::is
+sleep 10
+# Set up link sets
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::2:::mtpvariant=itu1992,mtp3rstreq=y
+ent-sg-pcown::3:::mtpvariant=itu1992,mtp3rstreq=y
+ent-prfl-sgpc::1
+ent-sg-pc::1:::pcdir=adj,pcprflid=1,mtpvariant=itu1992,mtp3rstreq=y
+ent-lset::1:::opc=2,adjdpc=1
+ent-mg-mgcassoc::inetfpod1-part0:::mgctype=primary,ipaddr=10.11.30.21,mgcidletmr=0
+ent-sg-m3uanettype::2:::netapp=1,ssf=ssfnat,dpclen=14bit,slslen=4bit,m3uanetvariant=itu1992
+ent-sg-m3uaassoc::3:::netid=2,ipadest=10.11.93.33,ipbdest=NULL,prinetwork=A,port=50000:is
+ent-sg-m3uaassocmap::4-3
+ent-sg-m3uaroute::opc-1-dpc-3:::routectxt=4
+ent-slk::3:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/1/1,l2prflid=1,lnkspeed=56k
+ent-sg-slk::3:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=1,slc=0,mtp3prflid=1,m2paassocid=0
+ent-route-ss7::1-1
+set-sid:::::ihlcswag1

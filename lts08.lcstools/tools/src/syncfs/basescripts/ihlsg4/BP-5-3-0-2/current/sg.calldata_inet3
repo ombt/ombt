@@ -1,0 +1,8 @@
+ent-sg-pc::230-80-1:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat;
+#signaling links here
+ent-lset::3:::OPC=230-80-22,ADJDPC=230-80-1;
+ent-route-ss7::230-80-1-3:::lsetpriority=0;
+#
+ED-STATE-SLK::2:100::OOS;
+dlt-slk::2:100::;
+ent-slk::2:::IOMPORT=IOM-1-PORT-2,CHAN=1,LSETID=3,SLC=0,MTP2PRFLID=1,MTP3PRFLID=1,lnkspeed=56K;

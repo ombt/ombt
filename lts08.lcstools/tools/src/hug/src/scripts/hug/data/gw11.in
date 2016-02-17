@@ -1,0 +1,44 @@
+#
+# global data used by reload script.
+#
+globals data {
+	scriptsdir .
+	#
+	switchid ihlcsgw11
+	#
+	ihlcsgw11 {
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+		spa {
+			ip 135.1.104.205
+		}
+		spb {
+			ip 135.1.104.206
+		}
+	}
+	#
+	load {
+		ftpmachine 135.111.82.6
+		ftplogin lcstools
+		ftppasswd ch1s0x
+		textdir /l148/text/BP-5-3-0-6
+		branch BP-5-3-0-6
+		cpuload 5.3.0.6
+		images {
+			types cm cpu 
+			cm 5.3.0.6_cm.tar.gz
+			cpu 5.3.0.6_cpu.tar.gz
+			cmload 5.3.0.6
+			cpuload 5.3.0.6
+		}
+	}
+	#
+	backup {
+		machine 135.111.82.6
+		login lcstools
+		passwd ch1s0x
+		dir /tmp
+	}
+}

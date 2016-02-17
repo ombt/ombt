@@ -1,0 +1,73 @@
+C
+C PROGRAM TO READ IN A SERIES OF POINTS AND COMPUTE THE MEAN AND
+C STANDARD DEVIATION. SHOWS HOW TO READ IN VALUES FOR ARRAYS AND
+C HOW TO USE ARRAYS IN CALCULATIONS.
+C
+C        1         2         3         4
+C234567890123456789012345678901234567890
+C
+C         N
+C        ---
+C mean = \   X(i) / N
+C        /
+C        ---
+C        i=1
+C
+C                       N
+C                      ---
+C standard deviation = \   (X(i) - mean) / (N - 1)
+C                      /
+C                      ---
+C                      i=1
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C
+      PROGRAM AVRG
+C
+C DECLARE VARIABLES
+C
+      INTEGER MAXSZ
+      PARAMETER(MAXSZ=1000)
+C
+      REAL SUM, MEAN, SDEV
+      REAL X(MAXSZ)
+      INTEGER NPTS, I
+C
+C HOW MANY POINTS TO READ IN?
+C
+ 50   PRINT *, 'ENTER THE NUMBER OF POINTS'
+      READ *, NPTS
+      IF (NPTS.LT.2.OR.NPTS.GT.MAXSZ) GOTO 50
+C
+C READ IN POINTS
+C
+      DO 100 I=1, NPTS, 1
+          PRINT *, 'ENTER POINT'
+          READ *, X(I)
+ 100  CONTINUE
+C
+C CALCULATE THE MEAN
+C
+      SUM = 0.0
+      DO 200 I=1, NPTS, 1
+          SUM = SUM + X(I)
+ 200  CONTINUE
+      MEAN = SUM/FLOAT(NPTS)
+C
+C CALCULATE THE STANDARD DEVIATION
+C
+      SUM = 0.0
+      DO 300 I=1, NPTS, 1
+          SUM = SUM + (X(I) - MEAN)**2
+ 300  CONTINUE
+      SDEV = SUM/FLOAT(NPTS-1)
+C
+C PRINT OUT RESULTS
+C
+      PRINT *, 'MEAN = ', MEAN
+      PRINT *, 'STANDARD DEVIATION  = ', SDEV
+C
+C ALL DONE
+C
+      STOP
+      END

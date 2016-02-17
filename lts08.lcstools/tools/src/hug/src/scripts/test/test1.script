@@ -1,0 +1,15 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+#
+# global data used by script.
+#
+source <scriptsdir>/reload.globals
+#
+# prepare switch for reload and transfer products to switch.
+#
+source <scriptsdir>/reload.prepare
+#
+# update the switch and boot
+#
+source <scriptsdir>/reload.update

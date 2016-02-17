@@ -1,0 +1,32 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+saveload
+saveload.sh
+install1=-(rm $(HOME)/tools/bin/lcssaveload)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcssaveload
+#
+removeload
+removeload.sh
+install1=-(rm $(HOME)/tools/bin/lcsremoveload)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsremoveload
+#
+configure
+configure.sh
+install1=-(rm $(HOME)/tools/bin/lcsconfigure)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsconfigure
+#
+copytl1
+copytl1.sh
+install1=-(rm $(HOME)/tools/bin/lcscopytl1)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcscopytl1
+#
+hugcopytl1
+hugcopytl1.sh
+install1=-(rm $(HOME)/tools/bin/lcshugcopytl1)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcshugcopytl1
+#
+bbbscripts
+bbbscripts.sh
+install1=-(rm $(HOME)/tools/bin/lcsbbbscripts)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsbbbscripts
+#

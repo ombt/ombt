@@ -1,0 +1,18 @@
+This directory contains the following files:
+README          <-- you're reading it
+faqgrep         <-- the tangled faqgrep script (with line directives)
+faqgrep.nw      <-- the literate source
+faqgrep.pdf     <-- typeset documentation in PDF format
+faqgrep.ps      <-- typeset documentation in postscript format
+
+Typeset output produced by "weaving" the literate source into a .tex
+file and then using LaTeX ... finally 'dvips' was used to create the
+postscript file. I used pdflatex to generate the PDF file, and the
+quality appears better than the previous version using ps2pdf ---
+however, you should be aware that some viewers (notably xpdf on my
+system) do not render all font symbols (such as the ~ or ^ or the
+special angle braces around code chunks). If it looks like characters
+are missing, check the .nw source file.
+
+regards
+andrew

@@ -1,0 +1,1109 @@
+<html>
+
+<head>
+<title> HUG Notes </title>
+</head>
+
+<body bgcolor="E0E0E0">
+<font>
+
+<pre>
+
+4/2007 - HUG notes for updating lcshug tools.
+
+1 - preliminary steps
+
+rtrv-chassis-eqpt to get chassis types. allowed chassis types are:
+
+SG ==>> Lucent SG - Lucent Signaling Gateway
+MGC ==>> Lucent NC - Lucent Network Controller
+MG ==>> Lucent NG - Lucent Network Gateway
+SG_MGC ==>> Lucent CC - Lucent Compact Controller
+SG_MGC_MG ==>> Lucent CS - Lucent Compact Switch
+SG_MG ==>> Lucent SG/NG - Combined Lucent Signaling Gateway and Network Gateway
+
+task index list contains list for upgrading and downgrading the 
+switches listed above.
+
+2 - guide lines
+
+2.1 - procedures common to all switches for changing SP software:
+
+	<a href="DLP/DLP-700" target="contents">DLP-700</a> - preparing for in-service change of sp of software
+	<a href="DLP/DLP-701" target="contents">DLP-701</a> - checking memory for a change of sp software
+	<a href="DLP/DLP-702" target="contents">DLP-702</a> - ftp of software for an sp software change
+	<a href="DLP/DLP-703" target="contents">DLP-703</a> - extracting software for an sp software change
+
+2.2 - procedures common to all switches for changin IOM software:
+
+	<a href="DLP/DLP-712" target="contents">DLP-712</a> - preparing for upgrading iom software
+	<a href="DLP/DLP-713" target="contents">DLP-713</a> - ftp'ing files for in upgrade of iom software
+	<a href="DLP/DLP-714" target="contents">DLP-714</a> - extacting file for upgrade of iom software
+
+
+2.3) changing software of SPs of a 6.x and higher lucent gateway 
+platform switch. three types of in-service procedures:
+
+	- in-service upgrade
+	- upgrade to a version with no new features and a possible
+	downgrade of SPs.
+	- upgrade to a version with new features and a possible
+	downgrade of SPs.
+
+2.4) recommended in-service upgrade procedures depending on switch type.
+these procedures will upgrade the SP to a new software version.
+
+	<a href="DLP/DLP-710" target="contents">DLP-710</a> - SG_MG - In-Service Upgrading of Combined Lucent 
+		Signaling Gateway and Network Gateway System Processor Software
+	<a href="DLP/DLP-706" target="contents">DLP-706</a> - MG - In-Service Upgrading of Lucent Network Gateway System
+		Processor Software
+	<a href="DLP/DLP-704" target="contents">DLP-704</a> - SG - In-Service Upgrading of Lucent Signaling Gateway 
+		System Processor Software
+	<a href="DLP/DLP-705" target="contents">DLP-705</a> - MGC - In-Service Upgrading of Lucent Network Controller 
+		System Processor Software
+	<a href="DLP/DLP-707" target="contents">DLP-707</a> - SG_MGC_MG - In-Service Upgrading of Lucent Compact Switch 
+		System Processor Software
+	<a href="DLP/DLP-708" target="contents">DLP-708</a> - SG_MGC - In-Service Upgrading of Lucent Compact Controller 
+		System Processor Software
+
+2.5) upgrade to a version with no new features and a possible downgrade
+of the SPs:
+
+	<a href="DLP/DLP-752" target="contents">DLP-752</a> - SG_MG - In-Service Upgrade to a Version with No New 
+		Features and Possible Downgrade of SPs for a Combined Lucent 
+		Signaling Gateway and Network Gateway
+	<a href="DLP/DLP-737" target="contents">DLP-737</a> - MG - In-Service Upgrade to a Version with No New Features 
+		and Possible Downgrade of SPs for a Lucent Network Gateway
+	<a href="DLP/DLP-735" target="contents">DLP-735</a> - SG - In-Service Upgrade to a Version with No New Features 
+		and Possible Downgrade of SPs for a Lucent Signaling Gateway
+	<a href="DLP/DLP-736" target="contents">DLP-736</a> - MGC - In-Service Upgrade a to a Version with No New Features 
+		and Possible Downgrade of SPs for a Lucent Network Controller
+	<a href="DLP/DLP-738" target="contents">DLP-738</a> - SG_MGC_MG - In-Service Upgrade to a Version with No New 
+		Features and Possible Downgrade of SPs for a Lucent Compact 
+		Switch
+	<a href="DLP/DLP-739" target="contents">DLP-739</a> - SG_MGC - In-Service Upgrade to a Version with No New 
+		Features and Possible Downgrade of SPs for a Lucent Compact 
+		Controller
+
+2.6) upgrade to a version with new features and a possible downgrade
+of SPs:
+
+	<a href="DLP/DLP-753" target="contents">DLP-753</a> - SG_MG - In-Service Upgrade to a Version with New Features 
+		and Possible Downgrade of SPs for a Combined Lucent Signaling 
+		Gateway and Network Gateway
+	<a href="DLP/DLP-742" target="contents">DLP-742</a> - MG - In-Service Upgrade to a Version with New Features and 
+		Possible Downgrade of SPs for a Lucent Network Gateway
+	<a href="DLP/DLP-740" target="contents">DLP-740</a> - SG - In-Service Upgrade to a Version with New Features 
+		and Possible Downgrade of SPs for a Lucent Signaling Gateway
+	<a href="DLP/DLP-741" target="contents">DLP-741</a> - MGC - In-Service Upgrade to a Version with New Features 
+		and Possible Downgrade of SPs for a Lucent Network Controller
+	<a href="DLP/DLP-743" target="contents">DLP-743</a> - SG_MGC_MG - In-Service Upgrade to a Version with New 
+		Features and Possible Downgrade of SPs for a Lucent Compact 
+		Switch
+	<a href="DLP/DLP-744" target="contents">DLP-744</a> - SG_MGC - In-Service Upgrade to a Version with New Features 
+		and Possible Downgrade of SPs for a Lucent Compact Controller
+
+	
+2.7) changing software of IOMs of a 6.x and higher lucen gateway platform
+switch. upgrading procedures for IOMs:
+
+	<a href="DLP/DLP-717" target="contents">DLP-717</a> - MG - Upgrading IOM Software of the Lucent Network Gateway
+	<a href="DLP/DLP-715" target="contents">DLP-715</a> - SG - Upgrading IOM Software of a Lucent Signaling Gateway
+	<a href="DLP/DLP-718" target="contents">DLP-718</a> - SG_MGC_MG - Upgrading IOM Software of the Lucent 
+		Compact Switch
+	<a href="DLP/DLP-719" target="contents">DLP-719</a> - SG_MGC - Upgrading IOM Software of the Lucent Compact 
+		Controller
+	<a href="DLP/DLP-754" target="contents">DLP-754</a> - SG_MG - Upgrading IOM Software of a Combined Lucent 
+		Signaling Gateway and Network Gateway
+
+2.8) upgrading spare SPs of a 6.x and higher lucent gateway platform switch:
+
+	update the spare rear SPs to keep them consistent.
+
+2.9) upgrading spare IOms of a 6.x and higher lucent gateway platform switch:
+	
+	update the spare IOMs to keep them consistent.
+
+2.10) out-of-service upgrades and downgrades - in-service upgrades are not
+supported for all releases. refer to release notes to determine if in-service
+upgrade is supported. if an out-of-service upgrade is required, then the
+configuration data are deleted and the switch have to be reprovisioned.
+
+2.11) out-of-service downgrades are performed if the new software is not
+acceptable. an out-of-service downgrade will remove all configuration data
+and the switch will have to be reprovisioned.
+
+2.12) Out-of Service Upgrades from Version 5.X or 6.X to 6.2 For
+	Geographical Redundant Systems
+
+2.13) Swapping SPs and IOMs
+
+In a geographically redundant configuration, there are two sites with a 
+Lucent SG and a Lucent NC at each site. They control 1-n Lucent MGs. If there 
+has been a catastrophic failure at the primary, a switch to the secondary or 
+redundant switch can be done with minimal loss of calls and traffic. The 
+version of software and the configuration database at each site must be 
+identical.
+
+During an out of service upgrade, switches will be down and calls will fail 
+and be dropped at points during the upgrade process. To minimize down time, 
+during an upgrade to 6.2 the rear SPs will be replaced with SPs with the new 
+software version and the customer's database and front IOMs will be replaced 
+with IOMs with the new software version. To accomplish this, the customer's 
+database must be backed up and sent to Lucent Technologies. Lucent will 
+update rear SPs and front IOMs and then send them to the customer site for 
+the replacement and upgrade procedures.
+
+During this time, if the customer makes configuration changes, the customer is
+responsible for updating the database with these changes after the upgrade is
+completed.
+
+In a geographically redundant configuration, the secondary site will be 
+upgraded first. Then a switch will be made to the primary site that will 
+then be upgraded.
+
+After the Lucent SG and NCs at the primary and secondary sites have been
+upgraded, the Lucent MGs can be upgraded to 6.2.
+
+2.14) Swapping SPs and Upgrading IOMs
+
+This upgrade is similar to the previous upgrade of swapping both the SPs and
+IOMs, except only the SPs are swapped. The IOMs must be upgraded using the
+procedures listed in the following table. This type of upgrade takes more time
+than swapping both SPs and IOMs.
+
+	Upgrade Procedures for IOMs
+
+	<a href="DLP/DLP-712" target="contents">DLP-712</a> Preparing for Upgrading IOM Software
+	<a href="DLP/DLP-713" target="contents">DLP-713</a> FTPing Files for an Upgrade of IOM Software
+	<a href="DLP/DLP-714" target="contents">DLP-714</a> Extracting File for an Upgrade of IOM Software
+
+	<a href="DLP/DLP-717" target="contents">DLP-717</a> Upgrading IOM Software of the Lucent Network Gateway
+	<a href="DLP/DLP-715" target="contents">DLP-715</a> Upgrading IOM Software of a Lucent Signaling Gateway
+	<a href="DLP/DLP-718" target="contents">DLP-718</a> Upgrading IOM Software of the Lucent Compact Switch
+	<a href="DLP/DLP-719" target="contents">DLP-719</a> Upgrading IOM Software of the Lucent Compact Controller
+	<a href="DLP/DLP-754" target="contents">DLP-754</a> Upgrading IOM Software of a Combined Lucent Signaling
+		Gateway and Network Gateway
+
+2.15) Out of Service Upgrade of SPs and IOMS
+
+This type of upgrade takes the longest time to complete. Before the upgrade a
+backup of the database must be sent to Lucent for upgrading to 6.2. When the
+database is returned, an out-of-service upgrade is performed which removes the
+existing database and upgrades the SPs and IOMs to the new version. The
+updated database must then be restored to the switch. This type of upgrade takes
+the longest time.
+
+2.16) Out-of Service Upgrades from Version 5.X or 6.X to 6.2 For Non-
+Geographical Redundant Systems
+
+2.16.1) Swapping SPs and IOMs
+This upgrade swaps both the SPs and the IOMs and allows the upgrade to be
+accomplished in the shortest amount of time.
+
+2.16.2) Swapping SPs and Upgrading IOMs
+This upgrade is similar to the previous upgrade of swapping both the SPs and
+IOMs, except only the SPs are swapped. The IOMs must be upgraded using the
+procedures listed in the following table. This type of upgrade takes more time
+than swapping both SPs and IOMs.
+	
+	Upgrade Procedures for IOMs
+
+	<a href="DLP/DLP-712" target="contents">DLP-712</a> Preparing for Upgrading IOM Software
+	<a href="DLP/DLP-713" target="contents">DLP-713</a> FTPing Files for an Upgrade of IOM Software
+	<a href="DLP/DLP-714" target="contents">DLP-714</a> Extracting File for an Upgrade of IOM Software
+	<a href="DLP/DLP-717" target="contents">DLP-717</a> Upgrading IOM Software of the Lucent Network Gateway
+	<a href="DLP/DLP-715" target="contents">DLP-715</a> Upgrading IOM Software of a Lucent Signaling Gateway
+	<a href="DLP/DLP-718" target="contents">DLP-718</a> Upgrading IOM Software of the Lucent Compact Switch
+	<a href="DLP/DLP-719" target="contents">DLP-719</a> Upgrading IOM Software of the Lucent Compact Controller
+	<a href="DLP/DLP-754" target="contents">DLP-754</a> Upgrading IOM Software of a Combined Lucent Signaling
+		Gateway and Network Gateway
+
+2.16.3) Out of Service Upgrade of SPs and IOMS
+
+This type of upgrade takes the longest time to complete. Before the upgrade a
+backup of the database must be sent to Lucent for upgrading to 6.2. When the
+database is returned, an out-of-service upgrade is performed which removes the
+existing database and upgrades the SPs and IOMs to the new version. The
+updated database must then be restored to the switch. This type of upgrade takes
+the longest time.
+
+=============================================================================
+
+3.0) task list index
+
+3.1) In-Service Upgrades
+
+3.1.1) Upgrading a Combined Lucent Signaling Gateway and Network Gateway
+
+Option 1: Complete Upgrade of Lucent SG/NG (Recommended)
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrading of Combined Lucent Signaling Gateway and
+Network Gateway Processor Software - <a href="DLP/DLP-710" target="contents">DLP-710</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent SG/NG - <a href="DLP/DLP-754" target="contents">DLP-754</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent SG/NG with 
+No New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with No New Features and Possible Downgrade
+of SPs for a Combined Lucent Signaling Gateway and Network Gateway - <a href="DLP/DLP-752" target="contents">DLP-752</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedures.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent SG/NG - <a href="DLP/DLP-754" target="contents">DLP-754</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent SG/NG with 
+New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with New Features and Possible Downgrade
+of SPs for a Combined Lucent Signaling Gateway and Network Gateway - <a href="DLP/DLP-753" target="contents">DLP-753</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedures.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent SG/NG - <a href="DLP/DLP-754" target="contents">DLP-754</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+3.1.2) Upgrading a Lucent Network Gateway
+
+Option 1: Complete Upgrade of Lucent NG (Recommended)
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrading of Lucent Network Gateway System Processor Software - <a href="DLP/DLP-706" target="contents">DLP-706</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Network Gateway - <a href="DLP/DLP-717" target="contents">DLP-717</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent NG with No New
+Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with No New Features and Possible
+Downgrade of SPs for a Lucent Network Gateway - <a href="DLP/DLP-737" target="contents">DLP-737</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedures.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Network Gateway - <a href="DLP/DLP-717" target="contents">DLP-717</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent NG with New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-706" target="contents">DLP-706</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with New Features and Possible
+Downgrade of SPs for a Lucent Network Gateway - <a href="DLP/DLP-742" target="contents">DLP-742</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the IOM upgrade
+procedures.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Network Gateway - <a href="DLP/DLP-717" target="contents">DLP-717</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+3.1.3) Upgrading a Lucent Signaling Gateway
+
+Option 1: Complete Upgrade of Lucent SG (Recommended)
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-704" target="contents">DLP-704</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrading of Lucent Signaling Gateway System Processor Software - <a href="DLP/DLP-704" target="contents">DLP-704</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of a Lucent Signaling Gateway - <a href="DLP/DLP-715" target="contents">DLP-715</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent SG with No New
+Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-704" target="contents">DLP-704</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade a to a Version with No New Features nd Possible
+Downgrade of SPS for a Lucent Signaling Gateway - <a href="DLP/DLP-735" target="contents">DLP-735</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedure.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of a Lucent Signaling Gateway - <a href="DLP/DLP-715" target="contents">DLP-715</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent SG with 
+New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-704" target="contents">DLP-704</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with New Features and Possible
+Downgrade of SPS for a Lucent Signaling Gateway - <a href="DLP/DLP-740" target="contents">DLP-740</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedure.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of a Lucent Signaling Gateway - <a href="DLP/DLP-715" target="contents">DLP-715</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+3.1.4) Upgrading a Lucent Network Controller
+
+Option 1: Complete Upgrade of Lucent NC (Recommended)
+
+Caution: Procedures must be executed in the order shown in the list below.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+In-Service Upgrading of Lucent Network Controller System 
+		Processor Software - <a href="DLP/DLP-705" target="contents">DLP-705</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare Compute Module - <a href="DLP/DLP-731" target="contents">DLP-731</a>
+Cleaning Up Disk Space
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent NC with No New
+Features
+
+Caution: Procedures must be executed in the order shown in the list below.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+In-Service Upgrade to a Version with No New Features and Possible
+Downgrade of SPs for a Lucent Network Controller - <a href="DLP/DLP-736" target="contents">DLP-736</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare Compute Module - <a href="DLP/DLP-731" target="contents">DLP-731</a>
+Cleaning Up Disk Space
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent NC with 
+New Features
+Caution: Procedures must be executed in the order shown in the list below.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+In-Service Upgrade to a Version with New Features and Possible
+Downgrade of SPs for a Lucent Network Controller - <a href="DLP/DLP-741" target="contents">DLP-741</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare Compute Module - <a href="DLP/DLP-731" target="contents">DLP-731</a>
+Cleaning Up Disk Space
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+3.1.5) Upgrading a Lucent Compact Switch
+
+Option 1: Complete Upgrade of Lucent CS (Recommended)
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-707" target="contents">DLP-707</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrading of Lucent Compact Switch System Processor 
+		Software - <a href="DLP/DLP-707" target="contents">DLP-707</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Compact Switch - <a href="DLP/DLP-718" target="contents">DLP-718</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent CS with No New
+Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-707" target="contents">DLP-707</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with No New Features and Possible
+Downgrade of SPs for a Lucent Compact Switch - <a href="DLP/DLP-707" target="contents">DLP-707</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedure.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Compact Switch - <a href="DLP/DLP-718" target="contents">DLP-718</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent CS with 
+New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-707" target="contents">DLP-707</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with No New Features and Possible
+Downgrade of SPs for a Lucent Compact Switch - <a href="DLP/DLP-743" target="contents">DLP-743</a>
+
+Upgrading the IOMs
+
+Note: You will be directed to back-out or downgrade procedures from the 
+IOM upgrade procedure.
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Compact Switch - <a href="DLP/DLP-718" target="contents">DLP-718</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+3.1.6) Upgrading a Lucent Compact Controller
+
+Option 1: Complete Upgrade of Lucent CC (Recommended)
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-708" target="contents">DLP-708</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrading of Lucent Compact Controller System Processor 
+		Software - <a href="DLP/DLP-708" target="contents">DLP-708</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+In-Service Upgrade and Possible Downgrade of SPs to a Version with
+No New Features for a Lucent Compact Controller - <a href="DLP/DLP-719" target="contents">DLP-719</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 2: In-service Upgrade and Possible Downgrade of Lucent CC with 
+No New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-708" target="contents">DLP-708</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with No New Features and Possible
+Downgrade of SPs for a Lucent Compact Controller - <a href="DLP/DLP-739" target="contents">DLP-739</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Compact Controller - <a href="DLP/DLP-719" target="contents">DLP-719</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+Option 3: In-service Upgrade and Possible Downgrade of Lucent CC with 
+New Features
+
+Caution: Procedures should be executed in the order shown in the list below.
+However, <a href="DLP/DLP-712" target="contents">DLP-712</a>, <a href="DLP/DLP-713" target="contents">DLP-713</a> and <a href="DLP/DLP-714" target="contents">DLP-714</a> (in that order) can be executed before
+<a href="DLP/DLP-708" target="contents">DLP-708</a>.
+
+Upgrading the SP
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+In-Service Upgrade to a Version with New Features and Possible
+Downgrade of SPs for a Lucent Compact Controller - <a href="DLP/DLP-744" target="contents">DLP-744</a>
+
+Upgrading the IOMs
+
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Upgrading IOM Software of the Lucent Compact Controller - <a href="DLP/DLP-719" target="contents">DLP-719</a>
+
+Upgrading the Spares
+
+Any of the following as required.
+
+Upgrading Software of a Spare System Processor - <a href="DLP/DLP-726" target="contents">DLP-726</a>
+Upgrading Software of a Spare DS1 I/O Module - <a href="DLP/DLP-727" target="contents">DLP-727</a>
+Upgrading Software of a Spare DS3 I/O Module - <a href="DLP/DLP-728" target="contents">DLP-728</a>
+Upgrading Software of a Spare Ethernet I/O Module - <a href="DLP/DLP-729" target="contents">DLP-729</a>
+Upgrading Software of a Spare Voice Server I/O Module - <a href="DLP/DLP-730" target="contents">DLP-730</a>
+Upgrading Software of a Spare Channelized OC-3 I/O Module - <a href="DLP/DLP-732" target="contents">DLP-732</a>
+Upgrading Software of a Spare ATM Network Access (ANA) IOM - <a href="DLP/DLP-733" target="contents">DLP-733</a>
+
+Cleaning Up Disk Space
+
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+
+3.2) Out-of-Service Upgrades or Downgrades
+
+3.2.1) Upgrading Geographically Redundant Switches to Version 6.2
+
+To upgrade a Lucent Gateway Platform switch, one of the three procedures 
+must be performed.  In these procedures a Lucent SG, a Lucent NC and 
+Lucent NGs will be upgraded.
+
+Upgrading Switches to Version 6.2 for Geographic Redundancy by
+Swapping SPs and IOMs - <a href="DLP/NTP-011" target="contents">NTP-011</a>
+Upgrading Switches to Version 6.2 for Geographic Redundancy by
+Swapping SPs only - <a href="DLP/NTP-012" target="contents">NTP-012</a>
+Upgrading Switches to Version 6.2 for Geographic Redundancy by Changing
+Module Software - <a href="DLP/NTP-013" target="contents">NTP-013</a>
+
+3.2.2) Upgrading Non-geographically Redundant Switches to Version 6.2
+
+To upgrade a Lucent Gateway Platform switch, one of following procedures 
+must be performed.  You can upgrade
+
+	- By swapping both the SPs and IOMs,
+	- By swapping only the SPs and upgrading the IOMs using the 
+	CPY-MEM command or
+	- By upgrading the SPs and IOMs using the CPY-MEM command.
+
+Swapping both the SPs and IOMs
+
+Upgrading a Lucent Signaling Gateway (SG) to Version 6.2 by Swapping
+SPs and IOMs - <a href="DLP/NTP-014" target="contents">NTP-014</a>
+Upgrading a Lucent Network Controller (NC) to Version 6.2 by Swapping
+SPs and IOMs - <a href="DLP/NTP-015" target="contents">NTP-015</a>
+Upgrading a Lucent Network Gateway (NG) to Version 6.2 by Swapping
+SPs and IOMs - <a href="DLP/NTP-016" target="contents">NTP-016</a>
+Upgrading a Lucent Compact Switch (CS) to Version 6.2 by Swapping SPs
+and IOMs - <a href="DLP/NTP-017" target="contents">NTP-017</a>
+Upgrading a Lucent Compact Controller (CC) to Version 6.2 by Swapping
+SPs and IOMs - <a href="DLP/NTP-018" target="contents">NTP-018</a>
+
+Swapping only the SPs and upgrading the IOMs using the CPY-MEM command
+
+Upgrading a Lucent Signaling Gateway (SG) to Version 6.2 by Swapping
+SPs only - <a href="DLP/NTP-019" target="contents">NTP-019</a>
+Upgrading a Lucent Network Controller (NC) to Version 6.2 by Swapping
+SPs only - <a href="DLP/NTP-020" target="contents">NTP-020</a>
+Upgrading a Lucent Network Gateway (NG) to Version 6.2 by Swapping
+SPs only - <a href="DLP/NTP-021" target="contents">NTP-021</a>
+Upgrading a Lucent Compact Switch (CS) to Version 6.2 by Swapping SPs
+only - <a href="DLP/NTP-022" target="contents">NTP-022</a>
+Upgrading a Lucent Compact Controller (CC) to Version 6.2 by Swapping
+SPs only - <a href="DLP/NTP-023" target="contents">NTP-023</a>
+
+Upgrading the SPs and IOMs using the CPY-MEM command
+
+Upgrading a Lucent Signaling Gateway (SG) to Version 6.2 by Changing
+Module Software - <a href="DLP/NTP-024" target="contents">NTP-024</a>
+Upgrading a Lucent Network Controller (NC) to Version 6.2 by Changing
+Module Software - <a href="DLP/NTP-025" target="contents">NTP-025</a>
+Upgrading a Lucent Network Gateway (NG) to Version 6.2 by Changing
+Module Software - <a href="DLP/NTP-026" target="contents">NTP-026</a>
+Upgrading a Lucent Compact Switch (CS) to Version 6.2 by Changing
+Module Software - <a href="DLP/NTP-027" target="contents">NTP-027</a>
+Upgrading a Lucent Compact Controller (CC) to Version 6.2 by Changing
+Module Software - <a href="DLP/NTP-028" target="contents">NTP-028</a>
+
+
+3.2.3) Upgrading an Out-of-Service Lucent Gateway Platform Switch
+
+Caution: Procedures must be executed in the order shown in the list below.
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Out-of-Service Upgrade of SP and IOM Software - <a href="DLP/DLP-711" target="contents">DLP-711</a>
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+
+3.2.4) Downgrading an Out-of-Service Lucent Gateway Platform Switch
+
+Caution: Procedures must be executed in the order shown in the list below.
+
+Preparing for an In-Service Change of System Processor Software - <a href="DLP/DLP-700" target="contents">DLP-700</a>
+Checking Memory for a change of System Processor Software - <a href="DLP/DLP-701" target="contents">DLP-701</a>
+FTPing Software for an SP Software Change - <a href="DLP/DLP-702" target="contents">DLP-702</a>
+Extracting Software for an SP Software Change - <a href="DLP/DLP-703" target="contents">DLP-703</a>
+Preparing for Changing IOM Software - <a href="DLP/DLP-712" target="contents">DLP-712</a>
+FTPing Files for Changing IOM Software - <a href="DLP/DLP-713" target="contents">DLP-713</a>
+Extracting File for Changing IOM Software - <a href="DLP/DLP-714" target="contents">DLP-714</a>
+Out-of-Service Downgrade of SP and IOM Software - <a href="DLP/DLP-709" target="contents">DLP-709</a>
+Cleaning up Disk Space of System Processors - <a href="DLP/DLP-734" target="contents">DLP-734</a>
+
+=============================================================================
+
+4) Detailed Level Procedures - 
+
+<a href="DLP/DLP-700" target="contents">DLP-700</a> - 
+
+<a href="DLP/DLP-701" target="contents">DLP-701</a> -
+
+<a href="DLP/DLP-702" target="contents">DLP-702</a> -
+
+<a href="DLP/DLP-703" target="contents">DLP-703</a> -
+
+<a href="DLP/DLP-704" target="contents">DLP-704</a> -
+
+<a href="DLP/DLP-705" target="contents">DLP-705</a> -
+
+<a href="DLP/DLP-706" target="contents">DLP-706</a> -
+
+<a href="DLP/DLP-707" target="contents">DLP-707</a> -
+
+<a href="DLP/DLP-708" target="contents">DLP-708</a> -
+
+<a href="DLP/DLP-709" target="contents">DLP-709</a> -
+
+<a href="DLP/DLP-710" target="contents">DLP-710</a> -
+
+<a href="DLP/DLP-711" target="contents">DLP-711</a> -
+
+<a href="DLP/DLP-712" target="contents">DLP-712</a> -
+
+<a href="DLP/DLP-713" target="contents">DLP-713</a> -
+
+<a href="DLP/DLP-714" target="contents">DLP-714</a> -
+
+<a href="DLP/DLP-715" target="contents">DLP-715</a> -
+
+<a href="DLP/DLP-717" target="contents">DLP-717</a> -
+
+<a href="DLP/DLP-718" target="contents">DLP-718</a> -
+
+<a href="DLP/DLP-719" target="contents">DLP-719</a> -
+
+<a href="DLP/DLP-726" target="contents">DLP-726</a> -
+
+<a href="DLP/DLP-727" target="contents">DLP-727</a> -
+
+<a href="DLP/DLP-728" target="contents">DLP-728</a> -
+
+<a href="DLP/DLP-729" target="contents">DLP-729</a> -
+
+<a href="DLP/DLP-730" target="contents">DLP-730</a> -
+
+<a href="DLP/DLP-731" target="contents">DLP-731</a> -
+
+<a href="DLP/DLP-732" target="contents">DLP-732</a> -
+
+<a href="DLP/DLP-733" target="contents">DLP-733</a> -
+
+<a href="DLP/DLP-734" target="contents">DLP-734</a> -
+
+<a href="DLP/DLP-735" target="contents">DLP-735</a> -
+
+<a href="DLP/DLP-736" target="contents">DLP-736</a> -
+
+<a href="DLP/DLP-737" target="contents">DLP-737</a> -
+
+<a href="DLP/DLP-738" target="contents">DLP-738</a> -
+
+<a href="DLP/DLP-739" target="contents">DLP-739</a> -
+
+<a href="DLP/DLP-740" target="contents">DLP-740</a> -
+
+<a href="DLP/DLP-741" target="contents">DLP-741</a> -
+
+<a href="DLP/DLP-742" target="contents">DLP-742</a> -
+
+<a href="DLP/DLP-743" target="contents">DLP-743</a> -
+
+<a href="DLP/DLP-744" target="contents">DLP-744</a> -
+
+<a href="DLP/DLP-752" target="contents">DLP-752</a> -
+
+<a href="DLP/DLP-753" target="contents">DLP-753</a> -
+
+<a href="DLP/DLP-754" target="contents">DLP-754</a> -
+
+<a href="DLP/DLP-757" target="contents">DLP-757</a> -
+
+<a href="DLP/DLP-781" target="contents">DLP-781</a> -
+
+=============================================================================
+
+</pre>
+</font>
+</body>
+</html>

@@ -1,0 +1,16 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+tpq
+tpq.PL
+#
+ttm
+ttm.PL
+#
+nsipsim
+nsipsim.PL
+#
+mypqueue.pm
+mypqueue.PM
+#
+mytimer.pm
+mytimer.PM

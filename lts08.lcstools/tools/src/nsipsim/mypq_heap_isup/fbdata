@@ -1,0 +1,191 @@
+start acc
+	boston college 
+		byu 20-3
+		army 44-7
+		florida st 17-28
+		clemson 16-13
+		ball st 38-0
+		virgina 28-17
+		wake forest
+		virginia tech
+		north carolina
+		n carolina st
+		maryland
+	florida st 
+		miami fla 10-7
+		the citadel 62-10
+		boston college 28-17
+		syracuse 38-14
+		wake forest 41-24
+		virginia 21-26
+		duke
+		maryland
+		n carolina st
+		clemson
+		florida
+	maryland 
+		navy 23-20
+		clemson 24-28
+		west virginia 19-31
+		wake forest 22-12
+		virginia 45-33
+		temple 38-7
+		virginia tech 9-28
+		florida st
+		north carolina
+		boston college
+		n carolina st
+	clemson
+		
+	n carolina st
+	wake forest
+	virgina tech
+	miami fla
+	georgia tech
+	north carolina
+	duke
+end acc
+#
+start big ten
+	penn st
+	wisconsin
+	iowa
+	northwestern
+	ohio st
+	minnesota
+	michigan
+	indiana
+	michigan st
+	illinois
+	purdue
+end big ten
+#
+start conference usa
+	southern miss
+	central florida
+	east carolina
+	marshall
+	memphis
+	uab
+	tulsa
+	utep
+	houston
+	tulane
+	smu
+	rice
+end conference usa
+
+start mid american
+	bowling green
+	akron
+	miami ohio
+	ohio
+	kent st
+	buffalo
+	toleda
+	c michigan
+	northern illinois
+	e michigan
+	w michigan
+	ball st
+end mid american
+
+start pacific 10
+	southern cal
+	ucla
+	oregon
+	oregon st
+	stanford
+	california
+	arizona st
+	washington st
+	arizona
+	washington
+end pacific 10
+
+start sun belt
+	louisiana monroe
+	arkansas st
+	troy
+	north texas
+	m tenn st
+	florida atlantic
+	la lafayette
+	fiu
+end sun belt
+
+start big east
+	west virginia
+	rutgers
+	pittsburgh
+	connecticut
+	cincinnati
+	south florida
+	louisville
+	syracuse
+end big east
+
+start big 12
+	nebraska
+	colorado
+	missouri
+	kansas st
+	iowa st
+	kansas
+	texas
+	texas tech
+	texas am
+	oklahoma
+	baylor
+	oklahome st
+end big 12
+
+start independents
+	notre dame
+	navy
+	army
+	temple
+end independents
+
+start mountain west
+	tcu
+	colorado st
+	new mexico
+	wyoming
+	byu
+	san diego st
+	air force
+	utah
+	unlv
+end mountain west
+
+start sec
+	georgia
+	florida
+	tennessee
+	vanderbilt
+	south carolina
+	kentucky
+	alabama
+	auburn
+	lsu
+	arkansas
+	mississippi
+	mississippi st
+end sec
+
+start western athletic
+	nevada
+	fresno st
+	boise st
+	louisiana tech
+	hawaii
+	utah st
+	idaho
+	san jose st
+	new mex st
+end western athletic
+
+start miscellaneous
+
+end miscellaneous

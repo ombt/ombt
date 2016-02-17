@@ -1,0 +1,278 @@
+My notes concerning Linux CM procedures and error recovery. These 
+notes are NOT official, so do use them unless you ask me first.
+
+==================================================================
+
+Procedure to convert a Lynx-OS CM to a Linux CM:
+
+You need a version of the CM tar file which contains a new start-up monitor.
+The CM tar file for Lynx-OS CMs which contains the new start-up monitor
+is 6.4.0.0.23, or 6.4.0.0.23_cm.tar.gz. You can get it from MA or on 
+lts08 under /lcsl102/text/Main/cm.
+
+Ship the 6.4.0.0.23 CM tar file to both SPs and save it under
+/home on both SPs. Expand the CM tar file in each SP. Do this:
+
+	# on each SP
+	$ cd /
+	$ tar xzvf /home/6.4.0.0.23_cm.tar.gz.
+
+All CM tar files starting with 6.4.0.0.24 are built for Linux. All CPU loads
+after 6.4.0.0.98 are build for Linux CMs.
+
+The CM Linux tar kit will now contain both the flash/kernel images (uboot, ffs)
+for Linux and the CM Linux applications (ccs, mega, sipa, etc.). The CM Linux 
+applications will be installed in the directory:
+
+	Telica/swCM_APPS/X.X.X.Xapps/<app>/<app>. 
+
+The CM flash images will be installed in Telica/swCM/X.X.X.X/. The CM Linux 
+applications were previously installed on the SPs disk in:
+
+	Telica/swCPU/X.X.X.X/apps/l<app>/l<app>.
+
+Two new disk partitions (home_f, home_g) were added to the SP disk to store 
+the CM Linux kits. However, the CM Linux kits can be installed on any SP disk 
+partition (/, home1, home_f, home_g).
+
+To install new CM Linux kit:
+
+cd /home_f
+
+tar xzvf /home/6.4.0.0.24_cm.tar.gz
+
+ 
+
+To upgrade to CM Linux:
+
+ 
+
+If you have not already upgraded your CMs to either release 6.4.0.0.22 or 6.4.0.0.23, you will need to upgrade to this release before upgrading to release 6.4.0.0.24 using the following commands:
+
+ 
+
+EMFDBG::COM:::ModDebugXml  DisableLinuxCpyMem 1 0;
+
+ 
+
+RMV-EQPT::IOM-X;
+
+ED-EQPT::IOM-X:::SWVERSION=6.4.0.0.23;
+
+CPY-MEM::IOM-X;
+
+<wait for CPY-MEM to complete>
+
+EMFDBG::COM:::ModDebugXml  DisableLinuxCpyMem 0 0;
+
+ 
+
+ 
+
+To upgrade to CM release 6.4.0.0.24:
+
+ 
+
+RMV-EQPT::IOM-X;
+
+ED-EQPT::IOM-X:::SWVERSION=6.4.0.0.23;
+
+CPY-MEM::IOM-X;
+
+<wait for CPY-MEM to complete>
+
+ 
+
+RST-EQPT::IOM-X;
+
+ 
+
+ 
+
+To downgrade CM to LynxOS (i.e. CM release 6.3.1), you must be running SP release 6.4:
+
+ 
+
+RMV-EQPT::IOM-X;
+
+ED-EQPT::IOM-X:::SWVERSION=6.3.1.0.X;
+
+CPY-MEM::IOM-X;
+
+<wait for CPY-MEM to complete>
+
+ 
+
+RST-EQPT::IOM-X;
+
+ 
+
+If you have any issues please contact me.
+
+ 
+
+ 
+
+ 
+
+CM kit 6.4.0.0.24:
+
+ 
+
+harvey: xterm2 2 % tar -tzvf /telica/toaster/home/release/Main/swCM/6.4.0.0.24_cm.tar.gz
+
+drwxr-xr-x builder/cvsusers  0 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/
+
+-rw-r--r-- builder/cvsusers 6346344 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/cm-jffs2-6.4.0.0.24.bin
+
+-rwxr-xr-x builder/cvsusers  602832 2007-12-11 15:03:40 Telica/swCM/6.4.0.0.24/419-uboot-01-09h.bin
+
+lrwxrwxrwx builder/cvsusers       0 2008-01-25 21:27:23 Telica/swCM/6.4.0.0.24/BOOT_bin -> 419-uboot-01-09h.bin
+
+lrwxrwxrwx builder/cvsusers       0 2008-01-25 21:27:23 Telica/swCM/6.4.0.0.24/FFS_bin -> cm-jffs2-6.4.0.0.24.bin
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/validation/
+
+-r-xr-xr-x builder/cvsusers    7648 2007-12-28 03:27:01 Telica/swCM/6.4.0.0.24/validation/validate_kit
+
+-r-xr-xr-x builder/cvsusers     606 2006-05-15 14:17:05 Telica/swCM/6.4.0.0.24/validation/vk_make_dir_list
+
+-r-xr-xr-x builder/cvsusers     953 2006-05-15 14:17:05 Telica/swCM/6.4.0.0.24/validation/vk_make_file_list
+
+-r-xr-xr-x builder/cvsusers     745 2006-05-15 14:17:05 Telica/swCM/6.4.0.0.24/validation/vk_make_link_list
+
+-r--r--r-- builder/cvsusers     219 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/validation/master.dirs
+
+-r--r--r-- builder/cvsusers     278 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/validation/master.links
+
+-r--r--r-- builder/cvsusers     698 2008-01-25 21:27:20 Telica/swCM/6.4.0.0.24/validation/master.files
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:27:05 Telica/swCM_APPS/6.4.0.0.98/apps/
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:26:34 Telica/swCM_APPS/6.4.0.0.98/apps/sipa/
+
+-rwxr-xr-x builder/cvsusers 4025520 2008-01-25 21:26:34 Telica/swCM_APPS/6.4.0.0.98/apps/sipa/sipa
+
+-rwxr-xr-x builder/cvsusers    6935 2007-08-16 11:51:56 Telica/swCM_APPS/6.4.0.0.98/apps/sipa/nbase.ini
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:26:36 Telica/swCM_APPS/6.4.0.0.98/apps/megaa/
+
+-rwxr-xr-x builder/cvsusers 2219376 2008-01-25 21:26:36 Telica/swCM_APPS/6.4.0.0.98/apps/megaa/megaa
+
+-rwxr-xr-x builder/cvsusers    5765 2007-03-14 18:53:46 Telica/swCM_APPS/6.4.0.0.98/apps/megaa/nbase.ini
+
+-rwxr-xr-x builder/cvsusers 3662096 2006-01-24 08:26:17 Telica/swCM_APPS/6.4.0.0.98/apps/megaa/sigtrace
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:26:36 Telica/swCM_APPS/6.4.0.0.98/apps/megagw/
+
+-rwxr-xr-x builder/cvsusers 2238456 2008-01-25 21:26:36 Telica/swCM_APPS/6.4.0.0.98/apps/megagw/megagw
+
+-rwxr-xr-x builder/cvsusers    5396 2005-02-17 15:03:46 Telica/swCM_APPS/6.4.0.0.98/apps/megagw/nbase.ini
+
+drwxr-xr-x builder/cvsusers       0 2008-01-25 21:26:43 Telica/swCM_APPS/6.4.0.0.98/apps/ccs/
+
+-rwxr-xr-x builder/cvsusers 28196600 2008-01-25 21:26:44 Telica/swCM_APPS/6.4.0.0.98/apps/ccs/ccs
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:44 Telica/swCM_APPS/6.4.0.0.98/apps/xu/
+
+-rwxr-xr-x builder/cvsusers   707556 2008-01-25 21:26:44 Telica/swCM_APPS/6.4.0.0.98/apps/xu/xu
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:48 Telica/swCM_APPS/6.4.0.0.98/apps/dist/
+
+-rwxr-xr-x builder/cvsusers  5756812 2008-01-25 21:26:48 Telica/swCM_APPS/6.4.0.0.98/apps/dist/dist
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:49 Telica/swCM_APPS/6.4.0.0.98/apps/router/
+
+-rwxr-xr-x builder/cvsusers  4784096 2008-01-25 21:26:49 Telica/swCM_APPS/6.4.0.0.98/apps/router/router
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:51 Telica/swCM_APPS/6.4.0.0.98/apps/gdi_trans/
+
+-rwxr-xr-x builder/cvsusers  4130056 2008-01-25 21:26:51 Telica/swCM_APPS/6.4.0.0.98/apps/gdi_trans/gdi_trans
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:52 Telica/swCM_APPS/6.4.0.0.98/apps/sipcl/
+
+-rwxr-xr-x builder/cvsusers  3343756 2008-01-25 21:26:52 Telica/swCM_APPS/6.4.0.0.98/apps/sipcl/sipcl
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:53 Telica/swCM_APPS/6.4.0.0.98/apps/m2uasig/
+
+-rwxr-xr-x builder/cvsusers  5334860 2008-01-25 21:26:53 Telica/swCM_APPS/6.4.0.0.98/apps/m2uasig/m2uasig
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:58 Telica/swCM_APPS/6.4.0.0.98/apps/mtp3sig/
+
+-rwxr-xr-x builder/cvsusers  8040188 2008-01-25 21:26:58 Telica/swCM_APPS/6.4.0.0.98/apps/mtp3sig/mtp3sig
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:59 Telica/swCM_APPS/6.4.0.0.98/apps/sgsig/
+
+-rwxr-xr-x builder/cvsusers  3991624 2008-01-25 21:26:59 Telica/swCM_APPS/6.4.0.0.98/apps/sgsig/sgsig
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:26:59 Telica/swCM_APPS/6.4.0.0.98/apps/m2pasig/
+
+lrwxrwxrwx builder/cvsusers        0 2008-01-25 21:27:23 Telica/swCM_APPS/6.4.0.0.98/apps/m2pasig/m2pasig -> ../sgsig/sgsig
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/
+
+-rwxr-xr-x builder/cvsusers  4306180 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/named
+
+-rw-r--r-- builder/cvsusers     1357 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/named.conf
+
+-rw-r--r-- builder/cvsusers      526 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/root.servers
+
+-rwxr-xr-x builder/cvsusers   768163 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/rndc
+
+-rw-r--r-- builder/cvsusers      253 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/apps/named/rndc.conf
+
+drwxr-xr-x builder/cvsusers        0 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/validation/
+
+-r-xr-xr-x builder/cvsusers     7648 2007-12-28 03:27:01 Telica/swCM_APPS/6.4.0.0.98/validation/validate_kit
+
+-r-xr-xr-x builder/cvsusers      606 2006-05-15 14:17:05 Telica/swCM_APPS/6.4.0.0.98/validation/vk_make_dir_list
+
+-r-xr-xr-x builder/cvsusers      953 2006-05-15 14:17:05 Telica/swCM_APPS/6.4.0.0.98/validation/vk_make_file_list
+
+-r-xr-xr-x builder/cvsusers      745 2006-05-15 14:17:05 Telica/swCM_APPS/6.4.0.0.98/validation/vk_make_link_list
+
+-r--r--r-- builder/cvsusers      413 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/validation/master.dirs
+
+-r--r--r-- builder/cvsusers      247 2008-01-25 21:27:06 Telica/swCM_APPS/6.4.0.0.98/validation/master.links
+
+-r--r--r-- builder/cvsusers     1730 2008-01-25 21:27:08 Telica/swCM_APPS/6.4.0.0.98/validation/master.files
+
+ 
+
+ 
+
+
+==================================================================
+
+Recovery procedures for some Linux CM cpy-mem problems:
+
+
+-------------------------------------------------------------------
+
+
+GW3 IOM2 CPU-B - failure after CPY-MEM completed and began init:
+
+VCONSOLE using newer sycor access method!
+
+ÿ
+blDbg>
+blDbg> exit
+exit command
+ ?Failure: timeout waiting for i2c status 0x08
+        status reg(0xc00c):actual=0xf8,expected=0x08
+ slave_addr = 0, len = 16, start_addr = 0x380
+ *** dbg uart enabled ***
+
+ ? SDRAM verify error? : addr=0x1fd00000, exp=0x48000100, act=0xffffffff
+
+**************************************************************
+
+   ** Welcome to the Bootloader Debug Console **
+   @(#)Bootloader Rev 1.6-Built on Aug 24 2007 @ 11:17:26
+
+**************************************************************
+
+blDbg>
+blDbg>

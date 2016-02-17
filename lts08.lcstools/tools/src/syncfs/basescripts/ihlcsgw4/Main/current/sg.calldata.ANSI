@@ -1,0 +1,40 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::234-60-1:::mtpvariant=ansi
+ent-prfl-sgpc::1
+ent-sg-pc::234-3-1:::pcdir=adj,pcprflid=1,mtpvariant=ansi
+ent-sg-pc::234-4-1:::pcdir=adj,pcprflid=1,mtpvariant=ansi
+ent-sg-pc::234-6-1:::pcdir=adj,pcprflid=1,mtpvariant=ansi
+ent-sg-pc::10-10-10:::pcdir=adj,pcprflid=1,mtpvariant=ansi
+ent-sg-pc::234-60-2:::pcdir=rem,pcprflid=1,mtpvariant=ansi
+ent-sg-pc::234-60-3:::pcdir=rem,pcprflid=1,mtpvariant=ansi
+ent-lset::1:::opc=234-60-1,adjdpc=234-3-1
+ent-lset::2:::opc=234-60-1,adjdpc=234-4-1
+ent-lset::3:::opc=234-60-1,adjdpc=234-6-1
+ent-lset::4:::opc=234-60-1,adjdpc=10-10-10
+ent-route-ss7::234-3-1-1:::lsetpriority=0
+ent-route-ss7::234-4-1-2:::lsetpriority=0
+ent-route-ss7::234-6-1-3:::lsetpriority=0
+ent-route-ss7::10-10-10-4:::lsetpriority=0
+ent-route-ss7::234-60-2-4:::lsetpriority=0
+ent-route-ss7::234-60-3-4:::lsetpriority=0
+ent-slk::1:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/15/1,l2prflid=1
+ent-slk::2:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/15/1,l2prflid=1
+ent-slk::3:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/16/1,l2prflid=1
+ent-slk::4:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/16/1,l2prflid=1
+ent-slk::5:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/17/1,l2prflid=1
+ent-slk::6:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/17/1,l2prflid=1
+ent-sg-slk::1:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=1,slc=0,mtp3prflid=1,m2paassocid=0
+ent-sg-slk::2:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=2,slc=0,mtp3prflid=1,m2paassocid=0
+ent-sg-slk::3:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=3,slc=0,mtp3prflid=1,m2paassocid=0
+ent-sg-slk::4:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=3,slc=1,mtp3prflid=1,m2paassocid=0
+ent-sg-slk::5:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=4,slc=0,mtp3prflid=1,m2paassocid=0
+ent-sg-slk::6:::sigtype=narrowband,m2uaassocid=0,m2uaiid=0,lsetid=4,slc=1,mtp3prflid=1,m2paassocid=0
+#  M2UA links
+#
+#MEGACO area
+ent-sg-mgcassoc::1-1:::inservicesownpc=234-60-1,ipadest=10.11.23.3,ipbdest=10.11.92.3,prinetwork=B,staportrange=50000:is
+ent-sg-m2uaassoc::20:::ipadesta=10.11.12.4,ipadestb=10.11.12.5,ipbdesta=10.11.92.20,ipbdestb=10.11.92.21,prinetwork=B,porta=2904,portb=2904
+sleep 75
+set-sid:::::ihlcsgw4

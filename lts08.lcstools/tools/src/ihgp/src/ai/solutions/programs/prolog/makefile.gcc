@@ -1,0 +1,18 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+COM_OBJS = pclause.o prolog.o ptable.o
+OBJS := $(COM_OBJS) sample1.o sample2.o
+TARGETS = sample1 sample2
+
+all:    $(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+sample1:	sample1.o $(COM_OBJS)
+	$(CXX) $(CXXFLAGS) $(COM_OBJS) $< $(AILIB) $(UTILLIB) $(LOGICLIB) -o $@
+sample2:	sample2.o $(COM_OBJS)
+	$(CXX) $(CXXFLAGS) $(COM_OBJS) $< $(AILIB) $(UTILLIB) $(LOGICLIB) -o $@
+
+
+

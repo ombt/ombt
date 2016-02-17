@@ -1,0 +1,28 @@
+<html>
+<head>
+<title> DLP-712 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-712 PREPARING FOR CHANGING IOM SOFTWARE </h3>
+<pre>
+
+1) Logon the active SP. You can use the login/passwd of root/plexus9000.
+
+	$ df
+
+If the disk space usage on /dev/hd2b is over 68%, then delete old files that 
+are not needed. Here are some of the files that can be removed:
+
+	/Telica/swCraft - only current version should there.
+	/Telica/swXXX - only current IOM tar files should exist.
+	All *.gz files not part of the current load.
+
+2) Repeat this procedure on the standby SP.
+
+3) There should sufficient space to receive and expand the new IOM 
+tar files. 
+
+Question: should this procedure be done after both SPs are upgraded?
+
+</pre>
+</font></body>
+</html>

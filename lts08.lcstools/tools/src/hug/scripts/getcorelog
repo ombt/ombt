@@ -1,0 +1,40 @@
+if test -z "$1"
+then
+	echo " "
+	echo "Usage:    getcorelog prod_file core_file"
+	echo " "
+	echo "Example:  getcorelog ccs ccs_CM1_PROC4_INST1.core"
+	echo " "
+	echo "Output:   both bt and dumplog are stored in ccs_CM1_PROC4_INST1.core.out,"
+	echo "          this file will be created in current directory"
+	echo " "
+exit 0
+fi
+
+cat >/tmp/gdb_get_core_log.$$ <<EOF 
+bt
+set height 0
+set print address off
+set $next = LogInfo.LogQ.Head
+printf "\n************ dumping %d entries ************\n\n", LogInfo.LogQ.Count
+while ($next)
+   p ((LOG_Q_ENTRY_t*)$next)->Buffer
+   set $next = ((LOG_Q_ENTRY_t*)$next)->Next
+end
+printf "\n\n************ end of dump ************\n\n"
+set print address on
+quit
+EOF
+
+echo "gdb -nw -batch -x /tmp/gdb_get_core_log.$$ $1 $2" >$2.out
+echo "output file $2.out" >>$2.out
+echo "Will take about 10 minutes or more, "
+echo "use \"tail -f $2.out\" to check and be patient :-)"
+
+gdb -nw -batch -x /tmp/gdb_get_core_log.$$ $1 $2 >>$2.out 2>&1 &
+
+rm -f /tmp/gdb_get_core_log.$$
+
+exit 0
+
+

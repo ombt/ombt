@@ -1,0 +1,47 @@
+sigdbg:::::dest-a-ccs-slave ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-a-ccs-slave ccDbg ainDbg0;
+sigdbg:::::dest-a-ccs-slave ccDbg ccIwDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-a-ccs-slave rmDbg rmDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-a-rs-slave rsDbg gen all high;
+sigdbg:::::dest-a-ccs-slave ficDbg 0;
+sigdbg:::::dest-a-ccs-slave isup msgtrace 3;
+SigDbg:::::dest-a-ccs-slave isup FsmTrace 7;
+SigDbg:::::dest-a-ccs-slave isup rxmflog_time 9999;
+SigDbg:::::dest-a-ccs-slave isup txmflog_time 9999;
+SigDbg:::::dest-a-ccs-slave isup rxmflog_time 9999 99;
+SigDbg:::::dest-a-ccs-slave isup txmflog_time 9999 99;
+SigDbg:::::dest-a-ccs-slave isup dbgMask 0xffffffff;
+sigdbg:::::dest-a-ccs-slave isup evtdump 255 254
+sigdbg:::::dest-a-ccs-slave isup msgtrace 1
+sigdbg:::::dest-a-ccs-slave sipw0;
+sigdbg:::::dest-a-ccs-slave sipa dumpraw 1;
+sigdbg:::::dest-a-ccs-slave sipa dbglvl 0;
+sigdbg:::::dest-a-ccs-slave sipa sttrc 1;
+sigdbg:::::dest-a-ccs-slave sipa ipstrc 1;
+sigdbg:::::dest-b-ccs-slave mmsldbg  0000ffff;
+sigdbg:::::dest-b-ccs-slave mmsldbg  startcapture;
+sigdbg:::::dest-b-ccs-slave mmsldbg  stopheartbeat;
+sigdbg:::::dest-a-ccs-slave mgidbg 2;
+sigdbg:::::dest-b-ccs-slave csDbg debug 3;
+sigdbg:::::dest-a-ccs-slave ccDbg mgctDbg 2;
+#
+sigdbg:::::dest-b-ccs-slave ccDbg ccDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-slave ccDbg ainDbg0;
+sigdbg:::::dest-b-ccs-slave ccDbg ccIwDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-ccs-slave rmDbg rmDbgMask 0xFFFFFFFF;
+sigdbg:::::dest-b-rs-slave rsDbg gen all high;
+sigdbg:::::dest-b-ccs-slave ficDbg 0;
+sigdbg:::::dest-b-ccs-slave isup evtdump 255 254
+sigdbg:::::dest-b-ccs-slave isup msgtrace 1
+sigdbg:::::dest-b-ccs-slave isup dbgMask 0xffffffff
+sigdbg:::::dest-b-ccs-slave isup msgtrace 3;
+SigDbg:::::dest-b-ccs-slave isup FsmTrace 7;
+SigDbg:::::dest-b-ccs-slave isup rxmflog_time 9999;
+SigDbg:::::dest-b-ccs-slave isup txmflog_time 9999;
+SigDbg:::::dest-b-ccs-slave isup rxmflog_time 9999 99;
+SigDbg:::::dest-b-ccs-slave isup txmflog_time 9999 99;
+sigdbg:::::dest-b-ccs-slave sipw0
+sigdbg:::::dest-b-ccs-slave sipa dumpraw 1;
+sigdbg:::::dest-b-ccs-slave sipa dbglvl 0;
+sigdbg:::::dest-b-ccs-slave sipa sttrc 1;
+sigdbg:::::dest-b-ccs-slave sipa ipstrc 1;

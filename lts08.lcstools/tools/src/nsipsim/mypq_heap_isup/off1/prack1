@@ -1,0 +1,49 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 5060
+parameter myadminip 135.111.82.6
+parameter myadminport 10001
+parameter myrtpip 135.111.82.6
+parameter myrtpport 8000
+parameter myrtcpport 8001
+parameter isupversion itu
+#
+# specific user section
+#
+rdn = 6305510201 100
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 5060
+rtpip = 135.111.82.6
+rtpport = 8000
+rtcpport = 8001
+waitingforprackduration = 10
+originvitesdp = UNDEFINED
+origpost180pracksdp = pcma
+origpost183pracksdp = pcma
+originviteacksdp = pcma
+term180ringingsdp = pcma
+term180prack200sdp = UNDEFINED
+term183ringingsdp = UNDEFINED
+term183prack200sdp = UNDEFINED
+terminvite200oksdp = pcma
+origination = originationprack
+termination = terminationprack
+#
+rdn = 6305520201 100
+expires = 1800
+maxcallduration = 20
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+origination = originationprack
+termination = terminationprack
+#
+rcall 6305510201 6305520201 100

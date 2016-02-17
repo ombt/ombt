@@ -1,0 +1,6 @@
+runtl1file exec { tl1file } {
+	call cpustate <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> isact,isstbyh isact,isstbyh <login> <passwd> <tl1login> <tl1passwd> 
+	tl1 open2 -t30 tl1usersp <ihlcsg10.spa.ip> <ihlcsg10.spb.ip> <tl1login> <tl1passwd> 
+	tl1 file -v tl1usersp <tl1dir>/<tl1file>
+	tl1 close tl1usersp
+}

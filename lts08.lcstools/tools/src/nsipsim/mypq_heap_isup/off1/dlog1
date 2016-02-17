@@ -1,0 +1,167 @@
+
+200 ORIG-TERM DN pairs read.
+
+Priority Queue Contents:
+
+Priority Queue Contents:
+Verbose is ON
+
+Priority Queue Contents:
+
+Timer expired: 
+
+Entry termination: Call-ID = <72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210>
+Timer Flag for 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210 = <1>
+
+CURRENT terminationstate STATE FOR 6305510201: TALKING
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.185.166.210:6060
+line=<BYE sip:6305510200@135.185.166.210 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:6060;branch=z9hG4bk945536122>
+line=<From: <sip:6305510201@135.111.82.6>;tag=959625390mytag>
+line=<To: Mike Rumore <sip:6305510200@135.111.82.6:6060>;tag=1958986547>
+line=<Call-ID: 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210>
+line=<CSeq: 31644 BYE>
+line=<Max-Forwards: 70>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210
+	label=WAIT FOR 200 BYE
+	delta=10
+	endtime=1117049506
+	id=213727483
+	callid = 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210
+	expire = 1117049506
+	id     = 213727483
+	label  = WAIT FOR 200 BYE
+
+OLD terminationstate STATE FOR 6305510201: TALKING
+NEW terminationstate STATE FOR 6305510201: WAITFOR200BYE
+
+SIP msg received: length=378
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.185.166.210:6060
+line=<SIP/2.0 200 Ok>
+line=<Via: SIP/2.0/UDP 135.111.82.6:6060;branch=z9hG4bk945536122>
+line=<From: <sip:6305510201@135.111.82.6>;tag=959625390mytag>
+line=<To: Mike Rumore <sip:6305510200@135.111.82.6:6060>;tag=1958986547>
+line=<Contact: <sip:6305510200@135.185.166.210:6060>>
+line=<Call-ID: 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210>
+line=<CSeq: 31644 BYE>
+line=<Server: X-Lite release 1103m>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+CSeq = 31644 BYE
+Call-ID = 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210
+Contact = <sip:6305510200@135.185.166.210:6060>
+Content-Length = 0
+From = <sip:6305510201@135.111.82.6>;tag=959625390mytag
+Server = X-Lite release 1103m
+To = Mike Rumore <sip:6305510200@135.111.82.6:6060>;tag=1958986547
+Via = SIP/2.0/UDP 135.111.82.6:6060;branch=z9hG4bk945536122
+msgtype = RETURNCODE
+returncode = 200
+
+Entry termination: Call-ID = <72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210>
+Timer Flag for 72997565-AC31-47C8-B04E-F794DE7175AA@135.185.166.210 = <0>
+
+CURRENT terminationstate STATE FOR 6305510201: WAITFOR200BYE
+
+OLD terminationstate STATE FOR 6305510201: WAITFOR200BYE
+NEW terminationstate STATE FOR 6305510201: INACTIVE
+
+Priority Queue Contents:
+
+help text:
+	'?' - help text
+	'c cps holdtime' - start a call load (indefinite).
+	'c cps holdtime maxcalls' - start a call load.
+	'cl' - list call originator-terminator pairs.
+	'cls' - clear statistics.
+	'cs' - list call load data.
+	'd' - list active dialogs.
+	'dp' - dump parameters.
+	'D' - toggle debugging.
+	'dpq' - dump priority queue contents.
+	'cpq' - count of priority queue items.
+	'h' - stop call load gracefully.
+	'l' - list all DN data.
+	'l dn' - list DN data.
+	'e dn' - edit DN data.
+	'o dn dialdn' - dn calls dialdn.
+	'q' - quit
+	'r dn' - register dn.
+	's' - list statistics.
+	'V' - toggle verbose.
+	'w text' - write 'text' to stdout/logfile.
+DN 63011111111 not found.
+
+Editting DN 6305510200 data:
+	callloadstate => INACTIVE
+enter new value [<CR>=current value]: keeping current value.
+	codec => pcma
+enter new value [<CR>=current value]: keeping current value.
+	dn => 6305510200
+enter new value [<CR>=current value]: keeping current value.
+	dnstate => INACTIVE
+enter new value [<CR>=current value]: keeping current value.
+	expires => 1800
+enter new value [<CR>=current value]: keeping current value.
+	interregistertime => 120
+enter new value [<CR>=current value]: keeping current value.
+	ipaddress => 127.0.0.1
+enter new value [<CR>=current value]: keeping current value.
+	maxcallduration => 20
+enter new value [<CR>=current value]: keeping current value.
+	origination => origination
+enter new value [<CR>=current value]: keeping current value.
+	originationstate => INACTIVE
+enter new value [<CR>=current value]: keeping current value.
+	prerefercallduration => 10
+enter new value [<CR>=current value]: keeping current value.
+	registrar => registrar
+enter new value [<CR>=current value]: keeping current value.
+	registration => register
+enter new value [<CR>=current value]: keeping current value.
+	registrationstate => INACTIVE
+enter new value [<CR>=current value]: keeping current value.
+	ringingduration => 1
+enter new value [<CR>=current value]: keeping current value.
+	rtcpip => 127.0.0.1
+enter new value [<CR>=current value]: keeping current value.
+	rtcpport => 9001
+enter new value [<CR>=current value]: keeping current value.
+	rtpip => 135.185.166.210
+enter new value [<CR>=current value]: keeping current value.
+	rtpport => 9000
+enter new value [<CR>=current value]: keeping current value.
+	sipip => 135.185.166.210
+enter new value [<CR>=current value]: keeping current value.
+	sipport => 6060
+enter new value [<CR>=current value]: keeping current value.
+	termination => termination
+enter new value [<CR>=current value]: keeping current value.
+	terminationstate => INACTIVE
+enter new value [<CR>=current value]: keeping current value.
+	waitingfor200duration => 10
+enter new value [<CR>=current value]: keeping current value.
+	waitingfor202duration => 10
+enter new value [<CR>=current value]: keeping current value.
+	waitingforackduration => 10
+enter new value [<CR>=current value]: keeping current value.
+
+unknown cmd
+
+unknown cmd
+
+unknown cmd
+
+unknown cmd
+
+Quitting ...

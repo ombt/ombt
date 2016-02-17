@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+#
+init_words();
+#
+print "Enter your name: ";
+$name = <STDIN>;
+chomp $name;
+#
+if ($name =~ /^randall\b/i)
+{
+	print "Hello, Randall ... how is the world treating you?\n";
+}
+else
+{
+	print "Hello, $name ...\n";
+	print "What is the secret passwd? ";
+	$guess = <STDIN>;
+	chomp $guess;
+	while (! good_word($name, $guess))
+	{
+		print "Wrong, try again ... \n";
+		print "What is the secret passwd? ";
+		$guess = <STDIN>;
+		chomp $guess;
+	}
+	print "You're in, $name !!!\n";
+}
+
+sub good_word {
+	my($somename, $someguess) = @_;
+	$somename =~ s/\W.*//;
+	$somename =~ tr/A-Z/a-z/;
+	#
+	if ($somename eq "randall")
+	{
+		return 1;
+	}
+	elsif (($words{$somename} || "duck") eq $someguess)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+sub init_words {
+	open(WORDLIST, "wordlist") || die "can't open wordlist: $!";
+	if (-M WORDLIST >= 7.0)
+	{
+		die "Sorrry, the wordlist is TOO old ...";
+	}
+	while (defined($name = <WORDLIST>)) 
+	{
+		chomp($name);
+		$word = <WORDLIST>;
+		chomp($word);
+		$words{$name} = $word;
+	}
+	close(WORDLIST) || die "can't close wordlist: $!";
+}

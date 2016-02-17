@@ -1,0 +1,4 @@
+sieve:	sieve.c 
+	-rm $(HOME)/bin/sieve
+	cc sieve.c -g -o sieve
+	ln sieve $(HOME)/bin/sieve

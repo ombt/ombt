@@ -1,0 +1,462 @@
+MGC CPU HUG:
+
+1) RTRV-CALL-CAPTVERBOSE;
+
+2) DLT-CALL-CAPTVERBOSE::1;
+
+3) RTRV-TRAFFICSTATS;
+
+4) ED-TRAFFICSTATS:::::OOS;
+
+5) RTRV-EQPT;
+
+6) RTRV-PM-CC;
+
+7) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+8) RTRV-EQPT;
+
+9) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+9.1) RTRV-EQPT;
+
+10) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+11) RMV-EQPT::<standbysp>;
+
+12) sleep 5 minutes
+
+13) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+14) RST-EQPT::<standbysp>;
+
+15) wait for synch: IS,STBYH for standby SP.
+
+16) RTRV-EQPT;
+
+17) RTRV-INFO-EQPT;
+
+18) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+19) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+20) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+21) wait for IS,ACT for active SP.
+
+22) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+23) we have a new <activesp> and <standbysp> because of the switch.
+
+24) you will need to telnet again to the new active SP to access Tl1.
+
+25) RMV-EQPT::<standbysp>;
+
+26) RTRV-ALM-ALL:
+
+27) RTRV-PM-CC:
+
+28) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+29) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) ED-TRAFFICSTATS::::::IS;
+
+34) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG CPU HUG:
+
+1) RTRV-SG-MGCASSOC;
+
+2) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+3) RTRV-EQPT;
+
+4) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+5) RTRV-EQPT;
+
+6) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+7) RMV-EQPT::<standbysp>;
+
+8) sleep 5 minutes
+
+9) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+10) RST-EQPT::<standbysp>;
+
+11) wait for synch: IS,STBYH for standby SP.
+
+12) RTRV-EQPT;
+
+13) RTRV-INFO-EQPT;
+
+14) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+15) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+16) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+17) wait for IS,ACT for active SP.
+
+18) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+19) we have a new <activesp> and <standbysp> because of the switch.
+
+20) you will need to telnet again to the new active SP to access Tl1.
+
+21) RMV-EQPT::<standbysp>;
+
+22) RTRV-ALM-ALL:
+
+23) RTRV-SG-MGCASSOC;
+
+24) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+25) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+MG CPU HUG:
+
+1) RTRV-STATUS-MG;
+
+2) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+3) RTRV-EQPT;
+
+4) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+5) RTRV-EQPT;
+
+6) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+7) RMV-EQPT::<standbysp>;
+
+8) sleep 5 minutes
+
+9) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+10) RST-EQPT::<standbysp>;
+
+11) wait for synch: IS,STBYH for standby SP.
+
+12) RTRV-EQPT;
+
+13) RTRV-INFO-EQPT;
+
+14) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+15) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+16) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+17) wait for IS,ACT for active SP.
+
+18) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+19) we have a new <activesp> and <standbysp> because of the switch.
+
+20) you will need to telnet again to the new active SP to access Tl1.
+
+21) RMV-EQPT::<standbysp>;
+
+22) RTRV-ALM-ALL:
+
+23) RTRV-STATUS-MG;
+
+24) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+25) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG_MGC_MG CPU HUG:
+
+1) RTRV-CALL-CAPTVERBOSE;
+
+2) DLT-CALL-CAPTVERBOSE::1;
+
+3) RTRV-TRAFFICSTATS;
+
+4) ED-TRAFFICSTATS:::::OOS;
+
+5) RTRV-EQPT;
+
+6) RTRV-PM-CC;
+
+7) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+8) RTRV-EQPT;
+
+9) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+9.1) RTRV-EQPT;
+
+10) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+11) RMV-EQPT::<standbysp>;
+
+12) sleep 5 minutes
+
+13) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+14) RST-EQPT::<standbysp>;
+
+15) wait for synch: IS,STBYH for standby SP.
+
+16) RTRV-EQPT;
+
+17) RTRV-INFO-EQPT;
+
+18) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+19) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+20) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+21) wait for IS,ACT for active SP.
+
+22) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+23) we have a new <activesp> and <standbysp> because of the switch.
+
+24) you will need to telnet again to the new active SP to access Tl1.
+
+25) RMV-EQPT::<standbysp>;
+
+26) RTRV-ALM-ALL:
+
+27) RTRV-PM-CC:
+
+28) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+29) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) ED-TRAFFICSTATS::::::IS;
+
+34) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG_MGC CPU HUG:
+
+1) RTRV-CALL-CAPTVERBOSE;
+
+2) DLT-CALL-CAPTVERBOSE::1;
+
+3) RTRV-TRAFFICSTATS;
+
+4) ED-TRAFFICSTATS:::::OOS;
+
+5) RTRV-EQPT;
+
+6) RTRV-PM-CC;
+
+7) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+8) RTRV-EQPT;
+
+9) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+9.1) RTRV-EQPT;
+
+10) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+11) RMV-EQPT::<standbysp>;
+
+12) sleep 5 minutes
+
+13) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+14) RST-EQPT::<standbysp>;
+
+15) wait for synch: IS,STBYH for standby SP.
+
+16) RTRV-EQPT;
+
+17) RTRV-INFO-EQPT;
+
+18) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+19) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+20) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+21) wait for IS,ACT for active SP.
+
+22) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+23) we have a new <activesp> and <standbysp> because of the switch.
+
+24) you will need to telnet again to the new active SP to access Tl1.
+
+25) RMV-EQPT::<standbysp>;
+
+26) RTRV-ALM-ALL:
+
+27) RTRV-PM-CC:
+
+28) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+29) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) ED-TRAFFICSTATS::::::IS;
+
+34) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+SG_MG CPU HUG:
+
+1) RTRV-STATUS-MG;
+
+2) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+
+3) RTRV-EQPT;
+
+4) ED-EQPT::<standbysp>:::SWVERSION=<newcpuswversion>;
+
+5) RTRV-EQPT;
+
+6) CPY-MEM::<standbysp>; if swversion >= 6.1.0.3.SP.5.
+
+7) RMV-EQPT::<standbysp>;
+
+8) sleep 5 minutes
+
+9) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+10) RST-EQPT::<standbysp>;
+
+11) wait for synch: IS,STBYH for standby SP.
+
+12) RTRV-EQPT;
+
+13) RTRV-INFO-EQPT;
+
+14) ED-EQPT::<activesp>:::SWVERSION=<newcpuswversion>;
+
+15) EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+
+16) CPY-MEM::<activesp>; if swversion >= 6.1.0.3.SP.5.
+
+17) wait for IS,ACT for active SP.
+
+18) if old cpuswversion >= 6.1.0.3.SP.6, then:
+
+	SW-TOPROTN-EQPT::<activesp>:::norst;
+
+	wait for old standby SP to become active and ignore the old active SP.
+else:
+
+	SW-TOPROTN-EQPT::<activesp>;
+
+	wait for old standby SP to become active and the old active SP to 
+	become OOS.
+end
+
+19) we have a new <activesp> and <standbysp> because of the switch.
+
+20) you will need to telnet again to the new active SP to access Tl1.
+
+21) RMV-EQPT::<standbysp>;
+
+22) RTRV-ALM-ALL:
+
+23) RTRV-STATUS-MG;
+
+24) EXEC-RUN-UPGRADE:<switchid>:<standbysp>;
+
+25) RST-EQPT::<standbysp>;
+
+30) wait for standby SP to be IS,STBYH.
+
+31) RTRV-EQPT;
+
+32) RTRV-INFO-EQPT;
+
+33) EXEC-BACKUP-PLEXUS::COM:::<ftpip>,<ftplogin>,<ftppasswd>,/tmp;
+

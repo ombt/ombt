@@ -1,0 +1,21 @@
+Total Elapsed Time = 618.7994 Seconds                                           
+         User Time = 2.749482 Seconds                                           
+Exclusive Times                                                                 
+%Time ExclSec CumulS #Calls sec/call Csec/c  Name                               
+ 262.   7.216  4.520 490802   0.0000 0.0000  mytimer::expire                    
+ 147.   4.068  5.228 140409   0.0000 0.0000  mytimer::cmp                       
+ 60.0   1.651  5.197   2052   0.0008 0.0025  mypqueue::enqueue                  
+ 53.3   1.467  1.571   2437   0.0006 0.0006  main::parseSipMsg                  
+ 28.0   0.770  0.419  63776   0.0000 0.0000  mytimer::id                        
+ 24.0   0.661  1.659   1900   0.0003 0.0009  mypqueue::remove                   
+ 12.3   0.340  0.269  12848   0.0000 0.0000  main::incrstats                    
+ 11.6   0.320  0.318    401   0.0008 0.0008  Storable::dclone                   
+ 9.82   0.270  7.449   2437   0.0001 0.0031  main::handleSIP                    
+ 9.42   0.259  5.536   2444   0.0001 0.0023  main::termination                  
+ 7.27   0.200  0.182   3345   0.0001 0.0001  mytimer::new                       
+ 6.87   0.189  0.318    999   0.0002 0.0003  main::sendInvite200OK              
+ 6.18   0.170  2.692   1445   0.0001 0.0019  main::starttimer                   
+ 5.82   0.160  0.163   2453   0.0001 0.0001  main::makepaddr                    
+ 4.36   0.120  0.134    537   0.0002 0.0002  main::sendGratuitous200OK          
+lts08:off1> type perl                                                           
+perl is /usr/exptools/bin/perl                                                  

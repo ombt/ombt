@@ -1,0 +1,216 @@
+scenario origination originationstate
+timers
+	maxcallduration 30
+	waitfor200duration 10
+end timers
+state inactive
+	timer origination
+		send invite
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+			sdp
+				...
+			end sdp
+		end send
+		starttimer waitfor200invite waitfor200duration
+		next waitfor200invite
+	end timer
+	timer default
+		next inactive
+	end timer
+	msg default
+		next inactive
+	end msg
+end state
+state waitfor200invite
+	timer waitfor200invite
+		send cancel
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		starttimer waitfor200cancel waitfor200duration
+		next waitfor200cancel
+	end timer
+	timer default
+		next waitfor200invite
+	end timer
+	msg 100 invite
+		starttimer waitfor200invite waitfor200duration
+		next waitfor200invite
+	end msg
+	msg 180 invite
+		starttimer waitfor200invite waitfor200duration
+		next waitfor200invite
+	end msg
+	msg 183 invite
+		starttimer waitfor200invite waitfor200duration
+		next waitfor200invite
+	end msg
+	msg 200 invite
+		send ack
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+			sdp
+				...
+			end sdp
+		end ack
+		starttimer talking maxcallduration
+		next talking
+	end msg
+	msg 486 invite
+		send ack
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg 302 invite
+		send ack
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		queueredirect
+		idle
+	end msg
+	msg 503 invite 
+		send ack
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg cancel
+		send 200 cancel
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg bye
+		send 200 cancel
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg default
+		next waitfor200invite
+	end msg
+end state
+state talking
+	timer talking
+		send bye
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		starttimer waitfor200bye waitfor200duration
+		next waitfor200bye
+	end timer
+	timer default
+		next talking
+	end timer
+	msg bye
+		send 200 bye
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg invite
+		queuereinvite
+		idle
+	end msg
+	msg subscribe
+		send notify
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end notify
+		next talking
+	end msg
+	msg 200 notify
+		next talking
+	end msg
+	msg default
+		next talking
+	end msg
+end state
+state waitfor200bye
+	timer waitfor200bye
+		idle
+	end timer
+	timer default
+		next waitfor200bye
+	end timer
+	msg 200 bye
+		idle
+	end msg
+	msg bye
+		send 200 bye
+			hdrs
+				From:
+				To: 
+				...
+			end hdrs
+		end send
+		idle
+	end msg
+	msg default
+		next waitfor200bye
+	end msg
+end state
+state waitfor200cancel
+	timer waitfor200cancel
+		idle
+	end timer
+	timer default
+		next waitfor200cancel
+	end timer
+	msg 200 cancel
+		idle
+	end msg
+	msg default
+		next waitfor200cancel
+	end msg
+end state
+state default
+	timer default
+		idle
+	end timer
+	msg default
+		idle
+	end msg
+end state
+end scenario

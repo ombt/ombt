@@ -1,0 +1,9 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/remove_data
+}
+source <scriptsdir>/remove_data.globals
+source <scriptsdir>/remove_data.removeload
+source <scriptsdir>/remove_data.minmode
+source <scriptsdir>/remove_data.appmode
+source <scriptsdir>/remove_data.rtrv_eqpt
+source <scriptsdir>/remove_data.closestreams

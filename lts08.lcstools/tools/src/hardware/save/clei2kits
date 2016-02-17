@@ -1,0 +1,47 @@
+clei is ba1ax60aab ...
+clei is ba2a30tgaa ...
+========================================
+   ----------           -------         -------         ---------
+   ena iom kit                          89-0390-a       ba2a30tgaa
+   kdi 			$h{ena}[$kitver]
+clei is ba2a30tgab ...
+clei is ba4a701faa ...
+========================================
+   oct_2 iom kit                        89-0398-a       baa9uvxgaa
+   kdi                  $h{octds3_2}[$kitver]                89-0411-a       ba4a701faa
+   file path:		$h{octds3_2}[$kittarfile]
+========================================
+   oct_3 iom kit                        89-0398-a       baa9uvxgaa
+   kdi                  $h{octds3_3}[$kitver]                89-0411-a       ba4a701faa
+   file path:		$h{octds3_3}[$kittarfile]
+clei is ba7atp0faa ...
+========================================
+   ----------           -------         -------         ---------
+   ds1.2 iom kit                        89-0414-a       ba7atp0faa
+   kdi                  $h{ds1_2}[$kitver]                
+clei is ba9ats0faa ...
+========================================
+   ----------           -------         -------         ---------
+   cm iom kit                           89-0419-a       ba9ats0faa
+   kdi 			$h{cm}[$kitver]                89-0419-b       ba9ats0fab
+clei is ba9ats0fab ...
+========================================
+   cm iom kit                           89-0419-a       ba9ats0faa
+   kdi 			$h{cm}[$kitver]                89-0419-b       ba9ats0fab
+   file path:		$h{cm}[$kittarfile]
+clei is ba9axy0faa ...
+clei is ba9iaa0aaa ...
+========================================
+   ----------           -------         -------         ---------
+   ds1 iom kit                          89-0360-a       ba9iaa0aaa
+   kdi			$h{ds1}[$kitver]
+clei is bauiaa1eab ...
+========================================
+   vs3 iom kit
+   kdi                  $h{vs3}[$kitver]                89-0413-b       bauiaa1eab
+   file path:		$h{vs3}[$kittarfile]
+clei is bauiadpeaa ...
+========================================
+   ----------           -------         -------         ---------
+   ena2 iom kit                         89-0432-a       bauiadpeaa
+   kdi 			$h{ena2}[$kitver]

@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+my $infName = "/dev/tty";
+my $outfName = "/dev/tty";
+#
+my $num = @ARGV;
+#
+if ($num == 1)
+{
+	($infName) = @ARGV;
+}
+elsif ($num == 2)
+{
+	($infName, $outfname) = @ARGV;
+}
+#
+open(IN, $infName) || die("unable to open $infname: $!");
+open(OUT, ">$outfName") || die("unable to open $outfname: $!");
+#
+while (my $inbuf = <IN>)
+{
+	chomp $inbuf;
+	print OUT "$inbuf\n";
+}
+#
+close(IN);
+close(OUT);
+#

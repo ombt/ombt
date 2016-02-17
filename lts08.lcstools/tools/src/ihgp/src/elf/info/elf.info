@@ -1,0 +1,1656 @@
+ELF notes
+
+1) header files describing ELF format:
+
+	1) elf.h - which includes sys/elf.h, and describes the
+	intermal format of an ELF file.
+	2) libelf.h - defines the ELF library functions.
+	3) sys/elf.h - actual header with ELF file definitions.
+	4) sys/elf_XXX.h - header containing constants, etc. for 
+	type XXX machine, examples are:
+		sys/elf_386.h
+		sys/elf_M32.h
+		sys/elf_SPARC.h
+		sys/elf_ppc.h
+	5) sys/elf_notes.h - constants for ELF note sections.
+	6) sys/elftypes.h - definitions of ELF data types.
+	7) sys/machelf.h - machine dependent data types are typedefed
+	to simplify interface.
+	
+2) definitions for ELF data types (sys/elftypes.h):
+
+#if defined(_LP64) || defined(_I32LPx)
+typedef unsigned int		Elf32_Addr;
+typedef unsigned short		Elf32_Half;
+typedef unsigned int		Elf32_Off;
+typedef int			Elf32_Sword;
+typedef unsigned int		Elf32_Word;
+#else
+typedef unsigned long		Elf32_Addr;
+typedef unsigned short		Elf32_Half;
+typedef unsigned long		Elf32_Off;
+typedef long			Elf32_Sword;
+typedef unsigned long		Elf32_Word;
+#endif
+
+#if defined(_LP64)
+typedef unsigned long		Elf64_Addr;
+typedef unsigned short		Elf64_Half;
+typedef unsigned long		Elf64_Off;
+typedef int			Elf64_Sword;
+typedef long			Elf64_Sxword;
+typedef	unsigned int		Elf64_Word;
+typedef	unsigned long		Elf64_Xword;
+typedef unsigned long		Elf64_Lword;
+typedef unsigned long		Elf32_Lword;
+#elif ((__STDC__ - 0 == 0) && (!defined(_NO_LONGLONG)))
+typedef unsigned long long	Elf64_Addr;
+typedef unsigned short		Elf64_Half;
+typedef unsigned long long	Elf64_Off;
+typedef int			Elf64_Sword;
+typedef long long		Elf64_Sxword;
+typedef	unsigned int		Elf64_Word;
+typedef	unsigned long long	Elf64_Xword;
+typedef	unsigned long long	Elf64_Lword;
+typedef unsigned long long	Elf32_Lword;
+#endif
+
+summary of data types:
+
+	Elf32_Addr - unsigned program address
+	Elf32_Half - unsigned medium integer
+	Elf32_Off - unsigned file offset
+	Elf32_Sword - signed large integer
+	Elf32_Word - unsigned large integer
+	unsigned char - unsigned small integer
+
+3) elf file header definitions are shown below, cut from sys/elf.h
+file. the definition of the elf file header is shown below:
+
+#define	EI_NIDENT	16
+
+typedef struct {
+	unsigned char	e_ident[EI_NIDENT];	/* ident bytes */
+	Elf32_Half	e_type;			/* file type */
+	Elf32_Half	e_machine;		/* target machine */
+	Elf32_Word	e_version;		/* file version */
+	Elf32_Addr	e_entry;		/* start address */
+	Elf32_Off	e_phoff;		/* phdr file offset */
+	Elf32_Off	e_shoff;		/* shdr file offset */
+	Elf32_Word	e_flags;		/* file flags */
+	Elf32_Half	e_ehsize;		/* sizeof ehdr */
+	Elf32_Half	e_phentsize;		/* sizeof phdr */
+	Elf32_Half	e_phnum;		/* number phdrs */
+	Elf32_Half	e_shentsize;		/* sizeof shdr */
+	Elf32_Half	e_shnum;		/* number shdrs */
+	Elf32_Half	e_shstrndx;		/* shdr string index */
+} Elf32_Ehdr;
+
+elf fields:
+
+3.1) unsigned char e_ident[EI_IDENT] - elf file identifier string. 
+this string is EI_IDENT bytes in length. each byte in the string is accessed
+using the following #defines. for example,
+
+	e_ident[EI_MAG0] to access the first byte in e_ident.
+
+The remaining #defines are:
+
+	EI_MAG0		0
+	EI_MAG1		1
+	EI_MAG2		2
+	EI_MAG3		3
+	EI_CLASS	4
+	EI_DATA		5
+	EI_VERSION	6
+	EI_PAD		7
+
+The contents of the first few bytes of e_ident are shown next:
+
+	e_ident[EI_MAG0] = ELFMAG0
+	e_ident[EI_MAG1] = ELFMAG1
+	e_ident[EI_MAG2] = ELFMAG2
+	e_ident[EI_MAG3] = ELFMAG3
+
+definitions for elf ident array, magic number:
+
+	ELFMAG0	0x7f
+	ELFMAG1 'E'
+	ELFMAG2 'L'
+	ELFMAG3 'F'
+	ELFMAG "\177ELF"
+	SELFMAG 4
+
+3.1.1) The first four bytes of e_ident[EI_MAG0] to e_ident[EI_MAG3] are the 
+magic value for elf files.
+
+3.1.2) e_ident[EI_CLASS] identifies the file class. possible values are
+
+	ELFCLASSNONE 0 - invalid class
+	ELFCLASS32 1 - 32-bit objects
+	ELFCLASS64 2 - 64-bit objects.
+	ELFCLASSNUM 3
+
+3.1.3) e_ident[EI_DATA] identifies the data encoding for data. 
+
+	ELFDATANONE 0 - no data
+	ELFDATA2LSB 1 - specifies 2's complement values with the
+		the least significant byte in the lowest address.
+	ELFDATA2MSB 2 - specifies 2's complement values with the
+		the least significant byte in the highest address.
+	ELFDATANUM 3 - number of entries
+
+3.1.4) e_ident[EI_VERSION] identifies the elf version number. should
+be the same as the e_version field.
+
+	EV_NONE - invalid version.
+	EV_CURRENT - >= 1 - current version of ELF.
+
+3.2) Elf32_Half e_type - object file types supported by ELF are:
+
+	ET_NONE 0 - no file type
+	ET_REL 1 - relocatable file
+	ET_EXEC 2 - executable file
+	ET_DYN 3 - shared object file
+	ET_CORE 4 - core file
+	ET_NUM 5 - number of entries
+	ET_LOPROC 0xff00 - start of processor-specific range
+	ET_HIPROC 0xffff - end of processor-specific range
+
+
+3.3) Elf32_Half e_machine - target machine type. possible values are:
+
+	EM_NONE 0 - no machine type
+	EM_M32 1 -  AT&T WE 32100 */
+	EM_SPARC 2 -  Sun SPARC */
+	EM_386 3 -  Intel 80386 */
+	EM_68K 4 -  Motorola 68000 */
+	EM_88K 5 -  Motorola 88000 */
+	EM_486 6 -  Intel 80486 */
+	EM_860 7 -  Intel i860 */
+	EM_MIPS 8 -  MIPS RS3000 Big-Endian */
+	EM_UNKNOWN9 9
+	EM_MIPS_RS3_LE 10 -  MIPS RS3000 Little-Endian */
+	EM_RS6000 11 -  RS6000 */
+	EM_UNKNOWN12 12
+	EM_UNKNOWN13 13
+	EM_UNKNOWN14 14
+	EM_PA_RISC 15 -  PA-RISC */
+	EM_nCUBE 16 -  nCUBE */
+	EM_VPP500 17 -  Fujitsu VPP500 */
+	EM_SPARC32PLUS 18 -  Sun SPARC 32+ */
+	EM_UNKNOWN19 19
+	EM_PPC 20 -  PowerPC */
+	EM_SPARCV9 43 -  Sun SPARC V9 (64-bit) */
+	EM_NUM 44 - number of entries
+
+3.4) Elf32_Word e_version - object file version - possible values are:
+
+	EV_NONE 0 - invalid version
+	EV_CURRENT 1 - current version
+	EV_NUM 2 - number of entries
+
+3.5) Elf32_Addr e_entry; -  start address - starting virtual address
+for this process when it runs. if zer0, then this file has no starting
+address.
+
+3.6) Elf32_Off e_phoff -  phdr file offset - program header table file
+offset. if zero, then there is no program header table in the file.
+
+3.7) Elf32_Off e_shoff; -  shdr file offset - section header table
+file offset. if zero, then there is no section header table in the
+file.
+
+3.8) Elf32_Word e_flags -  file flags - contains processor-specific
+flags. currently set to zero for SPARC, X86, and PPC.
+
+3.9) Elf32_Half e_ehsize -  sizeof ehdr - elf header size in bytes.
+
+3.10) Elf32_Half e_phentsize -  size in bytes of one entry in the
+program header table; all entries are the same size.
+
+3.11) Elf32_Half e_phnum -  number program headers - number of entries in 
+the program header table. e_phnum*e_phentsize give the size in
+bytes of the program header table. if the file contains no program
+header table, then the e_phnum is equal to zero.
+
+3.12) Elf32_Half e_shentsize -  size of section hdr - contains size of an 
+entry in the section header table; all entries are the same size.
+
+3.13) Elf32_Half e_shnum - number of section headers - e_shnum*e_shentsize
+gives the size of the section header table. if s_shnum is zero, then there
+is NO section header in the file.
+
+3.14) Elf32_Half e_shstrndx - section name string index - section index
+for the section header containing the information for the section name
+string table. if the file has NO section name string table, then
+it contains the value SHN_UNDEF.
+
+4) section header table - contains headers describing all of the file's
+sections. the section header table is an array of Elf32_Shdr structures.
+A sectiom header index is an index into the section header table.
+
+in the file header (see above), e_shoff is the file offset to the
+section header table, e_shnum is the number of entries in the section
+header table (can be 0), and e_shentsize is the size of an entry
+in the section header table.
+
+the section header definition is in the header sys/elf.h. the 
+definition follows:
+
+typedef struct {
+	Elf32_Word	sh_name;	/* section name */
+	Elf32_Word	sh_type;	/* SHT_... */
+	Elf32_Word	sh_flags;	/* SHF_... */
+	Elf32_Addr	sh_addr;	/* virtual address */
+	Elf32_Off	sh_offset;	/* file offset */
+	Elf32_Word	sh_size;	/* section size */
+	Elf32_Word	sh_link;	/* misc info */
+	Elf32_Word	sh_info;	/* misc info */
+	Elf32_Word	sh_addralign;	/* memory alignment */
+	Elf32_Word	sh_entsize;	/* entry size if table */
+} Elf32_Shdr;
+
+some section header table indexes have special meanings. these special
+section indices do not have any sections in the object file. they are:
+
+	SHN_UNDEF 0 - undefined section
+	SHN_LORESERVE 0xff00 - lower bounds of reserved indexes
+	SHN_ABS 0xfff1 - absolute values for the correspondinf
+		references, no relocation required.
+	SHN_COMMON 0xfff2 - symbols defines relative to this
+		section are common symbols, like FORTRAN COMMON
+		symbols, or unallocated C extern symbols.
+	SHN_HIRESERVE 0xffff - upper bounds of reserved indexes.
+	SHN_LOPROC 0xff00  - low-end of processor-specific range, inclusive.
+	SHN_HIPROC 0xff1f - high-end of processor-specific range, inclusive.
+
+section header table does not contain entries for the above special
+indexes.
+
+4.1) Elf32_Word sh_name - section name - index into section header 
+string table, points to a null-terminated string which contains the
+section's name. 
+
+section names starting with a dot "." are reserved for the system.
+section names reserved for specific processor types are formed
+by prefixing a section name with the processor name. the processor
+name used should be the same as e_machine. for example, .Foo.psect
+for .Foo processor type.
+
+existing extensions are:
+
+	.conflict
+	.debug
+	.gptab
+	.liblist
+	.line
+	.lit4
+	.lit8
+	.reginfo
+	.sbss
+	.sdata
+	.stab
+	.tdesc
+
+Some predefined section names are:
+
+4.1.1) .bss - type is SHT_NOBITS, attributes are SHF_ALLOC+SHF_WRITE,
+contains uninitialized data, part of program image. the section is
+initialized to zeroes when it is loaded, but it occupies no space
+in the file.
+
+4.1.2) .comment - type is SHT_PROGBITS, attributes are none, section
+contains commnt information.
+
+4.1.3) .data - type is SHT_PROGBITS, attributes are SHF_ALLOC+SHF_WRITE,
+initialized data, part of program image.
+
+4.1.4) .data1 - type is SHT_PROGBITS, attributes are SHF_ALLOC+SHF_WRITE
+
+4.1.5) .dynamic - type is SHT_DYNAMIC, attributes are SHF_ALLOC+SHF_WRITE,
+contains dynamic linking information.
+
+4.1.6) .dynstr - type is SHT_STRTAB, attributes are SHF_ALLOC, hold strings
+used in dynamic linking, names of symbols associated with symbol table
+entries.
+
+4.1.7) .dynsym - type is SHT_DYNSYM, attributes are SHF_ALLOC, contains
+dynamic linking symbol table.
+
+4.1.8) .fini - type is SHT_PROGBITS, attributes are SHF_ALLOC+SHF_EXECINSTR,
+contains executable instructions, code is executed when the program ends.
+
+4.1.9) .got - SHT_PROGBITS - contains the global offset table, holds absolute
+addresses to private data.
+
+4.1.9.1) .hash - type is SHT_HASH, attributes are SHF_ALLOC
+
+4.1.10) .init - type is SHT_PROGBITS, attributes are SHF_ALLOC+SHF_EXECINSTR,
+contains executable instructions, code is executed when the program starts.
+
+4.1.11) .interp - type is SHT_STRTAB - contains the path to the program
+interpreter.
+
+4.1.12) .note - type is SHT_NOTE, attributes are none, contains information
+marking or identifying the file. 
+
+4.1.13) .plt - type is SHT_PROGBITS, contains the procedure linkage table,
+this table converts position-independent function calls to absolute locations.
+
+4.1.14) .relXXXX - type is SHT_REL, contains relocation entries, the XXXX
+refers to the section containing the relocations instances. for example.
+.rel.text contains the relocation entries for section .text. if the file
+contains a loadable segment that is relocatable, then the section
+will have the SHF_ALLOC bit enabled.
+
+4.1.15) .relaXXXX - type is SHT_RELA, contains relocation entries, the XXXX
+refers to the section containing the relocations instances. for example.
+.rela.text contains the relocation entries for section .text. if the file
+contains a loadable segment that is relocatable, then the section
+will have the SHF_ALLOC bit enabled.
+
+4.1.16) .rodata - type is SHT_PROGBITS, attributes are SHF_ALLOC, contains
+non-writable data, contributes to the non-writable segment in the
+process image.
+
+4.1.17) .rodata1 - type is SHT_PROGBITS, attributes are SHF_ALLOC, contains
+non-writable data, contributes to the non-writable segment in the
+process image.
+
+4.1.18) .shstrtab - type is SHT_STRTAB - section contains section names.
+
+4.1.19) .strtab - type is SHT_STRTAB - contains a strings, strings
+associated with symbol table entries. if the section contains a
+loadable section that includes a symbol table, then the section
+will have the SHF_ALLOC bit enabled; otherwise, it is off.
+
+4.1.21) .symtab - type is SHT_SYMTAB, section contains a symbol table,
+if the file has a loadable segment that includes a symbol table, then
+the section will have the SHF_ALLOC bit enabled; otherwise, it is
+off.
+
+4.1.22) .text - type is SHT_PROGBITS, attributes are SHF_ALLOC+SHF_WRITE,
+section contains executable instructions.
+
+4.1.23) .SUNW_version - types are: SHT_SUNW_verdef, SHT_SUNW_verneed,
+SHT_SUNW_versym, attributes are SHF_ALLOC+SHF_WRITE, contains versioning
+information.
+
+4.2) Elf32_Word sh_type - SHT_ constants, categorizes the section's
+contents and semantics (interpretation of the data).
+
+4.2.1) SHT_NULL 0 - inactive section, sh_info = 0
+
+4.2.2) SHT_PROGBITS 1 - program information, sh_info = 0, information
+defined and interpreted by the program.
+
+4.2.3) SHT_SYMTAB 2 - complete symbol table, sh_info = one greater
+than the symbo table index of the last local symbol. one of these
+sections allowed per file.
+
+4.2.4) SHT_STRTAB 3 - string table, can have multiple string table sections
+per file, sh_info = 0.
+
+4.2.5) SHT_RELA 4 - relocation entries with explicit addends (offsets), 
+a file can have multiple relocation sections, sh_info = section header table
+index of the section to where the relocation applies.
+
+4.2.6) SHT_HASH 5 - symbol rehash table, only one per file, sh_info = 0.
+all dynamically linked object files must have a only one hash table.
+
+4.2.7) SHT_DYNAMIC 6 - dynamic linking information, only one per file, 
+sh_info = 0.
+
+4.2.8) SHT_NOTE 7 - information that marks the file, sh_info = 0.
+
+4.2.9) SHT_NOBITS 8 - contains information defined and interpreted
+by the program. a section of this type contains NO space in the file.
+section offset indicates where the section would have started, if the
+section existed. sounds like .bss.
+
+4.2.10) SHT_REL 9 - contain relocation entries without explicit addends.
+a file can have multiple relocation sections, sh_info = section header table
+index of the section to where the relocation applies.
+
+4.2.11) SHT_SHLIB 10 - reserved, sh_info = 0.
+
+4.2.12) SHT_DYNSYM 11 - symbol table with a minimal set of symbols 
+for dynamic linking, only one section of this type per file. sh_info =
+one greater that the symbol table index of the last local symbol.
+
+4.2.13) SHT_NUM 12 - number of values
+
+4.2.14) SHT_LOSUNW 0x6ffffffa
+
+4.2.15) SHT_SUNW_move 0x6ffffffa
+
+4.2.16) SHT_SUNW_COMDAT 0x6ffffffb
+
+4.2.17) SHT_SUNW_syminfo 0x6ffffffc
+
+4.2.18) SHT_SUNW_verdef 0x6ffffffd - contains fine-grained versions
+defined by this file.
+
+4.2.19) SHT_SUNW_verneed 0x6ffffffe - contains fine-grains dependencies
+required for this program to run.
+
+4.2.20) SHT_SUNW_versym 0x6fffffff - table describing relationships of 
+symbols to version definitions offered by this file.
+
+4.2.21) SHT_HISUNW 0x6fffffff
+
+4.2.22) SHT_LOPROC 0x70000000 - lower bound of section types reserved
+for processor-specific semantics.
+
+4.2.23) SHT_HIPROC 0x7fffffff - upper bound of section types reserved
+for processor-specific semantics.
+
+4.2.24) SHT_LOUSER 0x80000000 - lower bound of section types reserved
+for application programs.
+
+4.2.25) SHT_HIUSER 0xffffffff - upper bound of section types reserved
+for application programs.
+
+4.3) Elf32_Word sh_flags - SHF_... - flags describng section attributes,
+these flags can be ORed together.
+
+4.3.1) SHF_WRITE 0x1 - section contains data that is writable during 
+process execution.
+
+4.3.2) SHF_ALLOC 0x2 - section is allocated during process execution,
+some sections do not exist in memory when the program runs.
+
+4.3.3) SHF_EXECINSTR 0x4 - executable machine instructions.
+
+4.3.4) SHF_MASKPROC 0xf0000000 - bits are for processor-specific
+semantics.
+
+4.3.5) summary of flags for various sections:
+
+	.bss - type is SHT_NOBITS, flags are SHF_ALLOC+SHF_WRITE
+	.comment - type is SHT_PROGBITS, flags are none
+	.data - type is SHT_PROGBITS, flags are SHF_ALLOC+SHF_WRITE
+	.data1 - type is SHT_PROGBITS, flags are SHF_ALLOC+SHF_WRITE
+	.dynamic - type is SHT_DYNAMIC, flags are SHF_ALLOC+SHF_WRITE
+	.dynstr - type is SHT_STRTAB, flags are SHF_ALLOC
+	.dynsym - type is SHT_DYNSYM, flags are SHF_ALLOC
+	.fini - type is SHT_PROGBITS, flags are SHF_ALLOC+SHF_EXECINSTR
+	.hash - type is SHT_HASH, flags are SHF_ALLOC
+	.init - type is SHT_PROGBITS, flags are SHF_ALLOC+SHF_EXECINSTR
+	.interp - type is SHT_STRTAB
+	.note - type is SHT_NOTE, flags are none
+	.plt - type is SHT_PROGBITS
+	.relXXXX - type is SHT_REL
+	.relaXXXX - type is SHT_RELA
+	.rodata - type is SHT_PROGBITS, flags are SHF_ALLOC
+	.rodata1 - type is SHT_PROGBITS, flags are SHF_ALLOC
+	.shstrtab - type is SHT_STRTAB
+	.strtab - type is SHT_STRTAB
+	.symtab - type is SHT_SYMTAB
+	.text - type is SHT_PROGBITS, flags are SHF_ALLOC+SHF_WRITE
+	.SUNW_version - types are: SHT_SUNW_verdef, SHT_SUNW_verneed,
+		SHT_SUNW_versym, flags are SHF_ALLOC+SHF_WRITE
+
+4.4) Elf32_Addr sh_addr - virtual address, if the section is to
+appear in memory, then this is the virtual address where the 
+first byte of this section should be mapped; otherwise, this
+field is zero.
+
+4.5) Elf32_Off sh_offset - file offset - byte offset in the file to 
+the start of the section's data. a section of type SHT_NOTBITS 
+occupies no space in the file, the offset is where the section data
+would have been located.
+
+4.6) Elf32_Word sh_size - section size - size of section in bytes.
+a SHT_NOBITS section may have a non-zero size, but it occupies no
+space in the file. 
+
+4.7) Elf32_Word sh_link and Elf32_Word sh_info - misc info - intepretation
+of these fields depends on section type. 
+
+4.7.1) SHT_DYNAMIC - sh_link = section header index of associated
+string table, sh_info = 0.
+
+4.7.2) SHT_HASH - sh_link = section header index of associated
+string table, sh_info = 0.
+
+4.7.3) SHT_REL and SHT_RELA - sh_link = section header index of the 
+associated symbol table, sh_info = section header index of the associated
+symbol table entry, sh_info = section header index of the section to 
+which the relocation applies.
+
+4.7.4) SHT_SYMTAB and SHT_DYNSYM - sh_link = section header index of the
+associated string table, sh_info = one greater than the symbol table 
+index of the last local symbol.
+
+4.7.5) SHT_SUNW_verdef - sh_link = section header index of the associated
+string table, sh_info = number of version definitions within the section.
+
+4.7.6) SHT_SUNW_verneed - sh_link = section header index of the associated
+string table, sh_info = number of version dependencies within the section.
+
+4.7.7) SHT_SUNW_versym - sh_link = section header index of the associated
+symbol table, sh_info = 0.
+
+4.7.8) all other sections - sh_link = SHN_UNDEF, sh_info = 0.
+
+4.8) Elf32_Word sh_addralign - memory alignment constraints, can be zero 
+or a power of two, addresses must be a multiple of this value. if the
+value is 0 or 1, then there are NO addressing constraints.
+
+4.9) Elf32_Word sh_entsize - section table entry size, if the section
+contains a table, then this is the size of an entry in the table.
+if section is NOT a table, then the size is 0.
+
+5) string table sections contain null-terminated strings. the first
+byte in the section is null character and the the last byte in the
+section is a null byte to guarantee a null termination of all strings.
+
+an empty string table is allowed; it will have a section header
+size, sh_size, set to zero. the section's header sh_name will contain
+an index into the section string table pointing to the section's
+name.
+
+the file header's field e_shstrndx contains an index into the section
+header table which contains the section header string table.
+
+6) symbol table section entries contain information needed for relocation
+and for debugging. a symbol table index is an index into an array.
+index 0, first entry in the symbol table array, is an undefined index.
+
+the symbol table entry structure has the followning format:
+
+typedef struct {
+	Elf32_Word	st_name;
+	Elf32_Addr	st_value;
+	Elf32_Word	st_size;
+	unsigned char	st_info;	/* bind, type: ELF_32_ST_... */
+	unsigned char	st_other;
+	Elf32_Half	st_shndx;	/* SHN_... */
+} Elf32_Sym;
+
+the above structure is defined in sys/elf.h.
+
+6.1) Elf32_Word st_name - index into file symbol string table. 
+if 0, then the symbol has no name. the string is null-terminated.
+
+6.2) Elf32_Addr st_value - value associated with the symbol. its
+intepretation depends on the context, the use of the symbol.
+
+6.2.1) in relocatable files, st_value hold the alignment constraints
+for a symbol whose section index in SHN_COMMON.
+
+6.2.2) in relocatable files, st_value holds the section offset for a 
+defined symbol. st_value is the offset from the beginning of the section
+that st_shndx identifies.
+
+6.2.3) in executable and shared object files, st_value holds a virtual address.
+the section number is not use for this case.
+
+6.3) Elf32_Word st_size - size of a data object. if symbol has no size
+or the size is unkwown, then the st_size is zero.
+
+6.4) unsigned char st_info - sepcifies symbol's type and binding values.
+a set of macros are used to split this field into binding and type
+fields. the macros compose and decompose values for S.st_info:
+
+	bind = ELF32_ST_BIND(S.st_info)
+	type = ELF32_ST_TYPE(S.st_info)
+	S.st_info = ELF32_ST_INFO(bind, type)
+ 
+the actual macros are:
+
+	ELF32_ST_BIND(info)       = ((info) >> 4)
+	ELF32_ST_TYPE(info)       = ((info) & 0xf)
+	ELF32_ST_INFO(bind, type) = (((bind)<<4)+((type)&0xf))
+
+the allowed values for binding are:
+
+6.4.1) STB_LOCAL 0 - local symbols are not visible outside the 
+object file containing them. local symbols with the same name
+can exist is separate files without interfering.
+
+6.4.2) STB_GLOBAL 1 - global symbols are visible to all object files
+being combined. one file's global definition will satisfy another
+files undefined reference for the same global, as long as the types
+match.
+
+6.4.3) STB_WEAK 2 - weak symbols are like globals, but there
+precedence is lower. weak and globals differ in how they are 
+resolved. if a global and weak symbol have the same name, then
+the global is used to resolve the undefined reference. the presence
+of the weak symbol with the same name is NOT an error. strange.
+
+6.4.4) STB_NUM 3 - number of values.
+
+6.4.5) STB_LOPROC 13 - start of processor-specific range.
+
+6.4.6) STB_HIPROC 15 - end of processor-specific range.
+
+the allowed values for types are:
+
+6.4.7) STT_NOTYPE 0  - symbol type is not specified.
+
+6.4.8) STT_OBJECT 1 - symbol associated with a data object, such as an
+array, a variable, etc.
+
+6.4.9) STT_FUNC 2 - symbol associated with a function or excutable code.
+function symbols in shared object files are treated differently. when
+another object file references a function in a shared-object, the link-editor
+creates a PLT (procedure linkage table) entry for the referenced symbol. 
+other shared objects are not referenced thru the PLT
+
+6.4.10) STT_SECTION 3 - symbols associated with a section. typically
+these symbols are associated with relocation and have binding of STB_LOCAL.
+
+6.4.11) STT_FILE 4 - name of source file associated with the object file.
+a file symbol has STB_LOCAL binding, section index is SHN+ABS, and it
+precedes the other local symbols in the file. symbol index 1 of the
+SHT_SYMTAB is an STT_FILE symbol representing the fiel itself. this
+symbol is then followed byh the STT_SECTION symbols and any globals
+"reduced" to locals (reducing scope).
+
+6.4.12) STT_NUM 5 - number of entries.
+
+6.4.13) STT_LOPROC 13 - start of processor-specific range.
+
+6.4.14) STT_HIPROC 15 - end of processor-specific range.
+
+6.5) unsigned char st_other - set to zero, has no meaning.
+
+6.6) Elf32_Half st_shndx - every symbol table entry is defined
+relative to some section. this fields holds the section header
+index for the section which contains this symbol. 
+
+if the symbol's st_value is a location within a section, then the 
+section index st_shndx points to an entry in the section header 
+table. certain section index values give other interpretations:
+
+if st_shndx = SHN_ABS, then the symbol has an absolute value that does
+not change during relocation.
+
+if st_shndx = SHN_COMMON, then st_value gives alignment constraints. the
+st_size value gives the size of the data object in bytes.
+
+if st_shndx = SHN_UNDEF, then the section table index is undefined. when
+the link-editor combines this object file with the object file containing
+the definition, the references will be resolved using the actual definition.
+
+symbol table entry with an index equal to zero, has the following 
+definitions:
+
+	st_name = 0, no name
+	st_value = 0, zero value
+	st_size = 0, no size
+	st_info = 0, no type, local binding
+	st_shndx = SHN_UNDEF, no section
+
+
+7) relocation is the process of connecting symbolic references with
+symbol definitions. when a function is called, the address to the function
+must be inserted in the code that called it. this is a simple example
+of relocation.
+
+the structures defining relocation entries are stored in the header
+sys/elf.h. they are show below. 
+
+typedef struct {
+	Elf32_Addr	r_offset;
+	Elf32_Word	r_info;		/* sym, type: ELF32_R_... */
+} Elf32_Rel;
+
+typedef struct {
+	Elf32_Addr	r_offset;
+	Elf32_Word	r_info;		/* sym, type: ELF32_R_... */
+	Elf32_Sword	r_addend;
+} Elf32_Rela;
+
+there are two types of relocation entries, one with a constant to 
+add, and one without a constant to add. the fields are described
+next:
+
+7.1) Elf32_Addr r_offset - byte offset within the section at which
+the relocation process must patch a reference to an unresolved symbol.
+for a relocatable file, the offset is the byte offset within the 
+segment affected by the relocation entry. if an executable or shared
+object, the offset is virtual address of the program segment affected
+by the relocation process.
+
+7.2) Elf32_Word r_info - gives the symbol table index with respect
+to which the relocation process must be applied to and the type
+of relocation to apply. for example, a call opcode must have
+a function address patched in, its symbol table index points to 
+the called function.
+
+the relocation type and relocation symbol table index are obtained 
+by applying the the macros ELF32_R_TYPE or ELF32_R_SYM to the 
+r_info field to get the type or symbol table entry index, respectively.
+
+the symbol table index can be STN_UNDEF, then the undefined behaviot
+is followed.
+
+The macros compose and decompose values for Rel.r_info, Rela.f_info
+
+	sym = ELF32_R_SYM(R.r_info)
+	type = ELF32_R_TYPE(R.r_info)
+	R.r_info = ELF32_R_INFO(sym, type)
+
+	ELF32_R_SYM(info) = ((info)>>8)
+	ELF32_R_TYPE(info) = ((unsigned char)(info))
+	ELF32_R_INFO(sym, type) = (((sym)<<8)+(unsigned char)(type))
+
+7.3) Elf32_Sword r_addend - constant to add to compute the 
+value stored in the location to be patched.
+
+relocation entries of the type Elf32_Rel, store a value to add at
+the location to be patched. Elf32_Rela entries contain an explicit
+constant to add during the relocation process.
+
+SPARC and PowerPC use Elf32_Rela entries and x86 uses Elf32_Rel entries.
+
+a relocation section referencestwo other sections: a symbol table and
+the section to modify, patch. the section header's sh_info and sh_link
+fields specify this information. relocation entries interpretations
+change depending on the type of file containing the entries; the 
+interpretation of r_offset changes.
+
+in relocatable files, r_offset hold a section offset. the relocation
+entry describes how to modify another section in the file.
+
+in executable of shared object files, r_offset hold a virtual address.
+although the intepretation of r_offset changes, the type of relocation 
+stays the same.
+
+7.4) relocation types for SPARC
+
+	R_SPARC_NONE 0 /* relocation type */
+	R_SPARC_8 1
+	R_SPARC_16 2
+	R_SPARC_32 3
+	R_SPARC_DISP8 4
+	R_SPARC_DISP16 5
+	R_SPARC_DISP32 6
+	R_SPARC_WDISP30 7
+	R_SPARC_WDISP22 8
+	R_SPARC_HI22 9
+	R_SPARC_22 10
+	R_SPARC_13 11
+	R_SPARC_LO10 12
+	R_SPARC_GOT10 13
+	R_SPARC_GOT13 14
+	R_SPARC_GOT22 15
+	R_SPARC_PC10 16
+	R_SPARC_PC22 17
+	R_SPARC_WPLT30 18
+	R_SPARC_COPY 19
+	R_SPARC_GLOB_DAT 20
+	R_SPARC_JMP_SLOT 21
+	R_SPARC_RELATIVE 22
+	R_SPARC_UA32 23
+	R_SPARC_PLT32 24
+	R_SPARC_HIPLT22 25
+	R_SPARC_LOPLT10 26
+	R_SPARC_PCPLT32 27
+	R_SPARC_PCPLT22 28
+	R_SPARC_PCPLT10 29
+	R_SPARC_10 30
+	R_SPARC_11 31
+	R_SPARC_64 32
+	R_SPARC_OLO10 33
+	R_SPARC_HH22 34
+	R_SPARC_HM10 35
+	R_SPARC_LM22 36
+	R_SPARC_PC_HH22 37
+	R_SPARC_PC_HM10 38
+	R_SPARC_PC_LM22 39
+	R_SPARC_WDISP16 40
+	R_SPARC_WDISP19 41
+	R_SPARC_GLOB_JMP 42
+	R_SPARC_7 43
+	R_SPARC_5 44
+	R_SPARC_6 45
+	R_SPARC_DISP64 46
+	R_SPARC_PLT64 47
+	R_SPARC_HIX22 48
+	R_SPARC_LOX10 49
+	R_SPARC_H44 50
+	R_SPARC_M44 51
+	R_SPARC_L44 52
+	R_SPARC_REGISTER 53
+	R_SPARC_UA64 54
+	R_SPARC_UA16 55
+	R_SPARC_NUM 56 /* must be >last */
+	
+7.5) relocation types for PPC
+
+	R_PPC_NONE 0 /* relocation type */
+	R_PPC_ADDR32 1
+	R_PPC_ADDR24 2
+	R_PPC_ADDR16 3
+	R_PPC_ADDR16_LO 4
+	R_PPC_ADDR16_HI 5
+	R_PPC_ADDR16_HA 6
+	R_PPC_ADDR14 7
+	R_PPC_ADDR14_BRTAKEN 8
+	R_PPC_ADDR14_BRNTAKEN 9
+	R_PPC_REL24 10
+	R_PPC_REL14 11
+	R_PPC_REL14_BRTAKEN 12
+	R_PPC_REL14_BRNTAKEN 13
+	R_PPC_GOT16 14
+	R_PPC_GOT16_LO 15
+	R_PPC_GOT16_HI 16
+	R_PPC_GOT16_HA 17
+	R_PPC_PLTREL24 18
+	R_PPC_PLT24 18
+	R_PPC_COPY 19
+	R_PPC_GLOB_DAT 20
+	R_PPC_JMP_SLOT 21
+	R_PPC_RELATIVE 22
+	R_PPC_LOCAL24PC 23
+	R_PPC_UADDR32 24
+	R_PPC_UADDR16 25
+	R_PPC_REL32 26
+	R_PPC_PLT32 27
+	R_PPC_PLTREL32 28
+	R_PPC_PLT16_LO 29
+	R_PPC_PLT16_HI 30
+	R_PPC_PLT16_HA 31
+	R_PPC_SDAREL16 32
+	R_PPC_SDAREL 32
+	R_PPC_SECTOFF 33
+	R_PPC_SECTOFF_LO 34
+	R_PPC_SECTOFF_HI 35
+	R_PPC_SECTOFF_HA 36
+	R_PPC_ADDR30 37
+	R_PPC_NUM 38 /* must be >last */
+
+8) versioning information - objects created by the link-editor contain
+two types of versioning information:
+
+8.0.1)version definitions - provide associations of global symbols,
+implemented using sections of types: SHT_SUNS_verdef and SHT_SUNW_versym.
+
+8.0.2) version dependencies - indicates the version definition
+requirements from other object dependencies; implemented using
+sections of the type SHT_SUNW_verneed.
+
+sections that contain versioning information are named .SUNW_version.
+
+8.1) version definition section - defined by the type SHT_SUNW_verdef. if 
+this version exists, so does SHT_SUNW_versym. using these two sections,
+associations between symbols and version definitions are maintained.
+
+the definition of the Version Definition Structure (Elf32_Verdef) is next:
+
+8.1.1) Elf32_Half vd_version - structures version revision - identifies
+the version of the structure itself.
+
+	VER_DEF_NONE 0 - invalid version
+	VER_DEF_CURRENT 1 - >= 1, current version.
+	VER_DEF_NUM 2 - number of values
+
+8.1.2) Elf32_Half vd_flags -  version information - version definition
+specific flags:
+
+	VER_FLG_BASE 0x1 - version definition of file itself
+	VER_FLG_WEAK 0x2 - weak version identifier
+
+8.1.3) Elf32_Half vd_ndx - version index - each version definition has a 
+unique index used to aassociate SHT_SUNW_versym entries to the correct
+version definitions.
+
+8.1.4) Elf32_Half vd_cnt - no. of associated aux entries - number of
+entries in the Elf32_Verdaux table.
+
+8.1.5) Elf32_Word vd_hash - version name hash value - hash value of 
+the version definition name.
+
+8.1.6) Elf32_Word vd_aux - no. of bytes from start of this verdef to 
+verdaux array - byte offset, from the start of this Elf32_Verdef entry,
+to the Elf32_Verduax array of definition names. the first element must
+exist. additional entries, if they exist, are indicated by the vd_cnt field.
+these elements  represent the dependencies of the version definition.
+each of these dependencies will have its own version definition structure.
+
+8.1.7) Elf32_Word vd_next - no. of bytes from start of this
+verdef to next verdef entry - byte offset from the start of this
+Elf32_Verdef structure to the next Elf32_Verdef structure.
+
+the definition of the Verdef Auxiliary Structure (Elf32_Verdaux) is next:
+
+8.1.8) Elf32_Word vda_name - first element defines the version
+name. additional entries define dependency names. string table offset
+to a null-terminated string which gives the name of the version
+definition.
+
+8.1.9) Elf32_Word vda_next -  no. of bytes from start of this
+verdaux to next verdaux entry, byte offset from the current
+Elf32_Verdaux entry to the next Elf32_Verdaux entry.
+
+8.2) version symbol section - section type of SHT_SUNW_versym - consists
+of any array of the following type: 
+
+8.2.1) typedef Elf32_Half Elf32_Versym - version symbol index array. number
+of elements in this array must equal the number of symbol table entries
+in the associated symbol table (determine by the sh_link value). each 
+array element can be one of the following. versym symbol index values.  
+values greater than VER_NDX_GLOBAL and less then VER_NDX_LORESERVE associate 
+symbols with user specified version descriptors.
+
+	VER_NDX_LOCAL 0 - symbol is local
+	VER_NDX_GLOBAL 1 - symbol is global and assigned to the base version.
+		if >1, then symbol has global scope and is assigned to
+		a user-defined version definition.
+	VER_NDX_LORESERVE - 0xff00 beginning of RESERVED entries
+	VER_NDX_ELIMINATE - 0xff01 symbol is to be eliminated
+
+any index values greater thatn VER_NDX_GLOBAL musrt correspond to the vd_ndx
+value in an entry in the SHT_SUNW_verdef section. if no index has a value
+greater than VER_NDX_GLOBAL, then no SHT_SUNW_verdef section needs to exist.
+
+8.3) Version Requirement Structure - defined by the type SHT_SUNW_verneed -
+this section defines the version definitions for the dynamic dependency
+requirements for the object file. only if a dependency contains version
+definitions will the a record be made in this section.
+
+8.3.1) Elf32_Verneed structure has the form:
+
+8.3.1.1) Elf32_Half vn_version - this structures version revision -
+version of the structure.
+
+	VER_NEED_NONE 0 - invalid  version 
+	VER_NEED_CURRENT 1 - current version, can be >=1.
+	VER_NEED_NUM 2 - number of entries.
+
+8.3.1.2) Elf32_Half vn_cnt - no. of associated aux entries - number of e
+elements in the Elf32_Vernaux array.
+
+8.3.1.3) Elf32_Word vn_file - name of needed dependency (file) - string 
+table offset to a null-terminated string, giving the filename having the
+version dependency; must match one of the .dynamic dependencies found
+in the file.
+
+8.3.1.4) Elf32_Word vn_aux - no. of bytes from start of this verneed 
+to vernaux array. must have at least one version dependency. any extra
+dependencies are indicated by the vn_cnt field.
+
+8.3.1.5) Elf32_Word vn_next - no. of bytes from start of this verneed 
+to next verneed entry.
+
+8.3.2) Verneed Auxiliary Structure (Elf32_Vernaux) has the form:
+
+8.3.2.1) Elf32_Word vna_hash - version name hash value - hash value of the 
+version dependency name.
+
+8.3.2.2) Elf32_Half vna_flags - version information flags - 
+
+	VER_FLG_BASE 0x1 - version definition of file itself
+	VER_FLG_WEAK 0x2 - weak version identifier
+
+8.3.2.3) Elf32_Half vna_other - presently not used.
+
+8.3.2.4) Elf32_Word vna_name -  version name - string table offset to 
+the version dependency name.
+
+8.3.2.5) Elf32_Word vna_next -  no. of bytes from start of this 
+vernaux to next vernaux entry.
+
+9) note section - if an object file must be marked with special
+type of information, then this section can exist. vendors or system
+builders may create this type of section. for sections, the section type
+is SHT_NOTE; for program header elements, the type is PT_NOTE.
+
+the note header structure (Elf32_Nhdr) is given below. one more thing,
+this entire section is aligned on 4-byte boundaries.
+
+9.1) Elf32_Word n_namesz - length of note's name 
+
+9.2) Elf32_Word n_descsz - length of note's "desc"
+
+9.3) Elf32_Word n_type - type of note
+
+9.4) example of a note, with and without a description:
+
+	0     1     2     3     4
+	+-----+-----+-----+-----+
+	|           7           | namesz
+	+-----+-----+-----+-----+
+	|           0           | descsz (no descriptor)
+	+-----+-----+-----+-----+
+	|           1           | type
+	+-----+-----+-----+-----+
+	|  x  |  y  |  z  |     | name
+	+-----+-----+-----+-----+
+	|  c  |  0  |  \0 | pad |
+	+-----+-----+-----+-----+
+	|           7           | namesz
+	+-----+-----+-----+-----+
+	|           8           | descsz (no descriptor)
+	+-----+-----+-----+-----+
+	|           3           | type
+	+-----+-----+-----+-----+
+	|  x  |  y  |  z  |     | name
+	+-----+-----+-----+-----+
+	|  c  |  0  |  \0 | pad |
+	+-----+-----+-----+-----+
+	|        word0          | desc
+	+-----+-----+-----+-----+
+	|        word1          | 
+	+-----+-----+-----+-----+
+
+10) dynamic linking - the elf program header table describes how
+a program is loaded and started in memory. the program header table
+only had meaning in executable and shared object files. the program
+header structure definition (Elf32_Phdr) is shown below.
+
+	Elf32_Word p_type - entry type
+	Elf32_Off p_offset - file offset
+	Elf32_Addr p_vaddr - virtual address
+	Elf32_Addr p_paddr - physical address
+	Elf32_Word p_filesz - file size
+	Elf32_Word p_memsz - memory size
+	Elf32_Word p_flags - entry flags
+	Elf32_Word p_align - memory/file alignment
+
+10.1) Elf32_Word p_type - entry type - type of segment or how to
+interprete the information.
+
+10.1.1) PT_NULL 0 - element is unused, causes the element to be ignored.
+
+10.1.2) PT_LOAD 1 - specifies a loadable segment, described by 
+p_filesz and p_memsz. if p_memsz > p_filesz, then the extra bytes
+are zeroed.
+
+10.1.3) PT_DYNAMIC 2 - specifies dynamic linking information.
+
+10.1.4) PT_INTERP 3 - specifies the name of an interpreter. the name
+is a null-terminated string.
+
+10.1.5) PT_NOTE 4 - specifies the location of extra information.
+
+10.1.6) PT_SHLIB 5 - reserved, unspecified semantics.
+
+10.1.7) PT_PHDR 6 - location and size of program header table
+itself.
+
+10.1.8) PT_NUM 7 - number of entries.
+
+10.1.9) PT_LOPROC 0x70000000 to PT_HIPROC 0x7fffffff - processor 
+specific range - reserved.
+
+10.2) Elf32_Off p_offset - file offset - byte offset from beginning
+of the file to the start of the segment.
+
+10.3) Elf32_Addr p_vaddr - virtual address at which the segment
+starts in memory.
+
+10.4) Elf32_Addr p_paddr - physical address - on systems where the
+physical address is important, then this field is used. for other
+systems, it is ignored.
+
+10.5) Elf32_Word p_filesz - file size - number of bytes stored
+in the file for this segment, may be zero.
+
+10.6) Elf32_Word p_memsz - memory size - number of bytes in memory
+for this segment, may be zero.
+
+10.7) Elf32_Word p_flags - entry flags - permissions for segment. the
+permissions granted to a section depend on the hardware, the only
+gaurantee is that a section will NOT have write permission, unless 
+it is allowed.
+
+	0x0 - no access permission
+	PF_R 0x4 - execute permission
+	PF_W 0x2 - write permission
+	PF_X 0x1 - read permission
+	PF_MASKPRO - 0xf0000000	/* processor specific values */
+
+some of the possible combinations are as follows:
+
+10.7.1) none (0) requested, none allowed.
+10.7.2) PF_X requested, read and execute allowed.
+10.7.3) PF_W requested, read, write, execute allowed.
+10.7.4) PF_W, PF_X requested, read, write, execute allowed.
+10.7.5) PF_R requested, read and execute allowed.
+10.7.6) PF_R, PF_X requested, read and execute allowed.
+10.7.7) PF_R, PF_W requested, read, write and execute allowed.
+10.7.8) PF_R, PF_W, PF_X requested, read, write and execute allowed.
+
+10.8) Elf32_Word p_align - memory/file alignment - required alignment of 
+memory segment. values of 0 or 1 mean no alignment requirements, other
+values are powers of 2. p_vaddr = p_offset % p_align.
+
+
+=======================================================================
+
+/*
+ *	Move entry
+ */
+#if (defined(_LP64) || ((__STDC__ - 0 == 0) && (!defined(_NO_LONGLONG))))
+typedef struct {
+	Elf32_Lword	m_value;	/* symbol value */
+	Elf32_Word 	m_info;		/* size + index */
+	Elf32_Word	m_poffset;	/* symbol offset */
+	Elf32_Half	m_repeat;	/* repeat count */
+	Elf32_Half	m_stride;	/* stride info */
+} Elf32_Move;
+
+/*
+ *	The macros compose and decompose values for Move.r_info
+ *
+ *	sym = ELF32_M_SYM(M.m_info)
+ *	size = ELF32_M_SIZE(M.m_info)
+ *	M.m_info = ELF32_M_INFO(sym, size)
+ */
+#define	ELF32_M_SYM(info)	((info)>>8)
+#define	ELF32_M_SIZE(info)	((unsigned char)(info))
+#define	ELF32_M_INFO(sym, size)	(((sym)<<8)+(unsigned char)(size))
+
+typedef struct {
+	Elf64_Lword	m_value;	/* symbol value */
+	Elf64_Xword 	m_info;		/* size + index */
+	Elf64_Xword	m_poffset;	/* symbol offset */
+	Elf64_Half	m_repeat;	/* repeat count */
+	Elf64_Half	m_stride;	/* stride info */
+} Elf64_Move;
+#define	ELF64_M_SYM(info)	((info)>>8)
+#define	ELF64_M_SIZE(info)	((unsigned char)(info))
+#define	ELF64_M_INFO(sym, size)	(((sym)<<8)+(unsigned char)(size))
+
+#endif	/* (defined(_LP64) || ((__STDC__ - 0 == 0) ... */
+
+/*
+ *	Known values for note entry types (e_type == ET_CORE)
+ */
+
+#define	NT_PRSTATUS	1	/* prstatus_t	<sys/old_procfs.h>	*/
+#define	NT_PRFPREG	2	/* prfpregset_t	<sys/old_procfs.h>	*/
+#define	NT_PRPSINFO	3	/* prpsinfo_t	<sys/old_procfs.h>	*/
+#define	NT_PRXREG	4	/* prxregset_t	<sys/procfs.h>		*/
+#define	NT_PLATFORM	5	/* string from sysinfo(SI_PLATFORM)	*/
+#define	NT_AUXV		6	/* auxv_t array	<sys/auxv.h>		*/
+#define	NT_GWINDOWS	7	/* gwindows_t	SPARC only		*/
+#define	NT_ASRS		8	/* asrset_t	SPARC V9 only		*/
+#define	NT_PSTATUS	10	/* pstatus_t	<sys/procfs.h>		*/
+#define	NT_PSINFO	13	/* psinfo_t	<sys/procfs.h>		*/
+#define	NT_PRCRED	14	/* prcred_t	<sys/procfs.h>		*/
+#define	NT_UTSNAME	15	/* struct utsname <sys/utsname.h>	*/
+#define	NT_LWPSTATUS	16	/* lwpstatus_t	<sys/procfs.h>		*/
+#define	NT_LWPSINFO	17	/* lwpsinfo_t	<sys/procfs.h>		*/
+
+=======================================================================
+
+/*	Copyright (c) 1988 AT&T	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+/*
+ * Copyright (c) 1995, 1996 by Sun Microsystems, Inc.
+ * All rights reserved.
+ */
+
+#ifndef _SYS_LINK_H
+#define	_SYS_LINK_H
+
+#pragma ident	"@(#)link.h	1.42	98/04/16 SMI"	/* SVr4.0 1.9	*/
+
+#ifndef	_ASM
+#include <sys/types.h>
+#include <sys/elftypes.h>
+#endif
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+/*
+ * Communication structures for the run-time linker.
+ */
+
+/*
+ * The following data structure provides a self-identifying union consisting
+ * of a tag from a known list and a value.
+ */
+#ifndef	_ASM
+typedef struct {
+	Elf32_Sword d_tag;		/* how to interpret value */
+	union {
+		Elf32_Word	d_val;
+		Elf32_Addr	d_ptr;
+		Elf32_Off	d_off;
+	} d_un;
+} Elf32_Dyn;
+
+#if (defined(_LP64) || ((__STDC__ - 0 == 0) && (!defined(_NO_LONGLONG))))
+typedef struct {
+	Elf64_Xword d_tag;		/* how to interpret value */
+	union {
+		Elf64_Xword	d_val;
+		Elf64_Addr	d_ptr;
+	} d_un;
+} Elf64_Dyn;
+#endif	/* (defined(_LP64) || ((__STDC__ - 0 == 0) ... */
+#endif
+
+/*
+ * Tag values
+ */
+#define	DT_NULL		0	/* last entry in list */
+#define	DT_NEEDED	1	/* a needed object */
+#define	DT_PLTRELSZ	2	/* size of relocations for the PLT */
+#define	DT_PLTGOT	3	/* addresses used by procedure linkage table */
+#define	DT_HASH		4	/* hash table */
+#define	DT_STRTAB	5	/* string table */
+#define	DT_SYMTAB	6	/* symbol table */
+#define	DT_RELA		7	/* addr of relocation entries */
+#define	DT_RELASZ	8	/* size of relocation table */
+#define	DT_RELAENT	9	/* base size of relocation entry */
+#define	DT_STRSZ	10	/* size of string table */
+#define	DT_SYMENT	11	/* size of symbol table entry */
+#define	DT_INIT		12	/* _init addr */
+#define	DT_FINI		13	/* _fini addr */
+#define	DT_SONAME	14	/* name of this shared object */
+#define	DT_RPATH	15	/* run-time search path */
+#define	DT_SYMBOLIC	16	/* shared object linked -Bsymbolic */
+#define	DT_REL		17	/* addr of relocation entries */
+#define	DT_RELSZ	18	/* size of relocation table */
+#define	DT_RELENT	19	/* base size of relocation entry */
+#define	DT_PLTREL	20	/* relocation type for PLT entry */
+#define	DT_DEBUG	21	/* pointer to r_debug structure */
+#define	DT_TEXTREL	22	/* text relocations remain for this object */
+#define	DT_JMPREL	23	/* pointer to the PLT relocation entries */
+
+#define	DT_MAXPOSTAGS	24	/* number of positive tags */
+
+
+
+/*
+ * DT_* entries which fall between DT_VALRNGHI & DT_VALRNGLO use the
+ * Dyn.d_un.d_val field of the Elf*_Dyn structure.
+ */
+#define	DT_VALRNGLO	0x6ffffd00
+#define	DT_PLTPADSZ	0x6ffffdf9	/* pltpadding size */
+#define	DT_MOVEENT	0x6ffffdfa	/* Move table entry size */
+#define	DT_MOVESZ	0x6ffffdfb	/* Move table size */
+#define	DT_FEATURE_1	0x6ffffdfc	/* feature holder */
+#define	DT_POSFLAG_1	0x6ffffdfd	/* flags for DT_* entries, effecting */
+					/*    the folloiwng DT_* entry.  See */
+					/*    see DF_P1_* */
+#define	DT_SYMINSZ	0x6ffffdfe	/*	size of table (in bytes) */
+#define	DT_SYMINENT	0x6ffffdff	/*	entry size of syminfo */
+#define	DT_VALRNGHI	0x6ffffdff
+
+/*
+ * DT_* entries which fall between DT_ADDRRNGHI & DT_ADDRRNGLO use the
+ * Dyn.d_un.d_ptr field of the Elf*_Dyn structure.
+ *
+ * If any adjustment is made to the ELF object after it has been
+ * built these entries will need to be adjusted.
+ */
+#define	DT_ADDRRNGLO	0x6ffffe00
+#define	DT_PLTPAD	0x6ffffefd	/* pltpadding (sparcv9) */
+#define	DT_MOVETAB	0x6ffffefe	/* Move table */
+#define	DT_SYMINFO	0x6ffffeff	/* syminfo table */
+#define	DT_ADDRRNGHI	0x6ffffeff
+
+#define	DT_RELACOUNT	0x6ffffff9	/* number of RELATIVE relocations */
+#define	DT_RELCOUNT	0x6ffffffa	/* number of RELATIVE relcoations */
+
+#define	DT_FLAGS_1	0x6ffffffb	/* stat flags - see DF_1_* defs */
+#define	DT_VERDEF	0x6ffffffc	/* version definition table and */
+#define	DT_VERDEFNUM	0x6ffffffd	/*	associated no. of entries */
+#define	DT_VERNEED	0x6ffffffe	/* version needed table and */
+#define	DT_VERNEEDNUM	0x6fffffff	/* 	associated no. of entries */
+#define	DT_LOPROC	0x70000000	/* processor specific range */
+#define	DT_AUXILIARY	0x7ffffffd	/* shared library auxiliary name */
+#define	DT_USED		0x7ffffffe	/* an object that isn't needed yet */
+#define	DT_FILTER	0x7fffffff	/* shared library filter name */
+#define	DT_HIPROC	0x7fffffff
+
+/*
+ * Values for the DT_POSFLAG_1 .dynamic entry
+ * These values may be or'd together and they only effect the
+ * following DT_* entry.
+ */
+#define	DF_P1_LAZYLOAD	0x00000001	/* following object is to be */
+					/*    lazy loaded */
+#define	DF_P1_GROUPPERM	0x00000002	/* following object's symbols are */
+					/*	not available for general */
+					/*	symbol bindings. */
+
+#define	DF_1_NOW	0x00000001	/* set RTLD_NOW for this object */
+#define	DF_1_GLOBAL	0x00000002	/* set RTLD_GLOBAL for this object */
+#define	DF_1_GROUP	0x00000004	/* set RTLD_GROUP for this object */
+#define	DF_1_NODELETE	0x00000008	/* set RTLD_NODELETE for this object */
+#define	DF_1_LOADFLTR	0x00000010	/* trigger filtee loading at runtime */
+#define	DF_1_INITFIRST	0x00000020	/* set RTLD_INITFIRST for this object */
+#define	DF_1_NOOPEN	0x00000040	/* set RTLD_NOOPEN for this object */
+#define	DF_1_ORIGIN	0x00000080	/* ORIGIN processing required */
+#define	DF_1_DIRECT	0x00000100	/* direct binding enabled */
+#define	DF_1_TRANS	0x00000200
+#define	DF_1_INTERPOSE	0x00000400	/* object is an 'interposer' */
+
+/*
+ * Values set to DT_FEATURE tag's d_val.
+ */
+#define	DTF_1_PARINIT	0x00000001	/* partially initialization feature */
+
+
+
+/*
+ * Version structures.  There are three types of version structure:
+ *
+ *  o	A definition of the versions within the image itself.
+ *	Each version definition is assigned a unique index (starting from
+ *	VER_NDX_BGNDEF)	which is used to cross-reference symbols associated to
+ *	the version.  Each version can have one or more dependencies on other
+ *	version definitions within the image.  The version name, and any
+ *	dependency names, are specified in the version definition auxiliary
+ *	array.  Version definition entries require a version symbol index table.
+ *
+ *  o	A version requirement on a needed dependency.  Each needed entry
+ *	specifies the shared object dependency (as specified in DT_NEEDED).
+ *	One or more versions required from this dependency are specified in the
+ *	version needed auxiliary array.
+ *
+ *  o	A version symbol index table.  Each symbol indexes into this array
+ *	to determine its version index.  Index values of VER_NDX_BGNDEF or
+ *	greater indicate the version definition to which a symbol is associated.
+ *	(the size of a symbol index entry is recorded in the sh_info field).
+ */
+#ifndef	_ASM
+
+typedef struct {			/* Version Definition Structure. */
+	Elf32_Half	vd_version;	/* this structures version revision */
+	Elf32_Half	vd_flags;	/* version information */
+	Elf32_Half	vd_ndx;		/* version index */
+	Elf32_Half	vd_cnt;		/* no. of associated aux entries */
+	Elf32_Word	vd_hash;	/* version name hash value */
+	Elf32_Word	vd_aux;		/* no. of bytes from start of this */
+					/*	verdef to verdaux array */
+	Elf32_Word	vd_next;	/* no. of bytes from start of this */
+} Elf32_Verdef;				/*	verdef to next verdef entry */
+
+typedef struct {			/* Verdef Auxiliary Structure. */
+	Elf32_Word	vda_name;	/* first element defines the version */
+					/*	name. Additional entries */
+					/*	define dependency names. */
+	Elf32_Word	vda_next;	/* no. of bytes from start of this */
+} Elf32_Verdaux;			/*	verdaux to next verdaux entry */
+
+
+typedef	struct {			/* Version Requirement Structure. */
+	Elf32_Half	vn_version;	/* this structures version revision */
+	Elf32_Half	vn_cnt;		/* no. of associated aux entries */
+	Elf32_Word	vn_file;	/* name of needed dependency (file) */
+	Elf32_Word	vn_aux;		/* no. of bytes from start of this */
+					/*	verneed to vernaux array */
+	Elf32_Word	vn_next;	/* no. of bytes from start of this */
+} Elf32_Verneed;			/*	verneed to next verneed entry */
+
+typedef struct {			/* Verneed Auxiliary Structure. */
+	Elf32_Word	vna_hash;	/* version name hash value */
+	Elf32_Half	vna_flags;	/* version information */
+	Elf32_Half	vna_other;
+	Elf32_Word	vna_name;	/* version name */
+	Elf32_Word	vna_next;	/* no. of bytes from start of this */
+} Elf32_Vernaux;			/*	vernaux to next vernaux entry */
+
+typedef	Elf32_Half 	Elf32_Versym;	/* Version symbol index array */
+
+typedef struct {
+	Elf32_Half	si_boundto;	/* direct bindings - symbol bound to */
+	Elf32_Half	si_flags;	/* per symbol flags */
+} Elf32_Syminfo;
+
+
+#if (defined(_LP64) || ((__STDC__ - 0 == 0) && (!defined(_NO_LONGLONG))))
+typedef struct {
+	Elf64_Half	vd_version;	/* this structures version revision */
+	Elf64_Half	vd_flags;	/* version information */
+	Elf64_Half	vd_ndx;		/* version index */
+	Elf64_Half	vd_cnt;		/* no. of associated aux entries */
+	Elf64_Word	vd_hash;	/* version name hash value */
+	Elf64_Word	vd_aux;		/* no. of bytes from start of this */
+					/*	verdef to verdaux array */
+	Elf64_Word	vd_next;	/* no. of bytes from start of this */
+} Elf64_Verdef;				/*	verdef to next verdef entry */
+
+typedef struct {
+	Elf64_Word	vda_name;	/* first element defines the version */
+					/*	name. Additional entries */
+					/*	define dependency names. */
+	Elf64_Word	vda_next;	/* no. of bytes from start of this */
+} Elf64_Verdaux;			/*	verdaux to next verdaux entry */
+
+typedef struct {
+	Elf64_Half	vn_version;	/* this structures version revision */
+	Elf64_Half	vn_cnt;		/* no. of associated aux entries */
+	Elf64_Word	vn_file;	/* name of needed dependency (file) */
+	Elf64_Word	vn_aux;		/* no. of bytes from start of this */
+					/*	verneed to vernaux array */
+	Elf64_Word	vn_next;	/* no. of bytes from start of this */
+} Elf64_Verneed;			/*	verneed to next verneed entry */
+
+typedef struct {
+	Elf64_Word	vna_hash;	/* version name hash value */
+	Elf64_Half	vna_flags;	/* version information */
+	Elf64_Half	vna_other;
+	Elf64_Word	vna_name;	/* version name */
+	Elf64_Word	vna_next;	/* no. of bytes from start of this */
+} Elf64_Vernaux;			/*	vernaux to next vernaux entry */
+
+typedef	Elf64_Half	Elf64_Versym;
+
+typedef struct {
+	Elf64_Half	si_boundto;	/* direct bindings - symbol bound to */
+	Elf64_Half	si_flags;	/* per symbol flags */
+} Elf64_Syminfo;
+#endif	/* (defined(_LP64) || ((__STDC__ - 0 == 0) ... */
+
+#endif
+
+/*
+ * Versym symbol index values.  Values greater than VER_NDX_GLOBAL
+ * and less then VER_NDX_LORESERVE associate symbols with user
+ * specified version descriptors.
+ */
+#define	VER_NDX_LOCAL		0	/* symbol is local */
+#define	VER_NDX_GLOBAL		1	/* symbol is global and assigned to */
+					/*	the base version */
+#define	VER_NDX_LORESERVE	0xff00	/* beginning of RESERVED entries */
+#define	VER_NDX_ELIMINATE	0xff01	/* symbol is to be eliminated */
+
+/*
+ * Verdef and Verneed (via Veraux) flags values.
+ */
+#define	VER_FLG_BASE		0x1	/* version definition of file itself */
+#define	VER_FLG_WEAK		0x2	/* weak version identifier */
+
+/*
+ * Verdef version values.
+ */
+#define	VER_DEF_NONE		0	/* Ver_def version */
+#define	VER_DEF_CURRENT		1
+#define	VER_DEF_NUM		2
+
+/*
+ * Verneed version values.
+ */
+#define	VER_NEED_NONE		0	/* Ver_need version */
+#define	VER_NEED_CURRENT	1
+#define	VER_NEED_NUM		2
+
+
+/*
+ * Syminfo flag values
+ */
+#define	SYMINFO_FLG_DIRECT	0x0001	/* direct bound symbol */
+#define	SYMINFO_FLG_PASSTHRU	0x0002	/* pass-thru symbol for translator */
+#define	SYMINFO_FLG_COPY	0x0004	/* symbol is a copy-reloc */
+#define	SYMINFO_FLG_LAZYLOAD	0x0008	/* symbol bound to object to be lazy */
+					/*	loaded */
+
+/*
+ * key values for Syminfo.si_boundto
+ */
+#define	SYMINFO_BT_SELF		0xffff	/* symbol bound to self */
+#define	SYMINFO_BT_PARENT	0xfffe	/* symbol bound to parent */
+#define	SYMINFO_BT_LOWRESERVE	0xff00	/* beginning of reserved entries */
+
+/*
+ * Syminfo version values.
+ */
+#define	SYMINFO_NONE		0	/* Syminfo version */
+#define	SYMINFO_CURRENT		1
+#define	SYMINFO_NUM		2
+
+
+/*
+ * Public structure defined and maintained within the run-time linker
+ */
+#ifndef	_ASM
+
+typedef struct link_map	Link_map;
+
+struct link_map {
+	unsigned long	l_addr;		/* address at which object is mapped */
+	char *		l_name;		/* full name of loaded object */
+#ifdef _LP64
+	Elf64_Dyn *	l_ld;		/* dynamic structure of object */
+#else
+	Elf32_Dyn *	l_ld;		/* dynamic structure of object */
+#endif
+	Link_map *	l_next;		/* next link object */
+	Link_map *	l_prev;		/* previous link object */
+	char *		l_refname;	/* filters reference name */
+};
+
+#ifdef _SYSCALL32
+typedef struct link_map32 Link_map32;
+
+struct link_map32 {
+	Elf32_Word	l_addr;
+	Elf32_Addr	l_name;
+	Elf32_Addr	l_ld;
+	Elf32_Addr	l_next;
+	Elf32_Addr	l_prev;
+	Elf32_Addr	l_refname;
+};
+#endif
+
+typedef enum {
+	RT_CONSISTENT,
+	RT_ADD,
+	RT_DELETE
+} r_state_e;
+
+typedef enum {
+	RD_FL_NONE = 0,		/* no flags */
+	RD_FL_ODBG = (1<<0),	/* old style debugger present */
+	RD_FL_DBG = (1<<1)	/* debugging enabled */
+} rd_flags_e;
+
+
+
+/*
+ * Debugging events enabled inside of the run-time linker.  To
+ * access these events see the librtld_db interface.
+ */
+typedef enum {
+	RD_NONE = 0,		/* no event */
+	RD_PREINIT,		/* the Initial rendezvous before .init */
+	RD_POSTINIT,		/* the Second rendezvous after .init */
+	RD_DLACTIVITY		/* a dlopen or dlclose has happened */
+} rd_event_e;
+
+struct r_debug {
+	int		r_version;	/* debugging info version no. */
+	Link_map *	r_map;		/* address of link_map */
+	unsigned long	r_brk;		/* address of update routine */
+	r_state_e	r_state;
+	unsigned long	r_ldbase;	/* base addr of ld.so */
+	Link_map *	r_ldsomap;	/* address of ld.so.1's link map */
+	rd_event_e	r_rdevent;	/* debug event */
+	rd_flags_e	r_flags;	/* misc flags. */
+};
+
+#ifdef _SYSCALL32
+struct r_debug32 {
+	Elf32_Word	r_version;	/* debugging info version no. */
+	Elf32_Addr	r_map;		/* address of link_map */
+	Elf32_Word	r_brk;		/* address of update routine */
+	r_state_e	r_state;
+	Elf32_Word	r_ldbase;	/* base addr of ld.so */
+	Elf32_Addr	r_ldsomap;	/* address of ld.so.1's link map */
+	rd_event_e	r_rdevent;	/* debug event */
+	rd_flags_e	r_flags;	/* misc flags. */
+};
+#endif
+
+
+#define	R_DEBUG_VERSION	2		/* current r_debug version */
+#endif	/* _ASM */
+
+/*
+ * Attribute/value structures used to bootstrap ELF-based dynamic linker.
+ */
+#ifndef	_ASM
+typedef struct {
+	Elf32_Sword eb_tag;		/* what this one is */
+	union {				/* possible values */
+		Elf32_Word eb_val;
+		Elf32_Addr eb_ptr;
+		Elf32_Off  eb_off;
+	} eb_un;
+} Elf32_Boot;
+
+#if (defined(_LP64) || ((__STDC__ - 0 == 0) && (!defined(_NO_LONGLONG))))
+typedef struct {
+	Elf64_Xword eb_tag;		/* what this one is */
+	union {				/* possible values */
+		Elf64_Xword eb_val;
+		Elf64_Addr eb_ptr;
+		Elf64_Off eb_off;
+	} eb_un;
+} Elf64_Boot;
+#endif	/* (defined(_LP64) || ((__STDC__ - 0 == 0) ... */
+#endif
+
+/*
+ * Attributes
+ */
+#define	EB_NULL		0		/* (void) last entry */
+#define	EB_DYNAMIC	1		/* (*) dynamic structure of subject */
+#define	EB_LDSO_BASE	2		/* (caddr_t) base address of ld.so */
+#define	EB_ARGV		3		/* (caddr_t) argument vector */
+#define	EB_ENVP		4		/* (char **) environment strings */
+#define	EB_AUXV		5		/* (auxv_t *) auxiliary vector */
+#define	EB_DEVZERO	6		/* (int) fd for /dev/zero */
+#define	EB_PAGESIZE	7		/* (int) page size */
+#define	EB_MAX		8		/* number of "EBs" */
+
+
+#ifndef	_ASM
+
+#ifdef __STDC__
+
+/*
+ * Concurrency communication structure for threads library.
+ */
+extern void	_ld_concurrency(void *);
+#else /* __STDC__ */
+extern void	_ld_concurrency();
+#endif /* __STDC__ */
+#endif /* _ASM */
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* _SYS_LINK_H */

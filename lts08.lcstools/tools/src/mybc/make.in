@@ -1,0 +1,19 @@
+LD=CC
+CC=CC
+# LD=g++
+# CC=g++
+LDFLAGS=-g -DDEBUG -DUSEEXCEPTION
+CCFLAGS=-g -DDEBUG -DUSEEXCEPTION
+#
+mybc
+mybc.y
+mybc.l
+mycomplex.c
+epsilon.c
+-ll
+-ly
+-lm
+#
+install1=chmod 755 mybc
+install2=cp mybc $(HOME)/bin/MYBC
+#

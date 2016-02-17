@@ -1,0 +1,5 @@
+iomstate exec { spaip spbip tl1login tl1passwd iom reqstate } {
+	tl1 open2 -t30 iomstate_tl1sp <spaip> <spbip> <tl1login> <tl1passwd>
+	waitforiomstate -t300 iomstate_tl1sp <iom> <reqstate>
+	tl1 close iomstate_tl1sp
+}

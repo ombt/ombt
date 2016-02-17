@@ -1,0 +1,11 @@
+ent-mgc-prflmegaco::2:100::mgvariant=TAOSMG,transpprot=TCP
+ent-mgc-mgassoc::Max1:::name=10.11.31.1,port=2945,megoprflid=2,cpupercent=55
+ent-trkgrp::122:::isupansi1992:opcdpc=opc-234-80-1-DPC-234-80-2,hunting=circular,tgprofile=1
+ent-trkgrp::221:::isupansi1992:opcdpc=opc-234-80-1-DPC-234-80-3,hunting=circular,tgprofile=1
+ent-route-list::ss7tg122
+ent-route-list::ss7tg221
+ent-route::ss7tg122-1:::bgn=tgn-122
+ent-route::ss7tg221-1:::bgn=tgn-221
+ent-ss7-trk::122-325:::mgname=Max1,termid=P/004/001/002:is
+ent-ss7-trk::221-325:::mgname=Max1,termid=P/004/002/002:is
+ed-route-digits::DEFAULT-CDPN-natnum-327220:::rtdest=rtlist-ss7tg122

@@ -1,0 +1,12 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	ip chibuild.telica.com
+	login lcstools
+	passwd plexus9000
+}
+system_test exec {
+	system ls
+
+}

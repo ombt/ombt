@@ -1,0 +1,3 @@
+cpustate exec { spaip spbip reqspastate reqspbstate login passwd tl1login tl1passwd } {
+	waitforcpustate -t900 <spaip> <reqspastate> <login> <passwd> <tl1login> <tl1passwd> <spbip> <reqspbstate> <login> <passwd> <tl1login> <tl1passwd>
+}

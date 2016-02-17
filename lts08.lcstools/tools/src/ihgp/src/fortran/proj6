@@ -1,0 +1,27 @@
+CIS 255 Project 6
+
+output and code due 3/14/97
+
+1) The problem is to find the solution for the following sets
+   of linear equations using gaussian elimination with row
+   pivoting.
+
+   set 1 - solve for x, y
+
+	0.0001*x  +  y = 1
+	       x  +  y = 2
+
+   set 2 - solve for x, y, z, t
+
+	 4x +  3y +  2z +   t = 23
+	14x + 23y + 32z + 41t = 54
+	33x + 44y + 67z + 87t = 65
+	 9x +  8y +  7z       = 76
+	
+   set 3 - solve for x, y, z
+
+	 x +  y +  z = 2
+	2x + 2y + 2z = 3.9
+	4x + 2y + 4z = 8
+
+2) Turn in output, code and flow-chart. 

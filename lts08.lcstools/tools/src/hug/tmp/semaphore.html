@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Semaphore Package for TCL</title>
+</head>
+<body>
+<h1>Semaphore Package for TCL</h1>
+
+<p>Current Version 2.3
+<a href="http://web.uvic.ca/~erempel/tcl/semaphore/semaphore23.zip">zip</a>
+<a href="http://web.uvic.ca/~erempel/tcl/semaphore/semaphore23.tar.gz">tar gzip</a><br>
+<p>Author: Evan Rempel erempel@UVic.CA</p>
+
+<hr size="1">
+
+
+<p>This package implements a straight forward semaphore signal and wait
+mechanism. Semaphores can go up or down the interpreter hierarchy.
+Names within the same interpreter may not contain a "/" character.
+To specify a semaphore in a child interpreter, use a semaphore
+name of the form child/name which may be recursive. To specify a
+semaphore of a parent interpreter, use a semaphore name of the
+form ../name which may be recursive.</p>
+
+
+<dl>
+<dt><p><b>::Semaphore::Signal</b> name
+    <dd>Signal a semaphore returning the semaphore value after it is signaled.
+        It is not possible to determine if a Semaphore::Wait was release
+        as a result of the Signal.
+        </p>
+
+        <p>Signalling a semaphore may release one of the pending ::Semaphore::Wait
+        or incrementing its counter so that a successive ::Semaphore::Wait
+        will not block.</p>
+
+        <p>Semaphore names in a child interpreter take on the name of
+           {interpreter name}/{semaphore name} in the parent interpreter.
+           Children can use the name ../{semaphore name} to signal parent
+           semaphore. Siblings may signal each other by using semaphores
+           in the parent interpreter.
+         </p>
+
+<dt><p><b>::Semaphore::Wait</b> {glob name} ...
+    <dd>Wait for a semaphore to be signaled, returning the name
+        of the signaled semaphore. This name may be a semaphore
+        in a parent or a child interpreter. If the semaphore has
+        previously been signaled without a matching wait, then this
+        routine will return immediately, returning the name of
+        the semaphore that was signaled.</p>
+
+        <p>Semaphore names in a child interpreter take on the name of
+           {interpreter name}/{semaphore name} in the parent interpreter.
+           Children can use the name ../{semaphore name} to signal parent
+           semaphore. Siblings may signal each other by using semaphores
+           in the parent interpreter.
+         </p>
+
+<dt><p><b>::Semaphore::Reset</b> name
+    <dd>Reset for a semaphore. Once a semaphore has been reset, a wait will
+        block until a signal is generated. Resetting a semaphore does not signal
+        it, which may result in routines waiting on the semaphore that has
+        already been signaled and reset, which would then block indefinitely.</p>
+     </p>
+
+</dl>

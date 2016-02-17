@@ -1,0 +1,74 @@
+#!/opt/exp/bin/perl -w
+#
+#%secrethandshakes = qw(
+	#fred	camel
+	#barney	llama
+	#betty	alpaca
+	#wilma	alpaca
+#);
+#
+sub good_word {
+	my ($somename, $someguess) = @_;
+	#
+	$somename =~ s/\W.*$//;
+	$somename =~ tr/[A-Z]/[a-z]/;
+	#
+	if ($somename =~ /^mike\b.*/i) {
+		return 1;
+	} elsif (($secrethandshakes{$somename} || "farmer") eq $someguess) {
+		return 1;
+	} else {
+		open(MAIL, "|mail mrumore\@lucent.com");
+		print MAIL "bad news: $somename guessed $someguess\n";
+		close(MAIL);
+		return 0;
+	}
+}
+#
+sub init_words {
+	while (defined($filename = glob("*.secret"))) {
+		open(WORDSLIST, $filename) || die "can't open $filename: $!";
+		if (-M WORDSLIST >= 7.0) {
+			die "$filename is older than 7 days.";
+		}
+		while (defined($name = <WORDSLIST>)) {
+			chomp($name);
+			$word = <WORDSLIST>;
+			chomp($word);
+			$secrethandshakes{$name} = $word;
+		}
+		close(WORDSLIST);
+	}
+}
+#
+init_words();
+#
+print("hollow, world!\n");
+print("What is your name? ");
+$name = <STDIN>;
+chomp($name);
+$oname = $name;
+#
+$name =~ s/\W.*$//;
+$name =~ tr/[A-Z]/[a-z]/;
+#
+dbmopen(%last_good, "last_db", 0666);
+$last_good{$name} = time;
+dbmclose(%last_good);
+#
+if ($oname =~  /^mike\b/i) {
+	print("Hey $oname, how's work treating you ??? \n");
+} else {
+	print("Hello, $oname!\n");
+	$secrethandshake = $secrethandshakes{$name};
+	if (! defined ($secrethandshake)) {
+		$secrethandshake = "farmer";
+	}
+	$handshake = "";
+	while ( ! good_word($name, $handshake)) {
+		print("What is the secret hand-shake, $oname? ");
+		$handshake = <STDIN>;
+		chomp($handshake);
+	}
+}
+#

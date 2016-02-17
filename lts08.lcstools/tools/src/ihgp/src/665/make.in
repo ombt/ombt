@@ -1,0 +1,11 @@
+CC = cc
+CCFLAGS = -g
+#
+LD = cc
+LDFLAGS = -g
+#
+mypc
+gettoken.c
+main.c
+parser.c
+symtab.c

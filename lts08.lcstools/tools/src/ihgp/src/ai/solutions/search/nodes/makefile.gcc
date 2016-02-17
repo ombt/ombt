@@ -1,0 +1,13 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = node.o unode.o bnode.o aonode.o ornode.o andnode.o dnode.o backnode.o
+
+all:    $(OBJS)
+	$(AR) $(AILIB) $(OBJS)
+ifdef RANLIB
+	$(RANLIB) $(AILIB)
+endif
+
+clean:
+	rm -f $(OBJS)
+ 

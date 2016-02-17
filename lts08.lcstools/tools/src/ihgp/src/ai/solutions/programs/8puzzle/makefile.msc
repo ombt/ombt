@@ -1,0 +1,21 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -ML -GX -DWIN32 -D_WINDOWS -DNEED_CAST
+
+INCPATH = ..\..\include
+LIBPATH = ..\..\lib
+INCFLAGS = -I. -I$(INCPATH)
+LIBS = $(LIBPATH)\aisearch.lib $(LIBPATH)\util.lib
+
+TARGETS = 8puzzle.exe 8puzzle2.exe 8puzzle3.exe
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+all:	$(TARGETS)
+
+8puzzle.exe:    8puzzle.obj
+        $(CC) $(CFLAGS) $** $(LIBS)
+8puzzle2.exe:    8puzzle2.obj
+        $(CC) $(CFLAGS) $** $(LIBS)
+8puzzle3.exe:    8puzzle3.obj
+        $(CC) $(CFLAGS) $** $(LIBS)

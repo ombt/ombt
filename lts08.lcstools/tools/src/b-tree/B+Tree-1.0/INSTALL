@@ -1,0 +1,19 @@
+Installation
+------------
+
+
+Installation for all platforms is straight forward. Just run 
+ qmake  
+and then 
+ make/nmake/gmake  depending on your platform
+
+If you are on Windows, Visual Studio 2005 project file is included.
+
+Compiling
+---------
+
+Requirements:
+  - Qt 4.0.0 or higher. 
+
+You can obtain Qt at http://www.trolltech.com/
+

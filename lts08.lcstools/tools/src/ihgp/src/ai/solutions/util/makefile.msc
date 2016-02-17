@@ -1,0 +1,14 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -DNEED_CAST #-Ac
+
+AR = lib 
+UTILLIB = ..\lib\util.lib
+INCFLAGS = -I..\include
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+OBJS =  blist.obj biter.obj string.obj
+
+all:	$(OBJS)
+        $(AR) /out:$(UTILLIB) $(OBJS)

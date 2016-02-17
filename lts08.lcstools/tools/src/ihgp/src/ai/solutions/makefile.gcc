@@ -1,0 +1,53 @@
+#This makefile was written for GNU make. It may or may not work
+#with other make utilities.
+
+#TOPDIR is the directory where AIsearch is located. Set this to
+#the directory that you've installed AIsearch in.
+TOPDIR = $(HOME)/aisearch.v2/unix
+
+#The libraries will be built using 'ar'. If 'ar' needs different flags
+#insert them here.
+AR = ar rcs
+
+#If 'ar' does not support the 's' option 'ranlib' must be used 
+#together with 'ar'. If so, uncomment the following line.
+#RANLIB = ranlib
+
+#The name of the C++ compiler.
+CXX = g++
+
+#Compiler flags.
+CXXFLAGS = -O2
+
+#If your compiler needs extra include paths add them here.
+INCFLAGS = #-I/usr/g++-include 
+
+#If you get unresolved symbols on linking try adding or removing
+#-DNEED_CAST below. Gcc 2.7.x needs this, but 2.5.8 doesn't.
+#Adding the -DDEBUG directive results in the compilation of extra code
+#that will help debugging your programs.
+
+EXTRA_FLAGS = -DNEED_CAST #-DDEBUG
+
+##############################################################################
+#Do not change anything below this line                                      #
+##############################################################################
+
+INCLUDE = -I$(TOPDIR)/include $(INCFLAGS)
+AILIB = $(TOPDIR)/lib/libsearch.a
+UTILLIB = $(TOPDIR)/lib/util.a
+LOGICLIB = $(TOPDIR)/lib/logic.a
+MAKEFILE = makefile.gcc
+
+CXXFLAGS := $(CXXFLAGS) $(EXTRA_FLAGS) $(INCLUDE)
+
+export CXX CXXFLAGS AR MAKEFILE TOPDIR AILIB UTILLIB LOGICLIB RANLIB
+
+SUBDIRS = util search programs
+
+all:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE); done
+
+clean:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE) clean; done
+

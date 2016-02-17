@@ -1,0 +1,79 @@
+#
+# command summary -
+#
+# all cmd options are:
+#
+# 	-v = verbose
+#	-t<tmout> = time out value
+#
+# cmds syntax and options:
+#
+# ftp open [-v] [-t<tmout>] streamid <ip> <login> <passwd>
+# ftp put [-v] [-t<tmout>] [-a|-b] <streamid> <frompath> <topath>
+#	-a - ascii transfer
+#	-b - binary transfer
+# ftp get [-v] [-t<tmout>] [-a|-b] <streamid> <frompath> <topath>
+#	-a - ascii transfer
+#	-b - binary transfer
+# ftp close [-v] [-t<tmout>] <streamid>
+#
+# rsh [-v] [-t<tmout>] <ip> <login> <passwd> <cmd>
+#
+# ksh [-i] [-v] [-t<tmout>] <ip> <login> <passwd> <cmd>
+#
+# system cmd
+#
+# telnet open [-v] [-t<tmout>] streamid <ip> <login> <passwd>
+# telnet exec [-i] [-v] [-t<tmout>] <streamid> cmd
+#	-i - ignore return status, assume success.
+# telnet close [-v] [-t<tmout>] <streamid>
+#
+# tl1 open [-v] [-t<tmout>] streamid <ip> <login> <passwd> [tl1port] [maxlogons]
+# tl1 exec [-v] [-i] [-t<tmout>] <streamid> <tl1cmd>
+#	-i - ignore return status, assume success.
+# tl1 file [-v] [-i] [-t<tmout>] <streamid> <filename>
+# tl1 close [-v] [-t<tmout>] <streamid>
+# 
+# once waitforcpustate is executed, then the active sp state is stored
+# in cfgdata. open2 checks cfgdata to determine which SP is active.
+#
+# tl1 open2 [-v] [-t<tmout>] streamid <spa-ip> <spb-ip> <login> <passwd> [tl1port] [maxlogons]
+#
+# sleep sleeptime
+#
+# subs "any string with wariables"
+#
+# echo "any string to print "
+#
+# call <section_name> <arg1> <arg2> ... <argn>
+#
+# the number of arguments in call MUST match the number of arguments
+# defined with the section. the section must be executable. the order
+# of substitution is: arguments are substituted, then global variables
+# are substituted.
+#
+# builtin [-v] [-t<tmout>] <param1> <param2> ...
+#
+# waitforcpustate [-v] [-t<tmout>] \
+#	<spa-ip> <requested-spa-state> <spb-ip> <requested-spb-state> 
+#
+# allowed requested states are:
+#	ping, minmode, appmode, isact, isactnbk, isactsync, isstbyc, 
+#	isstbycsync, isstbyh
+#
+# assumption that TL1 stream is already opened.
+#
+# waitforiomstate [-v] [-t<tmout>] streamid <iom-no> <requested-iom-state>
+#
+# allowed states:
+#	is,act is,stbyc is,stbyh 
+#
+# substitution rules:
+#
+# arguments substituted first, then global variables are resolved.
+#
+# variables in source commands are resolved using the definitions
+# in the file section, not globals.
+# variables in ALL other sections, not including file, are
+# resolved using the values in the globals section.
+#

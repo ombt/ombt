@@ -1,0 +1,50 @@
+the sipsim simulator can simulate different type of SIP agents and thus
+support different call scenarios.
+
+1) registrar - external phones register with the simulator. all call
+originations from these external phones come through the simulator.
+
+2) sip end-point - when acting as a sip end-point, the simulator
+registers with an soft-switch and can originate and terminate calls
+to an end-point which it simulates.
+
+3) proxy - when acting as proxy or another softswitch, then the 
+simulator can orignate and terminate calls, but it does not register
+the endpoint at a softswitch or registrar.
+
+in summary, the simulator supports the following scenarios:
+
+1) external soft or hard phone - registrar.
+
+2) sip end-point - supports registration with a softswitch, originations
+and terminations to or from the simulator.
+
+3) softswitch - supports origination and termination of calls. the endpoints
+appear to be terminates on another switch, the simulator acts like a 
+tandem.
+
+fields that need to be populated in msgs:
+
+method - 
+	request uri -
+via -
+	SIP/2.0/UDP local-IP
+from - 
+	sip:dn@sipip:sipport;tag=fromtag
+to -
+	sip:dn@sipip:sipport;tag=totag
+cseq -
+	sequence number method
+call-id -
+	randomnumber@sipip
+contact -
+	sip:dn@sipip:port
+content-type -
+	sdp, isup, mixed, etc.
+content-length -
+	0 if no payload, not 0 if a payload
+content-boundary -
+	present if more than one type of payload.
+
+
+

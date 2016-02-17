@@ -1,0 +1,100 @@
+sub termination_busy_INACTIVE_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination_busy","invalidtimers-1");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_busy_INACTIVE_INVITE {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# busy, send 486
+	send486Busy($callid, $phdrs, "contact");
+	incrstats("termination_busy","send486Busy");
+	# wait for 486 ACK.
+	changeDnState($dn, $handler, "WAITFOR486ACK");
+	starttimer($callid, $dndata{$dn}{"waitingforackduration"},
+		"WAIT FOR 486 ACK");
+	incrstats("termination_busy","waitfor486ack");                 
+}
+#
+sub termination_busy_INACTIVE_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime,
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination_busy","unexpectedmsgs-1");
+	incrstats("termination_busy-unexpectedmsgs-1", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_busy_WAITFOR486ACK_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# check if my timer
+	if (!isMyTimer($callid, $ptimer)) {
+		incrstats("termination_busy","invalidtimers-7");
+		$ptimer = undef;
+		return;
+	}
+	# call ends.
+	$ptimer = undef;
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination_busy","inactive");
+	incrstats("termination_busy","timedout-5");
+}
+#
+sub termination_busy_WAITFOR486ACK_ACK {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	# call ends.
+	removetimer($callid);
+	delete $dialogs{$callid};
+	changeDnState($dn, $handler, "INACTIVE");
+	incrstats("termination_busy","inactive");
+}
+#
+sub termination_busy_WAITFOR486ACK_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination_busy","unexpectedmsgs-6");
+	incrstats("termination_busy-unexpectedmsgs-6", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}
+#
+sub termination_busy_DEFAULT_TIMER {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination_busy","invalidtimers-5");
+	vprint "\n${handler} ${state}:\n";
+	vprint "Unexpected timer.\n";
+	vprint "(callid=$callid).\n";
+	$ptimer = undef;
+}
+#
+sub termination_busy_DEFAULT_DEFAULT {
+	my ($dn, $state, $handler, $callid, $timerflag, $currtime, 
+		$recvpaddr, $pdatablocks, $phdrs, $ptimer) = @_;
+	#
+	incrstats("termination_busy","unexpectedmsgs-7");
+	incrstats("termination_busy-unexpectedmsgs-7", $phdrs->{msgtype});
+	#
+	vprint "\n${handler} ${state} warning:\n";
+	vprint "Unexpected msg $phdrs->{msgtype}.\n";
+	vprint "(callid=$callid).\n";
+}

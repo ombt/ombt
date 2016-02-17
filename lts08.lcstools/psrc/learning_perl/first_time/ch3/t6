@@ -1,0 +1,51 @@
+#!/usr/bin/perl 
+#
+getMinAndMax();
+#
+@junk = ($min .. $max);
+print "junk is ... @junk\n";
+#
+print 'first element $junk[0] is ... ' . $junk[0] . "\n";
+print 'last element $junk[$#junk] is ... ' . $junk[$#junk] . "\n";
+#
+@stack = ();
+#
+$i = 0;
+$maxi = $#junk;
+#
+while ($i <= $maxi)
+{
+	push(@stack, $junk[$i]);
+	print "$i: stack is ... @stack\n";
+	$i++;
+}
+print "final stack is ... @stack\n";
+#
+$i = 0;
+while (@stack != ())
+{
+	$e = pop(@stack);
+	print "$i: popped element is ... $e\n";
+	$i++;
+}
+#
+sub getMinAndMax {
+	#
+	$min = $max = 0;
+	#
+	print "enter a min number: ";
+	$min = <STDIN>;
+	chomp $min;
+	#
+	print "enter a max number: ";
+	$max = <STDIN>;
+	chomp $max;
+	#
+	if ($min > $max)
+	{
+		# $tmp = $min;
+		# $min = $max;
+		# $max = $tmp
+		($min, $max) = ($max, $min);
+	}
+}

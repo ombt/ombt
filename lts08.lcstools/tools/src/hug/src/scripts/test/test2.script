@@ -1,0 +1,7 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+source <scriptsdir>/reload.globals
+source <scriptsdir>/reload.globals
+source <scriptsdir>/reload.prepare
+source <scriptsdir>/reload.update

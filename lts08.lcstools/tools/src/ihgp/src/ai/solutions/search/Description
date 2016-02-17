@@ -1,0 +1,146 @@
+AI Search class library
+=======================
+
+The AI Search class library is a library of classes and routines
+that facilitate the implementation of problem solving programs in C++.
+By problem solving programs we mean programs that use AI search
+techniques to solve problems. The library supports the following search
+techiques:
+
+* Normal (uni-directional) search:
+  - depth-first
+  - breadth-first
+  - uniform-cost
+  - A*
+
+* Bi-directional search:
+  - depth-first
+  - breadth-first
+
+* AND/OR search:
+  - depth-first
+  - breadth-first
+
+* Backtracking
+
+* Minimax:
+  - with and without alpha-beta cutoffs
+
+A description of how the library must be used can be find in the programmers
+manual supplied with this library. Sample programs and more interesting
+applications built on top of the library have also been included to
+aid the user in implementing new programs.
+
+The classes
+-----------
+
+The search classes can be divided into two groups. One group of classes
+represent and act on the search space (or search tree). The other
+group of classes represent states (or nodes) in the search space
+(search tree). The classes in the first group will be referred to as
+the search classes and those in the second group will be referred to as
+the node classes, or simply nodes.
+
+For each of the search techniques supported by the library different
+search classes have been defined. Because 5 different types of search
+techniques are supported by the library the search classes are
+divided into 5 groups, each group corresponding to a particular
+search technique. For the first 3 of these groups a common (abstract)
+base class has been defined from which other classes that implement the
+actual search technique are derived. Each of these classes processes
+one the node classes. Below an overview is given of the search classes
+and the node classes that they process:
+
+* class Search - normal (uni-directional) search:
+    class DepthTree - class DepthNode
+    class DepthGraph - class DepthNode
+    class BreadthTree - class Node
+    class BreadthGraph - class Node
+    class UniCostTree - class UniNode
+    class UniCostGraph - class UniNode
+    class AStar - class BestNode
+
+* class BiSearch - bi-directional search:
+    class BiDepthTree - class Node
+    class BiDepthGraph - class Node
+    class BiBreadthTree - class Node
+    class BiBreadthGraph - class Node
+
+* class AOSearch - AND/OR search:
+    class AODepthTree - class AONode
+    class AOBreadthTree - class AONode
+
+* class BackTrack - backtracking - class BackNode
+
+* <template class T> class Minimax : minimax
+
+As this overview shows there are different types of node classes. The
+first 3 search classes all process objects of class Node or objects of
+a deritative of class Node. Class Node is derived from class ListNode.
+This derivation makes it possible to store objects of class Node (or
+of one of its derivatives) on an intrusive list: IntrList<Node>. The
+4th search class has its own node class called BackNode. BackNode is
+also derived from class ListNode. The 5th search class is a template
+based class, meaning it has no fixed type of node that it processes.
+Below an overview is given of the derivation scheme of the node classes
+that is used by the library:
+
+Nodes:
+    ListNode
+    |
+    |---Node
+    |   |
+    |   |---DepthNode
+    |   |
+    |   |---UniNode
+    |   |      |
+    |   |      |---BestNode
+    |   |
+    |   |---AONode
+    |         |
+    |         |---OrNode
+    |         |
+    |         |---AndNode
+    |
+    |---BackNode
+
+All of these classes, both the search and node classes, are never used
+directly by the programmer, but are used in derivation. When a new program
+is being developed that makes use of the search library at least two
+classes are defined. One of these is derived from one of the search
+classes and the other is derived from one of the node classes that is
+related to this search class. Note: the top-level search classes (Search,
+Bisearch, AOSearch) must never be used for direct derivation, instead
+one of their derivatives must be used.
+
+The algorithm
+-------------
+
+Because search classes search represents different search techniques
+different algorithms are used by each search class. But because most
+of these algorithms are very similar in nature they have been
+grouped together. For each of these groups common base classes have
+been defined (Search, BiSearch and AOSearch) that implement the core
+of the search algorithm of that group. The implementation of the search
+engine is split into two halves. The first or core half is implemented
+by function solve() of the base class. This half represents the generic
+part of all search techniques that belong to the same group. The second
+half is specific to the particular search technique and is implemented
+by function add() which is defined pure virtual in the base class. add()
+is called from solve(), meaning that the behaviour of the search algorithm
+depends on the implementation of add(). Because add() is implemented by the
+search classes that are derived from the base class these classes have
+control over what kind of search is done. The operations performed
+by solve() are mainly list-operations on two lists: OPEN and CLOSE. For
+this purpose a couple of generic list classes have been designed that are
+used heavily by the library.
+
+More information about the implementation of the search techniques
+supported by the library can be found in the comments accompanying
+the source code.
+
+Using the AI search library
+---------------------------
+
+An explanation of how the AI search library must be used can be found
+in the programmers manual.

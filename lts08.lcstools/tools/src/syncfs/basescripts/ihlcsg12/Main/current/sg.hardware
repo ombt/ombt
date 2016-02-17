@@ -1,0 +1,23 @@
+# T1/E1 IOMs here (414)
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-3:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+#
+ed-chassis-eqpt::com:::shelfid=1,chassistype=sg,emipspa=135.1.104.207,emipspb=135.1.104.208,sigaipspa=10.11.35.1,sigaipspb=10.11.35.2,sigaipchassis=10.11.35.3,emipmask=255.255.255.0,sigaipmask=255.255.255.0
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+# T1s go here
+#
+ent-t1::iom-1-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-16:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-16:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.35.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.35.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.35.254
+sleep 10
+init-sys:telica::::10

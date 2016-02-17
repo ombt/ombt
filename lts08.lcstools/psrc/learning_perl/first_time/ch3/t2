@@ -1,0 +1,29 @@
+#!/usr/bin/perl 
+#
+print "enter a min number: ";
+$min = <STDIN>;
+chomp $min;
+#
+print "enter a max number: ";
+$max = <STDIN>;
+chomp $max;
+#
+if ($min > $max)
+{
+	$tmp = $min;
+	$min = $max;
+	$max = $tmp
+}
+#
+@junk = ($min .. $max);
+#
+print "1) junk is ... @junk \n";
+#
+@junk = ($min .. 2*$max);
+#
+print "2) junk is ... @junk \n";
+#
+$max = 2*$max;
+#
+print "3) junk is ... @junk \n";
+#

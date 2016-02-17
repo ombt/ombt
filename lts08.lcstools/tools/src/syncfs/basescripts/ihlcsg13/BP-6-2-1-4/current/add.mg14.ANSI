@@ -1,0 +1,35 @@
+ent-mgc-mgassoc::ihlcsgw14:::name=10.11.41.3,port=2947,megacoprflid=2,cpupercent=75
+sleep 75
+ent-mgc-mgiua::ihlcsgw14:::ipadesta=10.11.41.4,mgiuaporta=9900,ipadestb=10.11.41.5,mgiuaportb=9900
+ent-ss7-trk::3-1&&-24:::mgname=ihlcsgw14,termid=t/1/4/1:is
+ent-ss7-trk::4-101&&-124:::mgname=ihlcsgw14,termid=t/1/5/1:is
+ent-ss7-trk::5-201&&-224:::mgname=ihlcsgw14,termid=t/1/6/1:is
+ent-ss7-trk::20-1&&-24:::mgname=ihlcsgw14,termid=t/1/2/1:is
+ent-ss7-trk::21-1&&-24:::mgname=ihlcsgw14,termid=t/1/3/1:is
+ent-cas-trk::212-1&&-4:::mgname=ihlcsgw14,termid=T/1/1/1,name=mfsage:is
+#
+ent-cas-line::ihlcsgw14-T/1/26/1:::casprflid=1:is
+ent-cas-line::ihlcsgw14-T/1/26/2:::casprflid=1:is
+ent-cas-line::ihlcsgw14-T/1/26/3:::casprflid=1:is
+ent-cas-line::ihlcsgw14-T/1/26/4:::casprflid=1:is
+ent-gr303-if::31:::mgname=ihlcsgw14
+ent-gr303-lnk::31-1:::termid=T/1/27,lnktype=PRI,tmciuaid=100,eociuaid=200
+ent-gr303-lnk::31-2:::termid=T/3/27,lnktype=SEC,tmciuaid=300,eociuaid=400
+ent-gr303-lnk::31-3:::termid=T/1/28,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ent-gr303-lnk::31-4:::termid=T/3/28,lnktype=b_lnk,tmciuaid=0,eociuaid=0
+ed-gr303-if::31::::is
+sleep 10
+ent-gr303-crv::ihlcsgw14-31-1:::casprflid=2
+ent-gr303-crv::ihlcsgw14-31-2:::casprflid=2
+ent-gr303-crv::ihlcsgw14-31-767:::casprflid=2
+ent-gr303-crv::ihlcsgw14-31-768:::casprflid=2
+ent-aag-sub::13312240001:::password=newsys,lineintfid=CAS-ihlcsgw14-T/1/26/1,SDPPRFLID=1,PRIVATEID=3312240001:IS
+ent-aag-sub::13312240002:::password=newsys,lineintfid=CAS-ihlcsgw14-T/1/26/2,SDPPRFLID=1,PRIVATEID=3312240002:IS
+ent-aag-sub::13312240003:::password=newsys,lineintfid=CAS-ihlcsgw14-T/1/26/3,SDPPRFLID=1,PRIVATEID=3312240003:IS
+ent-aag-sub::13312240004:::password=newsys,lineintfid=CAS-ihlcsgw14-T/1/26/4,SDPPRFLID=1,PRIVATEID=3312240004:IS
+ent-aag-sub::13312223101:::password=newsys,lineintfid=GR303-ihlcsgw14-31-1,SDPPRFLID=1,PRIVATEID=3312223101:IS
+ent-aag-sub::13312223102:::password=newsys,lineintfid=GR303-ihlcsgw14-31-2,SDPPRFLID=1,PRIVATEID=3312223102:IS
+ent-aag-sub::13312223103:::password=newsys,lineintfid=GR303-ihlcsgw14-31-767,SDPPRFLID=1,PRIVATEID=3312223103:IS
+ent-aag-sub::13312223104:::password=newsys,lineintfid=GR303-ihlcsgw14-31-768,SDPPRFLID=1,PRIVATEID=3312223104:IS
+ent-list-aintrigger::TERMSIM-1:::category=subscribed,trigtype=OFF_HOOK_DELAY,SERVICEID=SIM:is
+ed-trkgrp::1021:::AINTRIGLIST=TERMSIM

@@ -1,0 +1,4 @@
+TCLBIN=$(HOME)/bin
+#
+pkg_mkindex
+pkg_mkindex.TCL

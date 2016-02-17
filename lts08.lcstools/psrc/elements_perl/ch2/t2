@@ -1,0 +1,47 @@
+#!/usr/bin/perl -w
+#
+use strict;
+#
+print "welcome to math quiz !!!\n";
+#
+my $done = 0;
+#
+until ($done) {
+	my $first = int(rand(10));
+	my $second = int(rand(10));
+	#
+	my $answer = 0;
+	my $question = "";
+	#
+	if (int (rand(2)) == 1)
+	{
+		$answer = $first*$second;
+		$question = "$first X $second = ";
+	}
+	else
+	{
+		$answer = $second;
+		my $prod = $first*$second;
+		$question = "$prod / $first = ";
+	}
+	#
+	print "$question";
+	my $useranswer = <STDIN>;
+	chomp($useranswer);
+	#
+	if ($useranswer eq "q")
+	{
+		$done = 1;
+	}
+	elsif ($useranswer == $answer)
+	{
+		print "correct, einstein !!!\n";
+	}
+	else
+	{
+		print "wrong, pin-head !!!\n";
+		print "$question $answer\n";
+	}
+}
+#
+exit 0

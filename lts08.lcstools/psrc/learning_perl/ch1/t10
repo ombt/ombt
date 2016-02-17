@@ -1,0 +1,8 @@
+#!/opt/exp/bin/perl -w
+#
+dbmopen(%last_good, "last_db", 0666);
+#
+foreach $name (sort keys %last_good) {
+	print "$name ==>> $last_good{$name}\n";
+}
+dbmclose(%last_good);

@@ -1,0 +1,24 @@
+CC = CC
+CCFLAGS = -g -DDEBUG
+LD = CC
+LDFLAGS = -g -DDEBUG
+
+ncr
+ncr.c 
+install1 = rm $(HOME)/bin/ncr
+install2 = cp ncr $(HOME)/bin/ncr
+
+omyncr
+omyncr.c
+install1 = rm $(HOME)/bin/omyncr
+install2 = cp omyncr $(HOME)/bin/omyncr
+
+myncr
+myncr.c
+install1 = rm $(HOME)/bin/myncr
+install2 = cp myncr $(HOME)/bin/myncr
+
+key2num
+key2num.c
+install1 = rm $(HOME)/bin/key2num
+install2 = cp key2num $(HOME)/bin/key2num

@@ -1,0 +1,117 @@
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*                                                                           */
+/*                                                                           */
+/*                   MV++ Numerical Matrix/Vector C++ Library                */
+/*                             MV++ Version 1.5                              */
+/*                                                                           */
+/*                                  R. Pozo                                  */
+/*               National Institute of Standards and Technology              */
+/*                                                                           */
+/*                                  NOTICE                                   */
+/*                                                                           */
+/* Permission to use, copy, modify, and distribute this software and         */
+/* its documentation for any purpose and without fee is hereby granted       */
+/* provided that this permission notice appear in all copies and             */
+/* supporting documentation.                                                 */
+/*                                                                           */
+/* Neither the Institution (National Institute of Standards and Technology)  */
+/* nor the author makes any representations about the suitability of this    */
+/* software for any purpose.  This software is provided ``as is''without     */
+/* expressed or implied warranty.                                            */
+/*                                                                           */
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+         MV++ :  Numerical Matrix/Vector Classes in C++
+
+            (http://math.nist.gov/pozo/mv++.html)
+
+MV++ is a small, efficient, set of concrete vector and simple matrix
+classes for numerical computing.  It is not intended as a general
+vector container class, but rather designed  specifically for optimized
+numerical computations on RISC and pipelined architectures.  It is one
+step above a C/C++ array, altough it supports subvector/matrix expressions.
+
+It includes several of the computational kernels found in the 
+Basic Linear Algebra Subprograms (BLAS), such as scalar updates,
+vector sums, dot products and so on. 
+
+These classes are the building blocks of larger user-level libraries such 
+as SparseLib++ and Lapack++.
+
+
+1) More About MV++
+------------------
+i) User's Guide and man-style pages are in  http://math.nist.gov/pozo/mv++.html
+  or are available via anonymous ftp from math.nist.gov:pub/pozo/docs/mv++.ps.Z.
+
+ii) Code examples are in ./testing/*.cc
+
+
+
+2a) Installating MV++ library (float, double, and complex)
+------------------------------------------
+
+i)   cd to root directory where MV++ is installed, <mv++>
+ii)  edit makefile.def to specify your specify your particular C++ compiler
+iii) type "make mv"; "make" by itself will provide a list of options.
+
+
+3) Testing MV++
+---------------
+
+i) cd to <mv++>
+ii) "make test" will run a test suites and leave their output in 
+                <mv++>/testing/mv_test.out.  
+
+
+4) Using MV++
+----------
+
+i)   all MV++ include files are in <mv++>/include.
+ii)  MV++ library is in <mv++>/lib/mvlib.a
+iii) to extend non-templated MV++ for vector and matrices of user-defined 
+        classes, see mvvt.h, mvmt.h in <mv++>/include.
+        These can easily modified with an editor, replacing "$TYPE" with your
+        specific class name.
+
+
+5) Help!
+--------
+
+Questions, comments, suggestions, etc. can be sent to pozo@cam.nist.gov.
+
+
+
+Questions and Answers:
+---------------------
+
+o) What types does the non-templated MV++ classes support?
+
+Float, double, int, and (optionally) complex. 
+
+
+o) How do I extend the non-templated MV++ classes to my own data types?
+
+Edit mvvt.h in <mv++>/include and change every occurence of
+"$TYPE" to the name of your numerical class.  (Don't use cpp or m4
+for this, as you'll need to change "$TYPE" in word segments as well.)
+One easy way is
+
+  sed '1,$s/$$TYPE/Large_Real/g' mvvt.h > mvvLR.h
+
+Do the same for mvvt.cc in <mv++>/src.
+For example, an arbitrary-precision numerical class, Large_Real, would
+have MV++ classes MV_Vector_Large_Real, MV_ColMat_Large_Real, and so on.
+
+
+
+o) what is the file "empty" in <mv++>/lib?
+
+A dummy file; it was put there so our version of shar would
+include the <mv++>/lib directory.  Otherwise, make reports an error
+when trying to build mvlib.a , because the destination directory does not
+exist.
+
+

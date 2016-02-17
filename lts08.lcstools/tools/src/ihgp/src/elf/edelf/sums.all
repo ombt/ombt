@@ -1,0 +1,183 @@
+21402 183 oexptools dasm.c
+21402 183 osrc dasm.c
+51571 182 exptools dasm.c
+51571 182 gnu dasm.c
+51571 182 src dasm.c
+
+40505 1 exptools data.c
+40505 1 gnu data.c
+40505 1 src data.c
+55402 1 oexptools data.c
+55402 1 osrc data.c
+
+33863 1 exptools data.h
+33863 1 gnu data.h
+33863 1 src data.h
+58908 2 oexptools data.h
+58908 2 osrc data.h
+
+09397 8 exptools debug.h
+09397 8 gnu debug.h
+09397 8 oexptools debug.h
+09397 8 osrc debug.h
+09397 8 src debug.h
+
+20049 18 exptools dynamic.c
+20049 18 gnu dynamic.c
+20049 18 src dynamic.c
+61062 21 oexptools dynamic.c
+61062 21 osrc dynamic.c
+
+21265 4 oexptools edelf.c
+21265 4 osrc edelf.c
+36421 3 exptools edelf.c
+36421 3 gnu edelf.c
+36421 3 src edelf.c
+
+13298 5 src edelf.h
+22826 5 exptools edelf.h
+23292 4 oexptools edelf.h
+23292 4 osrc edelf.h
+40916 5 gnu edelf.h
+
+31949 59 gnu elfobj.h
+37981 53 src elfobj.h
+55698 53 exptools elfobj.h
+
+54400 13 oexptools fhdr.c
+54400 13 osrc fhdr.c
+61945 13 exptools fhdr.c
+61945 13 gnu fhdr.c
+61945 13 src fhdr.c
+
+32164 22 osrc hash.c
+52080 22 gnu hash.c
+57321 21 exptools hash.c
+57321 21 src hash.c
+63531 22 oexptools hash.c
+
+32618 11 gnu menu.c
+33815 11 exptools menu.c
+33815 11 src menu.c
+60156 10 oexptools menu.c
+60156 10 osrc menu.c
+
+01428 24 oexptools overwriter.c
+01428 24 osrc overwriter.c
+52425 23 exptools overwriter.c
+52425 23 gnu overwriter.c
+52425 23 src overwriter.c
+
+01265 11 exptools phdrs.c
+01265 11 gnu phdrs.c
+01265 11 src phdrs.c
+35719 12 oexptools phdrs.c
+35719 12 osrc phdrs.c
+
+16221 9 osrc pointer.h
+
+16221 9 osrc primpointer.h
+
+36681 39 exptools reloc.c
+36681 39 gnu reloc.c
+36681 39 src reloc.c
+48727 42 oexptools reloc.c
+48727 42 osrc reloc.c
+
+26983 1 exptools returns.h
+26983 1 gnu returns.h
+26983 1 oexptools returns.h
+26983 1 osrc returns.h
+26983 1 src returns.h
+
+13653 14 exptools shdrs.c
+13653 14 gnu shdrs.c
+13653 14 src shdrs.c
+37410 17 oexptools shdrs.c
+37410 17 osrc shdrs.c
+
+61074 1 exptools spaces.c
+61074 1 gnu spaces.c
+61074 1 oexptools spaces.c
+61074 1 osrc spaces.c
+61074 1 src spaces.c
+
+36908 2 exptools spaces.h
+36908 2 gnu spaces.h
+36908 2 oexptools spaces.h
+36908 2 osrc spaces.h
+36908 2 src spaces.h
+
+51998 12 exptools stab.h
+51998 12 gnu stab.h
+51998 12 oexptools stab.h
+
+00938 259 oexptools stabs.c
+00938 259 osrc stabs.c
+12972 249 exptools stabs.c
+12972 249 gnu stabs.c
+12972 249 src stabs.c
+
+62966 3 exptools stabtokenizer.c
+62966 3 gnu stabtokenizer.c
+62966 3 oexptools stabtokenizer.c
+62966 3 osrc stabtokenizer.c
+62966 3 src stabtokenizer.c
+
+05844 26 oexptools stabtokenizer.h
+05844 26 osrc stabtokenizer.h
+06688 26 exptools stabtokenizer.h
+06688 26 gnu stabtokenizer.h
+06688 26 src stabtokenizer.h
+
+00597 28 exptools strings.c
+09562 28 gnu strings.c
+09562 28 src strings.c
+18804 30 oexptools strings.c
+18804 30 osrc strings.c
+
+13259 33 oexptools symbols.c
+13259 33 osrc symbols.c
+64900 43 exptools symbols.c
+64900 43 gnu symbols.c
+64900 43 src symbols.c
+
+01661 4 exptools tokenize.c
+01661 4 gnu tokenize.c
+01661 4 oexptools tokenize.c
+01661 4 osrc tokenize.c
+01661 4 src tokenize.c
+
+14977 1 exptools tokenize.h
+14977 1 gnu tokenize.h
+14977 1 oexptools tokenize.h
+14977 1 osrc tokenize.h
+14977 1 src tokenize.h
+
+38789 43 exptools trans.c
+38789 43 gnu trans.c
+38789 43 oexptools trans.c
+38789 43 osrc trans.c
+38789 43 src trans.c
+
+07639 5 exptools trans.h
+07639 5 gnu trans.h
+07639 5 oexptools trans.h
+07639 5 osrc trans.h
+07639 5 src trans.h
+
+62349 1 exptools ttoken.c
+62349 1 oexptools ttoken.c
+62349 1 osrc ttoken.c
+
+11744 4 oexptools util.c
+11744 4 osrc util.c
+64894 4 exptools util.c
+64894 4 gnu util.c
+64894 4 src util.c
+
+16237 50 exptools versions.c
+16237 50 gnu versions.c
+16237 50 src versions.c
+54997 57 oexptools versions.c
+54997 57 osrc versions.c

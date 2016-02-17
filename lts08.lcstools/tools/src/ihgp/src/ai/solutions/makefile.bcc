@@ -1,0 +1,31 @@
+#This makefile was written for the make utility that comes with BCC 3.1.
+#It may or may not work with other make utilities.
+
+#Compiler flags. This includes the memory model used to compile the libraries.
+CFLAGS = -O2 -mc
+
+#If you get unresolved symbols on linking try adding or removing
+#-DNEED_CAST below. BCC 3.1 needs it.
+#Adding the -DDEBUG directive results in the compilation of extra code
+#that will help debugging your programs.
+
+EXTRA_FLAGS = -DNEED_CAST #-DDEBUG
+
+##############################################################################
+#Do not change anything below this line                                      #
+##############################################################################
+
+#-P forces C++ compilation, this flag is needed because all source files
+#end in .cc instead of .cpp.
+CFLAGS = -P $(CFLAGS) $(EXTRA_FLAGS)
+MAKEFILE = makefile.bcc
+
+SUBDIRS = util search programs
+
+all:    $(SUBDIRS)
+
+$(SUBDIRS):
+        cd $@
+        $(MAKE) -f $(MAKEFILE) -DCFLAGS="$(CFLAGS)"
+        cd ..
+

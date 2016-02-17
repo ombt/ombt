@@ -1,0 +1,26 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	ip chibuild.telica.com
+	login lcstools
+	passwd plexus9000
+	getfromfile /build/lcstools/rje/bt
+	# getfromfile /build/lcstools/rje/shit
+	gettofile /tmp/bt
+	# gettofile /bt
+	putfromfile /tmp/bt
+	puttofile /tmp/bt
+}
+ftp exec {
+	echo start FTP to chibuild <ip> <login> <passwd>
+	ftp open chibuild <ip> <login> <passwd>
+	#
+	echo get file <getfromfile> and store as <gettofile>
+	ftp get -b chibuild <getfromfile> <gettofile>
+	echo put file <putfromfile> and store as <puttofile>
+	ftp put -b chibuild <putfromfile> <puttofile>
+	#
+	echo close FTP to chibuild <ip> <login> <passwd>
+	ftp close chibuild
+}

@@ -1,0 +1,13 @@
+# Provisioning for IHLSG1
+
+tl1exec sg.hardware
+# Wait for init-sys to complete and SPs to be Act/Stby
+#--------------------------------------------------
+tl1exec copymem_all
+# Wait for copymem to complete
+#--------------------------------------------------
+# Had to do a lcsreboot -a before these would take.
+tl1exec sg.calldata
+#--------------------------------------------------
+# Add user logins
+tl1exec users

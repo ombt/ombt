@@ -1,0 +1,8 @@
+SHELLBIN=$(HOME)/tools/bin/suidtools
+#
+showvars
+showvars.sh
+#
+install1=-(rm $(HOME)/tools/bin/lcsshowvars)
+install2=ln $(HOME)/tools/bin/suidcmd $(HOME)/tools/bin/lcsshowvars
+#install3=chmod 744 $(SHELLBIN)/showvars

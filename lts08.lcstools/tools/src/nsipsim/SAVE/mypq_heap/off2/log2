@@ -1,0 +1,1577 @@
+
+200 ORIG-TERM DN pairs read.
+dp
+
+Parameters: 
+	branch = z9hG4bk
+	delta = 5
+	interreporttime = 120
+	logfile = log2
+	maxforwards = 70
+	minmsgsize = 20
+	myadminip = 135.111.82.6
+	myadminport = 10002
+	myrtcpport = 8003
+	myrtpip = 135.111.82.6
+	myrtpport = 8002
+	mysipip = 135.111.82.6
+	mysipport = 5061
+	rtplogfile = 
+	supportrtp = 1
+ep
+
+Editting Parameters:
+	branch => z9hG4bk
+enter new value [<CR>=current value]: 
+keeping current value.
+	delta => 5
+enter new value [<CR>=current value]: 
+keeping current value.
+	interreporttime => 120
+enter new value [<CR>=current value]: 
+keeping current value.
+	logfile => log2
+enter new value [<CR>=current value]: 
+keeping current value.
+	maxforwards => 70
+enter new value [<CR>=current value]: 
+keeping current value.
+	minmsgsize => 20
+enter new value [<CR>=current value]: 
+keeping current value.
+	myadminip => 135.111.82.6
+enter new value [<CR>=current value]: 
+keeping current value.
+	myadminport => 10002
+enter new value [<CR>=current value]: 
+keeping current value.
+	myrtcpport => 8003
+enter new value [<CR>=current value]: 
+keeping current value.
+	myrtpip => 135.111.82.6
+enter new value [<CR>=current value]: 
+keeping current value.
+	myrtpport => 8002
+enter new value [<CR>=current value]: 
+keeping current value.
+	mysipip => 135.111.82.6
+enter new value [<CR>=current value]: 
+keeping current value.
+	mysipport => 5061
+enter new value [<CR>=current value]: 
+keeping current value.
+	rtplogfile => 
+enter new value [<CR>=current value]: 
+keeping current value.
+	supportrtp => 1
+enter new value [<CR>=current value]: 
+keeping current value.
+
+
+unknown cmd
+
+
+unknown cmd
+dpq
+
+Priority Queue Contents:
+dpq
+
+Priority Queue Contents:
+
+Call Statistics Report: Thu May 26 17:22:14 2005
+
+Statistics: 
+general:
+	starttimerenqueuecalled = 1
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+dpq
+
+Priority Queue Contents:
+
+Call Statistics Report: Thu May 26 17:24:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 248
+	handleSip-sendGratuitous200OK = 10
+	starttimerenqueuecalled = 1805
+msgs-received:
+	ACK = 477
+	BYE = 299
+	CANCEL = 13
+	INVITE = 489
+	RETURNCODE200BYE = 346
+msgs-sent:
+	BYE = 356
+	RETURNCODE180INVITE = 489
+	RETURNCODE200BYE = 299
+	RETURNCODE200CANCEL = 3
+	RETURNCODE200CANCEL-GRATUITOUS = 10
+	RETURNCODE200INVITE = 481
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 400
+	send200OK = 299
+	send200OKCancel = 3
+	sendBye = 356
+	sendInvite180Ringing = 489
+	sendInvite200OK = 481
+	stable = 477
+	started = 489
+	timedout = 0
+	timedout-2 = 356
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:26:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 665
+	handleSip-sendGratuitous200OK = 100
+	starttimerenqueuecalled = 4756
+msgs-received:
+	ACK = 1205
+	BYE = 875
+	CANCEL = 76
+	INVITE = 1306
+	RETURNCODE200BYE = 893
+msgs-sent:
+	BYE = 966
+	RETURNCODE180INVITE = 1291
+	RETURNCODE200BYE = 810
+	RETURNCODE200CANCEL = 30
+	RETURNCODE200CANCEL-GRATUITOUS = 43
+	RETURNCODE200INVITE = 1288
+	RETURNCODE486INVITE = 15
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 1150
+	invalidtimers-1 = 15
+	send200OK = 810
+	send200OKCancel = 30
+	send486Busy = 15
+	sendBye = 966
+	sendInvite180Ringing = 1291
+	sendInvite200OK = 1288
+	stable = 1193
+	started = 1291
+	timedout = 0
+	timedout-1 = 59
+	timedout-2 = 966
+	timedout-3 = 8
+	timedout-5 = 3
+	unexpectedmsgs-1 = 11
+	waitfor486ack = 15
+termination-unexpectedmsgs-1:
+	BYE = 8
+	CANCEL = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:28:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 1062
+	handleSip-sendGratuitous200OK = 204
+	starttimerenqueuecalled = 7953
+msgs-received:
+	ACK = 2002
+	BYE = 1478
+	CANCEL = 132
+	INVITE = 2184
+	RETURNCODE200BYE = 1483
+msgs-sent:
+	BYE = 1632
+	RETURNCODE180INVITE = 2159
+	RETURNCODE200BYE = 1349
+	RETURNCODE200CANCEL = 40
+	RETURNCODE200CANCEL-GRATUITOUS = 88
+	RETURNCODE200INVITE = 2152
+	RETURNCODE486INVITE = 25
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 1981
+	invalidtimers-1 = 24
+	send200OK = 1349
+	send200OKCancel = 40
+	send486Busy = 25
+	sendBye = 1632
+	sendInvite180Ringing = 2159
+	sendInvite200OK = 2152
+	stable = 1981
+	started = 2159
+	timedout = 0
+	timedout-1 = 126
+	timedout-2 = 1632
+	timedout-3 = 20
+	timedout-5 = 4
+	unexpectedmsgs-1 = 17
+	waitfor486ack = 25
+termination-unexpectedmsgs-1:
+	BYE = 13
+	CANCEL = 4
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:30:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 1498
+	handleSip-sendGratuitous200OK = 286
+	starttimerenqueuecalled = 10872
+msgs-received:
+	ACK = 2723
+	BYE = 2102
+	CANCEL = 172
+	INVITE = 2963
+	RETURNCODE200BYE = 2080
+msgs-sent:
+	BYE = 2281
+	RETURNCODE180INVITE = 2933
+	RETURNCODE200BYE = 1922
+	RETURNCODE200CANCEL = 44
+	RETURNCODE200CANCEL-GRATUITOUS = 123
+	RETURNCODE200INVITE = 2925
+	RETURNCODE486INVITE = 30
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 2786
+	invalidtimers-1 = 30
+	send200OK = 1922
+	send200OKCancel = 44
+	send486Busy = 30
+	sendBye = 2281
+	sendInvite180Ringing = 2933
+	sendInvite200OK = 2925
+	stable = 2698
+	started = 2933
+	timedout = 0
+	timedout-1 = 181
+	timedout-2 = 2281
+	timedout-3 = 27
+	timedout-5 = 5
+	unexpectedmsgs-1 = 22
+	waitfor486ack = 30
+termination-unexpectedmsgs-1:
+	BYE = 17
+	CANCEL = 5
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:32:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 1855
+	handleSip-sendGratuitous200OK = 385
+	starttimerenqueuecalled = 13780
+msgs-received:
+	ACK = 3422
+	BYE = 2688
+	CANCEL = 228
+	INVITE = 3787
+	RETURNCODE200BYE = 2593
+msgs-sent:
+	BYE = 2870
+	RETURNCODE180INVITE = 3743
+	RETURNCODE200BYE = 2430
+	RETURNCODE200CANCEL = 71
+	RETURNCODE200CANCEL-GRATUITOUS = 148
+	RETURNCODE200INVITE = 3730
+	RETURNCODE486INVITE = 42
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 3578
+	invalidtimers-1 = 41
+	send200OK = 2430
+	send200OKCancel = 71
+	send486Busy = 42
+	sendBye = 2870
+	sendInvite180Ringing = 3743
+	sendInvite200OK = 3730
+	stable = 3389
+	started = 3743
+	timedout = 0
+	timedout-1 = 263
+	timedout-2 = 2870
+	timedout-3 = 34
+	timedout-5 = 9
+	unexpectedmsgs-1 = 30
+	unexpectedmsgs-6 = 2
+	waitfor486ack = 42
+termination-unexpectedmsgs-1:
+	BYE = 21
+	CANCEL = 9
+termination-unexpectedmsgs-6:
+	INVITE = 2
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:34:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 2283
+	handleSip-sendGratuitous200OK = 469
+	starttimerenqueuecalled = 17044
+msgs-received:
+	ACK = 4203
+	BYE = 3310
+	CANCEL = 271
+	INVITE = 4667
+	RETURNCODE200BYE = 3249
+msgs-sent:
+	BYE = 3609
+	RETURNCODE180INVITE = 4610
+	RETURNCODE200BYE = 2984
+	RETURNCODE200CANCEL = 89
+	RETURNCODE200CANCEL-GRATUITOUS = 171
+	RETURNCODE200INVITE = 4602
+	RETURNCODE486INVITE = 54
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 4457
+	invalidtimers-1 = 54
+	send200OK = 2984
+	send200OKCancel = 89
+	send486Busy = 54
+	sendBye = 3609
+	sendInvite180Ringing = 4610
+	sendInvite200OK = 4602
+	stable = 4162
+	started = 4610
+	timedout = 0
+	timedout-1 = 319
+	timedout-2 = 3609
+	timedout-3 = 45
+	timedout-5 = 13
+	unexpectedmsgs-1 = 39
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 54
+termination-unexpectedmsgs-1:
+	BYE = 28
+	CANCEL = 11
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:36:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 2672
+	handleSip-sendGratuitous200OK = 579
+	starttimerenqueuecalled = 20038
+msgs-received:
+	ACK = 4948
+	BYE = 3912
+	CANCEL = 321
+	INVITE = 5498
+	RETURNCODE200BYE = 3802
+msgs-sent:
+	BYE = 4238
+	RETURNCODE180INVITE = 5422
+	RETURNCODE200BYE = 3498
+	RETURNCODE200CANCEL = 102
+	RETURNCODE200CANCEL-GRATUITOUS = 202
+	RETURNCODE200INVITE = 5406
+	RETURNCODE486INVITE = 73
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 5267
+	invalidtimers-1 = 71
+	send200OK = 3498
+	send200OKCancel = 102
+	send486Busy = 73
+	sendBye = 4238
+	sendInvite180Ringing = 5422
+	sendInvite200OK = 5406
+	stable = 4891
+	started = 5422
+	timedout = 0
+	timedout-1 = 410
+	timedout-2 = 4238
+	timedout-3 = 54
+	timedout-5 = 19
+	unexpectedmsgs-1 = 57
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 73
+termination-unexpectedmsgs-1:
+	ACK = 3
+	BYE = 37
+	CANCEL = 17
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:38:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 3031
+	handleSip-sendGratuitous200OK = 689
+	starttimerenqueuecalled = 22937
+msgs-received:
+	ACK = 5640
+	BYE = 4550
+	CANCEL = 380
+	INVITE = 6308
+	RETURNCODE200BYE = 4314
+msgs-sent:
+	BYE = 4832
+	RETURNCODE180INVITE = 6225
+	RETURNCODE200BYE = 4043
+	RETURNCODE200CANCEL = 136
+	RETURNCODE200CANCEL-GRATUITOUS = 225
+	RETURNCODE200INVITE = 6213
+	RETURNCODE486INVITE = 80
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 6107
+	invalidtimers-1 = 80
+	send200OK = 4043
+	send200OKCancel = 136
+	send486Busy = 80
+	sendBye = 4832
+	sendInvite180Ringing = 6225
+	sendInvite200OK = 6213
+	stable = 5578
+	started = 6225
+	timedout = 0
+	timedout-1 = 500
+	timedout-2 = 4832
+	timedout-3 = 65
+	timedout-5 = 21
+	unexpectedmsgs-1 = 65
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 80
+termination-unexpectedmsgs-1:
+	ACK = 3
+	BYE = 43
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:40:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 3485
+	handleSip-sendGratuitous200OK = 767
+	starttimerenqueuecalled = 26273
+msgs-received:
+	ACK = 6453
+	BYE = 5192
+	CANCEL = 431
+	INVITE = 7201
+	RETURNCODE200BYE = 4994
+msgs-sent:
+	BYE = 5567
+	RETURNCODE180INVITE = 7113
+	RETURNCODE200BYE = 4639
+	RETURNCODE200CANCEL = 153
+	RETURNCODE200CANCEL-GRATUITOUS = 259
+	RETURNCODE200INVITE = 7110
+	RETURNCODE486INVITE = 85
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 7016
+	invalidtimers-1 = 84
+	send200OK = 4639
+	send200OKCancel = 153
+	send486Busy = 85
+	sendBye = 5567
+	sendInvite180Ringing = 7113
+	sendInvite200OK = 7110
+	stable = 6388
+	started = 7113
+	timedout = 0
+	timedout-1 = 562
+	timedout-2 = 5567
+	timedout-3 = 68
+	timedout-5 = 23
+	unexpectedmsgs-1 = 67
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 85
+termination-unexpectedmsgs-1:
+	ACK = 3
+	BYE = 45
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+
+Call Statistics Report: Thu May 26 17:42:14 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 3874
+	handleSip-sendGratuitous200OK = 874
+	starttimerenqueuecalled = 29130
+msgs-received:
+	ACK = 7152
+	BYE = 5760
+	CANCEL = 468
+	INVITE = 8013
+	RETURNCODE200BYE = 5517
+msgs-sent:
+	BYE = 6150
+	RETURNCODE180INVITE = 7904
+	RETURNCODE200BYE = 5109
+	RETURNCODE200CANCEL = 165
+	RETURNCODE200CANCEL-GRATUITOUS = 284
+	RETURNCODE200INVITE = 7894
+	RETURNCODE486INVITE = 106
+origination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+termination:
+	abandoned = 0
+	inactive = 7759
+	invalidtimers-1 = 101
+	send200OK = 5109
+	send200OKCancel = 165
+	send486Busy = 106
+	sendBye = 6150
+	sendInvite180Ringing = 7904
+	sendInvite200OK = 7894
+	stable = 7065
+	started = 7904
+	timedout = 0
+	timedout-1 = 652
+	timedout-2 = 6150
+	timedout-3 = 84
+	timedout-5 = 23
+	unexpectedmsgs-1 = 84
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 106
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 61
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 0
+	callsstarted ==>> 0
+	currentorigdn ==>> 0
+	holdtime ==>> 0
+	maxcalls ==>> 0
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> idle
+	tag ==>> -1
+h
+cpq
+
+PQ count = 104
+cpq
+
+PQ count = 92
+cpq
+
+PQ count = 1
+cpq
+
+PQ count = 1
+c 20 10 
+
+Start call load:
+	Calls Per Sec = 20
+	Hold Time (secs) = 10
+cs
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 220
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+s
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4002
+	handleSip-sendGratuitous200OK = 907
+	starttimerenqueuecalled = 30724
+msgs-received:
+	ACK = 7309
+	BYE = 5989
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 134
+	RETURNCODE200BYE = 5750
+	RETURNCODE200CANCEL = 10
+	RETURNCODE200INVITE = 176
+msgs-sent:
+	ACK = 176
+	BYE = 6436
+	CANCEL = 12
+	INVITE = 218
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5314
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 46
+	queueOrigCalled = 235
+	queueOrigStartTimerCalled = 235
+	received180Invite = 134
+	received200Invite = 176
+	sendAck = 176
+	sendBye = 70
+	sendCancel = 12
+	sendInvite = 218
+	stable = 176
+	started = 218
+	timedout = 0
+	timedout-1 = 12
+	timedout-2 = 70
+	waitfor200cancel-received200OK = 10
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+s
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4002
+	handleSip-sendGratuitous200OK = 907
+	starttimerenqueuecalled = 31458
+msgs-received:
+	ACK = 7309
+	BYE = 5989
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 237
+	RETURNCODE200BYE = 5840
+	RETURNCODE200CANCEL = 18
+	RETURNCODE200INVITE = 310
+msgs-sent:
+	ACK = 310
+	BYE = 6572
+	CANCEL = 26
+	INVITE = 387
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5314
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 208
+	queueOrigCalled = 404
+	queueOrigStartTimerCalled = 404
+	received180Invite = 237
+	received200Invite = 310
+	sendAck = 310
+	sendBye = 206
+	sendCancel = 26
+	sendInvite = 387
+	stable = 310
+	started = 387
+	timedout = 0
+	timedout-1 = 26
+	timedout-2 = 206
+	timedout-3 = 59
+	timedout-4 = 5
+	waitfor200cancel-received200OK = 18
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+s
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4002
+	handleSip-sendGratuitous200OK = 907
+	starttimerenqueuecalled = 31576
+msgs-received:
+	ACK = 7309
+	BYE = 5989
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 285
+	RETURNCODE200BYE = 5868
+	RETURNCODE200CANCEL = 18
+	RETURNCODE200INVITE = 310
+msgs-sent:
+	ACK = 310
+	BYE = 6591
+	CANCEL = 26
+	INVITE = 419
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5314
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 236
+	queueOrigCalled = 419
+	queueOrigStartTimerCalled = 419
+	received180Invite = 285
+	received200Invite = 310
+	sendAck = 310
+	sendBye = 225
+	sendCancel = 26
+	sendInvite = 419
+	stable = 310
+	started = 419
+	timedout = 0
+	timedout-1 = 26
+	timedout-2 = 225
+	timedout-3 = 59
+	timedout-4 = 5
+	waitfor200cancel-received200OK = 18
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Call Statistics Report: Thu May 26 17:44:15 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4003
+	handleSip-sendGratuitous200OK = 932
+	starttimerenqueuecalled = 32420
+msgs-received:
+	ACK = 7309
+	BYE = 6015
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 363
+	RETURNCODE200BYE = 5917
+	RETURNCODE200CANCEL = 34
+	RETURNCODE200INVITE = 504
+	RETURNCODE486INVITE = 11
+msgs-sent:
+	ACK = 514
+	BYE = 6776
+	CANCEL = 50
+	INVITE = 585
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5315
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 422
+	queueOrigCalled = 603
+	queueOrigStartTimerCalled = 603
+	received180Invite = 363
+	received200Invite = 503
+	received486busy = 11
+	send200OK = 1
+	send486Ack = 11
+	sendAck = 503
+	sendBye = 410
+	sendCancel = 50
+	sendInvite = 585
+	stable = 503
+	started = 585
+	timedout = 0
+	timedout-1 = 50
+	timedout-2 = 410
+	timedout-3 = 157
+	timedout-4 = 16
+	waitfor200cancel-received200OK = 34
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 603
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+
+Call Statistics Report: Thu May 26 17:46:15 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4006
+	handleSip-sendGratuitous200OK = 986
+	starttimerenqueuecalled = 38154
+msgs-received:
+	ACK = 7309
+	BYE = 6079
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 1132
+	RETURNCODE200BYE = 6395
+	RETURNCODE200CANCEL = 186
+	RETURNCODE200INVITE = 1490
+	RETURNCODE486INVITE = 39
+msgs-sent:
+	ACK = 1521
+	BYE = 7740
+	CANCEL = 352
+	INVITE = 1897
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5325
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 1701
+	queueOrigCalled = 1899
+	queueOrigStartTimerCalled = 1899
+	received180Invite = 1132
+	received200Invite = 1482
+	received486busy = 39
+	send200OK = 11
+	send486Ack = 39
+	sendAck = 1482
+	sendBye = 1374
+	sendCancel = 352
+	sendInvite = 1897
+	stable = 1482
+	started = 1897
+	timedout = 0
+	timedout-1 = 352
+	timedout-2 = 1374
+	timedout-3 = 630
+	timedout-4 = 150
+	waitfor200cancel-received200OK = 190
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 1899
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+
+Call Statistics Report: Thu May 26 17:48:15 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4010
+	handleSip-sendGratuitous200OK = 1031
+	starttimerenqueuecalled = 43496
+msgs-received:
+	ACK = 7309
+	BYE = 6137
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 1814
+	RETURNCODE200BYE = 6897
+	RETURNCODE200CANCEL = 244
+	RETURNCODE200INVITE = 2502
+	RETURNCODE486INVITE = 67
+msgs-sent:
+	ACK = 2555
+	BYE = 8769
+	CANCEL = 499
+	INVITE = 3092
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5338
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 2893
+	queueOrigCalled = 3092
+	queueOrigStartTimerCalled = 3092
+	received180Invite = 1814
+	received200Invite = 2488
+	received486busy = 67
+	send200OK = 24
+	send486Ack = 67
+	sendAck = 2488
+	sendBye = 2403
+	sendCancel = 499
+	sendInvite = 3092
+	stable = 2488
+	started = 3092
+	timedout = 0
+	timedout-1 = 499
+	timedout-2 = 2403
+	timedout-3 = 1135
+	timedout-4 = 234
+	waitfor200cancel-received200OK = 250
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 3092
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+
+Call Statistics Report: Thu May 26 17:50:15 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4012
+	handleSip-sendGratuitous200OK = 1077
+	starttimerenqueuecalled = 48961
+msgs-received:
+	ACK = 7309
+	BYE = 6190
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 2483
+	RETURNCODE200BYE = 7389
+	RETURNCODE200CANCEL = 312
+	RETURNCODE200INVITE = 3558
+	RETURNCODE486INVITE = 90
+msgs-sent:
+	ACK = 3632
+	BYE = 9814
+	CANCEL = 662
+	INVITE = 4306
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5345
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 4120
+	queueOrigCalled = 4310
+	queueOrigStartTimerCalled = 4310
+	received180Invite = 2483
+	received200Invite = 3542
+	received486busy = 90
+	send200OK = 31
+	send486Ack = 90
+	sendAck = 3542
+	sendBye = 3448
+	sendCancel = 662
+	sendInvite = 4306
+	stable = 3542
+	started = 4306
+	timedout = 0
+	timedout-1 = 662
+	timedout-2 = 3448
+	timedout-3 = 1679
+	timedout-4 = 327
+	waitfor200cancel-received200OK = 318
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 4310
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+
+Call Statistics Report: Thu May 26 17:52:15 2005
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4019
+	handleSip-sendGratuitous200OK = 1096
+	starttimerenqueuecalled = 54551
+msgs-received:
+	ACK = 7309
+	BYE = 6228
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 3249
+	RETURNCODE200BYE = 8032
+	RETURNCODE200CANCEL = 399
+	RETURNCODE200INVITE = 4616
+	RETURNCODE486INVITE = 96
+msgs-sent:
+	ACK = 4691
+	BYE = 10892
+	CANCEL = 801
+	INVITE = 5528
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5362
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 5366
+	queueOrigCalled = 5550
+	queueOrigStartTimerCalled = 5550
+	received180Invite = 3249
+	received200Invite = 4595
+	received486busy = 96
+	send200OK = 48
+	send486Ack = 96
+	sendAck = 4595
+	sendBye = 4526
+	sendCancel = 801
+	sendInvite = 5528
+	stable = 4595
+	started = 5528
+	timedout = 0
+	timedout-1 = 801
+	timedout-2 = 4526
+	timedout-3 = 2111
+	timedout-4 = 388
+	waitfor200cancel-received200OK = 405
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+
+Listing Call Load Data:
+	calls ==>> HASH(0x35dabc)
+	callspersec ==>> 20
+	callsstarted ==>> 5550
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 4000000000
+	origdns ==>> ARRAY(0x35db28)
+	origdnsz ==>> 200
+	state ==>> running
+	tag ==>> 950864960
+s
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4020
+	handleSip-sendGratuitous200OK = 1104
+	starttimerenqueuecalled = 57828
+msgs-received:
+	ACK = 7309
+	BYE = 6242
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 3692
+	RETURNCODE200BYE = 8365
+	RETURNCODE200CANCEL = 460
+	RETURNCODE200INVITE = 5274
+	RETURNCODE486INVITE = 99
+msgs-sent:
+	ACK = 5351
+	BYE = 11491
+	CANCEL = 895
+	INVITE = 6258
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5368
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 6077
+	queueOrigCalled = 6259
+	queueOrigStartTimerCalled = 6259
+	received180Invite = 3692
+	received200Invite = 5252
+	received486busy = 99
+	send200OK = 54
+	send486Ack = 99
+	sendAck = 5252
+	sendBye = 5125
+	sendCancel = 895
+	sendInvite = 6258
+	stable = 5252
+	started = 6258
+	timedout = 0
+	timedout-1 = 895
+	timedout-2 = 5125
+	timedout-3 = 2383
+	timedout-4 = 424
+	waitfor200cancel-received200OK = 466
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+s
+
+Statistics: 
+general:
+	handleSip-no-handler-for-call-id = 4020
+	handleSip-sendGratuitous200OK = 1104
+	starttimerenqueuecalled = 59095
+msgs-received:
+	ACK = 7309
+	BYE = 6243
+	CANCEL = 496
+	INVITE = 8190
+	RETURNCODE180INVITE = 3868
+	RETURNCODE200BYE = 8481
+	RETURNCODE200CANCEL = 501
+	RETURNCODE200INVITE = 5486
+	RETURNCODE486INVITE = 105
+msgs-sent:
+	ACK = 5569
+	BYE = 11735
+	CANCEL = 944
+	INVITE = 6536
+	RETURNCODE180INVITE = 8080
+	RETURNCODE200BYE = 5369
+	RETURNCODE200CANCEL = 179
+	RETURNCODE200CANCEL-GRATUITOUS = 298
+	RETURNCODE200INVITE = 8077
+	RETURNCODE486INVITE = 107
+origination:
+	abandoned = 0
+	inactive = 6364
+	queueOrigCalled = 6542
+	queueOrigStartTimerCalled = 6542
+	received180Invite = 3868
+	received200Invite = 5464
+	received486busy = 105
+	send200OK = 55
+	send486Ack = 105
+	sendAck = 5464
+	sendBye = 5369
+	sendCancel = 944
+	sendInvite = 6536
+	stable = 5464
+	started = 6536
+	timedout = 0
+	timedout-1 = 944
+	timedout-2 = 5369
+	timedout-3 = 2497
+	timedout-4 = 433
+	waitfor200cancel-received200OK = 507
+termination:
+	abandoned = 0
+	inactive = 8080
+	invalidtimers-1 = 107
+	send200OK = 5314
+	send200OKCancel = 179
+	send486Busy = 107
+	sendBye = 6366
+	sendInvite180Ringing = 8080
+	sendInvite200OK = 8077
+	stable = 7221
+	started = 8080
+	timedout = 0
+	timedout-1 = 679
+	timedout-2 = 6366
+	timedout-3 = 89
+	timedout-5 = 23
+	unexpectedmsgs-1 = 89
+	unexpectedmsgs-6 = 3
+	waitfor486ack = 107
+termination-unexpectedmsgs-1:
+	ACK = 4
+	BYE = 66
+	CANCEL = 19
+termination-unexpectedmsgs-6:
+	INVITE = 3
+q
+
+Quitting ...

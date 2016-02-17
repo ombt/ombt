@@ -1,0 +1,66 @@
+#!/usr/bin/perl 
+# get min and max numbers
+getMinAndMax();
+#
+@junk = ($min .. $max);
+print "1) junk is ... @junk \n";
+#
+@junk = ($min .. 2*$max);
+print "2) junk is ... @junk \n";
+#
+$max = 2*$max;
+print "3) junk is ... @junk \n";
+#
+@junk = (@junk, @junk);
+print "4) junk is ... @junk \n";
+#
+printlist();
+#
+sub printlist {
+	@junk2 = @junk;
+	$l = @junk;
+	$l2 = @junk2;
+	print "length of junk ... $l\n";
+	print "length of junk2 ... $l2\n";
+	#
+	$index = 1;
+	while (@junk != ())
+	{
+		($front, @junk) = @junk;
+		print "$index: $front\n";
+		$index++;
+	}
+	#
+	$index = 1;
+	while (@junk2 != () && $index <= 20)
+	{
+		# this does NOT work. junk2 stays
+		# as junk2, and end is assigned NOTHING.
+		(@junk2, $end) = @junk2;
+		print "$index: @junk2\n";
+		print "$index: $end\n";
+		$index++;
+	}
+	#
+}
+#
+sub getMinAndMax {
+	#
+	$min = $max = 0;
+	#
+	print "enter a min number: ";
+	$min = <STDIN>;
+	chomp $min;
+	#
+	print "enter a max number: ";
+	$max = <STDIN>;
+	chomp $max;
+	#
+	if ($min > $max)
+	{
+		# $tmp = $min;
+		# $min = $max;
+		# $max = $tmp
+		($min, $max) = ($max, $min);
+	}
+}

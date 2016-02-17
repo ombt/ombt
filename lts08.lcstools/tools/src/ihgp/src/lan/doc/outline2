@@ -1,0 +1,355 @@
+.SA 1
+.ND "\*(DT"
+.DS
+Mike Rumore
+CSC 669
+Project Design
+.DE
+.H 1 "Proposed Project Topic"
+.P
+I propose to write an LAN emulator which supports MAC-layer bridging.
+It will allow a user to define several separate Ethernet-LANs connected
+to each other via MAC-layer bridges. The LANs will be modeled after
+IEEE 802.3 and Ethernet. The MAC-layer bridge will support three
+functions: learning, forwarding, and filtering. The bridge emulation
+will not support the spanning tree algorithm (STA).
+.H 1 "Data-Link Interface"
+.P
+The OSI data-link interface provides for four different type of primitives:
+request, indication, response, and confirm. Also, two types of data link 
+services are defined: connection-oriented and connectionless-mode. The
+service primitives for connection-oriented service are list below.\*(Rf
+.RS aA
+Stallings, W., Handbook of Computer-Communications Standards, The Open
+Systems (OSI) Model and OSI-related Standards, Volume 1, page 99, 
+Howard W. Sams and Company, 1990.
+.RF
+.AL 1
+.LI
+DL-CONNECT.request(called address, calling address, quality of 
+service parameter set).
+.LI
+DL-CONNECT.indication(called address, calling address, expedited data
+selection, quality of service parameter set).
+.LI
+DL-CONNECT.response(responding address, expedited data selection, 
+quality of service parameter set).
+.LI
+DL-CONNECT.confirm(responding address, expedited data selection, 
+quality of service parameter set).
+.LI
+DL-DISCONNECT.request(reason)
+.LI
+DL-DISCONNECT.indication(originator, reason)
+.LI
+DL-DATA.request(user-data)
+.LI
+DL-DATA.indication(user-data)
+.LI
+DL-RESET.request(reason)
+.LI
+DL-RESET.indication(originator, reason)
+.LI
+DL-RESET.response()
+.LI
+DL-RESET.confirm()
+.LE
+.P
+The service primitives for connectionless service are list below. 
+.AL 1
+.LI
+DL-UNITDATA.request(source address, destination address, quality of 
+service, user-data).
+.LI
+DL-UNITDATA.indication(source address, destination address, quality of 
+.LE
+.P
+I have chosen to implement a connectionless service using CSMA/CD. The
+primitives that I must provide for the data-link layer are the 
+DL-UNITDATA set of primitives. These primitives support a datagram
+packet service where each packet is independent. It is the responsibility
+of higher OSI levels to ensure the correct sequencing of packets.
+.H 1 "Data-Link Definitions"
+.P
+Using IEEE 802.3 and Ethernet as examples, there are several algorithms
+and data structures that identify a LAN. These algorithms and data
+structures include the frame structure, error detection and correction,
+back-off routines, collision detection, and addressing modes. The following
+sections describe the algorithms and data structures I am planning to
+incorporate in the emulator.
+.H 2 "Frame Structure"
+.P
+The frame structure consists of a preamble (8 bytes),
+destination address (6 bytes), source address (6 bytes), type field
+(2 bytes), data field (up to 1500 bytes), and a CRC check sum (4 bytes).
+The 8 byte preamble is used by the physical layer to notify other
+stations that it is about to start broadcasting. It serves to detect
+collisions. The preamble is never seen by the data-link layer since
+the physical layer uses the preamble to detect collisions. 
+\*(Rf
+.RS aE
+Naugle, M. G., Local Area Networks, pages 55-92, McGraw Hill, 1991.
+.RF
+.H 2 "Addressing Scheme"
+.P
+An address field is separated into two fields: the first three bytes
+are the vendor ID, and the second 3 bytes are a node ID. The highest bit in
+the vendor ID determines if the address is a unique address or a 
+multicast address. If the destination address is FFFFFFFFFFF, then 
+the frame is being broadcast to all stations.
+.H 2 "Error Detection"
+.P
+Error detection is accomplished via a CRC value. There are 4 popular
+CRC systems: CRC-12, CRC-16, CRC-CCITT, and CRC-32.
+\*(Rf
+.RS aC
+Tannenbaum, A. S., Computer Networks, page 208-212, Prentice Hall, 1989.
+.RF
+Since the CRC value
+in the frame is 32 bits, I will be using CRC-32. The polynomial for 
+CRC-32 is:
+\*(Rf
+.RS aB
+Stallings, W., Handbook of Computer-Communications Standards, The Open
+Systems (OSI) Model and OSI-related Standards, Volume 1, page 101-107, 
+Howard W. Sams and Company, 1990.
+.RF
+.SA 0
+.nf
+.DS
+
+CRC-32 = x**32 + x**26 + x**23 + x**22 + x**16 +
+         x**12 + x**11 + x**10 + x**8 + x**7 + 
+         x**5 + x**4 + x**2 + x**1 + 1
+
+.DE
+.fi
+.SA 1
+.H 2 "Transmission Algorithm"
+.P
+The physical medium for this emulator is assumed to be a single
+cable with multiple workstations connected to it. When station
+has to transmit a packet, it checks if the cable is busy. When the
+cable is quiet, then the station immediately begins to transmit.
+The initial transmission is the frame preamble. While transmitting
+the preamble, the station is monitoring the cable for collisions.
+A collision occurs when a signal 2 times or greater than the signal
+put out by one station is detected. Collisions can occur since
+there is a finite amount of time for the signal to travel between
+two stations connected to the cable. The 64 bit preamble is long enough
+in duration to ensure that the all stations connected to the network
+can detect the transmission request, i.e., the signal reaches all
+stations before actual data is transmitted. If no collision is 
+detected, then the packet is transmitted. \*(aE
+.P
+When a collision is detected, then the packet transmission is 
+immediately aborted. The tranmitting station then sends a jamming
+signal (4 to 6 random bytes) to notify all other stations that 
+a collision has occured. All transmitting or pending stations 
+will then execute their back-off alogrithm and attempt to retransmit 
+at a later time. The maximum number of times that a station will 
+attempt to retransmit is 16 times.
+.H 2 "Receiver Algorithm"
+.P
+When a station detects that the cable has been activated, that a 
+signal is being transmitted, it first waits for the preamble to
+finish. If the transmission is aborted because of a collision, then the
+station ignores the packet and continues to monitor for new
+transmissions.\*(aE
+.P
+If the packet is correctly received, then it checks the address fields
+to determine of the packet is sent to it. As stated before, there 
+three type of addresses: unique address, multicast, and broadcast.
+If the station determines that the packet is not for it, then it
+discards the packet and waits for new transmissions.
+.P
+If the packet is addressed to the station, then the packet is
+copied into an internal buffer and some basic sanity checks are
+executed on the packet. The minimum length of the packet is checked.
+It must be greater than or equal to 64 bytes. The packet boundary
+is checked since packets are constructed by bytes, but sent bit
+by bit; the packet size should be a multiple of 8.  Finally, the 
+CRC value is checked. The CRC value is calculated on the entire 
+packet, excluding the preamble and the CRC value itself. If the 
+calculated CRC value does not match the value sent, then the packet 
+is discarded. No type of negative acknowledgment is sent to the
+sender in this type of connectionless service.
+.H 2 "Back-off Routine"
+.P
+The back-off algorithm is a binary exponential backoff. The delay
+used in the back-off routine is measured in multiples of twice the 
+worst-case round-trip time of a signal on the cable; call this the 
+slot time. The algorithm is given below.
+\*(Rf
+.RS aD
+Stallings, W., Handbook of Computer-Communications Standards, Local
+Network Standards, Volume 2, page 91, Howard W. Sams and Company, 1987.
+.RF
+Variable backOffLimit is usually set to 16 times.
+.SA 0
+.nf
+.DS
+
+	attempts = 0
+	while attempts < backOffLimit
+	do
+		k = min(attempts, 10)
+		r = random(0, 2**k)
+		delay = r*slotTime
+		sleep(delay)
+		attempt to transmit and 
+			check for collisions
+	done
+
+.DE
+.fi
+.SA 1
+.H 2 "Call Origination"
+.P
+The emulator requires a method to originate calls. The call originator
+will call the data-link primitives to send messages. An exponential
+probability density will be sampled to determine the gap between each
+call origination.
+\*(Rf
+.RS aF
+Tannenbaum, A. S., Computer Networks, page 121-130, 631-637, Prentice Hall, 
+1989.
+.RF
+Each "work station" linked to the "network" will have to sample an
+exponential distribution to determine whether it should originate a
+call. The size of a message will be obtained by sampling a uniform 
+distribution from 0 to 1500 bytes. The data-link layer will 
+automatically pad any messages that are less than 64 bytes in length.
+.H 1 "Physical Layer"
+.P
+The simulation of physical processes will be done in the physical 
+layer. The physical processes which are simulated are listed next.
+.AL 1
+.LI
+Delay in sending packet from one station to another station. This is
+involved in determining if a collision has occur. Suppose a station
+begins to transmit the preamble, then if the second stations begins
+to transmit its preamble before it has received the first stations
+preamble, then a collision has occurred. A collision occurs when
+the difference between the start times of two separate transmissions 
+is less than the time it takes for a signal to get from the first station
+to the second station. This delay must be included in the simulation.
+.LI
+The occurence of random errors in the cable must be simulated. These
+random error should be detected by the CRC check and cause the packet
+to be discarded. Although, LANs are assumed to be highly reliable
+(low error rates), 
+\*(Rf
+.RS aG
+Tannenbaum, A. S., Computer Networks, page 117-118, Prentice Hall, 
+1989.
+.RF
+it would be interesting to increase the error rate and to test
+algorithms for error correction or retransmission. I still have
+to determine which distribution to sample for producing error bits
+in the packet. Poisson is a possible candidate. This needs further
+investigation.
+.LI
+Correct sequence of events must be maintained. The timing of 
+events is required for the simulation to be realistic.
+.LI
+Transmission delays and and transit times for pulses should be included
+in the simulation.
+.LE
+.H 1 "Finite State Machines"
+.P
+The transmiter and receiver can be described using two separate 
+finite state machines. The states and the events for the transmitter
+are described below. 
+.AL
+.LI
+State 1 - waiting for a message from the network layer.
+.LI
+State 2 - trying to gain access to a busy cable.
+.LI
+State 3 - waiting for between attempts to access a busy cable.
+.LI
+State 4 - sending preamble and checking for collision.
+.LI
+State 5 - transmitting packet.
+.LI
+State 6 - sending jammer signal.
+.LI
+State 7 - waiting back-off time.
+.LE
+.DS
+.TS
+center,tab(%);
+c s s
+l l l
+l | l | l.
+Transmitter FSM
+_
+current state%event%next state
+_
+1%message from network layer%2
+2%cable is busy%3
+2%cable is accessed%4
+3%timer expires%2
+4%no collision is detected%5
+4%collision is detected%6
+5%finished transmission%1
+6%attempts > max attempts%1
+6%attempts <= max attempts%7
+7%timer exprires%1
+_
+.TE
+.DE
+.P
+The states and events for the receiver are described below.
+.AL 1
+.LI
+State 1 - waiting for signal from cable.
+.LI
+State 2 - reading input and running sanity checks.
+.LE
+.DS
+.TS
+center,tab(%);
+c s s
+l l l
+l | l | l.
+Receiver FSM
+_
+current state%event%next state
+_
+1%message from physical layer%2
+2%error in reading%1
+2%finished reading%1
+_
+.TE
+.DE
+.H 1 "MAC-Layer Bridge"
+.P
+The MAC-layer bridge must support three functions: learning, filtering,
+and forwarding. 
+\*(Rf
+.RS aH
+Naugle, M. G., Local Area Networks, pages 111-157, McGraw Hill, 1991.
+.RF
+The spanning tree algorithm is not supported, therefore, a user
+must be careful to prevent loops when defining a network.
+.P
+The learning algorithm has a bridge operating in "promiscuous" mode,
+that is, it listens to all packets sent over a LAN. A bridge checks
+the source address of all packets sent over a cable. It first checks
+its internal table to verify if the address is known. If the address is
+not known, it adds the address to table corrsesponding to the LAN. If 
+the address is known, then the table entry has its "age" function 
+updated. The age function is a measure of the last time the address was 
+used. Old addresses are periodically removed from the table.
+.P
+Filtering and forwarding is accomplished by checking the destination
+address in a packet. First, the bridge checks if the destination
+address is on the same LAN that the packet originated from. If so, then
+the the packet is discarded. If the address is not found, then
+the bridge checks any other tables it has. If it finds the address
+in another table, then the packet is forwarded to that LAN. If the packet
+is not found in any table, then the packet is broadcast, assuming the
+address has not been seen yet. A bridge's routing table is built
+from source addresses only.

@@ -1,0 +1,494 @@
+#!/home/lcstools/bin/expect
+#
+# save list of scripts to the local repository.
+#
+#########################################################################
+#
+# library functions
+#
+source $env(LCSTOOLSLIB)/checkenv
+source $env(LCSTOOLSLIB)/getoptval
+source $env(LCSTOOLSLIB)/chooseone
+source $env(LCSTOOLSLIB)/db
+source $env(LCSTOOLSLIB)/lcsftp
+source $env(LCSTOOLSLIB)/logging
+#
+# functions
+#
+proc myflush { } {
+	global user_spawn_id;
+	flush $user_spawn_id;
+}
+#
+proc vputs { msg } {
+	global verbose;
+	if {$verbose} {
+		puts "\n$msg";
+		myflush;
+	}
+}
+#
+proc usage { } {
+	global argv0;
+	global username;
+	global userpasswd;
+
+	puts "\nusage: [file tail $argv0] \[-\?] \[-x] \[-U] \[-V] \[-S trace level] \[-u username] \[-p passwd]";
+	puts "where:";
+	puts "	-? - print usage message";
+	puts "	-x - enable TCL debugger";
+	puts "	-U - unconditional installation; remove local file when it exists.";
+	puts "	-V - enable verbose output";
+}
+#
+proc removews { varname } {
+	upvar $varname var;
+	regsub -- "\[\t\r\n ]" $var "" var;
+}
+#
+proc remote_ls { branch machine directory outfile } {
+	#
+	global env;
+	global username;
+	global userpasswd;
+	global timeout;
+	upvar $outfile ofile;
+	#
+	set loginseen 0;
+	set savetimeout $timeout;
+	set timeout 15;
+	#
+	spawn -noecho "/usr/bin/telnet" "-l $username" $machine;
+	expect {
+	-re ".*login: " {
+		set loginseen 1;
+		send "$username\r";
+	}
+	-re ".*Password:" {
+		set loginseen 0;
+		send "$userpasswd\r";
+	}
+	timeout {
+		puts "\ntimeout during login ...";
+		exit 2;
+	}
+	};
+	#
+	if {$loginseen} {
+		expect {
+		-re ".*Password:" {
+			send "$userpasswd\r";
+		}
+		timeout {
+			puts "\ntimeout during passwd ...";
+			exit 2;
+		}
+		};
+	}
+	#
+	expect {
+	-re ".*> " {
+		send "PS1=\"COMMAND_IS_DONE>\"\r";
+	}
+	timeout {
+		puts "\ntimeout during cd ...";
+		exit 2;
+	}
+	};
+	#
+	expect {
+	-re ".*COMMAND_IS_DONE>" {
+		send "cd $directory/$branch\r";
+	}
+	timeout {
+		puts "\ntimeout during cd ...";
+		exit 2;
+	}
+	};
+	#
+	expect {
+	-re "COMMAND_IS_DONE>" {
+		# sort by time using -t, newest files are listed first.
+		send "/bin/ls -t sw*/*tar.gz >/tmp/saveload\$\$\r";
+	}
+	timeout {
+		puts "\ntimeout during ls ...";
+		exit 2;
+	}
+	};
+	#
+	expect {
+	-re "COMMAND_IS_DONE>" {
+		send "echo PID=\$\$\r";
+	}
+	timeout {
+		puts "\ntimeout during ls output ...";
+		exit 2;
+	}
+	};
+	#
+	expect {
+	-re "PID=(\[0-9]+)\r\n" {
+		set ofile "/tmp/saveload$expect_out(1,string)";
+		vputs "outfile=$ofile";
+	}
+	timeout {
+		puts "\ntimeout during ls output ...";
+		exit 2;
+	}
+	};
+	#
+	set timeout $savetimeout;
+	#
+	catch { close; wait; } ignore;
+}
+#
+proc parse_local_file { localfile imagelistname } {
+	upvar #1 $imagelistname ilist;
+	#
+	set infd [open $localfile "r"];
+	while {[gets $infd line] != -1} { 
+		lappend files $line;
+	}
+	close $infd;
+	#	
+	foreach file $files {
+		set dname [file dirname $file];
+		set fname [file tail $file];
+		lappend ilist($dname) $fname;
+	}
+}
+#
+proc getimages { branch imagelistname } {
+	#
+	global timeout;
+	#
+	set bdata [split $branch " \t"];
+	#
+	set branch [lindex $bdata 0];
+	set machine [lindex $bdata 1];
+	set directory [lindex $bdata 2];
+	#
+	set savetimeout $timeout;
+	set timeout 15;
+	#
+	set errmsg "";
+	if {[catch { 
+		# do an ls on remote machine to get list of loads.
+		remote_ls $branch $machine $directory remotefile;
+		# ftp remote ls-output file to current machine
+		append localfile "/tmp/localfile" [exp_pid];
+		ftp_get_ascii_file $machine $remotefile $localfile
+		# scan the ls-output file and generate list of loads.
+		parse_local_file $localfile $imagelistname
+	} errmsg] != 0} {
+		if {[string length $errmsg] > 0} {
+			puts "\nCAUGHT ERROR IN getimages: $errmsg";
+		} else {
+			puts "\nCAUGHT ERROR IN getimages.";
+		}
+		exit 2;
+	}
+	#
+	set timeout $savetimeout;
+}
+#
+proc saveimages { branch ilist savecntname filesysname } {
+	global env;
+	global expect_out;
+	global ucond;
+	#
+	upvar $ilist images;
+	upvar $savecntname savecnt;
+	upvar $filesysname filesys;
+	#
+	set savecnt 0;
+	set bdata [split $branch " \t"];
+	#
+	set branch [lindex $bdata 0];
+	set machine [lindex $bdata 1];
+	set directory [lindex $bdata 2];
+	#
+	# text file system
+	#
+	if {[dbselect fsobuf filesystems "branch req ^$branch\$ and type req text" "path" ] != 0} {
+		puts "saveimages: dbselect of relation 'filesystems' failed.";
+		exit 2;
+	}
+	if {![info exists fsobuf] || [llength fsobuf] == 0} {
+		puts "saveimages: no filesystem found for branch $branch.";
+		exit 2;
+	}
+	set choices $fsobuf;
+	set choices [linsert $choices 0 "QUIT"];
+	chooseone "Choose a file system: " choices rootfilesys;
+	if {$rootfilesys == "QUIT"} {
+		puts "exiting saveload.";
+		exit 0;
+	}
+	set filesys $rootfilesys;
+	#
+	foreach imagetype [array names images] {
+		foreach image [split $images($imagetype)] {
+			if {$image == "NONE"} {
+				puts "NO FILE TO SAVE FOR IMAGE TYPE $imagetype:"
+				continue;
+			}
+			#
+			set fromfile "";
+			set tofilepath "";
+			set tofile "";
+			#
+			append fromfile $directory "/" $branch "/" $imagetype "/" $image;
+			append tofilepath $rootfilesys "/" $branch "/" $imagetype;
+			append tofile $rootfilesys "/" $branch "/" $imagetype "/" $image;
+			#
+			if {![file isdirectory $tofilepath]} {
+				file mkdir $tofilepath;
+			}
+			if {[file exists $tofile]} {
+				puts "\n$tofile exists locally.";
+				if {$ucond} {
+					puts "===>>> deleting local file ...";
+					file delete -force -- $tofile;
+				} else {
+					puts "===>>> skipping local file ...";
+					continue;
+				}
+			}
+			#
+			puts "\nSAVING IMAGE TYPE $imagetype:"
+			puts "FROM FILE: $machine!$fromfile";
+			puts "TO FILE  : $tofile";
+			#
+			ftp_get_binary_file $machine $fromfile $tofile
+			incr savecnt +1;
+		}
+	}
+}
+#
+proc getcpuload { branch cpuloadname } {
+	upvar $cpuloadname cpuload;
+	#
+	if {[dbselect cpuloadlist loads "branch req ^${branch}$" cpuload] != 0} {
+		puts "saveload: dbselect of relation 'loads' failed.";
+		exit 2;
+	}
+	#
+	if {![info exists cpuloadlist]} {
+		puts "no cpuloads found for branch $branch.";
+		exit 2;
+	} else {
+		set choices $cpuloadlist;
+		set choices [linsert $choices 0 "QUIT"];
+		chooseone "Choose a cpu-load: " choices answer;
+		if {$answer == "QUIT"} {
+			puts "exiting saveload.";
+			exit 0;
+		}
+		set cpuload $answer;
+	}
+}
+#
+proc insertimages { branch cpuload imagetype image } {
+	if {[dbselect names images "branch req ^${branch}$ and cpuload req ^${cpuload}$ and type req ^${imagetype}$ and name req ^${image}$" "name"] != 0} {
+		puts "insertimages: dbselect of relation 'images' failed.";
+		exit 2;
+	}
+	if {[info exists names] && [llength names] > 0} {
+		puts "insertimages: tuple <$branch,$cpuload,$imagetype,$image> exists.";
+		return 0;
+	} 
+	set namevalue(branch) $branch;
+	set namevalue(cpuload) $cpuload;
+	set namevalue(type) $imagetype;
+	set namevalue(name) $image;
+	if {[dbinsert images namevalue] != 0} {
+		puts "insertimages: dbinsert of relation 'images' failed.";
+		exit 2;
+	}
+	return 0;
+}
+#
+proc insertloads { branch cpuload rootfilesys } {
+	if {[dbselect filesys loads "branch req ^${branch}$ and cpuload req ^${cpuload}$ and basedir req ^${rootfilesys}$" "basedir"] != 0} {
+		puts "insertloads: dbselect of relation 'loads' failed.";
+		exit 2;
+	}
+	if {[info exists filesys] && [llength filesys] > 0} {
+		puts "insertloads: tuple <$branch,$cpuload,$rootfilesys> exists.";
+		return 0;
+	} 
+	set namevalue(branch) $branch;
+	set namevalue(cpuload) $cpuload;
+	set namevalue(basedir) $rootfilesys;
+	if {[dbinsert loads namevalue] != 0} {
+		puts "insertloads: dbinsert of relation 'loads' failed.";
+		exit 2;
+	}
+	return 0;
+}
+#
+proc createdbentries { branch ilist rootfilesys } {
+	global env;
+	global expect_out;
+	#
+	upvar $ilist images;
+	#
+	puts "\ncreating database entries ...";
+	#
+	set bdata [split $branch " \t"];
+	set branch [lindex $bdata 0];
+	puts "branch: $branch";
+	#
+	# get swCPU load
+	#
+	if {$images(swCPU) == "NONE"} {
+		# we need a cpu load to store the data. ask the user.
+		getcpuload $branch cpuload;
+	} elseif {[regexp -nocase -- "^(.*)_cpu\.tar\.gz$" $images(swCPU) ignore cpuload] != 1} {
+		puts "createdbentries: unable to get cpu-load.";
+		exit 2;
+	}
+	puts "cpu-load: $cpuload";
+	#
+	# insert any new images tuples
+	#
+	foreach imagetype [array names images] {
+		foreach image [split $images($imagetype)] {
+			if {$image == "NONE"} {
+				continue;
+			}
+			insertimages $branch $cpuload $imagetype $image;
+		}
+	}
+	#
+	# insert any new loads tuple
+	#
+	insertloads $branch $cpuload $rootfilesys;
+}
+#
+proc getimagesubtypes { switype ilistname stypelistname } {
+	upvar $ilistname ilist;
+	upvar $stypelistname subitypecnt;
+	#
+	if {[regexp "^sw(.*)$" $switype ignore itype] != 1} {
+		puts "checkformultipleimages: invalid image type - $switype.";
+		exit 2;
+	}
+	#
+	foreach image $ilist {
+		if {[regexp -nocase -- "(${itype}.*)\.tar\.gz$" $image ignore subitype] == 1} {
+			if {[info exists subitypecnt($subitype)]} {
+				incr subitypecnt($subitype) +1;
+			} else {
+				set subitypecnt($subitype) 1;
+			}
+		}
+	}
+	#
+	return [array size subitypecnt];
+}
+#
+proc saveload { } {
+	global env;
+	global expect_out;
+	global spawn_id;
+	#
+	if {[dbselect branches buildmachines "" "branch machine directory"] != 0} {
+		puts "saveload: dbselect of relation 'buildmachines' failed.";
+		exit 2;
+	}
+	#
+	set choices $branches;
+	set choices [linsert $choices 0 "QUIT"];
+	chooseone "Choose a branch: " choices branch 
+	if {$branch == "QUIT"} {
+		puts "exiting saveload.";
+		exit 0;
+	}
+	unset choices;
+	#
+	getimages $branch images
+	# 
+	foreach image [array names images] {
+		getimagesubtypes $image images($image) imagesubtypes;
+		#
+		foreach imagesubtype [array names imagesubtypes] {
+			puts "imagesubtype is <$imagesubtype>.";
+			#
+			set prompt "Choose an $image image to save: ";
+			lappend choices "QUIT" "NONE";
+			#
+			foreach imagefile $images($image) {
+				if {[regexp -nocase -- "(${imagesubtype}\.tar\.gz)$" $imagefile ignore ignore2] == 1} {
+					lappend choices $imagefile;
+				}
+			}
+			#
+			set image2save "";
+			chooseone "${prompt}" choices image2save;
+			if {$image2save == "QUIT"} {
+				puts "exiting saveload.";
+				exit 0;
+			}
+			lappend images2save($image) $image2save;
+			if {$image2save != "NONE"} {
+				puts "Will save image $images2save($image).";
+			}
+			unset choices;
+		}
+		unset imagesubtypes;
+	}
+	#
+	saveimages $branch images2save savecount filesys;
+	#
+	puts "$savecount images saved; will create DB entries.";
+	createdbentries $branch images2save $filesys;
+}
+#
+#########################################################################
+#
+# default values
+#
+set username "lcstools";
+set userpasswd "plexus9000";
+set verbose 0;
+set ucond 0;
+set stracelevel -1;
+#
+# get cmd line options
+#
+for {set arg 0} {$arg<$argc} {incr arg} {
+	set argval [lindex $argv $arg];
+	switch -regexp -- $argval {
+	{^-x} { debug -now; }
+	{^-V} { set verbose 1; }
+	{^-U} { set ucond 1; }
+	{^-S.*} { getoptval $argval stracelevel arg; }
+	{^-u.*} { getoptval $argval username arg; }
+	{^-p.*} { getoptval $argval userpasswd arg; }
+	{^-\?} { usage; exit 0; }
+	{^--} { incr arg; break; }
+	{^-.*} { puts "\nunknown option: $argval\n"; usage; exit 2 }
+	default { break; }
+	}
+}
+#
+if {$stracelevel >= 0} {
+	strace $stracelevel;
+}
+if {$verbose} {
+	log_user 1;
+} else {
+	log_user 0;
+}
+#
+checkenv
+#
+logusage saveload
+#
+saveload 
+#
+exit 0
+

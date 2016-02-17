@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+#
+%kids = (
+	"Mike" => [ "Jacob", "Mark" ],
+	"Clara" => [ "Erica", "Christopher" ],
+	"John" => [ "Jennifer", "Jonathan" ]
+);
+#
+foreach $key (keys %kids)
+{
+	print "$key\'s kids are:";
+	foreach $kid (@kids{$key})
+	{
+		print " $kid";
+	}
+	print "\n";
+}
+#
+exit 0

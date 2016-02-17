@@ -1,0 +1,198 @@
+
+
+
+       mm2html			 SV Tools		    mm2html
+
+
+
+       NNNNAAAAMMMMEEEE
+
+	   mm2html - Convert roff and mm macro text to html
+
+
+       SSSSYYYYNNNNOOOOPPPPSSSSIIIISSSS
+
+	   mm2html [ -l	num ] [	troff_file ]
+
+
+       DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
+
+	   mmmmmmmm2222hhhhttttmmmmllll will	attempt	to convert a troff file	 with
+	   memorandum macros to	an html	3.0 file.  The html
+	   translation makes use of hypertext links in the table of
+	   contents (TOC), footnotes, and references.
+
+	   The TOC will	appear at the beginning	of the html
+	   document.  The level	of headings which is displayed in
+	   the TOC can be controlled by	the -l option.	The default
+	   is three levels. A value of 0 will prevent a	Table of
+	   Contents from being generated.
+
+	   Footnotes are numbered sequentially and are displayed at
+	   the end of the document.
+
+	   References are number sequentially and are displayed	at
+	   the end of the document.
+
+	   Imbedded font controls (e.g., \fB) are interpreted.
+
+	   mmmmmmmm2222hhhhttttmmmmllll understands the following mm	macros and roff
+	   instructions:
+
+	   TITLE/ABSTRACT: Macros .ND, .TL, .AU, .AS, .AE, .MT
+
+	   HEADING: Macros .H, .HU, .PH
+
+	   LISTS: Macros .AL, .DL, .BL,	.VL, .LI, .LE,	(arguments
+	       to these	macros are ignored, except .AL will support
+	       arguments of 1,A,a,i,I, and .LI will include text on
+	       the macro line in the list.  .DL	is treated the same
+	       as .BL.	.VL will use only the text on the .LI macro
+	       line as the list	mark)
+
+	   MACROS: roff	instructions .de, ..  (Very limited Testing
+	       Done. Does not interpret	.if yet)
+
+	   MISCELLANEOUS: Macros and roff instructions .P, .br,
+	       .bp, .sp, .ce, .nf, .fi,	.tr, .DS, .DE, .NS, .TB,
+	       .FG, (The .tr instruction appears to be buggy for
+
+
+
+
+
+
+
+
+
+
+
+       mm2html			 SV Tools		    mm2html
+
+
+
+	       some characters such a +)
+
+	   FONT	CONTROL: Macros	and roff instructions .R, .I, .B,
+	       \fB, \fI, \fP, \f1, \f2,	\f(CO
+
+	   FOOTNOTES/REFERENCES: Macros	.FS, .FE, .RS, .RF
+
+	   REGISTERS/STRINGS roff instructions .nr, .ds
+
+	   TABLES: Macros .TS, .TE  with the following limitations:
+
+		  - Recognizes l,|,||,c,r,s,B, and I specifications
+		    only.
+
+		  - Treats n as	l.
+
+		  - Does not recognize ^ as a vertical span.
+
+		  - Does not recognize .TH or .T&
+
+	   EQUATIONS: Macros .EQ, .EN  (Does not interpret
+	       equations, simply centers the eqn text)
+
+	   PIC/GRAP: Macros .BP, .PS, .PE,.G1, .G2 (Does not
+	       interpret, justs	prints a line that indicates
+	       picture is missing)
+
+	   ESCAPE TO HTML: instruction '.html text'
+	       Using the '.html' macro will cause the text
+	       following it to be printed to the html file while
+	       not printing in a troff file.
+
+       VVVVEEEERRRRSSSSIIIIOOOONNNN
+
+	   2222....0000	---- 11112222////33331111////99995555 ---- DDDD....	JJJJ.... NNNNoooooooonnnnaaaannnn
+
+
+       VVVVEEEERRRRIIIIFFFFIIIICCCCAAAATTTTIIIIOOOONNNN
+
+	   BBBBeeeessssiiiiddddeeeessss tttthhhhiiiissss	MMMMaaaannnnuuuuaaaallll PPPPaaaaggggeeee ((((wwwwrrrriiiitttttttteeeennnn iiiinnnn	mmmmmmmm mmmmaaaaccccrrrroooossss)))) TTTThhhheeee
+	   ffffoooolllllllloooowwwwiiiinnnngggg DDDDooooccccuuuummmmeeeennnnttttssss iiiinnnn CCCCOOOOMMMMPPPPAAAASSSS HHHHaaaavvvveeee bbbbeeeeeeeennnn CCCCoooonnnnvvvveeeerrrrtttteeeedddd aaaannnndddd
+	   cccchhhheeeecccckkkkeeeedddd....  33333333999955557777,,,, 33336666222200002222,,,, 33337777333377770000,,,, 33336666666622228888,,,, 33336666444433336666,,,,	44449999000044448888,,,,
+	   44441111555599992222....
+
+
+       VVVVEEEERRRRIIIIFFFFIIIICCCCAAAATTTTIIIIOOOONNNN
+
+	   TTTThhhheeee ttttoooooooollll ccccoooonnnnvvvveeeerrrrtttteeeedddd tttthhhheeee ddddooooccccuuuummmmeeeennnnttttssss lllliiiisssstttteeeedddd aaaabbbboooovvvveeee ttttoooo tttthhhheeee
+	   eeeexxxxtttteeeennnntttt tttthhhhoooosssseeee	ddddooooccccuuuummmmeeeennnnttttssss uuuusssseeee rrrrooooffffffff iiiinnnnssssttttrrrruuuuccccttttiiiioooonnnnssss	aaaannnndddd mmmmmmmm
+	   mmmmaaaaccccrrrroooossss....  WWWWhhhheeeennnn kkkknnnnoooowwwwnnnn,,,,	eeeexxxxcccceeeeppppttttiiiioooonnnnssss oooorrrr lllliiiimmmmiiiittttaaaattttiiiioooonnnnssss ttttoooo tttthhhhoooosssseeee
+	   ccccoooonnnnvvvveeeerrrrssssiiiioooonnnnssss aaaarrrreeee lllliiiisssstttteeeedddd aaaabbbboooovvvveeee	iiiinnnn tttthhhheeee DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN....
+
+
+
+
+
+
+
+
+
+
+
+       mm2html			 SV Tools		    mm2html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

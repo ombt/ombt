@@ -1,0 +1,8 @@
+SUBDIRS = logic 8puzzle parser prolog prover route tictac planner
+
+all:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE); done
+
+clean:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE) clean; done
+

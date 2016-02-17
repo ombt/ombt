@@ -1,0 +1,8 @@
+# remove times ten installation.
+/opt/TimesTen4.*/32/bin/setup.sh -uninstall <<EOF
+yes
+yes
+yes
+EOF
+#
+exit $?

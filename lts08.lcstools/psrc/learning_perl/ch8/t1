@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+pargs("a", "b");
+pargs("a", "b", "c");
+pargs("a", "b", "c", "d");
+pargs(qw( a b c d ));
+pargs((1 .. 20));
+$min = 10;
+$max = 15;
+pargs(($min .. $max));
+#
+sub pargs {
+	$i = 1;
+	foreach (@_)
+	{
+		print "arg $i: $_\n";
+		$i++;
+	}
+}

@@ -1,0 +1,19 @@
+CC = CC
+CCFLAGS = -g 
+#
+LD = CC
+LDFLAGS = -g
+#
+lan
+lan.c
+cable.c
+call.c
+exponential.c
+item.c
+poisson.c
+probDist.c
+station.c
+uniform.c
+-lm
+#
+install1 = cp lan $(HOME)/bin/lan

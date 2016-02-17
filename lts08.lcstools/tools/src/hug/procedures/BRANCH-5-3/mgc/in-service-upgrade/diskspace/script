@@ -1,0 +1,9 @@
+# DLP-734 - clean-up disk space on an sp. must have an tl1 stream
+# open before calling this function.
+#
+removetarfiles exec { tl1sp } {
+	tl1 exec -i -v <tl1sp> exec-ls:::::-l,/*tar.gz
+	tl1 exec -i -v <tl1sp> exec-ls:::::-r,/*tar.gz
+	tl1 exec -i -v <tl1sp> exec-ls:::::-l,/home1/*tar.gz
+	tl1 exec -i -v <tl1sp> exec-ls:::::-r,/home1/*tar.gz
+}

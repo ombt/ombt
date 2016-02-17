@@ -1,0 +1,4 @@
+ed-mg-mgcassoc::ihlcsgw13-part0::::is
+set-sid:::::ihlcsgw14
+sleep 10
+init-sys:ihlcsgw14::::10

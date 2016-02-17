@@ -1,0 +1,4 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+set-bts-server
+set-bts-server.sh

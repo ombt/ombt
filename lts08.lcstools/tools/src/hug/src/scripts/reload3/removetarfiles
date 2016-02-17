@@ -1,0 +1,16 @@
+removetarfiles exec { spaip spbip login passwd } {
+	#
+	# clean up old tar files before sending new ones.
+	#
+	telnet open rmvtarfiles_telnetspa <spaip> <login> <passwd>
+	telnet open rmvtarfiles_telnetspb <spbip> <login> <passwd>
+	#
+	telnet exec rmvtarfiles_telnetspa /bin/rm /*tar.gz
+	telnet exec rmvtarfiles_telnetspb /bin/rm /*tar.gz
+	#
+	telnet exec -i rmvtarfiles_telnetspa /bin/find /home -type f -print | /bin/xargs rm -f
+	telnet exec -i rmvtarfiles_telnetspb /bin/find /home -type f -print | /bin/xargs rm -f
+	#
+	telnet close rmvtarfiles_telnetspa
+	telnet close rmvtarfiles_telnetspb
+}

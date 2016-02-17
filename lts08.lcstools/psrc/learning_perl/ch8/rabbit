@@ -1,0 +1,17 @@
+#!/opt/exp/bin/perl -w
+#
+$wabbits = 0;
+$subwabbits = 0;
+#
+sub wabbit() {
+	++$wabbits;
+	print "wabbit $wabbits calling subwabbit ...\n";
+	subwabbit();
+}
+sub subwabbit() {
+	++$subwabbits;
+	print "subwabbit $subwabbits calling wabbit ...\n";
+	wabbit();
+}
+#
+wabbit();

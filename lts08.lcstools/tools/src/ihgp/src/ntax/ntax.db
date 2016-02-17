@@ -1,0 +1,143 @@
+#
+#######################################################################
+#
+# field-specific information
+#
+# federal income fields
+#
+Income;use this field?;yes
+Wages Salary Tips Etc;use this field?;yes
+Taxable Interest Income;use this field?;yes
+Tax Exempt Income;use this field?;yes
+Dividend Income;use this field?;yes
+Taxable Refunds Of State And Local Income Taxes;use this field?;yes
+Alimony Received;use this field?;no
+Business Income Or Loss;use this field?;yes
+Capital Gain Or Loss;use this field?;yes
+Other Gains Or Losses;use this field?;yes
+Total Ira Distributions;use this field?;no
+Total Pensions And Annuities;use this field?;no
+Rental Real Estate Etc;use this field?;no
+Farm Income Or Loss;use this field?;no
+Unemployment Compensation;use this field?;no
+Social Security;use this field?;no
+Other Income;use this field?;no
+#
+# federal adjustments to income fields
+#
+Adjustments To Income;use this field?;yes
+Your Ira Deduction;use this field?;no
+Spouses Ira Deduction;use this field?;no
+Moving Expenses;use this field?;yes
+One Half Self Employment Tax;use this field?;no
+Self Employed Health Insurance Deduction;use this field?;no
+Keogh And Self Employed SEP Plans;use this field?;no
+Penalty On Early Withdrawal Of Savings;use this field?;no
+Alimoney Paid;use this field?;no
+#
+# federal adjusted gross income fields
+#
+Adjusted Gross Income;use this field?;yes
+#
+# federal tax computation fields
+#
+Tax Computation;use this field?;yes
+Itemized Deductions;use this field?;yes
+Standard Deductions;use this field?;yes
+Taxable Income;use this field?;yes
+Tax;use this field?;yes
+Additional Taxes;use this field?;yes
+#
+# real estate data fields
+#
+Real Estate Value;use this field?;yes
+Real Estate Loan Principal;use this field?;yes
+Real Estate Loan Interest (in percentage);use this field?;yes
+Real Estate Loan Length (in years);use this field?;yes
+Real Estate Loan Points (in percentage);use this field?;yes
+Real Estate Loan Additional Costs;use this field?;yes
+Real Estate Tax Rate (in percentage);use this field?;yes
+#
+# federal schedule A for itemized deductions fields
+#
+Schedule A;use this field?;yes
+Medical And Dental Expenses;use this field?;yes
+Taxes You Paid;use this field?;yes
+State And Local Taxes;use this field?;yes
+Real Estate Taxes;use this field?;yes
+Personal Property Taxes;use this field?;yes
+Other Taxes;use this field?;no
+Interest You Paid;use this field?;yes
+Home Mortage Interest And Points;use this field?;yes
+Investment Interest;use this field?;no
+Gifts To Charity;use this field?;yes
+Gifts By Cash Or Check;use this field?;yes
+Gifts Not By Cash Or Check;use this field?;yes
+Carry Over From Prior year;use this field?;no
+Casualty And Theft Losses;use this field?;no
+Job Expenses;use this field?;yes
+Unreimbursed Employee Expenses;use this field?;yes
+Tax Preparation Fees;use this field?;no
+Other Expenses;use this field?;no
+Other Miscellaneous Expenses;use this field?;no
+Total Itemized Deductions;use this field?;yes
+#
+# federal credits fields
+#
+Credits;use this field?;yes
+Credit For Child And Dependent Care;use this field?;yes
+Credit For Elderly Or Disabled;use this field?;yes
+Foreign Tax Credit;use this field?;no
+Other Credits;use this field?;no
+#
+# federal other taxes fields
+#
+Other Taxes;use this field?;no
+Self Employment Tax;use this field?;no
+Alternative Minimum Tax;use this field?;no
+Recapture Taxes;use this field?;no
+Social Security And Medicare Tax On Nonreported Income;use this field?;no
+Tax On Qualified Retirement Plans;use this field?;no
+Advanced Earned Income Credit Payments;use this field?;no
+Household Employment Taxes;use this field?;no
+Total Taxes;use this field?;yes
+#
+# federal tax payments fields
+#
+Payments;use this field?;yes
+Federal Income Tax Withheld;use this field?;yes
+Estimated Tax Payments;use this field?;yes
+Earned Income Credit;use this field?;yes
+Amount Paid From Extensions;use this field?;yes
+Excess Social Security And RRTA Tax;use this field?;yes
+Other Payments;use this field?;yes
+#
+# federal refund or amount due fields
+#
+Refund Or Amount Owed;use this field?;yes
+Refund;use this field?;yes
+Owed;use this field?;yes
+Penalty;use this field?;yes
+#
+###############################################################
+#
+# operation-specific information
+#
+# calculate taxes
+#
+Federal Taxes;calculate?;yes
+State Taxes;calculate?;yes
+#
+# calculate real estate data
+#
+Real Estate;calculate?;yes
+Real Estate Taxes;calculate?;yes
+Real Estate Interest;calculate?;yes
+#
+# federal standard deductions
+#
+Single Standard Deduction;value?;3900.0
+Married Filing Joint Return Standard Deduction;value?;6550.0
+Married Filing Separate Return Standard Deduction;value?;3275.0
+Head Of Household Standard Deduction;value?;5750.0
+Qualifying Widow With Dependent Standard Deduction;value?;6550.0

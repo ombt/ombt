@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+#
+foreach $arg (@ARGV)
+{
+	my $file = "";
+	#
+	my @files = glob("$arg");
+	foreach $file (@files)
+	{
+		print "1: file is ... $file\n";
+	}
+	#
+	# to get this form to work, I needed to concatenate
+	# a null string ... don't ask me why.
+	#
+	@files = <"" . $arg>;
+	foreach $file (@files)
+	{
+		print "2: file is ... $file\n";
+	}
+	#
+	@files = <${arg}>;
+	foreach $file (@files)
+	{
+		print "3: file is ... $file\n";
+	}
+	#
+}

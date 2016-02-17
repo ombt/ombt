@@ -1,0 +1,211 @@
+<html>
+<head>
+<title> DLP-721 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-721 UPGRADING SOFTWARE OF DS3 (octds3 and trids3)  IOMS </h3>
+<pre>
+
+Procedures for updating a DS3 (octds3*.tar.gz and trids3*.tar.gz) are 
+listed below.
+
+1) Determine which IOM slots have DS1_2 and their states.
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+2) If one of the installed IOMs has a state of UAS, then use 
+ENT-EQPT command to define it.
+
+3) Check files:
+
+	EXEC-CD:::::/Telica/swOCTDS3_2;
+	EXEC-LS:::::-l;
+
+Check for all types of DS3 files that apply for this switch:
+
+	EXEC-CD:::::/Telica/swOCTDS3
+	EXEC-LS:::::-l;
+	EXEC-CD:::::/Telica/swOCTDS3_2
+	EXEC-LS:::::-l;
+	EXEC-CD:::::/Telica/swOCTDS3_3
+	EXEC-LS:::::-l;
+	EXEC-CD:::::/Telica/swTRIDS3
+	EXEC-LS:::::-l;
+	EXEC-CD:::::/Telica/swTRIDS3_3
+	EXEC-LS:::::-l;
+
+Verify files are there and software version is correct.
+
+4) Files should have already been FTPed and extracted before starting
+this procedure.
+
+5) DS3 protection IOMs are in slots IOM-5 and IOM-13. IOM-5 protects
+IOMs 1 to 4 and 6 to 8; IOM-13 protects IOMs 9 to 12 and 14 to 17.
+
+First update the protection DS3 IOMs -- IOM 5 and 13 in this case.
+
+	RMV-EQPT::IOM-5;
+
+6) Update software version:
+
+	ED-EQPT::IOM-5:::SWVERSION=x.x.x.x.x;
+
+7) Update flash:
+
+	CPY-MEM::IOM-5;
+
+8) Restore the protection IOM:
+
+	RST-EQPT::IOM-5;
+
+9) Verify the software was updated on IOM-7:
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+Update IOM-13 if it exist. Repeat steps 6 to 9, but use IOM-13 instead
+of IOM-5.
+
+10) If updating LCS (sg_mgc_mg), sg_mgc, or sg_mg, then continue; else 
+goto step 17.
+
+11) Determine which IOMs have signaling links and the ss7linkaid using:
+
+	RTRV-SLK;
+
+If there are NO signaling links on the IOM to be updated, then goto 
+step 17.
+
+12) Determine if the signaling links are active on other IOM other than
+the one you are about to update. Try this:
+
+	RTRV-STATUS-SGSLK::1;
+
+where the '1' is the signaling link. You will have to repeat this for
+every signaling link on the IOM.
+
+13) if there are other signlaing links active on other IOM, then continue.
+If not, then make the another link active on different IOM (if possible).
+
+	ED-STATE-SGSLK::1:::IS;
+
+14) Inhibit signaling links on IOM to be upgraded:
+
+	Command Syntax: ED-STATE-SGSLK:[TID]: <ss7LnkId>:[CTAG]::<pst>;
+
+	Parameters:
+	ss7LnkId = {1 . . . 64} - ID of the signaling link.
+	pst = IS - Primary state of a signaling link is In-Service.
+	= OOS - Primary state of a signaling link is Out-Of-Service.
+	= INH - Primary state of a signaling link Inhibited.
+	= UNINH - Primary state of a signaling link Uninhibited.
+
+Command Example: 
+
+	ED-STATE-SGSLK::1:::INH;
+
+15) Did signaling link become inhibited? If not, the place the link OOS.
+
+	Command Syntax: ED-STATE-SGSLK:[TID]: <ss7LnkId>:[CTAG]::<pst>;
+
+	Command Example: 
+
+		ED-STATE-SGSLK::1:::OOS;
+
+16) Are all signaling links inhibited or oos?
+
+17) Switch to protection IOM.
+
+	Command Syntax: SW-TOPROTN-EQPT:[TID]:<sw_id>:[CTAG];
+
+	Command Example: 
+
+		SW-TOPROTN-EQPT::IOM-1;
+
+18) Verify the protection IOM is IS,WRK.
+
+19) Check switch status:
+
+	RTRV-PM-CC;
+
+On a sg_mgc_mg and sg_mg, check this:
+
+	RTRV-STATUS-MG;
+
+20) Change software verion on IOM to be upgraded:
+
+	ED-EQPT::IOM-1:::SWVERSION=x.x.x.x.x;
+
+21) Upgrade firmware:
+
+	CPY-MEM::IOM-1;
+
+22) After the CPY-MEM, the working IOM becomes active and IS, and the
+protection IOM becomes IS,STBYC.
+
+	RTRV-EQPT;
+
+23) Check upgraded IOM:
+
+	RTRV-INFO-EQPT;
+
+24) Repeat steps 11 to 23 until all IOMs are upgraded.
+
+25) Are there any unprotected IOMs? If not goto step 35.
+
+26) Updating unprotected IOMs will cause service interruption.
+
+27) If you are updating an unprotected IOM on a sg_mgc_mg, sg_mgc or
+sg_mgc_mg, then continue; else goto step 30.
+
+28) Determine where signaling links are at:
+
+	RTRV-SLK;
+
+29) If the IOM has signaling links, then do this:
+
+	ED-STATE-SGSLK:[TID]: <ss7LnkId>:[CTAG]::<pst>;
+
+Parameters:
+	ss7LnkId = {1 . . . 64} - ID of the signaling link.
+	pst = IS - Primary state of a signaling link is In-Service.
+	= OOS - Primary state of a signaling link is Out-Of-Service.
+	= INH - Primary state of a signaling link Inhibited.
+	= UNINH - Primary state of a signaling link Uninhibited.
+
+Example:
+
+	ED-STATE-SGSLK::1:::INH;
+
+If the signaling link was not inhibited, then place it OOS.
+
+	ED-STATE-SGSLK:[TID]: <ss7LnkId>:[CTAG]::<pst>;
+	Command Example: 
+
+		ED-STATE-SGSLK::1:::OOS;
+
+30) Remove IOM from service:
+
+	RMV-EQPT::IOM-1;
+
+31) Update the software version on the IOM:
+
+	ED-EQPT::IOM-1:::SWVERSION=x.x.x.x.x;
+
+32) Update the flash:
+
+	CPY-MEM::IOM-1;
+
+33) Restore the IOM once the cpy-mem is done:
+
+	RST-EQPT::IOM-1;
+
+IOM should be restored to service.
+
+34) Repeat for all DS1_2 IOMs until done.
+
+35) Done.
+
+</pre>
+</font></body>
+</html>

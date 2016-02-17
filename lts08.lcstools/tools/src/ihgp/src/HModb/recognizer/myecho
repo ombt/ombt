@@ -1,0 +1,9 @@
+#
+while read string
+do
+	# echo "$$: ${string}"
+	echo "${string}"
+done >${1}
+#
+exit 0
+

@@ -1,0 +1,105 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+# parameter mytcpsipip 135.111.82.6
+# parameter mytcpsipport 5061
+parameter mysipip 135.111.82.6
+parameter mysipport 5061
+parameter myadminip 135.111.82.6
+parameter myadminport 10002
+parameter myrtpip 135.111.82.6
+parameter myrtpport 8002
+parameter myrtcpport 8003
+# parameter interreporttime 120
+parameter isupversion itu
+# parameter supportsiptcp 1
+#
+# specific user section
+#
+rdn = 6305510201 100
+expires = 1800
+maxcallduration = 20
+# tcpsipip = 135.111.82.6
+# tcpsipport = 5060
+sipip = 135.111.82.6
+sipport = 5060
+rtpip = 135.111.82.6
+rtpport = 8000
+rtcpport = 8001
+# orig200okbyesdp => "",               
+# orig200okcancelsdp => "",            
+# orig200oksdp => "",                  
+# orig200okupdatesdp => "",            
+# origacksdp => "",                    
+# origbyesdp => "",                    
+# origcancelsdp => "",                 
+originviteacksdp = pcmu
+originvitesdp = pcmu
+# orignotifysdp =
+# term180ringingsdp =
+# term183ringingsdp =
+# term200okbyesdp =
+# term200okcancelsdp =
+# term200oksdp =
+# term200okupdatesdp =
+# term486busysdp =
+# termbyesdp =
+terminvite200oksdp = pcmu
+# origpost100updatesdp = pcmu
+# origpost180updatesdp = pcmu
+# origpost183updatesdp = pcmu
+# origpost200updatesdp = pcmu
+# origpostackupdatesdp = pcmu
+# termpost100updatesdp = pcmu
+# termpost180updatesdp = pcmu
+# termpost183updatesdp = pcmu
+# termpost200updatesdp = pcmu
+# termpostackupdatesdp = pcmu
+origination = originationupdate
+termination = terminationupdate
+#
+rdn = 6305520201 100
+expires = 1800
+maxcallduration = 20
+# tcpsipip = 135.111.82.6
+# tcpsipport = 5061
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+# orig200okbyesdp => "",               
+# orig200okcancelsdp => "",            
+# orig200oksdp => "",                  
+# orig200okupdatesdp => "",            
+# origacksdp => "",                    
+# origbyesdp => "",                    
+# origcancelsdp => "",                 
+originviteacksdp = pcmu
+originvitesdp = pcmu
+# orignotifysdp =
+# term180ringingsdp =
+# term183ringingsdp =
+# term200okbyesdp =
+# term200okcancelsdp =
+# term200oksdp =
+# term200okupdatesdp =
+# term486busysdp =
+# termbyesdp =
+terminvite200oksdp = pcmu
+# origpost100updatesdp = pcmu
+# origpost180updatesdp = pcmu
+# origpost183updatesdp = pcmu
+# origpost200updatesdp = pcmu
+# origpostackupdatesdp = pcmu
+# termpost100updatesdp = pcmu
+# termpost180updatesdp = pcmu
+# termpost183updatesdp = pcmu
+# termpost200updatesdp = pcmu
+# termpostackupdatesdp = pcmu
+origination = originationupdate
+termination = terminationupdate
+#
+rcall 6305520201 6305510201 100

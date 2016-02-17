@@ -1,0 +1,131 @@
+globals data {
+	#
+	# switch data
+	#
+	switchid ihlcsg10
+	#
+	ihlcsg10 {
+		tl1login telica
+		tl1passwd telica
+		#
+		spa {
+			login root
+			passwd plexus9000
+			ip 135.1.104.203
+			status unknown
+			provisioned unknown
+			version unknown
+		}
+		spb {
+			login root
+			passwd plexus9000
+			ip 135.1.104.204
+			status unknown
+			provisioned unknown
+			version unknown
+		}
+		ioms {
+			1 {
+				status unknown
+				provisioned unknown
+				version unknown
+			}
+			2 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			3 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			4 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			5 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			6 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			7 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			8 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			9 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			10 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			11 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			12 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			13 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			14 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			15 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			16 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+			17 {
+				status unknown
+				provisioned unknown
+				version unknown
+				redundancy unknown
+			}
+		}
+	}
+}

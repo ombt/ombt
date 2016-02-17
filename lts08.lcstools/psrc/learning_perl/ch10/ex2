@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+print "input file name: ";
+my $infname = <STDIN>;
+chomp $infname;
+die("null file name given.\n") if ($infname eq "");
+#
+print "output file name: ";
+my $outfname = <STDIN>;
+chomp $outfname;
+die("null file name given.\n") if ($outfname eq "");
+#
+print "search pattern: ";
+my $pattern = <STDIN>;
+chomp $pattern;
+die("null pattern given.\n") if ($pattern eq "");
+#
+print "replacement string: ";
+my $repstring = <STDIN>;
+chomp $repstring;
+#
+open(IN, $infname) || die("unable to open $infname: $!");
+open(OUT, ">$outfname") || die("unable to open $outfname: $!");
+#
+while (my $buf = <IN>)
+{
+	$buf =~ s/$pattern/$repstring/;
+	print OUT $buf;
+}
+#
+close(IN);
+close(OUT);
+#

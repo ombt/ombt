@@ -1,0 +1,32 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::230-80-22:::MTPVARIANT=ANSI
+ent-prfl-sgpc::1
+# Eagle STPs
+ent-sg-pc::230-101-0:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat
+ent-sg-pc::230-102-0:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat
+# Eagle STP Alias
+ent-sg-pc::230-175-1:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat
+# LiveNet 5E(Five1 Switch)
+ent-sg-pc::230-35-1:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat
+# MSVE SCP
+ent-sg-pc::230-35-5:::PCDIR=rem,PCPRFLID=1,MTPVARIANT=ansi,PCSSF=ssfnat
+#signaling links here
+ent-lset::1:::OPC=230-80-22,ADJDPC=230-101-0
+ent-lset::2:::OPC=230-80-22,ADJDPC=230-102-0
+ent-route-ss7::230-101-0-1:::lsetpriority=0
+ent-route-ss7::230-101-0-2:::lsetpriority=1
+ent-route-ss7::230-102-0-2:::lsetpriority=0
+ent-route-ss7::230-102-0-1:::lsetpriority=1
+ent-route-ss7::230-35-1-1:::lsetpriority=0
+ent-route-ss7::230-35-1-2:::lsetpriority=0
+ent-route-ss7::230-175-1-1:::lsetpriority=0
+ent-route-ss7::230-175-1-2:::lsetpriority=0
+#
+ent-slk::1:::IOMPORT=IOM-1-PORT-1,CHAN=1,LSETID=1,SLC=0,MTP2PRFLID=1,MTP3PRFLID=1,lnkspeed=56K
+ent-slk::2:::IOMPORT=IOM-1-PORT-2,CHAN=1,LSETID=2,SLC=0,MTP2PRFLID=1,MTP3PRFLID=1,lnkspeed=56K
+#MEGACO area
+ent-sg-mgcassoc::2:::OPCLIST=230-80-22,IPADDR=10.10.120.15,STAPORTRANGE=50000:is
+ed-sg-mgCASSOC::2:100::is
+set-sid:::::ihlsg4

@@ -1,0 +1,84 @@
+<html>
+<head>
+<title> DLP-717 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-717 DLP-717 - UPGRADING IOM SOFTWARE OF THE LUCENT NETWORK GATEWAY
+</h3>
+<pre>
+
+This procedure describes how to upgrade the software of the IOMs of a 
+Lucent Network Gateway (MG). The upgrade is labeled as: (x.x.x.x.Px).
+
+1) Before running this procedure, do this:
+
+	DLP-712 Preparing for Changing IOM Software
+	DLP-713 FTPing Files for Changing IOM Software
+	DLP-714 Extracting File for Changing IOM Software
+
+	DLP-757 Checking for and Disabling Scheduled Backups and 
+		Protection Switches
+	DLP-781 Preparing to Change System Software
+
+2) Run a backup:
+
+	EXEC-BACKUP-PLEXUS::COM:::196.10.20.30,anonymous,anon,/FTPRoot;
+
+3) Check the MG status:
+
+	RTRV-STATUS-MG;
+
+4) Determine the types of IOMs on the MG:
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+5) These are the types of IOM that can be updated:
+
+	89-0390 Ethernet NA Module 
+		BA2A30TGAA x.x.x.x.x_ena.tar.gz
+	89-0390 Ethernet NA Module w/RAM
+		BA2A30TGAB x.x.x.x.x_ena.tar.gz
+	89-0395 Voice Server Module 
+		BA1AX60AAB x.x.x.x.x_voip.tar.gz
+	89-0397 Triple DS3 
+		BA9IX04AAA x.x.x.x.x_trids3.tar.gz
+	89-0398 Octal DS3 
+		BAA9UVXGAA x.x.x.x.x_octds3.tar.gz
+	89-0400 Chan. OC3 
+		Module BA4AW60FAA x.x.x.x.x_tdmoc.tar.gz
+	89-0410 Triple DS3 STS-1 
+		BA4A60ZFAA x.x.x.x.x_trids3_2.tar.gz
+	89-0411 Octal DS3 STS-1 
+		BA4A701FAA x.x.x.x.x_octds3_2.tar.gz
+	89-0413 HD Voice Server (6.x only) 
+		BAUIAA1EAB x.x.x.x.x_vs3.tar.gz
+	89-0414 DS1/E1/J1 
+		BA7ATP0FAA x.x.x.x.x_ds1_2.tar.gz
+	89-0424 Triple DS3 
+		BA9AWX0FAA x.x.x.x.x_trids3_3.tar.gz
+	89-0425 Octal DS3 
+		BA9AXY0FAA x.x.x.x.x_octds3_3.tar.gz
+	89-0432 ENA-2 
+		BAUIADPEAA x.x.x.x.x_ena2.tar.gz
+
+6) Ensure the primary state of the installed IOMs is not UAS (unassigned).
+
+7) DS1_2 Upgrades: use <a href="DLP-720" target="contents">DLP-720</a>.
+
+8) DS3 Upgrade: use <a href="DLP-721" target="contents">DLP-721</a>.
+
+9) ENA Upgrade: use <a href="DLP-722" target="contents">DLP-722</a>.
+
+10) VS Upgrade: use <a href="DLP-723" target="contents">DLP-723</a>.
+
+11) OC3 Upgrade: use <a href="DLP-724" target="contents">DLP-724</a>.
+
+12) Restart IP filtering and scheduled backups: DLP-782.
+
+13) Do a backup:
+
+	EXEC-BACKUP-PLEXUS::COM:::196.10.20.30,anonymous,anon,/FTPRoot;
+
+</pre>
+</font></body>
+</html>

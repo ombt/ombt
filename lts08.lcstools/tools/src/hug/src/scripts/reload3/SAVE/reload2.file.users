@@ -1,0 +1,10 @@
+file_users_spa exec {
+	tl1 open -t10 tl1spa <spa.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1spa users
+	tl1 close tl1spa
+}
+file_users_spb exec {
+	tl1 open -t10 tl1spb <spb.ip> <spb.tl1login> <spb.tl1passwd>
+	tl1 file -v tl1spb users
+	tl1 close tl1spb
+}

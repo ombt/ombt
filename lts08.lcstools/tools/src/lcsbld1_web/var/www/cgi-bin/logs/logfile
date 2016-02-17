@@ -1,0 +1,461 @@
+Thu Dec 13 10:59:15 2007 - mrumore-c1.ih.lucent.com - GDB starting
+Thu Dec 13 10:59:18 2007 - lewis.lra.lucent.com - LABS - starting
+Thu Dec 13 11:00:11 2007 - mrumore-c1.ih.lucent.com - LABS - starting
+Thu Dec 13 11:00:55 2007 - mrumore-c1.ih.lucent.com - GDB starting
+Thu Dec 13 11:01:38 2007 - mrumore-c1.ih.lucent.com - CORES starting
+Thu Dec 13 11:07:20 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 11:13:14 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 11:13:23 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 11:13:55 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 11:14:28 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 11:14:41 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/dbp.core, /build/lcstools/6.4.0.0.51/Telica/swCPU/6.4.0.0.51_DEBUG/apps/dbp/dbp)
+Thu Dec 13 11:15:11 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 11:15:14 2007 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsdv2)
+Thu Dec 13 12:02:07 2007 - savitri-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:02:36 2007 - savitri-c1.ih.lucent.com - Running GDB - (ihlcsg11, Main, 6.4.0.0.58, /labs/ihlcsg11_spa_home1/Telica/swCPU/core/dbp.core, /build/lcstools/6.4.0.0.58/Telica/swCPU/6.4.0.0.58_DEBUG/apps/dbp/dbp)
+Thu Dec 13 12:16:28 2007 - mrumore-c1.ih.lucent.com - LOADS - starting
+Thu Dec 13 12:16:33 2007 - mrumore-c1.ih.lucent.com - Listing Load Files - (/build/lcstools/6.3.0.2.SP.4/Telica/swCPU)
+Thu Dec 13 12:16:36 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:18:19 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:18:23 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:18:45 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:18:49 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:23:02 2007 - rhellman-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:23:16 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:23:18 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 12:23:29 2007 - mrumore-c1.ih.lucent.com - LOADS - starting
+Thu Dec 13 12:23:35 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 12:23:40 2007 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg26)
+Thu Dec 13 12:27:27 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 12:27:36 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:27:51 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 12:28:17 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:40:29 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg13, Main, 6.4.0.0.45, /labs/ihlcsg13_spa_home1/Telica/swCPU/core/tl1agent.oldCore.1, /tmp/tl1agent)
+Thu Dec 13 12:41:19 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:41:54 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg13, Main, 6.4.0.0.45, /labs/ihlcsg13_spa_home1/Telica/swCPU/core/slam.oldCore.1, /build/lcstools/6.4.0.0.45/Telica/swCPU/6.4.0.0.45_DEBUG/apps/slam/slam)
+Thu Dec 13 12:42:16 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 12:46:59 2007 - mrumore-c1.ih.lucent.com - LOADS - starting
+Thu Dec 13 12:47:03 2007 - mrumore-c1.ih.lucent.com - Listing Load Files - (/build/lcstools/6.3.1.0.85/Telica/swCPU)
+Thu Dec 13 12:47:10 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 12:47:15 2007 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg22)
+Thu Dec 13 12:52:32 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 13:13:00 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 13:13:15 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 13:13:31 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg11, Main, 6.4.0.0.58, /labs/ihlcsg11_spa_home1/Telica/swCPU/core/dbp.core, /build/lcstools/6.4.0.0.58/Telica/swCPU/6.4.0.0.58_DEBUG/apps/dbp/dbp)
+Thu Dec 13 13:20:30 2007 - peizeng-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 13:20:37 2007 - peizeng-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw5)
+Thu Dec 13 13:38:25 2007 - singlar-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 13:38:35 2007 - singlar-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg36)
+Thu Dec 13 13:40:42 2007 - singlar-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 13:41:23 2007 - singlar-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:16:42 2007 - rgbarry-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 15:16:42 2007 - rgbarry-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 15:16:50 2007 - rgbarry-c1.ih.lucent.com - Listing Lab Logs - (ihlcs1)
+Thu Dec 13 15:17:35 2007 - rgbarry-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:26:58 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:27:28 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:27:35 2007 - rgbarry-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:27:38 2007 - rgbarry-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 15:27:39 2007 - rgbarry-c1.ih.lucent.com - LOADS - starting
+Thu Dec 13 15:27:40 2007 - rgbarry-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 15:28:10 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:30:40 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:30:47 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 15:40:10 2007 - mrumore-c1.ih.lucent.com - LOADS - starting
+Thu Dec 13 15:40:12 2007 - mrumore-c1.ih.lucent.com - Listing Load Files - (/build/lcstools/6.2.1.4.SP.4/Telica/swCPU)
+Thu Dec 13 15:48:04 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:48:24 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 15:48:46 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:51:16 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:52:01 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 15:53:58 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 15:54:07 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 15:54:48 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:29:49 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:31:22 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:31:57 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:37:14 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:41:18 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:41:46 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:48:29 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 16:48:53 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 16:49:22 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:50:14 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 16:51:26 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 16:51:33 2007 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw3)
+Thu Dec 13 16:54:39 2007 - jacksonm-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 16:54:40 2007 - jacksonm-c1.ih.lucent.com - LABS Logs - starting
+Thu Dec 13 16:54:50 2007 - jacksonm-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw3)
+Thu Dec 13 16:57:31 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 17:40:30 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 17:40:41 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 17:41:03 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 17:42:37 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 17:46:27 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 17:47:06 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 17:47:16 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 17:47:33 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 17:48:31 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 18:59:34 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 18:59:36 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 19:04:08 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 19:08:51 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg11, Main, 6.4.0.0.58, /labs/ihlcsg11_spa_home1/Telica/swCPU/core/dbp.oldCore.3, /build/lcstools/6.4.0.0.58/Telica/swCPU/6.4.0.0.58_DEBUG/apps/dbp/dbp)
+Thu Dec 13 19:16:30 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg11, Main, 6.4.0.0.58, /labs/ihlcsg11_spa_home1/Telica/swCPU/core/dbp.oldCore.3, /build/lcstools/6.4.0.0.58/Telica/swCPU/6.4.0.0.58_DEBUG/apps/dbp/dbp)
+Thu Dec 13 19:17:08 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 19:17:20 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 19:17:57 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Thu Dec 13 19:18:08 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Thu Dec 13 19:18:31 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 19:21:18 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 19:25:50 2007 - klauschang-c1.cn.lucent.com - LABS Logs - starting
+Thu Dec 13 19:25:57 2007 - klauschang-c1.cn.lucent.com - Listing Lab Logs - (ihlcs1)
+Thu Dec 13 19:28:01 2007 - klauschang-c1.cn.lucent.com - Find CORES starting
+Thu Dec 13 19:29:58 2007 - klauschang-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:32:42 2007 - ci3015hong.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:33:11 2007 - cn107082-proxy1.gw.lucent.com - LABS Logs - starting
+Thu Dec 13 19:33:24 2007 - cn107082-proxy1.gw.lucent.com - Listing Lab Logs - (ihlcsgw1)
+Thu Dec 13 19:35:05 2007 - haiyan-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:35:54 2007 - haiyan-c1.cn.lucent.com - Running GDB - (ihlcsdv2, BRANCH-6-3-1, 6.3.1.0.92, , /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/ccs/ccs)
+Thu Dec 13 19:35:54 2007 - klauschang-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:36:19 2007 - klauschang-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:36:30 2007 - haiyan-c1.cn.lucent.com - Find CORES starting
+Thu Dec 13 19:36:38 2007 - klauschang-c1.cn.lucent.com - Find CORES starting
+Thu Dec 13 19:37:19 2007 - klauschang-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:38:46 2007 - klauschang-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:44:03 2007 - yex-c1.cn.lucent.com - Run GDB starting
+Thu Dec 13 19:45:23 2007 - yex-c1.cn.lucent.com - Running GDB - (ihlcsg15, Main, 6.4.0.0.51, /labs/ihlcsg15_spa_home1/Telica/swCPU/core/sgsig.core, /build/lcstools/6.4.0.0.51/Telica/swCPU/6.4.0.0.51_DEBUG/apps/sgsig/sgsig)
+Thu Dec 13 19:46:25 2007 - mrumore-c1.ih.lucent.com - Running GDB - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 22:00:35 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Thu Dec 13 22:00:40 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsg36)
+Thu Dec 13 22:07:44 2007 - mrumore.lra.lucent.com - Run GDB starting
+Thu Dec 13 22:08:20 2007 - mrumore.lra.lucent.com - Running GDB - 18349 - (ihlcsg25, Main, 6.4.0.0.51, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/svcmgr.core, /labs/ihlcsg25_spa_root/Telica/swCPU/6.4.0.0.51/apps/svcmgr/svcmgr)
+Thu Dec 13 22:32:32 2007 - mrumore.lra.lucent.com - Run GDB starting
+Thu Dec 13 22:32:49 2007 - mrumore.lra.lucent.com - Running GDB - 1329 - (ihlcsg18, BRANCH-6-3-1, 6.3.1.0.85, , /build/lcstools/6.3.1.0.85/Telica/swCPU/6.3.1.0.85_DEBUG/apps/sipa/sipa)
+Thu Dec 13 22:34:17 2007 - mrumore.lra.lucent.com - Running GDB - 1395 - (ihlcsg18, BRANCH-6-3-1, 6.3.1.0.85, , /build/lcstools/6.3.1.0.85/Telica/swCPU/6.3.1.0.85_DEBUG/apps/sipa/sipa)
+Thu Dec 13 22:35:57 2007 - mrumore.lra.lucent.com - Find CORES starting
+Thu Dec 13 22:37:21 2007 - mrumore.lra.lucent.com - Run GDB starting
+Thu Dec 13 22:39:48 2007 - mrumore.lra.lucent.com - LOADS - starting
+Thu Dec 13 22:39:53 2007 - mrumore.lra.lucent.com - Listing Load Files - (/build/lcstools/6.3.0.2.51/Telica/swCPU)
+Thu Dec 13 22:40:27 2007 - mrumore.lra.lucent.com - Run GDB starting
+Thu Dec 13 22:45:31 2007 - mrumore.lra.lucent.com - Find CORES starting
+Thu Dec 13 22:45:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Thu Dec 13 22:46:06 2007 - mrumore.lra.lucent.com - Running GDB - 2252 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.85, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.85/Telica/swCPU/6.3.1.0.85_DEBUG/apps/sipa/sipa)
+Thu Dec 13 23:16:57 2007 - mrumore.lra.lucent.com - LOADS - starting
+Thu Dec 13 23:17:00 2007 - mrumore.lra.lucent.com - Find CORES starting
+Thu Dec 13 23:19:38 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Thu Dec 13 23:19:45 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsg20)
+Fri Dec 14 09:20:22 2007 - djwag-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:21:39 2007 - djwag-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:25:04 2007 - ded-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 09:26:01 2007 - ded-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 09:26:03 2007 - ded-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:50:24 2007 - djwag-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:50:36 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 09:50:54 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:51:43 2007 - mrumore-c1.ih.lucent.com - Running GDB - 14591 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:51:47 2007 - djwag-c1.ih.lucent.com - Running GDB - 14611 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:52:27 2007 - mrumore-c1.ih.lucent.com - Running GDB - 14638 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:53:52 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 09:55:57 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 09:56:20 2007 - djwag-c1.ih.lucent.com - Running GDB - 19064 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:56:37 2007 - mrumore-c1.ih.lucent.com - Running GDB - 19098 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:57:44 2007 - mrumore-c1.ih.lucent.com - Running GDB - 19157 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:57:46 2007 - djwag-c1.ih.lucent.com - Running GDB - 19167 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:58:16 2007 - mrumore-c1.ih.lucent.com - Running GDB - 19238 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 09:58:17 2007 - djwag-c1.ih.lucent.com - Running GDB - 19245 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 10:55:20 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 10:56:32 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 10:58:12 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 11:04:11 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 11:04:20 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 11:06:25 2007 - mrumore-c1.ih.lucent.com - Running GDB - 12678 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 13:41:04 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 13:57:41 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 13:58:10 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 14:01:13 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 14:03:34 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 14:07:18 2007 - mrumore-c1.ih.lucent.com - Running GDB - 2047 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs)
+Fri Dec 14 14:27:20 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 14:27:56 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 14:28:13 2007 - mrumore-c1.ih.lucent.com - Running GDB - 3279 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 15:01:42 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 15:02:13 2007 - mrumore-c1.ih.lucent.com - Running GDB - 15747 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:11:23 2007 - mrumore-c1.ih.lucent.com - Running GDB - 2645 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:12:16 2007 - mrumore-c1.ih.lucent.com - Running GDB - 2673 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:12:56 2007 - mrumore-c1.ih.lucent.com - Running GDB - 2697 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:16:48 2007 - mrumore-c1.ih.lucent.com - Running GDB - 2741 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:40:58 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 16:41:17 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 16:41:29 2007 - mrumore-c1.ih.lucent.com - Running GDB - 3416 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:52:22 2007 - mrumore-c1.ih.lucent.com - Running GDB - 4715 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:56:46 2007 - mrumore-c1.ih.lucent.com - Running GDB - 4761 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 16:58:16 2007 - mrumore-c1.ih.lucent.com - Running GDB - 4795 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:02:57 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:03:13 2007 - mrumore-c1.ih.lucent.com - Running GDB - 4995 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:08:19 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:08:31 2007 - mrumore-c1.ih.lucent.com - Running GDB - 5093 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:09:27 2007 - mrumore-c1.ih.lucent.com - Running GDB - 5119 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:18:22 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:18:41 2007 - mrumore-c1.ih.lucent.com - Running GDB - 5277 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:20:31 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:21:31 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:22:59 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 17:23:14 2007 - mrumore-c1.ih.lucent.com - Running GDB - 5549 - (ihlcsg27, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg27_spa_home1/Telica/swCPU/core/sipa_CM2_PROC1_INST1.core, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa)
+Fri Dec 14 17:55:01 2007 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Fri Dec 14 17:55:07 2007 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg25)
+Fri Dec 14 18:01:04 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 18:01:27 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 18:02:01 2007 - mrumore-c1.ih.lucent.com - Find CORES starting
+Fri Dec 14 18:02:27 2007 - mrumore-c1.ih.lucent.com - Run GDB starting
+Fri Dec 14 18:02:48 2007 - mrumore-c1.ih.lucent.com - Running GDB - 7209 - (ihlcsg17, BRANCH-6-3-1, 6.3.1.0.85, /labs/ihlcsg17_spa_home1/Telica/swCPU/core/dbp.oldCore.1, /build/lcstools/6.3.1.0.85/Telica/swCPU/6.3.1.0.85_DEBUG/apps/dbp/dbp)
+Sat Dec 15 07:42:12 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 07:56:54 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 08:31:38 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 08:32:38 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 08:32:54 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 08:33:33 2007 - mrumore.lra.lucent.com - Running GDB - 15396 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 09:50:17 2007 - mrumore.lra.lucent.com - Running GDB - 31664 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 09:53:31 2007 - mrumore.lra.lucent.com - Running GDB - 31984 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 09:56:43 2007 - mrumore.lra.lucent.com - Running GDB - 32300 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 11:07:37 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 11:07:49 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 11:08:57 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 11:09:31 2007 - mrumore.lra.lucent.com - Running GDB - 4996 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 11:25:19 2007 - mrumore.lra.lucent.com - Running GDB - 5773 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 12:26:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 12:26:49 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 12:27:02 2007 - mrumore.lra.lucent.com - Running GDB - 6805 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 12:27:40 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 12:31:18 2007 - mrumore.lra.lucent.com - Running GDB - 6896 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router)
+Sat Dec 15 12:36:30 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 12:36:46 2007 - mrumore.lra.lucent.com - Running GDB - 6988 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 12:37:46 2007 - mrumore.lra.lucent.com - Running GDB - 7014 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 12:38:29 2007 - mrumore.lra.lucent.com - Running GDB - 7042 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 12:38:54 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 12:39:37 2007 - mrumore.lra.lucent.com - Running GDB - 7128 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:07:55 2007 - mrumore.lra.lucent.com - Running GDB - 7312 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:09:35 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 13:09:47 2007 - mrumore.lra.lucent.com - Running GDB - 7378 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 13:10:53 2007 - mrumore.lra.lucent.com - Running GDB - 7408 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:13:25 2007 - mrumore.lra.lucent.com - Running GDB - 7451 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:16:19 2007 - mrumore.lra.lucent.com - Running GDB - 7494 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:18:17 2007 - mrumore.lra.lucent.com - Running GDB - 7531 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:19:40 2007 - mrumore.lra.lucent.com - Running GDB - 7564 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 13:48:12 2007 - mrumore.lra.lucent.com - Running GDB - 7730 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 13:49:01 2007 - mrumore.lra.lucent.com - Running GDB - 7758 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 13:49:54 2007 - mrumore.lra.lucent.com - Running GDB - 7783 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 13:50:26 2007 - mrumore.lra.lucent.com - Running GDB - 7812 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 14:23:13 2007 - mrumore.lra.lucent.com - Running GDB - 8004 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 14:27:01 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 14:27:15 2007 - mrumore.lra.lucent.com - Running GDB - 8081 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 14:27:37 2007 - mrumore.lra.lucent.com - Running GDB - 8104 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 14:31:08 2007 - mrumore.lra.lucent.com - Running GDB - 8151 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 14:49:29 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 14:49:47 2007 - mrumore.lra.lucent.com - Running GDB - 8299 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 14:53:06 2007 - mrumore.lra.lucent.com - Running GDB - 8360 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 14:59:18 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 14:59:46 2007 - mrumore.lra.lucent.com - Running GDB - 8448 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 15:04:22 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 15:04:51 2007 - mrumore.lra.lucent.com - Running GDB - 8551 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 15:13:57 2007 - mrumore.lra.lucent.com - LOADS - starting
+Sat Dec 15 15:14:02 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Sat Dec 15 15:14:11 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsgw2)
+Sat Dec 15 15:14:58 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Sat Dec 15 15:15:08 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsgw2)
+Sat Dec 15 15:28:25 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 15:32:14 2007 - mrumore.lra.lucent.com - Running GDB - 8780 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 16:46:35 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 16:46:37 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 16:47:09 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 16:47:50 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 16:48:32 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 16:49:01 2007 - mrumore.lra.lucent.com - Running GDB - 9688 - (ihlcsg17, BRANCH-6-3-1, 6.3.1.0.85, /labs/ihlcsg17_spa_home1/Telica/swCPU/core/dbp.oldCore.1, /build/lcstools/6.3.1.0.85/Telica/swCPU/6.3.1.0.85_DEBUG/apps/dbp/dbp, yes)
+Sat Dec 15 20:37:03 2007 - vpanizo.lra.lucent.com - Run GDB starting
+Sat Dec 15 21:45:54 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 21:46:22 2007 - mrumore.lra.lucent.com - Running GDB - 12306 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Sat Dec 15 21:46:41 2007 - mrumore.lra.lucent.com - Running GDB - 12330 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 22:02:25 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 22:02:44 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 22:02:51 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 22:04:42 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Sat Dec 15 22:04:50 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsgw1)
+Sat Dec 15 22:08:13 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 22:08:22 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 22:08:46 2007 - mrumore.lra.lucent.com - Running GDB - 13036 - (ihlcsgw7, BRANCH-6-3-0, 6.3.0.2.54, /labs/ihlcsgw7_spa_home1/Telica/swCPU/core/ccs_CM1_PROC2_INST1.core, /build/lcstools/6.3.0.2.54/Telica/swCPU/6.3.0.2.54_DEBUG/apps/ccs/ccs, yes)
+Sat Dec 15 22:10:07 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 22:10:29 2007 - mrumore.lra.lucent.com - Running GDB - 13133 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sat Dec 15 23:05:24 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sat Dec 15 23:06:05 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sat Dec 15 23:06:26 2007 - mrumore.lra.lucent.com - Running GDB - 14519 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sun Dec 16 06:27:17 2007 - oliverx.lra.lucent.com - Run GDB starting
+Sun Dec 16 07:05:25 2007 - 135.4.67.155 - Run GDB starting
+Sun Dec 16 11:44:23 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sun Dec 16 11:44:41 2007 - mrumore.lra.lucent.com - Running GDB - 10565 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, yes)
+Sun Dec 16 15:05:18 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sun Dec 16 15:05:49 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Sun Dec 16 15:05:56 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsgw3)
+Sun Dec 16 15:06:54 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Sun Dec 16 15:07:02 2007 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsg24)
+Sun Dec 16 15:10:29 2007 - mrumore.lra.lucent.com - Run GDB starting
+Sun Dec 16 18:32:44 2007 - xiaohuiyu-c1.cn.lucent.com - Run GDB starting
+Sun Dec 16 18:48:45 2007 - yushuanchen-c1.cn.lucent.com - Run GDB starting
+Sun Dec 16 19:06:05 2007 - ci3015smchi.cn.lucent.com - Run GDB starting
+Sun Dec 16 19:11:15 2007 - jiany-c1.cn.lucent.com - Run GDB starting
+Sun Dec 16 20:00:11 2007 - minwang-c1.cn.lucent.com - Run GDB starting
+Mon Dec 17 09:06:06 2007 - 135.4.66.181 - Run GDB starting
+Mon Dec 17 14:48:05 2007 - 135.4.66.225 - Run GDB starting
+Mon Dec 17 14:48:19 2007 - 135.4.66.225 - Run GDB starting
+Mon Dec 17 17:15:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Mon Dec 17 22:18:44 2007 - mrumore.lra.lucent.com - Find CORES starting
+Mon Dec 17 22:19:24 2007 - mrumore.lra.lucent.com - Run GDB starting
+Mon Dec 17 22:21:57 2007 - mrumore.lra.lucent.com - Find CORES starting
+Mon Dec 17 22:22:41 2007 - mrumore.lra.lucent.com - Run GDB starting
+Mon Dec 17 22:34:54 2007 - mrumore.lra.lucent.com - Running GDB - 17058 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/emf.oldCore.1, /labs/ihlcswg2_spb_root/Telica/swCPU/6.3.0.2.55/emf/emf, yes)
+Mon Dec 17 22:37:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Mon Dec 17 22:38:00 2007 - mrumore.lra.lucent.com - Running GDB - 20212 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/emf.oldCore.1, /labs/ihlcswg2_spb_root/Telica/swCPU/6.3.0.2.55/emf/emf, no)
+Mon Dec 17 22:41:38 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Mon Dec 17 22:41:42 2007 - mrumore.lra.lucent.com - Run GDB starting
+Mon Dec 17 22:42:36 2007 - mrumore.lra.lucent.com - Running GDB - 26011 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/emf.oldCore.1, /labs/ihlcswg2_spb_root/Telica/swCPU/6.3.0.2.55/emf/emf, yes)
+Tue Dec 18 09:07:59 2007 - rhellman.lra.lucent.com - LABS Logs - starting
+Tue Dec 18 10:25:23 2007 - zhenhuaxie-c1.ih.lucent.com - LABS Logs - starting
+Tue Dec 18 10:25:33 2007 - zhenhuaxie-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw5)
+Tue Dec 18 10:25:48 2007 - zhenhuaxie-c1.ih.lucent.com - LABS Logs - starting
+Tue Dec 18 10:26:00 2007 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Dec 18 10:26:30 2007 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 27576 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spa_home1/ccs_CM4_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, no)
+Tue Dec 18 10:29:45 2007 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Dec 18 10:30:08 2007 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 27690 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spa_home1/ccs_CM4_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, no)
+Tue Dec 18 10:41:39 2007 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Dec 18 10:41:58 2007 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 27841 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spa_home1/ccs_CM4_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, no)
+Tue Dec 18 12:44:00 2007 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Dec 18 12:44:24 2007 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 21585 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spa_home1/ccs_CM4_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, yes)
+Tue Dec 18 21:49:28 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 21:49:44 2007 - mrumore.lra.lucent.com - Find CORES starting
+Tue Dec 18 21:50:04 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 21:50:25 2007 - mrumore.lra.lucent.com - Running GDB - 5243 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 21:50:55 2007 - mrumore.lra.lucent.com - Running GDB - 5267 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 21:56:05 2007 - mrumore.lra.lucent.com - Running GDB - 5412 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 21:56:40 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 21:56:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 21:56:50 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 21:57:06 2007 - mrumore.lra.lucent.com - Running GDB - 5483 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 21:59:40 2007 - mrumore.lra.lucent.com - Running GDB - 5851 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 22:00:28 2007 - mrumore.lra.lucent.com - Find CORES starting
+Tue Dec 18 22:00:43 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 22:01:08 2007 - mrumore.lra.lucent.com - Running GDB - 5994 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/mgsig.oldCore.1, /build/lcstools/6.3.0.2.55/Telica/swCPU/6.3.0.2.55_DEBUG/apps/mgsig/mgsig, no)
+Tue Dec 18 22:19:12 2007 - mrumore.lra.lucent.com - Running GDB - 6667 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/mgsig.oldCore.1, /build/lcstools/6.3.0.2.55/Telica/swCPU/6.3.0.2.55_DEBUG/apps/mgsig/mgsig, no)
+Tue Dec 18 22:20:17 2007 - mrumore.lra.lucent.com - Running GDB - 6704 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/mgsig.oldCore.1, /build/lcstools/6.3.0.2.55/Telica/swCPU/6.3.0.2.55_DEBUG/apps/mgsig/mgsig, no)
+Tue Dec 18 22:21:28 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 22:22:03 2007 - mrumore.lra.lucent.com - Find CORES starting
+Tue Dec 18 23:03:31 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:03:36 2007 - mrumore.lra.lucent.com - Find CORES starting
+Tue Dec 18 23:03:57 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:04:21 2007 - mrumore.lra.lucent.com - Running GDB - 8313 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, no)
+Tue Dec 18 23:08:21 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:09:26 2007 - mrumore.lra.lucent.com - Running GDB - 8523 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, yes)
+Tue Dec 18 23:18:20 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:18:29 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:18:49 2007 - mrumore.lra.lucent.com - Running GDB - 9474 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, no)
+Tue Dec 18 23:21:44 2007 - mrumore.lra.lucent.com - Running GDB - 9559 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, no)
+Tue Dec 18 23:22:11 2007 - mrumore.lra.lucent.com - Running GDB - 9583 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, no)
+Tue Dec 18 23:22:32 2007 - mrumore.lra.lucent.com - Running GDB - 9606 - (ihlcsg28, BRANCH-6-3-1, 6.3.1.0.92, /labs/ihlcsg28_spa_home1/Telica/swCPU/core/sipa.oldCore.1, /build/lcstools/6.3.1.0.92/Telica/swCPU/6.3.1.0.92_DEBUG/apps/sipa/sipa, yes)
+Tue Dec 18 23:26:34 2007 - mrumore.lra.lucent.com - Run GDB starting
+Tue Dec 18 23:27:09 2007 - mrumore.lra.lucent.com - Running GDB - 9806 - (ihlcsg25, Main, 6.4.0.0.60, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/router.oldCore.1, /build/lcstools/6.4.0.0.60/Telica/swCPU/6.4.0.0.60_DEBUG/apps/router/router, no)
+Tue Dec 18 23:42:38 2007 - mrumore.lra.lucent.com - LOADS - starting
+Tue Dec 18 23:42:40 2007 - mrumore.lra.lucent.com - LABS Logs - starting
+Wed Dec 19 10:51:31 2007 - mrumore.lra.lucent.com - LOADS - starting
+Wed Dec 19 10:51:32 2007 - mrumore.lra.lucent.com - Find CORES starting
+Wed Dec 19 10:52:06 2007 - mrumore.lra.lucent.com - Run GDB starting
+Wed Dec 19 10:52:34 2007 - mrumore.lra.lucent.com - Running GDB - 14655 - (ihlcswg3, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg3_spa_home1/Telica/swCPU/core/mgsig.oldCore.1, /build/lcstools/6.3.0.2.55/Telica/swCPU/6.3.0.2.55_DEBUG/apps/mgsig/mgsig, no)
+Wed Dec 19 10:54:45 2007 - mrumore.lra.lucent.com - Run GDB starting
+Wed Dec 19 10:55:57 2007 - mrumore.lra.lucent.com - Find CORES starting
+Wed Dec 19 10:55:58 2007 - mrumore.lra.lucent.com - Find CORES starting
+Wed Dec 19 10:56:06 2007 - mrumore.lra.lucent.com - Run GDB starting
+Wed Dec 19 13:13:46 2007 - usil100014-proxy3.gw.lucent.com - LABS Logs - starting
+Wed Dec 19 14:00:08 2007 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Wed Dec 19 14:00:29 2007 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 1291 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spb_home1/ccs_CM3_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, no)
+Wed Dec 19 16:53:39 2007 - mrumore.lra.lucent.com - Run GDB starting
+Wed Dec 19 16:54:04 2007 - mrumore.lra.lucent.com - Running GDB - 1024 - (ihlcsgw5, BRANCH-6-3-1, 6.3.1.0.97, /labs/ihlcsgw5_spb_home1/ccs_CM3_PROC1_INST2.core, /build/lcstools/6.3.1.0.97/Telica/swCPU/6.3.1.0.97_DEBUG/apps/ccs/ccs, yes)
+Thu Dec 20 22:49:45 2007 - lewis.lra.lucent.com - Run GDB starting
+Fri Dec 21 07:04:50 2007 - mrumore.lra.lucent.com - Find CORES starting
+Fri Dec 21 07:05:35 2007 - mrumore.lra.lucent.com - Run GDB starting
+Fri Dec 21 07:06:06 2007 - mrumore.lra.lucent.com - Running GDB - 5184 - (ihlcswg2, BRANCH-6-3-0, 6.3.0.2.55, /labs/ihlcswg2_spb_home1/Telica/swCPU/core/emf.oldCore.1, /labs/ihlcswg2_spb_root/Telica/swCPU/6.3.0.2.55/emf/emf, yes)
+Fri Dec 21 18:01:47 2007 - mrumore.lra.lucent.com - Find CORES starting
+Sun Dec 23 12:59:49 2007 - bradstru.lra.lucent.com - LABS Logs - starting
+Sun Dec 23 13:00:04 2007 - bradstru.lra.lucent.com - Listing Lab Logs - (ihlcsgw3)
+Sun Dec 23 18:47:14 2007 - mrumore.lra.lucent.com - Find CORES starting
+Mon Dec 24 12:33:25 2007 - mrumore.lra.lucent.com - Find CORES starting
+Wed Jan  2 13:14:22 2008 - 135.4.64.237 - Run GDB starting
+Wed Jan  2 13:20:26 2008 - eyuan-c1.ih.lucent.com - Run GDB starting
+Wed Jan  2 13:20:26 2008 - eyuan-c1.ih.lucent.com - Run GDB starting
+Thu Jan  3 17:08:57 2008 - wnix-c1.ih.lucent.com - LABS Logs - starting
+Thu Jan  3 17:09:02 2008 - wnix-c1.ih.lucent.com - Listing Lab Logs - (ihlcs1)
+Fri Jan  4 14:01:45 2008 - wnix-c1.ih.lucent.com - LABS Logs - starting
+Fri Jan  4 14:01:55 2008 - wnix-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw1)
+Mon Jan  7 09:38:53 2008 - 135.4.67.170 - Run GDB starting
+Mon Jan  7 09:39:34 2008 - 135.4.67.170 - Run GDB starting
+Mon Jan  7 09:41:14 2008 - 135.4.67.170 - LABS Logs - starting
+Mon Jan  7 10:52:49 2008 - zhenhuaxie-c1.ih.lucent.com - LABS Logs - starting
+Mon Jan  7 10:53:10 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Mon Jan  7 10:56:46 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 7268 - (ihlcsgw3, BRANCH-6-3-1, 6.3.1.0.111, /labs/ihlcsgw3_spb_home1/sipa_CM1_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Mon Jan  7 12:06:30 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Mon Jan  7 12:07:08 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 22639 - (ihlcsgw3, BRANCH-6-3-1, 6.3.1.0.111, /labs/ihlcsgw3_spb_home1/sipa_CM1_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Mon Jan  7 12:08:04 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 22935 - (ihlcsgw3, BRANCH-6-3-1, 6.3.1.0.111, /labs/ihlcsgw3_spb_home1/sipa_CM1_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Mon Jan  7 14:21:27 2008 - 135.4.67.170 - Run GDB starting
+Mon Jan  7 19:33:22 2008 - testvand.lra.lucent.com - Run GDB starting
+Mon Jan  7 20:50:46 2008 - mrumore.lra.lucent.com - LABS Logs - starting
+Mon Jan  7 20:51:16 2008 - mrumore.lra.lucent.com - Find CORES starting
+Mon Jan  7 20:51:43 2008 - mrumore.lra.lucent.com - Run GDB starting
+Mon Jan  7 20:52:16 2008 - mrumore.lra.lucent.com - Running GDB - 15240 - (ihlcsg35, BRANCH-6-3-1, 6.3.1.0.107, /labs/ihlcsg35_spa_home1/Telica/swCPU/core/megagw.oldCore.1, /build/lcstools/6.3.1.0.107/Telica/swCPU/6.3.1.0.107_DEBUG/apps/megagw/megagw, yes)
+Mon Jan  7 23:03:18 2008 - mrumore.lra.lucent.com - LABS Logs - starting
+Mon Jan  7 23:03:31 2008 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcswg1)
+Mon Jan  7 23:03:50 2008 - mrumore.lra.lucent.com - LABS Logs - starting
+Mon Jan  7 23:03:52 2008 - mrumore.lra.lucent.com - LOADS - starting
+Mon Jan  7 23:03:55 2008 - mrumore.lra.lucent.com - Find CORES starting
+Tue Jan  8 16:58:35 2008 - zhenhuaxie-c1.ih.lucent.com - LABS Logs - starting
+Tue Jan  8 16:58:42 2008 - zhenhuaxie-c1.ih.lucent.com - Listing Lab Logs - (ihlcsgw3)
+Tue Jan  8 17:00:33 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Jan  8 17:00:57 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 22616 - (ihlcsgw3, BRANCH-6-3-1, 6.3.1.0.111, /labs/ihlcsgw3_spa_home1/sipa_CM1_PROC4_INST1.core, /build/zhenhuaxie/sipa, no)
+Tue Jan  8 21:26:58 2008 - mrumore.lra.lucent.com - Find CORES starting
+Tue Jan  8 21:27:44 2008 - mrumore.lra.lucent.com - Run GDB starting
+Tue Jan  8 21:28:10 2008 - mrumore.lra.lucent.com - Running GDB - 6716 - (ihlcsdv2, Main, 6.4.0.0.74, /labs/ihlcsdv2_spb_home1/Telica/swCPU/core/slam.oldCore.1, /build/lcstools/6.4.0.0.74/Telica/swCPU/6.4.0.0.74_DEBUG/apps/slam/slam, yes)
+Wed Jan  9 08:27:09 2008 - mrumore.lra.lucent.com - Find CORES starting
+Sat Jan 12 02:01:28 2008 - jpernst.lra.lucent.com - Run GDB starting
+Sat Jan 12 02:02:13 2008 - jpernst.lra.lucent.com - Running GDB - 24778 - (ihlcsg25, Main, 6.4.0.0.83, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/dist.core, /build/lcstools/6.4.0.0.83/Telica/swCPU/6.4.0.0.83_DEBUG/apps/dist/dist, no)
+Sun Jan 13 18:47:52 2008 - jpernst.lra.lucent.com - Find CORES starting
+Mon Jan 14 09:40:25 2008 - mrumore-c1.ih.lucent.com - LABS Logs - starting
+Mon Jan 14 09:40:31 2008 - mrumore-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg15)
+Mon Jan 14 16:06:23 2008 - singlar-c1.ih.lucent.com - LABS Logs - starting
+Mon Jan 14 16:06:28 2008 - singlar-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg13)
+Mon Jan 14 17:13:40 2008 - ostrego-c1.ih.lucent.com - LOADS - starting
+Tue Jan 15 15:00:15 2008 - savitri-c1.ih.lucent.com - Run GDB starting
+Tue Jan 15 15:00:53 2008 - savitri-c1.ih.lucent.com - Running GDB - 24665 - (ihlcsg11, Main, 6.4.0.0.86, /labs/ihlcsg11_spb_home1/Telica/swCPU/core/dist.core, /build/lcstools/6.4.0.0.86/Telica/swCPU/6.4.0.0.86_DEBUG/apps/dist/dist, no)
+Tue Jan 15 15:47:19 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Tue Jan 15 15:49:49 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 1614 - (ihlcsgw7, BRANCH-6-3-1, 6.3.1.0.119, /labs/ihlcsgw7_spa_home1/core/sipa_CM2_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Tue Jan 15 16:33:46 2008 - jpernst-c1.ih.lucent.com - Run GDB starting
+Tue Jan 15 16:34:13 2008 - jpernst-c1.ih.lucent.com - Running GDB - 28240 - (ihlcsg25, Main, 6.4.0.0.83, /labs/ihlcsg25_spa_home1/Telica/swCPU/core/dist.core, /build/lcstools/6.4.0.0.83/Telica/swCPU/6.4.0.0.83_DEBUG/apps/dist/dist, no)
+Tue Jan 15 17:52:21 2008 - gurusamy.lra.lucent.com - Run GDB starting
+Tue Jan 15 17:53:05 2008 - gurusamy.lra.lucent.com - Running GDB - 9639 - (ihlcsg26, BRANCH-6-3-1, 6.3.1.0.122, /labs/ihlcsg26_spa_home1/Telica/swCPU/core/sipa.core, /build/lcstools/6.3.1.0.122/Telica/swCPU/6.3.1.0.122_DEBUG/apps/sipa/sipa, no)
+Wed Jan 16 09:41:05 2008 - scherukuri-c1.ih.lucent.com - LABS Logs - starting
+Wed Jan 16 09:41:15 2008 - scherukuri-c1.ih.lucent.com - Listing Lab Logs - (ihlcsg13)
+Thu Jan 17 12:35:32 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Thu Jan 17 12:36:03 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 4745 - (ihlcsgw1, BRANCH-6-3-1, 6.3.1.0.119, /labs/ihlcsgw1_spa_home1/sipa_CM2_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Thu Jan 17 16:19:46 2008 - zhenhuaxie-c1.ih.lucent.com - Run GDB starting
+Thu Jan 17 16:20:09 2008 - zhenhuaxie-c1.ih.lucent.com - Running GDB - 24178 - (ihlcsgw1, BRANCH-6-3-1, 6.3.1.0.119, /labs/ihlcsgw1_spa_home1/sipa_CM1_PROC4_INST1.core.1, /build/zhenhuaxie/sipa, no)
+Thu Jan 17 16:31:18 2008 - testvander-c1.ih.lucent.com - Run GDB starting
+Thu Jan 17 16:35:56 2008 - testvander-c1.ih.lucent.com - Running GDB - 8190 - (ihlcsgw7, BRANCH-6-3-1, 6.3.1.0.123, /labs/ihlcsgw7_spb_home1/ccs_CM1_PROC4_INST1.core, /build/lcstools/6.3.1.0.123/Telica/swCPU/6.3.1.0.123_DEBUG/apps/ccs/ccs, yes)
+Thu Jan 17 16:37:54 2008 - testvander-c1.ih.lucent.com - Run GDB starting
+Thu Jan 17 16:38:10 2008 - testvander-c1.ih.lucent.com - Find CORES starting
+Thu Jan 17 16:38:23 2008 - testvander-c1.ih.lucent.com - Run GDB starting
+Thu Jan 17 16:40:57 2008 - testvander-c1.ih.lucent.com - Running GDB - 9142 - (ihlcsgw7, BRANCH-6-3-1, 6.3.1.0.123, /labs/ihlcsgw7_spb_home1/ccs_CM1_PROC4_INST1.core, /build/lcstools/6.3.1.0.123/Telica/swCPU/6.3.1.0.123_DEBUG/apps/ccs/ccs, yes)
+Fri Jan 18 15:45:09 2008 - mgrodgers-c1.ih.lucent.com - Run GDB starting
+Fri Jan 18 20:37:44 2008 - mrumore.lra.lucent.com - Find CORES starting
+Fri Jan 18 20:38:20 2008 - mrumore.lra.lucent.com - LABS Logs - starting
+Fri Jan 18 20:39:19 2008 - mrumore.lra.lucent.com - Run GDB starting
+Fri Jan 18 20:40:13 2008 - mrumore.lra.lucent.com - Running GDB - 20292 - (ihlcsgw5, BP-6-2-1-4, 6.2.1.4.SP.4, /labs/ihlcsgw5_spa_home1/ccs_CM3_PROC1_INST2.core, /build/lcstools/6.2.1.4.SP.4/Telica/swCPU/6.2.1.4.SP.4_DEBUG/apps/ccs/ccs, no)
+Fri Jan 18 20:41:19 2008 - mrumore.lra.lucent.com - Running GDB - 20338 - (ihlcsgw5, BP-6-2-1-4, 6.2.1.4.SP.4, /labs/ihlcsgw5_spa_home1/ccs_CM3_PROC1_INST2.core, /build/lcstools/6.2.1.4.SP.4/Telica/swCPU/6.2.1.4.SP.4_DEBUG/apps/ccs/ccs, yes)
+Fri Jan 18 20:42:46 2008 - mrumore.lra.lucent.com - LOADS - starting
+Fri Jan 18 20:42:51 2008 - mrumore.lra.lucent.com - Listing Load Files - (/build/lcstools/6.3.1.0.126/Telica/swCPU)
+Sun Jan 20 11:06:51 2008 - mrumore.lra.lucent.com - LABS Logs - starting
+Sun Jan 20 11:06:57 2008 - mrumore.lra.lucent.com - Listing Lab Logs - (ihlcsg25)
+Sun Jan 20 11:18:41 2008 - mrumore.lra.lucent.com - Run GDB starting
+Sun Jan 20 11:19:11 2008 - mrumore.lra.lucent.com - Running GDB - 14614 - (ihlcsg25, Main, 6.4.0.0.83, /labs/ihlcsg25_spb_home1/Telica/swCPU/core/ccs.oldCore.1, /build/lcstools/6.4.0.0.83/Telica/swCPU/6.4.0.0.83_DEBUG/apps/ccs/ccs, no)

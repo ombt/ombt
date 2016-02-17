@@ -1,0 +1,18 @@
+parameter delta 5
+parameter minmsgsize 20
+#
+Call-ID = 16305514762@ihgp.ih.lucent.com
+Scenario = refersuccess
+Refer-To = 16307134396@ihgp.ih.lucent.com
+WaitFor202Timer = 30
+#
+Call-ID = 16307134396@ihgp.ih.lucent.com
+Scenario = refersuccess
+Refer-To = 16307134396@ihgp.ih.lucent.com
+WaitFor202Timer = 30
+#
+Call-ID = xxx@yyy.zzz.com
+Scenario = refersuccess
+Refer-To = yyy@zzz.com
+WaitFor202Timer = 30
+#

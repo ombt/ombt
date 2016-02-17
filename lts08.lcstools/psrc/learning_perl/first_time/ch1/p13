@@ -1,0 +1,26 @@
+#!/opt/exp/bin/perl -w
+#
+while (defined($filename = glob("*.secret")))
+{
+	open(WORDLIST, "wordlist") || die "can't open wordlist: $!";
+	while ($name = <WORDLIST>) 
+	{
+		chomp($name);
+		$word = <WORDLIST>;
+		chomp($word);
+		write;
+	}
+	close(WORDLIST) || die "can't close wordlist: $!";
+}
+#
+format STDOUT = 
+@<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<
+$filename, $name, $word
+.
+format STDOUT_TOP =
+page @<<
+$%
+
+Filename              Name                 Word
+===================== ==================== =====================
+.

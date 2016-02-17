@@ -1,0 +1,34 @@
+#!/opt/exp/bin/perl
+#
+%secrethandshakes = qw(
+	fred	camel
+	barney	llama
+	betty	alpaca
+	wilma	alpaca
+);
+#
+print("hollow, world!\n");
+print("What is your name? ");
+$name = <STDIN>;
+chomp($name);
+$oname = $name;
+#
+$name =~ s/\W.*$//;
+$name =~ tr/[A-Z]/[a-z]/;
+#
+if ($oname =~  /^mike\b/i) {
+	print("Hey $oname, how's work treating you ??? \n");
+} else {
+	print("Hello, $oname!\n");
+	$secrethandshake = $secrethandshakes{$name};
+	if ($secrethandshake eq "") {
+		$secrethandshake = "farmer";
+	}
+	$handshake = "";
+	while ($handshake ne $secrethandshake) {
+		print("What is the secret hand-shake, $oname? ");
+		$handshake = <STDIN>;
+		chomp($handshake);
+	}
+}
+#

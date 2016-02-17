@@ -1,0 +1,5 @@
+rtrv_eqpt exec { spip tl1login tl1passwd } {
+	tl1 open -t10 rtrv_eqpt_tl1spa <spip> <tl1login> <tl1passwd>
+	tl1 exec -i -v rtrv_eqpt_tl1spa rtrv-eqpt
+	tl1 close rtrv_eqpt_tl1spa
+}

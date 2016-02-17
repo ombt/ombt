@@ -1,0 +1,53 @@
+CC = CC
+CCFLAGS = -g -DDEBUG
+LDS = CC
+LDFLAGS = -g -DDEBUG
+#
+ntax
+ntax.c
+1040.c
+federal.c
+il.c
+db.c
+taxTable.c
+scheduleA.c
+money.c
+number.c
+realEstate.c
+-lm
+#
+usury
+usury.c
+db.c
+money.c
+number.c
+-lm
+#
+interest
+interest.c
+db.c
+money.c
+number.c
+-lm
+-liostream
+#
+interest2
+interest2.c
+db.c
+money.c
+number.c
+-lm
+#
+ttax
+ttax.c
+1040.c
+federal.c
+il.c
+fica.c
+db.c
+taxTable.c
+scheduleA.c
+money.c
+number.c
+realEstate.c
+-lm

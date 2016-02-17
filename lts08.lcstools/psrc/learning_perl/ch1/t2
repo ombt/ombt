@@ -1,0 +1,24 @@
+#!/opt/exp/bin/perl -w
+#
+$secrethandshake = "farmer";
+#
+print("hollow, world!\n");
+print("What is your name? ");
+$name = <STDIN>;
+chomp($name);
+#
+if ($name eq "Mike") {
+	print("Hey $name, how's work treating you ??? \n");
+} else {
+	print("Hello, $name!\n");
+	print("What is the secret hand-shake? ");
+	$handshake = <STDIN>;
+	chomp($handshake);
+	while ($handshake ne $secrethandshake) {
+		print("Wrong guess, STIFF. Try again.\n");
+		print("What is the secret hand-shake? ");
+		$handshake = <STDIN>;
+		chomp($handshake);
+	}
+}
+#

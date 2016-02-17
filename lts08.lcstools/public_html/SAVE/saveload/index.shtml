@@ -1,0 +1,28 @@
+<html>
+
+<head>
+<title> LCS TOOLS SAVELOAD </title>
+</head>
+
+<body bgcolor="E0E0E0">
+<font>
+
+<center>
+
+<h1>
+LCS TOOLS SAVELOAD -
+<!--#exec cmd="../cgi-bin/showremoteuser.cgi"-->
+</h1>
+<hr>
+
+<!--#exec cmd="../cgi-bin/showenvvars.cgi"-->
+
+<hr>
+<!--#exec cmd="../cgi-bin/counter.cgi SAVELOAD ../cgi-bin/hits.dat"-->
+
+</center>
+
+</font>
+</body>
+
+</html>

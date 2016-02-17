@@ -1,0 +1,430 @@
+hrdcpy ftp ihgp
+Connected to ihgp.
+220 ihgp FTP server (SunOS 5.8) ready.
+Name (ihgp:lcstools): mrumore
+331 Password required for mrumore.
+Password:
+
+500 'PASS ': command not understood.
+Login failed.
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy ftp ihgphrdcpy 
+Connected to ihgp.
+220 ihgp FTP server (SunOS 5.8) ready.
+Name (ihgp:lcstools): rumore
+331 Password required for rumore.
+Password:XXXXXXXXX
+
+230 User rumore logged in.
+ftp> 
+ftp> 
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy 
+hrdcpy 
+hrdcpy ftp ihgphrdcpy 
+Connected to ihgp.
+220 ihgp FTP server (SunOS 5.8) ready.
+Name (ihgp:lcstools): rumore
+331 Password required for rumore.
+Password:junk
+
+530 Login incorrect.
+Login failed.
+ftp> 
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy ftp ihgphrdcpy 
+Connected to ihgp.
+220 ihgp FTP server (SunOS 5.8) ready.
+Name (ihgp:lcstools): rumore
+331 Password required for rumore.
+Password:XXXXXXX
+
+530 Login incorrect.
+Login failed.
+ftp> quit
+221 Goodbye.
+hrdcpy ftp ihgphrdcpy 
+Connected to ihgp.
+220 ihgp FTP server (SunOS 5.8) ready.
+Name (ihgp:lcstools): rumore
+331 Password required for rumore.
+Password:XXXXXXXXX
+
+230 User rumore logged in.
+ftp> 
+ftp> 
+ftp> 
+ftp> 
+ftp> ls
+200 PORT command successful.
+150 ASCII data connection for /bin/ls (135.111.82.6,53945) (0 bytes).
+_viminfo
+bin
+cuj
+diagnostic.tests
+docs
+flash_solaris
+info
+javadecomp
+jsrc
+lib
+LTS00
+mail
+mylibs
+ns_imap
+nsmail
+plexus
+provers
+psrc
+public_html
+PUTTY.RND
+readmes
+relo5.ovrld
+rje
+rop
+ROP.CLASS
+src
+sysconfig
+tclsrc
+Temp
+webstart101
+226 ASCII Transfer complete.
+259 bytes received in 0.034 seconds (7.4 Kbytes/s)
+ftp> cd bin
+250 CWD command successful.
+ftp> ls
+200 PORT command successful.
+150 ASCII data connection for /bin/ls (135.111.82.6,53946) (0 bytes).
+acsdb
+addpath
+ahdr
+aliases
+asn1cc
+asn1l
+asn1pp
+atp
+atpfe
+backup
+bldcscope
+boldoff
+boldon
+byaccj
+card_adm
+catmid
+cdp
+cdv
+cfdmp
+chess
+circle
+clear.netscape
+clrhist
+cos
+cosine
+cscbuq
+cscd
+cuckoo
+cvs
+demangle
+dhdr
+dir
+dupnode
+edelf58
+elfcompare
+elfoc
+f2lns
+folp
+folp_pp
+folp_prover
+folp_split
+ftrc
+gedelf
+getall
+gethdrs
+getmid
+getrd
+gnutar
+greper
+gvim
+h2d
+hfe
+interest
+ipclr
+isfeatured
+isfileout
+jad
+jdir
+jgrep
+jping
+key2num
+lan
+lnno
+load.mikey
+logdb
+lssmon
+marjavabin
+marjavabin_st_tools
+mirror
+mm2html
+mm2html.awk
+modsget
+mr2file
+mrgrp
+mrrpt
+mtread
+mtwrite
+mvp
+myar
+mybc
+mybsplit
+mycpp
+mycpr
+mycpr2on1
+mycscope
+mydf
+mygraph
+mymk
+mymrs
+myncr
+myp
+myprt
+myprtfmt
+myptree
+myxmcd
+ncr
+nlssmon
+nodalbin
+Nrunapp
+ntax
+ocelf58
+omybc
+omyncr
+orig.dis
+otybld
+otypp
+otypp2
+otyscan
+otyscan2
+otyssbld
+pcenv
+pdir
+pst
+rcvio
+rhdr
+rle
+rmdups
+ropdb
+rotate
+rsd
+runapp
+save.netscape
+scale
+sccspr
+shar.cc
+shar.shar
+shcodec
+shl
+sieve
+sin
+sine
+stabp
+suropdb
+tan
+tax
+tmemo
+tpredpp
+tprop
+trans
+ttax
+ttyattr
+uman
+uqpth
+usury
+utbl
+vimid
+vucp
+vudf
+vuvi
+xgraph
+zap
+226 ASCII Transfer complete.
+1182 bytes received in 0.088 seconds (13 Kbytes/s)
+ftp> lcs /tmp
+?Invalid command
+ftp> lcd .tm
+.tm: No such file or directory
+ftp> lcs /tmp
+?Invalid command
+ftp> lcd /tmp
+Local directory now /tmp
+ftp> ascii
+200 Type set to A.
+ftp> get vuvi
+200 PORT command successful.
+150 ASCII data connection for vuvi (135.111.82.6,54020) (139 bytes).
+226 ASCII Transfer complete.
+local: vuvi remote: vuvi
+152 bytes received in 0.056 seconds (2.6 Kbytes/s)
+ftp> 
+ftp> 
+ftp> 
+ftp> get junk
+200 PORT command successful.
+550 junk: No such file or directory.
+ftp> 
+ftp> 
+ftp> 
+ftp> binary
+200 Type set to I.
+ftp> 
+ftp> 
+ftp> get vuvi
+200 PORT command successful.
+150 Binary data connection for vuvi (135.111.82.6,54101) (139 bytes).
+226 Binary Transfer complete.
+local: vuvi remote: vuvi
+139 bytes received in 0.00022 seconds (6.1e+02 Kbytes/s)
+ftp> 
+ftp> 
+ftp> get junk
+200 PORT command successful.
+550 junk: No such file or directory.
+ftp> 
+ftp> 
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy exi   
+hrdcpy ftp lcsbld1
+Connected to lcsbld1.
+220 (vsFTPd 1.2.1)
+Name (lcsbld1:lcstools): mrumokre
+331 Please specify the password.
+Password:
+
+530 Login incorrect.
+Login failed.
+ftp> 
+ftp> 
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy ftp lcsbld1hrdcpy 
+Connected to lcsbld1.
+220 (vsFTPd 1.2.1)
+Name (lcsbld1:lcstools): mrumore
+331 Please specify the password.
+Password:XXXXXXX
+
+230 Login successful.
+ftp> 
+ftp> 
+ftp> 
+ftp> lcs bin
+?Invalid command
+ftp> lcd bin
+bin: No such file or directory
+ftp> cd bin
+250 Directory successfully changed.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+gedelf
+getalltl1
+make.ss.cscope
+mycvsco
+mydir
+mymk
+mytl1cvsco
+myvercvsco
+set_cvsenv
+sscscope
+226 Directory send OK.
+103 bytes received in 0.013 seconds (7.6 Kbytes/s)
+ftp> lcd /tmp
+Local directory now /tmp
+ftp> ascii
+200 Switching to ASCII mode.
+ftp> get mymk
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for mymk (24537 bytes).
+226 File send OK.
+local: mymk remote: mymk
+24537 bytes received in 0.059 seconds (4.1e+02 Kbytes/s)
+ftp> 
+ftp> 
+ftp> 
+ftp> get junk
+200 PORT command successful. Consider using PASV.
+550 Failed to open file.
+ftp> 
+ftp> 
+ftp> 
+ftp> 
+ftp> bin
+200 Switching to Binary mode.
+ftp> 
+ftp> 
+ftp> 
+ftp> get vuvi
+200 PORT command successful. Consider using PASV.
+550 Failed to open file.
+ftp> 
+ftp> 
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+gedelf
+getalltl1
+make.ss.cscope
+mycvsco
+mydir
+mymk
+mytl1cvsco
+myvercvsco
+set_cvsenv
+sscscope
+226 Directory send OK.
+103 bytes received in 0.014 seconds (7.4 Kbytes/s)
+ftp> get mymk
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for mymk (24537 bytes).
+226 File send OK.
+local: mymk remote: mymk
+24537 bytes received in 0.0034 seconds (7.1e+03 Kbytes/s)
+ftp> 
+ftp> 
+ftp> 
+ftp> 
+ftp> lcd .
+Local directory now /tmp
+ftp> binary
+200 Switching to Binary mode.
+ftp> get mymk
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for mymk (24537 bytes).
+226 File send OK.
+local: mymk remote: mymk
+24537 bytes received in 0.0033 seconds (7.2e+03 Kbytes/s)
+ftp> 
+ftp> 
+ftp> 
+ftp> 
+ftp> get junk
+200 PORT command successful. Consider using PASV.
+550 Failed to open file.
+ftp> 
+ftp> 
+ftp> 
+ftp> 
+ftp> quit
+221 Goodbye.
+hrdcpy exit

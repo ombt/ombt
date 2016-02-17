@@ -1,0 +1,51 @@
+#!/usr/bin/perl 
+#
+getMinAndMax();
+#
+@junk = ($min .. $max);
+print "1) junk is ... @junk\n";
+#
+$a = $junk[0];
+print "2) junk[0] is ... $a\n";
+#
+$junk[0]++;
+$a = $junk[0];
+print "3) junk[0]++ is ... $a\n";
+#
+$junk[1]++;
+print "4) junk is ... @junk\n";
+@junk[0,1] = @junk[1,0];
+$a = $junk[0];
+print "4) junk[0] is ... $a\n";
+$a = $junk[1];
+print "4) junk[1] is ... $a\n";
+print "4) junk is ... @junk\n";
+#
+@junk2 = ($min .. 2*$max)[2,3];
+print "5) junk2 is ... @junk2\n";
+#
+$l = @junk;
+@ijunk= (0 .. $l-1);
+@junk3 = @junk2[@ijunk];
+print "6) junk3 is ... @junk3\n";
+#
+sub getMinAndMax {
+	#
+	$min = $max = 0;
+	#
+	print "enter a min number: ";
+	$min = <STDIN>;
+	chomp $min;
+	#
+	print "enter a max number: ";
+	$max = <STDIN>;
+	chomp $max;
+	#
+	if ($min > $max)
+	{
+		# $tmp = $min;
+		# $min = $max;
+		# $max = $tmp
+		($min, $max) = ($max, $min);
+	}
+}

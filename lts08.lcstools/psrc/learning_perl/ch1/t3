@@ -1,0 +1,33 @@
+#!/opt/exp/bin/perl -w
+#
+@secrethandshakes = ("camel", "llama", "alpaca");
+#
+print("hollow, world!\n");
+print("What is your name? ");
+$name = <STDIN>;
+chomp($name);
+#
+if ($name eq "Mike") {
+	print("Hey $name, how's work treating you ??? \n");
+} else {
+	print("Hello, $name!\n");
+	$done = "no";
+	while ($done ne "yes") {
+		print("What is the secret hand-shake? ");
+		$handshake = <STDIN>;
+		chomp($handshake);
+		#
+		$i = 0;
+		while ($i < scalar(@secrethandshakes)) {
+			if ($secrethandshakes[$i] eq $handshake) {
+				print "Got it !!!\n";
+				$done = "yes";
+				last;
+			} else {
+				$done = "no";
+				$i = $i + 1;
+			}
+		}
+	}
+}
+#

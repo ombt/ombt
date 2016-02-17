@@ -1,0 +1,13 @@
+A german ISUP calldata has been prepared for this lab,
+If you need to provision German, then use the calldata script
+with calldata.GER.
+
+If you need to know if this lab is already German, then
+rtrv-mgc-pc, if the response has 4343H-x-x-x-x, then it
+is German.  Or try rtrv-sg-pc, if that response is 4343H-x-x-x-x
+it is also German.
+
+If you are in a distributed system, then both your mgc and sg point
+codes have to match.
+So you would need to rtrv-mgc-pc on the mgc
+and then rtrv-sg-pc on the sg and make sure they match.

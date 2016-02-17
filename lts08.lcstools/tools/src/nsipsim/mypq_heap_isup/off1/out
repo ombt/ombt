@@ -1,0 +1,537 @@
+
+SIP Simulator:
+
+==>> logfile = log1
+
+100 ORIG-TERM DN pairs read.
+SIP IP  : 135.111.82.6
+SIP PORT: 5060
+ADMIN IP  : 135.111.82.6
+ADMIN PORT: 10001
+RTP IP  : 135.111.82.6
+RTP PORT: 8000
+RTCP PORT: 8001
+
+starttimer:
+	callid=CALL-REPORT
+	label=CALL-REPORT
+	delta=900
+	endtime=1127712595
+	id=965575132
+	callid = CALL-REPORT
+	expire = 1127712595
+	id     = 965575132
+	label  = CALL-REPORT
+
+Current time: Mon Sep 26 00:15:23 2005
+===============================================================
+
+Start call load:
+	Calls Per Sec = 1
+	Hold Time (secs) = 10
+	Maximum Number of Calls  = 1
+startcallload: ORID DN - TRYING 6305510201.
+startcallload: TERM DN - TRYING 6305520201.
+	startcallload: ORID DN - USING 6305510201 (state=INACTIVE).
+	startcallload: TERM DN - USING 6305520201.
+
+dn2contact: dn=6305520201
+dn2contact: contact=sip:6305520201@135.111.82.6:5061
+
+queueOrig: 'contact' is ... sip:6305520201@135.111.82.6:5061
+
+dn2contact: dn=6305510201
+dn2contact: contact=sip:6305510201@135.111.82.6:5060
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=ORIGINATION
+	delta=1
+	endtime=1127711724
+	id=745276319
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711724
+	id     = 745276319
+	label  = ORIGINATION
+startcallload: 1 new calls queue (1 out of 0).
+
+starttimer:
+	callid=CALL-LOAD
+	label=CALL-LOAD
+	delta=2
+	endtime=1127711725
+	id=121184402
+	callid = CALL-LOAD
+	expire = 1127711725
+	id     = 121184402
+	label  = CALL-LOAD
+
+Timer expired: 
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <2>
+
+CURRENT originationstate STATE FOR 6305510201: INACTIVE
+makepaddr: found dn,ip,port, no defaults ...
+
+Current time: Mon Sep 26 00:15:24 2005
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.111.82.6:5061
+line=<INVITE sip:6305520201@135.111.82.6:5061 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781313 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305510201@135.111.82.6:5060>
+line=<Max-Forwards: 70>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 120>
+line=<v=0>
+line=<o=6305510201 0 8000 IN IP4 135.111.82.6>
+line=<s=->
+line=<c=IN IP4 135.111.82.6>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0>
+line=<a=rtpmap:0 pcmu/8000>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT FOR 200 INVITE
+	delta=10
+	endtime=1127711734
+	id=474715928
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711734
+	id     = 474715928
+	label  = WAIT FOR 200 INVITE
+
+OLD originationstate STATE FOR 6305510201: INACTIVE
+NEW originationstate STATE FOR 6305510201: WAITFOR200
+
+SIP msg received: length=382
+
+Current time: Mon Sep 26 00:15:24 2005
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.111.82.6:5061
+line=<SIP/2.0 180 Ringing>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781313 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305520201@135.111.82.6:5061>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+Allow = INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE
+CSeq = 297781313 INVITE
+Call-ID = 485556666305510201@135.111.82.6
+Call-Id = 485556666305510201@135.111.82.6
+Contact = sip:6305520201@135.111.82.6:5061
+Content-Length = 0
+From = sip:6305510201@135.111.82.6:5060;tag=20740305mytag
+To = sip:6305520201@135.111.82.6:5061;tag=784270547mytag
+Via = SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809
+invitefromdn = 
+msgtype = RETURNCODE
+requesturi NOT DEFINED.
+returncode = 180
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <0>
+
+CURRENT originationstate STATE FOR 6305510201: WAITFOR200
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT FOR 200 INVITE (after 180)
+	delta=10
+	endtime=1127711734
+	id=222642037
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711734
+	id     = 222642037
+	label  = WAIT FOR 200 INVITE (after 180)
+
+OLD originationstate STATE FOR 6305510201: WAITFOR200
+NEW originationstate STATE FOR 6305510201: WAITFOR200
+
+SIP msg received: length=391
+
+Current time: Mon Sep 26 00:15:24 2005
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.111.82.6:5061
+line=<SIP/2.0 183 Session Progress>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781313 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305520201@135.111.82.6:5061>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+Allow = INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE
+CSeq = 297781313 INVITE
+Call-ID = 485556666305510201@135.111.82.6
+Call-Id = 485556666305510201@135.111.82.6
+Contact = sip:6305520201@135.111.82.6:5061
+Content-Length = 0
+From = sip:6305510201@135.111.82.6:5060;tag=20740305mytag
+To = sip:6305520201@135.111.82.6:5061;tag=784270547mytag
+Via = SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809
+invitefromdn = 
+msgtype = RETURNCODE
+requesturi NOT DEFINED.
+returncode = 183
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <0>
+
+CURRENT originationstate STATE FOR 6305510201: WAITFOR200
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT FOR 200 INVITE (after 183)
+	delta=10
+	endtime=1127711734
+	id=498301261
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711734
+	id     = 498301261
+	label  = WAIT FOR 200 INVITE (after 183)
+
+OLD originationstate STATE FOR 6305510201: WAITFOR200
+NEW originationstate STATE FOR 6305510201: WAITFOR200
+
+Timer expired: 
+
+	handleCallLoad: Call load done.
+
+Listing Call Load Data:
+	calls ==>> HASH(0x1270dc)
+	callspersec ==>> 1
+	callsstarted ==>> 1
+	currentorigdn ==>> 0
+	holdtime ==>> 10
+	maxcalls ==>> 1
+	origdns ==>> ARRAY(0x127148)
+	origdnsz ==>> 100
+	state ==>> idle
+	tag ==>> 968944975
+
+Statistics: 
+general:
+	starttimerenqueuecalled = 6
+msgs-received:
+	RETURNCODE180INVITE = 1
+	RETURNCODE183INVITE = 1
+msgs-sent:
+	INVITE = 1
+origination:
+	abandoned = 0
+	queueOrigCalled = 1
+	queueOrigStartTimerCalled = 1
+	stable = 0
+	started = 0
+	timedout = 0
+originationreinvite:
+	received180Invite = 1
+	received183Invite = 1
+	sendInvite = 1
+	started = 1
+termination:
+	abandoned = 0
+	stable = 0
+	started = 0
+	timedout = 0
+
+SIP msg received: length=530
+
+Current time: Mon Sep 26 00:15:25 2005
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.111.82.6:5061
+line=<SIP/2.0 200 OK>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781313 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305520201@135.111.82.6:5061>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 120>
+line=<v=0>
+line=<o=6305520201 0 8002 IN IP4 135.111.82.6>
+line=<s=->
+line=<c=IN IP4 135.111.82.6>
+line=<t=0 0>
+line=<m=audio 8002 RTP/AVP 0>
+line=<a=rtpmap:0 pcmu/8002>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+parseSipMsg: peersdp = v=0
+o=6305520201 0 8002 IN IP4 135.111.82.6
+s=-
+c=IN IP4 135.111.82.6
+t=0 0
+m=audio 8002 RTP/AVP 0
+a=rtpmap:0 pcmu/8002
+
+
+Found 1 blocks in application/sdp payload.
+parseDataBlock: data=<ARRAY(0x7f7510)>
+
+Found an UNKNOWN data block (length=15):
+
+Header Fields:
+Allow = INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE
+CSeq = 297781313 INVITE
+Call-ID = 485556666305510201@135.111.82.6
+Call-Id = 485556666305510201@135.111.82.6
+Contact = sip:6305520201@135.111.82.6:5061
+Content-Length = 120
+Content-Type = application/sdp
+From = sip:6305510201@135.111.82.6:5060;tag=20740305mytag
+To = sip:6305520201@135.111.82.6:5061;tag=784270547mytag
+Via = SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809
+invitefromdn = 
+msgtype = RETURNCODE
+requesturi NOT DEFINED.
+returncode = 200
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <0>
+
+CURRENT originationstate STATE FOR 6305510201: WAITFOR200
+makepaddr: found dn,ip,port, no defaults ...
+
+Current time: Mon Sep 26 00:15:25 2005
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.111.82.6:5061
+line=<ACK sip:6305520201@135.111.82.6:5061 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk396616809>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<Cseq: 297781313 ACK>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305510201@135.111.82.6:5060>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 120>
+line=<v=0>
+line=<o=6305510201 0 8000 IN IP4 135.111.82.6>
+line=<s=->
+line=<c=IN IP4 135.111.82.6>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0>
+line=<a=rtpmap:0 pcmu/8000>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT BEFORE SENDING REINVITE
+	delta=2
+	endtime=1127711727
+	id=881554200
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711727
+	id     = 881554200
+	label  = WAIT BEFORE SENDING REINVITE
+
+OLD originationstate STATE FOR 6305510201: WAITFOR200
+NEW originationstate STATE FOR 6305510201: WAITBEFOREREINVITE
+
+Timer expired: 
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <1>
+
+CURRENT originationstate STATE FOR 6305510201: WAITBEFOREREINVITE
+makepaddr: found dn,ip,port, no defaults ...
+
+Current time: Mon Sep 26 00:15:27 2005
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.111.82.6:5061
+line=<INVITE sip:6305520201@135.111.82.6:5061 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk303579660>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781314 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305510201@135.111.82.6:5060>
+line=<Max-Forwards: 70>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT FOR 200 INVITE
+	delta=10
+	endtime=1127711737
+	id=766113943
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711737
+	id     = 766113943
+	label  = WAIT FOR 200 INVITE
+
+OLD originationstate STATE FOR 6305510201: WAITBEFOREREINVITE
+NEW originationstate STATE FOR 6305510201: WAITFORREINVITE200
+
+SIP msg received: length=377
+
+Current time: Mon Sep 26 00:15:27 2005
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.111.82.6:5061
+line=<SIP/2.0 200 OK>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk303579660>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781314 INVITE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305520201@135.111.82.6:5061>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+Allow = INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE
+CSeq = 297781314 INVITE
+Call-ID = 485556666305510201@135.111.82.6
+Call-Id = 485556666305510201@135.111.82.6
+Contact = sip:6305520201@135.111.82.6:5061
+Content-Length = 0
+From = sip:6305510201@135.111.82.6:5060;tag=20740305mytag
+To = sip:6305520201@135.111.82.6:5061;tag=784270547mytag
+Via = SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk303579660
+invitefromdn = 
+msgtype = RETURNCODE
+requesturi NOT DEFINED.
+returncode = 200
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <0>
+
+CURRENT originationstate STATE FOR 6305510201: WAITFORREINVITE200
+makepaddr: found dn,ip,port, no defaults ...
+
+Current time: Mon Sep 26 00:15:27 2005
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.111.82.6:5061
+line=<ACK sip:6305520201@135.111.82.6:5061 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk303579660>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<Cseq: 297781314 ACK>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305510201@135.111.82.6:5060>
+line=<Content-Type: application/sdp>
+line=<Content-Length: 120>
+line=<v=0>
+line=<o=6305510201 0 8000 IN IP4 135.111.82.6>
+line=<s=->
+line=<c=IN IP4 135.111.82.6>
+line=<t=0 0>
+line=<m=audio 8000 RTP/AVP 0>
+line=<a=rtpmap:0 pcmu/8000>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=TALKING MAX CALL LENGTH
+	delta=10
+	endtime=1127711737
+	id=876692557
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711737
+	id     = 876692557
+	label  = TALKING MAX CALL LENGTH
+
+OLD originationstate STATE FOR 6305510201: WAITFORREINVITE200
+NEW originationstate STATE FOR 6305510201: TALKING
+
+Timer expired: 
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <1>
+
+CURRENT originationstate STATE FOR 6305510201: TALKING
+makepaddr: found dn,ip,port, no defaults ...
+
+Current time: Mon Sep 26 00:15:37 2005
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+TO IP/PORT: 135.111.82.6:5061
+line=<BYE sip:6305520201@135.111.82.6:5061 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk187800873>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781315 BYE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Max-Forwards: 70>
+line=<Content-Length: 0>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> outgoing msg
+
+starttimer:
+	callid=485556666305510201@135.111.82.6
+	label=WAIT FOR 200 BYE
+	delta=10
+	endtime=1127711747
+	id=217088325
+	callid = 485556666305510201@135.111.82.6
+	expire = 1127711747
+	id     = 217088325
+	label  = WAIT FOR 200 BYE
+
+OLD originationstate STATE FOR 6305510201: TALKING
+NEW originationstate STATE FOR 6305510201: WAITFOR200BYE
+
+SIP msg received: length=396
+
+Current time: Mon Sep 26 00:15:37 2005
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.111.82.6:5061
+line=<SIP/2.0 200 OK>
+line=<Via: SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk187800873;received=135.111.82.6>
+line=<From: sip:6305510201@135.111.82.6:5060;tag=20740305mytag>
+line=<To: sip:6305520201@135.111.82.6:5061;tag=784270547mytag>
+line=<Call-Id: 485556666305510201@135.111.82.6>
+line=<CSeq: 297781315 BYE>
+line=<Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE>
+line=<Contact: sip:6305520201@135.111.82.6:5061>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+Allow = INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE
+CSeq = 297781315 BYE
+Call-ID = 485556666305510201@135.111.82.6
+Call-Id = 485556666305510201@135.111.82.6
+Contact = sip:6305520201@135.111.82.6:5061
+Content-Length = 0
+From = sip:6305510201@135.111.82.6:5060;tag=20740305mytag
+To = sip:6305520201@135.111.82.6:5061;tag=784270547mytag
+Via = SIP/2.0/UDP 135.111.82.6:5060;branch=z9hG4bk187800873;received=135.111.82.6
+invitefromdn = 
+msgtype = RETURNCODE
+requesturi NOT DEFINED.
+returncode = 200
+
+Entry originationreinvite: Call-ID = <485556666305510201@135.111.82.6>
+Timer Flag for 485556666305510201@135.111.82.6 = <0>
+
+CURRENT originationstate STATE FOR 6305510201: WAITFOR200BYE
+
+OLD originationstate STATE FOR 6305510201: WAITFOR200BYE
+NEW originationstate STATE FOR 6305510201: INACTIVE
+
+Quitting ...

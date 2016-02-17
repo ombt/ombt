@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+#
+use strict;
+#
+print "PARENT ENV ...\n";
+#
+foreach (sort keys %ENV)
+{
+	print "$_=$ENV{$_}\n";
+}
+#
+print "ADD JUNK TO PARENT ENV ...\n";
+$ENV{"JUNK"} = "eat shit";
+#
+print "CHILD ENV (grep for JUNK) ...\n";
+system("env | grep JUNK");
+#

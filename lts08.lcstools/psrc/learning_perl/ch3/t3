@@ -1,0 +1,17 @@
+#!/opt/exp/bin/perl -w
+#
+$ifile = "t2_input_file";
+open(INFD, $ifile) || die "unable to open $ifile: $!";
+#
+while (defined($a = <INFD>)) {
+	chomp($a);
+	unshift(@myq, $a);
+	print "unshift: $a\n";
+}
+#
+close(INFD);
+#
+while (defined($a = shift(@myq))) {
+	print "shift: $a\n";
+}
+

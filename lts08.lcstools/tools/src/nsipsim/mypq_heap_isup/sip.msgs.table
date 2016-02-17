@@ -1,0 +1,219 @@
+
+20 Header Fields
+
+   The general syntax for header fields is covered in Section 7.3.  This
+   section lists the full set of header fields along with notes on
+   syntax, meaning, and usage.  Throughout this section, we use [HX.Y]
+   to refer to Section X.Y of the current HTTP/1.1 specification RFC
+   2616 [8].  Examples of each header field are given.
+
+
+
+
+Rosenberg, et. al.          Standards Track                   [Page 159]
+
+RFC 3261            SIP: Session Initiation Protocol           June 2002
+
+
+   Information about header fields in relation to methods and proxy
+   processing is summarized in Tables 2 and 3.
+
+   The "where" column describes the request and response types in which
+   the header field can be used.  Values in this column are:
+
+      R: header field may only appear in requests;
+
+      r: header field may only appear in responses;
+
+      2xx, 4xx, etc.: A numerical value or range indicates response
+           codes with which the header field can be used;
+
+      c: header field is copied from the request to the response.
+
+      An empty entry in the "where" column indicates that the header
+           field may be present in all requests and responses.
+
+   The "proxy" column describes the operations a proxy may perform on a
+   header field:
+
+      a: A proxy can add or concatenate the header field if not present.
+
+      m: A proxy can modify an existing header field value.
+
+      d: A proxy can delete a header field value.
+
+      r: A proxy must be able to read the header field, and thus this
+           header field cannot be encrypted.
+
+   The next six columns relate to the presence of a header field in a
+   method:
+
+      c: Conditional; requirements on the header field depend on the
+           context of the message.
+
+      m: The header field is mandatory.
+
+      m*: The header field SHOULD be sent, but clients/servers need to
+           be prepared to receive messages without that header field.
+
+      o: The header field is optional.
+
+      t: The header field SHOULD be sent, but clients/servers need to be
+           prepared to receive messages without that header field.
+
+           If a stream-based protocol (such as TCP) is used as a
+           transport, then the header field MUST be sent.
+
+
+
+Rosenberg, et. al.          Standards Track                   [Page 160]
+
+RFC 3261            SIP: Session Initiation Protocol           June 2002
+
+
+      *: The header field is required if the message body is not empty.
+           See Sections 20.14, 20.15 and 7.4 for details.
+
+      -: The header field is not applicable.
+
+   "Optional" means that an element MAY include the header field in a
+   request or response, and a UA MAY ignore the header field if present
+   in the request or response (The exception to this rule is the Require
+   header field discussed in 20.32).  A "mandatory" header field MUST be
+   present in a request, and MUST be understood by the UAS receiving the
+   request.  A mandatory response header field MUST be present in the
+   response, and the header field MUST be understood by the UAC
+   processing the response.  "Not applicable" means that the header
+   field MUST NOT be present in a request.  If one is placed in a
+   request by mistake, it MUST be ignored by the UAS receiving the
+   request.  Similarly, a header field labeled "not applicable" for a
+   response means that the UAS MUST NOT place the header field in the
+   response, and the UAC MUST ignore the header field in the response.
+
+   A UA SHOULD ignore extension header parameters that are not
+   understood.
+
+   A compact form of some common header field names is also defined for
+   use when overall message size is an issue.
+
+   The Contact, From, and To header fields contain a URI.  If the URI
+   contains a comma, question mark or semicolon, the URI MUST be
+   enclosed in angle brackets (< and >).  Any URI parameters are
+   contained within these brackets.  If the URI is not enclosed in angle
+   brackets, any semicolon-delimited parameters are header-parameters,
+   not URI parameters.
+
+20.1 Accept
+
+   The Accept header field follows the syntax defined in [H14.1].  The
+   semantics are also identical, with the exception that if no Accept
+   header field is present, the server SHOULD assume a default value of
+   application/sdp.
+
+   An empty Accept header field means that no formats are acceptable.
+
+
+
+
+
+
+
+
+
+
+
+Rosenberg, et. al.          Standards Track                   [Page 161]
+
+RFC 3261            SIP: Session Initiation Protocol           June 2002
+
+
+   Example:
+
+      Header field          where   proxy ACK BYE CAN INV OPT REG
+      ___________________________________________________________
+      Accept                  R            -   o   -   o   m*  o
+      Accept                 2xx           -   -   -   o   m*  o
+      Accept                 415           -   c   -   c   c   c
+      Accept-Encoding         R            -   o   -   o   o   o
+      Accept-Encoding        2xx           -   -   -   o   m*  o
+      Accept-Encoding        415           -   c   -   c   c   c
+      Accept-Language         R            -   o   -   o   o   o
+      Accept-Language        2xx           -   -   -   o   m*  o
+      Accept-Language        415           -   c   -   c   c   c
+      Alert-Info              R      ar    -   -   -   o   -   -
+      Alert-Info             180     ar    -   -   -   o   -   -
+      Allow                   R            -   o   -   o   o   o
+      Allow                  2xx           -   o   -   m*  m*  o
+      Allow                   r            -   o   -   o   o   o
+      Allow                  405           -   m   -   m   m   m
+      Authentication-Info    2xx           -   o   -   o   o   o
+      Authorization           R            o   o   o   o   o   o
+      Call-ID                 c       r    m   m   m   m   m   m
+      Call-Info                      ar    -   -   -   o   o   o
+      Contact                 R            o   -   -   m   o   o
+      Contact                1xx           -   -   -   o   -   -
+      Contact                2xx           -   -   -   m   o   o
+      Contact                3xx      d    -   o   -   o   o   o
+      Contact                485           -   o   -   o   o   o
+      Content-Disposition                  o   o   -   o   o   o
+      Content-Encoding                     o   o   -   o   o   o
+      Content-Language                     o   o   -   o   o   o
+      Content-Length                 ar    t   t   t   t   t   t
+      Content-Type                         *   *   -   *   *   *
+      CSeq                    c       r    m   m   m   m   m   m
+      Date                            a    o   o   o   o   o   o
+      Error-Info           300-699    a    -   o   o   o   o   o
+      Expires                              -   -   -   o   -   o
+      From                    c       r    m   m   m   m   m   m
+      In-Reply-To             R            -   -   -   o   -   -
+      Max-Forwards            R      amr   m   m   m   m   m   m
+      Min-Expires            423           -   -   -   -   -   m
+      MIME-Version                         o   o   -   o   o   o
+      Organization                   ar    -   -   -   o   o   o
+
+             Table 2: Summary of header fields, A--O
+
+
+
+
+
+
+Rosenberg, et. al.          Standards Track                   [Page 162]
+
+RFC 3261            SIP: Session Initiation Protocol           June 2002
+
+
+   Header field              where       proxy ACK BYE CAN INV OPT REG
+   ___________________________________________________________________
+   Priority                    R          ar    -   -   -   o   -   -
+   Proxy-Authenticate         407         ar    -   m   -   m   m   m
+   Proxy-Authenticate         401         ar    -   o   o   o   o   o
+   Proxy-Authorization         R          dr    o   o   -   o   o   o
+   Proxy-Require               R          ar    -   o   -   o   o   o
+   Record-Route                R          ar    o   o   o   o   o   -
+   Record-Route             2xx,18x       mr    -   o   o   o   o   -
+   Reply-To                                     -   -   -   o   -   -
+   Require                                ar    -   c   -   c   c   c
+   Retry-After          404,413,480,486         -   o   o   o   o   o
+                            500,503             -   o   o   o   o   o
+                            600,603             -   o   o   o   o   o
+   Route                       R          adr   c   c   c   c   c   c
+   Server                      r                -   o   o   o   o   o
+   Subject                     R                -   -   -   o   -   -
+   Supported                   R                -   o   o   m*  o   o
+   Supported                  2xx               -   o   o   m*  m*  o
+   Timestamp                                    o   o   o   o   o   o
+   To                        c(1)          r    m   m   m   m   m   m
+   Unsupported                420               -   m   -   m   m   m
+   User-Agent                                   o   o   o   o   o   o
+   Via                         R          amr   m   m   m   m   m   m
+   Via                        rc          dr    m   m   m   m   m   m
+   Warning                     r                -   o   o   o   o   o
+   WWW-Authenticate           401         ar    -   m   -   m   m   m
+   WWW-Authenticate           407         ar    -   o   -   o   o   o
+
+   Table 3: Summary of header fields, P--Z; (1): copied with possible
+   addition of tag
+
+      Accept: application/sdp;level=1, application/x-private, text/html
+

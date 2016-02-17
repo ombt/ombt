@@ -1,0 +1,19 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = 8puzzle.o 8puzzle2.o 8puzzle3.o
+
+TARGETS = 8puzzle 8puzzle2 8puzzle3
+
+all:	$(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+8puzzle:	8puzzle.o
+	$(CXX) $(CXXFLAGS) $< $(AILIB) $(UTILLIB) -o $@
+
+8puzzle2:	8puzzle2.o
+	$(CXX) $(CXXFLAGS) $< $(AILIB) $(UTILLIB) -o $@
+
+8puzzle3:	8puzzle3.o
+	$(CXX) $(CXXFLAGS) $< $(AILIB) $(UTILLIB) -o $@ 

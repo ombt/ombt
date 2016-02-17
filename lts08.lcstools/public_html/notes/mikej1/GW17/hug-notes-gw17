@@ -1,0 +1,182 @@
+=============LOGIN to lcsbld for privates================
+rlogin lcsbld1
+login: lcstools
+passwd: plexus9000
+
+### BTS INFO GW17 #####
+
+telnet 135.1.104.86
+
+btsadm
+plexus9000
+
+cd /opt/PlexDC
+BindIp=135.1.104.86
+GdiHost=135.1.105.102
+
+cd /opt/PlexDC/ihlcsgw17+18/Bill_data/baf
+cdrsearch *.ama (file searched)
+
+Generate ftp/extract commands
+/home/mcj/bin/generate_tl1 6.2.1.2.SP.5.1
+
+
+tarsplogs -A/B
+/home/lcstools/tools/bin/untarsplogs ihlcsgw17_SP-A_log.tar.gz
+/home/lcstools/tools/bin/untarsplogs ihlcsgw17_SP-B_log.tar.gz
+
+RTRV-TRAFFICSTATS;
+ED-TRAFFICSTATS::::::IS;
+ED-TRAFFICSTATS::::::OOS;
+RTRV-BILLSYS:::::;
+ED-BILLSYS:ihlcsgw17::100::AMAGEN=ON,SWITCHNAME=ihlcsgw17;
+ED-BILLSYS:ihlcsgw17::100::AMAGEN=OFF,SWITCHNAME=ihlcsgw17;
+RTRV-DATASERVER-HOSTCFG;
+SET-DATASERVERHOSTCFG:IHLCSGW17::DATASERVERANET1=135.1.104.86;
+
+#lcsfiles 6.2.1.2.86 -> official path to files for a given load
+
+RTRV-EQPT;
+RTRV-INFO-EQPT;
+RTRV-EQPT-ALL;
+RTRV-PM-CC;
+RTRV-PM-DB;
+RTRV-PM-DBTABLE;
+RTRV-SG-MGCASSOC;
+RTRV-MGC-MGASSOC;
+RTRV-ALM-ALL;
+INIT-SYS:TELICA::::10;
+RTRV-CHASSIS-EQPT;
+RTRV-CALL-CAPTVERBOSE;
+ED-SYS-SECU:::::SSHENABLED=n;
+ED-SYS-SECU:::::SSHENABLED=y;
+
+===================EXTRACT FILES================================
+
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.SP.5.1_cpu.tar.gz;
+EXEC-TAR-EXTRACTSTBY::COM:::/home1/6.2.1.2.SP.5.1_cpu.tar.gz,/home1/;
+
+EXEC-CD:::::/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.P1_cm.tar.gz;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.P3_ds1_2.tar.gz;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.P1_cm.tar.gz,/;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.P3_ds1_2.tar.gz,/;
+
+===================BACKUP ======================================
+
+EXEC-BACKUP-PLEXUS::COM:::135.1.105.17,root,plexus9000,/FTPRoot;
+EXEC-BACKUP-PLEXUS::COM:::135.1.105.18,root,plexus9000,/FTPRoot;
+
+=====================UPGRADE SP-A/B=============================
+
+----------------------SP-A (active)-----------------------------
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.SP.5
+CPY-MEM::SP-B;
+RMV-EQPT::SP-B;
+wait 5 minutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw17:SP-B
+RST-EQPT::SP-B;
+
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.SP.5
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+CPY-MEM::SP-A;
+SW-TOPROTN-EQPT::SP-A:::norst;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw17:SP-A
+RST-EQPT::SP-A;
+
+----------------------SP-B (active)-----------------------------
+
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.SP.5
+CPY-MEM::SP-A;
+RMV-EQPT::SP-A;
+wait 5 minutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw17:SP-A
+RST-EQPT::SP-A;
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.SP.5
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+CPY-MEM::SP-B;
+SW-TOPROTN-EQPT::SP-B:::norst;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw17:SP-B
+RST-EQPT::SP-B;
+
+=====================UPGRADE CCM 14/15============================
+
+RMV-EQPT::IOM-14;
+ED-EQPT-ALL::IOM-14:::SWVERSION=6.2.1.2.P1,APPSWVERSION=6.2.1.2.SP.5;
+CPY-MEM::IOM-14;
+RST-EQPT::IOM-14;
+
+SW-TOPROTN-EQPT::IOM-15;
+ED-EQPT-ALL::IOM-15:::SWVERSION=6.2.1.2.P1,APPSWVERSION=6.2.1.2.SP.5;
+CPY-MEM::IOM-15;
+
+=====================UPGRADE CM 1/2================================
+
+RMV-EQPT::IOM-1;
+ED-EQPT-ALL::IOM-1:::SWVERSION=6.2.1.2.P1,APPSWVERSION=6.2.1.2.SP.5;
+CPY-MEM::IOM-1;
+RST-EQPT::IOM-1;
+
+SW-TOPROTN-EQPT::IOM-2;
+ED-EQPT-ALL::IOM-2:::SWVERSION=6.2.1.2.P1,APPSWVERSION=6.2.1.2.SP.5;
+CPY-MEM::IOM-2;
+
+=====================UPGRADE DS1_2 11/13===========================
+
+--------------------------IOM-11-------------------
+RTRV-SLK;
+RTRV-STATUS-SGSLK::1;
+RTRV-STATUS-SGSLK::3;
+
+ED-STATE-SGSLK::1:::INH;
+ED-STATE-SGSLK::3:::INH;
+
+##If this does not work try next step###
+
+ED-STATE-SGSLK::1:::OOS;
+ED-STATE-SGSLK::3:::OOS;
+
+ED-STATE-SGSLK::1:::IS;
+ED-STATE-SGSLK::3:::IS;
+
+RMV-EQPT::IOM-11;
+ED-EQPT::IOM-11:::SWVERSION=6.2.1.2.P3;
+CPY-MEM::IOM-11;
+RST-EQPT::IOM-11;
+--------------------------IOM-13-------------------
+RTRV-STATUS-SGSLK::2;
+RTRV-STATUS-SGSLK::4;
+RTRV-STATUS-SGSLK::6;
+
+ED-STATE-SGSLK::2:::INH;
+ED-STATE-SGSLK::4:::INH;
+ED-STATE-SGSLK::6:::INH;
+
+##If this does not work try next step###
+
+ED-STATE-SGSLK::2:::OOS;
+ED-STATE-SGSLK::4:::OOS;
+ED-STATE-SGSLK::6:::OOS;
+
+ED-STATE-SGSLK::2:::IS;
+ED-STATE-SGSLK::4:::IS;
+ED-STATE-SGSLK::6:::IS;
+
+RMV-EQPT::IOM-13;
+ED-EQPT::IOM-13:::SWVERSION=6.2.1.2.P3;
+CPY-MEM::IOM-13;
+RST-EQPT::IOM-13;
+

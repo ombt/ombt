@@ -1,0 +1,14 @@
+CC = CC
+LD = CC
+CCFLAGS = -g -DDEBUG
+LDFLAGS = -g -DDEBUG
+#
+dumpelf
+dumpelf.c
+data.c
+-lelf
+-ldemangle
+#
+install1 = chmod 755 dumpelf
+install2 = cp dumpelf /home/rumore/bin/dumpelf
+install3 = rcp dumpelf integ@ihlbs1:/home/integ/bin/dumpelf

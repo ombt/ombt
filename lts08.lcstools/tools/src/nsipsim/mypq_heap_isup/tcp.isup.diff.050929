@@ -1,0 +1,3968 @@
+1c1
+< #!/opt/exp/bin/perl -w 
+---
+> #!/opt/exp/bin/perl -w
+52a53,54
+> 	mytcpsipip => "127.0.0.1",
+> 	mytcpsipport => 5060,
+86a89,90
+> 		tcpsipip => "127.0.0.1",
+> 		tcpsipport => 5060,
+95d98
+< 		waitingforprackduration => 30,
+98d100
+< 		waitbeforereinviteduration => 2,
+115d116
+< 		viaprefix => "",
+130c131
+< 		term200okmsgid => 0b00000000, 
+---
+> 		term200okmsgid => 0b00000000,
+155d155
+< 		origreinviteacksdp => "pcma",
+157d156
+< 		origreinvitesdp => "",
+163c162
+< 		term200oksdp => "", 
+---
+> 		term200oksdp => "",
+168d166
+< 		termreinvite200oksdp => "pcma",
+171d168
+< 		origpost180pracksdp => "",
+173d169
+< 		origpost183pracksdp => "",
+181,188d176
+< 		term180prack200sdp => "",
+< 		term183prack200sdp => "",
+< 		origpost100abandon => "",
+< 		origpost180abandon => "",
+< 		origpost183abandon => "",
+< 		origpost200abandon => "",
+< 		origpostackabandon => "",
+< 		max183tosend => undef,
+292a281,291
+> sub deleteCallId {
+> 	my ($callid) = @_;
+> 	#
+> 	return unless (defined($dialogs{$callid}));
+> 	return unless (exists($dialogs{$callid}));
+> 	#
+> 	delete $dialogs{$callid};
+> 	#
+> 	return;
+> }
+> #
+397,398c396,397
+< 	my $v2 = (($v >> $lowbit) << $lowbit); 
+< 	my $v3 = (($v2 << (31-$highbit)) >> (31-$highbit)); 
+---
+> 	my $v2 = (($v >> $lowbit) << $lowbit);
+> 	my $v3 = (($v2 << (31-$highbit)) >> (31-$highbit));
+406,407c405,406
+< 	my $v2 = (($v >> (31-$highbit)) << (31-$highbit)); 
+< 	my $v3 = (($v2 << $lowbit) >> $lowbit); 
+---
+> 	my $v2 = (($v >> (31-$highbit)) << (31-$highbit));
+> 	my $v3 = (($v2 << $lowbit) >> $lowbit);
+512,514d510
+< 				if ($value =~ /^ *UNDEFINED *$/) {
+< 					$value = undef;
+< 				}
+517,518c513,526
+< 				if ($value =~ /^ *UNDEFINED *$/) {
+< 					$value = undef;
+---
+> 				if ($key eq "tcpsipport") {
+> 					# add a different TCP port for each
+> 					# DN when originating a call from
+> 					# range of DNs.
+> 					for (my $i=0; $i<$dncnt; ${i}++) {
+> 						$dn = $mindn + $i;
+> 						my $tcpport = $value+$i;
+> 						$dndata{$dn}{$key} = $tcpport;
+> 					}
+> 				} else {
+> 					for (my $i=0; $i<$dncnt; ${i}++) {
+> 						$dn = $mindn + $i;
+> 						$dndata{$dn}{$key} = $value;
+> 					}
+520,523d527
+< 				for (my $i=0; $i<$dncnt; ${i}++) {
+< 					$dn = $mindn + $i;
+< 					$dndata{$dn}{$key} = $value;
+< 				}
+567a572,591
+> sub callid2mysipuri {
+> 	my ($callid) = @_;
+> 	my $mydn = $dialogs{$callid}{dn};
+> 	my $myip = $dialogs{$callid}{sipip};
+> 	# my $myport = $dialogs{$callid}{sipport};
+> 	my $mycontact = "sip:${mydn}\@${myip}";
+> 	return($mycontact);
+> }
+> #
+> sub callid2contact {
+> 	my ($callid) = @_;
+> 	#
+> 	my $dn = $dialogs{$callid}{dn};
+> 	my $ip = $dialogs{$callid}{sipip};
+> 	my $port = $dialogs{$callid}{sipport};
+> 	my $contact = "sip:${dn}\@${ip}:${port}";
+> 	#
+> 	return($contact);
+> }
+> #
+588,592d611
+< sub getRseqNo {
+< 	my ($rseq) = @_;
+< 	$rseq =~ /^[\s]*([0-9]+)/;
+< 	return($1);
+< }
+723,748d741
+< 	# check if offered codec is the name of a file. if so,
+< 	# then read in the file as the SDP for this message.
+< 	#
+< 	if (defined($offercodec) && (-R $offercodec)) {
+< 		# open file for read.
+< 		vprint "makeOfferSDP: opening SDP file ${offercodec}\n";
+< 		if (!open(SDPFILE, $offercodec)) {
+< 			# unable to open file, use defaults.
+< 			vprint "makeOfferSDP: unable to open SDP file ${offercodec}\n";
+< 			makeOfferSDP($dn, undef, $psdp);
+< 			return;
+< 		}
+< 		# read in file
+< 		$$psdp = "";
+< 		while (defined($sdprec = <SDPFILE>)) {
+< 			# vprint "makeOfferSDP: record <${sdprec}>\n";
+< 			$$psdp .= $sdprec;
+< 		}
+< 		# close file
+< 		close(SDPFILE);
+< 		vprint "makeOfferSDP: SDP read in: $${psdp}\n";
+< 		return;
+< 	}
+< 	#
+< 	# not a file, treat as a choice 
+< 	#
+772d764
+< 	return;
+822c814,815
+< 	my ($rawmsg, $prawhdr, $prawdata, $phdrs, $pdatablocks, $reinvite) = @_;
+---
+> 	my ($rawmsg, $prawhdr, $prawdata, $phdrs, 
+> 		$pdatablocks, $reinvite, $fileno) = @_;
+903a897,921
+> 			# get transport type
+> 			if ($phdrs->{"Via"} =~ /\/UDP/) {
+> 				$dialogs{$callid}{transport} = "UDP";
+> 			} elsif ($phdrs->{"Via"} =~ /\/TCP/) {
+> 				$dialogs{$callid}{transport} = "TCP";
+> 			} else {
+> 				die "parseSipMsg: unknown transport in Via";
+> 			}
+> 			$dialogs{$callid}{fileno} = $fileno;
+> 			if ($dialogs{$callid}{transport} eq "TCP") {
+> 				# get local IP/Port.
+> 				my $paddr = getsockname($fd2file[$fileno]);
+> 				my ($port, $ip) = sockaddr_in($paddr);
+> 				$ip = inet_ntoa($ip);
+> 				$dialogs{$callid}{sipip} = $ip;
+> 				$dialogs{$callid}{sipport} = $port;
+> 			} elsif ($dialogs{$callid}{transport} eq "UDP") {
+> 				$dialogs{$callid}{sipip} = 
+> 					$dndata{$
+> 			} else {
+> 				die "parseSipMsg: unknown transport";
+> 			}
+> 			
+> 
+> 			#
+909,916d926
+< 			$dialogs{$callid}{invitecseq} = 
+< 				getCseqNo($phdrs->{"CSeq"});
+< 			if (defined($phdrs->{"RSeq"})) {
+< 				$dialogs{$callid}{rseq} = 
+< 					getRseqNo($phdrs->{"RSeq"});
+< 			} else {
+< 				$dialogs{$callid}{rseq} = 0;
+< 			}
+967c977
+< 		$phdrs->{"From"} = $dummy;
+---
+> 		# $phdrs->{"From"} = $dummy;
+976a987
+> 		#
+994,996d1004
+< 			$dialogs{$callid}{invitecseq} = 
+< 				getCseqNo($phdrs->{"CSeq"});
+< 			$dialogs{$callid}{rseq} = int(rand(1000000000));
+1004,1005d1011
+< 			$dialogs{$callid}{viaprefix} = 
+< 				$dndata{$phdrs->{"dn"}}{viaprefix};
+1064,1065d1069
+< 			$dialogs{$callid}{termreinvite200oksdp} =
+< 				$dndata{$phdrs->{"dn"}}{termreinvite200oksdp};
+1092,1095d1095
+< 			$dialogs{$callid}{term180prack200sdp} = 
+< 				$dndata{$phdrs->{"dn"}}{term180prack200sdp};
+< 			$dialogs{$callid}{term183prack200sdp} = 
+< 				$dndata{$phdrs->{"dn"}}{term183prack200sdp};
+1293c1293
+< 	defined($paddr) or die "getprotobyname: $!";
+---
+> 	defined($paddr) or die "sockaddr_in: $!";
+1303,1306d1302
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1311c1307
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1340,1343d1335
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1348c1340
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1423,1424c1415
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+1460,1461c1451
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+1535,1538d1524
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1543c1529
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1572,1575d1557
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1580c1562
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1607,1610d1588
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1615c1593
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1649c1627
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+1685c1663
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+1708,1711d1685
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1718c1692
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+1746,1749d1719
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+1754c1724
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+2090c2060
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2104c2074
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2188,2189d2157
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+2290c2258
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2299c2267
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2306c2274
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2322c2290
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2332c2300
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2341c2309
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2379c2347
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2387c2355
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2392c2360
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+2399c2367
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2435c2403
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2444c2412
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2453c2421
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2462c2430
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2487c2455
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2496c2464
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2540,2541d2507
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+2551,2552c2517
+< 				incrstats("originationreqannc",
+< 					"invalidtimers-1");
+---
+> 				incrstats("originationreqannc","invalidtimers-1");
+2643c2608
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2652c2617
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2661c2626
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2671c2636
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2680c2645
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2718c2683
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2726c2691
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2731c2696
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+2738c2703
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2774c2739
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2783c2748
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2792c2757
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2801c2766
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2826c2791
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2835c2800
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+2879,2880d2843
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+2982c2945
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+2991c2954
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+3000c2963
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+3010c2973
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3019c2982
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3027c2990
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3032c2995
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3074c3037
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3083c3046
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3091c3054
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3096c3059
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3148c3111
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3157c3120
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3165c3128
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3170c3133
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3210c3173
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3218c3181
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3223c3186
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3230c3193
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3255c3218
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3264c3227
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3273c3236
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3282c3245
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3290c3253
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3295c3258
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3318c3281
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3327c3290
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3336c3299
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3341c3304
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3382,3383d3344
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+3400,3414c3361,3362
+< 			if (defined($dndata{$dn}{max183tosend})) {
+< 				for (my $m=0; 
+< 				     $m<$dndata{$dn}{max183tosend};
+< 				     $m++) {
+< 					sendInvite183Ringing($callid, 
+< 						$phdrs, "contact");
+< 					incrstats("termination",
+< 						"sendInvite183Ringing");
+< 				}
+< 			} else {
+< 				sendInvite183Ringing($callid, 
+< 					$phdrs, "contact");
+< 				incrstats("termination",
+< 					"sendInvite183Ringing");
+< 			}
+---
+> 			sendInvite183Ringing($callid, $phdrs, "contact");
+> 			incrstats("termination","sendInvite183Ringing");
+3477c3425
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3486c3434
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3515a3464,3466
+> 			deleteCallId($callid);
+> 			changeDnState($dn, "terminationstate", "INACTIVE");
+> 			incrstats("termination","inactive");
+3517,3524d3467
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendBye($callid, "contact");
+< 			incrstats("termination","sendBye");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "terminationstate", "WAITFOR200BYE");
+3547c3490
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3556c3499
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3612c3555
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+3618c3561
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3626c3569
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3643c3586
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3665c3608
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3684c3627
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3693c3636
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3702c3645
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3728c3671
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3735c3678
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3779,3780d3721
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+3794,3808c3735,3736
+< 			if (defined($dndata{$dn}{max183tosend})) {
+< 				for (my $m=0; 
+< 				     $m<$dndata{$dn}{max183tosend};
+< 				     $m++) {
+< 					sendInvite183Ringing($callid, 
+< 						$phdrs, "contact");
+< 					incrstats("terminationrefer",
+< 						"sendInvite183Ringing");
+< 				}
+< 			} else {
+< 				sendInvite183Ringing($callid, 
+< 					$phdrs, "contact");
+< 				incrstats("terminationrefer",
+< 					"sendInvite183Ringing");
+< 			}
+---
+> 			sendInvite183Ringing($callid, $phdrs, "contact");
+> 			incrstats("terminationrefer","sendInvite183Ringing");
+3874c3802
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+3880c3808
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3888c3816
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3897c3825
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3919c3847
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3942c3870
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+3948c3876
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+3962c3890
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+3971c3899
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4018c3946
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+4024c3952
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+4032c3960
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4041c3969
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4100c4028
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4109c4037
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4131c4059
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+4137c4065
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+4175c4103
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4184c4112
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4206c4134
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+4212c4140
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+4233c4161
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4256c4184
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+4262c4190
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+4269c4197
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4278c4206
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4287c4215
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4328,4329d4255
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+4343,4357c4269,4270
+< 			if (defined($dndata{$dn}{max183tosend})) {
+< 				for (my $m=0; 
+< 				     $m<$dndata{$dn}{max183tosend};
+< 				     $m++) {
+< 					sendInvite183Ringing($callid, 
+< 						$phdrs, "contact");
+< 					incrstats("terminationreqanc",
+< 						"sendInvite183Ringing");
+< 				}
+< 			} else {
+< 				sendInvite183Ringing($callid, 
+< 					$phdrs, "contact");
+< 				incrstats("terminationreqannc",
+< 					"sendInvite183Ringing");
+< 			}
+---
+> 			sendInvite183Ringing($callid, $phdrs, "contact");
+> 			incrstats("terminationreqannc","sendInvite183Ringing");
+4420c4333
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4429c4342
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4451c4364
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4477c4390
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4486c4399
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4534c4447
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4543c4456
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4582c4495
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4591c4504
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4613c4526
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4632c4545
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4641c4554
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4650c4563
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4691,4692d4603
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+4706,4720c4617,4618
+< 			if (defined($dndata{$dn}{max183tosend})) {
+< 				for (my $m=0; 
+< 				     $m<$dndata{$dn}{max183tosend};
+< 				     $m++) {
+< 					sendInvite183Ringing($callid, 
+< 						$phdrs, "contact");
+< 					incrstats("terminationsubscribe",
+< 						"sendInvite183Ringing");
+< 				}
+< 			} else {
+< 				sendInvite183Ringing($callid, 
+< 					$phdrs, "contact");
+< 				incrstats("terminationsubscribe",
+< 					"sendInvite183Ringing");
+< 			}
+---
+> 			sendInvite183Ringing($callid, $phdrs, "contact");
+> 			incrstats("terminationsubscribe","sendInvite183Ringing");
+4783c4681
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4792c4690
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4818c4716
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4845c4743
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4854c4752
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4903c4801
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4912c4810
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4962c4860
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+4971c4869
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5014c4912
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5023c4921
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5049c4947
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5068c4966
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5077c4975
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5086c4984
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5130,5131d5027
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+5171c5067
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5178c5074
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5218,5219d5113
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+5259c5153
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5266c5160
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5307,5308d5200
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+5348c5240
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5355c5247
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+5391d5282
+< 	my $useprack = $dialogs{$callid}{useprack};
+5395,5398d5285
+< 	if ($useprack) {
+< 		$ackmsg .= "Require: 100rel\r\n";
+< 		$ackmsg .= "RSeq: ".$dialogs{$callid}{rseq}."\r\n";
+< 	}
+5403,5405c5290,5291
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5449,5451c5335,5336
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5495,5497c5380,5381
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5535,5538d5418
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+5543c5423
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+5549c5429
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5586,5587c5466,5467
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." ACK\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{invitecseq}." ACK\r\n";
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5624,5625c5504,5505
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5655,5658d5534
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+5665c5541
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+5671c5547
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5702,5706d5577
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+< 	my $useprack = $dialogs{$callid}{useprack};
+5711,5715c5582
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+< 	if ($useprack) {
+< 		$ackmsg .= "Supported: 100rel\r\n";
+< 		$ackmsg .= "Require: 100rel\r\n";
+< 	}
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+5721c5588
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5773c5640
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5819c5686
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5857,5860d5723
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+5865c5728
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+5871c5734
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5904c5767,5773
+< 	vprint "\nsendUPDATE: UPDATE msg ($updatesdp) to send.\n";
+---
+> 	if (!defined($dialogs{$callid}{$updatesdp}) ||
+> 	     length($dialogs{$callid}{$updatesdp}) <= 0) {
+> 		# no UPDATE to send.
+> 		vprint "\nsendUpdate: no UPDATE msg in data to send.\n";
+> 		return;
+> 	}
+> 	vprint "\nsendUPDATE: UPDATE $updatesdp msg ($dialogs{$callid}{$updatesdp}) to send.\n";
+5910,5913d5778
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+5918c5783
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+5924c5789
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+---
+> 	$ackmsg .= "Allow: INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+5949,6565d5813
+< sub sendPrackUPDATE {
+< 	my ($callid, $phdrs, $contact, $offersdp) = @_;
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $requesturi = $dialogs{$callid}{requesturi};
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+< 	my $useprack = $dialogs{$callid}{useprack};
+< 	my $brand = int(rand(1000000000));
+< 	my $newbranch = ${parameters}{branch}.$brand;
+< 	#
+< 	# flip To and From fields in the PRACK msg.
+< 	#
+< 	my $ackmsg = "PRACK ${requesturi} SIP/2.0\r\n";
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+< 	if ($useprack) {
+< 		# $ackmsg .= "RAck: ".$dialogs{$callid}{rseq}." ";
+< 		$ackmsg .= "RAck: ".$phdrs->{"RSeq"}." ";
+< 		$ackmsg .= $dialogs{$callid}{invitecseq}." INVITE\r\n";
+< 	}
+< 	$ackmsg .= "From: ".$dialogs{$callid}{local}."\r\n";
+< 	$ackmsg .= "To: ".$dialogs{$callid}{peer}."\r\n";
+< #	$ackmsg .= "Call-ID: ".${callid}."\r\n";
+< 	$ackmsg .= "Call-Id: ".${callid}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." PRACK\r\n";
+< 	$ackmsg .= "Allow: PRACK, INVITE, ACK, CANCEL, BYE, INFO, OPTIONS, UPDATE\r\n";
+< 	$ackmsg .= "Contact: ".$dialogs{$callid}{mycontact}."\r\n";
+< 	$ackmsg .= "Max-Forwards: ".$dialogs{$callid}{maxforwards}."\r\n";
+< 	#
+< 	if (defined($offersdp) && length($offersdp) > 0) {
+< 		my $sdp = "";
+< 		makeOfferSDP($dn, $offersdp, \$sdp);
+< 		my $sdplen = length($sdp);
+< 		$ackmsg .= "Content-Type: application/sdp\r\n";
+< 		$ackmsg .= "Content-Length: $sdplen\r\n";
+< 		$ackmsg .= "\r\n";
+< 		$ackmsg .= "$sdp";
+< 	} else {
+< 		# no SDP to send.
+< 		$ackmsg .= "Content-Length: 0\r\n";
+< 		$ackmsg .= "\r\n";
+< 	}
+< 	#
+< 	my $paddr = makepaddr($contact, $callid);
+< 	dumpOutgoingMsg($paddr, $ackmsg, $isupmsg);
+< 	#
+< 	defined(send(SIP, $ackmsg, 0, $paddr)) or die "send: $!";
+< 	incrstats("msgs-sent", "CANCEL");
+< 	return;
+< }
+< #
+< sub isAbandoned {
+< 	my ($flag) = @_;
+< 	return (defined($flag) && length($flag) > 0);
+< }
+< #
+< sub originationabandon {
+< 	my ($rawmsg, $callid, $timerflag, $current_time, $recvpaddr, 
+< 	    $pdatablocks, $phdrs, $ptimer, $reinvite) = @_;
+< 	#
+< 	if ($verboseflag) {
+< 		vprint "\nEntry originationabandon: Call-ID = <$callid>\n";
+< 		vprint "Timer Flag for $callid = <$timerflag>\n";
+< 	}
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $origstate = $dndata{$dn}{originationstate};
+< 	dumpDnState($dn, "originationstate");
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+< 	#
+< 	# check for originations
+< 	#
+< 	if ($origstate =~ /^INACTIVE$/) {
+< 		# only call orig timers are allowed.
+< 		if ($timerflag == 2) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-1");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# start up a call, send an INVITE
+< 			$dialogs{$callid}{cseq} += 1;
+< 			$dialogs{$callid}{invitecseq} = $dialogs{$callid}{cseq};
+< 			sendInviteUPDATE($callid, "contact", 0, 
+< 				$dialogs{$callid}{originvitesdp});
+< 			if (isAbandoned($dialogs{$callid}{origpostinviteabandon})) {
+< 				$dialogs{$callid}{cseq} += 1;
+< 				sendCancelUPDATE($callid, "contact",
+< 					$dialogs{$callid}{origcancelsdp});
+< 				incrstats("originationabandon","sendCancel");
+< 				starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 CANCEL");
+< 				changeDnState($dn, "originationstate", 
+< 						"WAITFOR200CANCEL");
+< 				return;
+< 			}
+< 			incrstats("originationabandon","started");
+< 			incrstats("originationabandon","sendInvite");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 INVITE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200");
+< 		} else {
+< 			if ($timerflag) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-2");
+< 			} else {
+< 				incrstats("originationabandon","unexpectedmsgs-1");
+< 				incrstats("originationabandon-unexpectedmsgs-1", 
+< 					$phdrs->{msgtype});
+< 			}
+< 			vprint "\noriginationabandon INACTIVE:\n";
+< 			vprint "Unexpected message or timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-3");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationabandon","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# cancel call.
+< 			$ptimer = undef;
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendCancelUPDATE($callid, "contact",
+< 				$dialogs{$callid}{origcancelsdp});
+< 			incrstats("originationabandon","sendCancel");
+< 			incrstats("originationabandon","timedout-1");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 CANCEL");
+< 			changeDnState($dn, "originationstate", 
+< 					"WAITFOR200CANCEL");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			my $label = "";
+< 			# now we have the far-end URI.
+< 			$dialogs{$callid}{peer} = $phdrs->{"To"};
+< 			#
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			if ($cseqmeth =~ /UPDATE/) {
+< 				# UPDATE return code. just stay in the
+< 				# same state.
+< 				my $retcode = $phdrs->{returncode};
+< 
+< 				if ($retcode == 200) {
+< 					incrstats("originationabandon", "received200update");
+< 				} else {
+< 					incrstats("originationabandon", "RETURNCODE".$retcode.$cseqmeth);
+< 				}
+< 				return;
+< 			}
+< 			#
+< 			if ($phdrs->{returncode} == 100) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 100)");
+< 				changeDnState($dn, "originationstate", "WAITFOR200");
+< 				incrstats("originationabandon","received100Invite");
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost100updatesdp});
+< 				if (isAbandoned($dialogs{$callid}{origpost100abandon})) {
+< 					removetimer($callid);
+< 					$dialogs{$callid}{cseq} += 1;
+< 					sendCancelUPDATE($callid, "contact",
+< 						$dialogs{$callid}{origcancelsdp});
+< 					incrstats("originationabandon","sendCancel");
+< 					starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 						"WAIT FOR 200 CANCEL");
+< 					changeDnState($dn, "originationstate", 
+< 							"WAITFOR200CANCEL");
+< 					return;
+< 				}
+< 			} elsif ($phdrs->{returncode} == 180) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 180)");
+< 				changeDnState($dn, "originationstate", "WAITFOR200");
+< 				incrstats("originationabandon","received180Invite");
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost180updatesdp});
+< 				if (isAbandoned($dialogs{$callid}{origpost180abandon})) {
+< 					removetimer($callid);
+< 					$dialogs{$callid}{cseq} += 1;
+< 					sendCancelUPDATE($callid, "contact",
+< 						$dialogs{$callid}{origcancelsdp});
+< 					incrstats("originationabandon","sendCancel");
+< 					starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 						"WAIT FOR 200 CANCEL");
+< 					changeDnState($dn, "originationstate", 
+< 							"WAITFOR200CANCEL");
+< 					return;
+< 				}
+< 			} elsif ($phdrs->{returncode} == 183) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 183)");
+< 				changeDnState($dn, "originationstate", "WAITFOR200");
+< 				incrstats("originationabandon","received183Invite");
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost183updatesdp});
+< 				if (isAbandoned($dialogs{$callid}{origpost183abandon})) {
+< 					removetimer($callid);
+< 					$dialogs{$callid}{cseq} += 1;
+< 					sendCancelUPDATE($callid, "contact",
+< 						$dialogs{$callid}{origcancelsdp});
+< 					incrstats("originationabandon","sendCancel");
+< 					starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 						"WAIT FOR 200 CANCEL");
+< 					changeDnState($dn, "originationstate", 
+< 							"WAITFOR200CANCEL");
+< 					return;
+< 				}
+< 			} elsif ($phdrs->{returncode} == 200) {
+< 				# check if the 200 is from an INFO msg and not
+< 				# from the INVITE.
+< 				$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 				if ($cseqmeth =~ /INFO/) {
+< 					# INFO 200 return.
+< 					incrstats("originationabandon", "received200info");
+< 					return;
+< 				} elsif ($cseqmeth =~ /UPDATE/) {
+< 					# INFO 200 return.
+< 					incrstats("originationabandon", "received200update");
+< 					return;
+< 				}
+< 				# 
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost200updatesdp});
+< 				if (isAbandoned($dialogs{$callid}{origpost200abandon})) {
+< 					removetimer($callid);
+< 					$dialogs{$callid}{cseq} += 1;
+< 					sendCancelUPDATE($callid, "contact",
+< 						$dialogs{$callid}{origcancelsdp});
+< 					incrstats("originationabandon","sendCancel");
+< 					starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 						"WAIT FOR 200 CANCEL");
+< 					changeDnState($dn, "originationstate", 
+< 							"WAITFOR200CANCEL");
+< 					return;
+< 				}
+< 				sendInviteAckUPDATE($callid, $phdrs, "contact", 
+< 					$dialogs{$callid}{originviteacksdp});
+< 				incrstats("originationabandon","sendAck");
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"maxcallduration"},
+< 					"TALKING MAX CALL LENGTH");
+< 				changeDnState($dn, "originationstate", "TALKING");
+< 				incrstats("originationabandon","stable");
+< 				incrstats("originationabandon","received200Invite");
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpostackupdatesdp});
+< 				if (isAbandoned($dialogs{$callid}{origpostackabandon})) {
+< 					removetimer($callid);
+< 					$dialogs{$callid}{cseq} += 1;
+< 					sendByeUPDATE($callid, "contact",
+< 						$dialogs{$callid}{origbyesdp});
+< 					incrstats("originationabandon","sendBye");
+< 					starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 						"WAIT FOR 200 BYE");
+< 					changeDnState($dn, "originationstate", 
+< 							"WAITFOR200BYE");
+< 					return;
+< 				}
+< 			} elsif ($phdrs->{returncode} == 486) {
+< 				incrstats("originationabandon", "received486busy");
+< 				sendAckUPDATE($callid, $phdrs, "contact", 
+< 					$dialogs{$callid}{origacksdp});
+< 				incrstats("originationabandon","send486Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationabandon", "inactive");
+< 			} elsif ($phdrs->{returncode} == 503) {
+< 				incrstats("originationabandon", "received503serviceunavailable");
+< 				sendAckUPDATE($callid, $phdrs, "contact",
+< 					$dialogs{$callid}{origacksdp});
+< 				incrstats("originationabandon","send503Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationabandon", "inactive");
+< 			} elsif ($phdrs->{returncode} =~ /^3[0-9][0-9]/) {
+< 				sendAck($callid, $phdrs, "contact");
+< 				incrstats("originationpudate","sendAck");
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationpudate", "inactive");
+< 				#
+< 				my ($ntdn, $ntdnip, $ntdnport) = 
+< 					contact2dnipport($phdrs->{"Contact"});
+< 				vprint "\noriginationpudate: new tdn is ... $ntdn\n";
+< 				vprint "originationpudate: new ntdnip is ... $ntdnip\n";
+< 				vprint "origination: new ntdnport is ... $ntdnport\n";
+< 				queueOrig($dn, $ntdn, 1, 0, undef, $ntdnip, $ntdnport);
+< 			} else {
+< 				incrstats("originationabandon", "receivedXXXstatus");
+< 				sendAckUPDATE($callid, $phdrs, "contact",
+< 					$dialogs{$callid}{origacksdp});
+< 				incrstats("originationabandon","sendXXXAck");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationabandon", "inactive");
+< 			}
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okcancelsdp});
+< 			incrstats("originationabandon","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# other side is gone.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okbyesdp});
+< 			incrstats("originationabandon","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /INFO/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200oksdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} elsif ($phdrs->{msgtype} =~ /UPDATE/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okupdatesdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} else {
+< 			incrstats("originationabandon","unexpectedmsgs-2");
+< 			incrstats("originationabandon-unexpectedmsgs-2", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationabandon WAITFOR200 warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^TALKING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-4");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationabandon","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact",
+< 				$dialogs{$callid}{origbyesdp});
+< 			incrstats("originationabandon","sendBye");
+< 			incrstats("originationabandon","timedout-2");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200BYE");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okbyesdp});
+< 			incrstats("originationabandon","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif (($dndata{$dn}{"handleorigreinvite"} != 0) && 
+< 			 ($phdrs->{msgtype} =~ /INVITE/)) {
+< 			# we have a RE-INVITE. end this call and
+< 			# treat as a new termination.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 			incrstats("originationabandon","reinvitesstarted");
+< 			# call parser for new termination
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okcancelsdp});
+< 			incrstats("originationabandon","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /SUBSCRIBE/) {
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendNotifyUPDATE($callid, "contact",
+< 				$dialogs{$callid}{orignotifysdp});
+< 			incrstats("originationabandon","sendNotify");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# stay in current state
+< 			my $cseqmeth = undef;
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			if ($cseqmeth =~ /UPDATE/) {
+< 				# UPDATE return code. just stay in the
+< 				# same state.
+< 				my $retcode = $phdrs->{returncode};
+< 
+< 				if ($retcode == 200) {
+< 					incrstats("originationabandon", "received200update");
+< 				} else {
+< 					incrstats("originationabandon", "RETURNCODE".$retcode.$cseqmeth);
+< 				}
+< 				return;
+< 			}
+< 			if (defined($phdrs->{"CSeq"})) {
+< 				$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			} 
+< 			if (!defined($cseqmeth)) {
+< 				$cseqmeth = "UNKNOWNMETHOD";
+< 			}
+< 			my $retcode = "RETURNCODE";
+< 			$retcode .= $cseqmeth;
+< 			$retcode .= $phdrs->{returncode};
+< 			incrstats("msgs-sent", $retcode);
+< 		} elsif ($phdrs->{msgtype} =~ /INFO/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200oksdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} elsif ($phdrs->{msgtype} =~ /UPDATE/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okupdatesdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} else {
+< 			incrstats("originationabandon","unexpectedmsgs-3");
+< 			incrstats("originationabandon-unexpectedmsgs-3", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationabandon TALKING warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200BYE$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-5");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationabandon","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 			incrstats("originationabandon","timedout-3");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			if ($cseqmeth =~ /UPDATE/) {
+< 				# UPDATE return code. just stay in the
+< 				# same state.
+< 				my $retcode = $phdrs->{returncode};
+< 
+< 				if ($retcode == 200) {
+< 					incrstats("originationabandon", "received200update");
+< 				} else {
+< 					incrstats("originationabandon", "RETURNCODE".$retcode.$cseqmeth);
+< 				}
+< 				return;
+< 			}
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okcancelsdp});
+< 			incrstats("originationabandon","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okbyesdp});
+< 			incrstats("originationabandon","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /INFO/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200oksdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} elsif ($phdrs->{msgtype} =~ /UPDATE/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okupdatesdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} else {
+< 			incrstats("originationabandon","unexpectedmsgs-4");
+< 			incrstats("originationabandon-unexpectedmsgs-4", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationabandon WAITFOR200BYE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200CANCEL$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationabandon","invalidtimers-6");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationabandon","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 			incrstats("originationabandon","timedout-4");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			if ($cseqmeth =~ /UPDATE/) {
+< 				# UPDATE return code. just stay in the
+< 				# same state.
+< 				my $retcode = $phdrs->{returncode};
+< 
+< 				if ($retcode == 200) {
+< 					incrstats("originationabandon", "received200update");
+< 				} else {
+< 					incrstats("originationabandon", "RETURNCODE".$retcode.$cseqmeth);
+< 				}
+< 				return;
+< 			}
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationabandon","inactive");
+< 			incrstats("originationabandon","waitfor200cancel-received200OK");
+< 		} elsif ($phdrs->{msgtype} =~ /INFO/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200oksdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} elsif ($phdrs->{msgtype} =~ /UPDATE/) {
+< 			# send back 200 and stay in state
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{orig200okupdatesdp});
+< 			incrstats("originationabandon","send200OK");
+< 		} else {
+< 			incrstats("originationabandon","unexpectedmsgs-5");
+< 			incrstats("originationabandon-unexpectedmsgs-5", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationabandon WAITFOR200CANCEL warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} else {
+< 		vprint "\noriginationabandon - unknown state $origstate error:\n";
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("originationabandon","invalidtimers-7");
+< 			if ($timerflag == 2) {
+< 				incrstats("originationabandon","notreadyfororig");
+< 			}
+< 			vprint "Unexpected timer.\n";
+< 			$ptimer = undef;
+< 		} else {
+< 			incrstats("originationabandon","unexpectedmsgs-6");
+< 			incrstats("originationabandon-unexpectedmsgs-6", 
+< 					$phdrs->{msgtype});
+< 		}
+< 		vprint "(callid=$callid).\n";
+< 	}
+< 	return;
+< }
+< #
+6578,6579d5825
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+6666,6667c5912
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost100updatesdp});
+---
+> 				sendUpdate($callid, "contact", "origpost100updatesdp");
+6675,6676c5920
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost180updatesdp});
+---
+> 				sendUpdate($callid, "contact", "origpost180updatesdp");
+6684,6685c5928
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost183updatesdp});
+---
+> 				sendUpdate($callid, "contact", "origpost183updatesdp");
+6700,6701c5943
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpost200updatesdp});
+---
+> 				sendUpdate($callid, "contact", "origpost200updatesdp");
+6712,6713c5954
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{origpostackupdatesdp});
+---
+> 				sendUpdate($callid, "contact", "origpostackupdatesdp");
+6721c5962
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+6731c5972
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+6734,6747d5974
+< 			} elsif ($phdrs->{returncode} =~ /^3[0-9][0-9]/) {
+< 				sendAck($callid, $phdrs, "contact");
+< 				incrstats("originationpudate","sendAck");
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationpudate", "inactive");
+< 				#
+< 				my ($ntdn, $ntdnip, $ntdnport) = 
+< 					contact2dnipport($phdrs->{"Contact"});
+< 				vprint "\noriginationpudate: new tdn is ... $ntdn\n";
+< 				vprint "originationpudate: new ntdnip is ... $ntdnip\n";
+< 				vprint "origination: new ntdnport is ... $ntdnport\n";
+< 				queueOrig($dn, $ntdn, 1, 0, undef, $ntdnip, $ntdnport);
+6755c5982
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+6766c5993
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6776c6003
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6826c6053
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6834c6061
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6839c6066
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+6847c6074
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6913c6140
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6935c6162
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6945c6172
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6955c6182
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+6990c6217
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7012c6239
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7066,7067d6292
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+7086,7087c6311
+< 			sendUpdate($callid, "contact",
+< 				$dialogs{$callid}{termpost180updatesdp});
+---
+> 			sendUpdate($callid, "contact", "termpost180updatesdp");
+7093,7094c6317
+< 			sendUpdate($callid, "contact",
+< 				$dialogs{$callid}{termpost183updatesdp});
+---
+> 			sendUpdate($callid, "contact", "termpost183updatesdp");
+7111,7112c6334
+< 				sendUpdate($callid, "contact",
+< 					$dialogs{$callid}{termpost200updatesdp});
+---
+> 				sendUpdate($callid, "contact", "termpost200updatesdp");
+7143,7144c6365
+< 			sendUpdate($callid, "contact",
+< 				$dialogs{$callid}{termpost200updatesdp});
+---
+> 			sendUpdate($callid, "contact", "termpost200updatesdp");
+7167c6388
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7177c6398
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7235c6456
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7257,7258c6478
+< 			sendUpdate($callid, "contact",
+< 				$dialogs{$callid}{termpostackupdatesdp});
+---
+> 			sendUpdate($callid, "contact", "termpostackupdatesdp");
+7266c6486
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7276c6496
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7362c6582
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+7368c6588
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+7377c6597
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7397c6617
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7445c6665
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7487c6707
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7497c6717
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7507c6727
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7539c6759
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7546c6766
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+7605,9089d6824
+< sub originationreinvite {
+< 	my ($rawmsg, $callid, $timerflag, $current_time, $recvpaddr, 
+< 	    $pdatablocks, $phdrs, $ptimer, $reinvite) = @_;
+< 	#
+< 	if ($verboseflag) {
+< 		vprint "\nEntry originationreinvite: Call-ID = <$callid>\n";
+< 		vprint "Timer Flag for $callid = <$timerflag>\n";
+< 	}
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $origstate = $dndata{$dn}{originationstate};
+< 	dumpDnState($dn, "originationstate");
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+< 	#
+< 	# check for originations
+< 	#
+< 	if ($origstate =~ /^INACTIVE$/) {
+< 		# only call orig timers are allowed.
+< 		if ($timerflag == 2) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite","invalidtimers-1");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# start up a call, send an INVITE
+< 			$dialogs{$callid}{cseq} += 1;
+< 			$dialogs{$callid}{invitecseq} = $dialogs{$callid}{cseq};
+< 			sendInviteUPDATE($callid, "contact", 0, 
+< 				$dialogs{$callid}{originvitesdp});
+< 			incrstats("originationreinvite","started");
+< 			incrstats("originationreinvite","sendInvite");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 INVITE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200");
+< 		} else {
+< 			if ($timerflag) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite",
+< 					"invalidtimers-2");
+< 			} else {
+< 				incrstats("originationreinvite",
+< 					"unexpectedmsgs-1");
+< 				incrstats("originationreinvite-unexpectedmsgs-1", 
+< 					$phdrs->{msgtype});
+< 			}
+< 			vprint "\noriginationreinvite INACTIVE:\n";
+< 			vprint "Unexpected message or timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite",
+< 					"invalidtimers-3");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# cancel call.
+< 			$ptimer = undef;
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendCancelUPDATE($callid, "contact", undef);
+< 			incrstats("originationreinvite","sendCancel");
+< 			incrstats("originationreinvite","timedout-1");
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 CANCEL");
+< 			changeDnState($dn, "originationstate", 
+< 					"WAITFOR200CANCEL");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			my $label = "";
+< 			# now we have the far-end URI.
+< 			$dialogs{$callid}{peer} = $phdrs->{"To"};
+< 			#
+< 			if ($phdrs->{returncode} == 100) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 100)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationreinvite",
+< 					"received100Invite");
+< 			} elsif ($phdrs->{returncode} == 180) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 180)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationreinvite",
+< 					"received180Invite");
+< 			} elsif ($phdrs->{returncode} == 183) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 183)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationreinvite",
+< 					"received183Invite");
+< 			} elsif ($phdrs->{returncode} == 200) {
+< 				sendInviteAckUPDATE($callid, $phdrs, "contact", 
+< 					$dialogs{$callid}{originviteacksdp});
+< 				incrstats("originationreinvite","sendAck");
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitbeforereinviteduration"},
+< 					"WAIT BEFORE SENDING REINVITE");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITBEFOREREINVITE");
+< 				incrstats("originationreinvite", "stable");
+< 				incrstats("originationreinvite","received200Invite");
+< 			} elsif ($phdrs->{returncode} == 486) {
+< 				incrstats("originationreinvite", "received486busy");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","send486Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			} elsif ($phdrs->{returncode} == 503) {
+< 				incrstats("originationreinvite", 
+< 					"received503serviceunavailable");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","send503Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			} else {
+< 				incrstats("originationreinvite", "receivedXXXstatus");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","sendXXXAck");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			}
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# other side is gone.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-2");
+< 			incrstats("originationreinvite-unexpectedmsgs-2", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationreinvite WAITFOR200 warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITBEFOREREINVITE$/) {
+< 		# only call orig timers are allowed.
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite","invalidtimers-4");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# send a RE-INVITE
+< 			$dialogs{$callid}{cseq} += 1;
+< 			$dialogs{$callid}{invitecseq} = $dialogs{$callid}{cseq};
+< 			sendInviteUPDATE($callid, "contact", 0, 
+< 				$dialogs{$callid}{origreinvitesdp});
+< 			incrstats("originationreinvite","sendReInvite");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 INVITE");
+< 			changeDnState($dn, "originationstate", 
+< 				"WAITFORREINVITE200");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# other side is gone.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			if ($timerflag) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite",
+< 					"invalidtimers-5");
+< 			} else {
+< 				incrstats("originationreinvite","unexpectedmsgs-3");
+< 				incrstats("originationreinvite-unexpectedmsgs-3", 
+< 					$phdrs->{msgtype});
+< 			}
+< 			vprint "\noriginationreinvite INACTIVE:\n";
+< 			vprint "Unexpected message or timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		}
+< 	} elsif ($origstate =~ /^WAITFORREINVITE200$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite",
+< 					"invalidtimers-6");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# cancel call.
+< 			$ptimer = undef;
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("originationreinvite","sendBye");
+< 			incrstats("originationreinvite","timedout-2");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 CANCEL");
+< 			changeDnState($dn, "originationstate", "WAITFOR200BYE");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			my $label = "";
+< 			# now we have the far-end URI.
+< 			$dialogs{$callid}{peer} = $phdrs->{"To"};
+< 			#
+< 			if ($phdrs->{returncode} == 100) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 REINVITE (after 100)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFORREINVITE200");
+< 				incrstats("originationreinvite",
+< 					"received100Invite");
+< 			} elsif ($phdrs->{returncode} == 180) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 REINVITE (after 180)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFORREINVITE200");
+< 				incrstats("originationreinvite",
+< 					"received180Invite");
+< 			} elsif ($phdrs->{returncode} == 183) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 REINVITE (after 183)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFORREINVITE200");
+< 				incrstats("originationreinvite",
+< 					"received183Invite");
+< 			} elsif ($phdrs->{returncode} == 200) {
+< 				sendInviteAckUPDATE($callid, $phdrs, "contact", 
+< 					$dialogs{$callid}{origreinviteacksdp});
+< 				incrstats("originationreinvite","sendAck");
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"maxcallduration"},
+< 					"TALKING MAX CALL LENGTH");
+< 				changeDnState($dn, "originationstate", 
+< 					"TALKING");
+< 				incrstats("originationreinvite", "stable");
+< 				incrstats("originationreinvite","received200Invite");
+< 			} elsif ($phdrs->{returncode} == 486) {
+< 				incrstats("originationreinvite", "received486busy");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","send486Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			} elsif ($phdrs->{returncode} == 503) {
+< 				incrstats("originationreinvite", 
+< 					"received503serviceunavailable");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","send503Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			} else {
+< 				incrstats("originationreinvite", "receivedXXXstatus");
+< 				sendAckUPDATE($callid, $phdrs, "contact", undef);
+< 				incrstats("originationreinvite","sendXXXAck");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", "INACTIVE");
+< 				incrstats("originationreinvite", "inactive");
+< 			}
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# other side is gone.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-4");
+< 			incrstats("originationreinvite-unexpectedmsgs-4", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationreinvite WAITFOR200 warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^TALKING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite","invalidtimers-7");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationreinvite","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("originationreinvite","sendBye");
+< 			incrstats("originationreinvite","timedout-3");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200BYE");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKBye");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-5");
+< 			incrstats("originationreinvite-unexpectedmsgs-5", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationreinvite TALKING warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200BYE$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite","invalidtimers-8");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationreinvite","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 			incrstats("originationreinvite","timedout-4");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKBye");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-6");
+< 			incrstats("originationreinvite-unexpectedmsgs-6", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationreinvite WAITFOR200BYE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200CANCEL$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationreinvite","invalidtimers-9");
+< 				if ($timerflag == 2) {
+< 					incrstats("originationreinvite","notreadyfororig");
+< 				}
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 			incrstats("originationreinvite","timedout-5");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# other side canceled call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationreinvite","inactive");
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-7");
+< 			incrstats("originationreinvite-unexpectedmsgs-7", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationreinvite WAITFOR200CANCEL warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} else {
+< 		vprint "\noriginationreinvite - unknown state $origstate error:\n";
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("originationreinvite","invalidtimers-10");
+< 			if ($timerflag == 2) {
+< 				incrstats("originationreinvite","notreadyfororig");
+< 			}
+< 			vprint "Unexpected timer.\n";
+< 			$ptimer = undef;
+< 		} else {
+< 			incrstats("originationreinvite","unexpectedmsgs-8");
+< 			incrstats("originationreinvite-unexpectedmsgs-8", 
+< 					$phdrs->{msgtype});
+< 		}
+< 		vprint "(callid=$callid).\n";
+< 	}
+< 	return;
+< }
+< #
+< sub terminationreinvite {
+< 	my ($rawmsg, $callid, $timerflag, $current_time, $recvpaddr, 
+< 	    $pdatablocks, $phdrs, $ptimer, $reinvite) = @_;
+< 	#
+< 	if ($verboseflag) {
+< 		vprint "\nEntry terminationreinvite: Call-ID = <$callid>\n";
+< 		vprint "Timer Flag for $callid = <$timerflag>\n";
+< 	}
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $termstate = $dndata{$dn}{terminationstate};
+< 	dumpDnState($dn, "terminationstate");
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+< 	#
+< 	if ($termstate =~ /^INACTIVE$/) {
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("terminationreinvite","invalidtimers-1");
+< 			vprint "\nterminationreinvite INACTIVE warning:\n";
+< 			vprint "Unexpected timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		} elsif ($phdrs->{msgtype} =~ /INVITE/) {
+< 			incrstats("terminationreinvite","started");
+< 			sendInvite180RingingUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term180ringingsdp});
+< 			incrstats("terminationreinvite","sendInvite180Ringing");
+< 			#
+< 			sendInvite183RingingUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term183ringingsdp});
+< 			incrstats("terminationreinvite","sendInvite183Ringing");
+< 			#
+< 			if ($dndata{$dn}{"ringingduration"} > 0) {
+< 				# wait for ringing
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"ringingduration"}, 
+< 					"RINGING");
+< 				changeDnState($dn, "terminationstate", 
+< 					"RINGING");
+< 				$dialogs{$callid}{lastphdrs} = $phdrs;
+< 			} else {
+< 				# just send 200OK immediately
+< 				sendInvite200OKUPDATE($callid, $phdrs, "contact",
+< 					$dialogs{$callid}{terminvite200oksdp});
+< 				incrstats("terminationreinvite","sendInvite200OK");
+< 				#
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingforackduration"}, 
+< 					"WAIT FOR ACK");
+< 				changeDnState($dn, "terminationstate", 
+< 					"WAITFORACK");
+< 			}
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-1");
+< 			incrstats("terminationreinvite-unexpectedmsgs-1", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite INACTIVE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^RINGING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationreinvite","invalidtimers-2");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			$phdrs = $dialogs{$callid}{lastphdrs};
+< 			sendInvite200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{terminvite200oksdp});
+< 			incrstats("terminationreinvite","sendInvite200OK");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+< 				"WAIT FOR ACK");
+< 			changeDnState($dn, "terminationstate", "WAITFORACK");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-2");
+< 			incrstats("terminationreinvite-unexpectedmsgs-2", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite WAITFORACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^WAITFORACK$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationreinvite","invalidtimers-3");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 			incrstats("terminationreinvite","timedout-1");
+< 		} elsif ($phdrs->{msgtype} =~ /ACK/) {
+< 			removetimer($callid);
+< 			starttimer($callid, $dndata{$dn}{"maxcallduration"},
+< 				"TALKING MAX CALL LENGTH");
+< 			changeDnState($dn, "terminationstate", "TALKING");
+< 			incrstats("terminationreinvite","stable");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-3");
+< 			incrstats("terminationreinvite-unexpectedmsgs-3", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite WAITFORACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^TALKING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationreinvite","invalidtimers-4");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("terminationreinvite","sendBye");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "terminationstate", "WAITFOR200BYE");
+< 			incrstats("terminationreinvite","timedout-2");
+< 		} elsif ($phdrs->{msgtype} =~ /INVITE/) {
+< 			incrstats("terminationreinvite","restarted");
+< 			# just send 200OK immediately
+< 			sendInvite200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{termreinvite200oksdp});
+< 			incrstats("terminationreinvite","sendReInvite200OK");
+< 			#
+< 			removetimer($callid);
+< 			starttimer($callid, $dndata{$dn}{"waitingforackduration"}, 
+< 				"WAIT FOR REINVITE ACK");
+< 			changeDnState($dn, "terminationstate", "WAITFORREINVITEACK");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-4");
+< 			incrstats("terminationreinvite-unexpectedmsgs-4", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite TALKING warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^WAITFORREINVITEACK$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationreinvite","invalidtimers-5");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("terminationreinvite","sendBye");
+< 			#
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "terminationstate", "WAITFOR200BYE");
+< 			incrstats("terminationreinvite","timedout-2");
+< 		} elsif ($phdrs->{msgtype} =~ /ACK/) {
+< 			removetimer($callid);
+< 			starttimer($callid, $dndata{$dn}{"maxcallduration"},
+< 				"TALKING MAX CALL LENGTH");
+< 			changeDnState($dn, "terminationstate", "TALKING");
+< 			incrstats("terminationreinvite","reinvite-stable");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term200okbyesdp});
+< 			incrstats("terminationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-5");
+< 			incrstats("terminationreinvite-unexpectedmsgs-5", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite WAITFORREINVITEACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /WAITFOR200BYE/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationreinvite","invalidtimers-6");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 			incrstats("terminationreinvite","timedout-3");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			#
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term200okcancelsdp});
+< 			incrstats("terminationreinvite","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term200okbyesdp});
+< 			incrstats("terminationreinvite","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationreinvite","inactive");
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-6");
+< 			incrstats("terminationreinvite-unexpectedmsgs-6", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationreinvite WAITFOR200BYE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} else {
+< 		vprint "\nterminationreinvite - unknown state $termstate error:\n";
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("terminationreinvite","invalidtimers-7");
+< 			vprint "Unexpected timer.\n";
+< 			$ptimer = undef;
+< 		} else {
+< 			incrstats("terminationreinvite","unexpectedmsgs-7");
+< 			incrstats("terminationreinvite-unexpectedmsgs-7", 
+< 					$phdrs->{msgtype});
+< 		}
+< 		vprint "(callid=$callid).\n";
+< 	}
+< 	return;
+< }
+< #
+< sub originationprack {
+< 	my ($rawmsg, $callid, $timerflag, $current_time, $recvpaddr, 
+< 	    $pdatablocks, $phdrs, $ptimer, $reinvite) = @_;
+< 	#
+< 	if ($verboseflag) {
+< 		vprint "\nEntry originationprack: Call-ID = <$callid>\n";
+< 		vprint "Timer Flag for $callid = <$timerflag>\n";
+< 	}
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $origstate = $dndata{$dn}{originationstate};
+< 	dumpDnState($dn, "originationstate");
+< 	# just turn it on.
+< 	$dialogs{$callid}{useprack} = 1;
+< 	#
+< 	# check for originations
+< 	#
+< 	if ($origstate =~ /^INACTIVE$/) {
+< 		# only call orig timers are allowed.
+< 		if ($timerflag == 2) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-1");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# start up a call, send an INVITE
+< 			$dialogs{$callid}{cseq} += 1;
+< 			$dialogs{$callid}{invitecseq} = $dialogs{$callid}{cseq};
+< 			sendInviteUPDATE($callid, "contact", 0, 
+< 				$dialogs{$callid}{originvitesdp});
+< 			incrstats("originationprack","started");
+< 			incrstats("originationprack","sendInvite");
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 INVITE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200");
+< 		} else {
+< 			if ($timerflag) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-2");
+< 			} else {
+< 				incrstats("originationprack",
+< 					"unexpectedmsgs-1");
+< 				incrstats("originationprack-unexpectedmsgs-1", 
+< 					$phdrs->{msgtype});
+< 			}
+< 			vprint "\noriginationprack INACTIVE:\n";
+< 			vprint "Unexpected message or timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-3");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# cancel call.
+< 			$ptimer = undef;
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendCancelUPDATE($callid, "contact", undef);
+< 			incrstats("originationprack","sendCancel");
+< 			incrstats("originationprack","timedout-1");
+< 			starttimer($callid, $dndata{$dn}{"waitingfor200duration"}, 
+< 				"WAIT FOR 200 CANCEL");
+< 			changeDnState($dn, "originationstate", 
+< 					"WAITFOR200CANCEL");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			my $label = "";
+< 			# now we have the far-end URI.
+< 			$dialogs{$callid}{peer} = $phdrs->{"To"};
+< 			#
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			if ($cseqmeth !~ /INVITE/) {
+< 				# PRACK return code. just stay in the
+< 				# same state.
+< 				my $retcode = $phdrs->{returncode};
+< 				incrstats("originationprack", 
+< 					"RETURNCODE".$retcode.$cseqmeth);
+< 				return;
+< 			}
+< 			#
+< 			if ($phdrs->{returncode} == 100) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 100)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationprack",
+< 					"received100Invite");
+< 			} elsif ($phdrs->{returncode} == 180) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 180)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationprack",
+< 					"received180Invite");
+< 				$dialogs{$callid}{cseq} += 1;
+< 				sendPrackUPDATE($callid, $phdrs, "contact",
+< 					$dialogs{$callid}{origpost180pracksdp});
+< 				incrstats("originationprack","send180Prack");
+< 			} elsif ($phdrs->{returncode} == 183) {
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"waitingfor200duration"}, 
+< 					"WAIT FOR 200 INVITE (after 183)");
+< 				changeDnState($dn, "originationstate", 
+< 					"WAITFOR200");
+< 				incrstats("originationprack",
+< 					"received183Invite");
+< 				$dialogs{$callid}{cseq} += 1;
+< 				sendPrackUPDATE($callid, $phdrs, "contact",
+< 					$dialogs{$callid}{origpost183pracksdp});
+< 				incrstats("originationprack","send183Prack");
+< 			} elsif ($phdrs->{returncode} == 200) {
+< 				sendInviteAckUPDATE($callid, $phdrs, "contact", 
+< 					$dialogs{$callid}{originviteacksdp});
+< 				incrstats("originationprack","sendAck");
+< 				removetimer($callid);
+< 				starttimer($callid, 
+< 					$dndata{$dn}{"maxcallduration"},
+< 					"TALKING MAX CALL LENGTH");
+< 				changeDnState($dn, "originationstate", 
+< 					"TALKING");
+< 				incrstats("originationprack","stable");
+< 				incrstats("originationprack",
+< 					"received200Invite");
+< 			} elsif ($phdrs->{returncode} == 486) {
+< 				incrstats("originationprack", 
+< 					"received486busy");
+< 				sendAckUPDATE($callid, $phdrs, 
+< 					"contact", undef);
+< 				incrstats("originationprack","send486Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", 
+< 					"INACTIVE");
+< 				incrstats("originationprack", "inactive");
+< 			} elsif ($phdrs->{returncode} == 503) {
+< 				incrstats("originationprack", 
+< 					"received503serviceunavailable");
+< 				sendAckUPDATE($callid, $phdrs, 
+< 					"contact", undef);
+< 				incrstats("originationprack","send503Ack");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", 
+< 					"INACTIVE");
+< 				incrstats("originationprack", "inactive");
+< 			} else {
+< 				incrstats("originationprack", 
+< 					"receivedXXXstatus");
+< 				sendAckUPDATE($callid, $phdrs, "contact", 
+< 					undef);
+< 				incrstats("originationprack","sendXXXAck");
+< 				# call ends.
+< 				removetimer($callid);
+< 				delete $dialogs{$callid};
+< 				changeDnState($dn, "originationstate", 
+< 					"INACTIVE");
+< 				incrstats("originationprack", "inactive");
+< 			}
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# other side is gone.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} else {
+< 			incrstats("originationprack","unexpectedmsgs-2");
+< 			incrstats("originationprack-unexpectedmsgs-2", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationprack WAITFOR200 warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^TALKING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-4");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("originationprack","sendBye");
+< 			incrstats("originationprack","timedout-2");
+< 			#
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "originationstate", "WAITFOR200BYE");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} else {
+< 			incrstats("originationprack","unexpectedmsgs-3");
+< 			incrstats("originationprack-unexpectedmsgs-3", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationprack TALKING warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200BYE$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-5");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 			incrstats("originationprack","timedout-3");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("originationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 		} else {
+< 			incrstats("originationprack","unexpectedmsgs-4");
+< 			incrstats("originationprack-unexpectedmsgs-4", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationprack WAITFOR200BYE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($origstate =~ /^WAITFOR200CANCEL$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("originationprack","invalidtimers-6");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 			incrstats("originationprack","timedout-4");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			$cseqmeth = getCseqMethod($phdrs->{"CSeq"});
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "originationstate", "INACTIVE");
+< 			incrstats("originationprack","inactive");
+< 			incrstats("originationprack",
+< 				"waitfor200cancel-received200OK");
+< 		} else {
+< 			incrstats("originationprack","unexpectedmsgs-5");
+< 			incrstats("originationprack-unexpectedmsgs-5", 
+< 					$phdrs->{msgtype});
+< 			vprint "\noriginationprack WAITFOR200CANCEL warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} else {
+< 		vprint "\noriginationprack - unknown state $origstate error:\n";
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("originationprack","invalidtimers-7");
+< 			if ($timerflag == 2) {
+< 				incrstats("originationprack","notreadyfororig");
+< 			}
+< 			vprint "Unexpected timer.\n";
+< 			$ptimer = undef;
+< 		} else {
+< 			incrstats("originationprack","unexpectedmsgs-6");
+< 			incrstats("originationprack-unexpectedmsgs-6", 
+< 					$phdrs->{msgtype});
+< 		}
+< 		vprint "(callid=$callid).\n";
+< 	}
+< 	return;
+< }
+< #
+< sub terminationprack {
+< 	my ($rawmsg, $callid, $timerflag, $current_time, $recvpaddr, 
+< 	    $pdatablocks, $phdrs, $ptimer, $reinvite) = @_;
+< 	#
+< 	if ($verboseflag) {
+< 		vprint "\nEntry terminationprack: Call-ID = <$callid>\n";
+< 		vprint "Timer Flag for $callid = <$timerflag>\n";
+< 	}
+< 	#
+< 	my $dn = $dialogs{$callid}{dn};
+< 	my $termstate = $dndata{$dn}{terminationstate};
+< 	dumpDnState($dn, "terminationstate");
+< 	# set this flag
+< 	$dialogs{$callid}{useprack} = 1;
+< 	#
+< 	if ($termstate =~ /^INACTIVE$/) {
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("terminationprack","invalidtimers-1");
+< 			vprint "\nterminationprack INACTIVE warning:\n";
+< 			vprint "Unexpected timer.\n";
+< 			vprint "(callid=$callid).\n";
+< 			$ptimer = undef;
+< 		} elsif ($phdrs->{msgtype} =~ /INVITE/) {
+< 			incrstats("terminationprack","started");
+< 			$dialogs{$callid}{rseq} += 1;
+< 			sendInvite180RingingUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term180ringingsdp});
+< 			incrstats("terminationprack","sendInvite180Ringing");
+< 			#
+< 			removetimer($callid);
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingforprackduration"}, 
+< 				"WAIT FOR 180 PRACK");
+< 			changeDnState($dn, "terminationstate", 
+< 				"WAITFOR180PRACK");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-1");
+< 			incrstats("terminationprack-unexpectedmsgs-1", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack INACTIVE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^WAITFOR180PRACK$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationprack","invalidtimers-2");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 			incrstats("terminationprack","timedout-1");
+< 		} elsif ($phdrs->{msgtype} =~ /PRACK/) {
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term180prack200sdp});
+< 			incrstats("terminationprack","send180prack200ok");
+< 			$dialogs{$callid}{rseq} += 1;
+< 			sendInvite183RingingUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term183ringingsdp});
+< 			incrstats("terminationprack","sendInvite180Ringing");
+< 			#
+< 			removetimer($callid);
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingforprackduration"}, 
+< 				"WAIT FOR 183 PRACK");
+< 			changeDnState($dn, "terminationstate", 
+< 				"WAITFOR183PRACK");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-2");
+< 			incrstats("terminationprack-unexpectedmsgs-2", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack WAITFORACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^WAITFOR183PRACK$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationprack","invalidtimers-3");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 			incrstats("terminationprack","timedout-1");
+< 		} elsif ($phdrs->{msgtype} =~ /PRACK/) {
+< 			send200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{term183prack200sdp});
+< 			incrstats("terminationprack","send183prack200ok");
+< 			sendInvite200OKUPDATE($callid, $phdrs, "contact",
+< 				$dialogs{$callid}{terminvite200oksdp});
+< 			incrstats("terminationprack","sendInvite200OK");
+< 			#
+< 			removetimer($callid);
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingforackduration"}, 
+< 				"WAIT FOR ACK");
+< 			changeDnState($dn, "terminationstate", 
+< 				"WAITFORACK");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-3");
+< 			incrstats("terminationprack-unexpectedmsgs-3", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack WAITFORACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^WAITFORACK$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationprack","invalidtimers-4");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 			incrstats("terminationprack","timedout-1");
+< 		} elsif ($phdrs->{msgtype} =~ /ACK/) {
+< 			removetimer($callid);
+< 			starttimer($callid, $dndata{$dn}{"maxcallduration"},
+< 				"TALKING MAX CALL LENGTH");
+< 			changeDnState($dn, "terminationstate", "TALKING");
+< 			incrstats("terminationprack","stable");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-4");
+< 			incrstats("terminationprack-unexpectedmsgs-4", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack WAITFORACK warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /^TALKING$/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationprack","invalidtimers-5");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends, send bye.
+< 			$dialogs{$callid}{cseq} += 1;
+< 			sendByeUPDATE($callid, "contact", undef);
+< 			incrstats("terminationprack","sendBye");
+< 			#
+< 			starttimer($callid, 
+< 				$dndata{$dn}{"waitingfor200duration"},
+< 				"WAIT FOR 200 BYE");
+< 			changeDnState($dn, "terminationstate", 
+< 				"WAITFOR200BYE");
+< 			incrstats("terminationprack","timedout-2");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# onhook received
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-5");
+< 			incrstats("terminationprack-unexpectedmsgs-5", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack TALKING warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} elsif ($termstate =~ /WAITFOR200BYE/) {
+< 		if ($timerflag) {
+< 			# check if my timer
+< 			if (!isMyTimer($callid, $ptimer)) {
+< 				dumptimer($timerflag, $ptimer);
+< 				incrstats("terminationprack","invalidtimers-6");
+< 				$ptimer = undef;
+< 				return;
+< 			}
+< 			# call ends.
+< 			$ptimer = undef;
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 			incrstats("terminationprack","timedout-3");
+< 		} elsif ($phdrs->{msgtype} =~ /RETURNCODE/) {
+< 			# call ends. the return code should be
+< 			# 200OK, but really we are ending the call
+< 			# whether it is or not.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /CANCEL/) {
+< 			# last request was canceled. end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OKCancel");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} elsif ($phdrs->{msgtype} =~ /BYE/) {
+< 			# end call.
+< 			send200OKUPDATE($callid, $phdrs, "contact", undef);
+< 			incrstats("terminationprack","send200OK");
+< 			# call ends.
+< 			removetimer($callid);
+< 			delete $dialogs{$callid};
+< 			changeDnState($dn, "terminationstate", "INACTIVE");
+< 			incrstats("terminationprack","inactive");
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-6");
+< 			incrstats("terminationprack-unexpectedmsgs-6", 
+< 					$phdrs->{msgtype});
+< 			vprint "\nterminationprack WAITFOR200BYE warning:\n";
+< 			vprint "Unexpected msg $phdrs->{msgtype}.\n";
+< 			vprint "(callid=$callid).\n";
+< 		}
+< 	} else {
+< 		vprint "\nterminationprack - unknown state $termstate error:\n";
+< 		if ($timerflag) {
+< 			dumptimer($timerflag, $ptimer);
+< 			incrstats("terminationprack","invalidtimers-7");
+< 			vprint "Unexpected timer.\n";
+< 			$ptimer = undef;
+< 		} else {
+< 			incrstats("terminationprack","unexpectedmsgs-7");
+< 			incrstats("terminationprack-unexpectedmsgs-7", 
+< 					$phdrs->{msgtype});
+< 		}
+< 		vprint "(callid=$callid).\n";
+< 	}
+< 	return;
+< }
+< #
+9105,9106c6840
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+9166,9167c6900
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+9227,9228c6960
+< 	# $ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." INVITE\r\n";
+---
+> 	$ackmsg .= "CSeq: ".$phdrs->{"CSeq"}."\r\n";
+9293,9296d7024
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+9301c7029
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+9359,9360c7087
+< 	# $ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{invitecseq}." ACK\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+9420c7147
+< 	$ackmsg .= "CSeq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+---
+> 	$ackmsg .= "Cseq: ".$dialogs{$callid}{cseq}." ACK\r\n";
+9462,9465d7188
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+9472c7195
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+9524,9527d7246
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+9532c7251
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+9735,9738d7453
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+9743c7458
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+9803,9806d7517
+< 	my $viaprefix = $dialogs{$callid}{viaprefix};
+< 	if (!defined($viaprefix)) {
+< 		$viaprefix = "";
+< 	}
+9811c7522
+< 	$ackmsg .= "Via: SIP/2.0/UDP ".${viaprefix}.$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+---
+> 	$ackmsg .= "Via: SIP/2.0/UDP ".$parameters{mysipip}.":".$parameters{mysipport}.";branch=".${newbranch}."\r\n";
+9869,9870d7579
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+10020c7729
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+10030c7739
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+10040c7749
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+10051c7760
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10061c7770
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10106c7815
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10114c7823
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10119c7828
+< 			handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 			handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+10127c7836
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10175c7884
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10184c7893
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10194c7903
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10204c7913
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10234c7943
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10243c7952
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10292,10293d8000
+< 	# just turn it off.
+< 	$dialogs{$callid}{useprack} = 0;
+10419c8126
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10429c8136
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10469c8176
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10501c8208
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10511c8218
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10579c8286
+< 				delete $dialogs{$callid};
+---
+> 				deleteCallId($callid);
+10585c8292
+< 				handleSIP($current_time, $recvpaddr, $rawmsg, 1);
+---
+> 				handleSIP($current_time, $recvpaddr, $rawmsg, 1, $dialogs{$callid}{fd});
+10594c8301
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10609c8316
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10644c8351
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10674c8381
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10684c8391
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10694c8401
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10721c8428
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10728c8435
+< 			delete $dialogs{$callid};
+---
+> 			deleteCallId($callid);
+10781c8488
+< 			    ($dndata{$dn}{"${type}state"} eq "INACTIVE")) {
+---
+> 			    ($dndata{$dn}{"${type}state"} ne "INACTIVE")) {
+10852,10855c8559,8562
+< 	# if ($simcalls > $loaddata{origdnsz}) {
+< 		# printit "Requested number of simultaneous calls > number of ORIG DNs.\n";
+< 		# return;
+< 	# }
+---
+> 	if ($simcalls > $loaddata{origdnsz}) {
+> 		printit "Requested number of simultaneous calls > number of ORIG DNs.\n";
+> 		return;
+> 	}
+10967d8673
+< 	# $dialogs{$callid}{rseq} = int(rand(1000000000));
+10979d8684
+< 	$dialogs{$callid}{viaprefix} = $dndata{$odn}{viaprefix};
+11032,11033d8736
+< 	$dialogs{$callid}{origreinviteacksdp} = 
+< 			$dndata{$odn}{origreinviteacksdp};
+11036,11037d8738
+< 	$dialogs{$callid}{origreinvitesdp} = 
+< 			$dndata{$odn}{origreinvitesdp};
+11047,11050d8747
+< 	$dialogs{$callid}{origpost180pracksdp} = 
+< 			$dndata{$odn}{origpost180pracksdp};
+< 	$dialogs{$callid}{origpost183pracksdp} = 
+< 			$dndata{$odn}{origpost183pracksdp};
+11056,11066d8752
+< 	$dialogs{$callid}{origpost100abandon} = 
+< 			$dndata{$odn}{origpost100abandon};
+< 	$dialogs{$callid}{origpost180abandon} = 
+< 			$dndata{$odn}{origpost180abandon};
+< 	$dialogs{$callid}{origpost183abandon} = 
+< 			$dndata{$odn}{origpost183abandon};
+< 	$dialogs{$callid}{origpost200abandon} = 
+< 			$dndata{$odn}{origpost200abandon};
+< 	$dialogs{$callid}{origpostackabandon} = 
+< 			$dndata{$odn}{origpostackabandon};
+< 	#
+11114a8801,8828
+> sub killclient {
+> 	my ($fd) = @_;
+> 	#
+> 	vec($rin,$fd,1) = 0;
+> 	vec($win,$fd,1) = 0;
+> 	vec($ein,$fd,1) = 0;
+> 	#
+> 	$input[$fd] = '';
+> 	$output[$fd] = '';
+> 	#
+> 	close($fd2file[$fd]);
+> 	#
+> 	$fd2file[$fd] = undef;
+> 	$fd2paddr[$fd] = undef;
+> 	$fd2ip[$fd] = undef;
+> 	$fd2port[$fd] = undef;
+> 	#
+> 	my @cl;
+> 	#
+> 	while ($i = shift @clients) {
+> 		if ($i != $fd) {
+> 			push((@cl), $i);
+> 		}
+> 	}
+> 	@clients = @cl;
+> 	return;
+> }
+> #
+11130,11146d8843
+< 	} elsif ($line =~ /^emacs/) {
+< 		if ($parameters{logfile} ne "") {
+< 			if (defined($ENV{DISPLAY}) && length($ENV{DISPLAY}) > 0) {
+< 				printit "\nUGH. EMACS USER ...\n";
+< 				if ($pid = fork) {
+< 					printit "editting log file $parameters{logfile}.\n";
+< 				} else {
+< 					die "cannot fork: $!" unless defined $pid;
+< 					$SIG{INT} = "IGNORE";
+< 					exec("xterm -e emacs $parameters{logfile}");
+< 				}
+< 			} else {
+< 				printit "DISPLAY is not defined or exported.\n";
+< 			}
+< 		} else {
+< 			printit "\nNo Log File defined.\n";
+< 		}
+11150,11156d8846
+< 				if ($parameters{editor} =~ /emacs/) {
+< 					printit "\nUGH. EMACS USER ...\n";
+< 				} elsif ($parameters{editor} =~ /vi/) {
+< 					printit "\nCOOL DUDE. VI USER ...\n";
+< 				} else {
+< 					printit "\nWEIRDO. WHAT EDITOR ARE YOU USING ??? ...\n";
+< 				}
+11175,11176c8865
+< 				# $statistics{$key}{$key2} = 0;
+< 				delete $statistics{$key}{$key2};
+---
+> 				$statistics{$key}{$key2} = 0;
+11484,11485c9173
+< 		printit "\t'vi' - edit logfile (uses parameter 'editor').\n";
+< 		printit "\t'emacs' - edit logfile using emacs.\n";
+---
+> 		printit "\t'vi' - edit logfile..\n";
+11775a9464,9547
+> sub handleTCP {
+> 	my ($current_time, $fd, $reinvite) = @_;
+> 	#
+> 	# check if we have a complete msg.
+> 	#
+> 	if (!defined($input[$fd])) {
+> 		# no message at all.
+> 		return;
+> 	}
+> 	if ($input[$fd] !~ /^[^\r\n]*[\r\n]{4,4}/) {
+> 		# not a complete message yet.
+> 		return;
+> 	}
+> 	#
+> 	# we have the hdr part of msg, check if we have the
+> 	# payload part of the msg.
+> 	#
+> 	my $rawhdr = undef;
+> 	my $rawdata = undef;
+> 	#
+> 	($rawhdr, $rawdata) = split /[\r\n]{4,4}/, $input[$fd], 2;
+> 	return unless (defined($rawhdr));
+> 	#
+> 	# get the Content-Length and determine if we have read enough.
+> 	#
+> 	$rawhdr =~ /^.*Content-Length:[\s]*\([0-9][0-9]*\)[\s]*[\r\n]{2,2}/;
+> 	if (!defined($1)) {
+> 		# no content length found
+> 		return;
+> 	}
+> 	my $contentlen = $1;
+> 	#
+> 	if ($contentlen <= 0) {
+> 		# we have a complete message without a payload.
+> 		my $rawmsg = $rawhdr."\r\n\r\n";
+> 		my $rawmsglen = length($rawmsg);
+> 		# adjust input stream buffer
+> 		my $inputlen = length($input[$fd]);
+> 		if ($rawmsglen <= $inputlen) {
+> 			# everything was read.
+> 			$input[$fd] = '';
+> 		} else {
+> 			# part of another message is left. remove
+> 			# current message from input buffer.
+> 			$input[$fd] = substr($input[$fd], $rawmsglen, 
+> 					($inputlen-$rawmsglen));
+> 		}
+> 		# call SIP handler
+> 		handleSIP($current_time, $fd2paddr[$fd], 
+> 				$rawmsg, $reinvite, $fd);
+> 	} else {
+> 		# check if the raw data is greater than the content length.
+> 		if (!defined($rawdata)) {
+> 			# no data, keep reading
+> 			return;
+> 		}
+> 		my $rawdatalen = length($rawdata);
+> 		if ($rawdatalen < $contentlen) {
+> 			# not enough data, keep reading
+> 			return;
+> 		}
+> 		# get the payload from the rawdata
+> 		$rawdata = substr($rawdata, 0, $contentlen);
+> 		# we have a complete message with a payload.
+> 		my $rawmsg = $rawhdr."\r\n\r\n".$rawdata;
+> 		my $rawmsglen = length($rawmsg);
+> 		# adjust input stream buffer
+> 		my $inputlen = length($input[$fd]);
+> 		if ($rawmsglen <= $inputlen) {
+> 			# everything was read.
+> 			$input[$fd] = '';
+> 		} else {
+> 			# part of another message is left. remove
+> 			# current message from input buffer.
+> 			$input[$fd] = substr($input[$fd], $rawmsglen, 
+> 					($inputlen-$rawmsglen));
+> 		}
+> 		# call SIP handler
+> 		handleSIP($current_time, $fd2paddr[$fd], 
+> 				$rawmsg, $reinvite, $fd);
+> 	}
+> 	return;
+> }
+> #
+11777c9549
+< 	my ($current_time, $recvpaddr, $rawmsg, $reinvite) = @_;
+---
+> 	my ($current_time, $recvpaddr, $rawmsg, $reinvite, $fd) = @_;
+11795c9567
+< 	my $ret = parseSipMsg($rawmsg, \$rawhdr, \$rawdata, \%hdrs, \@datablocks, $reinvite);
+---
+> 	my $ret = parseSipMsg($rawmsg, \$rawhdr, \$rawdata, \%hdrs, \@datablocks, $reinvite, $fd);
+11814c9586
+< 		incrstats("general", "handleSip-sendGratuitous200OK");
+---
+> 		Incrstats("general", "handleSip-sendGratuitous200OK");
+11832,11835d9603
+< # redirect STDERR to STDOUT.
+< #
+< # open STDERR, ">&STDOUT";
+< #
+11844a9613
+> 		printit "\n==>> logfile = $parameters{logfile}\n";
+11849d9617
+< 		printit "\n==>> logfile = $parameters{logfile}\n";
+11884d9651
+< printit "\n==>> config file = $configfile\n";
+11894,11895c9661,9664
+< my $proto = getprotobyname('udp');
+< defined($proto) or die "getprotobyname: $!";
+---
+> my $udp_proto = getprotobyname('udp');
+> defined($udp_proto) or die "getprotobyname: $!";
+> my $tcp_proto = getprotobyname('tcp');
+> defined($tcp_proto) or die "getprotobyname: $!";
+11899c9668
+< socket(SIP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+---
+> socket(SIP, PF_INET, SOCK_DGRAM, $udp_proto) or die "socket: $!";
+11903c9672
+< defined($paddr) or die "getprotobyname: $!";
+---
+> defined($paddr) or die "sockaddr_in: $!";
+11905a9675,9686
+> # set up TCP SIP SERVER port.
+> vprint "TCP IP  : $parameters{mytcpsipip}\n";
+> vprint "TCP PORT: $parameters{mytcpsipport}\n";
+> socket(SIPTCP, PF_INET, SOCK_STREAM, $tcp_proto);
+> setsockopt(SIPTCP, SOL_SOCKET, SO_REUSEADDR, 1);
+> my $tcp_ipaddr = gethostbyname($parameters{mytcpsipip});
+> defined($tcp_ipaddr) or die "gethostbyname: $!";
+> my $tcp_paddr = sockaddr_in($parameters{mytcpsipport}, $tcp_ipaddr)
+> defined($tcp_paddr) or die "sockaddr_in: $!";
+> bind(SIPTCP, $tcp_paddr) or die "bind: $!";
+> listen(SIPTCP, SOMAXCONN) or die "listen: $!";
+> #
+11908c9689
+< socket(ADMIN, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+---
+> socket(ADMIN, PF_INET, SOCK_DGRAM, $udp_proto) or die "socket: $!";
+11912c9693
+< defined($admin_paddr) or die "getprotobyname: $!";
+---
+> defined($admin_paddr) or die "sockaddr_in: $!";
+11916c9697
+< 	socket(RTP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+---
+> 	socket(RTP, PF_INET, SOCK_DGRAM, $udp_proto) or die "socket: $!";
+11922c9703
+< 	defined($rtp_paddr) or die "getprotobyname: $!";
+---
+> 	defined($rtp_paddr) or die "sockaddr_in: $!";
+11926c9707
+< 	socket(RTCP, PF_INET, SOCK_DGRAM, $proto) or die "socket: $!";
+---
+> 	socket(RTCP, PF_INET, SOCK_DGRAM, $udp_proto) or die "socket: $!";
+11928c9709
+< 	defined($rtcp_paddr) or die "getprotobyname: $!";
+---
+> 	defined($rtcp_paddr) or die "sockaddr_in: $!";
+11932,11933c9713,9718
+< my $rin = '';
+< my $rout = '';
+---
+> $rin = '';
+> $rout = '';
+> $win = '';
+> $wout = '';
+> $ein = '';
+> $eout = '';
+11937a9723
+> vec($rin, fileno(SIPTCP), 1) = 1;
+11947a9734
+> fcntl(SIPTCP, F_SETFL, O_NONBLOCK);
+11969c9756
+< # event loop for simulation. 
+---
+> # event loop for simulation.
+12004c9791
+< 	($nf, $timeleft) = select($rout=$rin, undef, undef, $mydelta);
+---
+> 	($nf, $timeleft) = select($rout=$rin, $wout=$win, $eout=$ein, $mydelta);
+12019c9806
+< 			} 
+---
+> 			}
+12024,12026d9810
+< 	# my $pqcnt = $pq->count();
+< 	# dprint "\nPQ count = $pqcnt\n";
+< 	#
+12037a9822,9823
+> 	# SIP UDP port
+> 	#
+12043c9829
+< 			handleSIP($current_time, $recvpaddr, $msg, 0);
+---
+> 			handleSIP($current_time, $recvpaddr, $msg, 0, undef);
+12045a9832,9898
+> 	#
+> 	# SIP TCP server
+> 	#
+> 	if (vec($rout, fileno(SIPTCP), 1)) {
+> 		my $NS = FileHandle->new();
+> 		# accept returns the remote client IP/PORT.
+> 		if (my $client_paddr = accept($NS, SIPTCP)) {
+> 			my ($client_port, $client_packed_ip) =
+> 				sockaddr_in($client_paddr);
+> 			my $client_ascii_ip = inet_ntoa($client_packed_ip);
+> 			#
+> 			vec($rin, fileno($NS), 1) = 1;
+> 			vec($ein, fileno($NS), 1) = 1;
+> 			#
+> 			$input[fileno($NS)] = '';
+> 			$output[fileno($NS)] = '';
+> 			#
+> 			$fd2file[file($NS)] = $NS;
+> 			$fd2paddr[file($NS)] = $client_paddr;
+> 			$fd2ip[file($NS)] = $client_ascii_ip;
+> 			$fd2port[file($NS)] = $client_port;
+> 			#
+> 			fcntl($NS, F_SETFL, O_NONBLOCK);
+> 			push((@clients), fileno($NS));
+> 		}
+> 	}
+> 	#
+> 	# SIP TCP clients
+> 	#
+> 	@cl = @clients;
+> 	#
+> 	while ($fd = shift @cl) {
+> 		if (vec($eout, $fd, 1)) {
+> 			killclient($fd);
+> 			next;
+> 		}
+> 		if (vec($wout, $fd, 1)) {
+> 			$len = length($output[$fd]);
+> 			if ($len > 0) {
+> 				$w = syswrite($fd2file[$fd],$output[$fd],$len);
+> 				if (!defined($w)) {
+> 					printit "ERROR: syswrite failed.\n";
+> 					killclient($fd);
+> 				} else {
+> 					$output[$fd] = substr($output[$fd], 
+> 							$w, $len-$w);
+> 				}
+> 			} else {
+> 				# nothing left to write.
+> 				vec($win, $fd, 1) = 0;
+> 			}
+> 		}
+> 		if (vec($rout, $fd, 1)) {
+> 			$r = sysread($fd2file[$fd], $input[$fd], 2048, 
+> 					length($input[$fd]));
+> 			if (!defined($r) || !$r) {
+> 				printit "ERROR: sysread failed.\n";
+> 				killclient($fd);
+> 			} else {
+> 				# not a reinvite
+> 				handleTCP($current_time, $fd, 0);
+> 			}
+> 		}
+> 	}
+> 	#
+> 	# RTP and RTCP ports
+> 	#
+12048c9901
+< 			while (defined($recvpaddr = 
+---
+> 			while (defined($recvpaddr =
+12054c9907
+< 			while (defined($recvpaddr = 
+---
+> 			while (defined($recvpaddr =
+12062a9916
+> close(SIPTCP);

@@ -1,0 +1,16 @@
+globals data {
+	spa {
+		ip 135.1.64.199
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+	spb {
+		ip 135.1.64.200
+		login root
+		passwd plexus9000
+		tl1login telica
+		tl1passwd telica
+	}
+}

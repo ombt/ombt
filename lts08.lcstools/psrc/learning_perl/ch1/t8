@@ -1,0 +1,29 @@
+#!/opt/exp/bin/perl -w
+#
+while (defined($filename = glob("*.secret"))) {
+	open(WORDSLIST, $filename) || die "can't open $filename: $!";
+	if (-M WORDSLIST >= 7.0) {
+		die "$filename is older than 7 days.";
+	}
+	while (defined($name = <WORDSLIST>)) {
+		chomp($name);
+		$word = <WORDSLIST>;
+		chomp($word);
+		write;
+	}
+	close(WORDSLIST);
+}
+#
+format STDOUT_TOP = 
+Page @<<
+$%
+
+FILENAME               Name            Word
+====================== =============== ===================
+@<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<
+.
+#
+format STDOUT = 
+@<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<
+$filename, $name, $word
+.

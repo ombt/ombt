@@ -1,0 +1,88 @@
+cfdmp info
+
+1) headers ...
+
+section		header
+-----------------------------
+file hdr	filehdr.h
+optional hdr	aouthdr.h
+section hdr	scnhdr.h
+raw data	
+relocation hdr	reloc.h
+line # hdr	linenum.h
+symbols table	syms.h
+		storclass.h
+string stable
+
+2) options ...
+
+level				option	
+------------------------------------------------------------
+section				-c [1,2,... | all]
+				-C section_name
+	raw data		-d
+	relocation		-r 
+	line #			-l
+	symbols			-s
+	strings			-t
+
+filename			-F [filename1,... | all]
+	function		-f [func1,... | all]
+		raw data	-d
+		relocation	-r
+		line #		-l
+		symbols		-s
+		strings		-t
+
+file 				-h
+optional 			-o
+global				-g [name1,... | all]
+unresolved			-u
+extern				-e
+
+3) cfdmp globals
+
+machine - (from f_magic) - type of machine, one of the following
+	B16MAGIC	0502
+	BTVMAGIC	0503
+	X86MAGIC	0510
+	XTVMAGIC	0511
+	N3BMAGIC	0550
+	NTVMAGIC	0551
+	XLMAGIC		0540
+	FBOMAGIC	0560
+	RBOMAGIC	0562
+	MTVMAGIC	0561
+	VAXWRMAGIC	0570
+	VAXROMAGIC	0575
+	MC68MAGIC	0520
+	MC68TVMAGIC	0521
+	M68MAGIC	0210
+	M68TVMAGIC	0211
+	U370TOMAGIC	0530
+	U370WRMAGIC	0535
+
+numsec - (from f_nscns) - number of sections in COFF file.
+
+symstart - (from f_symptr) - pointer to start of symbol table.
+
+numsyms - (from f_nsyms) - number of symbol entries.
+
+opthdrsz - (from f_opthdr) - size of optional file.
+
+fileflags - (from f_flags) - file header flags.
+	F_RELFLG	00001
+	F_EXEC		00002
+	F_LNNO		00004
+	F_LSYMS		00010
+	F_MINMAL	00020
+	F_UPDATE	00040
+	F_SWABD		00100
+	F_AR16WR	00200
+	F_AR32WR	00400
+	F_AR32W		01000
+	F_PATCH		02000
+	F_BM32ID	0160000
+	
+
+secstart = sizeof(filehdr) + f_opthdr - start of section headers.

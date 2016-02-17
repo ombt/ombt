@@ -1,0 +1,152 @@
+<html>
+<head>
+<title> DLP-706 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-706 IN-SERVICE UPGRADING OF LUCENT NETWORK GATEWAY SYSTEM 
+PROCESSOR SOFTWARE </h3>
+<pre>
+
+The procedure for upgrading SPs for an MG switch are described here. 
+
+1) You nust complete these steps before performing this procedure:
+
+DLP-700 Preparing for an In-Service Change of System Processor Software
+DLP-701 Checking Memory for a change of System Processor Software
+DLP-702 FTPing Software for an SP Software Change
+DLP-703 Extracting Software for an SP Software Change
+
+2) If CMs are to be upgraded, then you must perform these procedures first:
+
+DLP-712 Preparing for Changing IOM Software
+DLP-713 FTPing Files for Changing IOM Software
+DLP-714 Extracting File for Changing IOM Software
+
+3) Before you continue, you must run these procedures:
+
+DLP-757 Checking for and Disabling Scheduled Backups and Protection Switches
+DLP-781 Preparing to Change System Software
+
+4) Check the status of the MG:
+
+	RTRV-STATUS-MG;
+
+Verify there are no failutes or resource unavailability, (noEcAvailCurrent 
+and noEcAvailTotal fields).
+
+5) Backup the switches data. Run this command:
+
+	EXEC-BACKUP-PLEXUS:[TID]:[&lt;src>]:[CTAG]::
+	&lt;desthost>,&lt;username>,&lt;password>,&lt;destdir>,
+	[&lt;suppressoutput>],[&lt;tmout>];
+
+6) Determine the active and standby SPs:
+
+	RTRV-EQPT;
+
+7) Change the software on the standby SP first. Edit the software 
+version to the new software level. Do this:
+
+	ED-EQPT::&lt;standby-sp>:::SWVERSION=&lt;x.x.x.x.x>;
+
+8) If the new software level is greater than load 6.1.0.3.SP.5, then
+do a cpy-mem:
+
+	CPY-MEM::&lt;standby-sp>;
+
+9) Once the cpymem is done or if no cpymem was required, then do this:
+
+	RMV-EQPT::&lt;standby-sp>;
+
+10) Wait for at least 5 minutes before doing the next step.
+
+11) Run the upgrade on the stand-by SP. Do this:
+
+	EXEC-RUN-UPGRADE:&lt;switch-id>:&lt;standby-sp>;
+
+12) Wait for upgrade to complete. This can take up 10 to 15 minutes. TimesTen
+database is updated here.
+
+13) Once the update is done, restore the stand-by SP. Do this:
+
+	RST-EQPT::&lt;standby-sp>;
+
+Synchronization can take up 15 minutes. The states of the SPs should be
+IS,ACT for the active SP and IS,STBYH for the standby SP.
+
+14) Verify the standby-sp is really IS,STBYH and the software version
+reflects the new CPU load. Do this to verify:
+
+	RTRV-INFO-EQPT;
+
+15) Change the software version on the active SP, do this:
+
+	ED-EQPT::&lt;active-sp>:::SWVERSION=&lt;x.x.x.x.x>;
+
+Verify CurrRel points to the new version, the version entered above. Do this:
+
+	exec-ls:::::-l,/Telica/swCPU/CurrRel;
+
+16) If the new software level is greater than load 6.1.0.3.SP.5, then
+do a cpy-mem:
+
+	CPY-MEM::&lt;active-sp>;
+
+17) Once the cpymem is done or if no cpymem was required, then do this:
+
+If the previous software version was equal to or greater than 6.1.0.3.SP.6,
+then do this:
+
+	SW-TOPROTN-EQPT::&lt;active-sp>:::norst;
+
+If the previous software level was less than 6.1.0.3.SP.6, then do this:
+
+	SW-TOPROTN-EQPT::&lt;active-sp>;
+
+Wait for the switch to complete. Wait for the standby to be IS. The old
+active will not come up.
+
+18) Logon the new active SP, and remove the new standby SP (may be OOS).
+
+	RMV-EQPT::&lt;standby-sp>;
+
+19) Check all alarms:
+
+	RTRV-ALM-ALL:
+
+20) Check the MG status. Do this:
+
+	RTRV-STATUS-MG;
+
+Verify there are no failutes or resource unavailability, (noEcAvailCurrent 
+and noEcAvailTotal fields).
+
+21) Now upgrade the standby SP. Do this:
+
+	
+	EXEC-RUN-UPGRADE:&lt;switch-id>:&lt;standby-sp>;
+
+This can take up to 15 minutes.
+
+22) Restore the standby SP:
+
+	RST-EQPT::&lt;standby-sp>;
+
+Wait for the standby SP to have the state IS,STBYH and verify the 
+software version is the new version. Do this::
+
+	RTRV-EQPT;
+	RTRV-INFO-EQPT;
+
+23) Reestablish OMC-P management and IP filtering.
+
+24) Do another backup and save the new configuration:
+
+	EXEC-BACKUP-PLEXUS:[TID]:[&lt;src>]:[CTAG]::
+	&lt;desthost>,&lt;username>,&lt;password>,&lt;destdir>,
+	[&lt;suppressoutput>],[&lt;tmout>];
+
+25) Start up any scheduled backups and protection switches. Refer to DLP-758.
+
+</pre>
+</font></body>
+</html>

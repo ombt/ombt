@@ -1,0 +1,9 @@
+1) To build this tool, enter:
+
+   make -f mtio.make all
+
+2) A sample input file and manual pages are in the man directory.
+
+Any questions, call me at x34396.
+
+Mike Rumore

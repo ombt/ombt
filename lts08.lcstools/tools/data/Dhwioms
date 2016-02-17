@@ -1,0 +1,15 @@
+labid	t\t	l9
+scriptlabid	t\t	l9
+branch	t\t	l15
+iom	t\t	l3
+type	t\t	l8
+clei	t\t	l12
+rearmodclei	t\t	l16
+redundancy	t\t	l5
+initialstate	t\t	l5
+threshold1	t\t	l5
+threshold2	t\t	l5
+threshold3	t\t	l5
+filename	t\t	l20
+tl1cmd	t\t	l20
+remarks	t\n	40

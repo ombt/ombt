@@ -1,0 +1,3 @@
+ent-mg-mgcassoc::PRIMARY:::mgctype=PRIMARY,ipaddr=10.11.50.3,rxport=2944,txport=2944,mgcidletmr=8
+set-sid:::::ihlcsgw24
+init-sys:ihlcsgw24::::10

@@ -1,0 +1,4 @@
+#calldata
+#MEGACO area
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.25.3,,RXPORT=2946,TXPORT=2946,MGCIDLETMR=8
+set-sid:::::ihlcsgw12

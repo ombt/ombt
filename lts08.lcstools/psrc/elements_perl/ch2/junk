@@ -1,0 +1,17 @@
+#!/usr/bin/perl -w
+use strict;
+#
+# roll some dice and print faces
+#
+my %faces;
+#
+@faces{ 1, 2, 3, 4, 5, 6 } = ( 
+		"#  1  #",
+		"#   2 #",
+		"#  3  #",
+		"# 4 4 #",
+		"# 5 5 #",
+		"#######"
+);
+#
+exit 0

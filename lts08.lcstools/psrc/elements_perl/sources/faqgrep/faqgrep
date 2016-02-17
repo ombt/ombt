@@ -1,0 +1,99 @@
+#!/usr/bin/perl -w
+#line 154 "faqgrep.nw"
+use strict;
+#line 168 "faqgrep.nw"
+# set $faqdir to point to your installed pod files:
+my $faqdir = '/usr/local/lib/perl5/5.00503/pod';
+my($opt_f,$opt_or,$pattern);
+#line 177 "faqgrep.nw"
+while($ARGV[0]=~/^-/){
+    $_=$ARGV[0];
+    if (/^-or$/){$opt_or=1;shift @ARGV;next}
+    if (/^-f$/){$opt_f=1;shift @ARGV;next}
+die<<HERE;
+illegal option: $_
+usage: faqgrep [-f] [-or] [keywords...]
+HERE
+}
+#line 197 "faqgrep.nw"
+die "no keywords specified\n" unless @ARGV;
+if($opt_or){
+    $pattern = '.*(?:' . join('|',@ARGV) . ')';
+}else{
+    $pattern=join('',map{"(?=.*$_)"}@ARGV);
+}
+#line 173 "faqgrep.nw"
+#line 209 "faqgrep.nw"
+opendir(FAQDIR,$faqdir)|| die "can't open $faqdir $!";
+my @faqs = grep /faq/,readdir FAQDIR;
+closedir FAQDIR;
+#line 220 "faqgrep.nw"
+foreach my $faq (@faqs) {
+    open(FAQ,"$faqdir/$faq")||die "can't $!";
+    while (<FAQ>) {
+        if (s/^=head2($pattern)/$1/io) {
+            print "$faq:$_" ;
+#line 234 "faqgrep.nw"
+            if ($opt_f) {
+                while(<FAQ>){
+                    last if m/^=head(?!$pattern)/io;
+                    print;
+                }
+            }            
+#line 226 "faqgrep.nw"
+        }
+    }
+    close FAQ;
+}
+#line 243 "faqgrep.nw"
+=head1 NAME
+
+faqgrep - perl script to search perlfaqs
+
+=head1 SYNOPSIS
+
+   faqgrep [-f] [-or] [keywords...]
+   faqgrep sort hash
+   faqgrep -or sort hash
+   faqgrep -f sort array
+
+=head1 DESCRIPTION
+
+This script takes keywords as arguments and searches through the
+perlfaqs printing on STDOUT the questions (and optionally the
+answers) which contain the keywords.
+
+
+=over 2
+
+=item -or
+
+By default, keywords are 'ANDed' together to find questions
+which contain ALL of the keywords. Using the B<-or> option
+'ORs' together the keywords to find questions which contain ANY
+of the keywords.
+
+=item -f
+
+By default only the matching questions are printed. Using this
+option causes the full entry (answer) of all matching questions
+to be printed. This can cause a lot of output unless the search
+was restricted. It is recommended that you first search
+for just one or two keywords and see the resulting matches and
+then repeat the search using B<-f> and additional keywords to
+restrict output to just those entries you wish to see.
+
+=back
+
+=head1 AUTHOR
+
+Andrew L. Johnson <andrew-johnson@home.com>
+
+=head1 COPYRIGHT
+
+Copyright 1997-1998 Andrew L Johnson.
+This is free software and you may redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=cut
+#line 159 "faqgrep.nw"

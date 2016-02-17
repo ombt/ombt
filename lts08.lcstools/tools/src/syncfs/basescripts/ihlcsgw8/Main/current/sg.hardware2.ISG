@@ -1,0 +1,17 @@
+# T1/E1 IOMs here (414) 
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is                          
+ent-eqpt-all::iom-3:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,NVMEMTHRESHOLD=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is 
+# 
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is 
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is 
+# E1s go here 
+ent-e1::iom-1-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-1-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-1:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+ent-e1::iom-3-e1-2:::fmt=df,linecde=hdb3,omode=ais,tmgref=none,iftype=network:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-a-10.11.0.0-16:::gateway=10.11.28.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.28.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.28.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.28.254

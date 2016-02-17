@@ -1,0 +1,41 @@
+# iom boards
+# ds1_2
+#
+ent-eqpt-all::iom-1:::iomoduletype=ba7atp0faa,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=ba7a1p0faa:is
+# ena2
+#
+ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgab,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=baa9tz5gaa:is
+ent-eqpt-all::iom-10:::iomoduletype=ba2a30tgab,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=baa9tz5gaa:is
+#
+# vsm3
+ent-eqpt::iom-9:::bauiaa1eac,sec,95,95,95,<vs3>:is
+# bits timing
+#
+ed-t1::tmg-a:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-b:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+# t1
+#
+ent-t1::iom-1-port-2:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-3:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-4:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-5:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-6:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-10:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-11:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+#
+# bearer path data
+#
+ent-enet::iom-8-enet-1:::mode=AUTONEG,format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1:::ipaddr=10.175.13.1,mateipaddr=10.175.13.2,subnetmask=255.255.255.0,defaultgateway=10.175.13.254:is
+#
+# gateways
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.13.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.13.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.13.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.13.254
+#
+set-sid:::::ihlcs4

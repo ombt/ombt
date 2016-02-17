@@ -1,0 +1,35 @@
+<html>
+<head>
+<title> DLP-713 </title></head>
+<body bgcolor="E0E0E0"><font>
+<h3> DLP-713 FTPING FILES FOR CHANGING IOM SOFTWARE</h3>
+<pre>
+
+1) Copy the required IOM tar files to / using FTP.
+
+	EXEC-FTP-GET:[TID]:[&lt;src>]:[CTAG]::
+	&lt;srchost>,&lt;username>,&lt;password>,&lt;srcfile>,
+	[&lt;destdir>],[&lt;suppressoutput>],[&lt;tmout>];
+
+Do this to get a file from a remote machine and copy it to the
+active SP:
+
+	EXEC-FTP-GET::COM:::ftp.server.ip,ftplogin,ftppasswd,
+		/path/to/IOM/tarfile,/;
+
+2) Repeat until all required IOM tar files are on the active SP.
+
+3) Copy the IOM tar file to the standby SP.
+
+	EXEC-CP-TOSTBY:[TID]:[&lt;src>]:[CTAG]::
+	[&lt;switches>],&lt;source>,&lt;dest>, [&lt;suppressoutput>];
+
+Do this to copy a file from the active SP to the standby SP:
+
+	EXEC-CP-TOSTDBY::COM:::-rp,/Y.Y.Y.Y.Y_iom.tar.gz,/;
+
+4) Repeat until all required IOM tar files are copied to the standby SP.
+
+</pre>
+</font></body>
+</html>

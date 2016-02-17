@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+#
+foreach $arg (@ARGV)
+{
+	my $file = "";
+	#
+	my @files = glob("$arg");
+	foreach $file (@files)
+	{
+		opendir(FILE, $file) || next;
+		while ($name = readdir(FILE))
+		{
+			print "file is ... $name\n";
+		}
+		closedir(FILE);
+	}
+}
+#

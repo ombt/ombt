@@ -1,0 +1,93 @@
+RTRV-EQPT;
+RTRV-INFO-EQPT;
+RTRV-EQPT-ALL;
+RTRV-PM-CC;
+RTRV-ALM-ALL;
+INIT-SYS:TELICA::::10;
+RTRV-CHASSIS-EQPT;
+RTRV-CALL-CAPTVERBOSE;
+RTRV-TRAFFICSTATS;
+ED-SYS-SECU:::::SSHENABLED=n;
+ED-SYS-SECU:::::SSHENABLED=y;
+RTRV-PRFL-SIP;
+RTRV-SLHR-SCP;
+
+===================EXTRACT CPU FILES================================
+
+EXEC-LS:::::-1;
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.86_cpu.tar.gz;
+EXEC-TAR-EXTRACTSTBY::COM:::/home1/6.2.1.2.86_cpu.tar.gz,/home1/;
+
+
+===================EXTRACT IOM FILES================================
+EXEC-CD:::::/;
+EXEC-LS:::::-1;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.30_ds1_2.tar.gz;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.7_ena.tar.gz;
+EXEC-TAR-EXTRACT::COM:::6.2.1.2.14_vs3.tar.gz;
+
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.30_ds1_2.tar.gz,/;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.7_ena.tar.gz,/;
+EXEC-TAR-EXTRACTSTBY::COM:::/6.2.1.2.14_vs3.tar.gz,/;
+
+===================BACKUP ======================================
+
+EXEC-BACKUP-PLEXUS::COM:::135.1.105.11,root,plexus9000,/FTPRoot;
+EXEC-BACKUP-PLEXUS::COM:::135.1.105.12,root,plexus9000,/FTPRoot;
+
+===========UPGRADE SP-A/B (SP-A active)==========================
+
+ED-EQPT::SP-B:::SWVERSION=6.2.1.2.86
+CPY-MEM::SP-B;
+RMV-EQPT::SP-B;
+wait 5 minutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw14:SP-B
+RST-EQPT::SP-B;
+
+EXEC-LS:::::-l,/Telica/swCPU/CurrRel;
+ED-EQPT::SP-A:::SWVERSION=6.2.1.2.86
+CPY-MEM::SP-A;
+SW-TOPROTN-EQPT::SP-A;
+RMV-EQPT::SP-A;
+wait 5 miniutes
+EXEC-CD:::::/home1/;
+EXEC-LS:::::-1;
+EXEC-RUN-UPGRADE:ihlcsgw14:SP-A
+RST-EQPT::SP-A;
+
+=================UPDATING DS1_2 IOMs==============================
+
+RMV-EQPT::IOM-7;
+ED-EQPT-ALL::IOM-7:::SWVERSION=6.2.1.2.30,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-7;
+RST-EQPT::IOM-7;
+
+SW-TOPROTN-EQPT::IOM-1;
+ED-EQPT-ALL::IOM-1:::SWVERSION=6.2.1.2.30,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-1;
+
+SW-TOPROTN-EQPT::IOM-3;
+ED-EQPT-ALL::IOM-3:::SWVERSION=6.2.1.2.30,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-3;
+
+=================UPDATING ENA2 IOMs================================
+
+RMV-EQPT::IOM-10;
+ED-EQPT-ALL::IOM-10:::SWVERSION=6.2.1.2.7,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-10;
+RST-EQPT::IOM-10;
+
+SW-TOPROTN-EQPT::IOM-8;
+ED-EQPT-ALL::IOM-8:::SWVERSION=6.2.1.2.7,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-8;
+
+=================UPDATING VS3PG IOMs==============================
+
+RMV-EQPT::IOM-14;
+ED-EQPT-ALL::IOM-14:::SWVERSION=6.2.1.2.14,APPSWVERSION=6.2.1.2.86;
+CPY-MEM::IOM-14;
+RST-EQPT::IOM-14;

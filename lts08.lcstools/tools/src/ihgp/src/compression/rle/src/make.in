@@ -1,0 +1,12 @@
+CC = CC
+CCFLAGS = -g -DDEBUG -DUSEEXCEPTION
+#
+LD = CC
+LDFLAGS = -g -DDEBUG -DUSEEXCEPTION
+#
+rle
+rle.c
+#
+install1=chmod 755 rle
+install2=rm -f /home/rumore/bin/rle
+install3=ln -s `pwd`/rle /home/rumore/bin/rle

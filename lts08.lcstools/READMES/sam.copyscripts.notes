@@ -1,0 +1,2154 @@
+hrdcpy 
+hrdcpy copyscripts ihlcs1      -?
+
+ usage: copyscripts [-?x] [-a] [labid [labid ...]]
+ 
+ where 
+        -? - print usage message 
+        -x - debug 
+        -a - ask where to copy to 
+ 
+
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy copyscripts ihlcs1                    
+hrdcpy 
+hrdcpy lcsconfigure -c 3.11.2.1.. SP> .1
+
+Starting LCS Configure Load
+
+Starting list_by_cpuload: 3.11.2.1.SP.1
+
+Load data for cpuload 3.11.2.1.SP.1:
+
+
+|---------------------------------------------------------|
+|branch              |cpuload        |basedir             |
+|---------------------------------------------------------|
+|BP-3-11-2-1         |3.11.2.1.SP.1  |/lcsl100/text       |
+|---------------------------------------------------------|
+
+Lab Load data for cpuload 3.11.2.1.SP.1:
+
+
+|-----------------------------------------------|
+|labid     |branch              |cpuload        |
+|-----------------------------------------------|
+|ihlcs1    |BP-3-11-2-1         |3.11.2.1.SP.1  |
+|ihlcs2    |BP-3-11-2-1         |3.11.2.1.SP.1  |
+|ihlcs3    |BP-3-11-2-1         |3.11.2.1.SP.1  |
+|ihlcsdv2  |BP-3-11-2-1         |3.11.2.1.SP.1  |
+|-----------------------------------------------|
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy copyscripts ihlcs1 ihlcs2 ihlcs3 ihlcsdv2
+
+'From' Lab and Release data from /home/lcstools/tools/data/chassis file.
+'To' Lab, Release, Load data from /home/lcstools/tools/data/labloads file.
+
+1) QUIT
+2) BP-3-11-0-4
+3) BP-3-11-0-5
+4) BP-3-11-1-1
+5) BP-3-11-2-1
+6) BRANCH-3-10-1
+7) BRANCH-3-11
+Choose a release for lab ihlcs1 to copy base scripts from: 5
+
+Copying from ihlcs1/BP-3-11-2-1 ...
+
+ 1) QUIT
+ 2) BP-3-10-1-7__3.10.1.7.SP.19
+ 3) BP-3-10-1-7__3.10.1.7.SP.4
+ 4) BP-3-11-0-4__3.11.0.4.SP.5
+ 5) BP-3-11-0-5__3.11.0.5.SP.5
+ 6) BP-3-11-0-5__3.11.0.5.SP.6
+ 7) BP-3-11-1-1__3.11.1.1.SP.5
+ 8) BP-3-11-1-1__3.11.1.1.SP.6
+ 9) BP-3-11-2-1__3.11.2.1.SP.1
+10) BRANCH-3-11__3.11.1.0.26
+11) BRANCH-3-11__3.11.1.0.27
+12) BRANCH-3-11__3.11.1.0.28
+13) BRANCH-3-11__3.11.1.0.29
+14) BRANCH-3-11__3.11.2.0
+Choose a ihlcs1 Release and Load to copy base scripts To: 9
+
+Base Scripts From : ihlcs1/BP-3-11-2-1
+Copying Scripts To: BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+
+'To' directory /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1 does not exist.
+Creating 'To' directory /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1.
+
+Exec'ing cp /lcsl100/basescripts/ihlcs1/BP-3-11-2-1/current/* /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1 ...
+1) QUIT
+2) BP-3-11-0-4
+3) BP-3-11-0-5
+4) BP-3-11-1-1
+5) BP-3-11-2-1
+6) BRANCH-3-11
+Choose a release for lab ihlcs2 to copy base scripts from: 5
+
+Copying from ihlcs2/BP-3-11-2-1 ...
+
+ 1) QUIT
+ 2) BP-3-10-1-7__3.10.1.7.SP.19
+ 3) BP-3-10-1-7__3.10.1.7.SP.4
+ 4) BP-3-11-0-4__3.11.0.4
+ 5) BP-3-11-0-4__3.11.0.4.SP.5
+ 6) BP-3-11-0-5__3.11.0.5.SP.5
+ 7) BP-3-11-0-5__3.11.0.5.SP.6
+ 8) BP-3-11-1-1__3.11.1.1.SP.5
+ 9) BP-3-11-1-1__3.11.1.1.SP.6
+10) BP-3-11-2-1__3.11.2.1.SP.1
+11) BRANCH-3-11__3.11.1.0.26
+12) BRANCH-3-11__3.11.1.0.27
+13) BRANCH-3-11__3.11.1.0.28
+14) BRANCH-3-11__3.11.1.0.29
+15) BRANCH-3-11__3.11.2.0
+Choose a ihlcs2 Release and Load to copy base scripts To: 10
+
+Base Scripts From : ihlcs2/BP-3-11-2-1
+Copying Scripts To: BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Exec'ing cp /lcsl100/basescripts/ihlcs2/BP-3-11-2-1/current/* /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2 ...
+1) QUIT
+2) BP-3-11-0-4
+3) BP-3-11-0-5
+4) BP-3-11-1-1
+5) BP-3-11-2-1
+6) BRANCH-3-11
+Choose a release for lab ihlcs3 to copy base scripts from: 5
+
+Copying from ihlcs3/BP-3-11-2-1 ...
+
+ 1) QUIT
+ 2) BP-3-10-1-7__3.10.1.7.SP.19
+ 3) BP-3-10-1-7__3.10.1.7.SP.4
+ 4) BP-3-11-0-4__3.11.0.4.SP.5
+ 5) BP-3-11-0-5__3.11.0.5.SP.5
+ 6) BP-3-11-0-5__3.11.0.5.SP.6
+ 7) BP-3-11-1-1__3.11.1.1.SP.5
+ 8) BP-3-11-1-1__3.11.1.1.SP.6
+ 9) BP-3-11-2-1__3.11.2.1.SP.1
+10) BRANCH-3-11__3.11.1.0.26
+11) BRANCH-3-11__3.11.1.0.27
+12) BRANCH-3-11__3.11.1.0.28
+13) BRANCH-3-11__3.11.1.0.29
+14) BRANCH-3-11__3.11.2.0
+Choose a ihlcs3 Release and Load to copy base scripts To: 9
+
+Base Scripts From : ihlcs3/BP-3-11-2-1
+Copying Scripts To: BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Exec'ing cp /lcsl100/basescripts/ihlcs3/BP-3-11-2-1/current/* /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3 ...
+cp: cannot create /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3/calldata: Permission denied
+cp: cannot create /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3/hardware: Permission denied
+1) QUIT
+2) BP-3-11-0-4
+3) BP-3-11-0-5
+4) BP-3-11-1-1
+5) BP-3-11-2-1
+6) BRANCH-3-11
+7) BRANCH-3-11-1
+Choose a release for lab ihlcsdv2 to copy base scripts from: 5
+
+Copying from ihlcsdv2/BP-3-11-2-1 ...
+
+ 1) QUIT
+ 2) BP-3-11-0-4__3.11.0.4.SP.5
+ 3) BP-3-11-0-5__3.11.0.5.SP.6
+ 4) BP-3-11-1-1__3.11.1.1.SP.5
+ 5) BP-3-11-1-1__3.11.1.1.SP.6
+ 6) BP-3-11-2-1__3.11.2.1.SP.1
+ 7) BP-5-3-0-1__5.3.0.1.SP.2
+ 8) BRANCH-3-11__3.11.1.0.26
+ 9) BRANCH-3-11__3.11.1.0.27
+10) BRANCH-3-11__3.11.1.0.29
+Choose a ihlcsdv2 Release and Load to copy base scripts To: 6
+
+Base Scripts From : ihlcsdv2/BP-3-11-2-1
+Copying Scripts To: BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+
+'To' directory /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2 does not exist.
+Creating 'To' directory /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2.
+
+Exec'ing cp /lcsl100/basescripts/ihlcsdv2/BP-3-11-2-1/current/* /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2 ...
+/home/lcstools/tools/bin/copyscripts done.
+hrdcpy copyscripts ihlcs1 ihlcs2 ihlcs3 ihlcsdv2hrdcpy copyscripts ihlcs2 ihlcs3 ihlcsdv2       hrdcpy copyscripts ihlcs3 ihlcsdv2       hrdcpy copyscripts ihlcs3          
+
+'From' Lab and Release data from /home/lcstools/tools/data/chassis file.
+'To' Lab, Release, Load data from /home/lcstools/tools/data/labloads file.
+
+1) QUIT
+2) BP-3-11-0-4
+3) BP-3-11-0-5
+4) BP-3-11-1-1
+5) BP-3-11-2-1
+6) BRANCH-3-11
+Choose a release for lab ihlcs3 to copy base scripts from: 5
+
+Copying from ihlcs3/BP-3-11-2-1 ...
+
+ 1) QUIT
+ 2) BP-3-10-1-7__3.10.1.7.SP.19
+ 3) BP-3-10-1-7__3.10.1.7.SP.4
+ 4) BP-3-11-0-4__3.11.0.4.SP.5
+ 5) BP-3-11-0-5__3.11.0.5.SP.5
+ 6) BP-3-11-0-5__3.11.0.5.SP.6
+ 7) BP-3-11-1-1__3.11.1.1.SP.5
+ 8) BP-3-11-1-1__3.11.1.1.SP.6
+ 9) BP-3-11-2-1__3.11.2.1.SP.1
+10) BRANCH-3-11__3.11.1.0.26
+11) BRANCH-3-11__3.11.1.0.27
+12) BRANCH-3-11__3.11.1.0.28
+13) BRANCH-3-11__3.11.1.0.29
+14) BRANCH-3-11__3.11.2.0
+Choose a ihlcs3 Release and Load to copy base scripts To: 9
+
+Base Scripts From : ihlcs3/BP-3-11-2-1
+Copying Scripts To: BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Exec'ing cp /lcsl100/basescripts/ihlcs3/BP-3-11-2-1/current/* /lcsl100/scripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3 ...
+/home/lcstools/tools/bin/copyscripts done.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy exit    
+hrdcpy 
+hrdcpy 
+hrdcpy lcsloads
+
+Starting LCS List Loads
+ 1) QUIT                              19) BP-6-1-1-2__6.1.1.2.SP.1
+ 2) BP-3-10-1-7__3.10.1.7.SP.19       20) BP-6-1-1-2__6.1.1.2.SP.2
+ 3) BP-3-10-1-7__3.10.1.7.SP.4        21) BRANCH-3-11__3.11.1.0.26
+ 4) BP-3-11-0-4__3.11.0.4.SP.5        22) BRANCH-3-11__3.11.1.0.27
+ 5) BP-3-11-0-5__3.11.0.5.SP.5        23) BRANCH-3-11__3.11.1.0.28
+ 6) BP-3-11-0-5__3.11.0.5.SP.6        24) BRANCH-3-11__3.11.1.0.29
+ 7) BP-3-11-1-1__3.11.1.1.SP.3        25) BRANCH-3-11__3.11.2.0
+ 8) BP-3-11-1-1__3.11.1.1.SP.5        26) BRANCH-5-2__5.2.0.0.151
+ 9) BP-3-11-1-1__3.11.1.1.SP.6        27) BRANCH-5-3__5.3.0.2
+10) BP-3-11-2-1__3.11.2.1.SP.1        28) BRANCH-5-3__5.3.0.2.13
+11) BP-5-3-0-1__5.3.0.1.SP.2          29) BRANCH-5-3__5.3.0.2.14
+12) BP-5-3-0-1__5.3.0.1.SP.6          30) BRANCH-5-3__5.3.0.2.16
+13) BP-5-3-0-1__5.3.0.1.SP.7          31) BRANCH-5-3__5.3.0.2.4
+14) BP-5-3-0-2__5.3.0.2.SP.1          32) BRANCH-5-3__5.3.0.2.6
+15) BP-5-3-0-2__5.3.0.2.SP.2          33) BRANCH-6-1__6.1.1.1
+16) BP-5-3-0-2__5.3.0.2.SP.3          34) BRANCH-6-1__6.1.1.2.10
+17) BP-6-1-1-1__6.1.1.2               35) BRANCH-6-1__6.1.1.2.4
+18) BP-6-1-1-1__6.1.1.3.SP.2          36) BRANCH-6-1__6.1.1.2.8
+Choose branch/load to list: 10
+
+Branch/Load to list: BP-3-11-2-1 3.11.2.1.SP.1
+
+
+|------------------------------------------------------------------------|
+|cpuload        |type           |name                                    |
+|------------------------------------------------------------------------|
+|3.11.2.1.SP.1  |ds1            |3.11.2.1.P1_ds1.tar.gz                  |
+|3.11.2.1.SP.1  |octds3         |3.11.2.1.P1_octds3.tar.gz               |
+|3.11.2.1.SP.1  |ds3            |3.11.2.1.P1_ds3.tar.gz                  |
+|3.11.2.1.SP.1  |trids3_3       |3.11.2.1.P1_trids3_3.tar.gz             |
+|3.11.2.1.SP.1  |ena            |3.11.2.1.P1_ena.tar.gz                  |
+|3.11.2.1.SP.1  |voip           |3.11.2.1.P1_voip.tar.gz                 |
+|3.11.2.1.SP.1  |ena2           |3.11.2.1.P1_ena2.tar.gz                 |
+|3.11.2.1.SP.1  |cpu            |3.11.2.1.SP.1_cpu.tar.gz                |
+|3.11.2.1.SP.1  |ds1_2          |3.11.2.1.P1_ds1_2.tar.gz                |
+|3.11.2.1.SP.1  |octds3_2       |3.11.2.1.P1_octds3_2.tar.gz             |
+|3.11.2.1.SP.1  |trids3         |3.11.2.1.P1_trids3.tar.gz               |
+|3.11.2.1.SP.1  |octds3_3       |3.11.2.1.P1_octds3_3.tar.gz             |
+|3.11.2.1.SP.1  |voip6          |3.11.2.1.P1_voip6.tar.gz                |
+|------------------------------------------------------------------------|
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy mkhwscr    wscripts             
+hrdcpy 
+hrdcpy 
+hrdcpy rsd 4
+/home/lcstools/tools/data
+hrdcpy make hwioms
+`hwioms' is up to date.
+hrdcpy mak ke h2 22  w2ioms
+hw2ioms -D >Dhwioms
+hw2ioms >hwioms
+hrdcpy make hw2chassis
+hw2chassis -D >Dhwchassis
+hw2chassis >hwchassis
+hrdcpy dir
+.
+Dloads
+Dscripts
+Dbinary
+Dlabs
+loads
+binary
+Dimages
+images
+Dchassis
+labs
+chassis
+scripts
+Dparameters
+parameters
+Dbuildmachines
+labloads
+buildmachines
+Dlabloads
+Dfilesystems
+README.data
+filesystems
+Dhwioms
+BACKUP
+hwioms
+Dhwchassis
+Dhwenet
+SAVE
+hwchassis
+hwenet
+Dhwtdm
+makefile
+hwtdm
+Dnotification
+notification
+hrdcpy ls
+BACKUP          Dfilesystems    Dlabs           hwenet          makefile
+binary          Dhwchassis      Dloads          hwioms          notification
+buildmachines   Dhwenet         Dnotification   hwtdm           parameters
+chassis         Dhwioms         Dparameters     images          README.data
+Dbinary         Dhwtdm          Dscripts        labloads        SAVE
+Dbuildmachines  Dimages         filesystems     labs            scripts
+Dchassis        Dlabloads       hwchassis       loads
+hrdcpy make hw2enet
+hw2enet -D >Dhwenet
+hw2enet >hwenet
+hrdcpy mkhwscripts -?
+
+Starting mkhwscripts:
+
+ for creating scripts: 
+ 
+ usage: mkhwscripts [-?x] branch cpuload labid [labid ...] 
+ 
+ or for listing available load data: 
+ 
+ usage: mkhwscripts [-?x] -L [-l labid ... | -c load ... | -b branch ...] 
+ 
+ or for listing chassis data: 
+ 
+ usage: mkhwscripts [-?x] -C [-l labid ... | -b branch ...] 
+ 
+ or for listing IOM data: 
+ 
+ usage: mkhwscripts [-?x] -I [-l labid ... | -b branch ...] 
+ 
+ or for listing ENET data: 
+ 
+ usage: mkhwscripts [-?x] -E [-l labid ... | -b branch ...] 
+ 
+ or for listing TDM (T1,E1,T3,STS1,OC3,OC12) data: 
+ 
+ usage: mkhwscripts [-?x] -T [-l labid ... | -b branch ...] 
+ 
+ where 
+        -? - print usage message 
+        -x - debug 
+        -L - list load data 
+        -C - list chassis data 
+        -I - list IOM data 
+        -l - filter data by labid 
+        -c - filter data by cpuload 
+        -b - filter data by branch 
+ 
+
+hrdcpy mkhwscripts -?hrdcpy mkhwscripts -   BRANCH     P-3-11-2-1 3.11.2.0.SP   .Sp1  P.111.SP.1 ihlcs1 ihlcs2 ihlcs3 ihlcsdv2
+
+Starting mkhwscripts:
+
+Labid   : ihlcs1
+Branch  : BP-3-11-2-1
+CPU Load: 3.11.2.1.SP.1
+
+Creating HW script directory /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1 ...
+
+Creating ED-CHASSIS-EQPT for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |chassistype         |both                |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |emipspa             |135.1.104.113       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |signalingipspa      |10.11.10.1          |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |emipspb             |135.1.104.114       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |signalingipspb      |10.11.10.2          |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |emipmask            |255.255.255.0       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |signalingipmask     |255.255.255.0       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |signalingipchassis  |10.11.10.3          |
+|-----------------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|filename            |remarks                                 |
+|-------------------------------------------------------------|
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|-------------------------------------------------------------|
+ED-CHASSIS-EQPT: ed-chassis-eqpt:,chassistype=both,,,emipspa=135.1.104.113,,signalingipspa=10.11.10.1,emipspb=135.1.104.114,,signalingipspb=10.11.10.2,emipmask=255.255.255.0,,signalingipmask=255.255.255.0,signalingipchassis=10.11.10.3,,,,,;
+
+Creating ENT-EQPT for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |1  |octds3_2|ba4a701faa  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |16 |voip    |ba1ax60aab  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |17 |voip    |ba1ax60aab  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |2  |octds3_2|ba4a701faa  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |6  |octds3_3|ba9axy0faa  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |3  |octds3_2|ba4a701faa  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |5  |octds3_2|ba4a701faa  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT: ent-eqpt::iom-1:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-16:::ba1ax60aab,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-17:::ba1ax60aab,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-6:::ba9axy0faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-3:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-5:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+
+Creating ENT-EQPT-ALL for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |8  |ena     |ba2a30tgaa  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |10 |ena     |ba2a30tgaa  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|ba2a20sgaa      |pri  |is   |95   |95   |95   |hardware            |
+|ba2a20sgaa      |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT-ALL: ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgaa,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-10:::iomoduletype=ba2a30tgaa,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+
+Creating ENT-ENET for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |mode                |autoneg             |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |format              |enet_dix_ii         |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+ENT-ENET: ent-enet::iom-8-enet-1:::mode=autoneg,format=enet_dix_ii:is
+
+Creating ENT-ENET_ENDPTVOIP for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |ipaddr              |10.175.10.1         |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |mateipaddr          |10.175.10.2         |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |subnetmask          |255.255.255.0       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |defaultgateway      |10.175.10.254       |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |iplnkmon            |y                   |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |lnkmonper           |1                   |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |lnkmaxtmouts        |60                  |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |bwlmt               |100                 |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |pktlmt              |0                   |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs1   |ihlcs1   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+ENT-ENET-ENDPTVOIP: ent-enet-endptvoip::iom-8-enet-1:::ipaddr=10.175.10.1,mateipaddr=10.175.10.2,subnetmask=255.255.255.0,defaultgateway=10.175.10.254,iplnkmon=y,lnkmonper=1,lnkmaxtmouts=60,bwlmt=100,pktlmt=0:is
+
+Creating CPY-MEM for:
+
+Labid     : ihlcs1
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs1
+
+Current IOM Data:
+
+
+|--------------------------------------|
+|labid    |branch         |iom|type    |
+|--------------------------------------|
+|ihlcs1   |BP-3-11-2-1    |1  |octds3_2|
+|ihlcs1   |BP-3-11-2-1    |16 |voip    |
+|ihlcs1   |BP-3-11-2-1    |17 |voip    |
+|ihlcs1   |BP-3-11-2-1    |2  |octds3_2|
+|ihlcs1   |BP-3-11-2-1    |6  |octds3_3|
+|ihlcs1   |BP-3-11-2-1    |3  |octds3_2|
+|ihlcs1   |BP-3-11-2-1    |5  |octds3_2|
+|ihlcs1   |BP-3-11-2-1    |8  |ena     |
+|ihlcs1   |BP-3-11-2-1    |10 |ena     |
+|--------------------------------------|
+CPY-MEM: cpy-mem::iom-1
+CPY-MEM: cpy-mem::iom-16
+CPY-MEM: cpy-mem::iom-17
+CPY-MEM: cpy-mem::iom-2
+CPY-MEM: cpy-mem::iom-6
+CPY-MEM: cpy-mem::iom-3
+CPY-MEM: cpy-mem::iom-5
+CPY-MEM: cpy-mem::iom-8
+CPY-MEM: cpy-mem::iom-10
+
+Labid   : ihlcs2
+Branch  : BP-3-11-2-1
+CPU Load: 3.11.2.1.SP.1
+
+Creating HW script directory /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2 ...
+
+Creating ED-CHASSIS-EQPT for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |chassistype         |both                |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |emipspa             |135.1.104.141       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |signalingipspa      |10.11.11.1          |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |emipspb             |135.1.104.142       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |signalingipspb      |10.11.11.2          |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |emipmask            |255.255.255.0       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |signalingipmask     |255.255.255.0       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |signalingipchassis  |10.11.11.3          |
+|-----------------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|filename            |remarks                                 |
+|-------------------------------------------------------------|
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|-------------------------------------------------------------|
+ED-CHASSIS-EQPT: ed-chassis-eqpt:,chassistype=both,,,emipspa=135.1.104.141,,signalingipspa=10.11.11.1,emipspb=135.1.104.142,,signalingipspb=10.11.11.2,emipmask=255.255.255.0,,signalingipmask=255.255.255.0,signalingipchassis=10.11.11.3,,,,,;
+
+Creating ENT-EQPT for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |1  |octds3_2|ba4a701faa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |2  |octds3_2|ba4a701faa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |3  |octds3_2|ba4a701faa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |4  |ds1     |ba9iaa0aaa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |5  |octds3_2|ba4a701faa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |6  |octds3_3|ba9axy0faa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |16 |voip    |ba1ax60aab  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |17 |voip    |ba1ax60aab  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT: ent-eqpt::iom-1:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-3:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-4:::ba9iaa0aaa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-5:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-6:::ba9axy0faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-16:::ba1ax60aab,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-17:::ba1ax60aab,sec,95,95,95,3.11.2.1.P1:is
+
+Creating ENT-EQPT-ALL for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |8  |ena     |ba2a30tgaa  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |10 |ena2    |bauiadpeaa  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|ba2a20sgaa      |pri  |is   |95   |95   |95   |hardware            |
+|ba2a20sgaa      |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT-ALL: ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgaa,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-10:::iomoduletype=bauiadpeaa,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+
+Creating ENT-ENET for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |mode                |fullduplex          |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |format              |enet_dix_ii         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pst                 |is                  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |mode                |fullduplex          |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |format              |enet_dix_ii         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|copyhard            |ent-enet            |
+|copyhard            |ent-enet            |
+|copyhard            |ent-enet            |
+|copyhard            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+
+WARNING: Field mode=fullduplex NOT found in ent-enet template.
+
+WARNING: Field format=enet_dix_ii NOT found in ent-enet template.
+
+WARNING: Field enetid=iom-8-enet-1 NOT found in ent-enet template.
+
+WARNING: Field pst=is NOT found in ent-enet template.
+ENT-ENET: ent-enet::iom-8-enet-1:::mode=fullduplex,format=enet_dix_ii:is
+
+Creating ENT-ENET_ENDPTVOIP for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |ipaddr              |10.175.11.1         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |mateipaddr          |10.175.11.2         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |subnetmask          |255.255.255.0       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |defaultgateway      |10.175.11.254       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |iplnkmon            |y                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |lnkmonper           |1                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |lnkmaxtmouts        |60                  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |bwlmt               |100                 |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pktlmt              |0                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pst                 |is                  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |ipaddr              |10.175.11.1         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |mateipaddr          |10.175.11.2         |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |subnetmask          |255.255.255.0       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |defaultgateway      |10.175.11.254       |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |iplnkmon            |y                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |lnkmonper           |1                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |lnkmaxtmouts        |60                  |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |bwlmt               |100                 |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pktlmt              |0                   |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs2   |ihlcs2   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|copyhard            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+
+WARNING: Field ipaddr=10.175.11.1 NOT found in ent-enet template.
+
+WARNING: Field mateipaddr=10.175.11.2 NOT found in ent-enet template.
+
+WARNING: Field subnetmask=255.255.255.0 NOT found in ent-enet template.
+
+WARNING: Field defaultgateway=10.175.11.254 NOT found in ent-enet template.
+
+WARNING: Field iplnkmon=y NOT found in ent-enet template.
+
+WARNING: Field lnkmonper=1 NOT found in ent-enet template.
+
+WARNING: Field lnkmaxtmouts=60 NOT found in ent-enet template.
+
+WARNING: Field bwlmt=100 NOT found in ent-enet template.
+
+WARNING: Field pktlmt=0 NOT found in ent-enet template.
+
+WARNING: Field enetid=iom-8-enet-1 NOT found in ent-enet template.
+
+WARNING: Field pst=is NOT found in ent-enet template.
+ENT-ENET-ENDPTVOIP: ent-enet-endptvoip::iom-8-enet-1:::ipaddr=10.175.11.1,mateipaddr=10.175.11.2,subnetmask=255.255.255.0,defaultgateway=10.175.11.254,iplnkmon=y,lnkmonper=1,lnkmaxtmouts=60,bwlmt=100,pktlmt=0:is
+
+Creating CPY-MEM for:
+
+Labid     : ihlcs2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs2
+
+Current IOM Data:
+
+
+|--------------------------------------|
+|labid    |branch         |iom|type    |
+|--------------------------------------|
+|ihlcs2   |BP-3-11-2-1    |1  |octds3_2|
+|ihlcs2   |BP-3-11-2-1    |2  |octds3_2|
+|ihlcs2   |BP-3-11-2-1    |3  |octds3_2|
+|ihlcs2   |BP-3-11-2-1    |4  |ds1     |
+|ihlcs2   |BP-3-11-2-1    |5  |octds3_2|
+|ihlcs2   |BP-3-11-2-1    |6  |octds3_3|
+|ihlcs2   |BP-3-11-2-1    |8  |ena     |
+|ihlcs2   |BP-3-11-2-1    |10 |ena2    |
+|ihlcs2   |BP-3-11-2-1    |16 |voip    |
+|ihlcs2   |BP-3-11-2-1    |17 |voip    |
+|--------------------------------------|
+CPY-MEM: cpy-mem::iom-1
+CPY-MEM: cpy-mem::iom-2
+CPY-MEM: cpy-mem::iom-3
+CPY-MEM: cpy-mem::iom-4
+CPY-MEM: cpy-mem::iom-5
+CPY-MEM: cpy-mem::iom-6
+CPY-MEM: cpy-mem::iom-8
+CPY-MEM: cpy-mem::iom-10
+CPY-MEM: cpy-mem::iom-16
+CPY-MEM: cpy-mem::iom-17
+
+Labid   : ihlcs3
+Branch  : BP-3-11-2-1
+CPU Load: 3.11.2.1.SP.1
+
+Creating HW script directory /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3 ...
+
+Creating ED-CHASSIS-EQPT for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |chassistype         |both                |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipspa             |135.1.104.143       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipspa      |10.11.12.1          |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipspb             |135.1.104.144       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipspb      |10.11.12.2          |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipmask            |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipmask     |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipchassis  |10.11.12.3          |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |chassistype         |both                |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipspa             |135.1.104.143       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipspa      |10.11.12.1          |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipspb             |135.1.104.144       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipspb      |10.11.12.2          |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |emipmask            |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipmask     |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |signalingipchassis  |10.11.12.3          |
+|-----------------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|filename            |remarks                                 |
+|-------------------------------------------------------------|
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|410.hardware        |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|-------------------------------------------------------------|
+
+WARNING: Field chassistype=both NOT found in ed-chassis-eqpt template.
+
+WARNING: Field emipspa=135.1.104.143 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field signalingipspa=10.11.12.1 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field emipspb=135.1.104.144 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field signalingipspb=10.11.12.2 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field emipmask=255.255.255.0 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field signalingipmask=255.255.255.0 NOT found in ed-chassis-eqpt template.
+
+WARNING: Field signalingipchassis=10.11.12.3 NOT found in ed-chassis-eqpt template.
+ED-CHASSIS-EQPT: ed-chassis-eqpt:,chassistype=both,,,emipspa=135.1.104.143,,signalingipspa=10.11.12.1,emipspb=135.1.104.144,,signalingipspb=10.11.12.2,emipmask=255.255.255.0,,signalingipmask=255.255.255.0,signalingipchassis=10.11.12.3,,,,,;
+
+Creating ENT-EQPT for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |1  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |2  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |3  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |4  |trids3_3|ba4a60zfaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |15 |trids3_3|ba4a60zfaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |5  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |13 |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |6  |octds3_3|ba9axy0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |16 |voip    |ba1ax60aab  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |17 |voip    |ba1ax60aab  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |1  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |2  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |3  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |4  |ds1     |ba9iaa0aaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |5  |octds3_2|ba4a701faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |6  |octds3_3|ba9axy0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |16 |voip    |ba1ax60aab  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |17 |voip    |ba1ax60aab  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |90   |90   |90   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |sec  |is   |95   |95   |95   |410.hardware        |
+|NONE            |sec  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |410.hardware        |
+|NONE            |sec  |is   |95   |95   |95   |410.hardware        |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |pri  |is   |95   |95   |95   |hardware            |
+|NONE            |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT: ent-eqpt::iom-1:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-3:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-4:::ba4a60zfaa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-15:::ba4a60zfaa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-5:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-13:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-6:::ba9axy0faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-16:::ba1ax60aab,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-17:::ba1ax60aab,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-1:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-3:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-4:::ba9iaa0aaa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-5:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-6:::ba9axy0faa,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-16:::ba1ax60aab,pri,95,95,95,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-17:::ba1ax60aab,sec,95,95,95,3.11.2.1.P1:is
+
+Creating ENT-EQPT-ALL for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |7  |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |12 |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |14 |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |8  |ena     |ba2a30tgaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |10 |ena2    |bauiadpeaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |7  |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |12 |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |14 |ds1_2   |ba7atp0faa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |8  |ena     |ba2a30tgaa  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |10 |ena     |ba2a30tgaa  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|ba9ibb0aaa      |sec  |is   |90   |90   |90   |410.hardware        |
+|ba7a1p0faa      |pri  |is   |90   |90   |90   |410.hardware        |
+|ba7a1p0faa      |pri  |is   |90   |90   |90   |410.hardware        |
+|ba2a20sgaa      |pri  |is   |95   |95   |95   |410.hardware        |
+|ba2a20sgaa      |sec  |is   |95   |95   |95   |410.hardware        |
+|ba9ibb0aaa      |sec  |is   |90   |90   |90   |hardware            |
+|ba7a1p0faa      |pri  |is   |90   |90   |90   |hardware            |
+|ba7a1p0faa      |pri  |is   |90   |90   |90   |hardware            |
+|ba2a20sgaa      |pri  |is   |95   |95   |95   |hardware            |
+|ba2a20sgaa      |sec  |is   |95   |95   |95   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|ent-eqpt-all        |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT-ALL: ent-eqpt-all::iom-7:::iomoduletype=ba7atp0faa,redundancy=sec,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba9ibb0aaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-12:::iomoduletype=ba7atp0faa,redundancy=pri,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba7a1p0faa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-14:::iomoduletype=ba7atp0faa,redundancy=pri,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba7a1p0faa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgaa,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-10:::iomoduletype=bauiadpeaa,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-7:::iomoduletype=ba7atp0faa,redundancy=sec,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba9ibb0aaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-12:::iomoduletype=ba7atp0faa,redundancy=pri,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba7a1p0faa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-14:::iomoduletype=ba7atp0faa,redundancy=pri,memthreshold=90,busythreshold=90,nvmemthreshold=90,swversion=3.11.2.1.P1,rearmoduletype=ba7a1p0faa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgaa,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ENT-EQPT-ALL: ent-eqpt-all::iom-10:::iomoduletype=ba2a30tgaa,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+
+Creating ENT-ENET for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |mode                |autoneg             |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |format              |enet_dix_ii         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pst                 |is                  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |mode                |autoneg             |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |format              |enet_dix_ii         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|410.hardware        |ent-enet            |
+|410.hardware        |ent-enet            |
+|410.hardware        |ent-enet            |
+|410.hardware        |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|hardware            |ent-enet            |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+
+WARNING: Field mode=autoneg NOT found in ent-enet template.
+
+WARNING: Field format=enet_dix_ii NOT found in ent-enet template.
+
+WARNING: Field enetid=iom-8-enet-1 NOT found in ent-enet template.
+
+WARNING: Field pst=is NOT found in ent-enet template.
+ENT-ENET: ent-enet::iom-8-enet-1:::mode=autoneg,format=enet_dix_ii:is
+
+Creating ENT-ENET_ENDPTVOIP for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |ipaddr              |10.175.12.1         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |mateipaddr          |10.175.12.2         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |subnetmask          |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |defaultgateway      |10.175.12.254       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |iplnkmon            |y                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |lnkmonper           |1                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |lnkmaxtmouts        |60                  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |bwlmt               |100                 |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pktlmt              |0                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pst                 |is                  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |ipaddr              |10.175.12.1         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |mateipaddr          |10.175.12.2         |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |subnetmask          |255.255.255.0       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |defaultgateway      |10.175.12.254       |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |iplnkmon            |y                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |lnkmonper           |1                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |lnkmaxtmouts        |60                  |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |bwlmt               |100                 |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pktlmt              |0                   |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |enetid              |iom-8-enet-1        |
+|ihlcs3   |ihlcs3   |BP-3-11-2-1    |pst                 |is                  |
+|-----------------------------------------------------------------------------|
+
+
+|-----------------------------------------|
+|filename            |tl1cmd              |
+|-----------------------------------------|
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|410.hardware        |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|hardware            |ent-enet-endptvoip  |
+|-----------------------------------------|
+
+
+|----------------------------------------|
+|remarks                                 |
+|----------------------------------------|
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|NONE                                    |
+|----------------------------------------|
+
+WARNING: Field ipaddr=10.175.12.1 NOT found in ent-enet template.
+
+WARNING: Field mateipaddr=10.175.12.2 NOT found in ent-enet template.
+
+WARNING: Field subnetmask=255.255.255.0 NOT found in ent-enet template.
+
+WARNING: Field defaultgateway=10.175.12.254 NOT found in ent-enet template.
+
+WARNING: Field iplnkmon=y NOT found in ent-enet template.
+
+WARNING: Field lnkmonper=1 NOT found in ent-enet template.
+
+WARNING: Field lnkmaxtmouts=60 NOT found in ent-enet template.
+
+WARNING: Field bwlmt=100 NOT found in ent-enet template.
+
+WARNING: Field pktlmt=0 NOT found in ent-enet template.
+
+WARNING: Field enetid=iom-8-enet-1 NOT found in ent-enet template.
+
+WARNING: Field pst=is NOT found in ent-enet template.
+ENT-ENET-ENDPTVOIP: ent-enet-endptvoip::iom-8-enet-1:::ipaddr=10.175.12.1,mateipaddr=10.175.12.2,subnetmask=255.255.255.0,defaultgateway=10.175.12.254,iplnkmon=y,lnkmonper=1,lnkmaxtmouts=60,bwlmt=100,pktlmt=0:is
+
+Creating CPY-MEM for:
+
+Labid     : ihlcs3
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcs3
+
+Current IOM Data:
+
+
+|--------------------------------------|
+|labid    |branch         |iom|type    |
+|--------------------------------------|
+|ihlcs3   |BP-3-11-2-1    |1  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |2  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |3  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |4  |trids3_3|
+|ihlcs3   |BP-3-11-2-1    |15 |trids3_3|
+|ihlcs3   |BP-3-11-2-1    |5  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |13 |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |6  |octds3_3|
+|ihlcs3   |BP-3-11-2-1    |7  |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |12 |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |14 |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |8  |ena     |
+|ihlcs3   |BP-3-11-2-1    |10 |ena2    |
+|ihlcs3   |BP-3-11-2-1    |16 |voip    |
+|ihlcs3   |BP-3-11-2-1    |17 |voip    |
+|ihlcs3   |BP-3-11-2-1    |1  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |2  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |3  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |4  |ds1     |
+|ihlcs3   |BP-3-11-2-1    |5  |octds3_2|
+|ihlcs3   |BP-3-11-2-1    |6  |octds3_3|
+|ihlcs3   |BP-3-11-2-1    |7  |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |12 |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |14 |ds1_2   |
+|ihlcs3   |BP-3-11-2-1    |8  |ena     |
+|ihlcs3   |BP-3-11-2-1    |10 |ena     |
+|ihlcs3   |BP-3-11-2-1    |16 |voip    |
+|ihlcs3   |BP-3-11-2-1    |17 |voip    |
+|--------------------------------------|
+CPY-MEM: cpy-mem::iom-1
+CPY-MEM: cpy-mem::iom-2
+CPY-MEM: cpy-mem::iom-3
+CPY-MEM: cpy-mem::iom-4
+CPY-MEM: cpy-mem::iom-15
+CPY-MEM: cpy-mem::iom-5
+CPY-MEM: cpy-mem::iom-13
+CPY-MEM: cpy-mem::iom-6
+CPY-MEM: cpy-mem::iom-7
+CPY-MEM: cpy-mem::iom-12
+CPY-MEM: cpy-mem::iom-14
+CPY-MEM: cpy-mem::iom-8
+CPY-MEM: cpy-mem::iom-10
+CPY-MEM: cpy-mem::iom-16
+CPY-MEM: cpy-mem::iom-17
+CPY-MEM: cpy-mem::iom-1
+CPY-MEM: cpy-mem::iom-2
+CPY-MEM: cpy-mem::iom-3
+CPY-MEM: cpy-mem::iom-4
+CPY-MEM: cpy-mem::iom-5
+CPY-MEM: cpy-mem::iom-6
+CPY-MEM: cpy-mem::iom-7
+CPY-MEM: cpy-mem::iom-12
+CPY-MEM: cpy-mem::iom-14
+CPY-MEM: cpy-mem::iom-8
+CPY-MEM: cpy-mem::iom-10
+CPY-MEM: cpy-mem::iom-16
+CPY-MEM: cpy-mem::iom-17
+
+Labid   : ihlcsdv2
+Branch  : BP-3-11-2-1
+CPU Load: 3.11.2.1.SP.1
+
+Creating HW script directory /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2 ...
+
+Creating ED-CHASSIS-EQPT for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current Chassis Data:
+
+
+|-----------------------------------------------------------------------------|
+|labid    |scriptlab|branch         |fieldname           |fieldvalue          |
+|         |id       |               |                    |                    |
+|-----------------------------------------------------------------------------|
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |chassistype         |both                |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |emipspa             |135.1.104.117       |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |emipspb             |135.1.104.118       |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |emipmask            |255.255.255.0       |
+|-----------------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|filename            |remarks                                 |
+|-------------------------------------------------------------|
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|hardware            |NONE                                    |
+|-------------------------------------------------------------|
+ED-CHASSIS-EQPT: ed-chassis-eqpt:,chassistype=both,,,emipspa=135.1.104.117,,,emipspb=135.1.104.118,,,emipmask=255.255.255.0,,,,,,,,;
+
+Creating ENT-EQPT for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current IOM Data:
+
+
+|-------------------------------------------------------------|
+|labid    |scriptlab|branch         |iom|type    |clei        |
+|         |id       |               |   |        |            |
+|-------------------------------------------------------------|
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |1  |octds3_2|ba4a701faa  |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |2  |octds3_2|ba4a701faa  |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |16 |voip    |ba1ax60aab  |
+|ihlcsdv2 |ihlcsdv2 |BP-3-11-2-1    |17 |voip    |ba1ax60aab  |
+|-------------------------------------------------------------|
+
+
+|-------------------------------------------------------------------|
+|rearmodclei     |redun|initi|thres|thres|thres|filename            |
+|                |dancy|alsta|hold1|hold2|hold3|                    |
+|                |     |te   |     |     |     |                    |
+|-------------------------------------------------------------------|
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|NONE            |pri  |is   |90   |90   |90   |hardware            |
+|-------------------------------------------------------------------|
+
+
+|-------------------------------------------------------------|
+|tl1cmd              |remarks                                 |
+|-------------------------------------------------------------|
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|ent-eqpt            |NONE                                    |
+|-------------------------------------------------------------|
+ENT-EQPT: ent-eqpt::iom-1:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-16:::ba1ax60aab,pri,90,90,90,3.11.2.1.P1:is
+ENT-EQPT: ent-eqpt::iom-17:::ba1ax60aab,pri,90,90,90,3.11.2.1.P1:is
+
+Creating ENT-EQPT-ALL for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current IOM Data:
+
+Creating ENT-ENET for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current Chassis Data:
+ENT-ENET: ent-enet::<enetid>:::,:<pst>
+
+Creating ENT-ENET_ENDPTVOIP for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current Chassis Data:
+ENT-ENET-ENDPTVOIP: ent-enet-endptvoip::<enetid>:::,,,,,,,,:<pst>
+
+Creating CPY-MEM for:
+
+Labid     : ihlcsdv2
+Branch    : BP-3-11-2-1
+CPU Load  : 3.11.2.1.SP.1
+Script Dir: /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1/ihlcsdv2
+
+Current IOM Data:
+
+
+|--------------------------------------|
+|labid    |branch         |iom|type    |
+|--------------------------------------|
+|ihlcsdv2 |BP-3-11-2-1    |1  |octds3_2|
+|ihlcsdv2 |BP-3-11-2-1    |2  |octds3_2|
+|ihlcsdv2 |BP-3-11-2-1    |16 |voip    |
+|ihlcsdv2 |BP-3-11-2-1    |17 |voip    |
+|--------------------------------------|
+CPY-MEM: cpy-mem::iom-1
+CPY-MEM: cpy-mem::iom-2
+CPY-MEM: cpy-mem::iom-16
+CPY-MEM: cpy-mem::iom-17
+hrdcpy cd /lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy pwd
+/lcsl100/hwscripts/BP-3-11-2-1/3.11.2.1.SP.1
+hrdcpy lf
+[ihlcs1]    [ihlcs2]    [ihlcs3]    [ihlcsdv2]
+hrdcpy cd ihlcs1
+hrdcpy lf
+ cpy-mem              ent-enet             ent-eqpt
+ ed-chassis-eqpt      ent-enet-endptvoip   ent-eqpt-all
+hrdcpy cat ed-chs*  a( *
+ed-chassis-eqpt:,chassistype=both,,,emipspa=135.1.104.113,,signalingipspa=10.11.10.1,emipspb=135.1.104.114,,signalingipspb=10.11.10.2,emipmask=255.255.255.0,,signalingipmask=255.255.255.0,signalingipchassis=10.11.10.3,,,,,;
+hrdcpy cat ene t-eq*
+ent-eqpt::iom-1:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ent-eqpt::iom-16:::ba1ax60aab,pri,95,95,95,3.11.2.1.P1:is
+ent-eqpt::iom-17:::ba1ax60aab,sec,95,95,95,3.11.2.1.P1:is
+ent-eqpt::iom-2:::ba4a701faa,pri,90,90,90,3.11.2.1.P1:is
+ent-eqpt::iom-6:::ba9axy0faa,pri,95,95,95,3.11.2.1.P1:is
+ent-eqpt::iom-3:::ba4a701faa,pri,95,95,95,3.11.2.1.P1:is
+ent-eqpt::iom-5:::ba4a701faa,sec,95,95,95,3.11.2.1.P1:is
+ent-eqpt-all::iom-8:::iomoduletype=ba2a30tgaa,redundancy=pri,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+ent-eqpt-all::iom-10:::iomoduletype=ba2a30tgaa,redundancy=sec,memthreshold=95,busythreshold=95,nvmemthreshold=95,swversion=3.11.2.1.P1,rearmoduletype=ba2a20sgaa:is
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy l csre      
+hrdcpy lcsreload -?
+usage: reload [-?] [-x] [-B] [-V] [-K|-X|-H] [-R] [-D] [-T]
+[-S trace level] [-l logfile] [-u username] [-p passwd] [-Q]
+[ -[i|I] simplex_a | -[i|I] simplex_b | -[i|I] duplex ] [labid] 
+
+where:
+        -x - enable TCL debugger
+        -S tracelevel - set trace to given stack level 
+        -K - do loadimage only; skip expansion.
+        -X - do expansion only; skip loadimage
+        -H - generate hardware Tl1 scripts (disables -K,-X)
+        -D - do NOT ask before proceeding with expansion
+        -l logfile - log all output to a logfile
+        -V - turn on verbose
+        -T - help text for recovering from time outs.
+        -Q - ask which IOM/CPU image to reload.
+        -R - remove lock file. see below before using this option.
+        -B - background reload.
+
+        default username = root
+        default passwd = plexus9000
+        labid is read from variable LABID, unless given.
+
+        by default, all IOMs/CPU are reloaded. if you want to be
+        asked which IOMs/CPU to reload, use the -Q option.
+
+        You can automatically reboot the switch after a reload by 
+        using the -i option. The choices are:
+
+        -i simplex_a - reload, split lab, boot SP-A active
+        -i simplex_b - reload, split lab, boot SP-B active
+        -i duplex - reload, duplex lab, boot SP-A and SP-B active
+
+        -I simplex_a - skip reload, split lab, boot SP-A active
+        -I simplex_b - skip reload, split lab, boot SP-B active
+        -I duplex - skip reload, duplex lab, boot SP-A and SP-B active
+
+        If you are absolutely sure that NO ONE else is running a
+        a reload and you are blocked by the lock file, then you can
+        run reload with the -R option to remove the lock. Remember,
+        if you remove the lock and there really is another reload
+        in progress for the same lab, each reload session will trash
+        the other. So, don't remove the lock, unless you are sure.
+
+V: no lock /home/lcstools/tools/queue/reload ...
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy setlabid ihlcsg10
+setlabid: Version 2003.5.1
+
+LABID = [ ihlcsg10 ]   LTS = [ /opt/laby/lts ] LAB_NAME = [ LCSGW10 ]
+
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy nlcstat   stat\
+feed_me_more> 
+
+
+ihlcsg10 SP_A_IP is not responding.
+ihlcsg10 SP_B_IP is alive.
+ihlcsg10 SP_B_IP UNIX is dead.
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy 
+hrdcpy nlcstat   stat
+ihlcsg10 SP_A_IP is not responding.
+ihlcsg10 SP_B_IP is alive.
+WARNING: UNIX is active, but 'unnamed_system' prompt was received.
+ihlcsg10 SP_B_IP UNIX is active - minimum mode, OS-only.
+ihlcsg10 SP_B_IP TL1 port is not responding.
+hrdcpy 
+hrdcpy 
+hrdcpy lcslre   reload -?
+usage: reload [-?] [-x] [-B] [-V] [-K|-X|-H] [-R] [-D] [-T]
+[-S trace level] [-l logfile] [-u username] [-p passwd] [-Q]
+[ -[i|I] simplex_a | -[i|I] simplex_b | -[i|I] duplex ] [labid] 
+
+where:
+        -x - enable TCL debugger
+        -S tracelevel - set trace to given stack level 
+        -K - do loadimage only; skip expansion.
+        -X - do expansion only; skip loadimage
+        -H - generate hardware Tl1 scripts (disables -K,-X)
+        -D - do NOT ask before proceeding with expansion
+        -l logfile - log all output to a logfile
+        -V - turn on verbose
+        -T - help text for recovering from time outs.
+        -Q - ask which IOM/CPU image to reload.
+        -R - remove lock file. see below before using this option.
+        -B - background reload.
+
+        default username = root
+        default passwd = plexus9000
+        labid is read from variable LABID, unless given.
+
+        by default, all IOMs/CPU are reloaded. if you want to be
+        asked which IOMs/CPU to reload, use the -Q option.
+
+        You can automatically reboot the switch after a reload by 
+        using the -i option. The choices are:
+
+        -i simplex_a - reload, split lab, boot SP-A active
+        -i simplex_b - reload, split lab, boot SP-B active
+        -i duplex - reload, duplex lab, boot SP-A and SP-B active
+
+        -I simplex_a - skip reload, split lab, boot SP-A active
+        -I simplex_b - skip reload, split lab, boot SP-B active
+        -I duplex - skip reload, duplex lab, boot SP-A and SP-B active
+
+        If you are absolutely sure that NO ONE else is running a
+        a reload and you are blocked by the lock file, then you can
+        run reload with the -R option to remove the lock. Remember,
+        if you remove the lock and there really is another reload
+        in progress for the same lab, each reload session will trash
+        the other. So, don't remove the lock, unless you are sure.
+
+V: no lock /home/lcstools/tools/queue/reload ...
+hrdcpy lcsreload -i ;lcs    sipmpl    mplex _b -Q
+
+Default log file is /lcsl100/logfiles/reload/reload7134.
+
+Starting reload of lab ihlcsg10:
+
+P: creating lock /home/lcstools/tools/queue/reloadihlcsg10 ...
+
+Reloading lab ihlcsg10 SP-A 135.1.104.203.
+Is this correct? [y/n/cr=n] n
+
+==>> Will NOT reload lab ihlcsg10.
+
+
+Reloading lab ihlcsg10 SP-B 135.1.104.204.
+Is this correct? [y/n/cr=n] y
+
+==>> Will reload lab ihlcsg10 SP-B.
+
+
+Current SP-B Status:
+
+ihlcsg10 SP-B 135.1.104.204 is alive.
+ihlcsg10 SP-B 135.1.104.204 UNIX is unnamed_system# - active - minimum mode, OS-only.
+
+
+  0: QUIT
+  1: BP-5-3-0-2 5.3.0.2.SP.1
+Choose a load to reload: 1
+Will reload load <BP-5-3-0-2, 5.3.0.2.SP.1>.
+
+Reload this image <cpu  5.3.0.2.SP.1_cpu.tar.gz>? [y/n/cr=n] y
+Will reload cpu    5.3.0.2.SP.1_cpu.tar.gz ...
+
+Reload this image <octds3       5.3.0.2.P2_octds3.tar.gz>? [y/n/cr=n] y
+Will reload octds3        5.3.0.2.P2_octds3.tar.gz ...
+
+Reload this image <trids3_3     5.3.0.2.P2_trids3_3.tar.gz>? [y/n/cr=n] y
+Will reload trids3_3    5.3.0.2.P2_trids3_3.tar.gz ...
+
+Reload this image <ena  5.3.0.2.P2_ena.tar.gz>? [y/n/cr=n] y
+Will reload ena      5.3.0.2.P2_ena.tar.gz ...
+
+Reload this image <voip 5.3.0.2.P2_voip.tar.gz>? [y/n/cr=n] y
+Will reload voip    5.3.0.2.P2_voip.tar.gz ...
+
+Reload this image <ena2 5.3.0.2.P2_ena2.tar.gz>? [y/n/cr=n] y
+Will reload ena2    5.3.0.2.P2_ena2.tar.gz ...
+
+Reload this image <cm   5.3.0.2.P2_cm.tar.gz>? [y/n/cr=n] y
+Will reload cm        5.3.0.2.P2_cm.tar.gz ...
+
+Reload this image <ds1_2        5.3.0.2.P2_ds1_2.tar.gz>? [y/n/cr=n] y
+Will reload ds1_2  5.3.0.2.P2_ds1_2.tar.gz ...
+
+Reload this image <octds3_2     5.3.0.2.P2_octds3_2.tar.gz>? [y/n/cr=n] y
+Will reload octds3_2    5.3.0.2.P2_octds3_2.tar.gz ...
+
+Reload this image <trids3       5.3.0.2.P2_trids3.tar.gz>? [y/n/cr=n] y
+Will reload trids3        5.3.0.2.P2_trids3.tar.gz ...
+
+Reload this image <octds3_3     5.3.0.2.P2_octds3_3.tar.gz>? [y/n/cr=n] y
+Will reload octds3_3    5.3.0.2.P2_octds3_3.tar.gz ...
+
+Reload this image <voip6        5.3.0.2.P2_voip6.tar.gz>? [y/n/cr=n] y
+Will reload voip6  5.3.0.2.P2_voip6.tar.gz ...
+
+Reload this image <tdmoc        5.3.0.2.P2_tdmoc.tar.gz>? [y/n/cr=n] y
+Will reload tdmoc  5.3.0.2.P2_tdmoc.tar.gz ...
+
+Clearing /home filesystem on 135.1.104.204 ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _cpu.tar.gz
+From file : /l148/text/BP-5-3-0-2/cpu/5.3.0.2.SP.1_cpu.tar.gz
+To file   : /home/5.3.0.2.SP.1_cpu.tar.gz
+
+Removing file /*_cpu.tar.gz ...
+
+Removing file /home/*_cpu.tar.gz ...
+
+Loading file /home/5.3.0.2.SP.1_cpu.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _octds3.tar.gz
+From file : /l148/text/BP-5-3-0-2/octds3/5.3.0.2.P2_octds3.tar.gz
+To file   : /home/5.3.0.2.P2_octds3.tar.gz
+
+Removing file /*_octds3.tar.gz ...
+
+Removing file /home/*_octds3.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_octds3.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _trids3_3.tar.gz
+From file : /l148/text/BP-5-3-0-2/trids3_3/5.3.0.2.P2_trids3_3.tar.gz
+To file   : /home/5.3.0.2.P2_trids3_3.tar.gz
+
+Removing file /*_trids3_3.tar.gz ...
+
+Removing file /home/*_trids3_3.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_trids3_3.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _ena.tar.gz
+From file : /l148/text/BP-5-3-0-2/ena/5.3.0.2.P2_ena.tar.gz
+To file   : /home/5.3.0.2.P2_ena.tar.gz
+
+Removing file /*_ena.tar.gz ...
+
+Removing file /home/*_ena.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_ena.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _voip.tar.gz
+From file : /l148/text/BP-5-3-0-2/voip/5.3.0.2.P2_voip.tar.gz
+To file   : /home/5.3.0.2.P2_voip.tar.gz
+
+Removing file /*_voip.tar.gz ...
+
+Removing file /home/*_voip.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_voip.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _ena2.tar.gz
+From file : /l148/text/BP-5-3-0-2/ena2/5.3.0.2.P2_ena2.tar.gz
+To file   : /home/5.3.0.2.P2_ena2.tar.gz
+
+Removing file /*_ena2.tar.gz ...
+
+Removing file /home/*_ena2.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_ena2.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _cm.tar.gz
+From file : /l148/text/BP-5-3-0-2/cm/5.3.0.2.P2_cm.tar.gz
+To file   : /home/5.3.0.2.P2_cm.tar.gz
+
+Removing file /*_cm.tar.gz ...
+
+Removing file /home/*_cm.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_cm.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _ds1_2.tar.gz
+From file : /l148/text/BP-5-3-0-2/ds1_2/5.3.0.2.P2_ds1_2.tar.gz
+To file   : /home/5.3.0.2.P2_ds1_2.tar.gz
+
+Removing file /*_ds1_2.tar.gz ...
+
+Removing file /home/*_ds1_2.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_ds1_2.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _octds3_2.tar.gz
+From file : /l148/text/BP-5-3-0-2/octds3_2/5.3.0.2.P2_octds3_2.tar.gz
+To file   : /home/5.3.0.2.P2_octds3_2.tar.gz
+
+Removing file /*_octds3_2.tar.gz ...
+
+Removing file /home/*_octds3_2.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_octds3_2.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _trids3.tar.gz
+From file : /l148/text/BP-5-3-0-2/trids3/5.3.0.2.P2_trids3.tar.gz
+To file   : /home/5.3.0.2.P2_trids3.tar.gz
+
+Removing file /*_trids3.tar.gz ...
+
+Removing file /home/*_trids3.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_trids3.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _octds3_3.tar.gz
+From file : /l148/text/BP-5-3-0-2/octds3_3/5.3.0.2.P2_octds3_3.tar.gz
+To file   : /home/5.3.0.2.P2_octds3_3.tar.gz
+
+Removing file /*_octds3_3.tar.gz ...
+
+Removing file /home/*_octds3_3.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_octds3_3.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _voip6.tar.gz
+From file : /l148/text/BP-5-3-0-2/voip6/5.3.0.2.P2_voip6.tar.gz
+To file   : /home/5.3.0.2.P2_voip6.tar.gz
+
+Removing file /*_voip6.tar.gz ...
+
+Removing file /home/*_voip6.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_voip6.tar.gz ...
+
+CPU-IP    : 135.1.104.204
+Suffix    : _tdmoc.tar.gz
+From file : /l148/text/BP-5-3-0-2/tdmoc/5.3.0.2.P2_tdmoc.tar.gz
+To file   : /home/5.3.0.2.P2_tdmoc.tar.gz
+
+Removing file /*_tdmoc.tar.gz ...
+
+Removing file /home/*_tdmoc.tar.gz ...
+
+Loading file /home/5.3.0.2.P2_tdmoc.tar.gz ...
+Proceed with installation? [y/n/cr=n] y
+Proceeding ...
+
+
+Killing emf on 135.1.104.204.
+
+
+Removing load from 135.1.104.204.
+
+
+Removing type swCPU (cpu) ...
+
+Removing type swCraft ...
+
+Removing type swOCTDS3 (octds3) ...
+
+Removing type swTRIDS3_3 (trids3_3) ...
+
+Removing type swENA (ena) ...
+
+Removing type swVOP (voip) ...
+
+Removing type swENA2 (ena2) ...
+
+Removing type swCM (cm) ...
+
+Removing type swDS1_2 (ds1_2) ...
+
+Removing type swOCTDS3_2 (octds3_2) ...
+
+Removing type swTRIDS3 (trids3) ...
+
+Removing type swOCTDS3_3 (octds3_3) ...
+
+Removing type swVOP6 (voip6) ...
+
+Removing type swTDMOC (tdmoc) ...
+
+Removing old log files /Telica/History/SavedLogs ...
+
+Removing old TimesTen log files /Telica/dbCurrent/SoftSwitch*/* ...
+
+Removing old directories /Telica/dbCurrent/Iom_* ...
+
+Removing old backup directories /Telica/dbCurrent/backup* ...
+
+Removing old database init file /.odbc.ini ...
+
+Removing any TimesTen left-overs under /opt ...
+
+Clearing /etc/resolv.conf (disabling DNS) ...
+
+Expanding file /home/5.3.0.2.SP.1_cpu.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_octds3.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_trids3_3.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_ena.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_voip.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_ena2.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_cm.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_ds1_2.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_octds3_2.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_trids3.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_octds3_3.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_voip6.tar.gz ...
+
+Expanding file /home/5.3.0.2.P2_tdmoc.tar.gz ...
+
+Linking 5.3.0.2.SP.1 to CurrRel ...
+
+Running uprev.sh ...
+
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+DO NOT INTERRUPT RELOAD AT THIS POINT. TIMESTEN DATABASE IS 
+INSTALLING RIGHT NOW AND IF YOU INTERRUPT IT, YOU RISK TRASHING
+YOUR LAB AND HAVING TO RESTART.
+
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+
+Suggested steps after a successful reload:
+
+1) For simplex labs, run the following on the LSP:
+        $ postlcsreload -s -D -h -c 10 -m
+or, for duplex labs, run:
+        $ postlcsreload -d -D -h -c 10 -m
+
+2) For simplex labs, reboot EITHER SP-A or SP-B, NEVER BOTH SPs:
+ $ lcsreboot -A # for SP-A init, do NOT boot SP-B
+or
+ $ lcsreboot -B # for SP-B init, do NOT boot SP-A
+For duplex labs, just enter:
+ $ lcsreboot    # init's both SPs
+
+3) For duplex labs, wait for the SPs to be IS,STBYH and IS,ACT.
+and for simplex labs, for the one SP to be IS,NBK, then you can
+continue on to provisioning.
+
+POST CMD: /home/lcstools/tools/bin/postlcsreload -a -s ihlcsg10 
+
+REBOOT CMD: /home/lcstools/tools/bin/lcsreboot -B -a ihlcsg10 
+
+postlcsreload options:
+run duplex mode.
+disable disk cleanup.
+update SP-A.
+update SP-B.
+update /etc/hosts file.
+update message-of-the-day, /etc/motd.
+set max cpy-mem to 10.
+set CPU date/time = LSP date/time.
+run simplex mode.
+
+Starting postlcsreload of lab ihlcsg10:
+
+exec'ing cmd /bin/postlcsreload -s -D -h -c 10 -m "ihlcsg10 SP-A" on SP-A ...
+
+timeout during ftp login ...
+
+postlcsreload: child process exited abnormally
+Skipping make hardware scripts stage ...
+Exiting reload.
+V: deleting lock /home/lcstools/tools/queue/reloadihlcsg10 ...
+hrdcpy \
+\
+feed_me_more> 
+hrdcpy 
+hrdcpy lcsreboot           echo $LABID
+ihlcsg10
+hrdcpy lcsreboot -B
+skip booting ihlcsg10 SP_A.
+ihlcsg10 SP_B is alive.
+ihlcsg10 SP_B UNIX is active.
+booting APP mode ihlcsg10 SP_B.
+hrdcpy quit    exit

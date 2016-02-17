@@ -1,0 +1,11 @@
+# Compute Modules
+ent-eqpt::iom-1:::BA9ATS0FAB,pri,95,95,95,<cm>:is
+ent-eqpt::iom-2:::BA9ATS0FAB,sec,95,95,95,<cm>:is
+ent-eqpt::iom-14:::BA9ATS0FAB,pri,95,95,95,<cm>:is
+ent-eqpt::iom-15:::BA9ATS0FAB,sec,95,95,95,<cm>:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.105.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.46.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.46.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.46.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.46.254

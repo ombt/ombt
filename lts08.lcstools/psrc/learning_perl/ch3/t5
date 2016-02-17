@@ -1,0 +1,20 @@
+#!/opt/exp/bin/perl -w
+#
+$ifile = "t5_input_file";
+open(INFD, $ifile) || die "unable to open $ifile: $!";
+#
+while (defined($a = <INFD>)) {
+	chomp($a);
+	@a = (@a, $a);
+	@b = ($a, @b);
+}
+#
+close(INFD);
+#
+while (defined($a = shift(@a))) {
+	print "a shift: $a\n";
+}
+while (defined($b = shift(@b))) {
+	print "b shift: $b\n";
+}
+

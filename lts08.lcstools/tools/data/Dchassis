@@ -1,0 +1,6 @@
+labid	t\t	l10
+branch	t\t	l20
+type	t\t	l5
+cpu_a_ip	t\t	l16
+cpu_b_ip	t\t	l16
+webreload	t\n	l5

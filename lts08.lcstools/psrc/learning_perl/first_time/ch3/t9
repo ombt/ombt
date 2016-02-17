@@ -1,0 +1,7 @@
+#!/usr/bin/perl 
+#
+print "enter a list of values ... ";
+@junk = <STDIN>;
+chomp(@junk);
+print "junk is ... @junk\n";
+#

@@ -1,0 +1,17 @@
+#!/opt/exp/bin/perl -w
+#
+$ifile = "t2_input_file";
+open(INFD, $ifile) || die "unable to open $ifile: $!";
+#
+while (defined($a = <INFD>)) {
+	chomp($a);
+	push(@mystack, $a);
+	print "in: $a\n";
+}
+#
+close(INFD);
+#
+while (defined($a = pop(@mystack))) {
+	print "out: $a\n";
+}
+

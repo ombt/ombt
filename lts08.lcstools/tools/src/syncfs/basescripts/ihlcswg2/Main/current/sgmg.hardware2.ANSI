@@ -1,0 +1,27 @@
+ent-eqpt-all::iom-1:::iomoduletype=BAA91Z0GAC,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ana>:is
+ent-eqpt-all::iom-2:::iomoduletype=BAA91Z0GAC,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ana>:is
+# ENA2 IOMs
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAB,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAB,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+# VSM-3 use in 6.X
+ent-eqpt::iom-15:::BAUIAA1EAC,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-16:::BAUIAA1EAC,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-17:::BAUIAA1EAC,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-9:::BAUIAA1EAC,sec,95,95,95,<vs3>:is
+#
+ed-t1::tmg-A:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::eqlz=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+#
+ent-oc3::iom-1-oc3-1::::is
+ent-oc3::iom-1-oc3-2::::is
+ent-oc3::iom-1-oc3-3::::is
+ent-oc3::iom-1-oc3-4::::is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is 
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.62.1,mateipaddr=10.175.62.2,subnetmask=255.255.255.0,defaultgateway=10.175.62.254:is
+#
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.62.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.62.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.62.254
+ent-iproute::sp-cpu-b-10.11.93.0-29:::gateway=10.11.96.14

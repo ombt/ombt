@@ -1,0 +1,13 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts
+}
+globals data {
+	ip chibuild.telica.com
+	login lcstools
+	passwd plexus9000
+}
+ksh_test exec {
+	# ksh -v -t 10 /usr/bin/ls
+	ksh -v -t 10 /tmp/junk
+
+}

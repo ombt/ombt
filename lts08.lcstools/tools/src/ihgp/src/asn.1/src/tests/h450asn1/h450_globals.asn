@@ -1,0 +1,5132 @@
+-- ------------------------------------------------------------- --
+--               Copyright (c) 1996-1999 Lucent Technologies
+--                       All Rights Reserved
+-- 
+--                       THIS IS UNPUBLISHED
+--                       PROPRIETARY SOURCE
+--                   CODE OF Lucent Technologies
+-- 
+--           The copyright notice above does not evidence any
+--          actual or intended publication of such source code
+-- 
+--  CVS Information:
+--<COMMENT  "$Revision: 1.3 $  $Date: 1998/11/23 21:25:05 $">--
+-- 
+--  Filename	:	h450_globals.asn
+--  Description	:	This file contains the OSS ASN.1 compiler
+--					directives.
+--  Caveats		:	ASN.1 compiler version: 4.2
+-- 
+--  Revision History
+--  Date			Revision description
+--  06/04/1998	File Created
+--	09/30/1999	Added h.450.4
+--	10/04/1999	Added h.450.6, h.450.7
+--	10/05/1999	Added h.450.5
+-- 
+-- ------------------------------------------------------------- --
+
+-- ============================================================= --
+-- 
+-- Global directives
+--
+-- ============================================================= --
+
+--<OSS.OBJECTID LONG>--
+--<OSS. NOPOINTER>--
+--<OSS.
+--  UNBOUNDED SEQUENCE OF, SET OF, OBJECT IDENTIFIER>--
+
+--<ASN1.WorkingSet 
+--		H450-WS
+--			H4501-Supplementary-ServiceAPDU-Structure,
+--			Remote-Operations-Information-Objects.Code,
+--			Remote-Operations-Apdus.Reject,
+--			Addressing-Data-Elements.EndpointAddress,
+--			Addressing-Data-Elements.PartySubaddress,
+--			Addressing-Data-Elements.UserSpecifiedSubaddress,
+--			Addressing-Data-Elements.NSAPSubaddress,
+--			Addressing-Data-Elements.SubaddressInformation,
+--			Call-Transfer-Operations.CallTransferExtension,
+--			Call-Transfer-Operations.CTInitiateArg,
+--			Call-Transfer-Operations.CTSetupArg,
+--			Call-Transfer-Operations.CTIdentifyRes,
+--			Call-Transfer-Operations.BMPString128,
+--			Call-Transfer-Operations.CTUpdateArg,
+--			Call-Transfer-Operations.SubaddressTransferArg,
+--			Call-Transfer-Operations.CTCompleteArg,
+--			Call-Transfer-Operations.CTActiveArg,
+--			Call-Transfer-Operations.CallIdentity,
+--			Call-Transfer-Operations.ExtensionSeq,
+--			Call-Transfer-Operations.CallTransferUnspecifiedParameter,
+--			Call-Diversion-Operations.CallDiversionExtension,
+--			Call-Diversion-Operations.ActivateDiversionQArg,
+--			Call-Diversion-Operations.DeactivateDiversionQArg,
+--			Call-Diversion-Operations.InterrogateDiversionQArg,
+--			Call-Diversion-Operations.CheckRestrictionArg,
+--			Call-Diversion-Operations.CallReroutingArg,
+--			Call-Diversion-Operations.DivertingLegInformation1Arg,
+--			Call-Diversion-Operations.DivertingLegInformation2Arg,
+--			Call-Diversion-Operations.DivertingLegInformation3Arg,
+--			Call-Diversion-Operations.DivertingLegInformation4Arg,
+--			Call-Diversion-Operations.IntResultList,
+--			Call-Diversion-Operations.IntResult,
+--			Call-Diversion-Operations.CallDiversionUnspecifiedParameter,
+--			Call-Diversion-Operations.ExtensionSeq,
+--			Call-Hold-Operations.HoldNotificArg,
+--			Call-Hold-Operations.RetrieveNotificArg,
+--			Call-Hold-Operations.RemoteHoldArg,
+--			Call-Hold-Operations.RemoteHoldRes,
+--			Call-Hold-Operations.RemoteRetrieveArg,
+--			Call-Hold-Operations.RemoteRetrieveRes,
+--			Call-Hold-Operations.MixedEntensionSeq,
+--			Call-Hold-Operations.MixedExtension,
+--			Call-Park-Pickup-Operations.CpRequestArg,
+--			Call-Park-Pickup-Operations.CpRequestRes,
+--			Call-Park-Pickup-Operations.CpSetupArg,
+--			Call-Park-Pickup-Operations.CpSetupRes,
+--			Call-Park-Pickup-Operations.GroupIndicationOnArg,
+--			Call-Park-Pickup-Operations.GroupIndicationOnRes,
+--			Call-Park-Pickup-Operations.GroupIndicationOffArg,
+--			Call-Park-Pickup-Operations.GroupIndicationOffRes,
+--			Call-Park-Pickup-Operations.PickrequArg,
+--			Call-Park-Pickup-Operations.PickrequRes,
+--			Call-Park-Pickup-Operations.PickupArg,
+--			Call-Park-Pickup-Operations.PickupRes,
+--			Call-Park-Pickup-Operations.PickExeArg,
+--			Call-Park-Pickup-Operations.PickExeRes,
+--			Call-Park-Pickup-Operations.CpNotifyArg,
+--			Call-Park-Pickup-Operations.CpickupNotifyArg,
+--			Call-Park-Pickup-Operations.ParkedToPosition,
+--			Call-Waiting-Operations.CallWaitingArg,
+--			Message-Waiting-Indication-Operations.MWIActivateArg,
+--			Message-Waiting-Indication-Operations.MWIDeactivateArg,
+--			Message-Waiting-Indication-Operations.MWIInterrogateArg,
+--			Message-Waiting-Indication-Operations.MWIInterrogateRes,
+--			Message-Waiting-Indication-Operations.MWIInterrogateResElt,
+--			Message-Waiting-Indication-Operations.MsgCentreId,
+--			Message-Waiting-Indication-Operations.NbOfMessages,
+--			Message-Waiting-Indication-Operations.TimeStamp>--
+
+-- ============================================================= --
+-- 
+-- From x.880: Remote-Operations-Information-Objects 
+--	{joint-iso-itu-t remote-operations(4) informationObjects(5) version1(0)}
+--
+-- ============================================================= --
+
+-- ------------------------------------------------------------- --
+-- 
+-- OPERATION ::= CLASS
+-- {
+-- 	&ArgumentType 									OPTIONAL,
+-- 	&argumentTypeOptional 	BOOLEAN 				OPTIONAL,
+-- 	&returnResult 			BOOLEAN DEFAULT TRUE,
+-- 	&ResultType 									OPTIONAL,
+-- 	&resultTypeOptional 	BOOLEAN 				OPTIONAL,
+-- 	&Errors 				ERROR 					OPTIONAL,
+-- 	&Linked 				OPERATION 				OPTIONAL,
+-- 	&synchronous 			BOOLEAN DEFAULT FALSE,
+-- 	&alwaysReturns 			BOOLEAN DEFAULT TRUE,
+-- 	&InvokePriority 		Priority 				OPTIONAL,
+-- 	&ResultPriority 		Priority 				OPTIONAL,
+-- 	&operationCode 			Code UNIQUE 			OPTIONAL
+-- }
+-- WITH SYNTAX
+-- {
+-- 	[ARGUMENT	 		&ArgumentType 	[OPTIONAL 	&argumentTypeOptional]]
+-- 	[RESULT 			&ResultType 	[OPTIONAL 	&resultTypeOptional]]
+-- 	[RETURN RESULT 		&returnResult]
+-- 	[ERRORS 			&Errors]
+-- 	[LINKED 			&Linked]
+-- 	[SYNCHRONOUS 		&synchronous]
+-- 	[ALWAYS RESPONDS 	&alwaysReturns]
+-- 	[INVOKE PRIORITY 	&InvokePriority]
+-- 	[RESULT-PRIORITY 	&ResultPriority]
+-- 	[CODE 				&operationCode]
+-- }
+-- 
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Remote-Operations-Information-Objects.OPERATION 
+--		"EmOPERATION">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&ArgumentType
+--		"ArgumentType">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&ArgumentType
+--		"EM_ArgumentType">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&argumentTypeOptional
+--		"argumentTypeOptional">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&argumentTypeOptional
+--		"EM_argumentTypeOptional">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&returnResult
+--		"returnResult">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&returnResult
+--		"EM_returnResult">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&ResultType
+--		"ResultType">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&ResultType
+--		"EM_ResultType">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&resultTypeOptional
+--		"resultTypeOptional">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&resultTypeOptional
+--		"EM_resultTypeOptional">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&Errors
+--		"Errors">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&Errors
+--		"EM_Errors">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&Linked
+--		"Linked">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&Linked
+--		"EM_Linked">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&synchronous
+--		"synchronous">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&synchronous
+--		"EM_synchronous">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&alwaysReturns
+--		"alwaysReturns">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&alwaysReturns
+--		"EM_alwaysReturns">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&InvokePriority
+--		"InvokePriority">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&InvokePriority
+--		"EM_InvokePriority">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&ResultPriority
+--		"ResultPriority">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&ResultPriority
+--		"EM_ResultPriority">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.OPERATION.&operationCode
+--		"operationCode">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.OPERATION.&operationCode
+--		"EM_operationCode">--
+
+-- ------------------------------------------------------------- --
+-- 
+-- ERROR ::= CLASS
+-- {
+-- 	&ParameterType 									OPTIONAL,
+-- 	&parameterTypeOptional 		BOOLEAN 			OPTIONAL,
+-- 	&ErrorPriority 				Priority 			OPTIONAL,
+-- 	&errorCode 					Code UNIQUE 		OPTIONAL
+-- }
+-- WITH SYNTAX
+-- {
+-- 	[PARAMETER 		&ParameterType 	[OPTIONAL &parameterTypeOptional]]
+-- 	[PRIORITY 		&ErrorPriority]
+-- 	[CODE 			&errorCode]
+-- }
+--
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Remote-Operations-Information-Objects.ERROR 
+--		"EmERROR">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.ERROR.&ParameterType
+--		"ParameterType">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.ERROR.&ParameterType
+--		"EM_ParameterType">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.ERROR.&parameterTypeOptional
+--		"parameterTypeOptional">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.ERROR.&parameterTypeOptional
+--		"EM_parameterTypeOptional">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.ERROR.&ErrorPriority
+--		"ErrorPriority">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.ERROR.&ErrorPriority
+--		"EM_ErrorPriority">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.ERROR.&errorCode
+--		"errorCode">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.ERROR.&errorCode
+--		"EM_errorCode">--
+
+-- ------------------------------------------------------------- --
+-- 
+-- Code ::= CHOICE
+-- {
+-- 	local 		INTEGER,
+-- 	global 		OBJECT IDENTIFIER
+-- }
+--
+-- ------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Remote-Operations-Information-Objects.Code>--
+--<OSS.TYPENAME
+--		Remote-Operations-Information-Objects.Code 
+--		"EmCode">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.Code.local
+--		"local">--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.Code.local
+--		"EM_local">--
+--<OSS.ExtractType 
+--		Remote-Operations-Information-Objects.Code.global>--
+--<OSS.TYPENAME
+--		Remote-Operations-Information-Objects.Code.global 
+--		"EmObjectIdentifier">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Information-Objects.Code.global
+--		global>--
+--<OSS.DefineName
+--		Remote-Operations-Information-Objects.Code.global
+--		"EM_global">--
+
+-- ------------------------------------------------------------- --
+-- 
+-- Priority ::= INTEGER (0..MAX)
+-- 
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Remote-Operations-Information-Objects.Priority 
+--		"EmPriority">--
+
+
+-- ============================================================= --
+--
+-- From h.225: H323-MESSAGES
+-- 		{itu-t (0) recommendation (0) h (8) 2250 version (0) 2}
+--
+-- ============================================================= --
+
+--------------------------------------------------------------- --
+-- ObjectIdentifier 	::= OBJECT IDENTIFIER
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		H235-SECURITY-MESSAGES.ObjectIdentifier	
+--		"EmObjectIdentifier">--
+
+--------------------------------------------------------------- --
+-- OctetString 			::= OCTET STRING
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		H235-SECURITY-MESSAGES.OctetString 		
+--		"EmOctetString">--
+
+
+-- ------------------------------------------------------------- --
+-- IP ::= OCTET STRING (SIZE(4))
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.IP
+--		"EmIP">--
+
+-- ------------------------------------------------------------- --
+-- TransportAddress ::= CHOICE
+-- {
+-- 	ipAddress 		SEQUENCE
+-- 	{
+-- 		ip			IP,
+-- 		port		INTEGER(0..65535)
+-- 	},
+-- 	ipSourceRoute 	SEQUENCE
+-- 	{
+-- 		ip			IP,
+-- 		port		INTEGER(0..65535),
+-- 		route		SEQUENCE OF IP,
+-- 		routing 	CHOICE
+-- 		{
+-- 			strict	NULL,
+-- 			loose	NULL,
+-- 			...
+-- 		},
+-- 		...
+-- 	},
+-- 	ipxAddress 		SEQUENCE
+-- 	{
+-- 		node		OCTET STRING (SIZE(6)),
+-- 		netnum		OCTET STRING (SIZE(4)),
+-- 		port		OCTET STRING (SIZE(2))
+-- 	},
+-- 	ip6Address 		SEQUENCE
+-- 	{
+-- 		ip			OCTET STRING (SIZE(16)),
+-- 		port		INTEGER(0..65535),
+-- 		...
+-- 	},
+-- 	netBios			OCTET STRING (SIZE(16)),
+-- 	nsap			OCTET STRING (SIZE(1..20)),
+-- 	nonStandardAddress	NonStandardParameter,	
+-- 	...	
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress 
+--		"EmH225TransportAddress">--
+
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.ipAddress>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ipAddress 
+--		"EmIPAddress">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipAddress
+--		"ipAddress">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ipAddress
+--		"EM_ipAddress">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipAddress.ip
+--		"ip">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipAddress.port
+--		"port">--
+
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute 
+--		"EmIPSourceRoute">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute
+--		"ipSourceRoute">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ipSourceRoute
+--		"EM_ipSourceRoute">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.ip
+--		"ip">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.port
+--		"port">--
+--<OSS.ExtractType
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.route>--
+--<OSS.TYPENAME
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.route
+--		"EmSeqOfIP">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.route
+--		"route">--
+--<OSS.ExtractType
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing
+--		"EmRouting">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing
+--		"routing">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing.strict
+--		"strict">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing.strict
+--		"EM_strict">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing.loose
+--		"loose">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ipSourceRoute.routing.loose
+--		"EM_loose">--
+
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.ipxAddress>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ipxAddress
+--		"EmIPXAddress">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipxAddress
+--		"ipxAddress">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ipxAddress
+--		"EM_ipxAddress">--
+--<OSS.InlineType
+--		H323-MESSAGES.TransportAddress.ipxAddress.node>--
+--<OSS.TYPENAME
+--		H323-MESSAGES.TransportAddress.ipxAddress.node
+--		"EmIPXNode">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipxAddress.node
+--		"node">--
+--<OSS.InlineType
+--		H323-MESSAGES.TransportAddress.ipxAddress.netnum>--
+--<OSS.TYPENAME
+--		H323-MESSAGES.TransportAddress.ipxAddress.netnum
+--		"EmIPXNetnum">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipxAddress.netnum
+--		"netnum">--
+--<OSS.InlineType
+--		H323-MESSAGES.TransportAddress.ipxAddress.port>--
+--<OSS.TYPENAME
+--		H323-MESSAGES.TransportAddress.ipxAddress.port
+--		"EmIPXPort">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ipxAddress.port
+--		"port">--
+
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.ip6Address>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ip6Address 
+--		"EmIP6Address">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ip6Address
+--		"ip6Address">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.ip6Address
+--		"EM_ip6Address">--
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.ip6Address.ip>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.ip6Address.ip 
+--		"EmIP6">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ip6Address.ip
+--		"ip">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.ip6Address.port
+--		"port">--
+
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.netBios>--
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.netBios 
+--		"EmNetBios">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.netBios
+--		"netBios">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.netBios
+--		"EM_netBios">--
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.TransportAddress.nsap 
+--		"EmNSAP">--
+--<OSS.InlineType 
+--		H323-MESSAGES.TransportAddress.nsap>--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.nsap
+--		"nsap">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.nsap
+--		"EM_nsap">--
+
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.TransportAddress.nonStandardAddress
+--		"nonStandardAddress">--
+--<OSS.DefineName
+--		H323-MESSAGES.TransportAddress.nonStandardAddress
+--		"EM_nonStandardAddress">--
+
+
+-- ------------------------------------------------------------- --
+-- H221NonStandard ::= SEQUENCE
+-- {	
+--  t35CountryCode		INTEGER(0..255),
+-- 	t35Extension		INTEGER(0..255),
+-- 	manufacturerCode	INTEGER(0..65535),
+-- 	...
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.H221NonStandard
+--		"EmH221NonStandard">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.H221NonStandard.t35CountryCode
+--		"t35CountryCode">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.H221NonStandard.t35Extension
+--		"t35Extension">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.H221NonStandard.manufacturerCode
+--		"manufacturerCode">--
+
+-- ------------------------------------------------------------- --
+-- NonStandardParameter ::= SEQUENCE
+-- {
+-- 	nonStandardIdentifier	NonStandardIdentifier,
+-- 	data					OCTET STRING
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.NonStandardParameter 
+--		"EmNonStandardParameter">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.NonStandardParameter.nonStandardIdentifier
+--		"nonStandardIdentifier">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.NonStandardParameter.data
+--		"data">--
+
+-- ------------------------------------------------------------- --
+-- NonStandardIdentifier		::=CHOICE
+-- {
+-- 	object			OBJECT IDENTIFIER,
+-- 	h221NonStandard	H221NonStandard,
+-- 	...
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.NonStandardIdentifier
+--		"EmNonStandardIdentifier">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.NonStandardIdentifier.object
+--		"object">--
+--<OSS.DefineName
+--		H323-MESSAGES.NonStandardIdentifier.object
+--		"EM_object">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.NonStandardIdentifier.h221NonStandard
+--		"h221NonStandard">--
+--<OSS.DefineName
+--		H323-MESSAGES.NonStandardIdentifier.h221NonStandard
+--		"EM_h221NonStandard">--
+
+-- ------------------------------------------------------------- --
+-- AliasAddress ::= CHOICE
+-- {
+-- 	e164		IA5String (SIZE (1..128)) (FROM ("0123456789#*,")),
+-- 	h323-ID		BMPString (SIZE (1..256)),
+-- 	...,
+-- 	url-ID		IA5String (SIZE(1..512)),
+-- 	transportID	TransportAddress,
+-- 	email-ID	IA5String (SIZE(1..512)),
+-- 	partyNumber	PartyNumber 
+-- }	
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.AliasAddress 
+--		"EmAliasAddress">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.e164
+--		"e164">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.e164
+--		"EM_e164">--
+--<OSS.ExtractType
+--		H323-MESSAGES.AliasAddress.h323-ID>--
+--<OSS.TYPENAME
+--		H323-MESSAGES.AliasAddress.h323-ID
+--		"EmH323ID">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.h323-ID
+--		"h323_ID">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.h323-ID
+--		"EM_h323_ID">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.url-ID
+--		"url_ID">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.url-ID
+--		"EM_url_ID">--
+--<OSS.NULLTERM
+--		H323-MESSAGES.AliasAddress.url-ID>--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.transportID
+--		"transportID">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.transportID
+--		"EM_transportID">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.email-ID
+--		"email_ID">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.email-ID
+--		"EM_email_ID">--
+--<OSS.NULLTERM
+--		H323-MESSAGES.AliasAddress.email-ID>--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.AliasAddress.partyNumber
+--		"partyNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.AliasAddress.partyNumber
+--		"EM_partyNumber">--
+
+-- ------------------------------------------------------------- --
+-- PartyNumber ::= CHOICE
+-- {
+-- 	publicNumber 					PublicPartyNumber,
+-- 	dataPartyNumber 				NumberDigits,
+-- 	telexPartyNumber 				NumberDigits,
+-- 	privateNumber 					PrivatePartyNumber,
+-- 	nationalStandardPartyNumber 	NumberDigits,
+-- 	...
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.PartyNumber
+--		"EmPartyNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PartyNumber.publicNumber
+--		"publicNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PartyNumber.publicNumber
+--		"EM_publicNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PartyNumber.dataPartyNumber
+--		"dataPartyNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PartyNumber.dataPartyNumber
+--		"EM_dataPartyNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PartyNumber.telexPartyNumber
+--		"telexPartyNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PartyNumber.telexPartyNumber
+--		"EM_telexPartyNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PartyNumber.privateNumber
+--		"privateNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PartyNumber.privateNumber
+--		"EM_privateNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PartyNumber.nationalStandardPartyNumber
+--		"nationalStandardPartyNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PartyNumber.nationalStandardPartyNumber
+--		"EM_nationalStandardPartyNumber">--
+
+-- ------------------------------------------------------------- --
+-- PublicPartyNumber ::= SEQUENCE
+-- {
+-- 	publicTypeOfNumber	PublicTypeOfNumber,
+-- 	publicNumberDigits	NumberDigits
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.PublicPartyNumber 
+--		"EmPublicPartyNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicPartyNumber.publicTypeOfNumber
+--		"publicTypeOfNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicPartyNumber.publicNumberDigits
+--		"publicNumberDigits">--
+
+-- ------------------------------------------------------------- --
+-- PrivatePartyNumber ::= SEQUENCE
+-- {
+-- 	privateTypeOfNumber	PrivateTypeOfNumber,
+-- 	privateNumberDigits	NumberDigits
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.PrivatePartyNumber 
+--		"EmPrivatePartyNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivatePartyNumber.privateTypeOfNumber
+--		"privateTypeOfNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivatePartyNumber.privateNumberDigits
+--		"privateNumberDigits">--
+
+-- ------------------------------------------------------------- --
+-- NumberDigits ::= IA5String (SIZE (1..128)) (FROM ("0123456789#*,"))
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.NumberDigits 
+--		"EmNumberDigits">--
+
+-- ------------------------------------------------------------- --
+-- PublicTypeOfNumber ::= CHOICE
+-- {
+-- 	unknown					NULL,
+-- 	internationalNumber		NULL,
+-- 	nationalNumber			NULL,
+-- 	networkSpecificNumber	NULL,
+-- 	subscriberNumber		NULL,
+-- 	abbreviatedNumber		NULL,
+-- 	...
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.PublicTypeOfNumber
+--		"EmPublicTypeOfNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.unknown
+--		"unknown">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.unknown
+--		"EM_PublicTypeOfNumber_unknown">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.internationalNumber
+--		"internationalNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.internationalNumber
+--		"EM_internationalNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.nationalNumber
+--		"nationalNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.nationalNumber
+--		"EM_nationalNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.networkSpecificNumber
+--		"networkSpecificNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.networkSpecificNumber
+--		"EM_networkSpecificNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.subscriberNumber
+--		"subscriberNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.subscriberNumber
+--		"EM_subscriberNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PublicTypeOfNumber.abbreviatedNumber
+--		"abbreviatedNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PublicTypeOfNumber.abbreviatedNumber
+--		"EM_PublicTypeOfNumber_abbreviatedNumber">--
+
+-- ------------------------------------------------------------- --
+-- PrivateTypeOfNumber ::= CHOICE
+-- {
+-- 	unknown					NULL,
+-- 	level2RegionalNumber	NULL,
+-- 	level1RegionalNumber	NULL,
+-- 	pISNSpecificNumber		NULL,
+-- 	localNumber				NULL,
+-- 	abbreviatedNumber		NULL,
+-- 	...
+-- }
+-- ------------------------------------------------------------- --
+
+--<OSS.TYPENAME 
+--		H323-MESSAGES.PrivateTypeOfNumber
+--		"EmPrivateTypeOfNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.unknown
+--		"unknown">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.unknown
+--		"EM_PrivateTypeOfNumber_unknown">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.level2RegionalNumber
+--		"level2RegionalNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.level2RegionalNumber
+--		"EM_level2RegionalNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.level1RegionalNumber
+--		"level1RegionalNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.level1RegionalNumber
+--		"EM_level1RegionalNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.pISNSpecificNumber
+--		"pISNSpecificNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.pISNSpecificNumber
+--		"EM_pISNSpecificNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.localNumber
+--		"localNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.localNumber
+--		"EM_localNumber">--
+--<OSS.FIELDNAME 
+--		H323-MESSAGES.PrivateTypeOfNumber.abbreviatedNumber
+--		"abbreviatedNumber">--
+--<OSS.DefineName
+--		H323-MESSAGES.PrivateTypeOfNumber.abbreviatedNumber
+--		"EM_PrivateTypeOfNumber_abbreviatedNumber">--
+
+-- ============================================================= --
+--
+-- From h.450.1: Remote-Operations-Apdus
+-- 		Object Id: 0, 0, 8, 450, 1, 0, 11
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- Reject ::= SEQUENCE
+-- {
+-- 	invokeId		InvokeId,
+-- 	problem			CHOICE
+-- 	{
+-- 		general			GeneralProblem,
+-- 		invoke			InvokeProblem,
+-- 		returnResult	ReturnResultProblem,
+-- 		returnError		ReturnErrorProblem
+-- 	}
+-- }
+-- (CONSTRAINED BY { must conform to the above definition }
+-- 	! RejectProblem : general-mistypedPDU) 
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Remote-Operations-Apdus.Reject>--
+--<OSS.TYPENAME
+--		Remote-Operations-Apdus.Reject 
+--		"EmReject">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.invokeId
+--		"invokeId">--
+--<OSS.ExtractType
+--		Remote-Operations-Apdus.Reject.problem>--
+--<OSS.TYPENAME
+--		Remote-Operations-Apdus.Reject.problem
+--		"EmProblem">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.problem
+--		"problem">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.problem.general
+--		"general">--
+--<OSS.DefineName
+--		Remote-Operations-Apdus.Reject.problem.general
+--		"EM_general">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.problem.invoke
+--		"invoke">--
+--<OSS.DefineName
+--		Remote-Operations-Apdus.Reject.problem.invoke
+--		"EM_invoke">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.problem.returnResult
+--		"returnResult">--
+--<OSS.DefineName
+--		Remote-Operations-Apdus.Reject.problem.returnResult
+--		"EM_returnResult">--
+--<OSS.FIELDNAME
+--		Remote-Operations-Apdus.Reject.problem.returnError
+--		"returnError">--
+--<OSS.DefineName
+--		Remote-Operations-Apdus.Reject.problem.returnError
+--		"EM_returnError">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- GeneralProblem ::= INTEGER
+-- {
+-- 	unrecognizedComponent 		(0),
+-- 	mistypedComponent 			(1),
+-- 	badlyStructuredComponent 	(2)
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Remote-Operations-Apdus.GeneralProblem 
+--		EmGeneralProblem>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.GeneralProblem.unrecognizedComponent 
+--		EM_unrecognizedComponent>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.GeneralProblem.mistypedComponent 
+--		EM_mistypedComponent>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.GeneralProblem.badlyStructuredComponent 
+--		EM_badlyStructuredComponent>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- InvokeProblem ::= INTEGER
+-- {
+-- 	duplicateInvocation 		(0),
+-- 	unrecognizedOperation 		(1),
+-- 	mistypedArgument 			(2),
+-- 	resourceLimitation 			(3),
+-- 	releaseInProgress 			(4),
+-- 	unrecognizedLinkedId 		(5),
+-- 	linkedResponseUnexpected 	(6),
+-- 	unexpectedLinkedOperation 	(7) 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Remote-Operations-Apdus.InvokeProblem 
+--		EmInvokeProblem>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.duplicateInvocation 
+--		EM_duplicateInvocation>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.unrecognizedOperation 
+--		EM_unrecognizedOperation>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.mistypedArgument 
+--		EM_mistypedArgument>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.resourceLimitation 
+--		EM_resourceLimitation>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.releaseInProgress 
+--		EM_releaseInProgress>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.unrecognizedLinkedId 
+--		EM_unrecognizedLinkedId>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.linkedResponseUnexpected 
+--		EM_linkedResponseUnexpected>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.InvokeProblem.unexpectedLinkedOperation 
+--		EM_unexpectedLinkedOperation>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ReturnResultProblem ::= INTEGER
+-- {
+-- 	unrecognizedInvocation 		(0),
+-- 	resultResponseUnexpected 	(1),
+-- 	mistypedResult 				(2)
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Remote-Operations-Apdus.ReturnResultProblem 
+--		EmReturnResultProblem>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnResultProblem.unrecognizedInvocation 
+--		EM_ReturnResultProblem_unrecognizedInvocation>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnResultProblem.resultResponseUnexpected 
+--		EM_resultResponseUnexpected>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnResultProblem.mistypedResult 
+--		EM_mistypedResult>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ReturnErrorProblem ::= INTEGER
+-- {
+-- 	unrecognizedInvocation 		(0),
+-- 	errorResponseUnexpected 	(1),
+-- 	unrecognizedError 			(2),
+-- 	unexpectedError 			(3),
+-- 	mistypedParameter 			(4)
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Remote-Operations-Apdus.ReturnErrorProblem 
+--		EmReturnErrorProblem>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnErrorProblem.unrecognizedInvocation 
+--		EM_ReturnErrorProblem_unrecognizedInvocation>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnErrorProblem.errorResponseUnexpected 
+--		EM_errorResponseUnexpected>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnErrorProblem.unrecognizedError 
+--		EM_unrecognizedError>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnErrorProblem.unexpectedError 
+--		EM_unexpectedError>--
+--<ASN1.Nickname 
+--		Remote-Operations-Apdus.ReturnErrorProblem.mistypedParameter 
+--		EM_mistypedParameter>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- InvokeId ::= INTEGER
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Remote-Operations-Apdus.InvokeId 
+--		EmInvokeId>--
+
+
+-- ============================================================= --
+-- 
+-- 	From: h.450.1 Manufacturer-specific-service-extension-definition
+--		{ itu-t  recommendation  h  450  1  version1(0)  msi-definition (18) }
+-- 
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- EXTENSION ::= CLASS
+-- {
+-- 	&ArgumentType,
+-- 	&extensionId			OBJECT IDENTIFIER
+-- }
+-- WITH SYNTAX
+-- {
+-- 	ARGUMENT		&ArgumentType
+-- 	IDENTIFIER		&extensionId
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Manufacturer-specific-service-extension-definition.EXTENSION 
+--		EmEXTENSION>--
+--<OSS.FIELDNAME
+--		Manufacturer-specific-service-extension-definition.EXTENSION.&ArgumentType
+--		"ArgumentType">--
+--<OSS.DefineName
+--		Manufacturer-specific-service-extension-definition.EXTENSION.&ArgumentType
+--		"EM_ArgumentType">--
+--<OSS.FIELDNAME
+--		Manufacturer-specific-service-extension-definition.EXTENSION.&extensionId
+--		"extensionId">--
+--<OSS.DefineName
+--		Manufacturer-specific-service-extension-definition.EXTENSION.&extensionId
+--		"EM_extensionId">--
+
+-- ============================================================= --
+-- 
+-- 	From: h.450.1 H225-Generic-parameters-definition
+--		{ itu-t  recommendation  h  450  1  version1(0)  h225-generic-parameters(6)}
+-- 
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- H225InformationElement	::=	OCTET STRING
+--
+-- -------------------------------------------------------------------------- --
+
+-- *** <OSS.TYPENAME
+--		H225-Generic-parameters-definition.H225InformationElement 
+--		EmH225InformationElement>--
+
+
+-- ============================================================= --
+-- 
+-- 	From: h.450.1 Addressing-Data-Elements
+--		{ itu-t  recommendation  h  450  1 version1(0) addressing-data-elements(9)}
+-- 
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- SeqOfAliasAddress ::= SEQUENCE OF AliasAddress
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.SeqOfAliasAddress 
+--		EmSeqOfAliasAddress>--
+--<OSS.TYPENAME 
+--		Addressing-Data-Elements.SeqOfAliasAddress.* 		
+--		"EmAliasAddress">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- EndpointAddress	::=	SEQUENCE
+-- {
+-- 	destinationAddress			SeqOfAliasAddress,
+-- 	remoteExtensionAddress		AliasAddress OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Addressing-Data-Elements.EndpointAddress>--
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.EndpointAddress 
+--		"EmEndpointAddress">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.EndpointAddress.destinationAddress
+--		"destinationAddress">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.EndpointAddress.remoteExtensionAddress
+--		"remoteExtensionAddress">--
+--<OSS.DefineName
+--		Addressing-Data-Elements.EndpointAddress.remoteExtensionAddress
+--		"EM_remoteExtensionAddress">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- PartySubaddress ::= CHOICE
+-- {
+-- 	userSpecifiedSubaddress		UserSpecifiedSubaddress,
+-- 	nsapSubaddress				NSAPSubaddress,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Addressing-Data-Elements.PartySubaddress>--
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.PartySubaddress 
+--		"EmPartySubaddress">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.PartySubaddress.userSpecifiedSubaddress
+--		"userSpecifiedSubaddress">--
+--<OSS.DefineName
+--		Addressing-Data-Elements.PartySubaddress.userSpecifiedSubaddress
+--		"EM_userSpecifiedSubaddress">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.PartySubaddress.nsapSubaddress
+--		"nsapSubaddress">--
+--<OSS.DefineName
+--		Addressing-Data-Elements.PartySubaddress.nsapSubaddress
+--		"EM_nsapSubaddress">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- UserSpecifiedSubaddress ::= SEQUENCE
+-- {
+-- 	subaddressInformation		SubaddressInformation,
+-- 	oddCountIndicator 			BOOLEAN OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Addressing-Data-Elements.UserSpecifiedSubaddress>--
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.UserSpecifiedSubaddress 
+--		"EmUserSpecifiedSubaddress">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.UserSpecifiedSubaddress.subaddressInformation
+--		"subaddressInformation">--
+--<OSS.FIELDNAME
+--		Addressing-Data-Elements.UserSpecifiedSubaddress.oddCountIndicator
+--		"oddCountIndicator">--
+--<OSS.DefineName
+--		Addressing-Data-Elements.UserSpecifiedSubaddress.oddCountIndicator
+--		"EM_oddCountIndicator">--
+
+-- -------------------------------------------------------------------------- --
+-- 					
+-- NSAPSubaddress ::= OCTET STRING (SIZE(1..20))
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Addressing-Data-Elements.NSAPSubaddress>--
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.NSAPSubaddress 
+--		"EmNSAPSubaddress">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- SubaddressInformation ::= OCTET STRING (SIZE(1..20))
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Addressing-Data-Elements.SubaddressInformation>--
+--<OSS.TYPENAME
+--		Addressing-Data-Elements.SubaddressInformation 
+--		"EmSubaddressInformation">--
+
+-- ============================================================= --
+-- 
+--  From h.450.2: Call-Transfer-Operations
+--  	{itu-t recommendation h 450 2 version1(0)  call-transfer-operations(0)} 
+-- 
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- H323CallTransferOperations OPERATION ::= 
+-- {	
+-- 		callTransferIdentify 
+-- 	| 	callTransferAbandon 
+-- 	| 	callTransferInitiate 
+-- 	| 	callTransferSetup 
+-- 	| 	callTransferUpdate 
+-- 	| 	subaddressTransfer 
+-- 	| 	callTransferComplete 
+-- 	| 	callTransferActive 
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferIdentify OPERATION ::=
+-- {
+-- 	ARGUMENT		CallTransferExtension	OPTIONAL TRUE
+-- 	RESULT			CTIdentifyRes
+-- 	ERRORS	
+-- 	{	
+-- 			notAvailable 
+-- 		| 	invalidCallState 
+-- 		| 	supplementaryServiceInteractionNotAllowed 
+-- 		| 	unspecified 
+-- 	}
+-- 	CODE			local:7
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferIdentify
+--		_callTransferIdentify>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferAbandon OPERATION ::=
+-- {		
+--	ARGUMENT			CallTransferExtension	OPTIONAL  TRUE
+-- 	RETURN RESULT  		FALSE
+-- 	ALWAYS RESPONDS		FALSE
+-- 	CODE				local:8
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferAbandon
+--		_callTransferAbandon>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferInitiate OPERATION ::=
+-- {
+-- 	ARGUMENT		CTInitiateArg
+--	RESULT			CallTransferExtension		OPTIONAL  TRUE
+-- 	ERRORS	
+-- 	{	
+-- 			notAvailable 
+-- 		|	invalidCallState 
+-- 		| 	invalidReroutingNumber 
+-- 		| 	unrecognizedCallIdentity 
+-- 		| 	establishmentFailure 
+-- 		| 	supplementaryServiceInteractionNotAllowed 
+-- 		| 	unspecified 
+-- 	}
+-- 	CODE			local:9
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferInitiate
+--		_callTransferInitiate>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferSetup OPERATION ::=
+-- {		
+-- 	ARGUMENT		CTSetupArg
+--	RESULT			CallTransferExtension		OPTIONAL  TRUE
+-- 	ERRORS 	
+-- 	{		
+-- 			notAvailable 
+-- 		| 	invalidCallState 
+-- 		| 	invalidReroutingNumber 
+-- 		| 	unrecognizedCallIdentity 
+-- 		| 	unspecified 
+-- 		| 	supplementaryServiceInteractionNotAllowed  
+-- 	}
+-- 	CODE			local:10
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferSetup
+--		_callTransferSetup>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferUpdate OPERATION ::=
+-- {
+-- 	ARGUMENT			CTUpdateArg
+-- 	RETURN RESULT  		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE				local:13
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferUpdate
+--		_callTransferUpdate>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- subaddressTransfer	OPERATION	::=
+-- {
+-- 	ARGUMENT			SubaddressTransferArg
+-- 	RETURN RESULT  		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE				local:14
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.subaddressTransfer
+--		_subaddressTransfer>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferComplete OPERATION ::=
+-- { 
+-- 	ARGUMENT			CTCompleteArg
+-- 	RETURN RESULT  		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE				local:12
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferComplete
+--		_callTransferComplete>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callTransferActive OPERATION ::=
+-- { 
+-- 	ARGUMENT			CTActiveArg
+-- 	RETURN RESULT  		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE				local:11
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.callTransferActive
+--		_callTransferActive>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallTransferExtension ::= CHOICE
+-- {
+-- 	extensionSeq		ExtensionSeq,
+-- 	nonStandardData		NonStandardParameter 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CallTransferExtension>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CallTransferExtension 
+--		"EmCallTransferExtension">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CallTransferExtension.extensionSeq
+--		"extensionSeq">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CallTransferExtension.extensionSeq
+--		"EM_CallTransferExtension_extensionSeq">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CallTransferExtension.nonStandardData
+--		"nonStandardData">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CallTransferExtension.nonStandardData
+--		"EM_CallTransferExtension_nonStandardData">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTInitiateArg ::= SEQUENCE
+-- {
+-- 	callIdentity		CallIdentity,
+-- 	reroutingNumber		EndpointAddress,
+-- 	argumentExtension	CallTransferExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTInitiateArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTInitiateArg 
+--		"EmCTInitiateArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTInitiateArg.callIdentity
+--		"callIdentity">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTInitiateArg.reroutingNumber
+--		"reroutingNumber">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTInitiateArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTInitiateArg.argumentExtension
+--		"EM_CTInitiateArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTSetupArg ::= SEQUENCE
+-- {
+-- 	callIdentity		CallIdentity,
+-- 	transferringNumber	EndpointAddress  OPTIONAL,
+-- 	argumentExtension	CallTransferExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTSetupArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTSetupArg 
+--		"EmCTSetupArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTSetupArg.callIdentity
+--		"callIdentity">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTSetupArg.transferringNumber
+--		"transferringNumber">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTSetupArg.transferringNumber
+--		"EM_CTSetupArg_transferringNumber">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTSetupArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTSetupArg.argumentExtension
+--		"EM_CTSetupArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTIdentifyRes ::= SEQUENCE
+-- {
+-- 	callIdentity		CallIdentity,
+-- 	reroutingNumber		EndpointAddress,
+-- 	resultExtension		CallTransferExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTIdentifyRes>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTIdentifyRes 
+--		"EmCTIdentifyRes">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTIdentifyRes.callIdentity
+--		"callIdentity">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTIdentifyRes.reroutingNumber
+--		"reroutingNumber">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTIdentifyRes.resultExtension
+--		"resultExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTIdentifyRes.resultExtension
+--		"EM_CTIdentifyRes_resultExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- BMPString128 ::= BMPString (SIZE(1..128))
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.BMPString128>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.BMPString128
+--		"EmBMPString128">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTUpdateArg ::= SEQUENCE
+-- {
+-- 	redirectionNumber		EndpointAddress,
+-- 	redirectionInfo			BMPString128			 	OPTIONAL,
+-- 	basicCallInfoElements 	H225InformationElement 		OPTIONAL,
+-- 	argumentExtension	CallTransferExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTUpdateArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTUpdateArg 
+--		"EmCTUpdateArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTUpdateArg.redirectionNumber
+--		"redirectionNumber">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTUpdateArg.redirectionInfo
+--		"redirectionInfo">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTUpdateArg.redirectionInfo
+--		"EM_CTUpdateArg_redirectionInfo">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTUpdateArg.basicCallInfoElements
+--		"basicCallInfoElements">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTUpdateArg.basicCallInfoElements
+--		"EM_CTUpdateArg_basicCallInfoElements">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTUpdateArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTUpdateArg.argumentExtension
+--		"EM_CTUpdateArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- SubaddressTransferArg ::= SEQUENCE
+-- {
+-- 	redirectionSubaddress	PartySubaddress,
+-- 	argumentExtension		CallTransferExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.SubaddressTransferArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.SubaddressTransferArg 
+--		"EmSubaddressTransferArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.SubaddressTransferArg.redirectionSubaddress
+--		"redirectionSubaddress">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.SubaddressTransferArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.SubaddressTransferArg.argumentExtension
+--		"EM_SubaddressTransferArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTCompleteArg	::= SEQUENCE 
+-- {
+-- 	endDesignation			EndDesignation,
+-- 	redirectionNumber		EndpointAddress,
+-- 	basicCallInfoElements 	H225InformationElement 		OPTIONAL,
+-- 	redirectionInfo			BMPString128			 	OPTIONAL,
+-- 	callStatus				CallStatus DEFAULT answered,
+-- 	argumentExtension		CallTransferExtension 		OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTCompleteArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTCompleteArg 
+--		"EmCTCompleteArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.endDesignation
+--		"endDesignation">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.redirectionNumber
+--		"redirectionNumber">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.basicCallInfoElements
+--		"basicCallInfoElements">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTCompleteArg.basicCallInfoElements
+--		"EM_CTCompleteArg_basicCallInfoElements">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.redirectionInfo
+--		"redirectionInfo">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTCompleteArg.redirectionInfo
+--		"EM_CTCompleteArg_redirectionInfo">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.callStatus
+--		"callStatus">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTCompleteArg.callStatus
+--		"EM_CTCompleteArg_callStatus">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTCompleteArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTCompleteArg.argumentExtension
+--		"EM_CTCompleteArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- EndDesignation ::= ENUMERATED
+-- {
+-- 	primaryEnd(0),
+-- 	secondaryEnd(1),
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Call-Transfer-Operations.EndDesignation 
+--		EmEndDesignation>--
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.EndDesignation.primaryEnd 
+--		EM_primaryEnd>--
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.EndDesignation.secondaryEnd 
+--		EM_secondaryEnd>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallStatus ::= ENUMERATED 
+-- {	
+-- 	answered(0), 
+-- 	alerting(1),
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Call-Transfer-Operations.CallStatus 
+--		EmCallStatus>--
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.CallStatus.answered 
+--		EM_CallStatus_answered>--
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.CallStatus.alerting 
+--		EM_CallStatus_alerting>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CTActiveArg ::= SEQUENCE 
+-- {
+-- 	connectedAddress		EndpointAddress,
+-- 	basicCallInfoElements 	H225InformationElement 		OPTIONAL,
+-- 	connectedInfo			BMPString128			 	OPTIONAL,
+-- 	argumentExtension		CallTransferExtension 		OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CTActiveArg>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CTActiveArg 
+--		"EmCTActiveArg">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTActiveArg.connectedAddress
+--		"connectedAddress">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTActiveArg.basicCallInfoElements
+--		"basicCallInfoElements">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTActiveArg.basicCallInfoElements
+--		"EM_CTActiveArg_basicCallInfoElements">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTActiveArg.connectedInfo
+--		"connectedInfo">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTActiveArg.connectedInfo
+--		"EM_CTActiveArg_connectedInfo">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CTActiveArg.argumentExtension
+--		"argumentExtension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CTActiveArg.argumentExtension
+--		"EM_CTActiveArg_argumentExtension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallIdentity ::= NumericString (SIZE(0..4))	
+-- 
+-- -- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CallIdentity>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CallIdentity 
+--		"EmCallIdentity">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ExtensionSeq ::= SEQUENCE OF Extension{{ExtensionSet}}
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.ExtensionSeq>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.ExtensionSeq 
+--		"EmCallTransferOperationsExtensionSeq">--
+--<OSS.ExtractType 
+--		Call-Transfer-Operations.ExtensionSeq.*>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.ExtensionSeq.* 
+--		"EmExtensionSet">--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ExtensionSet EXTENSION ::= {...}  
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallTransferUnspecifiedParameter ::= CHOICE
+-- {
+-- 	extension		Extension{{ExtensionSet}},
+-- 	nonStandard		NonStandardParameter
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter
+--		"EmCallTransferUnspecifiedParameter">--
+--<OSS.ExtractType
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.extension>--
+--<OSS.TYPENAME
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.extension
+--		"EmExtensionSet">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.extension
+--		"EM_CTUnspecifiedParameter_extension">--
+--<OSS.FIELDNAME
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.nonStandard
+--		"nonStandard">--
+--<OSS.DefineName
+--		Call-Transfer-Operations.CallTransferUnspecifiedParameter.nonStandard
+--		"EM_CTUnspecifiedParameter_nonStandard">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- unspecified	ERROR ::= 
+-- {
+-- 	PARAMETER 	CallTransferUnspecifiedParameter
+-- 	CODE		local:1008
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.unspecified
+--		_CallTransferOperations_unspecified>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- invalidReroutingNumber ERROR ::= 
+-- {	
+-- 	CODE		local:1004
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.invalidReroutingNumber
+--		_invalidReroutingNumber>--
+   
+-- -------------------------------------------------------------------------- --
+-- 
+-- unrecognizedCallIdentity ERROR ::=
+-- {	
+-- 	CODE		local:1005
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.unrecognizedCallIdentity
+--		_unrecognizedCallIdentity>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- establishmentFailure ERROR ::=
+-- {	
+-- 	CODE		local:1006
+-- }
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Transfer-Operations.establishmentFailure
+--		_establishmentFailure>--
+
+-- ============================================================= --
+--
+-- From h.450.1: H4501-General-Error-List
+--	{itu-t recommendation h  450 1 version1(0) general-error-list (1)}
+-- 
+-- userNotSubscribed           ERROR ::=  {CODE   local:0}
+-- rejectedByNetwork           ERROR ::=  {CODE   local:1}
+-- rejectedByUser              ERROR ::=  {CODE   local:2}
+-- notAvailable                ERROR ::=  {CODE   local:3}
+-- insufficientInformation     ERROR ::=  {CODE   local:5}
+-- invalidServedUserNumber     ERROR ::=  {CODE   local:6}
+-- invalidCallState            ERROR ::=  {CODE   local:7}
+-- basicServiceNotProvided     ERROR ::=  {CODE   local:8}
+-- notIncomingCall             ERROR ::=  {CODE   local:9}
+-- supplementaryServiceInteractionNotAllowed   ERROR ::=  {CODE   local:10}
+-- resourceUnavailable         ERROR ::=  {CODE   local:11}
+-- callFailure                 ERROR ::=  {CODE   local:25}
+-- proceduralError             ERROR ::=  {CODE   local:43}
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- ============================================================= --
+
+--<ASN1.Nickname
+--		H4501-General-Error-List.userNotSubscribed
+--		_userNotSubscribed>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.rejectedByNetwork
+--		_rejectedByNetwork>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.rejectedByUser
+--		_rejectedByUser>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.notAvailable
+--		_notAvailable>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.insufficientInformation
+--		_insufficientInformation>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.invalidServedUserNumber
+--		_invalidServedUserNumber>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.invalidCallState
+--		_invalidCallState>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.basicServiceNotProvided
+--		_basicServiceNotProvided>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.notIncomingCall
+--		_notIncomingCall>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.supplementaryServiceInteractionNotAllowed
+--		_supplementaryServiceInteractionNotAllowed>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.resourceUnavailable
+--		_resourceUnavailable>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.callFailure
+--		_callFailure>--
+--<ASN1.Nickname
+--		H4501-General-Error-List.proceduralError
+--		_proceduralError>--
+
+
+-- ============================================================= --
+--
+-- From h.450.3: Call-Diversion-Operations
+-- 		{itu-t recommendation h 450 3 version1(0) call-diversion-operations(0)}
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+--
+-- H323CallDiversionOperations	OPERATION ::=
+-- {		
+--		activateDiversionQ 
+-- 	| 	deactivateDiversionQ 
+-- 	| 	interrogateDiversionQ 
+-- 	|	checkRestriction 
+-- 	| 	callRerouting 
+-- 	| 	divertingLegInformation1 
+-- 	|	divertingLegInformation2 
+-- 	|	divertingLegInformation3 
+-- 	|	divertingLegInformation4 
+-- 	| 	cfnrDivertedLegFailed	
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- BMPString128 ::= BMPString (SIZE(1..128))
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.BMPString128
+--		"EmBMPString128">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallDiversionExtension ::= CHOICE
+-- {
+-- 	extensionSeq		ExtensionSeq,
+-- 	nonStandardData		NonStandardParameter 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.CallDiversionExtension>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.CallDiversionExtension
+--		"EmCallDiversionExtension">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallDiversionExtension.extensionSeq
+--		"extensionSeq">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallDiversionExtension.extensionSeq
+--		"EM_CallDiversionExtension_extensionSeq">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallDiversionExtension.nonStandardData
+--		"nonStandardData">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallDiversionExtension.nonStandardData
+--		"EM_CallDiversionExtension_nonStandardData">--
+
+-- -------------------------------------------------------------------------- --
+--
+-- ActivateDiversionQArg ::= SEQUENCE
+-- {	
+-- 	procedure			Procedure,
+-- 	basicService		BasicService,
+-- 	divertedToAddress	EndpointAddress,
+-- 	servedUserNr		EndpointAddress,
+-- 	activatingUserNr	EndpointAddress,
+-- 	extension			CallDiversionExtension OPTIONAL,    
+-- 	...
+-- }
+-- 	
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.ActivateDiversionQArg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.ActivateDiversionQArg
+--		"EmActivateDiversionQArg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.procedure
+--		"procedure">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.divertedToAddress
+--		"divertedToAddress">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.activatingUserNr
+--		"activatingUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.ActivateDiversionQArg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.ActivateDiversionQArg.extension
+--		"EM_ActivateDiversionQArg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- activateDiversionQ OPERATION ::=
+-- {
+-- 	// sent from the activating h.323-endpoint to the served h.323-endpoint
+-- 	
+-- 	ARGUMENT	ActivateDiversionQArg
+-- 
+-- 	RESULT		CallDiversionExtension OPTIONAL TRUE
+-- 
+-- 	ERRORS	
+-- 	{
+-- 			userNotSubscribed 
+-- 		| 	notAvailable 
+-- 		| 	invalidServedUserNumber 
+-- 		| 	basicServiceNotProvided 
+-- 		| 	resourceUnavailable 
+-- 		| 	invalidDivertedNumber 
+-- 		|	specialServiceNumber 
+-- 		| 	diversionToServedUserNumber 
+-- 		| 	temporarilyUnavailable 
+-- 		| 	notAuthorized 
+-- 		| 	unspecified  
+-- 	}
+-- 
+-- 	CODE		local:15
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.activateDiversionQ 
+--		_activateDiversionQ>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- DeactivateDiversionQArg ::= SEQUENCE
+-- {
+-- 	procedure			Procedure,
+-- 	basicService		BasicService,
+-- 	servedUserNr		EndpointAddress,
+-- 	deactivatingUserNr	EndpointAddress,
+-- 	extension			CallDiversionExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.DeactivateDiversionQArg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg
+--		"EmDeactivateDiversionQArg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg.procedure
+--		"procedure">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg.deactivatingUserNr
+--		"deactivatingUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DeactivateDiversionQArg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DeactivateDiversionQArg.extension
+--		"EM_DeactivateDiversionQArg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- deactivateDiversionQ OPERATION ::=
+-- {
+-- 	// sent from the deactivating h.323-endpoint to the served h.323-endpoint
+-- 	
+-- 	ARGUMENT	DeactivateDiversionQArg
+-- 
+-- 	RESULT		CallDiversionExtension OPTIONAL TRUE
+-- 
+-- 	ERRORS	
+-- 	{
+-- 			userNotSubscribed 
+-- 		| 	notAvailable 
+-- 		| 	invalidServedUserNumber 
+-- 		|	temporarilyUnavailable 
+-- 		| 	notAuthorized 
+-- 		| 	unspecified  
+-- 	}
+-- 	
+-- 	CODE		local:16
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.deactivateDiversionQ 
+--		_deactivateDiversionQ>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- InterrogateDiversionQArg ::= SEQUENCE
+-- {
+-- 	procedure			Procedure,
+-- 	basicService		BasicService DEFAULT allServices,
+-- 	servedUserNr		EndpointAddress,
+-- 	interrogatingUserNr	EndpointAddress,
+-- 	extension			CallDiversionExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.InterrogateDiversionQArg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg
+--		"EmInterrogateDiversionQArg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg.procedure
+--		"procedure">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg.basicService
+--		"basicService">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.InterrogateDiversionQArg.basicService
+--		"EM_InterrogateDiversionQArg_basicService">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg.interrogatingUserNr
+--		"interrogatingUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.InterrogateDiversionQArg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.InterrogateDiversionQArg.extension
+--		"EM_InterrogateDiversionQArg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- interrogateDiversionQ OPERATION ::=
+-- {
+-- 	// sent from the interrogating h.323-endpoint to the served h.323-endpoint
+-- 	
+-- 	ARGUMENT	InterrogateDiversionQArg
+-- 
+-- 	RESULT		IntResultList 
+-- 
+-- 	ERRORS	
+-- 	{
+-- 			userNotSubscribed 
+-- 		| 	notAvailable 
+-- 		| 	invalidServedUserNumber 
+-- 		|	temporarilyUnavailable 
+-- 		| 	notAuthorized 
+-- 		| 	unspecified  
+-- 	}
+-- 
+-- 	CODE		local:17
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.interrogateDiversionQ 
+--		_interrogateDiversionQ>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CheckRestrictionArg ::= SEQUENCE
+-- {
+-- 	servedUserNr		EndpointAddress,
+-- 	basicService		BasicService,
+-- 	divertedToNr		EndpointAddress,
+-- 	extension			CallDiversionExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.CheckRestrictionArg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.CheckRestrictionArg
+--		"EmCheckRestrictionArg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CheckRestrictionArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CheckRestrictionArg.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CheckRestrictionArg.divertedToNr
+--		"divertedToNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CheckRestrictionArg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CheckRestrictionArg.extension
+--		"EM_CheckRestrictionArg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- checkRestriction OPERATION ::=
+-- {
+--  // sent from the served h.323-endpoint to the diverted-to h.323-endpoint
+-- 	
+-- 	ARGUMENT	CheckRestrictionArg
+-- 
+-- 	RESULT		CallDiversionExtension OPTIONAL TRUE
+-- 		
+-- 	ERRORS	
+-- 	{
+-- 			notAvailable 
+-- 		| 	invalidServedUserNumber 
+-- 		| 	invalidDivertedNumber 
+-- 		| 	specialServiceNumber 
+-- 		| 	unspecified  
+-- 	}
+-- 
+-- 	CODE		local:18
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.checkRestriction 
+--		_checkRestriction>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallReroutingArg ::= SEQUENCE
+-- {	
+-- 	reroutingReason			DiversionReason,
+-- 	originalReroutingReason	DiversionReason OPTIONAL,
+-- 	calledAddress			EndpointAddress,
+-- 	diversionCounter		INTEGER (1..15),
+-- 	h225InfoElement			H225InformationElement,
+-- 		  // The H.225 information elements Bearer capability, 
+-- 		  // High layer compatibility, Low layer compatibility and 
+-- 		  // Progress Indicator information element may  be embedded 
+-- 		  // in the h225InfoElement in accordance with H.450.1. 
+-- 	lastReroutingNr			EndpointAddress,
+-- 	subscriptionOption		SubscriptionOption,
+-- 	callingPartySubaddress	PartySubaddress OPTIONAL,
+-- 	callingNumber			EndpointAddress,
+-- 	callingInfo				BMPString (SIZE(1..128)) OPTIONAL,
+-- 	originalCalledNr		EndpointAddress OPTIONAL,
+-- 	redirectingInfo			BMPString (SIZE(1..128)) OPTIONAL,
+-- 	originalCalledInfo		BMPString (SIZE(1..128)) OPTIONAL,
+-- 	extension				CallDiversionExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.CallReroutingArg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.CallReroutingArg
+--		"EmCallReroutingArg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallReroutingArg.reroutingReason
+--		"reroutingReason">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallReroutingArg.originalReroutingReason
+--		"originalReroutingReason">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.originalReroutingReason
+--		"EM_CallReroutingArg_originalReroutingReason">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.calledAddress
+--		"calledAddress">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.diversionCounter
+--		"diversionCounter">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.h225InfoElement
+--		"h225InfoElement">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.lastReroutingNr
+--		"lastReroutingNr">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.subscriptionOption
+--		"subscriptionOption">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.callingPartySubaddress
+--		"callingPartySubaddress">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.callingPartySubaddress
+--		"EM_CallReroutingArg_callingPartySubaddress">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.callingNumber
+--		"callingNumber">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.callingInfo
+--		"callingInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.callingInfo
+--		"EM_CallReroutingArg_callingInfo">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.originalCalledNr
+--		"originalCalledNr">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.originalCalledNr
+--		"EM_CallReroutingArg_originalCalledNr">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.redirectingInfo
+--		"redirectingInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.redirectingInfo
+--		"EM_CallReroutingArg_redirectingInfo">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallReroutingArg.originalCalledInfo
+--		"originalCalledInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.originalCalledInfo
+--		"EM_CallReroutingArg_originalCalledInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallReroutingArg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallReroutingArg.extension
+--		"EM_CallReroutingArg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- callRerouting OPERATION ::=	
+-- {
+-- 	// sent from the served h.323-endpoint to the rerouting h.323-endpoint
+-- 	
+-- 	ARGUMENT	CallReroutingArg
+-- 
+-- 	RESULT		CallDiversionExtension OPTIONAL TRUE
+-- 		
+-- 	ERRORS	
+-- 	{		
+-- 			userNotSubscribed 
+-- 		| 	notAvailable 
+-- 		| 	resourceUnavailable 
+-- 		| 	invalidDivertedNumber 
+-- 		| 	specialServiceNumber 
+-- 		| 	diversionToServedUserNumber 
+-- 		| 	numberOfDiversionsExceeded 
+-- 		| 	supplementaryServiceInteractionNotAllowed 
+-- 		| 	unspecified  
+-- 	}
+-- 	
+-- 	CODE		local:19
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.callRerouting 
+--		_callRerouting>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- DivertingLegInformation1Arg ::= SEQUENCE
+-- {	
+-- 	diversionReason		DiversionReason,
+-- 	subscriptionOption	SubscriptionOption,
+-- 	nominatedNr			EndpointAddress,
+-- 	nominatedInfo		BMPString128			OPTIONAL, 
+-- 	redirectingNr		EndpointAddress 		OPTIONAL,
+-- 	redirectingInfo		BMPString128 			OPTIONAL,
+-- 	extension			CallDiversionExtension 	OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.DivertingLegInformation1Arg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg
+--		"EmDivertingLegInformation1Arg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.diversionReason
+--		"diversionReason">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.subscriptionOption
+--		"subscriptionOption">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.nominatedNr
+--		"nominatedNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.nominatedInfo
+--		"nominatedInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.nominatedInfo
+--		"EM_DivertingLegInformation1Arg_nominatedInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.redirectingNr
+--		"redirectingNr">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.redirectingNr
+--		"EM_DivertingLegInformation1Arg_redirectingNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.redirectingInfo
+--		"redirectingInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.redirectingInfo
+--		"EM_DivertingLegInformation1Arg_redirectingInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation1Arg.extension
+--		"EM_DivertingLegInformation1Arg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- divertingLegInformation1 OPERATION ::=
+-- {
+-- 	// sent from the re-routing h.323-endpoint to the originating h.323-endpoint 
+-- 	// if the re-routing endpoint equals the originating endpoint, this operation
+-- 	// is not applicable; may also be sent from the rerouting endpoint to other 
+-- 	// members of a conference, if subscription option allows. 
+-- 
+-- 	ARGUMENT		DivertingLegInformation1Arg
+-- 
+-- 	RETURN RESULT	FALSE
+-- 
+-- 	ALWAYS RESPONDS	FALSE
+-- 
+-- 	CODE		local:20
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.divertingLegInformation1 
+--		_divertingLegInformation1>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- DivertingLegInformation2Arg ::= SEQUENCE
+-- {	
+-- 	diversionCounter			INTEGER (1..15),
+-- 	diversionReason				DiversionReason,
+-- 	originalDiversionReason		DiversionReason OPTIONAL,
+-- 	divertingNr					EndpointAddress OPTIONAL,
+-- 	originalCalledNr			EndpointAddress OPTIONAL,
+-- 	redirectingInfo				BMPString128	OPTIONAL,
+-- 	originalCalledInfo			BMPString128	OPTIONAL,
+-- 	extension					CallDiversionExtension OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.DivertingLegInformation2Arg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg
+--		"EmDivertingLegInformation2Arg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.diversionCounter
+--		"diversionCounter">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.diversionReason
+--		"diversionReason">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.diversionReason
+--		"EM_DivertingLegInformation2Arg_diversionReason">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalDiversionReason
+--		"originalDiversionReason">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalDiversionReason
+--		"EM_DivertingLegInformation2Arg_originalDiversionReason">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.divertingNr
+--		"divertingNr">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.divertingNr
+--		"EM_DivertingLegInformation2Arg_divertingNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalCalledNr
+--		"originalCalledNr">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalCalledNr
+--		"EM_DivertingLegInformation2Arg_originalCalledNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.redirectingInfo
+--		"redirectingInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.redirectingInfo
+--		"EM_DivertingLegInformation2Arg_redirectingInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalCalledInfo
+--		"originalCalledInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.originalCalledInfo
+--		"EM_DivertingLegInformation2Arg_originalCalledInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation2Arg.extension
+--		"EM_DivertingLegInformation2Arg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- divertingLegInformation2 OPERATION ::=
+-- {
+-- 	// sent from the re-routing h.323-endpoint to the diverted-to h.323-endpoint 
+-- 	
+-- 	ARGUMENT  	DivertingLegInformation2Arg
+-- 
+-- 	// The divertingNr element is mandatory except in the case of interworking
+-- 
+-- 	RETURN RESULT	FALSE
+-- 
+-- 	ALWAYS RESPONDS	FALSE
+-- 
+-- 	CODE		local:21
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.divertingLegInformation2 
+--		_divertingLegInformation2>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- DivertingLegInformation3Arg ::= SEQUENCE
+-- {
+-- 	presentationAllowedIndicator	PresentationAllowedIndicator,
+-- 	redirectionNr					EndpointAddress 		OPTIONAL,
+-- 	redirectionInfo					BMPString128	 		OPTIONAL,
+-- 	extension						CallDiversionExtension 	OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.DivertingLegInformation3Arg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.DivertingLegInformation3Arg
+--		"EmDivertingLegInformation3Arg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.presentationAllowedIndicator
+--		"presentationAllowedIndicator">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.redirectionNr
+--		"redirectionNr">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.redirectionNr
+--		"EM_DivertingLegInformation3Arg_redirectionNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.redirectionInfo
+--		"redirectionInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.redirectionInfo
+--		"EM_DivertingLegInformation3Arg_redirectionInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation3Arg.extension
+--		"EM_DivertingLegInformation3Arg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- divertingLegInformation3 OPERATION ::=
+-- {
+-- 	// sent from the diverted-to h.323-endpoint to the originating h.323-endpoint
+-- 	
+-- 	ARGUMENT 	DivertingLegInformation3Arg
+-- 
+-- 	RETURN RESULT	FALSE
+-- 
+-- 	ALWAYS RESPONDS	FALSE
+-- 
+-- 	CODE		local:22
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.divertingLegInformation3 
+--		_divertingLegInformation3>--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- DivertingLegInformation4Arg ::= SEQUENCE
+-- {	
+-- 	diversionReason			DiversionReason,
+-- 	subscriptionOption		SubscriptionOption,
+-- 	callingNr				EndpointAddress,
+-- 	callingInfo				BMPString128			OPTIONAL,
+-- 	nominatedNr				EndpointAddress,
+-- 	nominatedInfo			BMPString128			OPTIONAL,
+-- 	extension				CallDiversionExtension 	OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.DivertingLegInformation4Arg>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg
+--		"EmDivertingLegInformation4Arg">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.diversionReason
+--		"diversionReason">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.subscriptionOption
+--		"subscriptionOption">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.callingNr
+--		"callingNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.callingInfo
+--		"callingInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.callingInfo
+--		"EM_DivertingLegInformation4Arg_callingInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.nominatedNr
+--		"nominatedNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.nominatedInfo
+--		"nominatedInfo">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.nominatedInfo
+--		"EM_DivertingLegInformation4Arg_nominatedInfo">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.DivertingLegInformation4Arg.extension
+--		"EM_DivertingLegInformation4Arg_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- divertingLegInformation4 OPERATION ::=
+-- {
+-- 	// If call diversion in not performed by the forwarding terminal but by a
+-- 	// gatekeeper, the gatekeeper may send divertingLegInformation4 apdu to the 
+-- 	// forwarding terminal. 
+-- 	
+-- 	ARGUMENT	DivertingLegInformation4Arg
+-- 
+-- 	RETURN RESULT	FALSE
+-- 
+-- 	ALWAYS RESPONDS	FALSE
+-- 
+-- 	CODE		local:100
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.divertingLegInformation4 
+--		_divertingLegInformation4>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- cfnrDivertedLegFailed OPERATION ::=
+-- {
+-- 	// sent from the rerouting h.323-terminal to the served  h.323-endpoint
+-- 	
+-- 	ARGUMENT	CallDiversionExtension OPTIONAL TRUE
+-- 	
+-- 	RETURN RESULT	FALSE
+-- 
+-- 	ALWAYS RESPONDS	FALSE
+-- 
+-- 	CODE		local:23
+-- }
+-- // This indicates that the diverted-to leg has been cleared during SS-CFNR execution.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.cfnrDivertedLegFailed 
+--		_cfnrDivertedLegFailed>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- Definitions of general used data types:
+-- 
+-- DiversionReason	::= ENUMERATED 
+-- { 
+--		unknown 	(0), 
+--		cfu 		(1), 
+--		cfb 		(2), 
+--		cfnr		(3), 
+--		... 
+--	}
+-- 	// The value unknown is only used if received from another network 
+--	// when interworking.
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.DiversionReason 
+--		EmDiversionReason>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.DiversionReason.unknown 
+--		EM_DiversionReason_unknown>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.DiversionReason.cfu 
+--		EM_DiversionReason_cfu>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.DiversionReason.cfb 
+--		EM_DiversionReason_cfb>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.DiversionReason.cfnr 
+--		EM_DiversionReason_cfnr>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- IntResultList ::= SET SIZE (0..29) OF IntResult
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.IntResultList>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.IntResultList 
+--		"EmIntResultList">--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.IntResultList.* 
+--		"EmIntResult">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- IntResult ::= SEQUENCE
+-- {	
+-- 	servedUserNr		EndpointAddress,
+-- 	basicService		BasicService,
+-- 	procedure			Procedure,
+-- 	divertedToAddress	EndpointAddress,
+-- 	remoteEnabled		BOOLEAN DEFAULT FALSE,
+-- 	extension			CallDiversionExtension OPTIONAL,
+-- 	...		 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.IntResult>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.IntResult 
+--		"EmIntResult">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.procedure
+--		"procedure">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.divertedToAddress
+--		"divertedToAddress">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.remoteEnabled
+--		"remoteEnabled">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.IntResult.remoteEnabled
+--		"EM_IntResult_remoteEnabled">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.IntResult.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.IntResult.extension
+--		"EM_IntResult_extension">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- Procedure ::= ENUMERATED  { cfu (0), cfb (1), cfnr (2), ... }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.Procedure 
+--		EmProcedure>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.Procedure.cfu 
+--		EM_Procedure_cfu>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.Procedure.cfb 
+--		EM_Procedure_cfb>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.Procedure.cfnr 
+--		EM_Procedure_cfnr>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- SubscriptionOption ::= ENUMERATED  
+-- {
+-- 	noNotification 						(0),
+-- 	notificationWithoutDivertedToNr 	(1),
+-- 	notificationWithDivertedToNr 		(2),
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.SubscriptionOption 
+--		EmSubscriptionOption>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.SubscriptionOption.noNotification 
+--		EM_noNotification>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.SubscriptionOption.notificationWithoutDivertedToNr 
+--		EM_notificationWithoutDivertedToNr>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.SubscriptionOption.notificationWithDivertedToNr 
+--		EM_notificationWithDivertedToNr>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- invalidDivertedNumber		ERROR	::=	{CODE	local:12}
+-- specialServiceNumber			ERROR	::=	{CODE	local:14}
+-- diversionToServedUserNumber	ERROR	::=	{CODE	local:15}
+-- numberOfDiversionsExceeded	ERROR	::=	{CODE	local:24}
+-- temporarilyUnavailable		ERROR	::=	{CODE	local:1000}
+-- notAuthorized				ERROR	::=	{CODE	local:1007}
+-- 
+-- Note: OSS ASN.1 compiler bug. It will add the prefix even though I 
+-- specified a Nickname.
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.invalidDivertedNumber
+--		_invalidDivertedNumber>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.specialServiceNumber
+--		_specialServiceNumber>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.diversionToServedUserNumber
+--		_diversionToServedUserNumber>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.numberOfDiversionsExceeded
+--		_numberOfDiversionsExceeded>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.temporarilyUnavailable
+--		_temporarilyUnavailable>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.notAuthorized
+--		_notAuthorized>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallDiversionUnspecifiedParameter ::= CHOICE
+-- { 	
+-- 	extension		Extension{{ExtensionSet}},
+-- 	nonStandard		NonStandardParameter
+-- }
+--
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter
+--		"EmCallDiversionUnspecifiedParameter">--
+--<OSS.ExtractType
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.extension>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.extension
+--		"EmExtensionSet">--
+--<OSS.FIELDNAME
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.extension
+--		"EM_CallDiversionUnspecifiedParameter_extension">--
+--<OSS.FIELDNAME 
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.nonStandard
+--		"nonStandard">--
+--<OSS.DefineName
+--		Call-Diversion-Operations.CallDiversionUnspecifiedParameter.nonStandard
+--		"EM_CallDiversionUnspecifiedParameter_nonStandard">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- unspecified		ERROR	::=
+-- {	
+-- 	PARAMETER	CallDiversionUnspecifiedParameter
+-- 	CODE		local:1008
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.unspecified 
+--		_CallDiversionOperations_unspecified>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- BasicService ::= ENUMERATED	  
+-- {	
+-- 	allServices							(0),	
+-- 	// speech 							(1),	
+-- 	// unrestricedDigitalInformation 	(2),	
+-- 	// audio3.1KHz 						(3),	
+-- 	// telephony 						(32),	
+--  // teletex 							(33),	
+-- 	// telefaxGroup4Class1 				(34),	
+-- 	// videotexSyntaxBased 				(35),	
+-- 	// videotelephony 					(36), 
+-- 	...
+-- }
+-- 
+-- // For multimedia calls the value "allServices" shall be used only. 
+-- // The usage of the other codepoints for multimedia calls is for further study.
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.BasicService 
+--		EmBasicService>--
+--<ASN1.Nickname 
+--		Call-Diversion-Operations.BasicService.allServices 
+--		EM_allServices>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ExtensionSeq ::= SEQUENCE OF Extension{{ExtensionSet}}
+-- Extension{{ExtensionSet}}
+-- ExtensionSet EXTENSION ::= {...}  
+-- 		// Actual values defined by individual manufacturers
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Diversion-Operations.ExtensionSeq>--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.ExtensionSeq 
+--		"EmCallDiversionOperationsExtensionSeq">--
+--<OSS.TYPENAME
+--		Call-Diversion-Operations.ExtensionSeq.* 
+--		"EmExtensionSet">--
+--<OSS.ExtractType 
+--		Call-Diversion-Operations.ExtensionSeq.*>--
+
+-- ============================================================= --
+--
+-- From h.450.4: Call-Hold-Operations
+-- 		{itu-t recommendation h 450 4 version1(0) call-hold-operations(0)}
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- CallHoldOperations OPERATION ::=
+-- {
+-- 		holdNotific 
+-- 	|	retrieveNotific 
+-- 	| 	remoteHold 
+-- 	| 	remoteRetrieve 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- holdNotific OPERATION ::=
+-- { 
+-- 	// sent from holding to held H.323 endpoint to invoke near-end call hold feature 
+-- 	
+-- 	ARGUMENT			HoldNotificArg	OPTIONAL TRUE
+-- 	RETURN RESULT		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE 				local: 101
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Hold-Operations.holdNotific
+--		_holdNotific>--
+
+-- -------------------------------------------------------------------------- --
+-- HoldNotificArg ::= SEQUENCE
+-- {
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.HoldNotificArg>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.HoldNotificArg
+--		"EmHoldNotificArg">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.HoldNotificArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Hold-Operations.HoldNotificArg.extensionArg
+--		"EM_HoldNotificArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- retrieveNotific OPERATION ::=
+-- {
+-- 	// sent from holding to held H.323 endpoint to invoke retrieval of near-end call hold feature 
+-- 
+-- 	ARGUMENT			RetrieveNotificArg	OPTIONAL TRUE
+-- 	RETURN RESULT		FALSE
+-- 	ALWAYS RESPONDS  	FALSE
+-- 	CODE	 			local: 102
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Hold-Operations.retrieveNotific
+--		_retrieveNotific>--
+
+-- -------------------------------------------------------------------------- --
+-- RetrieveNotificArg ::= SEQUENCE
+-- {
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.RetrieveNotificArg>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.RetrieveNotificArg
+--		"EmRetrieveNotificArg">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.RetrieveNotificArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Hold-Operations.RetrieveNotificArg.extensionArg
+--		"EM_RetrieveNotificArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- remoteHold OPERATION ::=
+-- {
+-- 	// sent from holding to held H.323 endpoint to invoke remote-end call hold feature 
+-- 
+-- 	ARGUMENT  			RemoteHoldArg 	OPTIONAL TRUE
+-- 	RESULT				RemoteHoldRes 	OPTIONAL TRUE
+-- 	ERRORS 
+-- 	{
+-- 			notAvailable 		// feature not available in combination with the basic service
+-- 		|   invalidCallState  	// hold not possible in current call state
+-- 		|	resourceUnavailable	// maximum number of calls on hold reached
+-- 		|	supplementaryServiceInteractionNotAllowed 
+-- 
+-- 			// other supplementary service prohibits hold
+-- 
+-- 		|	undefined 	// undefined reason 
+-- 	}
+-- 	CODE				local: 103
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Hold-Operations.remoteHold
+--		_remoteHold>--
+
+-- -------------------------------------------------------------------------- --
+-- RemoteHoldArg ::= SEQUENCE
+-- {
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.RemoteHoldArg>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.RemoteHoldArg
+--		"EmRemoteHoldArg">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.RemoteHoldArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Hold-Operations.RemoteHoldArg.extensionArg
+--		"EM_RemoteHoldArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- RemoteHoldRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.RemoteHoldRes>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.RemoteHoldRes
+--		"EmRemoteHoldRes">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.RemoteHoldRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Hold-Operations.RemoteHoldRes.extensionRes
+--		"EM_RemoteHoldRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- remoteRetrieve OPERATION ::=
+-- { 
+-- 	// sent from holding to held H.323 endpoint to invoke retrieval of remote-end call hold feature
+-- 
+-- 	ARGUMENT 			RemoteRetrieveArg	OPTIONAL TRUE
+-- 	RESULT				RemoteRetrieveRes 	OPTIONAL TRUE
+-- 	ERRORS 
+-- 	{
+-- 			invalidCallState 	// Call to which retrieve request applies is not in state Hold_RE_Held
+-- 		| 	undefined 			// undefined reason 
+-- 	}
+-- 	CODE 			local: 104
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Hold-Operations.remoteRetrieve
+--		_remoteRetrieve>--
+
+-- -------------------------------------------------------------------------- --
+-- RemoteRetrieveArg ::= SEQUENCE
+-- {
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.RemoteRetrieveArg>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.RemoteRetrieveArg
+--		"EmRemoteRetrieveArg">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.RemoteRetrieveArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Hold-Operations.RemoteRetrieveArg.extensionArg
+--		"EM_RemoteRetrieveArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- RemoteRetrieveRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Hold-Operations.RemoteRetrieveRes>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.RemoteRetrieveRes
+--		"EmRemoteRetrieveRes">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.RemoteRetrieveRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Hold-Operations.RemoteRetrieveRes.extensionRes
+--		"EM_RemoteRetrieveRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- MixedEntensionSeq ::= SEQUENCE SIZE (0..255) OF MixedExtension
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Hold-Operations.MixedEntensionSeq>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.MixedEntensionSeq 
+--		EmSeqOfMixedExtension>--
+--<OSS.TYPENAME 
+--		Call-Hold-Operations.MixedEntensionSeq.*
+--		"EmMixedExtension">--
+--<OSS.ExtractType 
+--		Call-Hold-Operations.MixedEntensionSeq.*>--
+
+-- -------------------------------------------------------------------------- --
+-- MixedExtension ::= CHOICE
+-- {	
+-- 	extension			Extension{{ExtensionSet}}, 
+-- 	nonStandardData		NonStandardParameter
+-- } 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Hold-Operations.MixedExtension>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.MixedExtension
+--		"EmMixedExtension">--
+--<OSS.ExtractType
+--		Call-Hold-Operations.MixedExtension.extension>--
+--<OSS.TYPENAME
+--		Call-Hold-Operations.MixedExtension.extension
+--		"EmExtensionSet">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.MixedExtension.extension
+--		"extension">--
+--<OSS.DefineName
+--		Call-Hold-Operations.MixedExtension.extension
+--		"EM_MixedExtension_extension">--
+--<OSS.FIELDNAME
+--		Call-Hold-Operations.MixedExtension.nonStandardData
+--		"nonStandardData">--
+--<OSS.DefineName
+--		Call-Hold-Operations.MixedExtension.nonStandardData
+--		"EM_MixedExtension_nonStandardData">--
+
+-- -------------------------------------------------------------------------- --
+-- ExtensionSet EXTENSION ::= {...}
+-- 	// Actual values defined by individual manufacturers
+-- -------------------------------------------------------------------------- --
+
+
+-- -------------------------------------------------------------------------- --
+-- undefined ERROR ::= 
+-- {
+-- 	PARAMETER 			MixedExtensionSeq OPTIONAL TRUE
+-- 	CODE 				local:2002
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Hold-Operations.undefined
+--		_CallHoldOperations_undefined>--
+
+-- ============================================================= --
+--
+-- From h.450.5: Call-Park-Pickup-Operations
+--	{itu-t recommendation h 450 5 version1(0) call-park-pickup-operations(0)}
+-- 
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- CallParkPickupOperations OPERATION ::=
+-- {
+-- 		cpRequest 
+-- 	|	cpSetup 
+-- 	|	groupIndicationOn 
+-- 	|	groupIndicationOff 
+-- 	|	pickrequ 
+-- 	|	pickup 
+-- 	|	pickExe 
+-- 	|	cpNotify 
+-- 	|	cpickupNotify 
+-- }
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- cpRequest OPERATION	::=
+-- { 
+-- 	// sent from parking endpoint to the parked endpoint to invoke SS-PARK
+-- 
+-- 	ARGUMENT  			CpRequestArg 
+-- 	RESULT 				CpRequestRes
+-- 	ERRORS 
+-- 	{	
+-- 			notAvailable 		
+-- 				// feature not available in combination with the basic service
+-- 
+-- 		|	invalidCallState 	
+-- 				// call park not possible in current call state
+-- 				
+-- 		|	resourceUnavailable	
+-- 				// maximum number of parked calls reached
+-- 				
+-- 		|	supplementaryServiceInteractionNotAllowed 	
+-- 				// other supplementary service prohibits call park invocation
+-- 				
+-- 		|	undefined	
+-- 				// undefined reason 
+-- 	}
+-- 	CODE				local: 106 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.cpRequest
+--		_cpRequest>--
+
+-- -------------------------------------------------------------------------- --
+-- CpRequestArg ::= SEQUENCE
+-- {
+-- 	parkingNumber		EndpointAddress,
+-- 	parkedNumber		EndpointAddress,
+-- 	parkedToNumber		EndpointAddress,
+-- 	parkedToPosition	ParkedToPosition OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	... 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Park-Pickup-Operations.CpRequestArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpRequestArg
+--		"EmCpRequestArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestArg.parkingNumber
+--		"parkingNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestArg.parkedNumber
+--		"parkedNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestArg.parkedToNumber
+--		"parkedToNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestArg.parkedToPosition
+--		"parkedToPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpRequestArg.parkedToPosition
+--		"EM_CpRequestArg_parkedToPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpRequestArg.extensionArg
+--		"EM_CpRequestArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- CpRequestRes ::= SEQUENCE
+-- {
+-- 	parkedToNumber		EndpointAddress,
+-- 	parkedToPosition	ParkedToPosition OPTIONAL,
+-- 	parkCondition		ParkCondition,
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Park-Pickup-Operations.CpRequestRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpRequestRes
+--		"EmCpRequestRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestRes.parkedToNumber
+--		"parkedToNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestRes.parkedToPosition
+--		"parkedToPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpRequestRes.parkedToPosition
+--		"EM_CpRequestRes_parkedToPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestRes.parkCondition
+--		"parkCondition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpRequestRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpRequestRes.extensionRes
+--		"EM_CpRequestRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- cpSetup	OPERATION ::=
+-- { 
+-- 	// sent from parked endpoint to the parked-to endpoint 
+-- 	
+-- 	ARGUMENT  			CpSetupArg 
+-- 	RESULT 				CpSetupRes
+-- 	ERRORS 
+-- 	{	
+-- 			notAvailable 	
+-- 				// feature not available in combination with the basic service
+-- 				
+-- 		|	invalidCallState 
+-- 				// call park not possible in current call state
+-- 				
+-- 		|	resourceUnavailable 
+-- 				// maximum number of parked calls reached
+-- 				
+-- 		|	supplementaryServiceInteractionNotAllowed 
+-- 				// other supplementary service prohibits call park invocation
+-- 		
+-- 		|	undefined  
+-- 				// undefined reason 
+-- 	}
+-- 	CODE				local: 107 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.cpSetup
+--		_cpSetup>--
+
+-- -------------------------------------------------------------------------- --
+-- CpSetupArg ::= SEQUENCE
+-- {
+-- 	parkingNumber		EndpointAddress,
+-- 	parkedNumber		EndpointAddress,
+-- 	parkedToNumber		EndpointAddress,
+-- 	parkedToPosition	ParkedToPosition OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	... 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Park-Pickup-Operations.CpSetupArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpSetupArg
+--		"EmCpSetupArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupArg.parkingNumber
+--		"parkingNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupArg.parkedNumber
+--		"parkedNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupArg.parkedToNumber
+--		"parkedToNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupArg.parkedToPosition
+--		"parkedToPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpSetupArg.parkedToPosition
+--		"EM_CpSetupArg_parkedToPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpSetupArg.extensionArg
+--		"EM_CpSetupArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- CpSetupRes ::= SEQUENCE
+-- {
+-- 	parkedToNumber		EndpointAddress,
+-- 	parkedToPosition	ParkedToPosition OPTIONAL,
+-- 	parkCondition		ParkCondition,
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.CpSetupRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpSetupRes
+--		"EmCpSetupRes">--
+
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupRes.parkedToNumber
+--		"parkedToNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupRes.parkedToPosition
+--		"parkedToPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpSetupRes.parkedToPosition
+--		"EM_CpSetupRes_parkedToPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupRes.parkCondition
+--		"parkCondition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpSetupRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpSetupRes.extensionRes
+--		"EM_CpSetupRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- groupIndicationOn OPERATION ::=
+-- { 
+-- 	// sent from the parked-to endpoint / alerting endpoint to the group members  
+-- 
+-- 	ARGUMENT  			GroupIndicationOnArg 
+-- 	RESULT 				GroupIndicationOnRes
+-- 	ERRORS 
+-- 	{
+-- 		undefined  	// undefined reason 
+-- 	}
+-- 	CODE	local: 108 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.groupIndicationOn
+--		_groupIndicationOn>--
+
+-- -------------------------------------------------------------------------- --
+-- GroupIndicationOnArg ::= SEQUENCE 
+-- {
+-- 	callPickupId		CallIdentifier, 
+-- 		// identification of the call to be retrieved (parked or alerting call); 
+-- 		// its value equals the value of the CallIdentifier as assigned for the parked /
+-- 		// alerting call within Setup-UUIE
+-- 
+-- 	groupMemberUserNr	EndpointAddress,
+-- 	retrieveCallType	CallType,
+-- 	partyToRetrieve		EndpointAddress,  // Parked or Calling User 
+-- 	retrieveAddress		EndpointAddress,  
+-- 		// parked-to or alerting entity address 
+-- 		// (may also be a GK, see clause 9.2)
+-- 
+-- 	parkPosition		ParkedToPosition OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg
+--		"EmGroupIndicationOnArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.callPickupId
+--		"callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.groupMemberUserNr
+--		"groupMemberUserNr">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.retrieveCallType
+--		"retrieveCallType">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.partyToRetrieve
+--		"partyToRetrieve">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.retrieveAddress
+--		"retrieveAddress">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.parkPosition
+--		"parkPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.parkPosition
+--		"EM_GroupIndicationOnArg_parkPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.GroupIndicationOnArg.extensionArg
+--		"EM_GroupIndicationOnArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- GroupIndicationOnRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.GroupIndicationOnRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnRes
+--		"EmGroupIndicationOnRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOnRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.GroupIndicationOnRes.extensionRes
+--		"EM_GroupIndicationOnRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- groupIndicationOff	OPERATION	 ::=
+-- { 
+-- 	// sent from the parked-to endpoint / alerting endpoint to the group members  
+-- 	
+-- 	ARGUMENT  			GroupIndicationOffArg 
+-- 	RESULT 				GroupIndicationOffRes
+-- 	ERRORS 
+-- 	{	
+-- 			invalidCallState 	// group indication is not on
+-- 		|	undefined  			// undefined reason
+-- 	}
+-- 	CODE	local: 109 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.groupIndicationOff
+--		_groupIndicationOff>--
+
+-- -------------------------------------------------------------------------- --
+-- GroupIndicationOffArg ::= SEQUENCE 
+-- {
+-- 	callPickupId		CallIdentifier, 
+-- 		// identification of the call that has been picked up (parked or alerting call)
+-- 
+-- 	groupMemberUserNr	EndpointAddress,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg
+--		"EmGroupIndicationOffArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg.callPickupId
+--		"callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg.groupMemberUserNr
+--		"groupMemberUserNr">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.GroupIndicationOffArg.extensionArg
+--		"EM_GroupIndicationOffArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- GroupIndicationOffRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.GroupIndicationOffRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffRes
+--		"EmGroupIndicationOffRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.GroupIndicationOffRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.GroupIndicationOffRes.extensionRes
+--		"EM_GroupIndicationOffRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- pickrequ OPERATION ::=
+-- { 
+-- 	// sent from the picking-up user to the parked-to / 
+-- 	// alerting endpoint as part of the SS-PICK invocation
+-- 
+-- 	ARGUMENT  			PickrequArg 
+-- 	RESULT 				PickrequRes
+-- 	ERRORS 
+-- 	{ 	
+-- 			undefined  	// undefined reason 
+-- 		|	callAlreadyPickedUp	// call has already been picked up by anotheruser 
+-- 	}
+-- 	CODE	local: 110 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.pickrequ
+--		_pickrequ>--
+
+-- -------------------------------------------------------------------------- --
+-- PickrequArg ::= SEQUENCE
+-- {
+-- 	picking-upNumber	EndpointAddress,
+-- 	callPickupId		CallIdentifier  OPTIONAL, 
+-- 		// identification of the call to be picked up (parked or alerting call), if known
+-- 
+-- 	partyToRetrieve		EndpointAddress  OPTIONAL, 
+-- 		// Parked or Calling User 
+-- 		
+-- 	retrieveAddress		EndpointAddress,  
+-- 		// parked-to or alerting entity address
+-- 		
+-- 	parkPosition		ParkedToPosition   OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickrequArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickrequArg
+--		"EmPickrequArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.picking-upNumber
+--		"pickingUpNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.callPickupId
+--		"callPickupId">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickrequArg.callPickupId
+--		"EM_PickrequArg_callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.partyToRetrieve
+--		"partyToRetrieve">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickrequArg.partyToRetrieve
+--		"EM_PickrequArg_partyToRetrieve">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.retrieveAddress
+--		"retrieveAddress">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.parkPosition
+--		"parkPosition">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickrequArg.parkPosition
+--		"EM_PickrequArg_parkPosition">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickrequArg.extensionArg
+--		"EM_PickrequArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- PickrequRes ::= SEQUENCE
+-- {
+-- 	callPickupId		CallIdentifier, 
+-- 		// identification of the call that is being picked up (parked or alerting call), 
+-- 		// if not sent in pickrequ invoke, it is assigned at the parked-to / alerting
+-- 		// endpoint and reflects the CallIdentification of the parked / alerting call for
+-- 		// later association with the pickExe invoke APDU. 
+-- 
+-- 	extensionRes		MixedExtension OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickrequRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickrequRes
+--		"EmPickrequRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequRes.callPickupId
+--		"callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickrequRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickrequRes.extensionRes
+--		"EM_PickrequRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- pickup OPERATION ::=
+-- { 
+-- 	// sent from the parked-to / alerting endpoint to the parked / calling endpoint
+-- 	// after the picking-up user has invoked SS-PICK. The picking-up user may
+-- 	// be local (i.e. parked-to / alerting endpoint equals picking-up
+-- 	// endpoint) or may be remote (i.e. picking-up user is located at a
+-- 	// remote picking-up endpoint having sent pickrequ invoke APDU to the
+-- 	// parked-to / alerting endpoint). 
+-- 	
+-- 	ARGUMENT  			PickupArg 
+-- 	RESULT 				PickupRes
+-- 	ERRORS 
+-- 	{ 	
+-- 			undefined 		
+-- 				// undefined reason 
+-- 				
+-- 		|	callAlreadyPickedUp	
+-- 				// call has already been picked up by another user 
+-- 	}
+-- 	CODE				local: 111 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.pickup
+--		_pickup>--
+
+-- -------------------------------------------------------------------------- --
+-- PickupArg ::= SEQUENCE
+-- {
+-- 	callPickupId		CallIdentifier,
+-- 		// identification of this call to be picked up (parked or alerting call); 
+-- 		// equals the CallIdentifier value that was assigned to this call in Setup-UUIE
+-- 
+-- 	picking-upNumber	EndpointAddress, 
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickupArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickupArg
+--		"EmPickupArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickupArg.callPickupId
+--		"callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickupArg.picking-upNumber
+--		"pickingUpNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickupArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickupArg.extensionArg
+--		"EM_PickupArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- PickupRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickupRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickupRes
+--		"EmPickupRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickupRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickupRes.extensionRes
+--		"EM_PickupRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- pickExe	OPERATION ::=
+-- { 
+-- 	// sent from the parked / calling endpoint to the picking-up endpoint
+-- 	
+-- 	ARGUMENT  			PickExeArg 
+-- 	RESULT 				PickExeRes
+-- 	ERRORS 
+-- 	{ 	
+-- 			undefined 	 	
+-- 				// undefined reason 
+-- 				
+-- 		|	callPickupIdInvalid	
+-- 				// value not matching with the previous SS-PICKUP request
+-- 	}
+-- 	CODE	local: 112 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.pickExe
+--		_pickExe>--
+
+-- -------------------------------------------------------------------------- --
+-- PickExeArg ::= SEQUENCE
+-- {
+-- 	callPickupId		CallIdentifier, 
+-- 		// identification of the parked / alerting call to be picked-up; 
+-- 		// required at picking-up endpoint to associate the SS-PICKUP invoked with this
+-- 		// incoming setup message carrying the pickExe invoke APDU.
+-- 
+-- 	picking-upNumber	EndpointAddress,
+-- 
+-- 	partyToRetrieve		EndpointAddress,  
+-- 		// Parked or Calling User
+-- 
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickExeArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickExeArg
+--		"EmPickExeArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickExeArg.callPickupId
+--		"callPickupId">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickExeArg.picking-upNumber
+--		"pickingUpNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickExeArg.partyToRetrieve
+--		"partyToRetrieve">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickExeArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickExeArg.extensionArg
+--		"EM_PickExeArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- PickExeRes ::= SEQUENCE
+-- {
+-- 	extensionRes		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.PickExeRes>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.PickExeRes 
+--		"EmPickExeRes">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.PickExeRes.extensionRes
+--		"extensionRes">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.PickExeRes.extensionRes
+--		"EM_PickExeRes_extensionRes">--
+
+-- -------------------------------------------------------------------------- --
+-- cpNotify OPERATION ::=
+-- { 
+-- 	// sent from the parking to to parked endpoint in case of local park.
+-- 	
+-- 	ARGUMENT			CpNotifyArg		OPTIONAL TRUE
+-- 	RETURN RESULT		FALSE
+-- 	ALWAYS RESPONDS   	FALSE
+-- 	CODE				local: 113
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.cpNotify
+--		_cpNotify>--
+
+-- -------------------------------------------------------------------------- --
+-- CpNotifyArg ::= SEQUENCE
+-- {
+-- 	parkingNumber		EndpointAddress	OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.CpNotifyArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpNotifyArg
+--		"EmCpNotifyArg">--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpNotifyArg.parkingNumber
+--		"parkingNumber">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpNotifyArg.parkingNumber
+--		"EM_CpNotifyArg_parkingNumber">--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpNotifyArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpNotifyArg.extensionArg
+--		"EM_CpNotifyArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- cpickupNotify OPERATION ::=
+-- { 
+-- 	// sent from parked-to to parked endpoint in case of SS-PICKUP from local park
+-- 
+-- 	ARGUMENT			CpickupNotifyArg	OPTIONAL TRUE
+-- 	RETURN RESULT		FALSE
+-- 	ALWAYS RESPONDS   	FALSE
+-- 	CODE				local: 114
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.cpickupNotify
+--		_cpickupNotify>--
+
+-- -------------------------------------------------------------------------- --
+-- CpickupNotifyArg ::= SEQUENCE
+-- {
+-- 	picking-upNumber	EndpointAddress	OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	... 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.CpickupNotifyArg>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.CpickupNotifyArg
+--		"EmCpickupNotifyArg">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpickupNotifyArg.picking-upNumber
+--		"pickingUpNumber">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpickupNotifyArg.picking-upNumber
+--		"EM_CpickupNotifyArg_pickingUpNumber">--
+--<OSS.FIELDNAME
+--		Call-Park-Pickup-Operations.CpickupNotifyArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Park-Pickup-Operations.CpickupNotifyArg.extensionArg
+--		"EM_CpickupNotifyArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- ParkedToPosition ::= INTEGER  (0..65535)
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Call-Park-Pickup-Operations.ParkedToPosition>--
+--<OSS.TYPENAME
+--		Call-Park-Pickup-Operations.ParkedToPosition
+--		"EmParkedToPosition">--
+
+-- -------------------------------------------------------------------------- --
+-- ParkCondition ::= ENUMERATED 
+-- { 
+-- 	unspecified (0),
+-- 	parkedToUserIdle (1), 
+-- 	parkedToUserBusy (2), 
+-- 	parkedToGroup (3), 
+-- 	...
+-- } 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.ParkCondition
+--		EmParkCondition>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.ParkCondition.unspecified
+--		EM_ParkCondition_unspecified>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.ParkCondition.parkedToUserIdle
+--		EM_ParkCondition_parkedToUserIdle>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.ParkCondition.parkedToUserBusy
+--		EM_ParkCondition_parkedToUserBusy>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.ParkCondition.parkedToGroup
+--		EM_ParkCondition_parkedToGroup>--
+
+-- -------------------------------------------------------------------------- --
+-- CallType ::= ENUMERATED 
+-- { 
+-- 	parkedCall (0), 
+-- 	alertingCall (1), 
+-- 	...
+-- } 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.CallType
+--		EmCPCallType>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.CallType.parkedCall
+--		EM_CPCalltype_parkedCall>--
+--<ASN1.Nickname
+--		Call-Park-Pickup-Operations.CallType.alertingCall
+--		EM_CPCalltype_alertingCall>--
+
+-- -------------------------------------------------------------------------- --
+-- callPickupIdInvalid	ERROR ::=
+-- { 
+-- 	CODE 	local: 2000
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.callPickupIdInvalid
+--		_CallParkPickupOperations_callPickupIdInvalid>--
+
+-- -------------------------------------------------------------------------- --
+-- callAlreadyPickedUp	ERROR ::=
+-- { 
+-- 	CODE 	local: 2001
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.callAlreadyPickedUp
+--		_CallParkPickupOperations_callAlreadyPickedUp>--
+
+-- -------------------------------------------------------------------------- --
+-- undefined ERROR ::= 
+-- { 
+-- 	PARAMETER 			MixedExtensionSeq	OPTIONAL TRUE
+-- 	CODE	local:2002 
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Park-Pickup-Operations.undefined
+--		_CallParkPickupOperations_undefined>--
+
+-- ============================================================= --
+--
+-- From h.450.6: Call-Waiting-Operations
+--	{itu-t recommendation h 450 6 version1(0) call-waiting-operations(0)}
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- CallWaitingOperations OPERATION ::=
+-- {
+-- 	callWaiting 
+-- }
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- callWaiting	OPERATION ::=
+-- {
+-- 	// sent from served endpoint to the calling endpoint in ALERTING message
+-- 
+-- 	ARGUMENT			CallWaitingArg	OPTIONAL TRUE
+-- 	RETURN RESULT		FALSE
+-- 	ALWAYS RESPONDS   	FALSE
+-- 	CODE				local: 105
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Call-Waiting-Operations.callWaiting
+--		_callWaiting>--
+
+-- -------------------------------------------------------------------------- --
+-- CallWaitingArg ::= SEQUENCE
+-- { 	
+-- 	nbOfAddWaitingCalls	INTEGER (0..255) OPTIONAL,  
+-- 		// indicates the number of waiting calls at the served user 
+-- 		// in addition to the call to which this operation applies.
+-- 
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Call-Waiting-Operations.CallWaitingArg>--
+--<OSS.TYPENAME
+--		Call-Waiting-Operations.CallWaitingArg
+--		"EmCallWaitingArg">--
+--<OSS.FIELDNAME
+--		Call-Waiting-Operations.CallWaitingArg.nbOfAddWaitingCalls
+--		"nbOfAddWaitingCalls">--
+--<OSS.DefineName
+--		Call-Waiting-Operations.CallWaitingArg.nbOfAddWaitingCalls
+--		"EM_CALL_WAITING_nbOfAddWaitingCalls">--
+--<OSS.FIELDNAME
+--		Call-Waiting-Operations.CallWaitingArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Call-Waiting-Operations.CallWaitingArg.extensionArg
+--		"EM_CallWaitingArg_extensionArg">--
+
+-- ============================================================= --
+--
+-- From h.450.7: Message-Waiting-Indication-Operations
+--	{itu-t recommendation h 450 7 version1(0)  message-waiting-operations(0)} 
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- H323-MWI-Operations OPERATION ::= 
+-- {
+-- 		mwiActivate 
+-- 	| 	mwiDeactivate 
+-- 	| 	mwiInterrogate 
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+-- -------------------------------------------------------------------------- --
+-- mwiActivate OPERATION ::=
+-- {
+-- 	ARGUMENT 			MWIActivateArg
+-- 	RESULT				MixedExtensionSeq
+-- 	ERRORS			
+-- 	{		
+-- 			userNotSubscribed 
+-- 		|	invalidServedUserNumber 
+-- 		|	basicServiceNotProvided 
+-- 		|	undefined 	
+-- 	}
+-- 	CODE 				local: 80
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.mwiActivate
+--		_mwiActivate>--
+
+-- -------------------------------------------------------------------------- --
+-- mwiDeactivate OPERATION ::=
+-- {
+-- 	ARGUMENT 			MWIDeactivateArg
+-- 	RESULT				MixedExtensionSeq
+-- 	ERRORS			
+-- 	{
+-- 			userNotSubscribed 
+-- 		|	invalidServedUserNumber 
+-- 		|	basicServiceNotProvided 
+-- 		|	undefined 	
+-- 	}
+-- 	CODE 				local: 81
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.mwiDeactivate
+--		_mwiDeactivate>--
+
+-- -------------------------------------------------------------------------- --
+-- mwiInterrogate OPERATION ::=
+-- {
+-- 	ARGUMENT 			MWIInterrogateArg
+-- 	RESULT				MWIInterrogateRes
+-- 	ERRORS			
+-- 	{		
+-- 			userNotSubscribed 
+-- 		|	invalidServedUserNumber 
+-- 		|	notActivated 
+-- 		|	invalidMsgCentreId 
+-- 		|	undefined 
+-- 	}
+-- 	CODE 				local: 82
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.mwiInterrogate
+--		_mwiInterrogate>--
+
+-- -------------------------------------------------------------------------- --
+-- MWIActivateArg ::= SEQUENCE
+-- {
+-- 	servedUserNr		EndpointAddress,
+-- 	basicService		BasicService,
+-- 	msgCentreId			MsgCentreId OPTIONAL,
+-- 	nbOfMessages		NbOfMessages OPTIONAL,
+-- 	originatingNr		EndpointAddress OPTIONAL,
+-- 	timestamp 			TimeStamp OPTIONAL,
+-- 	priority			INTEGER (0..9) OPTIONAL,
+-- 		// the value 0 means the highest priority and 9 the lowest
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Message-Waiting-Indication-Operations.MWIActivateArg>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg
+--		"EmMWIActivateArg">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.msgCentreId
+--		"msgCentreId">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.msgCentreId
+--		"EM_MWIActivateArg_msgCentreId">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.nbOfMessages
+--		"nbOfMessages">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.nbOfMessages
+--		"EM_MWIActivateArg_nbOfMessages">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.originatingNr
+--		"originatingNr">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.originatingNr
+--		"EM_MWIActivateArg_originatingNr">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.timestamp
+--		"timestamp">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.timestamp
+--		"EM_MWIActivateArg_timestamp">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.priority
+--		"priority">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.priority
+--		"EM_MWIActivateArg_priority">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIActivateArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIActivateArg.extensionArg
+--		"EM_MWIActivateArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- MWIDeactivateArg ::= SEQUENCE
+-- {
+-- 	servedUserNr		EndpointAddress,
+-- 	basicService		BasicService,
+-- 	msgCentreId			MsgCentreId OPTIONAL,
+-- 	callbackReq			BOOLEAN OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg
+--		"EmMWIDeactivateArg">--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.basicService
+--		"basicService">--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.msgCentreId
+--		"msgCentreId">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.msgCentreId
+--		"EM_MWIDeactivateArg_msgCentreId">--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.callbackReq
+--		"callbackReq">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.callbackReq
+--		"EM_MWIDeactivateArg_callbackReq">--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIDeactivateArg.extensionArg
+--		"EM_MWIDeactivateArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- MWIInterrogateArg ::= SEQUENCE
+-- {
+-- 	servedUserNr		EndpointAddress,
+-- 	basicService		BasicService,
+-- 	msgCentreId			MsgCentreId OPTIONAL,
+-- 	callbackReq			BOOLEAN OPTIONAL,
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU 
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg
+--		"EmMWIInterrogateArg">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.servedUserNr
+--		"servedUserNr">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.msgCentreId
+--		"msgCentreId">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.msgCentreId
+--		"EM_MWIInterrogateArg_msgCentreId">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.callbackReq
+--		"callbackReq">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.callbackReq
+--		"EM_MWIInterrogateArg_callbackReq">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateArg.extensionArg
+--		"EM_MWIInterrogateArg_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- MWIInterrogateRes ::= SEQUENCE SIZE(1..64) OF MWIInterrogateResElt
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.MWIInterrogateRes>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateRes
+--		"EmMWIInterrogateRes">--
+
+-- -------------------------------------------------------------------------- --
+-- MWIInterrogateResElt ::= SEQUENCE
+-- {
+-- 	basicService		BasicService,
+-- 	msgCentreId			MsgCentreId OPTIONAL,
+-- 	nbOfMessages		NbOfMessages OPTIONAL,
+-- 	originatingNr		EndpointAddress OPTIONAL,
+-- 	timestamp 			TimeStamp OPTIONAL,
+-- 	priority			INTEGER (0..9) OPTIONAL,
+-- 		// the value 0 means the highest priority and 9 the lowest
+-- 	extensionArg		MixedExtensionSeq OPTIONAL,
+-- 	...
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt
+--		"EmMWIInterrogateResElt">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.basicService
+--		"basicService">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.msgCentreId
+--		"msgCentreId">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.msgCentreId
+--		"EM_MWIInterrogateResElt_msgCentreId">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.nbOfMessages
+--		"nbOfMessages">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.nbOfMessages
+--		"EM_MWIInterrogateResElt_nbOfMessages">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.originatingNr
+--		"originatingNr">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.originatingNr
+--		"EM_MWIInterrogateResElt_originatingNr">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.timestamp
+--		"timestamp">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.timestamp
+--		"EM_MWIInterrogateResElt_timestamp">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.priority
+--		"priority">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.priority
+--		"EM_MWIInterrogateResElt_priority">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.extensionArg
+--		"extensionArg">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MWIInterrogateResElt.extensionArg
+--		"EM_MWIInterrogateResElt_extensionArg">--
+
+-- -------------------------------------------------------------------------- --
+-- MsgCentreId ::=	CHOICE
+-- {
+-- 	// only partyNumber provides a callable identification
+-- 
+-- 	integer				INTEGER (0..65535),
+-- 	partyNumber			EndpointAddress,
+-- 	numericString		NumericString (SIZE (1..10))
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.MsgCentreId>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.MsgCentreId
+--		"EmMWIMsgCentreId">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MsgCentreId.integer
+--		"integer">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MsgCentreId.integer
+--		"EM_MsgCentreId_integer">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MsgCentreId.partyNumber
+--		"partyNumber">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MsgCentreId.partyNumber
+--		"EM_MsgCentreId_partyNumber">--
+--<OSS.FIELDNAME
+--		Message-Waiting-Indication-Operations.MsgCentreId.numericString
+--		"numericString">--
+--<OSS.DefineName
+--		Message-Waiting-Indication-Operations.MsgCentreId.numericString
+--		"EM_MsgCentreId_numericString">--
+
+-- -------------------------------------------------------------------------- --
+-- NbOfMessages ::= INTEGER (0..65535)
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.NbOfMessages>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.NbOfMessages
+--		"EmMWINbOfMessages">--
+									
+-- -------------------------------------------------------------------------- --
+-- TimeStamp ::= GeneralizedTime (SIZE (12..19))
+-- 	// a VisibleString representation of date and time following ISO 8601 
+-- 	// containing:		
+-- 	//		- the  (local) date in 8 digits (YYYYMMDD),
+-- 	//		- followed by (local) time of day in 4 or 6 digits (HHMM[SS]),
+-- 	//		- optionally followed by the letter  Z  or by a local time differential 
+-- 	//				from UTC time in 5 digits ( + HHMM or  - HHMM);
+-- 	// Examples:
+-- 	//		1) 19970621194530, meaning 21 June 1997, 19:45:30;
+-- 	//		2) 19970621194530Z, meaning the same as 1);
+-- 	//		3) 19970621194530-0500, meaning the same as 1), 
+-- 	//				5 hours retarded in relation to UTC time
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		Message-Waiting-Indication-Operations.TimeStamp>--
+--<OSS.TYPENAME
+--		Message-Waiting-Indication-Operations.TimeStamp
+--		"EmMWITimeStamp">--
+
+-- -------------------------------------------------------------------------- --
+-- undefined ERROR ::=
+-- {
+-- 	PARAMETER 			MixedExtensionSeq OPTIONAL TRUE
+-- 	CODE 				local: 2002
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.undefined
+--		_MWI_undefined>--
+
+-- -------------------------------------------------------------------------- --
+-- invalidMsgCentreId ERROR ::=
+-- {		
+-- 	// returned by a Message Centre endpoint when an unknown Message Centre 
+-- 	// Identifier is specified in a mwiInterrogate invoke
+-- 	
+-- 	CODE 				local: 1018
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.invalidMsgCentreId
+--		_MWI_invalidMsgCentreId>--
+
+-- -------------------------------------------------------------------------- --
+-- BasicService ::= ENUMERATED
+-- {
+-- 	// MWI Services:
+-- 	//		for compatibility among vendors, speech is recommended for voice mail indications
+-- 
+-- 	allServices						(0),
+-- 	speech							(1),
+-- 	unrestrictedDigitalInformation	(2),
+-- 	audio3100Hz						(3),
+-- 	telephony						(32),
+-- 	teletex							(33),
+-- 	telefaxGroup4Class1 			(34),
+-- 	videotexSyntaxBased 			(35),
+-- 	videotelephony					(36),
+-- 	telefaxGroup2-3 				(37),
+-- 	reservedNotUsed1				(38),
+-- 	reservedNotUsed2				(39),
+-- 	reservedNotUsed3				(40),
+-- 	reservedNotUsed4				(41),
+-- 	reservedNotUsed5				(42),
+-- 	telefaxGroup3					(50),
+-- 
+-- 	//
+-- 	// MWI Service Classes:
+-- 
+-- 	email 							(51),
+-- 	video 							(52),
+-- 	fileTransfer					(53),
+-- 	shortMessageService 			(54),
+-- 	speechAndVideo 					(55),
+-- 	speechAndFax					(56),
+-- 	speechAndEmail 					(57),
+-- 	videoAndFax						(58),
+-- 	videoAndEmail					(59),
+-- 	faxAndEmail						(60),
+-- 	speechVideoAndFax 				(61),
+-- 	speechVideoAndEmail 			(62),
+-- 	speechFaxAndEmail				(63),
+-- 	videoFaxAndEmail				(64),
+-- 	speechVideoFaxAndEmail			(65),
+-- 	multimediaUnknown				(66),
+-- 	serviceUunknown 				(67),
+-- 
+-- 	//
+-- 	// Reserved for future additions:
+-- 
+-- 	futureReserve1					(68),
+-- 	futureReserve2					(69),
+-- 	futureReserve3					(70),
+-- 	futureReserve4					(71),
+-- 	futureReserve5					(72),
+-- 	futureReserve6					(73),
+-- 	futureReserve7					(74),
+-- 	futureReserve8					(75)
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		Message-Waiting-Indication-Operations.BasicService
+--		EmMWIBasicService>--
+
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.allServices
+--		EM_MWIBasicService_allServices>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speech
+--		EM_MWIBasicService_speech>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.unrestrictedDigitalInformation
+--		EM_MWIBasicService_unrestrictedDigitalInformation>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.audio3100Hz
+--		EM_MWIBasicService_audio3100Hz>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.telephony
+--		EM_MWIBasicService_telephony>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.teletex
+--		EM_MWIBasicService_teletex>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.telefaxGroup4Class1
+--		EM_MWIBasicService_telefaxGroup4Class1>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.videotexSyntaxBased
+--		EM_MWIBasicService_videotexSyntaxBased>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.videotelephony
+--		EM_MWIBasicService_videotelephony>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.telefaxGroup2-3
+--		EM_MWIBasicService_telefaxGroup2_3>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.reservedNotUsed1
+--		EM_MWIBasicService_reservedNotUsed1>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.reservedNotUsed2
+--		EM_MWIBasicService_reservedNotUsed2>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.reservedNotUsed3
+--		EM_MWIBasicService_reservedNotUsed3>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.reservedNotUsed4
+--		EM_MWIBasicService_reservedNotUsed4>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.reservedNotUsed5
+--		EM_MWIBasicService_reservedNotUsed5>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.telefaxGroup3
+--		EM_MWIBasicService_telefaxGroup3>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.email
+--		EM_MWIBasicService_email>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.video
+--		EM_MWIBasicService_video>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.fileTransfer
+--		EM_MWIBasicService_fileTransfer>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.shortMessageService
+--		EM_MWIBasicService_shortMessageService>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechAndVideo
+--		EM_MWIBasicService_speechAndVideo>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechAndFax
+--		EM_MWIBasicService_speechAndFax>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechAndEmail
+--		EM_MWIBasicService_speechAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.videoAndFax
+--		EM_MWIBasicService_videoAndFax>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.videoAndEmail
+--		EM_MWIBasicService_videoAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.faxAndEmail
+--		EM_MWIBasicService_faxAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechVideoAndFax
+--		EM_MWIBasicService_speechVideoAndFax>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechVideoAndEmail
+--		EM_MWIBasicService_speechVideoAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechFaxAndEmail
+--		EM_MWIBasicService_speechFaxAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.videoFaxAndEmail
+--		EM_MWIBasicService_videoFaxAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.speechVideoFaxAndEmail
+--		EM_MWIBasicService_speechVideoFaxAndEmail>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.multimediaUnknown
+--		EM_MWIBasicService_multimediaUnknown>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.serviceUunknown
+--		EM_MWIBasicService_serviceUunknown>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve1
+--		EM_MWIBasicService_futureReserve1>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve2
+--		EM_MWIBasicService_futureReserve2>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve3
+--		EM_MWIBasicService_futureReserve3>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve4
+--		EM_MWIBasicService_futureReserve4>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve5
+--		EM_MWIBasicService_futureReserve5>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve6
+--		EM_MWIBasicService_futureReserve6>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve7
+--		EM_MWIBasicService_futureReserve7>--
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.BasicService.futureReserve8
+--		EM_MWIBasicService_futureReserve8>--
+
+-- -------------------------------------------------------------------------- --
+-- notActivated						ERROR ::=
+-- {
+-- 	CODE 				local:  31
+-- }
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname
+--		Message-Waiting-Indication-Operations.notActivated
+--		_MWI_notActivated>--
+
+-- ============================================================= --
+--
+-- From h.450.1: H4501-Supplementary-ServiceAPDU-Structure
+-- 		Object Id: 0, 0, 8, 450, 1, 0, 2
+--
+-- ============================================================= --
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- H4501SupplementaryService ::= SEQUENCE
+-- {	
+-- 	networkFacilityExtension	NetworkFacilityExtension	OPTIONAL,
+-- 	interpretationApdu			InterpretationApdu			OPTIONAL,
+-- 	serviceApdu					ServiceApdus,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService 
+--		"EmH4501SupplementaryService">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService.networkFacilityExtension
+--		"networkFacilityExtension">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService.networkFacilityExtension
+--		"EM_networkFacilityExtension">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService.interpretationApdu
+--		"interpretationApdu">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService.interpretationApdu
+--		"EM_interpretationApdu">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.H4501SupplementaryService.serviceApdu
+--		"serviceApdu">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- NetworkFacilityExtension ::= SEQUENCE  
+-- {	
+-- 	sourceEntity				EntityType,
+-- 	sourceEntityAddress			AddressInformation		OPTIONAL,
+-- 	destinationEntity			EntityType,
+-- 	destinationEntityAddress	AddressInformation		OPTIONAL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension 
+--		"EmNetworkFacilityExtension">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.sourceEntity
+--		"sourceEntity">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.sourceEntityAddress
+--		"sourceEntityAddress">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.sourceEntityAddress
+--		"EM_sourceEntityAddress">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.destinationEntity
+--		"destinationEntity">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.destinationEntityAddress
+--		"destinationEntityAddress">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.NetworkFacilityExtension.destinationEntityAddress
+--		"EM_destinationEntityAddress">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- EntityType ::= CHOICE
+-- {	
+-- 	endpoint	NULL, 
+-- 	anyEntity	NULL,
+-- 	...
+-- } 
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType 
+--		"EmEntityType">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType.endpoint
+--		"endpoint">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType.endpoint
+--		"EM_EntityType_endpoint">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType.anyEntity
+--		"anyEntity">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.EntityType.anyEntity
+--		"EM_EntityType_anyEntity">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- AddressInformation ::= AliasAddress
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.AddressInformation>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.AddressInformation 
+--		EmAddressInformation>--
+
+-- -------------------------------------------------------------------------- --
+-- 	
+-- InterpretationApdu ::= CHOICE
+-- { 	
+-- 	discardAnyUnrecognizedInvokePdu				NULL,
+-- 	clearCallIfAnyInvokePduNotRecognized		NULL,
+-- 	rejectAnyUnrecognizedInvokePdu				NULL,
+-- 	...
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu 
+--		"EmInterpretationApdu">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.discardAnyUnrecognizedInvokePdu
+--		"discardAnyUnrecognizedInvokePdu">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.discardAnyUnrecognizedInvokePdu
+--		"EM_discardAnyUnrecognizedInvokePdu">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.clearCallIfAnyInvokePduNotRecognized
+--		"clearCallIfAnyInvokePduNotRecognized">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.clearCallIfAnyInvokePduNotRecognized
+--		"EM_clearCallIfAnyInvokePduNotRecognized">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.rejectAnyUnrecognizedInvokePdu
+--		"rejectAnyUnrecognizedInvokePdu">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.InterpretationApdu.rejectAnyUnrecognizedInvokePdu
+--		"EM_rejectAnyUnrecognizedInvokePdu">--
+
+
+-- -------------------------------------------------------------------------- --
+-- RemoteOperationSet ::= ROS{{InvokeIdSet}, {OperationSet}, {OperationSet}}
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet
+--		"EmROS">--
+
+--<OSS.InlineType
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke
+--		"EmInvoke">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke
+--		"invoke">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke
+--		"EM_ROS_invoke">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.invokeId
+--		"invokeId">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.linkedId
+--		"linkedId">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.linkedId
+--		"EM_linkedId">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.opcode
+--		"opcode">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.argument
+--		"argument">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.invoke.argument
+--		"EM_argument">--
+
+
+--<OSS.InlineType
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult
+--		"EmReturnResult">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult
+--		"returnResult">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult
+--		"EM_ROS_returnResult">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.invokeId
+--		"invokeId">--
+--<OSS.InlineType
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result
+--		"EmResult">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result
+--		"result">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result
+--		"EM_result">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result.opcode
+--		"opcode">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnResult.result.result
+--		"result">--
+
+--<OSS.InlineType
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError
+--		"EmReturnError">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError
+--		"returnError">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError
+--		"EM_ROS_returnError">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError.invokeId
+--		"invokeId">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError.errcode
+--		"errcode">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError.parameter
+--		"parameter">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.returnError.parameter
+--		"EM_parameter">--
+
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.reject
+--		"reject">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.RemoteOperationSet.reject
+--		"EM_ROS_reject">--
+
+-- -------------------------------------------------------------------------- --
+-- SeqOfROS ::= SEQUENCE SIZE (1..MAX) OF RemoteOperationSet
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.SeqOfROS>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.SeqOfROS
+--		"EmSeqOfROS">--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- ServiceApdus ::= CHOICE
+-- {
+-- 	rosApdus	SEQUENCE SIZE (1..MAX) OF ROS{{InvokeIdSet}, {OperationSet}, {OperationSet}},  
+-- 	... 				
+-- }
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.PDU
+--		H4501-Supplementary-ServiceAPDU-Structure.ServiceApdus>--
+--<OSS.TYPENAME
+--		H4501-Supplementary-ServiceAPDU-Structure.ServiceApdus 
+--		"EmServiceApdus">--
+--<OSS.FIELDNAME
+--		H4501-Supplementary-ServiceAPDU-Structure.ServiceApdus.rosApdus
+--		"rosApdus">--
+--<OSS.DefineName
+--		H4501-Supplementary-ServiceAPDU-Structure.ServiceApdus.rosApdus
+--		"EM_rosApdus">--
+
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- InvokeIdSet INTEGER ::= {InvokeIDs,...}
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		H4501-Supplementary-ServiceAPDU-Structure.InvokeIdSet 
+--		EmInvokeIdSet>--
+--<OSS.LONG
+--		H4501-Supplementary-ServiceAPDU-Structure.InvokeIdSet>--
+
+-- -------------------------------------------------------------------------- --
+-- 
+-- InvokeIDs ::= INTEGER(0..65535)
+-- 
+-- -------------------------------------------------------------------------- --
+
+--<ASN1.Nickname 
+--		H4501-Supplementary-ServiceAPDU-Structure.InvokeIDs 
+--		EmInvokeIDs>--
+

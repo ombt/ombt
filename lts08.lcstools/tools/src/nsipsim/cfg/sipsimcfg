@@ -1,0 +1,71 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter myip 135.111.82.6
+#
+# specific user section
+#
+DN = sip:6305510200@135.111.82.6
+Call-ID = 6305510200@135.111.82.6
+Scenario = registersuccess
+# ToTag = to5510200
+FromTag = from5510200
+# ExpiresForm = InContact
+ExpiresForm = InExpires
+Expires = 60
+ReturnCode = 200
+#
+DN = sip:6305510400@135.111.82.6
+Call-ID = 6305510400@135.111.82.6
+Scenario = registerfailure
+ToTag = to5510400
+FromTag = from5510400
+ExpiresForm = InContact
+# ExpiresForm = InExpires
+Expires = 0
+ReturnCode = 400
+#
+DN = sip:6305510404@135.111.82.6
+Call-ID = 6305510404@135.111.82.6
+Scenario = registerfailure
+ToTag = to5510404
+FromTag = from5510404
+ExpiresForm = InContact
+# ExpiresForm = InExpires
+Expires = 0
+ReturnCode = 404
+#
+DN = sip:6305510423@135.111.82.6
+Call-ID = 6305510423@135.111.82.6
+Scenario = registerfailure
+ToTag = to5510423
+FromTag = from5510423
+ExpiresForm = InContact
+# ExpiresForm = InExpires
+Expires = 0
+ReturnCode = 423
+#
+DN = sip:6305510500@135.111.82.6
+Call-ID = 6305510500@135.111.82.6
+Scenario = registerfailure
+ToTag = to5510500
+FromTag = from5510500
+ReturnCode = 500
+#
+DN = sip:6305520200@135.111.82.6
+Call-ID = 6305520200@135.111.82.6
+Scenario = termination
+ToTag = to5520200
+FromTag = from5520200
+RingingTimer = 2
+#
+DN = sip:6305510000@135.111.82.6
+Call-ID = 6305510000@135.111.82.6
+Refer-To = sip:6305510001@135.111.82.6
+Scenario = refersuccess
+ToTag = to5510000
+FromTag = from5510000
+WaitFor202Timer = 2
+#

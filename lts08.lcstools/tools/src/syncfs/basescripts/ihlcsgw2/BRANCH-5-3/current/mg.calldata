@@ -1,0 +1,4 @@
+#calldata
+#MEGACO area
+ed-mgc-assoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.21.3,,RXPORT=2946
+set-sid:::::ihlcsgw2

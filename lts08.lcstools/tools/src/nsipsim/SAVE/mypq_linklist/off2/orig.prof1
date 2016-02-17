@@ -1,0 +1,21 @@
+ts08:off2> /opt/exp/perl/bin/dprofpp -u                                    
+otal Elapsed Time = 579.2778 Seconds                                       
+        User Time = 2.257408 Seconds                                       
+xclusive Times                                                             
+Time ExclSec CumulS #Calls sec/call Csec/c  Name                           
+724.   16.36  9.866 118240   0.0000 0.0000  mytimer::expire                
+536.   12.10 14.335 382896   0.0000 0.0000  mytimer::cmp                   
+146.   3.298  2.123 213922   0.0000 0.0000  mytimer::id                    
+132.   2.983  7.708   3247   0.0009 0.0024  mypqueue::remove               
+132.   2.980 10.933   4093   0.0007 0.0027  mypqueue::enqueue              
+22.5   0.509  0.511   1247   0.0004 0.0004  main::parseSipMsg              
+18.9   0.428 11.995   3908   0.0001 0.0031  main::origination              
+15.9   0.360  0.265  17301   0.0000 0.0000  main::incrstats                
+15.5   0.350  0.310   7212   0.0000 0.0000  mytimer::new                   
+14.1   0.320  0.318    400   0.0008 0.0008  Storable::dclone               
+11.4   0.259  7.295   1000   0.0003 0.0073  main::queueOrig                
+10.9   0.246  7.933     57   0.0043 0.1392  main::handleCallLoad           
+10.6   0.240  0.243   2448   0.0001 0.0001  main::makepaddr                
+10.5   0.239 10.095   3965   0.0001 0.0025  main::starttimer               
+8.86   0.200  0.221   2951   0.0001 0.0001  mypqueue::dequeue              
+ts08:off2>                                                                 

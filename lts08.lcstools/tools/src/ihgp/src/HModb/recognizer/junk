@@ -1,0 +1,213 @@
+#
+# international and domestic rop class parser.
+#
+# save command name and defaults.
+#
+cmd="${0}"
+classfile=
+#
+# get command line options.
+#
+set -- `getopt '?xc:' ${*}`
+if [ "${?}" -ne 0 ]
+then
+	echo "${cmd}: invalid command line option." >&2
+	echo "usage: ${cmd} [-?x] [-c classfile] ropfiles" >&2
+	exit 2
+fi
+#
+for opt in ${*}
+do
+	case "${opt}" in
+	-x)
+		set -x
+		shift 1
+		;;
+	-c)
+		classfile="${2}"
+		shift 2
+		;;
+	--)
+		shift 1
+		break
+		;;
+	esac
+done
+#
+# check if any rop file were given.
+#
+if [ $# -eq 0 ]
+then
+	echo "${cmd}: no rop files were given." >&2
+	exit 2
+fi
+#
+# save list of rop files.
+#
+ropList=${*}
+shift $#
+#
+# get list of classes, if given.
+#
+if [ -r "${classfile}" ]
+then
+	classlist="`cat ${classfile} | cut -d ' ' -f1 | tr '\012' ' '`"
+else
+	classlist=
+fi
+#
+for rop in ${ropList}
+do
+	#
+	# rop-specific info.
+	#
+	echo "INFO ABOUT ROP FILE: FILENAME ${rop}"
+	echo "INFO ABOUT ROP FILE: DATE `date '+%y/%m/%d %H:%M:%S'`"
+	echo "INFO ABOUT ROP FILE: CLASSES ${classlist}"
+	#
+	# check for compressed files.
+	#
+	case "${rop}" in
+	*Z)
+		# expand compressed files.
+		zcat ${rop}
+		;;
+	*)
+		# regular file, just cat it.
+		cat ${rop}
+		;;
+	esac
+done |
+nawk 'BEGIN {
+	#
+	# patterns for date and time.
+	#
+	pday = "[0-9][0-9]-[01][0-9]-[0-3][0-9]";
+	ptime = "[0-2][0-9]:[0-6][0-9]:[0-6][0-9]";
+	pdate = pday " " ptime;
+	#
+	# class-specific patterns.
+	#
+	pstartintl["DCF"] = pdate " " "DCF[ \t]";
+	pstartusa["DCF"] = pdate " [0-9]+ " "DCF[ \t]";
+	#
+	# class-specific patterns.
+	#
+	pstartintl["LAUDIT"] = pdate " " "LAUDIT[ \t]";
+	pstartusa["LAUDIT"] = pdate " [0-9]+ " "LAUDIT[ \t]";
+	#
+	# class-specific parsers.
+	#
+	class2parser["DCF"] = "myecho asserts.intl";
+	parsers["myecho asserts.intl"] = "myecho asserts.intl";
+	#
+	# class-specific parsers.
+	#
+	class2parser["LAUDIT"] = "myecho audits.intl";
+	parsers["myecho audits.intl"] = "myecho audits.intl";
+	printit = 0;
+	printidx = 0;
+	#
+	startno = -1;
+	endno = -1;
+}
+$0 ~ /INFO ABOUT ROP FILE:/ {
+	lineNoOffset = NR;
+	for (p in parsers)
+	{
+		print $0 | parsers[p];
+	}
+	next;
+}
+$0 ~ pstartintl["DCF"] {
+	if (match($0, pdate))
+		printDate = substr($0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "DCF";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = $0;
+	next;
+}
+$0 ~ pstartusa["DCF"] {
+	if (match($0, pdate))
+		printDate = substr($0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "DCF";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = $0;
+	next;
+}
+$0 ~ pstartintl["LAUDIT"] {
+	if (match($0, pdate))
+		printDate = substr($0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "LAUDIT";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = $0;
+	next;
+}
+$0 ~ pstartusa["LAUDIT"] {
+	if (match($0, pdate))
+		printDate = substr($0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "LAUDIT";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = $0;
+	next;
+}
+$0 ~ /\+\+\-/ {
+	if (printit == 1)
+	{
+		endno = NR - lineNoOffset;
+		print "INFO ABOUT RECORD: " printDate " " startno " " endno | class2parser[class];
+		for (idx = 0; idx < printidx; idx++)
+		{
+			print printbuffer[idx] | class2parser[class];
+		}
+		print $0 | class2parser[class];
+	}
+	printit = 0;
+	next
+}
+$0 ~ // {
+	if (printit == 1)
+	{
+		endno = NR - lineNoOffset - 1;
+		print "INFO ABOUT RECORD: " printDate " " startno " " endno | class2parser[class];
+		for (idx = 0; idx < printidx; idx++)
+		{
+			print printbuffer[idx] | class2parser[class];
+		}
+		print $0 | class2parser[class];
+	}
+	printit = 0;
+	next
+}
+{
+	if (printit == 1)
+	{
+		printbuffer[printidx] = $0;
+		printidx = printidx + 1;
+	}
+	next;
+}
+END {
+	for (p in parsers)
+	{
+		close(parsers[p]);
+	}
+} '
+#
+exit 0

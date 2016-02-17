@@ -1,0 +1,42 @@
+CC = CC
+CCFLAGS = -g -DYYDEBUG -DDEBUG -DUSEEXCEPTION 
+LD = CC
+LDFLAGS = -g -DYYDEBUG -DDEBUG -DUSEEXCEPTION
+#
+stabp
+stab.y
+stab.l
+-ldemangle
+#
+install1=chmod 755 stabp
+install2=rm -f /home/rumore/bin/stabp
+install3=ln -s `pwd`/stabp /home/rumore/bin/stabp 
+#
+tinteger
+tinteger.c
+spaces.c
+#
+thexinteger
+thexinteger.c
+spaces.c
+#
+treal
+treal.c
+spaces.c
+#
+tstring
+tstring.c
+spaces.c
+#
+tname
+tname.c
+spaces.c
+#
+tstabtokenizer
+tstabtokenizer.c
+spaces.c
+#
+tstab
+tstab.c
+spaces.c
+#

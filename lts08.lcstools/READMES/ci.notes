@@ -1,0 +1,95 @@
+Notes on how to build a CI load.
+
+1) On stein, change lock file so only builder, mrumore and gshores
+have access. For example, if the branch is BRANCH-3-11, then
+the file to change is:
+
+	/cvs/logs/BRANCH-3-11/lock
+
+Here's a cheap way to do it.
+
+$ cd /cvs/logs/BRANCH-3-11/lock
+$ echo builder >/cvs/logs/BRANCH/lock
+$ echo mrumore >>/cvs/logs/BRANCH/lock
+$ echo gshores >>/cvs/logs/BRANCH/lock
+
+or,
+
+$ cd /cvs/logs/BRANCH-3-11
+$ cat >lock <<EOF
+builder
+mrumore
+gshores
+EOF
+
+Logon chibuild and get to stein using ssh:
+
+	$ ssh stein -l builder
+
+you will need to know the passwd.
+
+2) Now we need to update the version files to the correct values. Check out
+the following files and update these #define's at least:
+
+	TelicaRoot/components/data_collect/include/version_bts.h
+#define BTS_SW_VERSION          "3.11.2.2
+
+	TelicaRoot/components/telica_common/inc/swcpuver.h
+#define SW_CPU_VERSION          "3.11.2.2"
+
+	TelicaRoot/components/telica_common/inc/swiomver.h
+#define DS1_SW_VERSION          "3.11.2.2"      
+#define DS1_2_SW_VERSION                "3.11.2.2"
+#define DS3_SW_VERSION          "3.11.2.2"      
+#define OCT_DS3_SW_VERSION      "3.11.2.2"      
+#define OC12_SW_VERSION         "3.11.2.2"      
+#define VOA_SW_VERSION          "A3.11.2.2"     
+#define PNA_SW_VERSION          "3.11.2.2"      
+#define VOIP_SW_VERSION         "3.11.2.2"      
+#define TDM_OC3_SW_VERSION      "3.11.2.2"      
+#define TDM_OC_SW_VERSION       "3.11.2.2"      
+#define TRIDS3_SW_VERSION       "3.11.2.2"      
+#define ATMDS3_SW_VERSION       "3.11.2.2"      
+#define ENA_SW_VERSION          "3.11.2.2"      
+#define E1_SW_VERSION           "3.11.2.2"      
+#define CM_SW_VERSION           "3.11.2.2"      
+#define VS3_SW_VERSION          "3.11.2.2"      
+
+CVS check-in commands after files are updated:
+
+$ cd TelicaRoot/components/data_collect/include
+$ cvs ci -r BRANCH-3-11 -m "BUG:4 update versions for CI" version_bts.h
+
+$ cd TelicaRoot/components/telica_common/inc
+$ cvs ci -r BRANCH-3-11 -m "BUG:4 update versions for CI" swcpuver.h swiomver.h
+
+3) Run a GA build at this page for 3.11:
+
+http://build2.telica.com/home/RM/RM.html
+
+Choose build release and check these boxes off:
+
+	Choose BRANCH-3-11 in the drop-down menu.
+	Check off these boxes:
+		CPU, OCTDS3, VOIP, ENA/ENA2, TRIDS3, DS1_2
+		DS1, DS3, E1
+		Tag Release
+		GA Release
+		Disable Abort Debug
+
+Send email to yourself and add some comment about "CI build".
+
+DO NOT BUILD BTS AT THIS TIME !!!
+
+Once the above build is done, then you can build BTS. Check these boxes off:
+
+	Choose BRANCH-3-11 in the drop-down menu.
+	Check off these boxes:
+		BTS 
+		Tag Release
+
+4) Once the both builds are done, you should have a BP-3-11-2-2, or 
+whatever you chose as the version, created. The BP should exist and 
+be ready for Patch builds.
+
+5) If there are any problems, then you need to fix by hand. Contact me.

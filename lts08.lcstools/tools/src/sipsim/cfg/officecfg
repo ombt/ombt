@@ -1,0 +1,38 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter myip 135.111.82.6
+parameter myport 5060
+parameter myrtpip 135.111.82.6
+parameter myrtpport 8000
+parameter myrtcpport 8001
+#
+# specific user section
+#
+dn = sip:6305510200@135.111.82.6
+expiresform = inexpires
+expires = 600
+totag = to5510200
+fromtag = from5510200
+#
+dn = sip:6305510201@135.111.82.6
+maxcallduration = 10
+waitingfor200duration = 5
+waitingforackduration = 5
+totag = to6305510201
+fromtag = from6305510201
+# referto = sip:6305510201@135.185.166.210
+requesturi = sip:6305510200@135.185.166.210
+# termination = terminationrefer
+#
+dn = sip:6305510202@135.111.82.6
+maxcallduration = 30
+waitingfor200duration = 5
+waitingforackduration = 5
+totag = to6305510202
+fromtag = from6305510202
+requesturi = sip:6305510200@135.185.166.210
+# termination = terminationrefer
+#

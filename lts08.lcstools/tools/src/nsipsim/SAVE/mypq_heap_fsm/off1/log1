@@ -1,0 +1,38 @@
+
+200 ORIG-TERM DN pairs read.
+dn2contact: dn=6305510200
+dn2contact: contact=sip:6305510200@135.185.166.210:5060
+dn2contact: dn=6305510201
+dn2contact: contact=sip:6305510201@135.111.82.6:5060
+Verbose is ON
+
+SIP msg received: length=470
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+FROM IP/PORT: 135.185.51.26:5060
+line=<REGISTER sip:135.111.82.6 SIP/2.0>
+line=<Via: SIP/2.0/UDP 135.185.51.26:5060;rport;branch=z9hG4bKDE3E3CB0C9F24F25A1455F6326C019EA>
+line=<From: Dennis Dammann <sip:6305510201@135.111.82.6>;tag=730513060>
+line=<To: Dennis Dammann <sip:6305510201@135.111.82.6>>
+line=<Contact: "Dennis Dammann" <sip:6305510201@135.185.51.26:5060>>
+line=<Call-ID: E042C0EFCB3D4AD7A43EE0865A810014@135.111.82.6>
+line=<CSeq: 57725 REGISTER>
+line=<Expires: 1800>
+line=<Max-Forwards: 70>
+line=<User-Agent: X-Lite release 1103m>
+line=<Content-Length: 0>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< incoming msg
+
+Header Fields:
+CSeq = 57725 REGISTER
+Call-ID = E042C0EFCB3D4AD7A43EE0865A810014@135.111.82.6
+Contact = "Dennis Dammann" <sip:6305510201@135.185.51.26:5060>
+Content-Length = 0
+Expires = 1800
+From = Dennis Dammann <sip:6305510201@135.111.82.6>;tag=730513060
+Max-Forwards = 70
+To = Dennis Dammann <sip:6305510201@135.111.82.6>
+User-Agent = X-Lite release 1103m
+Via = SIP/2.0/UDP 135.185.51.26:5060;rport;branch=z9hG4bKDE3E3CB0C9F24F25A1455F6326C019EA
+dn = 6305510201
+msgtype = REGISTER

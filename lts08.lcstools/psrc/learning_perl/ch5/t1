@@ -1,0 +1,65 @@
+#!/opt/exp/bin/perl 
+#
+$data{"a"} = 1;
+$data{"b"} = 2;
+$data{"c"} = 3;
+#
+print "hash data is ... %data\n";
+@data = %data;
+print "list data is ... @data\n";
+@kdata = keys %data;
+print "list data keys is ... @kdata\n";
+@vdata = values %data;
+print "list data values is ... @vdata\n";
+#
+foreach $key (keys %data)
+{
+	print "key is ... $key\n";
+	print "data is ... $data{$key}\n";
+}
+foreach $value (values %data)
+{
+	print "value is ... $value\n";
+}
+while (($key, $data) = each %data)
+{
+	print "key is ... $key\n";
+	print "data is ... $data\n";
+}
+#
+%rdata = reverse %data;
+@rdata = %rdata;
+print "reversed list data is ... @rdata\n";
+@krdata = keys %rdata;
+print "reversed list data keys is ... @krdata\n";
+@vrdata = values %rdata;
+print "reversed list data values is ... @vrdata\n";
+#
+foreach $key (keys %rdata)
+{
+	print "reverse key is ... $key\n";
+	print "reverse data is ... $rdata{$key}\n";
+}
+foreach $value (values %rdata)
+{
+	print "reverse value is ... $value\n";
+}
+while (($key, $data) = each %rdata)
+{
+	print "reverse key is ... $key\n";
+	print "reverse data is ... $data\n";
+}
+#
+foreach $key (keys %data)
+{
+	@tmp = %data;
+	print "before ... @tmp\n";
+	delete $data{$key};
+	@tmp = %data;
+	print "after ... @tmp\n";
+}
+#
+print "hash data is ... " . %data . "\n";
+print "hash data is ... " . $data{"a"} . "\n";
+print "hash data is ... " . $data{"b"} . "\n";
+print "hash data is ... " . $data{"c"} . "\n";

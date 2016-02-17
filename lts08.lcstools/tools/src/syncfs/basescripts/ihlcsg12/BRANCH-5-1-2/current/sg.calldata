@@ -1,0 +1,20 @@
+#calldata
+ent-prfl-slkl2::1
+ent-prfl-slkl3::1
+ent-sg-pcown::234-111-1:::MTPVARIANT=ANSI
+ent-sg-pcown::234-123-1:::MTPVARIANT=ANSI
+ent-prfl-sgpc::1
+ent-sg-pc::234-3-1:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-sg-pc::234-4-1:::PCDIR=adj,PCPRFLID=1,MTPVARIANT=ansi
+ent-lset::1:::OPC=234-111-1,ADJDPC=234-3-1
+ent-lset::2:::OPC=234-123-1,ADJDPC=234-4-1
+ent-route-ss7::234-3-1-1:::lsetpriority=0
+ent-route-ss7::234-4-1-2:::lsetpriority=0
+ent-slk::1:::iomport=iom-1-port-15,chan=1,lsetid=1,slc=0,mtp2prflid=1,mtp3prflid=1;
+ent-slk::2:::iomport=iom-3-port-15,chan=1,lsetid=1,slc=1,mtp2prflid=1,mtp3prflid=1;
+ent-slk::1:::iomport=iom-1-port-16,chan=1,lsetid=2,slc=0,mtp2prflid=1,mtp3prflid=1;
+ent-slk::2:::iomport=iom-3-port-16,chan=1,lsetid=2,slc=1,mtp2prflid=1,mtp3prflid=1;
+#MEGACO area
+ent-sg-mgcassoc::1:::OPCLIST=234-111-1,IPADDR=10.11.34.3,STAPORTRANGE=50000:is
+ent-sg-mgcassoc::2:::OPCLIST=234-123-1,IPADDR=10.11.50.3,STAPORTRANGE=50000:is
+set-sid:::::ihlcsgw12

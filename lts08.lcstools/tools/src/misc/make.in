@@ -1,0 +1,17 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+lcslocks
+lcslocks.sh
+#
+lcspicks
+lcspicks.sh
+#
+lcstimer
+lcstimer.sh
+#
+spload
+spload.sh
+#
+lcstimer2
+lcstimer2.sh
+#

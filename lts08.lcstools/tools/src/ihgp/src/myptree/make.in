@@ -1,0 +1,7 @@
+myptree
+myptree.sh
+#
+install1=chmod 755 myptree
+install2=cp myptree /home/rumore/bin/myptree
+install3=rcp myptree integ@lts00:/home/integ/bin/myptree
+install4=rcp myptree integ@ihlbs1:/home/integ/bin/myptree

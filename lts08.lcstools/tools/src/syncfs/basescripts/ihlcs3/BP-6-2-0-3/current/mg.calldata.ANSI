@@ -1,0 +1,37 @@
+#calldata
+#MEGACO area
+ent-mg-mgcassoc::PRIMARY:::MGCTYPE=PRIMARY,IPADDR=10.11.23.3,,RXPORT=2946,txport=2946,mgcidletmr=8
+ent-mg-prflcas::3:::sigmodel=e_m
+ent-iua-sys
+ent-iua-endptasp::1:::ipadest=10.11.23.3,port=53008
+ent-iua-endptasp::2:::ipadest=10.11.23.3,port=53240
+ent-iua-asp::1-1:::desc=asp1gw3
+ent-iua-asp::2-2:::desc=asp2gw3
+ent-iua-as::1-1:::priority=100
+ent-iua-as::1-2:::priority=150
+ed-t0::iom-12-port-1::::oos
+ed-t0::iom-12-port-1-t0-1:::mgcasprflid=3
+ed-t0::iom-12-port-1-t0-2:::mgcasprflid=3
+ed-t0::iom-12-port-1-t0-3:::mgcasprflid=3
+ed-t0::iom-12-port-1-t0-4:::mgcasprflid=3
+ed-t0::iom-12-port-1-t0-5:::mgcasprflid=3
+sleep 10
+ed-t0::iom-12-port-1::::is
+ed-t0::iom-12-port-2::::oos
+ed-t0::iom-12-port-2-t0-1:::mgcasprflid=3
+ed-t0::iom-12-port-2-t0-2:::mgcasprflid=3
+ed-t0::iom-12-port-2-t0-3:::mgcasprflid=3
+ed-t0::iom-12-port-2-t0-4:::mgcasprflid=3
+sleep 10 
+ed-t0::iom-12-port-2::::is
+ed-t0::iom-12-port-3::::oos
+ed-t0::iom-12-port-3-t0-1:::mgcasprflid=3
+ed-t0::iom-12-port-3-t0-2:::mgcasprflid=3
+ed-t0::iom-12-port-3-t0-3:::mgcasprflid=3
+ed-t0::iom-12-port-3-t0-4:::mgcasprflid=3
+sleep 13 
+ed-t0::iom-12-port-3::::is
+ent-iua-lnk::3001:::asid=1,iomport=iom-14-port-1,lnktype=network
+ent-iua-lnk::3002:::asid=1,iomport=iom-4-sts1-1-port-16,lnktype=network
+set-sid:::::ihlcs3
+init-sys:ihlcs3::::10

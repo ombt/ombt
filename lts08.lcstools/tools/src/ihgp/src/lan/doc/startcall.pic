@@ -1,0 +1,84 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 52 wid 102 with .sw at 0,0
+"\fR\s10\&sample interarrival\fP\s0" at 51,45
+"\fR\s10\&distribution, generate\fP\s0" at 51,32
+"\fR\s10\&next new call and queue\fP\s0" at 51,19
+"\fR\s10\&in event queue\fP\s0" at 51,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 92 with .sw at 0,0
+"\fR\s10\&start call state\fP\s0" at 46,19
+"\fR\s10\&call origination event\fP\s0" at 46,6
+] |
+
+define t105 |
+[ box invis ht 52 wid 122 with .sw at 0,0
+"\fR\s10\&queue call, wait for \fP\s0" at 61,45
+"\fR\s10\&station to idle\fP\s0" at 61,32
+"\fR\s10\&call state = queue for station\fP\s0" at 61,19
+"\fR\s10\&next event = station is idle\fP\s0" at 61,6
+] |
+
+define t107 |
+[ box invis ht 26 wid 88 with .sw at 0,0
+"\fR\s10\&is call waiting queue\fP\s0" at 44,19
+"\fR\s10\&full\fP\s0" at 44,6
+] |
+
+define t109 |
+[ box invis ht 26 wid 98 with .sw at 0,0
+"\fR\s10\&goto\fP\s0" at 49,19
+"\fR\s10\&start tranmission state\fP\s0" at 49,6
+] |
+
+define t110 |
+[ box invis ht 26 wid 114 with .sw at 0,0
+"\fR\s10\&call state = transmitting\fP\s0" at 57,19
+"\fR\s10\&statio state = transmitting\fP\s0" at 57,6
+] |
+
+box invis ht 624 wid 528 with .sw at 0,0
+line -> from 88,232 to 88,208 
+t100 with .nw at 189,496
+line -> from 408,296 to 408,264 
+line -> from 88,296 to 88,272 
+line -> from 408,384 to 408,344 
+"\fR\s12\&\fP\s0" at 244,444
+t102 with .nw at 198,575
+"\fR\s10\&yes\fP\s0" at 388,197
+line -> from 528,48 to 488,48 
+line -> from 408,216 to 408,176 
+line -> from 528,240 to 528,48 
+line -> from 304,384 to 408,384 
+line -> from 472,240 to 528,240 
+ellipse ht 48 wid 96 at 408,152
+"\fR\s10\&no\fP\s0" at 496,257
+line -> from 88,384 to 88,344 
+box ht 96 wid 160 with .nw at 328,96 
+t105 with .nw at 351,84
+"\fR\s10\&call dies\fP\s0" at 408,153
+box ht 48 wid 136 with .nw at 336,264 
+t107 with .nw at 356,259
+"\fR\s10\&station is transmitting\fP\s0" at 404,325
+box ht 48 wid 136 with .nw at 336,344 
+box ht 48 wid 136 with .nw at 16,344 
+line -> from 176,384 to 88,384 
+box ht 40 wid 136 with .nw at 16,272 
+ellipse ht 64 wid 160 at 80,176
+t109 with .nw at 27,199
+t110 with .nw at 27,275
+"\fR\s12\&\fP\s0" at 244,429
+"\fR\s10\&station is idle\fP\s0" at 88,325
+line -> from 240,520 to 240,496 
+line -> from 240,424 to 240,400 
+ellipse ht 64 wid 128 at 240,552
+box ht 40 wid 128 with .nw at 176,400 
+"\fR\s10\&check station state\fP\s0" at 236,385
+box ht 72 wid 128 with .nw at 176,496 
+"\fR\s14\&START CALL FUNCTION FLOW CHART\fP\s0" at 244,613
+.PE
+.fi

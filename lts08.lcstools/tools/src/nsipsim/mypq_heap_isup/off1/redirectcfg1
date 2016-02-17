@@ -1,0 +1,57 @@
+#
+# global parameters section
+#
+parameter delta 5
+parameter minmsgsize 20
+parameter mysipip 135.111.82.6
+parameter mysipport 5060
+parameter myadminip 135.111.82.6
+parameter myadminport 10001
+parameter myrtpip 135.111.82.6
+parameter myrtpport 8000
+parameter myrtcpport 8001
+# parameter interreporttime 120
+#
+# specific user section
+#
+rdn = 6305510201 100
+codec = pcma
+expires = 1800
+maxcallduration = 5
+sipip = 135.111.82.6
+sipport = 5060
+rtpip = 135.111.82.6
+rtpport = 8000
+rtcpport = 8001
+#
+rdn = 6305520201 100
+codec = pcma
+expires = 1800
+maxcallduration = 5
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+#
+rdn = 6305530201 100
+codec = pcma
+expires = 1800
+maxcallduration = 5
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+#
+rdn = 6305540201 100
+codec = pcma
+expires = 1800
+maxcallduration = 5
+sipip = 135.111.82.6
+sipport = 5061
+rtpip = 135.111.82.6
+rtpport = 8002
+rtcpport = 8003
+#
+rcall 6305510201 6305520201 100

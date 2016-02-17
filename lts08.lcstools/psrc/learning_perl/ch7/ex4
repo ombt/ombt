@@ -1,0 +1,22 @@
+#!/opt/exp/bin/perl
+#
+while (<STDIN>)
+{
+	chomp;
+	#
+	($login, $lastname) = (split(/:/))[0,4];
+	# print "1: login: $login, user: $lastname\n";
+	#
+	$lastname =~ s/^[^-]*-([^,_ ]*).*$/\1/;
+	# print "2: login: $login, lastname: $lastname\n";
+	#
+	$counts{$lastname}++;
+}
+#
+while (($lastname, $count) = each %counts)
+{
+	if ($count > 1)
+	{
+		print "lastname $lastname has $count occurences ...\n";
+	}
+}

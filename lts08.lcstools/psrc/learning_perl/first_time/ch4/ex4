@@ -1,0 +1,14 @@
+#!/usr/bin/perl 
+#
+print "enter a list of strings: ";
+@strings = <STDIN>;
+chomp @strings;
+#
+print "strings is ... @strings\n";
+#
+while (@strings != ())
+{
+	$e = pop(@strings);
+	print "element is ... $e\n";
+}
+#

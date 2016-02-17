@@ -1,0 +1,12 @@
+#!/usr/bin/perl 
+for ($i=0; $i <= $#ARGV; $i++)
+{
+	print "$i: $ARGV[$i]\n";
+}
+#
+$i = 0;
+foreach (@ARGV)
+{
+	print "$i: $_\n";
+	$i++;
+}

@@ -1,0 +1,8 @@
+closestreams exec {
+	tl1 close tl1spa
+	tl1 close tl1spb
+	ftp close ftpspa
+	ftp close ftpspb
+	telnet close telnetspa
+	telnet close telnetspb
+}

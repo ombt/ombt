@@ -1,0 +1,4 @@
+ent-mg-mgcassoc::PRIMARY:::mgctype=primary,ipaddr=10.11.40.3,rxport=2947,txport=2947,mgcidletmr=8
+set-sid:::::ihlcsgw14
+sleep 10
+init-sys:ihlcsgw14::::10

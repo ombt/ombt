@@ -1,0 +1,37 @@
+#!/usr/bin/perl -w
+#
+my $isF = 1;
+#
+foreach $arg (@ARGV)
+{
+	if ($arg =~ /-F/)
+	{
+		# fahrenheit degrees
+		$isF = 1;
+	}
+	elsif ($arg =~ /\-C/)
+	{
+		# celsius degrees
+		$isF = 0;
+	}
+	elsif ($isF)
+	{
+		F2C($arg);
+	}
+	else
+	{
+		C2F($arg);
+	}
+}
+#
+exit 0;
+#
+sub F2C {
+	($deg) = @_;
+	print "$deg F = " . int(($deg-32)*5/9+0.5) . " C\n";
+}
+#
+sub C2F {
+	($deg) = @_;
+	print "$deg C = " . int(9*$deg/5+32.5) . " F\n";
+}

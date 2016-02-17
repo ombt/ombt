@@ -1,0 +1,3 @@
+ed-chassis-eqpt::com:::shelfid=2,chassistype=sg_mgc,emipspa=135.1.104.193,emipspb=135.1.104.194,emipchassis=135.1.104.101,sigaipspa=10.11.25.1,sigaipspb=10.11.25.2,sigbipspa=10.11.93.1,sigbipspb=10.11.93.2,sigcipspa=10.11.25.4,sigcipspb=10.11.25.5,sigdipspa=10.11.93.4,sigdipspb=10.11.93.5,sigaipchassis=10.11.25.3,,emipmask=255.255.255.0,,sigaipmask=255.255.255.0,sigbipmask=255.255.255.248,sigcipmask=255.255.255.0,sigdipmask=255.255.255.248
+#Do an init-sys:telica::::10 here
+init-sys:telica::::10

@@ -1,0 +1,468 @@
+.SA 1
+.nr Hb 3
+.H 1 "CSC 255 - Scientific Programming Applications with Fortran"
+.H 2 "Course Description"
+.P
+Comprehensive coverage of the FORTRAN programming language. Emphasis
+is on design, programming and documentation of scientific applications,
+including statistical analysis, curve fitting, optimization, and
+engineering and scientific modeling applications.
+.P
+Mathematics 231, Calculus and Analytical Geometry, is required as 
+a prerequisite or you must be currently enrolled. 
+.H 2 "Syllabus"
+.H 3 "Algorithm Development and Program Design"
+.AL 1
+.LI
+Basic building blocks for developing a solution:
+sequential execution of statements, branching operations for 
+making decisions, and looping operations for repeating 
+blocks of instructions.
+.LI
+Top-Down Design: Divide-and-Conquer, Modularization.
+.LI
+Flow-Charts and Pseudo-Code.
+.LI
+Maintaining Code - Comments, Comments, Comments.
+.LE
+.H 3 "Basics: Data Types, Arithmetic, List-Directed I/O, Library Functions"
+.AL 1
+.LI
+Data Types: INTEGER, REAl, DOUBLE PRECISION, COMPLEX, CHARACTER and
+LOGICAL.
+.LI
+Implicit data typing: variables starting with letters I-N are
+integer by default, any other variable defaults to a real.
+.LI
+To turn off all implicit data typing:
+.DS
+	IMPLICIT NONE
+.DE
+.LI
+Assigment, Arithmetic Operations (+, -, *, /, **), and Expressions.
+Cover hierarchy of operations in expressions: (), **, * or /, + or -.
+.LI
+Functions: ABS(), ACOS(), ALOG(), ALOG10(), AMAX(), AMIN(), ASIN(),
+ATAN(), COS(), DBLE(), EXP(), INT(), FLOAT(), MOD(), NINT(), REAL(),
+SIN(), SQRT(), TAN().
+.LI
+List-Directed I/O: read * and print * statements.
+.LE
+.H 3 "Decision Making: If-Statements and Gotos"
+.AL 1
+.LI
+Unconditional Branching: the infamous goto.
+.LI
+Conditional Statements: 
+.DS
+	IF (test condition) statement-to-execute-if-true
+.DE
+Describe relations operations used in the above test condition: .LT., .GT.,
+ .LE., .GE., .EQ., .NE.
+Describe logical operations used in the above test condition: .NOT., .AND.,
+ .OR. Also, give the hierarchy: (), **, * or /, + or -, .EQ. or .NE. or .LT.
+or .LE. or .GT. or .GE., .NOT., .AND., .OR.
+.LI
+Block-If statements:
+.DS
+	IF (test condition) THEN
+		statements
+	ELSE IF (test condition) THEN
+		statements
+	ELSE
+		statements
+	END IF
+.DE
+Basic rules about block-ifs:
+.AL 1
+.LI
+can transfer to a statements outside a block.
+.LI
+can transfer from one statements within a block to another statements
+within the same block.
+.LI
+can not transfer into a block.
+.LI
+nesting of if-statements is allowed.
+.LI
+goto to closing statement is allowed.
+.LE
+.LE
+.H 3 "Do-loops and While-loops"
+.AL 1
+.LI
+Do-loop syntax:
+.DS
+	DO loop-counter=start, end, step
+		statements
+	END DO
+.DE
+Can increment or decrement loop counter. If step is left out, then
+the default is to increment by 1. Do-loops can be nested.
+.LI
+While-loop syntax:
+.DS
+	DO WHILE (test condition)
+		statements
+	END DO
+.DE
+The test condition must evaluate to .true. for the statements 
+within the loop to be executed. Be careful of infinite loops, that is,
+loops that never end. Can use a goto to the final statement to 
+skip statements.
+.LE
+.H 3 "Arrays"
+.AL 1
+.LI
+Syntax one-dimensional arrays:
+.DS
+	type arrayname(lower limit: upper limit)
+.DE
+Limits must be integers. Lower limit is 1 be default. The limits
+can be negative. The only requirement is that lower limit be less than
+upper limit.
+.LI
+Using arrays within expressions. Using subscripts to access
+individual elements with in an array.
+.LI
+Manipulating arrays with in do-loops. Example of adding all the
+elements in an array follows.
+.DS
+	INTEGER ia
+	REAL array(100), sum
+	READ *, (array(ia), ia=1, 100)
+	sum=0.0
+	DO ia=1, 100, 1
+		sum = sum + array(ia)
+	END DO
+	PRINT *, 'sum is ', sum
+.DE
+.LI
+Array I/O: using implicit do-loops. Examples for reading and 
+writing are:
+.DS
+	INTEGER ia
+	REAL array(100)
+	READ *, (array(ia), ia=1, 100)
+	PRINT *, (array(ia), ia=1, 100)
+.DE
+.LI
+Parameter and Data statements: parameter statements define constants;
+data statements initialize data.
+.DS
+	CHARACTER*1 tab, space
+	REAL pi
+	PARAMETER(tab=CHAR(9),space=char(32))
+	DATA pi /3.14159/
+.DE
+Implied do-loops and repeat factors may be used in data statements.
+.DS
+	DATA (array(ss), ss=start, end, step) /val1, val2, .../
+.DE
+An example with repeat factors is:
+.DS
+	REAL array(100)
+	DATA array /100*0.0/
+.DE
+.LE
+.H 3 "Subroutines and Functions"
+.P
+The secret to successful programming is modularization, and the
+method for modularizing a program is functions and subroutines.
+.AL 1
+.LI
+Function subroutine syntax -
+.DS
+	type FUNCTION name (list of variables)
+		statements
+	RETURN
+	END
+.DE
+A variable with the same name as the function is automatically
+defined within a function. This variable must be set before
+returning to return a value from the function.
+.LI
+Subroutine syntax:
+.DS
+	SUBROUTINE name (var1, var2, ..., varN)
+		statements
+	RETURN
+	END
+.DE
+Calling a subroutine from another program syntax:
+.DS
+	CALL subroutinename(var1, var2, ..., varN)
+.DE
+.LI
+Passing arrays to functions or subroutines. Can pass dimensions
+to function or subroutine as part of the arguments.
+.LI
+Entire arrays or just elements in the array can be passed to 
+subroutines and functions.
+.LI
+Common blocks and global data can be used to pass parameters to 
+functions. The syntax is:
+.DS
+	COMMON name /var1, var2, ..., varN/
+.DE
+.LE
+.H 3 "Formatted I/O"
+.AL 1
+.LI
+Simplest forms of IO defaults to terminal and keyboard. The syntax is:
+.DS
+	READ *, var1, var2, ...
+
+	PRINT *, var1, var2, ...
+.DE
+.LI
+Formatted IO to terminal and keyboard:
+.DS
+		READ label, var1, var2, ...
+	label	FORMAT(instructions)
+
+		PRINT label, var1, var2, ...
+	label	FORMAT(instructions)
+.DE
+.LI
+List of instructions specify the following:
+.AL 1
+.LI
+Type of variable and number of significant digits.
+.LI
+Column in which to start printing.
+.LI
+Floating point or exponential form for real numbers.
+.LI
+Number of spaces or blank lines.
+.LI
+Any text to write.
+.LE
+.LI
+General form of a FORMAT statement is:
+.DS
+	label	FORMAT(CCC, spec1, spec2, ..., specN)
+.DE
+where label is a statement label, CCC is carriage control character,
+and specN is the instruction for an individual variable.
+.LI
+The carriage control character controls the location of a the printer
+head. The possible values are:
+.DS
+.TS
+center,tab(%);
+l l.
+Character%Description
+_
+' '%single vertical space
+'0'%double vertical space
+'1'%new page
+'+'%reset to beginning of current line
+_
+.TE
+.TB "Carriage Control Characters"
+.DE
+.LI
+Specifiers give detail information as how to print a variable. The
+specifiers shown in the next table.
+.DS
+.TS
+center,tab(%);
+l l l l l.
+Descriptor%Function%Form%Example%Misc.
+_
+I%integer%Iw%I5%
+F%real%Fw.d%F6.2%w>=d+3
+E%exponential%Ew.d%E12.4%w>=d+7
+D%double precision%Dw.d%D20.8%w>=d+8
+G%real(E or F)%Gw.d%G8.2%messy
+A%character%Aw%A20%
+' '%strings%'xxx'%'Example'%
+X%individual space%rX%5x%
+T%tab to column c%Tc%T40%
+/%new line%/%/%
+r(...)%repeat ( )%r(...)%2(F6.2,I3)%
+_
+.TE
+.TB "Format Specifiers"
+.DE
+where w=width, d=decimal places, c=column, and r=repeat factor.
+.LI
+Text is left-justified and numbers are right-justified.
+.LI
+If the A-format is too small for a string, then the string is
+truncated. Numbers that don't fit in a the given specifier
+are not printed; X's are printed instead.
+.LE
+.H 3 "Character Data"
+.AL 1
+.LI
+Declaring character strings examples:
+.DS
+	CHARACTER*20 name, address, phone
+
+	CHARACTER name*20, address*40, phone*20
+
+	CHARACTER*20 table(5,5)
+.DE
+.LI
+Substrings can be accessed within a string. The following
+prints out "bcd".
+.DS
+	CHARACTER*5 string
+	DATA string / 'abcde' /
+	PRINT *, string(2:4)
+.DE
+.LI
+Strings can be concatenated to make larger strings. The syntax
+for string concatenation is:
+.DS
+	CHARACTER*10 s1, s2, s3
+	s3 = s1 // s2
+.DE
+.LI
+Concatenated strings that overflow are truncated. String s3 
+in the following example is equal to '012345678901234'.
+.DS
+	CHARACTER*10 s1, s2
+	CHARACTER*15 s3
+	DATA s1, s2 / '0123456789', '0123456789'
+	s3 = s1 // s2
+	print *, 's3 is ', s3
+.DE
+.LI
+Relational operators can be applied to strings. The collating
+order is determined by the EBCDIC or ASCII codes. The relational
+operators are: .LT., .GT., .LE., .GE., .EQ., .NE.
+.LI
+A-format specificier is used to read and write character strings.
+.LI
+There are several available library functions which are specific
+to strings. Some of the more important ones are: CHAR(), ICHAR(),
+INDEX(), and LEN(). CHAR() returns the character corresponding
+to an ASCII or EBCDIC code. ICHAR() returns the ASCII or EBSDIC
+code corresponding to a character. INDEX returns the location
+of a substring within a string. Finally, LEN() returns the 
+length of a string.
+.LE
+.H 3 "Data Files"
+.AL 1
+.LI
+There are 3 basic steps required for read from or writing to a file.
+.AL 1
+.LI
+Open an existing file for reading or create a file for writing.
+.LI
+Read or write to a file.
+.LI
+Close file when done.
+.LE
+.LI
+The open statement has the following syntax:
+.DS
+	OPEN(UNIT=unit number, FILE=filename, STATUS=file status,
+	     ACCESS=access type, ERR=label)
+.DE
+where UNIT is a number from 1 to 99; FILE is a file name; STATUS is
+'OLD', 'NEW', 'SCRATCH', or 'UNKNOWN'; ACCESS is 'SEQUENTIAL' or
+'DIRECT'; and ERR is label to transfer to in case of an error 
+during the open operation. An example for opening an existing file
+follows. The default access is sequential.
+.DS
+	OPEN(UNIT=10, FILE='data.out', STATUS='OLD', ERR=1000)
+	.
+	.
+	.
+1000	STOP 'OPEN FAILED'
+.DE
+An example for opening a new file follows:
+.DS
+	OPEN(UNIT=10, FILE='data.out', STATUS='NEW', ERR=1000)
+	.
+	.
+	.
+1000	STOP 'OPEN FAILED'
+.DE
+.LI
+An example for reading and writing to file follows. The unit number 10
+is assumed to come from a previously executed OPEN statement.
+.DS
+	CHARACTER name*20, address*40, state*20
+	OPEN(UNIT=9, FILE='old.in', STATUS='OLD')
+	OPEN(UNIT=10, FILE='new.out', STATUS='NEW')
+	READ(9,*) name, address, state
+	WRITE(10,*) name, address, state
+.DE
+.LI
+Closing a file is as follows.
+.DS
+	CLOSE(9)
+	CLOSE(10)
+.DE
+.LI
+Formatted input and output is possible, but list-directed works
+fine in most cases. Formatting is used mostly for output.
+.LE
+.H 3 "Statistical Analysis"
+.AL 1
+.LI
+Population mean.
+.LI
+Population median.
+.LI
+Standard deviation.
+.LI
+Normal Distribution.
+.LE
+.H 3 "Least-Squares Approximation"
+.AL 1
+.LI
+Chi-Square definition with and without weighing with errors.
+.LI
+Least-Squares fit using polynomials.
+.LI
+Linearizing power and exponentials by taking logs. Then a linear
+least squares fit canbe used. Remember to scale the errors.
+.LE
+.H 3 "Systems of Linear Equations"
+.AL 1
+.LI
+Definition of a system of linear equations.
+.LI
+Solving linear systems of equations. Remember some sets have no solution.
+Determinant of zero or almost zero can give big problems.
+.LI
+Gaussian elimination with no pivoting. Give examples of ill-conditioned
+sets of equations.
+.LI
+Gaussian elimination with pivoting.
+.LE
+.H 3 "Interpolation and Curve Fitting"
+.AL 1
+.LI
+Linear interpolation.
+.LI
+Lagrange interpolation.
+.LI
+Newton interpolation formula with divided differences.
+.LI
+Cubic Spline. If we have the the time.
+.LE
+.H 3 "Optimization"
+.P
+Minimizing or maximizing a function. Can use exhaustive search,
+gradient search, or parabolic interpolation. Most likely just
+exhaustive search, a systematic grid search.
+.H 3 "Finding Roots"
+.AL 1
+.LI
+Bisection Method.
+.LI
+Newton's Method.
+.LE
+.H 3 "Graphing"
+.P
+Simple printer plots. Most likely not.
+.H 3 "Engineering and Scientific Applications"
+.P
+This is very vague.

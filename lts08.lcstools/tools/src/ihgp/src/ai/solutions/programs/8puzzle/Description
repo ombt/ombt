@@ -1,0 +1,126 @@
+8-puzzle problem solver
+=======================
+
+This program solves 8-puzzle problems. The 8-puzzle consists of
+8 number, movable tiles, set in a 3x3 frame. One of the cells of
+the frame is empty (the empty tile) which makes it possible to
+move the tiles. The object of the program is to transform one
+8-puzzle configuration into another.
+
+Three versions of the program have been included. Each one demonstrates
+a different search technique: depth-first search, A* and bidirectional
+depth-first search respectively.
+
+The classes
+-----------
+
+Two classes are defined: class PNode and class Puzzle. Class PNode
+represents the nodes generated during the search:
+
+class PNode : public DepthNode
+
+Each object of class PNode contains an 8-puzzle board configuration.
+Node that in the version of the program that uses A* PNode is derived
+from BestNode and in the version based on bidirectional depth-first
+PNode is derived from Node.
+
+Class Puzzle is the implementation of the search algorithm:
+
+class Puzzle : public DepthGraph
+
+In the other versions of the program Puzzle is derived from AStar
+and BiDepthGraph respectively.
+
+The algorithm
+-------------
+
+The algorithm used by the 8-puzzle program is fairly simple: keep
+producing new board configurations until the goal configuration is
+found. There are for operators in this game, based on the directions
+in which the empty tile can be moved: down, up, right, left (numbered
+from 0 to 3). Each time do_operator() is called to apply one of these
+operators to the current node it is first check whether the tile can
+be moved in the specified direction and if so, a new node is generated
+that contains the new board configuration by swapping the empty tile
+and the tile in which the empty tile is to move.
+In the A* version of the program two extra functions must be implemented:
+one to compute the cost of the path from the parent node to the
+successor node and one that computes the heuristic value of the node. The
+cost of the path from parent to successor is always 1. The heuristic
+value of the node is computed by using a heuristic called the "Manhattan
+distance". This heuristic the total distance of the tiles in one
+configuration "home squares": the ordering of the tiles in the goal
+configuration. The Manhatten between two squares S1 and S2 is the distance
+between S1 and S2 in the horizontal direction plus the distance between
+S1 and S2 in the vertical direction
+
+Using the 8-puzzle problem solver
+=================================
+
+To use the program to solve different 8-puzzle problems than those
+supplied in the sample programs the following must be done. First
+two arrays must be declared that represent the start and goal
+8-puzzle board configuration, for instance:
+
+    char
+        start[3][3] = {
+                        {1, 3, 4},
+                        {8, 0, 2},
+                        {7, 6, 5},
+                      };
+
+    char
+        goal[3][3] = {
+                        {1, 2, 3},
+                        {8, 0, 4},
+                        {7, 6, 5},
+                    };
+
+Next an object of class Puzzle is created, passing it two objects
+of class PNode, allocated by new. The arguments passed to the
+constructor of PNode are the board configuration and the position
+of the empty tile of this board: X and Y coordinates. The following
+line shows how these steps can be realized as one step:
+
+    Puzzle
+        puzzle(new PNode(*start, 1, 1), new PNode(*goal, 1, 1));
+
+Next the search must be started and if successfull the solution can
+be displayed:
+
+    if (puzzle.generate())
+        puzzle.display();
+
+A sample program that includes all of these steps is included
+below.
+
+int main()
+{
+    char
+        start[3][3] = {
+                        {1, 3, 4},
+                        {8, 0, 2},
+                        {7, 6, 5},
+                      };
+
+    char
+        goal[3][3] = {
+                        {1, 2, 3},
+                        {8, 0, 4},
+                        {7, 6, 5},
+                    };
+
+    /* Install new handler to catch out of memory errors. */
+    set_new_handler(no_mem);
+
+    /*
+     * Create Puzzle object passing it the start and goal node
+     * which are also created at this point.
+     */
+    Puzzle
+        puzzle(new PNode(*start, 1, 1), new PNode(*goal, 1, 1));
+
+    if (puzzle.generate())
+	puzzle.display();
+    return(1);
+}

@@ -1,0 +1,10 @@
+#!/opt/exp/bin/perl -w
+#
+print "enter string: ";
+$string = <STDIN>;
+chomp $string;
+print "enter number of times to repeat: ";
+$number = <STDIN>;
+chomp $number;
+#
+print $string x $number . "\n";

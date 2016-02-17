@@ -1,0 +1,35 @@
+#calldata
+ent-prfl-slkl2::1
+ent-stg-prflslkl3::1
+ent-stg-mtpnettype::1:::protocol=ansi,mtp3restart=on,ntwkssf=ssfnat,slsldsharebits=sls8bit,dmpriority=n
+ent-stg-pcown::234-60-1:::ntwkid=1
+ent-stg-pcalias::5-5-5:::ntwkid=1,usrtype=m3ua
+ent-stg-lset::1:::ownpc=234-60-1,adjpc=234-3-1,feclli=lset1,festp=even
+ent-stg-lset::2:::ownpc=234-60-1,adjpc=234-4-1,feclli=lset2,festp=even
+ent-stg-lset::3:::ownpc=234-60-1,adjpc=234-6-1,feclli=lset3,festp=even
+ent-stg-lset::4:::ownpc=234-60-1,adjpc=10-10-10,feclli=lset4,festp=even
+ent-slk::1:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/15/1,l2prflid=1
+ent-slk::2:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/15/1,l2prflid=1
+ent-slk::3:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/16/1,l2prflid=1
+ent-slk::4:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/16/1,l2prflid=1
+ent-slk::5:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/1/17/1,l2prflid=1
+ent-slk::6:::sigtype=narrowband,prim2uaassocid=0,m2paassocid=0,m2uaiid=0,termid=T/3/17/1,l2prflid=1
+ent-stg-slk::1:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=1,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::2:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=2,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::3:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=3,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::4:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=3,slc=1,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::5:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=4,slc=0,mtp3prflid=1,m2paassocid=0
+ent-stg-slk::6:::sigtype=narrowband,prim2uaassocid=0,m2uaiid=0,lsetid=4,slc=1,mtp3prflid=1,m2paassocid=0
+ent-stg-routepriority::1:::normrte=1
+ent-stg-routepriority::2:::normrte=2
+ent-stg-routepriority::3:::normrte=3
+ent-stg-mtproute::234-3-1-MEMBER:::rpi=1
+ent-stg-mtproute::234-4-1-MEMBER:::rpi=2
+ent-stg-mtproute::234-6-1-MEMBER:::rpi=3
+#  M2UA links
+#
+#MEGACO area
+ent-sg-mgcassoc::1-1:::inservicesownpc=234-60-1,ipadest=10.11.23.3,ipbdest=10.11.92.3,prinetwork=B,staportrange=50000:is
+ent-sg-m2uaassoc::20:::ipadesta=10.11.12.4,ipadestb=10.11.12.5,ipbdesta=10.11.92.20,ipbdestb=10.11.92.21,prinetwork=B
+sleep 75
+set-sid:::::ihlcsgw4

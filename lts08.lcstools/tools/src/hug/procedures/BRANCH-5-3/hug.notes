@@ -1,0 +1,1756 @@
+1) rtrv-chassis-eqpt to get chassis types. allowed chassis types 
+for 5.X.
+
+	SG ==>> Lucent SG - Lucent Signaling Gateway
+	MGC ==>> Lucent NC - Lucent Network Controller
+	MG ==>> Lucent NG - Lucent Network Gateway
+	SG_MGC ==>> Lucent CC - Lucent Compact Controller
+	SG_MGC_MG ==>> Lucent CS - Lucent Compact Switch
+
+2) preliminary SP procedures:
+
+	DLP-700 - preparing for in-service change of sp of software
+	DLP-701 - checking memory for a change of sp software
+	DLP-702 - ftp of software for an sp software change
+	DLP 703 - extracting software for an sp software change
+
+3) preliminary IOM procedures:
+
+	DLP-712 - preparing for upgrading iom software
+	DLP-713 - ftp'ing files for in upgrade of iom software
+	DLP-714 - extacting file for upgrade of iom software
+
+4) update procedures depending on chassis type:
+
+	DLP-704 - SG ==>> Lucent Signaling Gateway SP update
+	DLP-705 - MGC ==>> Lucent Network Controller SP update
+	DLP-706 - MG ==>>  Lucent Network Gateway SP update
+	DLP-707 - SG_MGC_MG ==>> Lucent Compact Switch SP update
+	DLP-708 - SG_MGC ==>> Lucent CC - Lucent Compact Controller SP update
+
+5) update procedures to a version with no new features or a 
+downgrade depending on chassis type:
+
+	DLP-735 - SG ==>> Lucent Signaling Gateway SP update
+	DLP-736 - MGC ==>> Lucent Network Controller SP update
+	DLP-737 - MG ==>>  Lucent Network Gateway SP update
+	DLP-738 - SG_MGC_MG ==>> Lucent Compact Switch SP update
+	DLP-739 - SG_MGC ==>> Lucent CC - Lucent Compact Controller SP update
+
+6) update procedures to a version with new features or a 
+downgrade depending on chassis type:
+
+	DLP-740 - SG ==>> Lucent Signaling Gateway SP update
+	DLP-741 - MGC ==>> Lucent Network Controller SP update
+	DLP-742 - MG ==>>  Lucent Network Gateway SP update
+	DLP-743 - SG_MGC_MG ==>> Lucent Compact Switch SP update
+	DLP-744 - SG_MGC ==>> Lucent CC - Lucent Compact Controller SP update
+
+7) changing software version for ioms of a 5.X and higher Lucent Gateway
+platform switch:
+
+	DLP-715 - upgrading IOM software of a Lucent Signaling Gateway
+	DLP-717 - upgrading IOM software of a Lucent Network Gateway
+	DLP-718 - upgrading IOM software of a Lucent Compact Switch
+	DLP-719 - upgrading IOM software of a Lucent Compact Controller
+
+8) in-service upgrading a lucent signaling gateway (SG/sg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-704 - in-service upgrade of lucent sg sp software
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-715 - upgrading iom on a lucent sg
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o module
+	DLP-723 - upgrading software on a spare channelized oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+9) in-service upgrading or downgrading of a lucent signaling gateway with
+NO new features (SG/sg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-735 - in-service upgrade of lucent sg sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-715 - upgrading iom on a lucent sg
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o module
+	DLP-732 - upgrading software on a spare channelized oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+10) in-service upgrading or downgrading of a lucent signaling gateway with
+NEW features (SG/sg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-740 - in-service upgrade of lucent sg sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-715 - upgrading iom on a lucent sg
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o module
+	DLP-732 - upgrading software on a spare channelized oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+11) complete upgrade of a lucent network controller (MGC/mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-705 - in-service upgrade of lucent nc sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-716 - upgrading iom on a lucent nc
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-731 - upgrading software on a spare cm
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+12) in-service upgrading or downgrading of a lucent network controller with
+NO new features (MGC/mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-736 - in-service upgrade of lucent nc sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-716 - upgrading iom on a lucent nc
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-731 - upgrading software on a spare cm
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+13) in-service upgrading or downgrading of a lucent network controller with
+NEW features (MGC/mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-741 - in-service upgrade of lucent ng sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-716 - upgrading iom on a lucent nc
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-731 - upgrading software on a spare cm
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+14) complete upgrade of a lucent network gateway (MG/mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-706 - in-service upgrade of lucent ng sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-717 - upgrading iom on a lucent ng
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+15) in-service upgrading or downgrading of a lucent network gateway with
+NO new features (MG/mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-737 - in-service upgrade of lucent ng sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-717 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+16) in-service upgrading or downgrading of a lucent network gateway with
+NEW features (MG/mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-742 - in-service upgrade of lucent ng sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-717 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+17) complete upgrade of a lucent compact switch (SG_MGC_MG/sg_mgc_mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-707 - in-service upgrade of lucent cs sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-718 - upgrading iom on a lucent cs
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+18) in-service upgrading or downgrading of a lucent compact switch with
+NO new features (SG_MGC_MG/sg_mgc_mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-707 - in-service upgrade of lucent cs sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-718 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+19) in-service upgrading or downgrading of a lucent compact switch with
+NEW features (SG_MGC_MG/sg_mgc_mg):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-743 - in-service upgrade of lucent cs sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-718 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+20) complete upgrade of a lucent compact controller (SG_MGC/sg_mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-708 - in-service upgrade of lucent cc sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-719 - upgrading iom on a lucent cs
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+21) in-service upgrading or downgrading of a lucent compact controller with
+NO new features (SG_MGC/sg_mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-739 - in-service upgrade of lucent cc sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-719 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+22) in-service upgrading or downgrading of a lucent compact controller with
+NEW features (SG_MGC/sg_mgc):
+
+upgrading the sp -
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-744 - in-service upgrade of lucent cc sp software <<== difference
+
+upgrading the IOMs - 
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-719 - iom software upgrade
+
+upgrading the spares -
+	DLP-726 - upgrading software on a spare sp
+	DLP-727 - upgrading software on a spare ds1 i/o module
+	DLP-728 - upgrading software on a spare ds3 i/o modile
+	DLP-729 - upgrading software on a spare ethernet i/o module
+	DLP-730 - upgrading software on a spare voice server i/o module
+	DLP-732 - upgrading software on a spare oc-3 i/o module
+
+cleaning up disk space -
+	DLP-734 - cleaning up disk space on sps
+
+23) out-of-service upgrades - execute in order:
+
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-711 - out-of-service upgrade of SP or IOM software
+	DLP-734 - cleaning up disk space on sps
+
+24) out-of-service downgrades - execute in order:
+
+	DLP-700 - preparing of in-service change of sp software
+	DLP-701 - checking memory for sp software change
+	DLP-702 - ftp files for sp software change
+	DLP-703 - extracting software for sp software change
+	DLP-712 - preparing for iom software upgrade
+	DLP-713 - ftp file for iom software upgrade
+	DLP-714 - extracting files for iom software upgrade
+	DLP-709 - out-of-service downgrade of SP or IOM software
+	DLP-734 - cleaning up disk space on sps
+
+===========================================================================
+
+DLP-700 - prep for in-service software change.
+
+1) on active sp tl1 window:
+
+	rtrv-eqpt
+	rtrv-chassis-eqpt
+
+===========================================================================
+
+DLP-701 - checking memory for software change
+
+1) on active sp tl1 window:
+
+	rtrv-eqpt
+
+verify active sp is IS,ACT and standby sp is IS,STBYH.
+
+2) determine partition containing current load:
+
+	exec-ls:::::-l./Telica/swCPU/CurrRel
+
+if response is: 
+
+	../../Telica/swCPU/X.X.X.X.X
+
+then the software is under the / partition.
+
+
+if response is: 
+
+	../../home1/Telica/swCPU/X.X.X.X.X
+
+then the software is under the /home1 partition.
+
+3) determine if there are any OLD software versions:
+
+if CurrRel pointed to /Telica/swCPU, then check /home1 for old loads:
+
+	exec-ls:::::-l,/home1/Telica/swCPU
+
+if CurrRel pointed to /home1/Telica/swCPU, then check / for old loads:
+
+	exec-ls:::::-l,/Telica/swCPU
+
+4) if there are OLD software loads, then you must remove the older loads.
+
+if CurrRel is pointing to /Telica/swCPU, then remove old loads from
+/home1/Telica/swCPU:
+
+	exec-rm:::::-r,/home1/Telica/swCPU/X.X.X.X.X;
+
+verify old load is removed:
+
+	exec-ls:::::/home1/Telica/swCPU/X.X.X.X.X;
+
+repeat until all old loads are deleted.
+
+if CurrRel is pointing to /home1/Telica/swCPU, then remove old loads from
+/Telica/swCPU:
+
+	exec-rm:::::-r,/Telica/swCPU/X.X.X.X.X;
+
+verify old load is removed:
+
+	exec-ls:::::/Telica/swCPU/X.X.X.X.X;
+
+repeat until all old loads are deleted.
+
+5) remove stand-by SP:
+
+if sp-a is active:
+
+	rmv-eqpt::sp-b;
+
+then restore the stand-by SP:
+
+	rst-eqpt::sp-b;
+
+if sp-b is active:
+
+	rmv-eqpt::sp-a;
+
+then restore the stand-by SP:
+
+	rst-eqpt::sp-a;
+
+wait for sp to synchronize. verify stand-by sp is IS,STBYH.
+
+6) switch active SP to the stand-by SP:
+
+if sp-a is active:
+
+	sw-toprotn-eqpt::sp-a
+
+wait for new stand-by sp-a to be IS,STBYH.
+
+if sp-b is active:
+
+	sw-toprotn-eqpt::sp-b
+
+wait for new stand-by sp-b to be IS,STBYH.
+
+7) now repeat procedure to determine where CurrRel points on the new
+active SP and remove the old loads as before. if sp-a was active before, now
+sp-b should be active and repeat the above procedure on sp-b. similarly,
+if sp-b was active before, repeat the procedure on the new active sp-a.
+
+===========================================================================
+
+DLP-702 - ftp software for an sp software update
+
+1) you will use the tl1 ftp command to transfer files from a remote
+repository to the switch:
+
+	exec-ftp-get:[tid]:[<src>]:[ctag]::
+		<srchost>,<username>,<passwd>,<srcfile>,
+		[<destdir>],[<suppressoutput>],[<tmout>];
+
+2) now to transfer the cpu tar file to the switch:
+
+if CurrRel points to /home1/Telica/swCPU, then:
+
+	exec-ftp-get::com:::Y.Y.Y.Y,anonymous,
+		anon,X.X.X.X.cpu.tar.gz;
+
+if CurrRel points to /Telica/swCPU, then:
+
+	exec-ftp-get::com:::Y.Y.Y.Y,anonymous,
+		anon,X.X.X.X.cpu.tar.gz,/home1;
+
+wait for ftp to finish.
+
+3) tl1 command to copy ftp file from active processor to standby processor
+is:
+
+	exec-cp-tostby:[tid]:[src]:[ctag]::
+		[<switches>],<source>,<dest>,[<suppressedoutput>];
+
+if stand-by sp CurrRel points to /home1/Telica/swCPU, then:
+
+	exec-cp-tostby::com:::-rp,X.X.X.X.X_cpu.tar.gz,/;
+
+if stand-by sp CurrRel points to /Telica/swCPU, then:
+
+	exec-cp-tostby::com:::-rp,X.X.X.X.X_cpu.tar.gz,/home1/;
+
+===========================================================================
+
+DLP-703 - extracting sp software from a tar file.
+
+1) on the active processor, do this:
+
+if CurrRel points to /Telica/swCPU, then enter:
+
+	exec-cd:::::/home1/;
+
+if CurrRel points to /home1/Telica/swCPU, then enter:
+
+	exec-cd:::::/;
+
+2) check where cpu tar file is at:
+
+if CurrRel points to /Telica/swCPU, verify the cpu tar file is 
+in /home1/Telica/swCPU:
+
+	exec-ls:::::-l,/home1;
+
+if CurrRel points to /home1/Telica/swCPU, verify the cpu tar file is 
+in /Telica/swCPU:
+
+	exec-ls:::::-l,/;
+
+3) if the tar file is not there, check for space and resend, or resend
+if diskcleanup deleted it.
+
+4) extract the new load from the cpu tar file, enter:
+
+	exec-tar-extract:[tid]:[<src>]:[ctag]::<tarfile>,[<suppressoutput>];
+
+the command is:
+
+	exec-tar-extract::com:::X.X.X.X.X_cpu.tar.gz;
+
+
+wait for /* EXEC-TAR-EXTRACT */ response.
+
+5) now to extract the software on the standby side. the command syntax is:
+
+	exec-tar-extractstby:[tid]:[<src>]:[ctag]::
+		<tarfile>,<path>,[<suppressoutput>];
+
+if CurrRel on the stand-by sp is pointing to /home1/Telica/swCPU,
+then enter:
+
+	exec-tar-extractstby::com:::X.X.X.X.X_cpu.tar.gz,/;
+
+if CurrRel on the stand-by sp is pointing to /Telica/swCPU,
+then enter:
+
+	exec-tar-extractstby::com:::X.X.X.X.X_cpu.tar.gz,/home1/;
+
+============================================================================
+
+DLP-705 - in-service software upgrade for a lucent network controller (MGC)
+
+1) DLP-700,701,702,703 must be completed before this one is done.
+
+2) if cms are to be upgraded, then DLP-712,713,714 must be completed
+before this is done.
+
+3) check for call traces, enter:
+
+	rtrv-call-captverbose;
+
+if there are calls be traced, then do this:
+
+	dlt-call-captverbose::1;
+
+4) determine if Traffic Statistics Application (TCA) is active, enter:
+
+	rtrv-trafficstats;
+
+if state is "IS", then turn it off:
+
+	ed-trafficstats::::::oos;
+
+5) check if SSH or IP filtering is enabled. if enabled, turn off using
+DLP-570. to check, enter:
+
+	rtrv-sys-secu;
+
+6) if ssh is enabled on ems for this switch, then disable:
+
+	switch-name -> modify -> secure shell -> disable -> apply
+
+7) if ems is used, then unmanage the switch:
+
+	switch-name -> modify -> managed -> no -> apply
+
+8) determine which sp is active and which one is standby, enter:
+
+	rtrv-eqpt;
+
+note which sp is IS,ACT and which one is IS,STBYH.
+
+9) remove the stand-by sp, enter:
+
+if sp-a stand-by, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rmv-eqpt::sp-b;
+
+once stand-by sp is OOS-AM (check using rtrv-eqpt), then restore the sp:
+
+if sp-a is oos-ma, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b is oos-ma, enter:
+
+	rst-eqpt::sp-b;
+
+wait for the stand-by sp to be IS,STBYH.
+
+10) switch the active sp, enter:
+
+if sp-a is active and sp-b is stand-by, enter:
+
+	sw-toprotn-eqpt::sp-a;
+
+if sp-b is active and sp-a is stand-by, enter:
+
+	sw-toprotn-eqpt::sp-b;
+
+wait for new active sp to become IS,ACT. if sp-a was active before, now
+sp-b should be active. if sp-a was active before, now sp-a should be 
+active.
+
+11) check call completions using:
+
+	rtrv-pm-cc;
+
+if the switch is ok, then proceed.
+
+12) backup the data base, enter:
+
+	exec-backup-plexus:[tid]:[<src>]:[ctag}::
+		<desthost>,<username>,<passwd>,<destdir>,
+		[<suppressoutput>],[<tmout>];
+
+example:
+
+	exec-backup-plexus::com:::lts08.ih.lucent.com,lcstools,XXXXX,/tmp;
+
+13) now to change the software version on the stand-by processor:
+
+if sp-a is stand-by, then enter:
+
+	ed-eqpt::sp-a:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+if sp-b is stand-by, then enter:
+
+	ed-eqpt::sp-b:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+
+14) remove the stand-by sp from service, enter:
+
+if sp-a is stand-by, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rmv-eqpt::sp-b;
+
+IMPORTANT: wait for at least five minutes before continueing. if you
+don't wait, then the exec-run-upgrade command can fail.
+
+15) now update the timesten database:
+
+	exec-run-upgrade:<tid>:<sp>:[ctag]::[<suppressoutput>];
+
+if sp-a is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-a;
+
+if sp-b is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-b;
+
+wait for the response: /* EXEC_RUN_UPGRADE */
+
+this can happen quickly or take 10 minutes.
+
+16) once the update is done and stand-by processor is rebooting, then
+do this:
+
+if sp-a was stand-by, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b was stand-by, enter:
+
+	rst-eqpt::sp-b;
+
+17) wait for the stand-by processor to complete booting and synchronization.
+the status of the stand-by sp should be IS,STBYH and the software version
+should reflect the value given in the previous ed-chassis command. use
+rtrv-eqpt to verify this is true.
+
+18) change the software version of the current active processor. do this:
+
+if sp-a is active, enter:
+
+	ed-eqpt::sp-a:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+if sp-b is active, enter:
+
+	ed-eqpt::sp-b:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+19) verify CurrRel is pointing the new software version. enter this:
+
+	exec-ls:::::-l,/Telica/swCPU/CurrRel;
+
+20) switch to stand-by sp, enter:
+
+if sp-a is active, enter:
+
+	sw-toprotn-eqpt::sp-a;
+
+if sp-b is active, enter:
+
+	sw-toprotn-eqpt::sp-b;
+
+21) wait for the switch to finish, then do this:
+
+if sp-a is the new stand-by sp, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is the new stand-by sp, enter:
+
+	rmv-eqpt::sp-b;
+
+22) check alarms, do this:
+
+	rtrv-alm-all;
+
+23) if you make test calls, check the status:
+
+	rtrv-pm-cc;
+
+24) now upgrade the cpu software on the new stand-by sp:
+
+if sp-a is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-a;
+
+if sp-b is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-b;
+
+wait for the final response:
+
+	/* EXEC_RUN_UPGRADE */
+
+25) once the upgrade is done, restore the stand-by sp:
+
+if sp-a is stand-by, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rst-eqpt::sp-b;
+
+wait for the stand-by sp to boot and synchronize. the status for the
+stand-by sp must be: IS,STBYH. this can take up to 15 minutes.
+
+26) verify the stand-by sp is IS,STBYH and the software version
+reflects the previous ed-eqpt command. use rtrv-eqpt to verify this
+is true.
+
+27) verify the stand-by sp indicates the new software version, do 
+this:
+
+	rtrv-info-eqpt;
+
+28)  if you have cms to update, continue. if not, then you still 
+need to rmv/rst the cms because of possible cpu changes. remember
+that executables are NFS shared from the cpu to the cms. go to 
+step 42 if there are no cm changes, just sp changes.
+
+29) cms are installed in pairs, iom slot 9 is not used. first update
+the cms in slots 14 and 15. these are called common cms and are used
+for routing and accessing subscriber databases.
+
+30) determine which cm in slot 14 or 15 is the protection cm. use
+rtrv-eqpt to get this info.
+
+31) remove the protection cm:
+
+if iom-14 is the protection cm, enter:
+
+	rmv-eqpt::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	rmv-eqpt::iom-15;
+
+32) update the software version on the protection cm that was removed:
+
+if iom-14 is the protection cm, enter:
+
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+if iom-15 is the protection cm, enter:
+
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+33) upgrade the firmware on the protection cm, enter:
+
+if iom-14 is the protection cm, enter:
+
+	cpy-mem::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	cpy-mem::iom-15;
+
+wait for the cpy-mem to complete.
+
+34) restore the protection cm to service, enter:
+
+if iom-14 is the protection cm, enter:
+
+	rst-eqpt::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	rst-eqpt::iom-15;
+
+wait for the iom to recover.
+
+35) verify the protection cm has the state IS,STBYH. use rtrv-eqpt
+to verify this is true.
+
+36) switch the active CM to the protection CM, enter:
+
+if iom-14 is active, enter:
+
+	sw-toprotn-eqpt::iom-14;
+
+if iom-15 is active, enter:
+
+	sw-toprotn-eqpt::iom-15;
+
+37) ensure the old active cm is oos after the switch to protection.
+
+38) update the software version on the oos cm. do this:
+
+if iom-14 is oos, enter:
+
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+if iom-15 is oos, enter:
+
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+39) upgrade the software on the oos cm, enter:
+
+if iom-14 is oos, enter:
+
+	cpy-mem::iom-14;
+
+if iom-15 is oos, enter:
+
+	cpy-mem::iom-15;
+
+40) wait for the cpy-mem to complete and the cm to be IS,STBYH. the 
+old active cm is now the stand-by cm.
+
+41) if there is another CM pair, then repeat steps 29 to 40. if not,
+skip the following steps of removing/restoring cms. goto step 44.
+
+42) determine which sps are protection, use rtrv-eqpt.
+
+43) do ioms 14 and 15 first. do this:
+
+if iom-14 is stand-by, do this:
+
+	rmv-eqpt::iom-14;
+	rst-eqpt::iom-14;
+	sw-toprotn-eqpt::iom-15;
+	rst-eqpt::iom-15;
+
+if iom-15 is stand-by, do this:
+
+	rmv-eqpt::iom-15;
+	rst-eqpt::iom-15;
+	sw-toprotn-eqpt::iom-14;
+	rst-eqpt::iom-14;
+
+repeat this for each CM pair.
+
+44) cm upgrade is done. re-enable ssh if you disabled it. enable
+ems managmene, if you unmanaged it. 
+
+45) if tca was turned off, enter:
+
+	ed-trafficstats::::::is;
+
+============================================================================
+
+DLP-712 - preparation for changing iom software
+
+1) log into Unix using root on one of the SPs. check the file usage:
+
+	$ df
+
+if file usage is over 68%, you need to remove old files.
+
+2) repeat this procedure for both SPs.
+
+============================================================================
+
+DLP-713 - ftping files for iom software update
+
+1) determine type if iom, do this:
+
+	rtrv-info-eqpt;
+
+list of iom type and software type:
+
+part#     i/o module        SG NC NG CS CC SG/NG software
+89-0388-C quad ana (6.x)           y        y    ana.tar.gz
+89-0390-A ethernet na        n  n  n  y  n  y    ena.tar.gz
+89-0390-B ethernet na w/ram  n  n  n  y  n  y    ena.tar.gz
+89-0395-B voice server       n  n  n  y  n  n    voip.tar.gz
+89-0397   triple ds3         y  n  n  y  y  y    trds3.tar.gz
+89-0398   octal ds3          y  n  n  y  y  y    octds3.tar.gz
+89-0400-A chan. oc3          y  n  n  y  y  y    tdmoc.tar.gz
+89-0410-A triple ds3 sts-1   y  n  n  y  y  y    trids3.tar.gz
+89-0411-A octal ds3 sts-1    y  n  n  y  y  y    octds3_2.tar.gz
+89-0413-B hd voice server    n  n  n  y  y  y    vs3.tar.gz
+89-0414-A ds1/e1/t1          y  n  n  y  y  y    ds1_2.tar.gz
+89-0419-B compute modules    n  y  y  n  y  n    cm.tar.gz
+89-0424-A triple ds3         y  n  n  y  y  y    trids3_3.tar.gz
+89-0425-A octal ds3          y  n  n  y  y  y    octds3_3.tar.gz
+89-0432 ena-2                n  n  n  y  n  y    ena2.tar.gz
+
+2) copy required IOM files to the active sp:
+
+	exec-ftp=get::com::Y.Y.Y.Y,username,passwd,
+		/remotepath/X.X.X.X.X_type.tar.gz,/localpath;
+
+where Y.Y.Y.Y is the IP where the tar file is at, /remotepath/*type.tar.gz is
+the path to the remote tar file, and /localpath is the path where the 
+file is stored on the SP.
+
+wait for the termination response:
+
+	/* EXEC-FTP-GET */
+
+3) repeat 2 until all required iom tar files are retrieved and stored
+on the active sp.
+
+4) copy the iom tar files from the active sp to the stand-by sp.
+
+	 exec-cp-tostby::com:::-rp,/localpath/*.type.tar.gz,/stdbypath/;
+
+where /localpath/*type.tar.gz is where the file is on the active sp and
+/stdbypath/ is the path on the stand-by sp where the files are copied. 
+repeat for all IOM tar files.
+
+============================================================================
+
+DLP-714 - extracting files for iom software update
+
+1) extract the tar files on the active sp:
+
+	exec-tar-extract::com:::/localpath/*.type.tar.gz;
+
+where /localpath is path to the tar file on the active sp. wait for
+the termination response:
+
+	/* EXEC-TAR-EXTRACT */
+
+repeat for each iom tar file.
+
+2) now extract the tar files on the stand-by sp:
+
+	exec-tar-extractstby::com:::/stbypath/*type.tar.gz,/path;
+
+where /stbypath points to where the tar files are stored on the 
+stand-by sp and /path is where the files will be expanded, either
+/ or /home1.
+
+repeat for each iom tar file.
+
+============================================================================
+
+DLP-716 - upgrading iom software on a lucent network controller
+
+1) check security status:
+
+	rtrv-sys-secu;
+
+if ssh is on, disable it. refer to DLP-570.
+if ssh enabled on ems, disable it.
+if ems is managing this switch, disable it.
+
+2) save configuration. do a backup.
+
+	exec-backup-plexus::com:::Y.Y.Y.Y,<login>,<passwd>,/remotepath;
+
+wait for backup to finish.
+
+3) verify test calls, enter:
+
+	rtrv-pm-cc;
+
+4) check if call-trace is on:
+
+	rtrv-call-captverbose;
+
+if enabled, then:
+
+	dlt-call-captverbose::1;
+
+5) check tca is on:
+
+	rtrv-trafficstats;
+
+if enabled, then:
+
+	ed-trafficstats::::::oos;
+
+6) determine IOM data:
+
+	rtrv-eqpt;
+	rtrv-info-eqpt;
+
+7) ensure no IOMs are UAS (unassigned).
+
+8) if you have any IOM in the UAS state, then use ent-eqpt to 
+define the IOM.
+
+9) updating CMs, first do iom-14 and iom-15, then the remaining
+pairs. 
+
+if iom-14 is active and iom-15 is protection:
+
+	rmv-eqpt::iom-15;
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+	cpy-mem::iom-15;
+	rst-eqpt::iom-15;
+
+	sw-toprotn-eqpt::iom-14;
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+	cpy-mem::iom-14;
+
+if iom-15 is active and iom-14 is protection:
+
+	rmv-eqpt::iom-14;
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+	cpy-mem::iom-14;
+	rst-eqpt::iom-14;
+
+	sw-toprotn-eqpt::iom-15;
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+	cpy-mem::iom-15;
+
+10) repeat step 9 for every cm pair.
+
+11) enable anything that was disabled before starting.
+
+if ems was managing this switch, enable it.
+if ssh was enabled on ems, enable it.
+if ssh was on, enable it. refer to DLP-570.
+
+============================================================================
+
+DLP-726 - upgrading software on a spare (new) system processor
+
+============================================================================
+
+DLP-731 - upgrading software on a spare (new) compute module
+
+============================================================================
+
+DLP-734 - cleaning up disk space on an sp
+
+1) determine if there are any tar files on the main partition:
+
+	exec-ls:::::-l,*.tar.gz;
+
+2) if there are tar files in the main partition:
+
+	exec-rm:::::-r, *tar.gz;
+
+3) determine if there are any tar files on the secondary partition:
+
+	exec-ls:::::-l,/home1/*.tar.gz;
+
+4) if there are tar files in the secondary partition:
+
+	exec-rm:::::-r,/home1/*tar.gz;
+
+============================================================================
+
+DLP-736 - in-service software upgrade for a lucent network controller (MGC)
+with no new features and a possible downgrade
+
+1) DLP-700,701,702,703 must be completed before this one is done.
+
+2) check of ssh and ip filtering are enabled:
+
+	rtrv-sys-secu;
+
+if ssh is enabled, then disable. refer to DLP-570. 
+
+	ed-sys-secu:::::sshenabled=n;
+
+3) unmanage any ems, do this:
+
+	switch name -> modify -> managed -> no -> apply.
+
+4) call trace?
+	rtrv-call-captverbose;
+	dlt-call-captverbose::1;
+
+5) traffic stats?
+	rtrv-trafficstats;
+	ed-trafficstats:::::oos;
+
+6) determine which sp is active and which one is stand-by:
+
+	rtrv-eqpt;
+
+7) for this example, assume sp-a is stand-by and sp-b is active:
+
+	rmv-eqpt::sp-a;
+	rst-eqpt::sp-a;
+	sw-toprotn-eqpt::sp-b;
+
+run calls to check:
+
+	rtrv-pm-cc;
+	exec-backup-plexus::com:::Y.Y.Y.Y,<login>,<passwd>,/path;
+
+	ed-eqpt::sp-b:::swversion-=X.X.X.X.X;
+	rmv-eqpt::sp-b;
+	exec-run-upgrade:<switchid>:sp-b;
+
+updating timesten. this may upto ten minutes.
+
+while sp-b is booting, then enter:
+
+	rst-eqpt::sp-b;
+
+wait for the sps to synchronize.
+
+8) once the sps are IS,ACT and IS,STBYH, then:
+
+	ed-eqpt::sp-a::swversion=X.X.X.X.X;
+	sw-toprot-eqpt::sp-a;
+	rmv-eqpt::sp-a;
+
+run calls and check using:
+
+	rtrv-pm-cc;
+
+9) do you wish to upgrade or downgrade the switch? 
+
+for downgrade, continue to next step.
+for upgrade, goto step 11.
+
+10) downgrading an sp, do this. assume sp-a is stand-by and sp-b
+is active:
+
+	ed-eqpt::sp-a:::swversion=OLD.VERSION.X.X.X.X.X;
+
+Logon the stand-by SP via Lynx:
+
+	$ cd /Telica/swCPU
+	$ rm CurrRel
+
+if the old software is under /Telica/swCPU, then enter:
+
+	$ ln -s /Telica/swCPU/<old-version> CurrRel
+
+if the old software is under /home1/Telica/swCPU, then enter:
+
+	$ ln -s ../../home1/Telica/swCPU/<old-version> CurrRel
+
+you are done:
+
+	$ exit
+
+continue in the Tl1 window:
+
+	rst-eqpt::sp-a;
+	sw-toprotn-eqpt::sp-b;
+
+changed software on new stand-by sp-b:
+
+	ed-eqpt::sp-b:::swversion=OLD.VERSION.X.X.X.X.X;
+	rmv-eqpt::sp-b;
+	exec-run-upgrade:<systmeid>:sp-b;
+	rst-eqpt::sp-b;
+
+wait for both sps to be IS,ACT and IS,STBYH. run some calls and check
+with results:
+
+	rtrv-pm-cc;
+
+done downgrading the switch.
+
+11) upgrade of the sp. assume sp-a is stand-by and sp-b is active:
+
+	rmv-eqpt::sp-a
+	exec-run-upgrade:<systemid>:sp-a;
+
+this can take about 10 minutes. while sp-a is booting, enter:
+
+	rst-eqpt::sp-a;
+
+wait for the sps to synchronize, then run some calls and check using:
+
+	rtrv-pm-cc;
+
+12) do you have CMs to upgrade? if so, then continue. if not, goto step ___.
+
+13) update cms 14 and 15 first. assume iom-15 is the protection for 
+this example.
+
+	rmv-eqpt::iom-15;
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+	cpy-mem::iom-15
+
+wait for cpy-mem to complete.
+
+	rst-eqpt::iom-15;
+	sw-toprotn-eqpt::iom-14;
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+	cpy-mem::iom-14;
+
+wait for update to complete and the CMs to go IS,ACT and IS,STBYH. make
+calls to verify and check calls with:
+
+	rtrv-pm-cc;
+
+if you have more cm pairs, then repeat step 13.
+
+14)  do you wish to downgrade the CMs?
+
+LEFT OFF AT DLP-736 STEP 90.
+
+
+
+	
+	
+
+
+
+	
+
+
+2) if cms are to be upgraded, then DLP-712,713,714 must be completed
+before this is done.
+
+3) check for call traces, enter:
+
+	rtrv-call-captverbose;
+
+if there are calls be traced, then do this:
+
+	dlt-call-captverbose::1;
+
+4) determine if Traffic Statistics Application (TCA) is active, enter:
+
+	rtrv-trafficstats;
+
+if state is "IS", then turn it off:
+
+	ed-trafficstats::::::oos;
+
+5) check if SSH or IP filtering is enabled. if enabled, turn off using
+DLP-570. to check, enter:
+
+	rtrv-sys-secu;
+
+6) if ssh is enabled on ems for this switch, then disable:
+
+	switch-name -> modify -> secure shell -> disable -> apply
+
+7) if ems is used, then unmanage the switch:
+
+	switch-name -> modify -> managed -> no -> apply
+
+8) determine which sp is active and which one is standby, enter:
+
+	rtrv-eqpt;
+
+note which sp is IS,ACT and which one is IS,STBYH.
+
+9) remove the stand-by sp, enter:
+
+if sp-a stand-by, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rmv-eqpt::sp-b;
+
+once stand-by sp is OOS-AM (check using rtrv-eqpt), then restore the sp:
+
+if sp-a is oos-ma, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b is oos-ma, enter:
+
+	rst-eqpt::sp-b;
+
+wait for the stand-by sp to be IS,STBYH.
+
+10) switch the active sp, enter:
+
+if sp-a is active and sp-b is stand-by, enter:
+
+	sw-toprotn-eqpt::sp-a;
+
+if sp-b is active and sp-a is stand-by, enter:
+
+	sw-toprotn-eqpt::sp-b;
+
+wait for new active sp to become IS,ACT. if sp-a was active before, now
+sp-b should be active. if sp-a was active before, now sp-a should be 
+active.
+
+11) check call completions using:
+
+	rtrv-pm-cc;
+
+if the switch is ok, then proceed.
+
+12) backup the data base, enter:
+
+	exec-backup-plexus:[tid]:[<src>]:[ctag}::
+		<desthost>,<username>,<passwd>,<destdir>,
+		[<suppressoutput>],[<tmout>];
+
+example:
+
+	exec-backup-plexus::com:::lts08.ih.lucent.com,lcstools,XXXXX,/tmp;
+
+13) now to change the software version on the stand-by processor:
+
+if sp-a is stand-by, then enter:
+
+	ed-eqpt::sp-a:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+if sp-b is stand-by, then enter:
+
+	ed-eqpt::sp-b:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+
+14) remove the stand-by sp from service, enter:
+
+if sp-a is stand-=by, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rmv-eqpt::sp-b;
+
+IMPORTANT: wait for at least five minutes before continueing. if you
+don't wait, then the exec-run-upgrade command can fail.
+
+15) now update the timesten database:
+
+	exec-run-upgrade:<tid>:<sp>:[ctag]::[<suppressoutput>];
+
+if sp-a is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-a;
+
+if sp-b is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-b;
+
+wait for the response: /* EXEC_RUN_UPGRADE */
+
+this can happen quickly or take 10 minutes.
+
+16) once the update is done and stand-by processor is rebooting, then
+do this:
+
+if sp-a was stand-by, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b was stand-by, enter:
+
+	rst-eqpt::sp-b;
+
+17) wait for the stand-by processor to complete booting and synchronization.
+the status of the stand-by sp should be IS,STBYH and the software version
+should reflect the value given in the previous ed-chassis command. use
+rtrv-eqpt to verify this is true.
+
+18) change the software version of the current active processor. do this:
+
+if sp-a is active, enter:
+
+	ed-eqpt::sp-a:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+if sp-b is active, enter:
+
+	ed-eqpt::sp-b:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cpu software version.
+
+19) verify CurrRel is pointing the new software version. enter this:
+
+	exec-ls:::::-l,/Telica/swCPU/CurrRel;
+
+20) switch to stand-by sp, enter:
+
+if sp-a is active, enter:
+
+	sw-toprotn-eqpt::sp-a;
+
+if sp-b is active, enter:
+
+	sw-toprotn-eqpt::sp-b;
+
+21) wait for the switch to finish, then do this:
+
+if sp-a is the new stand-by sp, enter:
+
+	rmv-eqpt::sp-a;
+
+if sp-b is the new stand-by sp, enter:
+
+	rmv-eqpt::sp-b;
+
+22) check alarms, do this:
+
+	rtrv-alm-all;
+
+23) if you make test calls, check the status:
+
+	rtrv-pm-cc;
+
+24) now upgrade the cpu software on the new stand-by sp:
+
+if sp-a is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-a;
+
+if sp-b is stand-by, enter:
+
+	exec-run-upgrade:<labid>:sp-b;
+
+wait for the final response:
+
+	/* EXEC_RUN_UPGRADE */
+
+25) once the upgrade is done, restore the stand-by sp:
+
+if sp-a is stand-by, enter:
+
+	rst-eqpt::sp-a;
+
+if sp-b is stand-by, enter:
+
+	rst-eqpt::sp-b;
+
+wait for the stand-by sp to boot and synchronize. the status for the
+stand-by sp must be: IS,STBYH. this can take up to 15 minutes.
+
+26) verify the stand-by sp is IS,STBYH and the software version
+reflects the previous ed-eqpt command. use rtrv-eqpt to verify this
+is true.
+
+27) verify the stand-by sp indicates the new software version, do 
+this:
+
+	rtrv-info-eqpt;
+
+28)  if you have cms to update, continue. if not, then you still 
+need to rmv/rst the cms because of possible cpu changes. remember
+that executables are NFS shared from the cpu to the cms. go to 
+step 42 if there are no cm changes, just sp changes.
+
+29) cms are installed in pairs, iom slot 9 is not used. first update
+the cms in slots 14 and 15. these are called common cms and are used
+for routing and accessing subscriber databases.
+
+30) determine which cm in slot 14 or 15 is the protection cm. use
+rtrv-eqpt to get this info.
+
+31) remove the protection cm:
+
+if iom-14 is the protection cm, enter:
+
+	rmv-eqpt::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	rmv-eqpt::iom-15;
+
+32) update the software version on the protection cm that was removed:
+
+if iom-14 is the protection cm, enter:
+
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+if iom-15 is the protection cm, enter:
+
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+33) upgrade the firmware on the protection cm, enter:
+
+if iom-14 is the protection cm, enter:
+
+	cpy-mem::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	cpy-mem::iom-15;
+
+wait for the cpy-mem to complete.
+
+34) restore the protection cm to service, enter:
+
+if iom-14 is the protection cm, enter:
+
+	rst-eqpt::iom-14;
+
+if iom-15 is the protection cm, enter:
+
+	rst-eqpt::iom-15;
+
+wait for the iom to recover.
+
+35) verify the protection cm has the state IS,STBYH. use rtrv-eqpt
+to verify this is true.
+
+36) switch the active CM to the protection CM, enter:
+
+if iom-14 is active, enter:
+
+	sw-toprotn-eqpt::iom-14;
+
+if iom-15 is active, enter:
+
+	sw-toprotn-eqpt::iom-15;
+
+37) ensure the old active cm is oos after the switch to protection.
+
+38) update the software version on the oos cm. do this:
+
+if iom-14 is oos, enter:
+
+	ed-eqpt::iom-14:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+if iom-15 is oos, enter:
+
+	ed-eqpt::iom-15:::swversion=X.X.X.X.X;
+
+where X.X.X.X.X is the new cm software version.
+
+39) upgrade the software on the oos cm, enter:
+
+if iom-14 is oos, enter:
+
+	cpy-mem::iom-14;
+
+if iom-15 is oos, enter:
+
+	cpy-mem::iom-15;
+
+40) wait for the cpy-mem to complete and the cm to be IS,STBYH. the 
+old active cm is now the stand-by cm.
+
+41) if there is another CM pair, then repeat steps 29 to 40. if not,
+skip the following steps of removing/restoring cms. goto step 44.
+
+42) determine which sps are protection, use rtrv-eqpt.
+
+43) do ioms 14 and 15 first. do this:
+
+if iom-14 is stand-by, do this:
+
+	rmv-eqpt::iom-14;
+	rst-eqpt::iom-14;
+	sw-toprotn-eqpt::iom-15;
+	rst-eqpt::iom-15;
+
+if iom-15 is stand-by, do this:
+
+	rmv-eqpt::iom-15;
+	rst-eqpt::iom-15;
+	sw-toprotn-eqpt::iom-14;
+	rst-eqpt::iom-14;
+
+repeat this for each CM pair.
+
+44) cm upgrade is done. re-enable ssh if you disabled it. enable
+ems managmene, if you unmanaged it. 
+
+45) if tca was turned off, enter:
+
+	ed-trafficstats::::::is;
+

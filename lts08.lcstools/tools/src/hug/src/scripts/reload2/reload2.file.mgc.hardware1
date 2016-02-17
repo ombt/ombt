@@ -1,0 +1,12 @@
+file_mgc_hardware1_spa exec {
+	tl1 open -t10 tl1spa <spa.ip> <spa.tl1login> <spa.tl1passwd>
+	tl1 file -v tl1spa mgc.hardware1
+	tl1 exec -i -v tl1spa init-sys:telica::::10;
+	tl1 close tl1spa
+}
+file_mgc_hardware1_spb exec {
+	tl1 open -t10 tl1spb <spb.ip> <spb.tl1login> <spb.tl1passwd>
+	tl1 file -v tl1spb mgc.hardware1
+	tl1 exec -i -v tl1spb init-sys:telica::::10;
+	tl1 close tl1spb
+}

@@ -1,0 +1,149 @@
+hrdcpy /sh tl1sh -B viperlng1hrdcpy tl1sh -B viperlng   lnc1
+connecting to viperlnc1 at SP-B-IP-ADDR 135.112.169.73 ...
+
+connecting to machine viperlnc1 at 135.112.169.73 ...
+
+attempt 0 to logon machine 135.112.169.73 ...
+Trying 135.112.169.73...
+Connected to 135.112.169.73.
+Escape character is '^]'.
+
+connected to 135.112.169.73 at port 2361 ...
+^[
+
+LGP 1999-2006 Lucent Technologies Inc.
+
+
+Telica> 
+TL1 prompt received ...
+act-user::telica:::******;
+
+   VIPER_LNC1 2006-09-26 15:02:45
+*  0 REPT EVT SESSION
+   "VIPER_LNC1:N,,
+/* NOTICE: This is a private computer system.
+Unauthorized access or use may lead to prosecution.
+Last login: Mon Sep 25 14:06:04 2006
+This is the PROTECTION System Processor */"
+   /* REPT-EVT-SESSION */
+;
+
+   VIPER_LNC1 2006-09-26 15:02:45
+M  0 COMPLD
+;
+Telica> 
+Telica> 
+COMPLETED received ...
+
+135.112.169.73 is the STANDBY MACHINE.
+hrdcpy tl1sh -B viperlnc1hrdcpy tl1sh -A
+connecting to viperlnc1 at SP-A-IP-ADDR 135.112.169.72 ...
+
+connecting to machine viperlnc1 at 135.112.169.72 ...
+
+attempt 0 to logon machine 135.112.169.72 ...
+Trying 135.112.169.72...
+Connected to 135.112.169.72.
+Escape character is '^]'.
+
+connected to 135.112.169.72 at port 2361 ...
+^[
+
+LGP 1999-2006 Lucent Technologies Inc.
+
+
+Telica> 
+TL1 prompt received ...
+act-user::telica:::******;
+
+   VIPER_LNC1 2006-09-26 15:02:48
+*  0 REPT EVT SESSION
+   "VIPER_LNC1:N,,
+/* NOTICE: This is a private computer system.
+Unauthorized access or use may lead to prosecution.
+Last login: Mon Sep 25 14:06:04 2006
+This is the WORKING System Processor */"
+   /* REPT-EVT-SESSION */
+;
+
+   VIPER_LNC1 2006-09-26 15:02:48
+M  0 COMPLD
+;
+Telica> 
+Telica> 
+COMPLETED received ...
+;
+Telica> 
+Telica> rtrv-eqpt;
+
+   VIPER_LNC1 2006-09-26 15:02:50
+M  0 COMPLD
+   "IOM-1:BA7ATP0FAA,SX,90,90,90,6.2.0.1.P1:IS,ACT"
+   "IOM-2:BA7ATP0FAA,SX,90,90,90,6.2.0.1.P1:IS,ACT"
+   "IOM-3:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-4:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-5:BA9ATS0FAB,SEC,90,90,90,6.2.0.1.P1:IS,STBYH"
+   "IOM-6:BA9ATS0FAB,PRI,90,90,90,6.2.0.1.P1:IS,ACT"
+   "IOM-7:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-8:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-9:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-10:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-11:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-12:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-13:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-14:BA9ATS0FAB,SEC,90,90,90,6.2.0.1.P1:IS,STBYH"
+   "IOM-15:BA9ATS0FAB,PRI,90,90,90,6.2.0.1.P1:IS,ACT"
+   "IOM-16:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "IOM-17:,,0,0,0,:OOS-AUMA,UEQ&UAS"
+   "SP-A:BAUCAAEAAA,PRI,90,90,95,6.2.0.1.SP.1:IS,ACT"
+   "SF-A:BAC7W3YJAB,PRI,90,90,95,6.2.0.1.SP.1:IS,ACT"
+   "SP-B:BAUCAAEAAA,SEC,90,90,95,6.2.0.1.SP.1:IS,STBYH"
+   "SF-B:BAC7W3YJAB,SEC,90,90,95,6.2.0.1.SP.1:IS,STBYH"
+   /* RTRV-EQPT */
+;
+Telica> rtrv-chj[1D[1Passis=-eq[1D[1P[1D[1P[1D[1P[1D[1P[1D[1Ps-eqpt;
+
+   VIPER_LNC1 2006-09-26 15:02:58
+M  0 COMPLD
+   "COM:SHELFID=1,CHASSISTYPE=SG_MGC,MGTYPE=PG,SGTYPE=PSG,CLLI=VIPERLNC123,LOC=NULL,CRAFTIPSPA=NULL,CRAFTIPSPB=NULL,EMIPSPA=135.112.169.72,EMIPSPB=135.112.169.73,EMIPCHASSIS=135.112.169.71,SIGAIPSPA=135.112.169.212,SIGAIPSPB=135.112.169.213,SIGBIPSPA=NULL,SIGBIPSPB=NULL,SIGCIPSPA=NULL,SIGCIPSPB=NULL,SIGDIPSPA=NULL,SIGDIPSPB=NULL,SIGAIPCHASSIS=135.112.169.211,CRAFTIPMASK=NULL,EMIPMASK=NULL,SIGAIPMASK=255.255.255.224,SIGBIPMASK=NULL,SIGCIPMASK=NULL,SIGDIPMASK=NULL,EMPORTMODE=AUTONEG,SIGAPORTMODE=AUTONEG,SIGBPORTMODE=AUTONEG,SIGCPORTMODE=AUTONEG,SIGDPORTMODE=AUTONEG,EMFAILOVERTMR=0,SIGFAILOVERTMR=0,EMTOS=NULL,SIGATOS=NULL,SIGBTOS=NULL,SIGCTOS=NULL,SIGDTOS=NULL,DNSIP1=135.112.169.44,DNSIP2=NULL,NTPSERVIP1=135.112.169.86,NTPSERVIP2=NULL,DNSNAME=NULL"
+   /* RTRV-CHASSIS-EQPT */
+;
+Telica> rtrv-ijnfo[1D[1P[1D[1P[1D[1P[1D[1Pno[1D[1Pfo-eqpt;
+
+   VIPER_LNC1 2006-09-26 15:03:04
+M  0 COMPLD
+   "IOM-1:BA7ATP0FAA,\"Telica 28-port DS1_2 Front\",6.2.0.1.P1,A-1,000006KB01013436,PASS,,0,1,0,Y:0,0,0,0,0:BA7A1P0FAA,\"Telica 28-port DS1_2 Rear\",A-0,000005KB11011518,"
+   "IOM-2:BA7ATP0FAA,\"Telica 28-port DS1_2 Front\",6.2.0.1.P1,A-1,000006KB01013437,PASS,,0,0,0,Y:0,0,0,0,0:BA7A1P0FAA,\"Telica 28-port DS1_2 Rear\",A-0,000005KB11011526,"
+   "IOM-3:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-4:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-5:BA9ATS0FAB,\"Telica Compute Module\",6.2.0.1.P1,B-2,000005KB11011331,PASS,,0,0,0,Y:0,0,0,0,0:BA9AUT0FAA,\"Telica CM Rear Module\",A-1,000005KB11010950,"
+   "IOM-6:BA9ATS0FAB,\"Telica Compute Module\",6.2.0.1.P1,B-2,000005KB11011321,PASS,,0,0,0,Y:0,0,0,0,0:BA9AUT0FAA,\"Telica CM Rear Module\",A-1,000005KB11010960,"
+   "IOM-7:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-8:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-9:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-10:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-11:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-12:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-13:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-14:BA9ATS0FAB,\"Telica Compute Module\",6.2.0.1.P1,B-2,000005KB11011333,PASS,,0,0,0,Y:0,0,0,0,0:BA9AUT0FAA,\"Telica CM Rear Module\",A-1,000005KB11010973,"
+   "IOM-15:BA9ATS0FAB,\"Telica Compute Module\",6.2.0.1.P1,B-2,000005KB11011313,PASS,,0,0,0,Y:0,0,0,0,0:BA9AUT0FAA,\"Telica CM Rear Module\",A-1,000005KB11010962,"
+   "IOM-16:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "IOM-17:,,,,,,,0,0,0,N:0,0,0,0,0:,,,,"
+   "SP-A:BAUCAAEAAA,\"Telica Dual SP III Front Module\",6.2.0.1.SP.1,D-7,000006KB01014020,PASS,,0,0,0,Y:0,0,0,0,0:BA1C1W0HAA,\"Telica SP3 Rear Module (depop)\",A-1,000006KB01013620,"
+   "SF-A:BAC7W3YJAB,\"Telica 24-port Switch Fabric\",6.2.0.1.SP.1,D-7,000006KB01014161,PASS,,0,0,0,Y:0,0,0,0,0:BAC7Z30JAA,\"Telica Alarm Relay Module\",A-9,000005KB08006784,"
+   "SP-B:BAUCAAEAAA,\"Telica Dual SP III Front Module\",6.2.0.1.SP.1,D-7,000006KB01014010,PASS,,0,0,0,Y:0,0,0,0,0:BA1C1W0HAA,\"Telica SP3 Rear Module (depop)\",A-1,000006KB01013618,"
+   "SF-B:BAC7W3YJAB,\"Telica 24-port Switch Fabric\",6.2.0.1.SP.1,D-7,000006KB01014159,PASS,,0,0,0,Y:0,0,0,0,0:BAMGL00GRA,\"Telica 21 Slot Chassis, 14U\",A-1,000005kb11011975,"
+   /* RTRV-INFO-EQPT */
+;
+Telica> canc-user;
+
+   VIPER_LNC1 2006-09-26 15:03:07
+M  0 COMPLD
+;
+Telica> Connection closed by foreign host.
+
+
+end-of-file ...
+
+
+hrdcpy exit

@@ -1,0 +1,16 @@
+#All variables needed by this makefile are set by the top-level makefile.
+#The default rule for producing object files from .cc files is redefined
+#so that the settings specified by these variables will be used.
+
+AR = tlib 
+UTILLIB = $(TOPDIR)\lib\util.lib
+INCFLAGS = -I..\include
+
+.cc.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cc
+        $(AR) $(UTILLIB) -+$*
+
+OBJS =  biter.obj blist.obj string.obj
+
+all:	$(OBJS)
+

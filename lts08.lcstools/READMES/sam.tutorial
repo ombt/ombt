@@ -1,0 +1,1960 @@
+hrdcpy
+hrdcpy
+hrdcpy # for saveload, enter:
+hrdcpy
+hrdcpy lcssaveload -?
+
+usage: saveload	[-?] [-x] [-B] [-R] [-U] [-V] [-S trace	level]
+	[-u username] [-p passwd] [labid [labid	...] ]
+where:
+	-? - print usage message
+	-x - enable TCL	debugger
+	-U - unconditional installation; remove	local file when	it exists.
+	-V - enable verbose output
+	-R - remove saveload lock
+	-B - run saveload in the background.
+
+The load will be turned	on for any labid listed	in the command line.
+
+hrdcpy # saving	a load ...
+hrdcpy
+hrdcpy lcssaveload -
+P: creating lock /home/lcstools/tools/queue/saveloadall	...
+  0: QUIT
+  1: BP-3-10-1-7
+  2: BP-3-11-0-4
+  3: BP-3-11-0-5
+  4: BP-3-11-1-1
+  5: BP-3-11-2-1
+  6: BP-5-1-0-0-201
+  7: BP-5-3-0-1
+  8: BP-5-3-0-2
+  9: BRANCH-3-10-1
+ 10: BRANCH-3-11
+ 11: BRANCH-5-0-0
+ 12: BRANCH-5-1
+ 13: BRANCH-5-1-1
+ 14: BRANCH-5-2
+ 15: BRANCH-5-3
+ 16: BRANCH-6-0
+ 17: BRANCH-6-1
+ 18: BP-6-1-1-1
+ 19: BP-6-1-1-2
+Choose a branch: 2
+
+Branch	 : BP-3-11-0-4
+Machine	 : chibuild.telica.com
+Directory: /home2/builder/newpatches
+Type	 : beta
+
+imagesubtype is	<voip6>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/ECO/3-11-0-4-SP-5/3.11.0.4.0_voip6.tar.gz
+  3: /telica/toaster/home/release/ECO/3-11-0-4/3.11.0.4.0_voip6.tar.gz
+Choose an voip6	image to save: 0
+exiting	saveload.
+V: deleting lock /home/lcstools/tools/queue/saveloadall	...
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -?
+
+usage: configure [-x?] -a branch cpuload labid [labid ...]
+	or
+usage: configure [-x?] -d branch cpuload labid [labid ...]
+	or
+usage: configure [-x?] -b branch [branch ...]
+	or
+usage: configure [-x?] -c cpuload [cpuload ...]
+	or
+usage: configure [-x?] -l labid	[labid ...]
+
+where:
+	-x - enable debug mode
+	-? - print usage message
+	-a - add branch/cpuload	for reload of labid
+	-d - delete branch/cpuload for reload of labid
+	-b - list reload data filtered by branch
+	-c - list reload data filtered by cpuload
+	-l - list reload data filtered by labid
+
+the last option	[-a|-d|-b|-c|-l] given takes precedence.
+
+hrdcpy lcsconfigure -l ihlcs1
+
+Starting LCS Configure Load
+
+Starting list_by_labid:	ihlcs1
+
+Lab Load data for labid	ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -d BRANCH-3-11 3.11.1.0.26 ihlcs1
+
+Starting LCS Configure Load
+
+Starting delete_from_reload: BRANCH-3-11 3.11.1.0.26 ihlcs1
+
+Deleting BRANCH-3-11/3.11.1.0.26 from reload of	ihlcs1.
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -l ihlcs1-3-11 3.11.1.0.26 ihlcs1
+
+Starting LCS Configure Load
+
+Starting list_by_labid:	ihlcs1
+
+Lab Load data for labid	ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+hrdcpy lcsconfigure -a BRANCH-3-11 3.11.1.0.26 ihlcs1
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BRANCH-3-11 3.11.1.0.26	ihlcs1
+
+Adding BRANCH-3-11/3.11.1.0.26 for reload of ihlcs1.
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -l ihlcs1-3-11 3.11.1.0.26 ihlcs1
+
+Starting LCS Configure Load
+
+Starting list_by_labid:	ihlcs1
+
+Lab Load data for labid	ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcslabloads ihlcs1 ihlcs2
+
+
+Loads available	for reload of ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+
+
+Loads available	for reload of ihlcs2:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs2	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs2	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs2	   |BP-3-11-0-4		|3.11.0.4	|
+|ihlcs2	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs2	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs2	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs2	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs2	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs2	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy # to list loads for a lab
+hrdcpy
+hrdcpy
+hrdcpy lcslabloadsoihlcs1rihlcs2
+
+
+Loads available	for reload of ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+
+
+Loads available	for reload of ihlcs2:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs2	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs2	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs2	   |BP-3-11-0-4		|3.11.0.4	|
+|ihlcs2	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs2	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs2	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs2	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs2	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs2	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.29	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy # let's get the latest BRANCH-3-11 load
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy lcssaveload ihlcs1 ihlcs2 ihlcs3
+P: creating lock /home/lcstools/tools/queue/saveloadall	...
+  0: QUIT
+  1: BP-3-10-1-7
+  2: BP-3-11-0-4
+  3: BP-3-11-0-5
+  4: BP-3-11-1-1
+  5: BP-3-11-2-1
+  6: BP-5-1-0-0-201
+  7: BP-5-3-0-1
+  8: BP-5-3-0-2
+  9: BRANCH-3-10-1
+ 10: BRANCH-3-11
+ 11: BRANCH-5-0-0
+ 12: BRANCH-5-1
+ 13: BRANCH-5-1-1
+ 14: BRANCH-5-2
+ 15: BRANCH-5-3
+ 16: BRANCH-6-0
+ 17: BRANCH-6-1
+ 18: BP-6-1-1-1
+ 19: BP-6-1-1-2
+Choose a branch: 10
+
+Branch	 : BRANCH-3-11
+Machine	 : chibuild.telica.com
+Directory: /telica/toaster/home/release
+Type	 : dev
+
+imagesubtype is	<ds1>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.2.0_ds1.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.23_ds1.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.22_ds1.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.21_ds1.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.20_ds1.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.19_ds1.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.18_ds1.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.17_ds1.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.16_ds1.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.15_ds1.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.14_ds1.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.13_ds1.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.12_ds1.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.11_ds1.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.10_ds1.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.9_ds1.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.8_ds1.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.1.0.7_ds1.tar.gz
+Choose an ds1 image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.2.0_ds1.tar.gz.
+
+imagesubtype is	<octds3>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.2.0_octds3.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.23_octds3.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.22_octds3.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.21_octds3.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.20_octds3.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.19_octds3.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.18_octds3.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.17_octds3.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.16_octds3.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.15_octds3.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.14_octds3.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.13_octds3.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.12_octds3.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.11_octds3.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.10_octds3.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.9_octds3.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.8_octds3.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.1.0.7_octds3.tar.gz
+Choose an octds3 image to save:	 [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.2.0_octds3.tar.gz.
+
+imagesubtype is	<ds3>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.2.0_ds3.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.23_ds3.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.22_ds3.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.21_ds3.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.20_ds3.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.19_ds3.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.18_ds3.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.17_ds3.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.16_ds3.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.15_ds3.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.14_ds3.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.13_ds3.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.12_ds3.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.11_ds3.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.10_ds3.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.9_ds3.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.8_ds3.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.1.0.7_ds3.tar.gz
+Choose an ds3 image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.2.0_ds3.tar.gz.
+
+imagesubtype is	<trids3_3>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.2.0_trids3_3.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.23_trids3_3.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.22_trids3_3.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.21_trids3_3.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.20_trids3_3.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.19_trids3_3.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.18_trids3_3.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.17_trids3_3.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.16_trids3_3.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.15_trids3_3.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.14_trids3_3.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.13_trids3_3.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.12_trids3_3.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.11_trids3_3.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.10_trids3_3.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.9_trids3_3.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.8_trids3_3.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.1.0.7_trids3_3.tar.gz
+Choose an trids3_3 image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.2.0_trids3_3.tar.gz.
+
+imagesubtype is	<ena>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.2.0_ena.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.23_ena.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.22_ena.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.21_ena.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.20_ena.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.19_ena.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.18_ena.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.17_ena.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.16_ena.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.15_ena.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.14_ena.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.13_ena.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.12_ena.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.11_ena.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.10_ena.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.9_ena.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.8_ena.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swENA/3.11.1.0.7_ena.tar.gz
+Choose an ena image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swENA/3.11.2.0_ena.tar.gz.
+
+imagesubtype is	<voip>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.29_voip.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.28_voip.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.27_voip.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.26_voip.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.25_voip.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.24_voip.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.23_voip.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.22_voip.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.21_voip.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.20_voip.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.19_voip.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.18_voip.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.17_voip.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.16_voip.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.15_voip.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.14_voip.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.13_voip.tar.gz
+Choose an voip image to	save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip.tar.gz.
+
+imagesubtype is	<ena2>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.2.0_ena2.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.23_ena2.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.22_ena2.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.21_ena2.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.20_ena2.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.19_ena2.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.18_ena2.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.17_ena2.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.16_ena2.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.15_ena2.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.14_ena2.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.13_ena2.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.12_ena2.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.11_ena2.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.10_ena2.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.9_ena2.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.8_ena2.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.1.0.7_ena2.tar.gz
+Choose an ena2 image to	save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.2.0_ena2.tar.gz.
+
+imagesubtype is	<cpu>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.2.0_cpu.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.30_cpu.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.29_cpu.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.28_cpu.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.27_cpu.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.26_cpu.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.25_cpu.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.24_cpu.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.23_cpu.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.22_cpu.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.21_cpu.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.20_cpu.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.19_cpu.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.18_cpu.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.17_cpu.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.16_cpu.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.15_cpu.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.1.0.14_cpu.tar.gz
+Choose an cpu image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.2.0_cpu.tar.gz.
+
+imagesubtype is	<ds1_2>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.2.0_ds1_2.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.26_ds1_2.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.25_ds1_2.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.24_ds1_2.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.23_ds1_2.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.22_ds1_2.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.21_ds1_2.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.20_ds1_2.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.19_ds1_2.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.18_ds1_2.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.17_ds1_2.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.16_ds1_2.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.15_ds1_2.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.14_ds1_2.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.13_ds1_2.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.12_ds1_2.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.11_ds1_2.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.1.0.10_ds1_2.tar.gz
+Choose an ds1_2	image to save:	[<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.2.0_ds1_2.tar.gz.
+
+imagesubtype is	<octds3_2>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.2.0_octds3_2.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.23_octds3_2.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.22_octds3_2.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.21_octds3_2.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.20_octds3_2.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.19_octds3_2.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.18_octds3_2.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.17_octds3_2.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.16_octds3_2.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.15_octds3_2.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.14_octds3_2.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.13_octds3_2.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.12_octds3_2.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.11_octds3_2.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.10_octds3_2.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.9_octds3_2.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.8_octds3_2.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.1.0.7_octds3_2.tar.gz
+Choose an octds3_2 image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.2.0_octds3_2.tar.gz.
+
+imagesubtype is	<trids3>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.2.0_trids3.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.23_trids3.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.22_trids3.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.21_trids3.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.20_trids3.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.19_trids3.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.18_trids3.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.17_trids3.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.16_trids3.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.15_trids3.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.14_trids3.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.13_trids3.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.12_trids3.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.11_trids3.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.10_trids3.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.9_trids3.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.8_trids3.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.1.0.7_trids3.tar.gz
+Choose an trids3 image to save:	 [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.2.0_trids3.tar.gz.
+
+imagesubtype is	<octds3_3>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.2.0_octds3_3.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.23_octds3_3.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.22_octds3_3.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.21_octds3_3.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.20_octds3_3.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.19_octds3_3.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.18_octds3_3.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.17_octds3_3.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.16_octds3_3.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.15_octds3_3.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.14_octds3_3.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.13_octds3_3.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.12_octds3_3.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.11_octds3_3.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.10_octds3_3.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.9_octds3_3.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.8_octds3_3.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.1.0.7_octds3_3.tar.gz
+Choose an octds3_3 image to save:  [<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.2.0_octds3_3.tar.gz.
+
+imagesubtype is	<voip6>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip6.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.29_voip6.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.28_voip6.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.27_voip6.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.26_voip6.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.25_voip6.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.24_voip6.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.23_voip6.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.22_voip6.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.21_voip6.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.20_voip6.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.19_voip6.tar.gz
+ 14: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.18_voip6.tar.gz
+ 15: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.17_voip6.tar.gz
+ 16: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.16_voip6.tar.gz
+ 17: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.15_voip6.tar.gz
+ 18: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.14_voip6.tar.gz
+ 19: /telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.1.0.13_voip6.tar.gz
+Choose an voip6	image to save:	[<cr>=more choices] 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip6.tar.gz.
+
+imagesubtype is	<e1>.
+  0: QUIT
+  1: NONE
+  2: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.2.0_e1.tar.gz
+  3: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.10_e1.tar.gz
+  4: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.9_e1.tar.gz
+  5: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.8_e1.tar.gz
+  6: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.7_e1.tar.gz
+  7: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.6_e1.tar.gz
+  8: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.5_e1.tar.gz
+  9: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.4_e1.tar.gz
+ 10: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.3_e1.tar.gz
+ 11: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.2_e1.tar.gz
+ 12: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.1_e1.tar.gz
+ 13: /telica/toaster/home/release/BRANCH-3-11/swE1/3.11.1.0.0_e1.tar.gz
+Choose an e1 image to save: 2
+
+Will save image:
+/telica/toaster/home/release/BRANCH-3-11/swE1/3.11.2.0_e1.tar.gz.
+
+cpu-load: 3.11.2.0
+  0: QUIT
+  1: /lcsl100/text
+Choose a file system: 1
+
+SAVING IMAGE TYPE ds1:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swDS1/3.11.2.0_ds1.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/ds1/3.11.2.0_ds1.tar.gz
+
+SAVING IMAGE TYPE octds3:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swOCTDS3/3.11.2.0_octds3.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/octds3/3.11.2.0_octds3.tar.gz
+
+SAVING IMAGE TYPE ds3:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swDS3/3.11.2.0_ds3.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/ds3/3.11.2.0_ds3.tar.gz
+
+SAVING IMAGE TYPE trids3_3:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swTRIDS3_3/3.11.2.0_trids3_3.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/trids3_3/3.11.2.0_trids3_3.tar.gz
+
+SAVING IMAGE TYPE ena:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swENA/3.11.2.0_ena.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/ena/3.11.2.0_ena.tar.gz
+
+SAVING IMAGE TYPE voip:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/voip/3.11.2.0_voip.tar.gz
+
+SAVING IMAGE TYPE ena2:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swENA2/3.11.2.0_ena2.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/ena2/3.11.2.0_ena2.tar.gz
+
+SAVING IMAGE TYPE cpu:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swCPU/3.11.2.0_cpu.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/cpu/3.11.2.0_cpu.tar.gz
+
+SAVING IMAGE TYPE ds1_2:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swDS1_2/3.11.2.0_ds1_2.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/ds1_2/3.11.2.0_ds1_2.tar.gz
+
+SAVING IMAGE TYPE octds3_2:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swOCTDS3_2/3.11.2.0_octds3_2.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/octds3_2/3.11.2.0_octds3_2.tar.gz
+
+SAVING IMAGE TYPE trids3:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swTRIDS3/3.11.2.0_trids3.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/trids3/3.11.2.0_trids3.tar.gz
+
+SAVING IMAGE TYPE octds3_3:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swOCTDS3_3/3.11.2.0_octds3_3.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/octds3_3/3.11.2.0_octds3_3.tar.gz
+
+SAVING IMAGE TYPE voip6:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swVOIP/3.11.2.0_voip6.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/voip6/3.11.2.0_voip6.tar.gz
+
+SAVING IMAGE TYPE e1:
+FROM FILE: chibuild.telica.com!/telica/toaster/home/release/BRANCH-3-11/swE1/3.11.2.0_e1.tar.gz
+TO FILE	 : /lcsl100/text/BRANCH-3-11/e1/3.11.2.0_e1.tar.gz
+14 images saved; will create DB	entries.
+
+creating database entries ...
+branch:	BRANCH-3-11
+cpu-load: 3.11.2.0
+Enabling BRANCH-3-11/3.11.2.0 for lab ihlcs1.
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BRANCH-3-11 3.11.2.0 ihlcs1
+
+Adding BRANCH-3-11/3.11.2.0 for	reload of ihlcs1.
+Enabling BRANCH-3-11/3.11.2.0 for lab ihlcs2.
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BRANCH-3-11 3.11.2.0 ihlcs2
+
+Adding BRANCH-3-11/3.11.2.0 for	reload of ihlcs2.
+Enabling BRANCH-3-11/3.11.2.0 for lab ihlcs3.
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BRANCH-3-11 3.11.2.0 ihlcs3
+
+Adding BRANCH-3-11/3.11.2.0 for	reload of ihlcs3.
+V: deleting lock /home/lcstools/tools/queue/saveloadall	...
+hrdcpy
+you have mail in /var/mail/lcstools
+hrdcpy
+hrdcpy #ssaveload is done
+hrdcpy # some extra place of interest
+hrdcpy
+hrdcpy # for 3-X loads
+hrdcpy
+hrdcpy cd /lcsl100/text
+hrdcpy lf
+[BP-3-10-1-7]	 [BP-3-11-0-5]	  [BP-3-11-2-1]	   [BRANCH-3-11]
+[BP-3-11-0-4]	 [BP-3-11-1-1]	  [BRANCH-3-10-1]  [OS-IMAGES]
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy #ofor 5-x loads
+hrdcpy cd /l148/text
+hrdcpy lf
+[BP-5-3-0-1]	[BP-6-1-1-2]	[BRANCH-5-1-1]	[BRANCH-6-0]
+[BP-5-3-0-2]	[BRANCH-5-0-0]	[BRANCH-5-2]	[BRANCH-6-1]
+[BP-6-1-1-1]	[BRANCH-5-1]	[BRANCH-5-3]	[archive]
+hrdcpy ll
+total 24
+drwxr-xr-x   2 lcstools	lcstools     512 Dec 11	13:45 archive
+drwxr-xr-x  16 lcstools	lcstools    1024 Nov  7	06:37 BP-5-3-0-1
+drwxr-xr-x  15 lcstools	lcstools     512 Dec  1	02:22 BP-5-3-0-2
+drwxr-xr-x  12 lcstools	lcstools     512 Dec  5	22:45 BP-6-1-1-1
+drwxr-xr-x  12 lcstools	lcstools     512 Dec 14	23:51 BP-6-1-1-2
+drwxr-xr-x   2 lcstools	lcstools     512 Jun 16	 2005 BRANCH-5-0-0
+drwxr-xr-x  14 lcstools	lcstools     512 Oct 27	15:57 BRANCH-5-1
+drwxr-xr-x   2 lcstools	lcstools     512 Jun 16	 2005 BRANCH-5-1-1
+drwxr-xr-x  14 lcstools	lcstools     512 Oct 27	16:00 BRANCH-5-2
+drwxr-xr-x  28 lcstools	lcstools     512 Nov 21	05:16 BRANCH-5-3
+drwxr-xr-x  13 lcstools	lcstools     512 Oct 27	16:06 BRANCH-6-0
+drwxr-xr-x  26 lcstools	lcstools     512 Nov  9	08:53 BRANCH-6-1
+hrdcpy
+hrdcpy
+hrdcpy rsd 4
+/home/lcstools/tools/data
+hrdcpy pwd
+/home/lcstools/tools/data
+hrdcpy
+hrdcpy
+hrdcpy dbquery -?
+
+
+ usage:	/home/lcstools/tools/bin/dbquery [-?] [-x] relation unity_where_clause
+
+ or:
+
+ usage /home/lcstools/tools/bin/dbquery	[-?] [-x] [-s] [-l|-D] relation
+
+ where
+	-? - print usage message
+	-x - enable trace mode
+	-l - list available relations
+	-D - list fields for a relation
+	-s - use uselect instead of default uprint
+
+ and clause does NOT include the keyword 'where'.
+
+hrdcpy
+hrdcpy
+hrdcpy dbqueryy-L
+getopt:	illegal	option -- L
+
+
+ usage:	/home/lcstools/tools/bin/dbquery [-?] [-x] relation unity_where_clause
+
+ or:
+
+ usage /home/lcstools/tools/bin/dbquery	[-?] [-x] [-s] [-l|-D] relation
+
+ where
+	-? - print usage message
+	-x - enable trace mode
+	-l - list available relations
+	-D - list fields for a relation
+	-s - use uselect instead of default uprint
+
+ and clause does NOT include the keyword 'where'.
+
+hrdcpy
+hrdcpy
+hrdcpy dbquery -l
+binary	       filesystems    hwioms	     labloads	    notification
+buildmachines  hwchassis      hwtdm	     labs	    parameters
+chassis	       hwenet	      images	     loads	    scripts
+hrdcpy
+hrdcpy
+hrdcpy # to find out the loads for a lab
+hrdcpy lcsconfigure -l ihlcs1
+
+Starting LCS Configure Load
+
+Starting list_by_labid:	ihlcs1
+
+Lab Load data for labid	ihlcs1:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.19	|
+|ihlcs1	   |BP-3-10-1-7		|3.10.1.7.SP.4	|
+|ihlcs1	   |BP-3-11-0-4		|3.11.0.4.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.5	|
+|ihlcs1	   |BP-3-11-0-5		|3.11.0.5.SP.6	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.5	|
+|ihlcs1	   |BP-3-11-1-1		|3.11.1.1.SP.6	|
+|ihlcs1	   |BP-3-11-2-1		|3.11.2.1.SP.1	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.26	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.27	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.29	|
+|ihlcs1	   |BRANCH-3-11		|3.11.2.0	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy to finc labids for a load
+sh: to:	 not found
+hrdcpy
+hrdcpy #ttoffincllabidsfforaalload
+hrdcpy
+hrdcpy lcsconfigured-cf3.11.2.0dad
+
+Starting LCS Configure Load
+
+Starting list_by_cpuload: 3.11.2.0
+
+Load data for cpuload 3.11.2.0:
+
+
+|---------------------------------------------------------|
+|branch		     |cpuload	     |basedir		  |
+|---------------------------------------------------------|
+|BRANCH-3-11	     |3.11.2.0	     |/lcsl100/text	  |
+|---------------------------------------------------------|
+
+Lab Load data for cpuload 3.11.2.0:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BRANCH-3-11		|3.11.2.0	|
+|ihlcs2	   |BRANCH-3-11		|3.11.2.0	|
+|ihlcs3	   |BRANCH-3-11		|3.11.2.0	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -c 3.11.1.0.28
+
+Starting LCS Configure Load
+
+Starting list_by_cpuload: 3.11.1.0.28
+
+Load data for cpuload 3.11.1.0.28:
+
+
+|---------------------------------------------------------|
+|branch		     |cpuload	     |basedir		  |
+|---------------------------------------------------------|
+|BRANCH-3-11	     |3.11.1.0.28    |/lcsl100/text	  |
+|---------------------------------------------------------|
+
+Lab Load data for cpuload 3.11.1.0.28:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcs1	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs2	   |BRANCH-3-11		|3.11.1.0.28	|
+|ihlcs3	   |BRANCH-3-11		|3.11.1.0.28	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy lcsconfigure -c 5.3.0.2.SP.3
+
+Starting LCS Configure Load
+
+Starting list_by_cpuload: 5.3.0.2.SP.3
+
+Load data for cpuload 5.3.0.2.SP.3:
+
+
+|---------------------------------------------------------|
+|branch		     |cpuload	     |basedir		  |
+|---------------------------------------------------------|
+|BP-5-3-0-2	     |5.3.0.2.SP.3   |/l148/text	  |
+|---------------------------------------------------------|
+
+Lab Load data for cpuload 5.3.0.2.SP.3:
+
+
+|-----------------------------------------------|
+|labid	   |branch		|cpuload	|
+|-----------------------------------------------|
+|ihlcsgw1  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlcsgw2  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlcsgw5  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlcsgw6  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlcsgw7  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlcsgw8  |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlnc1	   |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlnc2	   |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlsg1	   |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|ihlsg4	   |BP-5-3-0-2		|5.3.0.2.SP.3	|
+|-----------------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy # to turn on a load for lab
+hrdcpy lcsconfigure -a BP-5-3-0-2 5.3.0.2.SP.3 ihlnc1 ihlnc2
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BP-5-3-0-2 5.3.0.2.SP.3	ihlnc1 ihlnc2
+
+Adding BP-5-3-0-2/5.3.0.2.SP.3 for reload of ihlnc1.
+
+Adding BP-5-3-0-2/5.3.0.2.SP.3 for reload of ihlnc2.
+hrdcpy #lcsconfigure--aBBP-5-3-0-255.3.0.2.SP.3iihlnc1iihlnc2
+hrdcpy
+hrdcpy
+hrdcpy # to remove a load for a	lab
+hrdcpy lcsconfiguree-daBP-5-3-0-225.3.0.2.SP.33ihlnc11ihlnc22
+
+Starting LCS Configure Load
+
+Starting delete_from_reload: BP-5-3-0-2	5.3.0.2.SP.3 ihlnc1 ihlnc2
+
+Deleting BP-5-3-0-2/5.3.0.2.SP.3 from reload of	ihlnc1.
+
+Deleting BP-5-3-0-2/5.3.0.2.SP.3 from reload of	ihlnc2.
+hrdcpy lcsconfigure -a BP-5-3-0-2 5.3.0.2.SP.3 ihlnc1 ihlnc2
+
+Starting LCS Configure Load
+
+Starting add_to_reload:	BP-5-3-0-2 5.3.0.2.SP.3	ihlnc1 ihlnc2
+
+Adding BP-5-3-0-2/5.3.0.2.SP.3 for reload of ihlnc1.
+
+Adding BP-5-3-0-2/5.3.0.2.SP.3 for reload of ihlnc2.
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy dbquery -?
+
+
+ usage:	/home/lcstools/tools/bin/dbquery [-?] [-x] relation unity_where_clause
+
+ or:
+
+ usage /home/lcstools/tools/bin/dbquery	[-?] [-x] [-s] [-l|-D] relation
+
+ where
+	-? - print usage message
+	-x - enable trace mode
+	-l - list available relations
+	-D - list fields for a relation
+	-s - use uselect instead of default uprint
+
+ and clause does NOT include the keyword 'where'.
+
+hrdcpy dbquery -l
+binary	       filesystems    hwioms	     labloads	    notification
+buildmachines  hwchassis      hwtdm	     labs	    parameters
+chassis	       hwenet	      images	     loads	    scripts
+hrdcpy dbquery images
+
+
+|-----------------------------------------------|
+|branch		|cpuload	|type		|
+|-----------------------------------------------|
+|BP-3-11-0-4	|3.11.0.4	|swCPU		|
+|BP-3-11-0-4	|3.11.0.4	|swDS1		|
+|BP-3-11-0-4	|3.11.0.4	|swDS3		|
+|BP-3-11-0-4	|3.11.0.4	|swENA		|
+|BP-3-11-0-4	|3.11.0.4	|swOCTDS3	|
+|BP-3-11-0-4	|3.11.0.4	|swOCTDS3_2	|
+|BP-3-11-0-4	|3.11.0.4	|swOCTDS3_3	|
+|BP-3-11-0-4	|3.11.0.4	|swTDMOC	|
+|BP-3-11-0-4	|3.11.0.4	|swTRIDS3	|
+|BP-3-11-0-4	|3.11.0.4	|swTRIDS3_3	|
+|BP-3-11-0-4	|3.11.0.4	|swVOIP		|
+|BP-3-11-0-4	|3.11.0.4	|swVOIP		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swCPU		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swDS1		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swDS3		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swENA		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swOCTDS3	|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swOCTDS3_2	|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swOCTDS3_3	|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swTRIDS3	|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swTRIDS3_3	|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swVOIP		|
+|BP-3-11-0-4	|3.11.0.4.SP.5	|swVOIP		|
+|BRANCH-5-2	|5.2.0.0.151	|swTDMOC	|
+|BRANCH-5-2	|5.2.0.0.151	|swOCTDS3	|
+|BRANCH-5-2	|5.2.0.0.151	|swTRIDS3_3	|
+|BRANCH-5-2	|5.2.0.0.151	|swENA		|
+|BRANCH-5-2	|5.2.0.0.151	|swVOIP		|
+|BRANCH-5-2	|5.2.0.0.151	|swVOIP		|
+|BRANCH-5-2	|5.2.0.0.151	|swENA2		|
+|BRANCH-5-2	|5.2.0.0.151	|swCPU		|
+|BRANCH-5-2	|5.2.0.0.151	|swCM		|
+|BRANCH-5-2	|5.2.0.0.151	|swTRIDS3	|
+|BRANCH-5-2	|5.2.0.0.151	|swOCTDS3_2	|
+|BRANCH-5-2	|5.2.0.0.151	|swDS1_2	|
+|BRANCH-5-2	|5.2.0.0.151	|swOCTDS3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swCPU		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swDS1		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swDS1_2	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swDS3		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swENA		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swENA2		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swOCTDS3	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swOCTDS3_2	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swOCTDS3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swTRIDS3	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swTRIDS3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swVOIP		|
+|BP-3-11-1-1	|3.11.1.1.SP.3	|swVOIP		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|ds1		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|octds3		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|ds3		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|trids3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|ena		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|voip		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|ena2		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|cpu		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|ds1_2		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|octds3_2	|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|trids3		|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|octds3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.5	|voip6		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|cpu		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|ds1		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|ena		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|octds3		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|voip6		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|octds3_2	|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|trids3		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|ds3		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|octds3_3	|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|voip		|
+|BP-3-11-0-5	|3.11.0.5.SP.5	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|octds3		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|ena		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|voip		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|ena2		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|cm		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|ds1_2		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|octds3_2	|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|trids3		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|octds3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|voip6		|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|tdmoc		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|cpu		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|ds1		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|ena		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|octds3		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|octds3_2	|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|trids3		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|ds3		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|octds3_3	|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|octds3		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|ena		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|voip		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|ena2		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|cm		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|cpu		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|ds1_2		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|octds3_2	|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|trids3		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|octds3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|voip6		|
+|BP-5-3-0-1	|5.3.0.1.SP.6	|tdmoc		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|ds1		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|octds3		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|ds3		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|trids3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|ena		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|voip		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|ena2		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|cpu		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|ds1_2		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|octds3_2	|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|trids3		|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|octds3_3	|
+|BP-3-11-1-1	|3.11.1.1.SP.6	|voip6		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|ena2		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|octds3		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|ena		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|voip		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|ena2		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|cm		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|cpu		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|ds1_2		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|octds3_2	|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|trids3		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|octds3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|voip6		|
+|BP-5-3-0-1	|5.3.0.1.SP.7	|tdmoc		|
+|BRANCH-5-3	|5.3.0.2	|octds3		|
+|BRANCH-5-3	|5.3.0.2	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2	|ena		|
+|BRANCH-5-3	|5.3.0.2	|voip		|
+|BRANCH-5-3	|5.3.0.2	|ena2		|
+|BRANCH-5-3	|5.3.0.2	|cm		|
+|BRANCH-5-3	|5.3.0.2	|cpu		|
+|BRANCH-5-3	|5.3.0.2	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2	|trids3		|
+|BRANCH-5-3	|5.3.0.2	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2	|voip6		|
+|BRANCH-5-3	|5.3.0.2	|tdmoc		|
+|BRANCH-6-1	|6.1.1.1	|cpu		|
+|BRANCH-6-1	|6.1.1.1	|vs3		|
+|BRANCH-6-1	|6.1.1.1	|ena		|
+|BRANCH-6-1	|6.1.1.1	|octds3		|
+|BRANCH-6-1	|6.1.1.1	|trids3		|
+|BRANCH-6-1	|6.1.1.1	|octds3_2	|
+|BRANCH-6-1	|6.1.1.1	|ds1_2		|
+|BRANCH-6-1	|6.1.1.1	|octds3_3	|
+|BRANCH-6-1	|6.1.1.1	|ena2		|
+|BRANCH-6-1	|6.1.1.1	|tdmoc		|
+|BRANCH-6-1	|6.1.1.1	|trids3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|cpu		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|octds3		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|trids3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|ena		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|voip		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|ena2		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|cm		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|ds1_2		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|octds3_2	|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|trids3		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|octds3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|voip6		|
+|BP-5-3-0-2	|5.3.0.2.SP.1	|tdmoc		|
+|BRANCH-5-3	|5.3.0.2.4	|ana		|
+|BRANCH-5-3	|5.3.0.2.4	|octds3		|
+|BRANCH-5-3	|5.3.0.2.4	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2.4	|ena		|
+|BRANCH-5-3	|5.3.0.2.4	|voip		|
+|BRANCH-5-3	|5.3.0.2.4	|ena2		|
+|BRANCH-5-3	|5.3.0.2.4	|cm		|
+|BRANCH-5-3	|5.3.0.2.4	|cpu		|
+|BRANCH-5-3	|5.3.0.2.4	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2.4	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2.4	|trids3		|
+|BRANCH-5-3	|5.3.0.2.4	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2.4	|voip6		|
+|BRANCH-5-3	|5.3.0.2.4	|tdmoc		|
+|BRANCH-5-3	|5.3.0.2.6	|ana		|
+|BRANCH-5-3	|5.3.0.2.6	|octds3		|
+|BRANCH-5-3	|5.3.0.2.6	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2.6	|ena		|
+|BRANCH-5-3	|5.3.0.2.6	|voip		|
+|BRANCH-5-3	|5.3.0.2.6	|ena2		|
+|BRANCH-5-3	|5.3.0.2.6	|cm		|
+|BRANCH-5-3	|5.3.0.2.6	|cpu		|
+|BRANCH-5-3	|5.3.0.2.6	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2.6	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2.6	|trids3		|
+|BRANCH-5-3	|5.3.0.2.6	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2.6	|voip6		|
+|BRANCH-5-3	|5.3.0.2.6	|tdmoc		|
+|BRANCH-6-1	|6.1.1.2.4	|ana		|
+|BRANCH-6-1	|6.1.1.2.4	|octds3		|
+|BRANCH-6-1	|6.1.1.2.4	|trids3_3	|
+|BRANCH-6-1	|6.1.1.2.4	|ena		|
+|BRANCH-6-1	|6.1.1.2.4	|vs3		|
+|BRANCH-6-1	|6.1.1.2.4	|ena2		|
+|BRANCH-6-1	|6.1.1.2.4	|cpu		|
+|BRANCH-6-1	|6.1.1.2.4	|ds1_2		|
+|BRANCH-6-1	|6.1.1.2.4	|octds3_2	|
+|BRANCH-6-1	|6.1.1.2.4	|trids3		|
+|BRANCH-6-1	|6.1.1.2.4	|octds3_3	|
+|BRANCH-6-1	|6.1.1.2.4	|tdmoc		|
+|BP-6-1-1-1	|6.1.1.2	|cpu		|
+|BP-6-1-1-1	|6.1.1.2	|octds3		|
+|BP-6-1-1-1	|6.1.1.2	|vs3		|
+|BP-6-1-1-1	|6.1.1.2	|ds1_2		|
+|BP-6-1-1-1	|6.1.1.2	|octds3_2	|
+|BP-6-1-1-1	|6.1.1.2	|trids3		|
+|BP-6-1-1-1	|6.1.1.2	|ena2		|
+|BP-6-1-1-1	|6.1.1.2	|octds3_3	|
+|BP-6-1-1-1	|6.1.1.2	|tdmoc		|
+|BP-6-1-1-1	|6.1.1.2	|trids3_3	|
+|BP-5-3-0-1	|5.3.0.1.SP.2	|cpu		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|octds3		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|trids3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|ena		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|voip		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|ena2		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|cm		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|cpu		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|ds1_2		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|octds3_2	|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|trids3		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|octds3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|voip6		|
+|BP-5-3-0-2	|5.3.0.2.SP.2	|tdmoc		|
+|BRANCH-3-11	|3.11.1.0.26	|ds1		|
+|BRANCH-3-11	|3.11.1.0.26	|octds3		|
+|BRANCH-3-11	|3.11.1.0.26	|ds3		|
+|BRANCH-3-11	|3.11.1.0.26	|trids3_3	|
+|BRANCH-3-11	|3.11.1.0.26	|ena		|
+|BRANCH-3-11	|3.11.1.0.26	|voip		|
+|BRANCH-3-11	|3.11.1.0.26	|ena2		|
+|BRANCH-3-11	|3.11.1.0.26	|cpu		|
+|BRANCH-3-11	|3.11.1.0.26	|ds1_2		|
+|BRANCH-3-11	|3.11.1.0.26	|octds3_2	|
+|BRANCH-3-11	|3.11.1.0.26	|trids3		|
+|BRANCH-3-11	|3.11.1.0.26	|octds3_3	|
+|BRANCH-3-11	|3.11.1.0.26	|voip6		|
+|BRANCH-3-11	|3.11.1.0.26	|e1		|
+|BRANCH-6-1	|6.1.1.2.8	|ana		|
+|BRANCH-6-1	|6.1.1.2.8	|octds3		|
+|BRANCH-6-1	|6.1.1.2.8	|trids3_3	|
+|BRANCH-6-1	|6.1.1.2.8	|ena		|
+|BRANCH-6-1	|6.1.1.2.8	|vs3		|
+|BRANCH-6-1	|6.1.1.2.8	|ena2		|
+|BRANCH-6-1	|6.1.1.2.8	|cpu		|
+|BRANCH-6-1	|6.1.1.2.8	|ds1_2		|
+|BRANCH-6-1	|6.1.1.2.8	|octds3_2	|
+|BRANCH-6-1	|6.1.1.2.8	|trids3		|
+|BRANCH-6-1	|6.1.1.2.8	|octds3_3	|
+|BRANCH-6-1	|6.1.1.2.8	|tdmoc		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|voip6		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|cpu		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|ena		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|octds3		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|ds1		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|trids3		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|octds3_2	|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|octds3_3	|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|voip		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|ds3		|
+|BP-3-10-1-7	|3.10.1.7.SP.4	|trids3_3	|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|voip6		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|cpu		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|ena		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|octds3		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|ds1		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|trids3		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|octds3_2	|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|octds3_3	|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|voip		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|ds3		|
+|BP-3-10-1-7	|3.10.1.7.SP.19	|trids3_3	|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|voip6		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|voip		|
+|BRANCH-3-11	|3.11.1.0.27	|ds1		|
+|BRANCH-3-11	|3.11.1.0.27	|octds3		|
+|BRANCH-3-11	|3.11.1.0.27	|ds3		|
+|BRANCH-3-11	|3.11.1.0.27	|trids3_3	|
+|BRANCH-3-11	|3.11.1.0.27	|ena		|
+|BRANCH-3-11	|3.11.1.0.27	|voip		|
+|BRANCH-3-11	|3.11.1.0.27	|ena2		|
+|BRANCH-3-11	|3.11.1.0.27	|cpu		|
+|BRANCH-3-11	|3.11.1.0.27	|ds1_2		|
+|BRANCH-3-11	|3.11.1.0.27	|octds3_2	|
+|BRANCH-3-11	|3.11.1.0.27	|trids3		|
+|BRANCH-3-11	|3.11.1.0.27	|octds3_3	|
+|BRANCH-3-11	|3.11.1.0.27	|voip6		|
+|BRANCH-3-11	|3.11.1.0.27	|e1		|
+|BRANCH-6-1	|6.1.1.2.10	|ana		|
+|BRANCH-6-1	|6.1.1.2.10	|octds3		|
+|BRANCH-6-1	|6.1.1.2.10	|trids3_3	|
+|BRANCH-6-1	|6.1.1.2.10	|ena		|
+|BRANCH-6-1	|6.1.1.2.10	|vs3		|
+|BRANCH-6-1	|6.1.1.2.10	|ena2		|
+|BRANCH-6-1	|6.1.1.2.10	|cpu		|
+|BRANCH-6-1	|6.1.1.2.10	|ds1_2		|
+|BRANCH-6-1	|6.1.1.2.10	|octds3_2	|
+|BRANCH-6-1	|6.1.1.2.10	|trids3		|
+|BRANCH-6-1	|6.1.1.2.10	|octds3_3	|
+|BRANCH-6-1	|6.1.1.2.10	|tdmoc		|
+|BRANCH-5-3	|5.3.0.2.13	|ana		|
+|BRANCH-5-3	|5.3.0.2.13	|octds3		|
+|BRANCH-5-3	|5.3.0.2.13	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2.13	|ena		|
+|BRANCH-5-3	|5.3.0.2.13	|voip		|
+|BRANCH-5-3	|5.3.0.2.13	|ena2		|
+|BRANCH-5-3	|5.3.0.2.13	|cm		|
+|BRANCH-5-3	|5.3.0.2.13	|cpu		|
+|BRANCH-5-3	|5.3.0.2.13	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2.13	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2.13	|trids3		|
+|BRANCH-5-3	|5.3.0.2.13	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2.13	|voip6		|
+|BRANCH-5-3	|5.3.0.2.13	|tdmoc		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|cpu		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|octds3		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|vs3		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|ds1_2		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|octds3_2	|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|trids3		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|ena2		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|octds3_3	|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|tdmoc		|
+|BP-6-1-1-1	|6.1.1.3.SP.2	|trids3_3	|
+|BRANCH-3-11	|3.11.1.0.28	|ds1		|
+|BRANCH-3-11	|3.11.1.0.28	|octds3		|
+|BRANCH-3-11	|3.11.1.0.28	|ds3		|
+|BRANCH-3-11	|3.11.1.0.28	|trids3_3	|
+|BRANCH-3-11	|3.11.1.0.28	|ena		|
+|BRANCH-3-11	|3.11.1.0.28	|voip		|
+|BRANCH-3-11	|3.11.1.0.28	|ena2		|
+|BRANCH-3-11	|3.11.1.0.28	|cpu		|
+|BRANCH-3-11	|3.11.1.0.28	|ds1_2		|
+|BRANCH-3-11	|3.11.1.0.28	|octds3_2	|
+|BRANCH-3-11	|3.11.1.0.28	|trids3		|
+|BRANCH-3-11	|3.11.1.0.28	|octds3_3	|
+|BRANCH-3-11	|3.11.1.0.28	|voip6		|
+|BRANCH-3-11	|3.11.1.0.28	|e1		|
+|BRANCH-5-3	|5.3.0.2.14	|ana		|
+|BRANCH-5-3	|5.3.0.2.14	|octds3		|
+|BRANCH-5-3	|5.3.0.2.14	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2.14	|ena		|
+|BRANCH-5-3	|5.3.0.2.14	|voip		|
+|BRANCH-5-3	|5.3.0.2.14	|ena2		|
+|BRANCH-5-3	|5.3.0.2.14	|cm		|
+|BRANCH-5-3	|5.3.0.2.14	|cpu		|
+|BRANCH-5-3	|5.3.0.2.14	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2.14	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2.14	|trids3		|
+|BRANCH-5-3	|5.3.0.2.14	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2.14	|voip6		|
+|BRANCH-5-3	|5.3.0.2.14	|tdmoc		|
+|BRANCH-3-11	|3.11.1.0.29	|ds1		|
+|BRANCH-3-11	|3.11.1.0.29	|octds3		|
+|BRANCH-3-11	|3.11.1.0.29	|ds3		|
+|BRANCH-3-11	|3.11.1.0.29	|trids3_3	|
+|BRANCH-3-11	|3.11.1.0.29	|ena		|
+|BRANCH-3-11	|3.11.1.0.29	|voip		|
+|BRANCH-3-11	|3.11.1.0.29	|ena2		|
+|BRANCH-3-11	|3.11.1.0.29	|cpu		|
+|BRANCH-3-11	|3.11.1.0.29	|ds1_2		|
+|BRANCH-3-11	|3.11.1.0.29	|octds3_2	|
+|BRANCH-3-11	|3.11.1.0.29	|trids3		|
+|BRANCH-3-11	|3.11.1.0.29	|octds3_3	|
+|BRANCH-3-11	|3.11.1.0.29	|voip6		|
+|BRANCH-3-11	|3.11.1.0.29	|e1		|
+|BRANCH-5-3	|5.3.0.2.16	|ana		|
+|BRANCH-5-3	|5.3.0.2.16	|octds3		|
+|BRANCH-5-3	|5.3.0.2.16	|trids3_3	|
+|BRANCH-5-3	|5.3.0.2.16	|ena		|
+|BRANCH-5-3	|5.3.0.2.16	|voip		|
+|BRANCH-5-3	|5.3.0.2.16	|ena2		|
+|BRANCH-5-3	|5.3.0.2.16	|cm		|
+|BRANCH-5-3	|5.3.0.2.16	|cpu		|
+|BRANCH-5-3	|5.3.0.2.16	|ds1_2		|
+|BRANCH-5-3	|5.3.0.2.16	|octds3_2	|
+|BRANCH-5-3	|5.3.0.2.16	|trids3		|
+|BRANCH-5-3	|5.3.0.2.16	|octds3_3	|
+|BRANCH-5-3	|5.3.0.2.16	|voip6		|
+|BRANCH-5-3	|5.3.0.2.16	|tdmoc		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|octds3		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|trids3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|ena		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|voip		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|ena2		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|cm		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|cpu		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|ds1_2		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|octds3_2	|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|trids3		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|octds3_3	|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|voip6		|
+|BP-5-3-0-2	|5.3.0.2.SP.3	|tdmoc		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|cpu		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|octds3		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|vs3		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|ds1_2		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|octds3_2	|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|trids3		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|ena2		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|octds3_3	|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|tdmoc		|
+|BP-6-1-1-2	|6.1.1.2.SP.1	|trids3_3	|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|ds1		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|octds3		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|ds3		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|trids3_3	|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|ena		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|voip		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|ena2		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|cpu		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|ds1_2		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|octds3_2	|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|trids3		|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|octds3_3	|
+|BP-3-11-2-1	|3.11.2.1.SP.1	|voip6		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|cpu		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|octds3		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|vs3		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|ds1_2		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|octds3_2	|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|trids3		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|ena2		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|octds3_3	|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|tdmoc		|
+|BP-6-1-1-2	|6.1.1.2.SP.2	|trids3_3	|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|trids3		|
+|BP-3-11-0-5	|3.11.0.5.SP.6	|trids3_3	|
+|BRANCH-3-11	|3.11.2.0	|ds1		|
+|BRANCH-3-11	|3.11.2.0	|octds3		|
+|BRANCH-3-11	|3.11.2.0	|ds3		|
+|BRANCH-3-11	|3.11.2.0	|trids3_3	|
+|BRANCH-3-11	|3.11.2.0	|ena		|
+|BRANCH-3-11	|3.11.2.0	|voip		|
+|BRANCH-3-11	|3.11.2.0	|ena2		|
+|BRANCH-3-11	|3.11.2.0	|cpu		|
+|BRANCH-3-11	|3.11.2.0	|ds1_2		|
+|BRANCH-3-11	|3.11.2.0	|octds3_2	|
+|BRANCH-3-11	|3.11.2.0	|trids3		|
+|BRANCH-3-11	|3.11.2.0	|octds3_3	|
+|BRANCH-3-11	|3.11.2.0	|voip6		|
+|BRANCH-3-11	|3.11.2.0	|e1		|
+|-----------------------------------------------|
+
+
+|----------------------------------------|
+|name					 |
+|----------------------------------------|
+|3.11.0.4_cpu.tar.gz			 |
+|3.11.0.4.0_ds1.tar.gz			 |
+|3.11.0.4.0_ds3.tar.gz			 |
+|3.11.0.4.0_ena.tar.gz			 |
+|3.11.0.4.0_octds3.tar.gz		 |
+|3.11.0.4.0_octds3_2.tar.gz		 |
+|3.11.0.4.0_octds3_3.tar.gz		 |
+|3.11.0.3.0_tdmoc.tar.gz		 |
+|3.11.0.4.0_trids3.tar.gz		 |
+|3.11.0.4.0_trids3_3.tar.gz		 |
+|3.11.0.4.0_voip.tar.gz			 |
+|3.11.0.4.0_voip6.tar.gz		 |
+|3.11.0.4.SP.5_cpu.tar.gz		 |
+|3.11.0.4.0_ds1.tar.gz			 |
+|3.11.0.4.0.P2_ds3.tar.gz		 |
+|3.11.0.4.0_ena.tar.gz			 |
+|3.11.0.4.P3_octds3.tar.gz		 |
+|3.11.0.4.P3_octds3_2.tar.gz		 |
+|3.11.0.4.P3_octds3_3.tar.gz		 |
+|3.11.0.4.P3_trids3.tar.gz		 |
+|3.11.0.4.P3_trids3_3.tar.gz		 |
+|3.11.0.4.0_voip.tar.gz			 |
+|3.11.0.4.0_voip6.tar.gz		 |
+|5.2.0.0.10_tdmoc.tar.gz		 |
+|5.2.0.0.14_octds3.tar.gz		 |
+|5.2.0.0.13_trids3_3.tar.gz		 |
+|5.2.0.0.5_ena.tar.gz			 |
+|5.2.0.0.6_voip6.tar.gz			 |
+|5.2.0.0.6_voip.tar.gz			 |
+|5.2.0.0.5_ena2.tar.gz			 |
+|5.2.0.0.151_cpu.tar.gz			 |
+|5.2.0.0.2_cm.tar.gz			 |
+|5.2.0.0.13_trids3.tar.gz		 |
+|5.2.0.0.14_octds3_2.tar.gz		 |
+|5.2.0.0.11_ds1_2.tar.gz		 |
+|5.2.0.0.14_octds3_3.tar.gz		 |
+|3.11.1.1.SP.3_cpu.tar.gz		 |
+|3.11.1.1.P3_ds1.tar.gz			 |
+|3.11.1.1.P3_ds1_2.tar.gz		 |
+|3.11.1.1.P3_ds3.tar.gz			 |
+|3.11.1.1.P3_ena.tar.gz			 |
+|3.11.1.1.P3_ena2.tar.gz		 |
+|3.11.1.1.P3_octds3.tar.gz		 |
+|3.11.1.1.P3_octds3_2.tar.gz		 |
+|3.11.1.1.P3_octds3_3.tar.gz		 |
+|3.11.1.1.P3_trids3.tar.gz		 |
+|3.11.1.1.P3_trids3_3.tar.gz		 |
+|3.11.1.1.P3_voip.tar.gz		 |
+|3.11.1.1.P3_voip6.tar.gz		 |
+|3.11.1.1.P4_ds1.tar.gz			 |
+|3.11.1.1.P4_octds3.tar.gz		 |
+|3.11.1.1.P4_ds3.tar.gz			 |
+|3.11.1.1.P4_trids3_3.tar.gz		 |
+|3.11.1.1.P4_ena.tar.gz			 |
+|3.11.1.1.P4_voip.tar.gz		 |
+|3.11.1.1.P4_ena2.tar.gz		 |
+|3.11.1.1.SP.5_cpu.tar.gz		 |
+|3.11.1.1.P4_ds1_2.tar.gz		 |
+|3.11.1.1.P4_octds3_2.tar.gz		 |
+|3.11.1.1.P4_trids3.tar.gz		 |
+|3.11.1.1.P4_octds3_3.tar.gz		 |
+|3.11.1.1.P4_voip6.tar.gz		 |
+|3.11.0.5.SP.5_cpu.tar.gz		 |
+|3.11.0.5.P2_ds1.tar.gz			 |
+|3.11.0.5.P2_ena.tar.gz			 |
+|3.11.0.5.P6_octds3.tar.gz		 |
+|3.11.0.5.P2_voip6.tar.gz		 |
+|3.11.0.5.P6_octds3_2.tar.gz		 |
+|3.11.0.5.P6_trids3.tar.gz		 |
+|3.11.0.5.P2_ds3.tar.gz			 |
+|3.11.0.5.P6_octds3_3.tar.gz		 |
+|3.11.0.5.P2_voip.tar.gz		 |
+|3.11.0.5.P6_trids3_3.tar.gz		 |
+|5.3.0.1.P2_octds3.tar.gz		 |
+|5.3.0.1.P2_trids3_3.tar.gz		 |
+|5.3.0.1.P2_ena.tar.gz			 |
+|5.3.0.1.P2_voip.tar.gz			 |
+|5.3.0.1.P2_ena2.tar.gz			 |
+|5.3.0.1.P2_cm.tar.gz			 |
+|5.3.0.1.P2_ds1_2.tar.gz		 |
+|5.3.0.1.P2_octds3_2.tar.gz		 |
+|5.3.0.1.P2_trids3.tar.gz		 |
+|5.3.0.1.P2_octds3_3.tar.gz		 |
+|5.3.0.1.P2_voip6.tar.gz		 |
+|5.3.0.1.P2_tdmoc.tar.gz		 |
+|3.11.0.5.SP.6_cpu.tar.gz		 |
+|3.11.0.5.P2_ds1.tar.gz			 |
+|3.11.0.5.P2_ena.tar.gz			 |
+|3.11.0.5.P6_octds3.tar.gz		 |
+|3.11.0.5.P6_octds3_2.tar.gz		 |
+|3.11.0.5.P6_trids3.tar.gz		 |
+|3.11.0.5.P2_ds3.tar.gz			 |
+|3.11.0.5.P6_octds3_3.tar.gz		 |
+|3.11.0.5.P6_trids3_3.tar.gz		 |
+|5.3.0.1.P4_octds3.tar.gz		 |
+|5.3.0.1.P4_trids3_3.tar.gz		 |
+|5.3.0.1.P4_ena.tar.gz			 |
+|5.3.0.1.P4_voip.tar.gz			 |
+|5.3.0.1.P4_ena2.tar.gz			 |
+|5.3.0.1.P4_cm.tar.gz			 |
+|5.3.0.1.SP.6_cpu.tar.gz		 |
+|5.3.0.1.P4_ds1_2.tar.gz		 |
+|5.3.0.1.P4_octds3_2.tar.gz		 |
+|5.3.0.1.P4_trids3.tar.gz		 |
+|5.3.0.1.P4_octds3_3.tar.gz		 |
+|5.3.0.1.P4_voip6.tar.gz		 |
+|5.3.0.1.P4_tdmoc.tar.gz		 |
+|3.11.1.1.P4_ds1.tar.gz			 |
+|3.11.1.1.P4_octds3.tar.gz		 |
+|3.11.1.1.P4_ds3.tar.gz			 |
+|3.11.1.1.P4_trids3_3.tar.gz		 |
+|3.11.1.1.P4_ena.tar.gz			 |
+|3.11.1.1.P4_voip.tar.gz		 |
+|3.11.1.1.P4_ena2.tar.gz		 |
+|3.11.1.1.SP.6_cpu.tar.gz		 |
+|3.11.1.1.P4_ds1_2.tar.gz		 |
+|3.11.1.1.P4_octds3_2.tar.gz		 |
+|3.11.1.1.P4_trids3.tar.gz		 |
+|3.11.1.1.P4_octds3_3.tar.gz		 |
+|3.11.1.1.P4_voip6.tar.gz		 |
+|3.11.0.5.P5_ena2.tar.gz		 |
+|5.3.0.1.P4_octds3.tar.gz		 |
+|5.3.0.1.P4_trids3_3.tar.gz		 |
+|5.3.0.1.P4_ena.tar.gz			 |
+|5.3.0.1.P4_voip.tar.gz			 |
+|5.3.0.1.P4_ena2.tar.gz			 |
+|5.3.0.1.P4_cm.tar.gz			 |
+|5.3.0.1.SP.7_cpu.tar.gz		 |
+|5.3.0.1.P4_ds1_2.tar.gz		 |
+|5.3.0.1.P4_octds3_2.tar.gz		 |
+|5.3.0.1.P4_trids3.tar.gz		 |
+|5.3.0.1.P4_octds3_3.tar.gz		 |
+|5.3.0.1.P4_voip6.tar.gz		 |
+|5.3.0.1.P4_tdmoc.tar.gz		 |
+|5.3.0.2_octds3.tar.gz			 |
+|5.3.0.2_trids3_3.tar.gz		 |
+|5.3.0.2_ena.tar.gz			 |
+|5.3.0.2_voip.tar.gz			 |
+|5.3.0.2_ena2.tar.gz			 |
+|5.3.0.2_cm.tar.gz			 |
+|5.3.0.2_cpu.tar.gz			 |
+|5.3.0.2_ds1_2.tar.gz			 |
+|5.3.0.2_octds3_2.tar.gz		 |
+|5.3.0.2_trids3.tar.gz			 |
+|5.3.0.2_octds3_3.tar.gz		 |
+|5.3.0.2_voip6.tar.gz			 |
+|5.3.0.2_tdmoc.tar.gz			 |
+|6.1.1.1_cpu.tar.gz			 |
+|6.1.1.1_vs3.tar.gz			 |
+|6.1.1.1_ena.tar.gz			 |
+|6.1.1.1_octds3.tar.gz			 |
+|6.1.1.1_trids3.tar.gz			 |
+|6.1.1.1_octds3_2.tar.gz		 |
+|6.1.1.1_ds1_2.tar.gz			 |
+|6.1.1.1_octds3_3.tar.gz		 |
+|6.1.1.1_ena2.tar.gz			 |
+|6.1.1.1_tdmoc.tar.gz			 |
+|6.1.1.1_trids3_3.tar.gz		 |
+|5.3.0.2.SP.1_cpu.tar.gz		 |
+|5.3.0.2.P2_octds3.tar.gz		 |
+|5.3.0.2.P2_trids3_3.tar.gz		 |
+|5.3.0.2.P2_ena.tar.gz			 |
+|5.3.0.2.P2_voip.tar.gz			 |
+|5.3.0.2.P2_ena2.tar.gz			 |
+|5.3.0.2.P2_cm.tar.gz			 |
+|5.3.0.2.P2_ds1_2.tar.gz		 |
+|5.3.0.2.P2_octds3_2.tar.gz		 |
+|5.3.0.2.P2_trids3.tar.gz		 |
+|5.3.0.2.P2_octds3_3.tar.gz		 |
+|5.3.0.2.P2_voip6.tar.gz		 |
+|5.3.0.2.P2_tdmoc.tar.gz		 |
+|5.3.0.2.0_ana.tar.gz			 |
+|5.3.0.2.0_octds3.tar.gz		 |
+|5.3.0.2.0_trids3_3.tar.gz		 |
+|5.3.0.2.0_ena.tar.gz			 |
+|5.3.0.2.0_voip.tar.gz			 |
+|5.3.0.2.0_ena2.tar.gz			 |
+|5.3.0.2.0_cm.tar.gz			 |
+|5.3.0.2.4_cpu.tar.gz			 |
+|5.3.0.2.0_ds1_2.tar.gz			 |
+|5.3.0.2.0_octds3_2.tar.gz		 |
+|5.3.0.2.0_trids3.tar.gz		 |
+|5.3.0.2.0_octds3_3.tar.gz		 |
+|5.3.0.2.0_voip6.tar.gz			 |
+|5.3.0.2.0_tdmoc.tar.gz			 |
+|5.3.0.2.0_ana.tar.gz			 |
+|5.3.0.2.0_octds3.tar.gz		 |
+|5.3.0.2.0_trids3_3.tar.gz		 |
+|5.3.0.2.0_ena.tar.gz			 |
+|5.3.0.2.0_voip.tar.gz			 |
+|5.3.0.2.0_ena2.tar.gz			 |
+|5.3.0.2.1_cm.tar.gz			 |
+|5.3.0.2.6_cpu.tar.gz			 |
+|5.3.0.2.0_ds1_2.tar.gz			 |
+|5.3.0.2.0_octds3_2.tar.gz		 |
+|5.3.0.2.0_trids3.tar.gz		 |
+|5.3.0.2.0_octds3_3.tar.gz		 |
+|5.3.0.2.0_voip6.tar.gz			 |
+|5.3.0.2.0_tdmoc.tar.gz			 |
+|6.1.1.0.1_ana.tar.gz			 |
+|6.1.1.2.1_octds3.tar.gz		 |
+|6.1.1.2.1_trids3_3.tar.gz		 |
+|6.1.1.1_ena.tar.gz			 |
+|6.1.1.1_vs3.tar.gz			 |
+|6.1.1.1_ena2.tar.gz			 |
+|6.1.1.2.4_cpu.tar.gz			 |
+|6.1.1.2.1_ds1_2.tar.gz			 |
+|6.1.1.2.1_octds3_2.tar.gz		 |
+|6.1.1.2.1_trids3.tar.gz		 |
+|6.1.1.2.1_octds3_3.tar.gz		 |
+|6.1.1.2.1_tdmoc.tar.gz			 |
+|6.1.1.2_cpu.tar.gz			 |
+|6.1.1.1_octds3.tar.gz			 |
+|6.1.1.1_vs3.tar.gz			 |
+|6.1.1.1_ds1_2.tar.gz			 |
+|6.1.1.1_octds3_2.tar.gz		 |
+|6.1.1.1_trids3.tar.gz			 |
+|6.1.1.2_ena2.tar.gz			 |
+|6.1.1.1_octds3_3.tar.gz		 |
+|6.1.1.1_tdmoc.tar.gz			 |
+|6.1.1.1_trids3_3.tar.gz		 |
+|5.3.0.1.SP.2_cpu.tar.gz		 |
+|5.3.0.2.P3_octds3.tar.gz		 |
+|5.3.0.2.P3_trids3_3.tar.gz		 |
+|5.3.0.2.P3_ena.tar.gz			 |
+|5.3.0.2.P3_voip.tar.gz			 |
+|5.3.0.2.P3_ena2.tar.gz			 |
+|5.3.0.2.P3_cm.tar.gz			 |
+|5.3.0.2.SP.2_cpu.tar.gz		 |
+|5.3.0.2.P3_ds1_2.tar.gz		 |
+|5.3.0.2.P3_octds3_2.tar.gz		 |
+|5.3.0.2.P3_trids3.tar.gz		 |
+|5.3.0.2.P3_octds3_3.tar.gz		 |
+|5.3.0.2.P3_voip6.tar.gz		 |
+|5.3.0.2.P3_tdmoc.tar.gz		 |
+|3.11.1.0.19_ds1.tar.gz			 |
+|3.11.1.0.19_octds3.tar.gz		 |
+|3.11.1.0.19_ds3.tar.gz			 |
+|3.11.1.0.19_trids3_3.tar.gz		 |
+|3.11.1.0.19_ena.tar.gz			 |
+|3.11.1.0.25_voip.tar.gz		 |
+|3.11.1.0.19_ena2.tar.gz		 |
+|3.11.1.0.26_cpu.tar.gz			 |
+|3.11.1.0.22_ds1_2.tar.gz		 |
+|3.11.1.0.19_octds3_2.tar.gz		 |
+|3.11.1.0.19_trids3.tar.gz		 |
+|3.11.1.0.19_octds3_3.tar.gz		 |
+|3.11.1.0.25_voip6.tar.gz		 |
+|3.11.1.0.6_e1.tar.gz			 |
+|6.1.1.0.1_ana.tar.gz			 |
+|6.1.1.2.3_octds3.tar.gz		 |
+|6.1.1.2.3_trids3_3.tar.gz		 |
+|6.1.1.1_ena.tar.gz			 |
+|6.1.1.2.0_vs3.tar.gz			 |
+|6.1.1.2.0_ena2.tar.gz			 |
+|6.1.1.2.8_cpu.tar.gz			 |
+|6.1.1.2.3_ds1_2.tar.gz			 |
+|6.1.1.2.3_octds3_2.tar.gz		 |
+|6.1.1.2.3_trids3.tar.gz		 |
+|6.1.1.2.3_octds3_3.tar.gz		 |
+|6.1.1.2.3_tdmoc.tar.gz			 |
+|3.10.1.7.P4_voip6.tar.gz		 |
+|3.10.1.7.SP.4_cpu.tar.gz		 |
+|3.10.1.7.P1_ena.tar.gz			 |
+|3.10.1.7.P4_octds3.tar.gz		 |
+|3.10.1.7.P3_ds1.tar.gz			 |
+|3.10.1.7.P4_trids3.tar.gz		 |
+|3.10.1.7.P4_octds3_2.tar.gz		 |
+|3.10.1.7.P4_octds3_3.tar.gz		 |
+|3.10.1.7.P4_voip.tar.gz		 |
+|3.10.1.7.P3_ds3.tar.gz			 |
+|3.10.1.7.P4_trids3_3.tar.gz		 |
+|3.10.1.7.P7_voip6.tar.gz		 |
+|3.10.1.7.SP.19_cpu.tar.gz		 |
+|3.10.1.7.P2_ena.tar.gz			 |
+|3.10.1.7.P6_octds3.tar.gz		 |
+|3.10.1.7.P4_ds1.tar.gz			 |
+|3.10.1.7.P6_trids3.tar.gz		 |
+|3.10.1.7.P6_octds3_2.tar.gz		 |
+|3.10.1.7.P6_octds3_3.tar.gz		 |
+|3.10.1.7.P7_voip.tar.gz		 |
+|3.10.1.7.P4_ds3.tar.gz			 |
+|3.10.1.7.P6_trids3_3.tar.gz		 |
+|3.11.0.5.P6_voip6.tar.gz		 |
+|3.11.0.5.P6_voip.tar.gz		 |
+|3.11.1.0.20_ds1.tar.gz			 |
+|3.11.1.0.20_octds3.tar.gz		 |
+|3.11.1.0.20_ds3.tar.gz			 |
+|3.11.1.0.20_trids3_3.tar.gz		 |
+|3.11.1.0.20_ena.tar.gz			 |
+|3.11.1.0.26_voip.tar.gz		 |
+|3.11.1.0.20_ena2.tar.gz		 |
+|3.11.1.0.27_cpu.tar.gz			 |
+|3.11.1.0.23_ds1_2.tar.gz		 |
+|3.11.1.0.20_octds3_2.tar.gz		 |
+|3.11.1.0.20_trids3.tar.gz		 |
+|3.11.1.0.20_octds3_3.tar.gz		 |
+|3.11.1.0.26_voip6.tar.gz		 |
+|3.11.1.0.7_e1.tar.gz			 |
+|6.1.1.0.1_ana.tar.gz			 |
+|6.1.1.2.4_octds3.tar.gz		 |
+|6.1.1.2.4_trids3_3.tar.gz		 |
+|6.1.1.1_ena.tar.gz			 |
+|6.1.1.2.1_vs3.tar.gz			 |
+|6.1.1.2.1_ena2.tar.gz			 |
+|6.1.1.2.10_cpu.tar.gz			 |
+|6.1.1.2.4_ds1_2.tar.gz			 |
+|6.1.1.2.4_octds3_2.tar.gz		 |
+|6.1.1.2.4_trids3.tar.gz		 |
+|6.1.1.2.4_octds3_3.tar.gz		 |
+|6.1.1.2.4_tdmoc.tar.gz			 |
+|5.3.0.2.1_ana.tar.gz			 |
+|5.3.0.2.2_octds3.tar.gz		 |
+|5.3.0.2.2_trids3_3.tar.gz		 |
+|5.3.0.2.2_ena.tar.gz			 |
+|5.3.0.2.2_voip.tar.gz			 |
+|5.3.0.2.2_ena2.tar.gz			 |
+|5.3.0.2.3_cm.tar.gz			 |
+|5.3.0.2.13_cpu.tar.gz			 |
+|5.3.0.2.2_ds1_2.tar.gz			 |
+|5.3.0.2.2_octds3_2.tar.gz		 |
+|5.3.0.2.2_trids3.tar.gz		 |
+|5.3.0.2.2_octds3_3.tar.gz		 |
+|5.3.0.2.2_voip6.tar.gz			 |
+|5.3.0.2.2_tdmoc.tar.gz			 |
+|6.1.1.3.SP.2_cpu.tar.gz		 |
+|6.1.1.3_octds3.tar.gz			 |
+|6.1.1.3_vs3.tar.gz			 |
+|6.1.1.2_ds1_2.tar.gz			 |
+|6.1.1.3_octds3_2.tar.gz		 |
+|6.1.1.3_trids3.tar.gz			 |
+|6.1.1.4_ena2.tar.gz			 |
+|6.1.1.3_octds3_3.tar.gz		 |
+|6.1.1.3_tdmoc.tar.gz			 |
+|6.1.1.3_trids3_3.tar.gz		 |
+|3.11.1.0.21_ds1.tar.gz			 |
+|3.11.1.0.21_octds3.tar.gz		 |
+|3.11.1.0.21_ds3.tar.gz			 |
+|3.11.1.0.21_trids3_3.tar.gz		 |
+|3.11.1.0.21_ena.tar.gz			 |
+|3.11.1.0.27_voip.tar.gz		 |
+|3.11.1.0.21_ena2.tar.gz		 |
+|3.11.1.0.28_cpu.tar.gz			 |
+|3.11.1.0.24_ds1_2.tar.gz		 |
+|3.11.1.0.21_octds3_2.tar.gz		 |
+|3.11.1.0.21_trids3.tar.gz		 |
+|3.11.1.0.21_octds3_3.tar.gz		 |
+|3.11.1.0.27_voip6.tar.gz		 |
+|3.11.1.0.8_e1.tar.gz			 |
+|5.3.0.2.1_ana.tar.gz			 |
+|5.3.0.2.2_octds3.tar.gz		 |
+|5.3.0.2.2_trids3_3.tar.gz		 |
+|5.3.0.2.2_ena.tar.gz			 |
+|5.3.0.2.2_voip.tar.gz			 |
+|5.3.0.2.2_ena2.tar.gz			 |
+|5.3.0.2.3_cm.tar.gz			 |
+|5.3.0.2.14_cpu.tar.gz			 |
+|5.3.0.2.2_ds1_2.tar.gz			 |
+|5.3.0.2.2_octds3_2.tar.gz		 |
+|5.3.0.2.2_trids3.tar.gz		 |
+|5.3.0.2.2_octds3_3.tar.gz		 |
+|5.3.0.2.2_voip6.tar.gz			 |
+|5.3.0.2.2_tdmoc.tar.gz			 |
+|3.11.1.0.22_ds1.tar.gz			 |
+|3.11.1.0.22_octds3.tar.gz		 |
+|3.11.1.0.22_ds3.tar.gz			 |
+|3.11.1.0.22_trids3_3.tar.gz		 |
+|3.11.1.0.22_ena.tar.gz			 |
+|3.11.1.0.28_voip.tar.gz		 |
+|3.11.1.0.22_ena2.tar.gz		 |
+|3.11.1.0.29_cpu.tar.gz			 |
+|3.11.1.0.25_ds1_2.tar.gz		 |
+|3.11.1.0.22_octds3_2.tar.gz		 |
+|3.11.1.0.22_trids3.tar.gz		 |
+|3.11.1.0.22_octds3_3.tar.gz		 |
+|3.11.1.0.28_voip6.tar.gz		 |
+|3.11.1.0.9_e1.tar.gz			 |
+|5.3.0.2.1_ana.tar.gz			 |
+|5.3.0.2.2_octds3.tar.gz		 |
+|5.3.0.2.2_trids3_3.tar.gz		 |
+|5.3.0.2.2_ena.tar.gz			 |
+|5.3.0.2.2_voip.tar.gz			 |
+|5.3.0.2.2_ena2.tar.gz			 |
+|5.3.0.2.3_cm.tar.gz			 |
+|5.3.0.2.16_cpu.tar.gz			 |
+|5.3.0.2.2_ds1_2.tar.gz			 |
+|5.3.0.2.2_octds3_2.tar.gz		 |
+|5.3.0.2.2_trids3.tar.gz		 |
+|5.3.0.2.2_octds3_3.tar.gz		 |
+|5.3.0.2.2_voip6.tar.gz			 |
+|5.3.0.2.2_tdmoc.tar.gz			 |
+|5.3.0.2.P4_octds3.tar.gz		 |
+|5.3.0.2.P4_trids3_3.tar.gz		 |
+|5.3.0.2.P4_ena.tar.gz			 |
+|5.3.0.2.P4_voip.tar.gz			 |
+|5.3.0.2.P4_ena2.tar.gz			 |
+|5.3.0.2.P4_cm.tar.gz			 |
+|5.3.0.2.SP.3_cpu.tar.gz		 |
+|5.3.0.2.P4_ds1_2.tar.gz		 |
+|5.3.0.2.P4_octds3_2.tar.gz		 |
+|5.3.0.2.P4_trids3.tar.gz		 |
+|5.3.0.2.P4_octds3_3.tar.gz		 |
+|5.3.0.2.P4_voip6.tar.gz		 |
+|5.3.0.2.P3_tdmoc.tar.gz		 |
+|6.1.1.2.SP.1_cpu.tar.gz		 |
+|6.1.1.2_octds3.tar.gz			 |
+|6.1.1.2_vs3.tar.gz			 |
+|6.1.1.2_ds1_2.tar.gz			 |
+|6.1.1.2_octds3_2.tar.gz		 |
+|6.1.1.2_trids3.tar.gz			 |
+|6.1.1.2_ena2.tar.gz			 |
+|6.1.1.2_octds3_3.tar.gz		 |
+|6.1.1.2_tdmoc.tar.gz			 |
+|6.1.1.2_trids3_3.tar.gz		 |
+|3.11.2.1.P1_ds1.tar.gz			 |
+|3.11.2.1.P1_octds3.tar.gz		 |
+|3.11.2.1.P1_ds3.tar.gz			 |
+|3.11.2.1.P1_trids3_3.tar.gz		 |
+|3.11.2.1.P1_ena.tar.gz			 |
+|3.11.2.1.P1_voip.tar.gz		 |
+|3.11.2.1.P1_ena2.tar.gz		 |
+|3.11.2.1.SP.1_cpu.tar.gz		 |
+|3.11.2.1.P1_ds1_2.tar.gz		 |
+|3.11.2.1.P1_octds3_2.tar.gz		 |
+|3.11.2.1.P1_trids3.tar.gz		 |
+|3.11.2.1.P1_octds3_3.tar.gz		 |
+|3.11.2.1.P1_voip6.tar.gz		 |
+|6.1.1.2.SP.2_cpu.tar.gz		 |
+|6.1.1.2_octds3.tar.gz			 |
+|6.1.1.2_vs3.tar.gz			 |
+|6.1.1.2_ds1_2.tar.gz			 |
+|6.1.1.2_octds3_2.tar.gz		 |
+|6.1.1.2_trids3.tar.gz			 |
+|6.1.1.2_ena2.tar.gz			 |
+|6.1.1.2_octds3_3.tar.gz		 |
+|6.1.1.2_tdmoc.tar.gz			 |
+|6.1.1.2_trids3_3.tar.gz		 |
+|3.11.0.5.P8_trids3.tar.gz		 |
+|3.11.0.5.P8_trids3_3.tar.gz		 |
+|3.11.2.0_ds1.tar.gz			 |
+|3.11.2.0_octds3.tar.gz			 |
+|3.11.2.0_ds3.tar.gz			 |
+|3.11.2.0_trids3_3.tar.gz		 |
+|3.11.2.0_ena.tar.gz			 |
+|3.11.2.0_voip.tar.gz			 |
+|3.11.2.0_ena2.tar.gz			 |
+|3.11.2.0_cpu.tar.gz			 |
+|3.11.2.0_ds1_2.tar.gz			 |
+|3.11.2.0_octds3_2.tar.gz		 |
+|3.11.2.0_trids3.tar.gz			 |
+|3.11.2.0_octds3_3.tar.gz		 |
+|3.11.2.0_voip6.tar.gz			 |
+|3.11.2.0_e1.tar.gz			 |
+|----------------------------------------|
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy
+hrdcpy exit

@@ -1,0 +1,439 @@
+ed-mgc-sys::com:::sipstaportrange=5036
+ent-mgc-prflmegaco::2:::mgvariant=lng
+#MEGACO area
+ent-mgc-mgassoc::virtualmg1:::NAME=0.0.0.0,PORT=3000,cpupercent=100
+sleep 10
+ent-mgc-mgassoc::virtualmg2:::name=0.0.0.0,PORT=3001,cpupercent=100
+sleep 10
+ent-mgc-mgassoc::ihlcsgw9:::NAME=10.11.29.3,PORT=2946,megacoprflid=2,cpupercent=100
+sleep 20
+ent-mgc-mgassoc::virtualmg3:::NAME=0.0.0.0,PORT=3002,cpupercent=75
+sleep 30
+ent-mgc-sgassoc::1:::SGSPAIP=10.11.28.1,SGSPBIP=10.11.28.2:is
+#ISUP details
+ent-prfl-isupansi::1
+ent-mgc-pcown::234-100-1:::inservices=y
+ent-mgc-pc::OPC-234-100-1-DPC-10-10-10:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-10-20-10:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-234-30-10:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-234-6-1:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-220-192-0:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-234-100-2:::isupvariant=ISUPANSI1992
+ent-mgc-pc::OPC-234-100-1-DPC-234-100-3:::isupvariant=ISUPANSI1992
+# Defaults for OLI and CSI for outbound calls
+#
+ent-prfl-paramdefaults::FS5000:::CHRGN=NULL,CDPN=NULL,CGPN=NULL,OLI=DEFAULT-0,TNS=NULL,CIP=NULL,JIP=NULL,CALLTYPE=NULL,CSI=DEFAULT-UNKNOWN
+#
+ent-trkgrp::3:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-30-10,hunting=circular,tgprofile=1
+ent-trkgrp::4:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-30-10,hunting=circular,tgprofile=1
+ent-trkgrp::20:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-100-2,hunting=circular,tgprofile=1
+ent-trkgrp::21:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-100-3,hunting=circular,tgprofile=1
+ent-trkgrp::77:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-6-1,hunting=circular,tgprofile=1
+ent-trkgrp::177:::isupansi1992:opcdpc=opc-234-100-1-dpc-234-6-1,hunting=circular,tgprofile=1
+ent-trkgrp::442:::isupansi1992:opcdpc=opc-234-100-1-dpc-220-192-0,hunting=circular,tgprofile=1
+ent-trkgrp::443:::isupansi1992:opcdpc=opc-234-100-1-dpc-220-192-0,hunting=circular,tgprofile=1,classofservice=fgd
+ent-trkgrp::162:::isupansi1992:opcdpc=opc-234-100-1-dpc-220-192-0,hunting=circular,tgprofile=1,classofservice=911
+ent-route-list::fs5177
+ent-route-list::fs577
+ent-route-list::tradisup
+ent-route-list::eaisup
+ent-route-list::911isup
+ent-route-list::mgtstk3
+ent-route-list::mgtstk4
+ent-route-list::ss720lp
+ent-route-list::ss721lp
+ent-route::fs5177-1:::bgn=tgn-177
+ent-route::fs577-1:::bgn=tgn-77
+ent-route::tradisup-1:::bgn=tgn-442
+ent-route::eaisup-1:::bgn=tgn-443
+ent-route::911isup-1:::bgn=tgn-162
+ent-route::mgtstk3-1:::bgn=tgn-3
+ent-route::mgtstk4-1:::bgn=tgn-4
+ent-route::ss720lp-1:::bgn=tgn-20
+ent-route::ss721lp-1:::bgn=tgn-21
+ent-digitmod-dn::gw7isup-CDPN-NATNUM-316-0:::modtype=stripinsertdgts,strippos=1,stripdgts=3,insertpos=1,insertdgts=315
+ent-route-digits::DEFAULT-CDPN-natnum-315:::rtdest=rtlist-fs577
+ent-route-digits::DEFAULT-CDPN-natnum-316:::rtdest=rtlist-fs5177,actn=dgtmodkey-gw7isup-CDPN
+ent-route-digits::DEFAULT-CDPN-natnum-322:::rtdest=rtlist-mgtstk4
+ent-route-digits::DEFAULT-CDPN-natnum-422:::rtdest=rtlist-ss721lp
+ent-route-digits::DEFAULT-CDPN-natnum-816:::rtdest=rtlist-tradisup
+ent-route-digits::DEFAULT-CDPN-natnum-888:::rtdest=rtlist-tradisup
+ent-route-digits::DEFAULT-CDPN-natnum-7027:::rtdest=rtlist-tradisup
+ent-ss7-trk::77-1&&-12:::mgname=ihlcsgw9,termid=t/1/17/1:is
+ent-ss7-trk::177-13&&-24:::mgname=ihlcsgw9,termid=t/1/17/13:is
+ent-ss7-trk::442-1&&-4:::mgname=ihlcsgw9,termid=t/1/18/1:is
+ent-ss7-trk::443-5&&-8:::mgname=ihlcsgw9,termid=t/1/18/5:is
+ent-ss7-trk::162-9&&-12:::mgname=ihlcsgw9,termid=t/1/18/17:is
+ent-ss7-trk::3-1&&-24:::mgname=ihlcsgw9,termid=t/6/1/1:is
+ent-ss7-trk::3-25&&-48:::mgname=ihlcsgw9,termid=t/6/2/1:is
+ent-ss7-trk::3-49&&-72:::mgname=ihlcsgw9,termid=t/6/3/1:is
+ent-ss7-trk::3-73&&-96:::mgname=ihlcsgw9,termid=t/6/4/1:is
+ent-ss7-trk::3-97&&-120:::mgname=ihlcsgw9,termid=t/6/5/1:is
+ent-ss7-trk::3-121&&-144:::mgname=ihlcsgw9,termid=t/6/6/1:is
+ent-ss7-trk::3-145&&-168:::mgname=ihlcsgw9,termid=t/6/7/1:is
+ent-ss7-trk::3-169&&-192:::mgname=ihlcsgw9,termid=t/6/8/1:is
+ent-ss7-trk::3-193&&-216:::mgname=ihlcsgw9,termid=t/6/9/1:is
+ent-ss7-trk::3-217&&-240:::mgname=ihlcsgw9,termid=t/6/10/1:is
+ent-ss7-trk::3-241&&-264:::mgname=ihlcsgw9,termid=t/6/11/1:is
+ent-ss7-trk::3-265&&-288:::mgname=ihlcsgw9,termid=t/6/12/1:is
+ent-ss7-trk::3-289&&-312:::mgname=ihlcsgw9,termid=t/6/13/1:is
+ent-ss7-trk::3-313&&-336:::mgname=ihlcsgw9,termid=t/6/14/1:is
+ent-ss7-trk::3-337&&-360:::mgname=ihlcsgw9,termid=t/6/15/1:is
+ent-ss7-trk::3-361&&-384:::mgname=ihlcsgw9,termid=t/6/16/1:is
+ent-ss7-trk::3-385&&-408:::mgname=ihlcsgw9,termid=t/6/17/1:is
+ent-ss7-trk::3-409&&-432:::mgname=ihlcsgw9,termid=t/6/18/1:is
+ent-ss7-trk::3-433&&-456:::mgname=ihlcsgw9,termid=t/6/19/1:is
+ent-ss7-trk::3-457&&-480:::mgname=ihlcsgw9,termid=t/6/20/1:is
+ent-ss7-trk::3-481&&-504:::mgname=ihlcsgw9,termid=t/6/21/1:is
+ent-ss7-trk::3-505&&-528:::mgname=ihlcsgw9,termid=t/6/22/1:is
+ent-ss7-trk::3-529&&-552:::mgname=ihlcsgw9,termid=t/6/23/1:is
+ent-ss7-trk::3-553&&-576:::mgname=ihlcsgw9,termid=t/6/24/1:is
+ent-ss7-trk::3-577&&-600:::mgname=ihlcsgw9,termid=t/6/25/1:is
+ent-ss7-trk::3-601&&-624:::mgname=ihlcsgw9,termid=t/6/26/1:is
+ent-ss7-trk::3-625&&-648:::mgname=ihlcsgw9,termid=t/6/27/1:is
+ent-ss7-trk::3-649&&-672:::mgname=ihlcsgw9,termid=t/6/28/1:is
+ent-ss7-trk::4-3001&&-3024:::mgname=ihlcsgw9,termid=t/6/29/1:is
+ent-ss7-trk::4-3025&&-3048:::mgname=ihlcsgw9,termid=t/6/30/1:is
+ent-ss7-trk::4-3049&&-3072:::mgname=ihlcsgw9,termid=t/6/31/1:is
+ent-ss7-trk::4-3073&&-3096:::mgname=ihlcsgw9,termid=t/6/32/1:is
+ent-ss7-trk::4-3097&&-3120:::mgname=ihlcsgw9,termid=t/6/33/1:is
+ent-ss7-trk::4-3121&&-3144:::mgname=ihlcsgw9,termid=t/6/34/1:is
+ent-ss7-trk::4-3145&&-3168:::mgname=ihlcsgw9,termid=t/6/35/1:is
+ent-ss7-trk::4-3169&&-3192:::mgname=ihlcsgw9,termid=t/6/36/1:is
+ent-ss7-trk::4-3193&&-3216:::mgname=ihlcsgw9,termid=t/6/37/1:is
+ent-ss7-trk::4-3217&&-3240:::mgname=ihlcsgw9,termid=t/6/38/1:is
+ent-ss7-trk::4-3241&&-3264:::mgname=ihlcsgw9,termid=t/6/39/1:is
+ent-ss7-trk::4-3265&&-3288:::mgname=ihlcsgw9,termid=t/6/40/1:is
+ent-ss7-trk::4-3289&&-3312:::mgname=ihlcsgw9,termid=t/6/41/1:is
+ent-ss7-trk::4-3313&&-3336:::mgname=ihlcsgw9,termid=t/6/42/1:is
+ent-ss7-trk::4-3337&&-3360:::mgname=ihlcsgw9,termid=t/6/43/1:is
+ent-ss7-trk::4-3361&&-3384:::mgname=ihlcsgw9,termid=t/6/44/1:is
+ent-ss7-trk::4-3385&&-3408:::mgname=ihlcsgw9,termid=t/6/45/1:is
+ent-ss7-trk::4-3409&&-3432:::mgname=ihlcsgw9,termid=t/6/46/1:is
+ent-ss7-trk::4-3433&&-3456:::mgname=ihlcsgw9,termid=t/6/47/1:is
+ent-ss7-trk::4-3457&&-3480:::mgname=ihlcsgw9,termid=t/6/48/1:is
+ent-ss7-trk::4-3481&&-3504:::mgname=ihlcsgw9,termid=t/6/49/1:is
+ent-ss7-trk::4-3505&&-3528:::mgname=ihlcsgw9,termid=t/6/50/1:is
+ent-ss7-trk::4-3529&&-3552:::mgname=ihlcsgw9,termid=t/6/51/1:is
+ent-ss7-trk::4-3553&&-3576:::mgname=ihlcsgw9,termid=t/6/52/1:is
+ent-ss7-trk::4-3577&&-3600:::mgname=ihlcsgw9,termid=t/6/53/1:is
+ent-ss7-trk::4-3601&&-3624:::mgname=ihlcsgw9,termid=t/6/54/1:is
+ent-ss7-trk::4-3625&&-3648:::mgname=ihlcsgw9,termid=t/6/55/1:is
+ent-ss7-trk::4-3649&&-3672:::mgname=ihlcsgw9,termid=t/6/56/1:is
+ent-ss7-trk::20-1&&-2:::mgname=ihlcsgw9,termid=t/1/2/1:is
+ent-ss7-trk::21-1&&-2:::mgname=ihlcsgw9,termid=t/1/3/1:is
+#
+#digitmods
+# Calling E164 (FS) to National (PSTN)
+ent-digitmod-dn::CDPN2NAT-CDPN-INTNATNUM-1-4-ISDN:::MODTYPE=STRIPONLY,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=1,STRIPDEST=NULL,NEWNAI=NATNUM,NEWNP=ISDN
+#
+# Called E164 (FS) to National (PSTN)
+ent-digitmod-dn::CGPN2NAT-CGPN-UNIINTNATNUM-1-1-ISDN:::MODTYPE=STRIPONLY,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=1,STRIPDEST=NULL,NEWNAI=UNINATNUM,NEWNP=ISDN
+#
+# Diversion in E164 (FS) to National RDN (PSTN) in SS7 or OCN
+#
+ent-digitmod-dn::RDN2NAT-RDN-UNIINTNATNUM-1-1-ISDN:::MODTYPE=STRIPONLY,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=1,STRIPDEST=NULL,NEWNAI=UNINATNUM,NEWNP=ISDN
+#
+ent-digitmod-dn::OCN2NAT-OCN-UNIINTNATNUM-1-1-ISDN:::MODTYPE=STRIPONLY,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=1,STRIPDEST=NULL,NEWNAI=UNINATNUM,NEWNP=ISDN
+#
+# Set Called to 911, REG-1 to ESRN, CPC to 14 (dec)
+# Used on ESRN incoming from FS5k
+ent-digitmod-DN::ESRN2911-CDPN-NATNUM-8162209110-10-ISDN:::MODTYPE=STRIPINSERTDGTS,ALTMODTYPE=REPLACE,MAXDGTS=31,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=10,STRIPDEST=REG-1,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=911,INSERTSRC=NULL,NEWNAI=NATNUM,NEWNP=ISDN,ALTPARAMVALUE=CPC-e0
+#
+ENT-DIGITMOD-DN::9112911-CDPN-NATNUM-911-3-ISDN:::MODTYPE=noaction,ALTMODTYPE=REPLACE,MAXDGTS=31,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=10,STRIPDEST=null,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=null,INSERTSRC=NULL,NEWNAI=null,NEWNP=null,ALTPARAMVALUE=CPC-e0,NEXTDGTMODKEY=NULL
+#
+# Set Called to 311, REG-1 to ESRN, CPC to e0
+ent-digitmod-dn::ESRN2311-CDPN-NATNUM-8162203110-10-ISDN:::MODTYPE=STRIPINSERTDGTS,ALTMODTYPE=REPLACE,MAXDGTS=31,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=10,STRIPDEST=REG-2,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=311,INSERTSRC=NULL,NEWNAI=NATNUM,NEWNP=ISDN,ALTPARAMVALUE=CPC-e0
+#
+ENT-DIGITMOD-DN::3112311-CDPN-NATNUM-311-3-ISDN:::MODTYPE=noaction,ALTMODTYPE=REPLACE,MAXDGTS=31,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=10,STRIPDEST=null,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=null,INSERTSRC=NULL,NEWNAI=null,NEWNP=null,ALTPARAMVALUE=CPC-e0,NEXTDGTMODKEY=NULL
+#
+# Dialed # GAP is 192
+ent-digitmod-gen::NAT2GAP-GAP-192-DEFAULT:::MODTYPE=INSERTDGTS,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=1,INSERTSRC=NULL,NEWNAI=INTNATNUM,NEWNP=ISDN
+ent-digitmod-gen::NAT2GAP-GAP-192-NOTPRSNT:::MODTYPE=NOACTION
+#
+# Calling National (PSTN) to E164 (FS) to be used for ROUTE to FS
+ent-digitmod-dn::NAT2CGPN-CGPN-UNINATNUM-DEFAULT-0-ISDN:::MODTYPE=INSERTDGTS,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=1,INSERTSRC=NULL,NEWNAI=UNIINTNATNUM,NEWNP=ISDN
+#
+# Called National (PSTN) to E164 (FS) to be used for ROUTE to FS
+ent-digitmod-dn::NAT2CDPN-CDPN-NATNUM-DEFAULT-0-ISDN:::MODTYPE=INSERTDGTS,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=1,INSERTSRC=NULL,NEWNAI=INTNATNUM,NEWNP=ISDN
+#
+# OCN
+ent-digitmod-dn::NAT2OCN-OCN-UNINATNUM-DEFAULT-0-ISDN:::MODTYPE=INSERTDGTS,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=1,INSERTSRC=NULL,NEWNAI=UNIINTNATNUM,NEWNP=ISDN
+#
+# RDN
+ent-digitmod-dn::NAT2RDN-RDN-UNINATNUM-DEFAULT-0-ISDN:::MODTYPE=INSERTDGTS,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=1,INSERTSRC=NULL,NEWNAI=UNIINTNATNUM,NEWNP=ISDN
+#
+#-------------------------------------------
+# Carrier Routing for J0 and FS5000
+#-------------------------------------------
+# FS5K: domestic tns direct to the toll office (no tns sent)
+# delete tns for direct toll office
+ent-digitmod-tns::tnsdel-tns-default-default-isup:::modtype=delete
+#
+# domesic tns & delete the tns
+ent-digitmod-dn::dirtns-cdpn-natnum-default-0-isdn:::modtype=noaction,nextdgtmodkey=tnsdel-tns
+#
+# 00 calls & delete the tns
+ent-digitmod-dn::dirtns-cdpn-nonumopreq-default-0-isdn:::modtype=noaction,nextdgtmodkey=tnsdel-tns
+#
+# FS5K: domestic tns direct to the acesss tandem office (tns sent)
+#===========================================================
+# set tns to use circuit code 10 for access tandem
+#
+ent-digitmod-tns::tnscc10-tns-default-default-isup:::modtype=replacecalltype,newcalltypecode=10
+#
+ent-digitmod-dn::indirtns-cdpn-natnum-default-0-isdn:::modtype=noaction,nextdgtmodkey=tnscc10-tns
+#
+# 00 calls & delete the tns
+ent-digitmod-dn::indirtns-cdpn-nonumopreq-default-0-isdn:::modtype=noaction,nextdgtmodkey=tnsdel-tns
+#
+# FS5K: international tns
+#=======================================
+# INTL NON-OPERATOR
+ent-digitmod-tns::cktcode1-tns-default-default-isup:::modtype=replacecalltype,newcalltypecode=1
+#
+ent-digitmod-dn::intltns-cdpn-intnatnum-default-0-isdn:::modtype=noaction,nextdgtmodkey=cktcode1-tns
+#
+# INTL OPERATOR
+ent-digitmod-tns::cktcode2-tns-default-default-isup:::modtype=replacecalltype,newcalltypecode=2
+#
+ent-digitmod-dn::intloptns-cdpn-intnatopreq-default-0-isdn:::modtype=noaction,nextdgtmodkey=cktcode2-tns
+#
+#========================================
+# FS5K: Remove cicp in Dialaround scenarios
+#========================================
+# delete tns for direct toll office
+ent-digitmod-tns::cipdel-tns-default-default-isup:::modtype=noaction,altmodtype=delete,altparamvalue=cip
+#
+ent-digitmod-dn::DIALARD-CDPN-UNKNOWN-101-3-ISDN:::modtype=noaction,nextdgtmodkey=cipdel-tns
+#-----------------------------------
+# FS5000 Special Route Didits to J0
+#-----------------------------------
+# FS5K: Emergency via ESRN
+ent-route-digits::EMERGENCY-REG-1-8162209110:::RTDEST=RTLIST-911isup
+ent-ROUTE-DIGITS::DEFAULT-CDPN-NATNUM-8162209110:::RTDEST=RTKEY-EMERGENCY-REG-1,ACTN=DGTMODKEY-ESRN2911-CDPN
+#
+# FS5K: Emergency via 911
+ENT-ROUTE-DIGITS::DEFAULT-CDPN-NATNUM-911:::RTDEST=RTLIST-911isup,ACTN=DGTMODKEY-9112911-CDPN
+#
+# FS5K: 311 via ESRN
+ent-route-digits::EMERGENCY-REG-2-8162203110:::RTDEST=RTLIST-911isup
+ent-ROUTE-DIGITS::DEFAULT-CDPN-NATNUM-8162203110:::RTDEST=RTKEY-EMERGENCY-REG-2,ACTN=DGTMODKEY-ESRN2311-CDPN
+#
+# FS5K: 311
+ENT-ROUTE-DIGITS::DEFAULT-CDPN-NATNUM-311:::RTDEST=RTLIST-911isup,ACTN=DGTMODKEY-3112311-CDPN
+#
+# Carrier 12 routes direct to the Toll office in J0
+ent-route-digits::default-tns-12-default-isup:::rtdest=rtlist-eaisup,actn=dgtmodkey-dirtns-cdpn&dgtmodkey-intltns-cdpn&dgtmodkey-intloptns-cdpn,mincost=0,maxcost=100,reroute=n
+# Note: Carrier 11 for defined in MF section
+#
+# MF details
+ent-mgc-prflcas::1:::callmodel=txrx,sigmodel=e_m,dialtone=off,tonetype=mfr1,txaddrinfo=cd,rxaddrinfo=cd
+ent-mgc-prflcas::2:::callmodel=911,sigmodel=e_m,dialtone=off,tonetype=mfr1,txaddrinfo=none,rxaddrinfo=none
+ent-mgc-prflcas::3:::callmodel=fgd,sigmodel=e_m,dialtone=off,tonetype=mfr1,txaddrinfo=none,rxaddrinfo=none
+ent-mgc-prflcas::4:::callmodel=eo_ops,sigmodel=e_m,dialtone=off,tonetype=mfr1,txaddrinfo=none,rxaddrinfo=none
+ent-mgc-prflcas::5:::callmodel=eaoss,sigmodel=e_m,dialtone=off,tonetype=mfr1,txaddrinfo=none,rxaddrinfo=none
+#ent-digitmod-dn::J0MF-CDPN-NATNUM-817-10-ISDN:::MODTYPE=STRIPINSERTDGTS,STRIPDIRN=LEFT,STRIPPOS=1,STRIPDGTS=3,STRIPDEST=NULL,INSERTDIRN=LEFT,INSERTPOS=1,INSERTDGTS=816
+ent-trkgrp::212:::cas:class=at,name=mfsage,hunting=lowest_avail,tgprofile=1
+#ent-trkgrp::444:::cas:class=eo,ownclass=eo,name=tradmfj0,hunting=lowest_avail,tgprofile=1
+#ent-trkgrp::445:::cas:class=ixc,ownclass=at,name=eamfj0,hunting=lowest_avail,tgprofile=3,classofservice=fgd
+ent-trkgrp::577:::cas:class=eo,ownclass=eo,name=fs575,hunting=lowest_avail,tgprofile=1
+ent-trkgrp::677:::cas:class=eo,ownclass=eo,name=fs5175,hunting=lowest_avail,tgprofile=1
+#ent-trkgrp::911:::cas:class=eo,ownclass=eo,name=911mfj0,hunting=lowest_avail,tgprofile=2,classofservice=911
+ent-route-list::mfsage
+#ent-route-list::tradmfj0
+#ent-route-list::eamfj0 
+ent-route-list::fs5577
+ent-route-list::fs5677
+#ent-route-list::911mfj0
+ent-route::mfsage-1:::bgn=tgn-212
+#ent-route::tradmfj0-1:::bgn=tgn-444
+#ent-route::eamfj0-1:::bgn=tgn-445
+ent-route::fs5577-1:::bgn=tgn-577
+ent-route::fs5677-1:::bgn=tgn-677
+#ent-route::911mfj0-1:::bgn=tgn-911
+ent-route-digits::DEFAULT-CDPN-natnum-212:::rtdest=rtlist-mfsage
+ent-cas-trk::212-1&&-4:::mgname=ihlcsgw9,termid=T/1/1/1,name=mfsage:is
+#ent-cas-trk::444-1&&-4:::mgname=ihlcsgw9,termid=T/1/18/9,name=tradmfj0:is
+#ent-cas-trk::445-1&&-4:::mgname=ihlcsgw9,termid=T/1/18/13,name=eamfj0:is
+ent-cas-trk::577-1&&-10:::mgname=ihlcsgw9,termid=T/3/17/1,name=fs5577:is
+ent-cas-trk::677-11&&-20:::mgname=ihlcsgw9,termid=T/3/17/11,name=fs5677:is
+#ent-cas-trk::911-1&&-4:::mgname=ihlcsgw9,termid=T/1/18/21,name=911mfj0:is
+#ent-route-digits::DEFAULT-CDPN-NATNUM-817-ISDN:::rtdest=rtlist-tradmfj0,ACTN=DGTMODKEY-J0MF-CDPN
+ent-route-digits::DEFAULT-CDPN-NONUMOPREQ-DEFAULT-ISDN:::rtdest=rtlist-tradisup
+ent-route-digits::DEFAULT-CDPN-SUBOPREQ-DEFAULT-ISDN:::rtdest=rtlist-tradisup
+ent-route-digits::DEFAULT-CDPN-NATOPREQ-DEFAULT-ISDN:::rtdest=rtlist-tradisup
+#SIP INFO
+ent-trans-plan::E164PLAN:::RTKEYLIST=DEFAULT-TNS,DIALPLAN=Y,ACTNINFOCOL=DGTMODKEY-CDPN2NAT-CDPN&DGTMODKEY-DIALARD-CDPN&DGTMODKEY-RDN2NAT-RDN&DGTMODKEY-OCN2NAT-OCN&DGTMODKEY-CGPN2NAT-CGPN
+#
+# Carrier 11 routes direct to the Toll office in J0 via MF
+#ent-route-digits::default-tns-11-default-isup:::rtdest=rtlist-eamfj0,actn=dgtmodkey-dirtns-cdpn&dgtmodkey-intltns-cdpn&dgtmodkey-intloptns-cdpn,mincost=0,maxcost=100,reroute=n
+#
+ent-trans-plan::CDPN:::RTKEYLIST=DEFAULT-TNS,DIALPLAN=Y
+ed-dns-sys:::::dnsname=lusip.net,dnsip1=10.14.1.159,dnsip2=10.11.30.54,dnsip3=10.11.30.56
+ed-sip-sys:::::dnscachettl=0
+ent-prfl-sip::1:::privacy=P_ASSERTID,pcharging=y
+#
+# FS5K  Trunks
+ent-trkgrp::1013:::sip:name=fscg1,tgprofile=1,lataid=100,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw7.lucent.com,sipdstfqdn=icsf-stdn.cg1.lucent.com,sipdstfqdnport=5060,ACTNTERMATTMPT=DGTMODKEY-NAT2CDPN-CDPN&DGTMODKEY-NAT2CGPN-CGPN&DGTMODKEY-NAT2RDN-RDN&DGTMODKEY-NAT2OCN-OCN&DGTMODKEY-NAT2GAP-GAP-192,class=eo,ownclass=eo
+#
+ent-trkgrp::1015:::sip:name=fsft1,tgprofile=1,lataid=100,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw7.lucent.com,sipdstfqdn=icsf-stdn.ft1.ims.fs5000lab.com,sipdstfqdnport=5060,ACTNTERMATTMPT=DGTMODKEY-NAT2CDPN-CDPN&DGTMODKEY-NAT2CGPN-CGPN&DGTMODKEY-NAT2RDN-RDN&DGTMODKEY-NAT2OCN-OCN&DGTMODKEY-NAT2GAP-GAP-192,class=eo,ownclass=eo
+#
+ent-trkgrp::1017:::sip:name=fsft2,tgprofile=1,lataid=100,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw7.lucent.com,sipdstfqdn=icsf-stdn.ft2.ims.fs5000lab.com,sipdstfqdnport=5060,ACTNTERMATTMPT=DGTMODKEY-NAT2CDPN-CDPN&DGTMODKEY-NAT2CGPN-CGPN&DGTMODKEY-NAT2RDN-RDN&DGTMODKEY-NAT2OCN-OCN&DGTMODKEY-NAT2GAP-GAP-192,class=eo,ownclass=eo
+ent-trkgrp::1019:::sip:name=fscg2,tgprofile=1,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw7.lucent.com,sipdstfqdn=icsf-stdn.cg2.lucent.com,sipdstfqdnport=5060,ACTNTERMATTMPT=DGTMODKEY-NAT2CDPN-CDPN&DGTMODKEY-NAT2CGPN-CGPN&DGTMODKEY-NAT2RDN-RDN&DGTMODKEY-NAT2OCN-OCN&DGTMODKEY-NAT2GAP-GAP-192,class=eo,ownclass=eo
+#
+ent-trkgrp::1020:::sip:name=fsft3n4,tgprofile=1,lataid=100,transplan=E164PLAN,sipplus=y,sipsrcfqdn=mgcf-stdn.lcsgw7.lucent.com,sipdstfqdn=icsf-stdn.ft3.lucent.com,sipdstfqdnport=5060,ACTNTERMATTMPT=DGTMODKEY-NAT2CDPN-CDPN&DGTMODKEY-NAT2CGPN-CGPN&DGTMODKEY-NAT2RDN-RDN&DGTMODKEY-NAT2OCN-OCN&DGTMODKEY-NAT2GAP-GAP-192,class=eo,ownclass=eo
+#
+ent-trkgrp::1178:::sip:name=sipsim1,tgprofile=1,sipdstfqdn=10.14.1.178,sipdstfqdnport=5060
+ent-trkgrp::1179:::sipt:name=sipsim2,tgprofile=1,sipdstfqdn=10.14.1.179,sipdstfqdnport=5060
+ent-trkgrp::1030:::sip:name=sptpod1,tgprofile=1,sipdstfqdn=10.11.30.1,sipdstfqdnport=5060
+ent-trkgrp::1040:::sip:name=sptpod2,tgprofile=1,sipdstfqdn=10.11.30.2,sipdstfqdnport=5060
+ent-trkgrp::1050:::sip:name=sptpod3,tgprofile=1,sipdstfqdn=10.11.30.3,sipdstfqdnport=5060
+ent-trkgrp::1060:::sip:name=sptpod4,tgprofile=1,sipdstfqdn=10.11.30.4,sipdstfqdnport=5060
+ent-trkgrp::1061:::sipt:name=sptpod4t,tgprofile=1,sipdstfqdn=10.11.30.4,sipdstfqdnport=5060
+ent-trkgrp::1130:::sip:name=inetc1,tgprofile=1,sipdstfqdn=10.11.30.5,sipdstfqdnport=5060
+ent-trkgrp::1140:::sip:name=inetc2,tgprofile=1,sipdstfqdn=10.11.30.6,sipdstfqdnport=5060
+ent-trkgrp::1150:::sip:name=inetc3,tgprofile=1,sipdstfqdn=10.11.30.7,sipdstfqdnport=5060
+ent-trkgrp::1160:::sip:name=inetc4,tgprofile=1,sipdstfqdn=10.11.30.8,sipdstfqdnport=5060
+ent-trkgrp::1161:::sipt:name=inetc4t,tgprofile=1,sipdstfqdn=10.11.30.8,sipdstfqdnport=5060
+ent-sip-tgmapaddr::135.2.67.10-IP-5060:::tgn=1013
+ent-sip-tgmapaddr::135.2.67.12-IP-5060:::tgn=1013
+ent-sip-tgmapaddr::10.3.6.10-IP-5060:::tgn=1015
+ent-sip-tgmapaddr::10.3.6.12-IP-5060:::tgn=1015
+ent-sip-tgmapaddr::10.3.7.10-IP-5060:::tgn=1017
+ent-sip-tgmapaddr::10.3.7.12-IP-5060:::tgn=1017
+ent-sip-tgmapaddr::135.2.67.42-IP-5060:::tgn=1019
+ent-sip-tgmapaddr::135.2.67.44-IP-5060:::tgn=1019
+ent-sip-tgmapaddr::135.2.67.74-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::135.2.67.75-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::135.2.67.76-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::135.2.67.77-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::135.2.67.78-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::135.2.67.79-IP-5060:::tgn=1020
+ent-sip-tgmapaddr::10.14.1.178-IP-5060:::tgn=1178
+ent-sip-tgmapaddr::10.14.1.179-IP-5060:::tgn=1179
+ent-sip-tgmapaddr::10.11.30.1-IP-DEFAULT:::tgn=1030
+ent-sip-tgmapaddr::10.11.30.2-IP-DEFAULT:::tgn=1040
+ent-sip-tgmapaddr::10.11.30.3-IP-DEFAULT:::tgn=1050
+ent-sip-tgmapaddr::10.11.30.4-IP-DEFAULT:::tgn=1060
+ent-sip-tgmapaddr::10.11.30.4-IP-5070:::tgn=1061
+ent-sip-tgmapaddr::10.11.30.5-IP-DEFAULT:::tgn=1130
+ent-sip-tgmapaddr::10.11.30.6-IP-DEFAULT:::tgn=1140
+ent-sip-tgmapaddr::10.11.30.7-IP-DEFAULT:::tgn=1150
+ent-sip-tgmapaddr::10.11.30.8-IP-DEFAULT:::tgn=1160
+ent-sip-tgmapaddr::10.11.30.8-IP-5070:::tgn=1161
+ent-route-list::fsft1
+ent-route-list::fsft2
+ent-route-list::fsft3
+ent-route-list::fsft3n4
+ent-route-list::fscg1
+ent-route-list::fscg2
+ent-route-list::sipsim1
+ent-route-list::sipsim2
+ent-route-list::sptpod1
+ent-route-list::sptpod2
+ent-route-list::sptpod3
+ent-route-list::sptpod4
+ent-route-list::sptpod4t
+ent-route-list::inetc1
+ent-route-list::inetc2
+ent-route-list::inetc3
+ent-route-list::inetc4
+ent-route-list::inetc4t
+ent-route::fsft1-1:::bgn=tgn-1015
+ent-route::fsft2-1:::bgn=tgn-1017
+ent-route::fsft3n4-1:::bgn=tgn-1020
+ent-route::fscg1-1:::bgn=tgn-1013
+ent-route::fscg2-1:::bgn=tgn-1019
+ent-route::sipsim1-1:::bgn=tgn-1178
+ent-route::sipsim2-1:::bgn=tgn-1179
+ent-route::sptpod1-1:::bgn=tgn-1030
+ent-route::sptpod2-1:::bgn=tgn-1040
+ent-route::sptpod3-1:::bgn=tgn-1050
+ent-route::sptpod4-1:::bgn=tgn-1060
+ent-route::sptpod4t-1:::bgn=tgn-1061
+ent-route::inetc1-1:::bgn=tgn-1130
+ent-route::inetc2-1:::bgn=tgn-1140
+ent-route::inetc3-1:::bgn=tgn-1150
+ent-route::inetc4-1:::bgn=tgn-1160
+ent-route::inetc4t-1:::bgn=tgn-1161
+ent-route-digits::DEFAULT-CDPN-natnum-974410:::rtdest=rtlist-fsft1
+ent-route-digits::DEFAULT-CDPN-natnum-974411:::rtdest=rtlist-fsft1
+ent-route-digits::DEFAULT-CDPN-natnum-974412:::rtdest=rtlist-fsft1
+ent-route-digits::DEFAULT-CDPN-natnum-881:::rtdest=rtlist-fsft1
+ent-route-digits::DEFAULT-CDPN-natnum-781:::rtdest=rtlist-fscg1
+ent-route-digits::DEFAULT-CDPN-natnum-882:::rtdest=rtlist-fsft2
+ent-route-digits::DEFAULT-CDPN-natnum-974421:::rtdest=rtlist-fsft2
+ent-route-digits::DEFAULT-CDPN-natnum-974420:::rtdest=rtlist-fsft2
+ent-route-digits::DEFAULT-CDPN-NATNUM-974422-ISDN:::RTDEST=RTLIST-fsft2
+ent-route-digits::DEFAULT-CDPN-NATNUM-974440-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974441-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974442-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974443-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974444-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974445-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-940-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-941-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-942-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-943-ISDN:::RTDEST=RTLIST-fsft3n4
+ent-route-digits::DEFAULT-CDPN-NATNUM-974510-ISDN:::RTDEST=RTLIST-fscg1
+ent-route-digits::DEFAULT-CDPN-NATNUM-974520-ISDN:::RTDEST=RTLIST-fscg2
+ent-route-digits::DEFAULT-CDPN-NATNUM-974521-ISDN:::RTDEST=RTLIST-fscg2
+ent-route-digits::DEFAULT-CDPN-NATNUM-974522-ISDN:::RTDEST=RTLIST-fscg2
+ent-route-digits::SCP-CDPN-NATNUM-DEFAULT:::rtdest=TRANS-CDPN
+ent-route-digits::DEFAULT-CDPN-natnum-336:::rtdest=rtlist-sipsim1
+ent-route-digits::DEFAULT-CDPN-natnum-436:::rtdest=rtlist-sipsim2
+ent-route-digits::DEFAULT-CDPN-natnum-446:::rtdest=rtlist-sptpod1
+ent-route-digits::DEFAULT-CDPN-natnum-456:::rtdest=rtlist-sptpod2
+ent-route-digits::DEFAULT-CDPN-natnum-466:::rtdest=rtlist-sptpod3
+ent-route-digits::DEFAULT-CDPN-natnum-476:::rtdest=rtlist-sptpod4
+ent-route-digits::DEFAULT-CDPN-natnum-477:::rtdest=rtlist-sptpod4t
+ent-route-digits::DEFAULT-CDPN-natnum-448:::rtdest=rtlist-inetc1
+ent-route-digits::DEFAULT-CDPN-natnum-458:::rtdest=rtlist-inetc2
+ent-route-digits::DEFAULT-CDPN-natnum-468:::rtdest=rtlist-inetc3
+ent-route-digits::DEFAULT-CDPN-natnum-478:::rtdest=rtlist-inetc4
+ent-route-digits::DEFAULT-CDPN-natnum-479:::rtdest=rtlist-inetc4t
+#Number Administration
+ent-country::1
+ent-national-npa::1-974
+ent-national-npa::1-315
+ent-national-npa::1-322
+ent-national-npa::1-422
+ent-national-npa::1-336
+ent-national-npa::1-436
+ent-national-npa::1-446
+ent-national-npa::1-456
+ent-national-npa::1-466
+ent-national-npa::1-476
+ent-national-npa::1-477
+ent-national-npa::1-448
+ent-national-npa::1-458
+ent-national-npa::1-468
+ent-national-npa::1-478
+ent-national-npa::1-479
+ent-national-npa::1-702
+ent-national-npa::1-741
+ent-national-npa::1-731
+ent-national-npa::1-940
+ent-national-npa::1-941
+ent-national-npa::1-942
+ent-national-npa::1-943
+ent-tollfree-npa::1-800
+ent-national-npa::1-888
+ent-sccp-route::10-10-10
+ent-sccp-ssn::10-10-10-236:::startmode=online,nind=national
+ent-sccp-ssn::10-10-10-238:::startmode=online,nind=national
+ent-sccp-ssn::10-10-10-253:::startmode=online,nind=national
+ent-prfl-insap::1:::svcreqssn=236,tcapuser=none,ssftmout=3
+ent-prfl-insap::2:::svcreqssn=238,tcapuser=ain1992,ssftmout=3
+ent-prfl-insap::3:::svcreqssn=253,tcapuser=none,ssftmout=3
+ent-slhr-scp::0:::desc=cname,routetype=rte_ssn,dpc=10-10-10,insapprflid=1,svcprovssn=236
+ent-slhr-scp::1:::desc=lnp,routetype=rte_ssn,dpc=10-10-10,insapprflid=2,svcprovssn=238
+ent-slhr-scp::2:::desc=toolfree,routetype=rte_ssn,dpc=10-10-10,insapprflid=3,svcprovssn=253
+ed-service-accesscode::cnam:::slhrid=0:is
+ed-service-accesscode::lnp:::slhrid=1:is
+ed-service-accesscode::tollfree:::slhrid=2:is
+ed-switch-cfg::COM:::owncid=NULL,OWNCNAM="",DN711=NULL,SENDIAMNAME=Y,USEIAMNAME=Y,UCNCNDPRI=N,ALWTENDGTLDDIAL=N,BLOCKCNAMP=N,OPRTOLLFREE=Y,OWNLATAID=NULL,LOCCNAM=N,FRAUDTRAPPRFL=NULL,SWITCHID=0,IGNORESAMELATALNPRSTRN=N,NMBPLAN=NANP
+set-sid:::::ihlcsgw7
+ed-billsys:ihlcsgw7:COM:::switchname=ihlcsgw7
+set-dataserver-hostcfg:::::dataserveranet1=135.1.235.69

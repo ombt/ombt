@@ -1,0 +1,41 @@
+# T1/E1 ioms here (414)
+ent-eqpt-all::iom-1:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-3:::iomoduletype=BA7ATP0FAA,redundancy=pri,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA7A1P0FAA:is
+ent-eqpt-all::iom-7:::iomoduletype=BA7ATP0FAA,redundancy=sec,memthreshold=90,nvmemthreshold=90,busythreshold=90,swversion=<ds1_2>,rearmoduletype=BA9IBB0AAA:is
+# ENA2 ioms
+ent-eqpt-all::iom-8:::iomoduletype=BAUIADPEAB,redundancy=pri,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+ent-eqpt-all::iom-10:::iomoduletype=BAUIADPEAB,redundancy=sec,memthreshold=95,nvmemthreshold=95,busythreshold=95,swversion=<ena2>,rearmoduletype=BA2A20SGAA:is
+#VSM 3
+ent-eqpt::iom-14:::BAUIAA1EAC,pri,95,95,95,<vs3>:is
+ent-eqpt::iom-9:::BAUIAA1EAC,sec,95,95,95,<vs3>:is
+#
+ed-t1::tmg-A:::EQLZ=0,fmt=sf,linecde=ami,omode=ais,tmgref=pri:is
+ed-t1::tmg-B:::EQLZ=0,fmt=sf,linecde=ami,omode=ais,tmgref=sec:is
+# enter partition data here so the partition info will populate on t0
+ent-mg-partition::part0:::,maxctxt=200
+ent-mg-mgcassoc::ihlcsgw11-part0:::mgctype=primary,ipaddr=10.11.34.3,rxport=2944,txport=2944,transprot=udp,mgcidletmr=8
+sleep 60
+# T1s go here
+#
+ent-t1::iom-1-port-2:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-3:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-4:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-5:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-6:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-15:::fmt=sf,linecde=ami,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-1-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-2:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-3:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-4:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-5:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-6:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-15:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+ent-t1::iom-3-port-17:::fmt=esf,linecde=b8zs,omode=ais,tmgref=none,iftype=network:is
+#
+ent-enet::iom-8-enet-1:::format=enet_dix_ii:is
+ent-enet-endptvoip::iom-8-enet-1-endpt-1:::ipaddr=10.175.34.1,mateipaddr=10.175.34.2,subnetmask=255.255.255.0,defaultgateway=10.175.34.254:is
+ent-iproute::sp-cpu-a-0.0.0.0-0:::gateway=135.1.104.254
+ent-iproute::sp-cpu-b-10.10.0.0-16:::gateway=10.11.34.254
+ent-iproute::sp-cpu-b-10.14.0.0-16:::gateway=10.11.34.254
+ent-iproute::sp-cpu-b-10.11.0.0-16:::gateway=10.11.34.254
+ent-iproute::sp-cpu-b-135.1.251.0-24:::gateway=10.11.34.254

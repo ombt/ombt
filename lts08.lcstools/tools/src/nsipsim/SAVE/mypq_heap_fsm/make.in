@@ -1,0 +1,21 @@
+SHELLBIN=$(HOME)/tools/bin
+#
+nsipsimfsm
+nsipsimfsm.PL
+install1 = -(sed "s?/opt/exp/bin/perl?/opt/OV/bin/Perl/bin/perl?" nsipsimfsm.PL >/tmp/remotensipsimfsm.PL)
+install2 = -(sed "s?/home/lcstools/tools/bin?/NSIPSIM/bin?" /tmp/remotensipsimfsm.PL >/tmp/remotensipsim2fsm.PL)
+install3 = -(rcp /tmp/remotensipsim2fsm.PL root@135.1.235.58:/NSIPSIM/src/nsipsimfsm.PL)
+#
+nsipsimadm
+nsipsimadm.PL
+install1 = -(sed "s?/opt/exp/bin/perl?/opt/OV/bin/Perl/bin/perl?" nsipsimadm.PL >/tmp/remotensipsimadm.PL)
+install2 = -(sed "s?/home/lcstools/tools/bin?/NSIPSIM/bin?" /tmp/remotensipsimadm.PL >/tmp/remotensipsim2adm.PL)
+install3 = -(rcp /tmp/remotensipsim2adm.PL root@135.1.235.58:/NSIPSIM/src/nsipsimadm.PL)
+#
+# mypqueue.pm
+# mypqueue.PM
+# install1 = -(rcp mypqueue.PM root@135.1.235.58:/NSIPSIM/src)
+#
+# mytimer.pm
+# mytimer.PM
+# install1 = -(rcp mytimer.PM root@135.1.235.58:/NSIPSIM/src)

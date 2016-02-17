@@ -1,0 +1,20 @@
+file script {
+	scriptsdir /home/lcstools/tools/src/hug/src/scripts/reload2
+}
+source <scriptsdir>/reload2.globals
+source <scriptsdir>/reload2.minmode
+source <scriptsdir>/reload2.removetarfiles
+source <scriptsdir>/reload2.ftpload
+source <scriptsdir>/reload2.removeload
+source <scriptsdir>/reload2.installnewload
+source <scriptsdir>/reload2.appmode
+# source <scriptsdir>/reload2.users
+# source <scriptsdir>/reload2.mgc.hardware1
+# source <scriptsdir>/reload2.mgc.hardware2
+# source <scriptsdir>/reload2.copymem_all
+source <scriptsdir>/reload2.file.users
+source <scriptsdir>/reload2.file.mgc.hardware1
+source <scriptsdir>/reload2.file.mgc.hardware2
+source <scriptsdir>/reload2.file.copymem_all
+source <scriptsdir>/reload2.rtrv_eqpt
+source <scriptsdir>/reload2.closestreams

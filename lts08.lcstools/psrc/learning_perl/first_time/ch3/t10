@@ -1,0 +1,14 @@
+#!/usr/bin/perl 
+#
+@junk = ();
+#
+while (($length=@junk)< 3)
+{
+	print "enter a list of values (at least 3) ... ";
+	@junk = <STDIN>;
+	chomp(@junk);
+}
+#
+print "junk is ... @junk\n";
+print "junk is ... @junk[0,2]\n";
+#
