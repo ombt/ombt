@@ -4,13 +4,21 @@
 # All rights reserved.
 # Contact: Mike A. Rumore, (mike.a.rumore@gmail.com)
 #
+# example to using proxy:
+#
+# use LWP::Simple qw( $ua get );
+# $ua->proxy( 'http', 'http://myproxy.example.com' );
+# my $content = get( 'http://www.example.com/' );
 #
 use strict;
 #
 use FileHandle;
 use File::Basename;
 use Getopt::Std;
-use LWP::Simple;
+#
+# use LWP::Simple;
+use LWP::Simple qw( $ua get );
+# $ua->proxy( 'http', 'http://rm-proxy.panasonic.com:8102' );
 #
 my $cmd = $0;
 my $verbose = 0;
@@ -24,6 +32,8 @@ my $plotcmds = '';
 my $startdate = '';
 my $enddate = '';
 my $period = 'daily';
+my $proxy_url = '';
+my $default_proxy_url = 'http://rm-proxy.panasonic.com:8102';
 #
 my $uniqueid = 0;
 #
@@ -32,6 +42,7 @@ sub shortusage {
 	print <<EOF;
 
 usage: $arg0 [-?|-h] [-V]
+	[-X proxy-url | -x ]
 	[-i input file]
 	[-o [output directory|output file]]
 	[-s [mm/dd/yyy|#|#d|#w|#m|#y]]
@@ -69,6 +80,7 @@ sub usage {
 	print <<EOF;
 
 usage: $arg0 [-?|-h] [-V]
+	[-X proxy-url | -x ]
 	[-i input file]
 	[-o [output directory|output file]]
 	[-s [mm/dd/yyy|#|#d|#w|#m|#y]]
@@ -80,6 +92,8 @@ usage: $arg0 [-?|-h] [-V]
 
 where:
 
+	-X url = use given proxy URL.
+	-x = use default proxy URL.
 	-i input file = path to input data file. the input file was
 		written by this script or has the same format.
 	-o [output directory|output file] = if the output
@@ -923,7 +937,7 @@ $enddate = previousworkday();
 $period = 'daily';
 #
 my %opts;
-if (getopts('?hVi:o:s:e:y:dwmp:', \%opts) != 1) {
+if (getopts('?hVi:o:s:e:y:dwmp:xX:', \%opts) != 1) {
 	usage($cmd);
 	exit 2;
 }
@@ -955,6 +969,11 @@ foreach my $opt (%opts) {
 		$period = "monthly";
 	} elsif ($opt eq "p") {
 		$plotcmds = $opts{$opt};
+	} elsif ($opt eq "X") {
+		$proxy_url = $opts{$opt};
+		$ua->proxy( 'http', $proxy_url );
+	} elsif ($opt eq "x") {
+		$ua->proxy( 'http', $default_proxy_url );
 	}
 }
 #
