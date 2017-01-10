@@ -11,7 +11,7 @@ endif
 
 include $(ROOT)/build/makefile.common
 
-PERLSCRIPTS = mutual stock yahoo_quotes yq
+PERLSCRIPTS = mutual real_time_quotes stock yahoo_quotes yq
 
 include $(ROOT)/build/makefile.PL
 
