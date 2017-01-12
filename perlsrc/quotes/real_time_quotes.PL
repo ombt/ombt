@@ -510,17 +510,25 @@ sub request_data_types
 #
 sub get_symbol_data
 {
-    my ($symbol, $pcontent, $phdr) = @_;
+    my ($symbol, $pcontent, $query) = @_;
     #
     $symbol =~ tr/a-z/A-Z/;
     print "\nProcessing Symbol: $symbol \n";
     #
-    # my $query = "http://ichart.finance.yahoo.com/table.csv?";
-    # $query .= "s=${symbol}";
+    $query =~ s/<SYMBOLS>/${symbol}/;
     #
-    my $query = "http://finance.yahoo.com/d/quotes.csv?";
-    $query .= "s=${symbol}";
-    $query .= "&f=xns";
+    query_yahoo($symbol, $query, $pcontent);
+    #
+    return;
+}
+#
+sub generate_query
+{
+    my ($pquery, $phdr) = @_;
+    #
+    $$pquery = "http://finance.yahoo.com/d/quotes.csv?";
+    $$pquery .= "s=<SYMBOLS>";
+    $$pquery .= "&f=xns";
     #
     my @options = undef;
     my @hdrs = undef;
@@ -539,13 +547,9 @@ sub get_symbol_data
     my $flipflop = 1;
     my @final_hdrs = grep { $flipflop = not $flipflop } @hdrs;
     #
-    $query .= join '', @options;
+    $$pquery .= join '', @options;
     $$phdr = "stock exchange,name,symbol,";
     $$phdr .= join ',', @final_hdrs;
-    #
-    query_yahoo($symbol, $query, $pcontent);
-    #
-    return;
 }
 #
 my %opts;
@@ -616,12 +620,17 @@ else
     exit 2;
 }
 #
+my $hdr = '';
+my $query = '';
+generate_query(\$query, \$hdr);
+die "Unable to generate query string" unless ($query ne '');
+printf "\nYahoo Query: %s\n", $query;
+printf "Ouput Header: %s\n", $hdr;
+#
 foreach my $symbol (@{$psymbols})
 {
-    $symbol =~ tr/a-z/A-Z/;
     my $content = '';
-    my $hdr = '';
-    get_symbol_data($symbol, \$content, \$hdr);
+    get_symbol_data($symbol, \$content, $query);
     handle_data($symbol, $content, $hdr);
 }
 #
