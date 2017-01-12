@@ -154,6 +154,16 @@ my %data_types =
             b3 => 'bid (realtime)',
             p => 'previous close',
             o => 'open'
+        },
+        non_real_time_options => {
+            a => 'ask',
+            b => 'bid',
+            p => 'previous close',
+            o => 'open'
+        },
+        real_time_options => {
+            b2 => 'ask (realtime)',
+            b3 => 'bid (realtime)',
         }
     },
     'v' => {
@@ -163,7 +173,13 @@ my %data_types =
             d => 'dividend per share',
             r1 => 'dividend pay date',
             q => 'ex-dividend date'
-        }
+        },
+        non_real_time_options => {
+            y => 'dividend yield',
+            d => 'dividend per share',
+            r1 => 'dividend pay date',
+            q => 'ex-dividend date'
+        },
     },
     'd' => {
         name => 'Date',
@@ -176,6 +192,18 @@ my %data_types =
             d1 => 'last trade date',
             d2 => 'trade date',
             t1 => 'last trade time'
+        },
+        non_real_time_options => {
+            c1 => 'change',
+            c => 'change & percentage change',
+            k2 => 'change percent',
+            p2 => 'change in percent',
+            d1 => 'last trade date',
+            d2 => 'trade date',
+            t1 => 'last trade time'
+        },
+        real_time_options => {
+            c6 => 'change (realtime)',
         }
     },
     'a' => {
@@ -195,6 +223,24 @@ my %data_types =
             m8 => 'percent change from 50 day moving average',
             m3 => '50 day moving average',
             m4 => '200 day moving average'
+        },
+        non_real_time_options => {
+            c8 => 'after hours change',
+            c3 => 'commission',
+            g => 'day’s low',
+            h => 'day’s high',
+            l => 'last trade (with time)',
+            l1 => 'last trade (price only)',
+            t8 => '1 yr target price',
+            m5 => 'change from 200 day moving average',
+            m6 => 'percent change from 200 day moving average',
+            m7 => 'change from 50 day moving average',
+            m8 => 'percent change from 50 day moving average',
+            m3 => '50 day moving average',
+            m4 => '200 day moving average'
+        },
+        real_time_options => {
+            k1 => 'last trade (realtime) with time',
         }
     },
     'm' => {
@@ -218,6 +264,27 @@ my %data_types =
             v1 => 'holdings value',
             v7 => 'holdings value (realtime)',
             s6 => 'revenue'
+        },
+        non_real_time_options => {
+            w1 => 'day’s value change',
+            p1 => 'price paid',
+            m => 'day’s range',
+            g1 => 'holding gain percent',
+            g3 => 'annualized gain',
+            g4 => 'holdings gain',
+            t7 => 'ticker trend',
+            t6 => 'trade links',
+            l2 => 'high limit',
+            l3 => 'low limit',
+            v1 => 'holdings value',
+            s6 => 'revenue'
+        },
+        real_time_options => {
+            w4 => 'day’s value change (realtime)',
+            m2 => 'day’s range (realtime)',
+            g6 => 'holdings gain (realtime)',
+            i5 => 'order book (realtime)',
+            v7 => 'holdings value (realtime)',
         }
     },
     '5' => {
@@ -230,7 +297,16 @@ my %data_types =
             j6 => 'percent change from 52 week low',
             k5 => 'percent change from 52 week high',
             w => '52 week range'
-        }
+        },
+        non_real_time_options => {
+            k => '52 week high',
+            j => '52 week low',
+            j5 => 'change from 52 week low',
+            k4 => 'change from 52 week high',
+            j6 => 'percent change from 52 week low',
+            k5 => 'percent change from 52 week high',
+            w => '52 week range'
+        },
     },
     's' => {
         name => 'Symbol Info',
@@ -245,6 +321,20 @@ my %data_types =
             s1 => 'shares owned',
             x => 'tock exchange',
             j2 => 'shares outstanding'
+        },
+        non_real_time_options => {
+            v => 'more info',
+            j1 => 'market capitalization',
+            f6 => 'float shares',
+            n => 'name',
+            n4 => 'notes',
+            s => 'symbol',
+            s1 => 'shares owned',
+            x => 'tock exchange',
+            j2 => 'shares outstanding'
+        },
+        real_time_options => {
+            j3 => 'market cap (realtime)',
         }
     },
     'v' => {
@@ -255,7 +345,14 @@ my %data_types =
             b6 => 'bid size',
             k3 => 'last trade size',
             a2 => 'average daily volume'
-        }
+        },
+        non_real_time_options => {
+            v => 'volume',
+            a5 => 'ask size',
+            b6 => 'bid size',
+            k3 => 'last trade size',
+            a2 => 'average daily volume'
+        },
     },
     'r' => {
         name => 'Ratios',
@@ -274,17 +371,37 @@ my %data_types =
             r6 => 'price / eps estimate current year',
             r7 => 'price /eps estimate next year',
             s7 => 'short ratio'
+        },
+        non_real_time_options => {
+            e => 'earnings per share',
+            e7 => 'eps estimate current year',
+            e8 => 'eps estimate next year',
+            e9 => 'eps estimate next quarter',
+            b4 => 'book value',
+            j4 => 'EBITDA',
+            p5 => 'price / sales',
+            p6 => 'price / book',
+            r => 'P/E ratio',
+            r5 => 'PEG ratio',
+            r6 => 'price / eps estimate current year',
+            r7 => 'price /eps estimate next year',
+            s7 => 'short ratio'
+        },
+        real_time_options => {
+            r2 => 'P/E ratio (realtime)',
         }
     }
 );
-#
-my $default_data_type = 'p'; # Pricing
 #
 my $cmd = $0;
 my $verbose = 0;
 my $inputfile = '';
 my $proxy_url = '';
 my $default_proxy_url = 'http://rm-proxy.panasonic.com:8102';
+#
+my $default_data_type = 'p'; # Pricing
+my $data_type = $default_data_type;
+my $use_real_time = 0;
 #
 sub usage
 {
@@ -295,7 +412,7 @@ usage: $arg0
            [-?|-h] [-V]
            [-X proxy-url | -x ]
            [-i input file]
-           [-d type]
+           [-d type [-r] ]
            sym1 [sym2 [...]]
 
 where:
@@ -315,6 +432,7 @@ where:
               s - Symbol Info
               v - Volume
               r - Ratios
+    -r - use real time versions of given data type (if they exist).
     sym1 [sym2 [...]] = list of symbols 
 
 EOF
@@ -337,7 +455,7 @@ sub read_input_file
 #
 sub handle_data
 {
-    my ($symbol, $content) = @_;
+    my ($symbol, $content, $hdr) = @_;
     #
     if (!defined ${content})
     {
@@ -345,7 +463,7 @@ sub handle_data
     }
     else
     {
-        print "\nDATA for $symbol: \n" . $content . "\n";
+        print "\nDATA for $symbol: \n" . $hdr . "\n" . $content . "\n";
     }
     #
     return;
@@ -383,9 +501,16 @@ sub query_yahoo
     return;
 }
 #
+sub request_data_types
+{
+    my ($ptypes) = @_;
+    #
+    return join '', keys %{$ptypes};
+}
+#
 sub get_symbol_data
 {
-    my ($symbol, $pcontent) = @_;
+    my ($symbol, $pcontent, $phdr) = @_;
     #
     $symbol =~ tr/a-z/A-Z/;
     print "\nProcessing Symbol: $symbol \n";
@@ -395,7 +520,28 @@ sub get_symbol_data
     #
     my $query = "http://finance.yahoo.com/d/quotes.csv?";
     $query .= "s=${symbol}";
-    $query .= "&f=nsab";
+    $query .= "&f=xns";
+    #
+    my @options = undef;
+    my @hdrs = undef;
+    #
+    if ($use_real_time)
+    {
+        @options = keys %{$data_types{$data_type}->{real_time_options}};
+        @hdrs = %{$data_types{$data_type}->{real_time_options}}{@options};
+    }
+    else
+    {
+        @options = keys %{$data_types{$data_type}->{non_real_time_options}};
+        @hdrs = %{$data_types{$data_type}->{non_real_time_options}}{@options};
+    }
+    #
+    my $flipflop = 1;
+    my @final_hdrs = grep { $flipflop = not $flipflop } @hdrs;
+    #
+    $query .= join '', @options;
+    $$phdr = "stock exchange,name,symbol,";
+    $$phdr .= join ',', @final_hdrs;
     #
     query_yahoo($symbol, $query, $pcontent);
     #
@@ -403,7 +549,7 @@ sub get_symbol_data
 }
 #
 my %opts;
-if (getopts('?hVX:xi:', \%opts) != 1)
+if (getopts('?hVX:xi:d:r', \%opts) != 1)
 {
     usage($cmd);
     exit 2;
@@ -433,7 +579,21 @@ foreach my $opt (%opts)
     {
         $inputfile = $opts{$opt};
     }
+    elsif ($opt eq 'd')
+    {
+        $data_type = $opts{$opt};
+    }
+    elsif ($opt eq 'r')
+    {
+        $use_real_time = 1;
+    }
 }
+#
+die "Unknown data type: ${data_type}" 
+    unless (exists($data_types{$data_type}));
+die "No real time data available for data type: ${data_type}" 
+    if (($use_real_time != 0) &&
+        (!exists($data_types{$data_type}{real_time_options})));
 #
 my $psymbols = undef;
 #
@@ -460,8 +620,9 @@ foreach my $symbol (@{$psymbols})
 {
     $symbol =~ tr/a-z/A-Z/;
     my $content = '';
-    get_symbol_data($symbol, \$content);
-    handle_data($symbol, $content);
+    my $hdr = '';
+    get_symbol_data($symbol, \$content, \$hdr);
+    handle_data($symbol, $content, $hdr);
 }
 #
 exit 0;
