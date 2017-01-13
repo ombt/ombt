@@ -395,9 +395,12 @@ my %data_types =
 #
 my $cmd = $0;
 my $verbose = 0;
-my $inputfile = '';
+my $input_file = '';
+my $output_file = '';
+my $default_output_file = "/tmp/" . basename($cmd) . ".out";
 my $proxy_url = '';
 my $default_proxy_url = 'http://rm-proxy.panasonic.com:8102';
+my $output_fh = undef;
 #
 my $default_data_type = 'p'; # Pricing
 my $data_type = $default_data_type;
@@ -412,8 +415,9 @@ usage: $arg0
            [-?|-h] [-V]
            [-X proxy-url | -x ]
            [-i input file]
+           [ [-o output file] | -O ]
            [-d type [-r] ]
-           sym1 [sym2 [...]]
+           sym1 [sym2 [...]] or sym1[,sym2,...]
 
 where:
 
@@ -422,6 +426,8 @@ where:
     -X url = use given proxy URL.
     -x = use default proxy URL.
     -i input file = path to input data file. 
+    -o output file = path to output file. 
+    -O = use default output file name, "${default_output_file}"
     -d type = type of data to retrieve for symbol:
               p - Pricing (default)
               v - Dividends
@@ -460,10 +466,12 @@ sub handle_data
     if (!defined ${content})
     {
         print "\nNO DATA FOR ${symbol}\n";
+        printf $output_fh "\nNO DATA FOR %s\n", ${symbol} if (defined($output_fh));
     }
     else
     {
         print "\nDATA for $symbol: \n" . $hdr . "\n" . $content . "\n";
+        printf $output_fh "%s\n", ${content} if (defined($output_fh));
     }
     #
     return;
@@ -553,7 +561,7 @@ sub generate_query
 }
 #
 my %opts;
-if (getopts('?hVX:xi:d:r', \%opts) != 1)
+if (getopts('?hVX:xi:o:Od:r', \%opts) != 1)
 {
     usage($cmd);
     exit 2;
@@ -581,7 +589,23 @@ foreach my $opt (%opts)
     }
     elsif ($opt eq 'i')
     {
-        $inputfile = $opts{$opt};
+        $input_file = $opts{$opt};
+    }
+    elsif ($opt eq 'o')
+    {
+        close($output_fh) if (defined($output_fh));
+        $output_file = $opts{$opt};
+        local *FH;
+        open (FH, '>', $output_file) or die $!;
+        $output_fh = *FH;
+    }
+    elsif ($opt eq 'O')
+    {
+        close($output_fh) if (defined($output_fh));
+        $output_file = ${default_output_file};
+        local *FH;
+        open (FH, '>', $output_file) or die $!;
+        $output_fh = *FH;
     }
     elsif ($opt eq 'd')
     {
@@ -601,10 +625,10 @@ die "No real time data available for data type: ${data_type}"
 #
 my $psymbols = undef;
 #
-if ($inputfile ne '')
+if ($input_file ne '')
 {
     my $content = '';
-    read_input_file($inputfile, \$content);
+    read_input_file($input_file, \$content);
     #
     my @symbols = split(/\n/, $content);
     $psymbols = \@symbols;
@@ -625,7 +649,9 @@ my $query = '';
 generate_query(\$query, \$hdr);
 die "Unable to generate query string" unless ($query ne '');
 printf "\nYahoo Query: %s\n", $query;
-printf "Ouput Header: %s\n", $hdr;
+printf "Output Header: %s\n", $hdr;
+#
+printf $output_fh "%s\n", $hdr if (defined($output_fh));
 #
 foreach my $symbol (@{$psymbols})
 {
@@ -633,6 +659,8 @@ foreach my $symbol (@{$psymbols})
     get_symbol_data($symbol, \$content, $query);
     handle_data($symbol, $content, $hdr);
 }
+#
+close($output_fh) if (defined($output_fh));
 #
 exit 0;
 
