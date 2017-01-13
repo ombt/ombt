@@ -311,7 +311,7 @@ my %data_types =
     's' => {
         name => 'Symbol Info',
         options => {
-            v => 'more info',
+            # v => 'more info',
             j1 => 'market capitalization',
             j3 => 'market cap (realtime)',
             f6 => 'float shares',
@@ -393,6 +393,20 @@ my %data_types =
     }
 );
 #
+# crummy way to do this ... but it works.
+# 
+my @dt_keys = keys %data_types;
+my %dt_options = map { $_ => $data_types{$_}->{options} } @dt_keys;
+my %options = ();
+foreach my $dt_key (@dt_keys)
+{
+    foreach my $option_key (keys %{$dt_options{$dt_key}})
+    {
+        # printf "%s ==>> %s\n", $dt_key, $option_key;
+        $options{$option_key} = $dt_options{$dt_key}{$option_key};
+    }
+}
+#
 my $cmd = $0;
 my $verbose = 0;
 my $input_file = '';
@@ -405,6 +419,8 @@ my $output_fh = undef;
 my $default_data_type = 'p'; # Pricing
 my $data_type = $default_data_type;
 my $use_real_time = 0;
+my $user_query = undef;
+my $default_user_query = 'aa5bb6k3pov';
 #
 sub usage
 {
@@ -412,16 +428,17 @@ sub usage
     print <<EOF;
 
 usage: $arg0 
-           [-?|-h] [-V]
+           [-?|-h|-H] [-V]
            [-X proxy-url | -x ]
            [-i input file]
-           [ [-o output file] | -O ]
-           [-d type [-r] ]
+           [ -o output file | -O ]
+           [-d type [-r] | -q types | -Q ]
            sym1 [sym2 [...]] or sym1[,sym2,...]
 
 where:
 
     -? or -h = print usage.
+    -H = print long usage.
     -V = verbose mode.
     -X url = use given proxy URL.
     -x = use default proxy URL.
@@ -438,7 +455,145 @@ where:
               s - Symbol Info
               v - Volume
               r - Ratios
-    -r - use real time versions of given data type (if they exist).
+    -q types = list of data to print (use -H to get list).
+    -Q = use default query 'aa5bb6k3pov' (use -H to interprete).
+    -r = use real time versions of given data type (if they exist).
+    sym1 [sym2 [...]] = list of symbols 
+
+EOF
+}
+#
+sub long_usage
+{
+    my ($arg0) = @_;
+    print <<EOF;
+
+usage: $arg0 
+           [-?|-h|-H] [-V]
+           [-X proxy-url | -x ]
+           [-i input file]
+           [ -o output file | -O ]
+           [-d type [-r] | -q types | -Q ]
+           sym1 [sym2 [...]] or sym1[,sym2,...]
+
+where:
+
+    -? or -h = print usage.
+    -H = print long usage.
+    -V = verbose mode.
+    -X url = use given proxy URL.
+    -x = use default proxy URL.
+    -i input file = path to input data file. 
+    -o output file = path to output file. 
+    -O = use default output file name, "${default_output_file}"
+    -d type = type of data to retrieve for symbol:
+              p - Pricing (default)
+              v - Dividends
+              d - Date
+              a - Averages
+              m - Misc
+              5 - 52 Week Pricing
+              s - Symbol Info
+              v - Volume
+              r - Ratios
+    -q types = list of data to print:
+               Symbol Info:
+                   v - more info
+                   j1 - market capitalization
+                   j3 - market cap (realtime)
+                   f6 - float shares
+                   n - name
+                   n4 - notes
+                   s - symbol
+                   s1 - shares owned
+                   x - tock exchange
+                   j2 - shares outstanding
+               Pricing:
+                   a - ask
+                   b - bid
+                   b2 - ask (realtime)
+                   b3 - bid (realtime)
+                   p - previous close
+                   o - open
+               Volume:
+                   v - volume
+                   a5 - ask size
+                   b6 - bid size
+                   k3 - last trade size
+                   a2 - average daily volume
+               Dividends:
+                   y - dividend yield
+                   d - dividend per share
+                   r1 - dividend pay date
+                   q - ex-dividend date
+               Date:
+                   c1 - change
+                   c - change & percentage change
+                   c6 - change (realtime)
+                   k2 - change percent
+                   p2 - change in percent
+                   d1 - last trade date
+                   d2 - trade date
+                   t1 - last trade time
+               Averages:
+                   c8 - after hours change
+                   c3 - commission
+                   g - day’s low
+                   h - day’s high
+                   k1 - last trade (realtime) with time
+                   l - last trade (with time)
+                   l1 - last trade (price only)
+                   t8 - 1 yr target price
+                   m5 - change from 200 day moving average
+                   m6 - percent change from 200 day moving average
+                   m7 - change from 50 day moving average
+                   m8 - percent change from 50 day moving average
+                   m3 - 50 day moving average
+                   m4 - 200 day moving average
+               Misc:
+                   w1 - day’s value change
+                   w4 - day’s value change (realtime)
+                   p1 - price paid
+                   m - day’s range
+                   m2 - day’s range (realtime)
+                   g1 - holding gain percent
+                   g3 - annualized gain
+                   g4 - holdings gain
+                   g5 - holdings gain percent (realtime)
+                   g6 - holdings gain (realtime)
+                   t7 - ticker trend
+                   t6 - trade links
+                   i5 - order book (realtime)
+                   l2 - high limit
+                   l3 - low limit
+                   v1 - holdings value
+                   v7 - holdings value (realtime)
+                   s6 - revenue
+               52 Week Pricing:
+                   k - 52 week high
+                   j - 52 week low
+                   j5 - change from 52 week low
+                   k4 - change from 52 week high
+                   j6 - percent change from 52 week low
+                   k5 - percent change from 52 week high
+                   w - 52 week range
+               Ratios:
+                   e - earnings per share
+                   e7 - eps estimate current year
+                   e8 - eps estimate next year
+                   e9 - eps estimate next quarter
+                   b4 - book value
+                   j4 - EBITDA
+                   p5 - price / sales
+                   p6 - price / book
+                   r - P/E ratio
+                   r2 - P/E ratio (realtime)
+                   r5 - PEG ratio
+                   r6 - price / eps estimate current year
+                   r7 - price /eps estimate next year
+                   s7 - short ratio
+    -Q = use default query 'aa5bb6k3pov' (look above to interprete),
+    -r = use real time versions of given data type (if they exist).
     sym1 [sym2 [...]] = list of symbols 
 
 EOF
@@ -530,6 +685,42 @@ sub get_symbol_data
     return;
 }
 #
+sub get_user_query_hdr
+{
+    my ($user_query) = @_;
+    #
+    my $delimiter = "";
+    my $hdr = '';
+    #
+    my $user_query_len = length($user_query);
+    for (my $i=0; $i<$user_query_len; )
+    {
+        my $c1 = substr($user_query, $i, 1);
+        my $c2 = substr($user_query, $i, 2);
+        #
+        if (exists($options{$c2}))
+        {
+            $hdr .= $delimiter . $options{$c2};
+            $i += 2;
+        }
+        elsif (exists($options{$c1}))
+        {
+            $hdr .= $delimiter . $options{$c1};
+            $i += 1;
+        }
+        else
+        {
+            $hdr .= $delimiter . $c1;
+            $i += 1;
+        }
+        $delimiter = ",";
+    }
+    #
+    printf "User Query Header: \n%s ==>> %s\n", $user_query, $hdr;
+    #
+    return $hdr;
+}
+#
 sub generate_query
 {
     my ($pquery, $phdr) = @_;
@@ -541,27 +732,36 @@ sub generate_query
     my @options = undef;
     my @hdrs = undef;
     #
-    if ($use_real_time)
+    if (defined($user_query))
     {
-        @options = keys %{$data_types{$data_type}->{real_time_options}};
-        @hdrs = %{$data_types{$data_type}->{real_time_options}}{@options};
+        $$pquery .= $user_query;
+        $$phdr = "stock exchange,name,symbol,";
+        $$phdr .= get_user_query_hdr($user_query);
     }
     else
     {
-        @options = keys %{$data_types{$data_type}->{non_real_time_options}};
-        @hdrs = %{$data_types{$data_type}->{non_real_time_options}}{@options};
+        if ($use_real_time)
+        {
+            @options = keys %{$data_types{$data_type}->{real_time_options}};
+            @hdrs = %{$data_types{$data_type}->{real_time_options}}{@options};
+        }
+        else
+        {
+            @options = keys %{$data_types{$data_type}->{non_real_time_options}};
+            @hdrs = %{$data_types{$data_type}->{non_real_time_options}}{@options};
+        }
+        #
+        my $flipflop = 1;
+        my @final_hdrs = grep { $flipflop = not $flipflop } @hdrs;
+        #
+        $$pquery .= join '', @options;
+        $$phdr = "stock exchange,name,symbol,";
+        $$phdr .= join ',', @final_hdrs;
     }
-    #
-    my $flipflop = 1;
-    my @final_hdrs = grep { $flipflop = not $flipflop } @hdrs;
-    #
-    $$pquery .= join '', @options;
-    $$phdr = "stock exchange,name,symbol,";
-    $$phdr .= join ',', @final_hdrs;
 }
 #
 my %opts;
-if (getopts('?hVX:xi:o:Od:r', \%opts) != 1)
+if (getopts('?hHVX:xi:o:Od:q:Qr', \%opts) != 1)
 {
     usage($cmd);
     exit 2;
@@ -572,6 +772,11 @@ foreach my $opt (%opts)
     if (($opt eq '?') or ($opt eq 'h'))
     {
         usage($cmd);
+        exit 0;
+    }
+    elsif ($opt eq 'H')
+    {
+        long_usage($cmd);
         exit 0;
     }
     elsif ($opt eq 'V')
@@ -611,17 +816,28 @@ foreach my $opt (%opts)
     {
         $data_type = $opts{$opt};
     }
+    elsif ($opt eq 'q')
+    {
+        $user_query = $opts{$opt};
+    }
+    elsif ($opt eq 'Q')
+    {
+        $user_query = $default_user_query;
+    }
     elsif ($opt eq 'r')
     {
         $use_real_time = 1;
     }
 }
 #
-die "Unknown data type: ${data_type}" 
-    unless (exists($data_types{$data_type}));
-die "No real time data available for data type: ${data_type}" 
-    if (($use_real_time != 0) &&
-        (!exists($data_types{$data_type}{real_time_options})));
+unless (defined($user_query))
+{
+    die "Unknown data type: ${data_type}" 
+        unless (exists($data_types{$data_type}));
+    die "No real time data available for data type: ${data_type}" 
+        if (($use_real_time != 0) &&
+            (!exists($data_types{$data_type}{real_time_options})));
+}
 #
 my $psymbols = undef;
 #
