@@ -595,7 +595,7 @@ foreach my $opt (%opts)
     {
         close($output_fh) if (defined($output_fh));
         $output_file = $opts{$opt};
-        local *FH;
+        # local *FH;
         open (FH, '>', $output_file) or die $!;
         $output_fh = *FH;
     }
@@ -603,7 +603,7 @@ foreach my $opt (%opts)
     {
         close($output_fh) if (defined($output_fh));
         $output_file = ${default_output_file};
-        local *FH;
+        # local *FH;
         open (FH, '>', $output_file) or die $!;
         $output_fh = *FH;
     }
