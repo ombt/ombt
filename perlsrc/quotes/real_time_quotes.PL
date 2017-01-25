@@ -743,20 +743,17 @@ sub generate_query
         if ($use_real_time)
         {
             @options = keys %{$data_types{$data_type}->{real_time_options}};
-            @hdrs = %{$data_types{$data_type}->{real_time_options}}{@options};
+            @hdrs = values %{$data_types{$data_type}->{real_time_options}};
         }
         else
         {
             @options = keys %{$data_types{$data_type}->{non_real_time_options}};
-            @hdrs = %{$data_types{$data_type}->{non_real_time_options}}{@options};
+            @hdrs = values %{$data_types{$data_type}->{non_real_time_options}};
         }
-        #
-        my $flipflop = 1;
-        my @final_hdrs = grep { $flipflop = not $flipflop } @hdrs;
         #
         $$pquery .= join '', @options;
         $$phdr = "stock exchange,name,symbol,";
-        $$phdr .= join ',', @final_hdrs;
+        $$phdr .= join ',', @hdrs;
     }
 }
 #
