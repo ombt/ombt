@@ -6,19 +6,19 @@
 # ROOT = /home/ombt/ombt
 
 ifndef ROOT
-ROOT = $(PWD)
+ROOT = $(PWD)/../..
 endif
 
 include $(ROOT)/build/makefile.common
 
-SUBDIRS = \
-	shsrc \
-	perlsrc \
-	libsrc \
-	libsrc2 \
-	src
+# CXXEXTRAFLAGS = -Wfatal-errors
 
-TESTSUBDIRS = \
-	testsrc 
+LIBNAME = errors2
 
-include $(ROOT)/build/makefile.all
+include .FILES
+
+include .HDRS
+
+include $(ROOT)/build/makefile.lib3
+
+include .DEPENDS
