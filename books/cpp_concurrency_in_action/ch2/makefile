@@ -1,4 +1,4 @@
-PRODS = t1 t2
+PRODS = t1 t2 t3
 
 all:	$(PRODS)
 
@@ -13,5 +13,10 @@ t1:	t1.cpp
 t2:	t2.cpp
 	g++ -g -std=c++11 -o t2 \
 		t2.cpp \
+		-pthread
+
+t3:	t3.cpp
+	g++ -g -std=c++11 -o t3 \
+		t3.cpp \
 		-pthread
 
