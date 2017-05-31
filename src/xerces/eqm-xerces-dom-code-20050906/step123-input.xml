@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<config lastupdate="1125443707">
+
+	<login password="cleartext" user="some name"/>
+
+	<reports>
+		<report name="Report One" tab="1"/>
+		<report name="Report Two" tab="2"/>
+		<report name="Third Report" tab="3"/>
+		<report name="Fourth Report" tab="4"/>
+		<report name="Fifth Report" tab="5"/>
+	</reports>
+
+</config>
