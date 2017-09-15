@@ -168,9 +168,9 @@ Socket::readn(void *inbuffer, size_t count)
     if (isNotOk()) return(NOTOK);
 
     char *ptr = (char *)inbuffer;
-    size_t nleft = count;
+    ssize_t nleft = count;
 
-    size_t nread;
+    ssize_t nread;
     while (nleft > 0)
     {
         if ((nread = ::read(socket_, ptr, nleft)) < 0)
@@ -198,9 +198,9 @@ Socket::writen(const void *outbuffer, size_t count)
     if (isNotOk()) return(NOTOK);
 
     char *ptr = (char *)outbuffer;
-    size_t nleft = count;
+    ssize_t nleft = count;
 
-    size_t nwritten;
+    ssize_t nwritten;
     while (nleft > 0)
     {
         if ((nwritten = ::write(socket_, ptr, nleft)) < 0)

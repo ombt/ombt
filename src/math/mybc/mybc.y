@@ -40,7 +40,7 @@ double xy[NUMBEROFPOINTS][2];
 int xyno;
 Complex<double> result(0.0,0.0);
 double deps = 0.0;
-int yydebug = 0;
+/* int yydebug = 0; */
 bool userational = false;
 
 /* externs */
@@ -6098,10 +6098,12 @@ usury(double principal, double interest, double length)
 
 main(int argc, char **argv)
 {
+#if 0
 	if (argc == 1)
 	{
 		return(system("rlwrap mybc --slave"));
 	}
+#endif
 
 #ifdef YYDEBUG
 	extern int yydebug;

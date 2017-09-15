@@ -42,7 +42,6 @@ mybc:		mybcyacc.o \
 		$(LD) $(LDFLAGS) -o mybc \
 			mybcyacc.o \
 			mybclex.o \
-			-ly \
 			-ll \
 			-lm
 
