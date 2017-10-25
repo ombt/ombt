@@ -12,13 +12,13 @@ YACCFLAGS = -d -v
 LEX = lex
 MAKE = make
 LDFLAGS = -g
-LD = CC
+LD = g++
 BACKUPDIR = BACKUP
 SHELLBIN = $(HOME)/bin
 ARFLAGS = -r -v
 CCFLAGS = -g -DDEBUG
 INCLDIRS = -I/opt/x11r5/include
-CC = CC
+CC = g++
 AR = ar
 ENDLIST = 
 

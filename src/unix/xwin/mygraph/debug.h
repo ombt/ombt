@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 // check macros
 #if defined(__STDC__)

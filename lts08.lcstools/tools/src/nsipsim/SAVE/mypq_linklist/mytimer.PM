@@ -66,7 +66,6 @@ sub dump {
 	print STDERR "expire = ".$self->{expire}."\n";
 	print STDERR "id = ".$self->{id}."\n";
 	print STDERR "label = ".$self->{label}."\n";
-	print STDERR "heap = ".$self->{heap}."\n";
 }
 # exit with success
 1;

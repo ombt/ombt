@@ -2,4 +2,4 @@
 #
 # log file build.
 #
-exec /cimuser/mrumore/bin/mybld -L "${@}"
+exec /cimuser/mrumore/bin/mybld -l "${@}"
