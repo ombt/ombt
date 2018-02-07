@@ -1,14 +1,6 @@
-LD=CC
-CC=CC
-LDFLAGS=-g -DSUN
-CCFLAGS=-g -DSUN 
-#
-omybc
-omybc.y
-omybc.l
+mybc
+mybc.y
+mybc.l
 -ll
 -ly
 -lm
-#
-install1=chmod 755 omybc
-install2=cp omybc /home/rumore/bin/omybc
