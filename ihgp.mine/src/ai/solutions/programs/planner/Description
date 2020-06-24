@@ -1,0 +1,158 @@
+STRIPS-planner
+==============
+
+This planning program is based on STRIPS and generates plans for
+problems that must be solved in the blocks world: an artificial
+world consisting of a robot arm, a table and a number of blocks.
+The blocks can be stacked on and popped off of each other or placed
+on and picked up from the table by the robot arm. The planning process
+involves transforming one particular configuration of the blocks
+world into another.
+
+The classes
+-----------
+
+The basic problem solving classes in the STRIPS-planner are Strips
+and StripsObject. Strips implements the search technique and
+StripsObject represents the objects in the search tree:
+
+class StripsObject : public Node
+
+class Strips : public DepthTree
+
+Class StripsObject is little more than a place holder, it contains
+the configuration of the world (a description of the blocks world),
+the goal stack and the action that was last applied to the world.
+These actions together make up the solution path: the plan.
+
+The goal stack consists of different types of objects: simple
+goals, compound goals and actions. For each of these a different
+class is defined: Fact, FactList and Action. Class Fact and FactList
+are also used in the state description of the world. Because all of these
+objects which are a different type must be stored on the same goal stack we
+need a heterogeneous container that can handle objects that are of a
+different type, but of the same base type. That's why class Fact, FactList
+and Action are derived from a common base class:
+
+class BasFact
+
+Using this derivation scheme pointers to objects of class BasFact can
+be stored on the stack.
+
+Fact objects are predicates, for instance "on(a, b)". This class is derived
+from one of the logic classes, class Complex:
+
+class Fact: public BasFact, public Complex
+
+A FactList object is a collection of facts, for instance "on(a, b) &
+on(b, c)". Class FactList can be most easily implemented as a list
+of Fact objects:
+
+class FactList : public BasFact, public PtrList<Fact>
+
+An Action object represents the action that must be applied to the world, for
+instance "pickup(a)":
+
+class Action : public BasFact
+
+The information contained in an Action object is stored in two seperate
+objects: a Complex object which represents the "name" of the action,
+e.g. "pickup(a)" and a pointer to an object of class F-rule. Class Frule
+represents STRIPS F-rules:
+
+class Frule
+
+It contains the name of the rule, the precondition list, the add list and the
+del list. Each of these lists is on object of type FactList. F-rule objects
+are used in combination with objects of type Action: every Action object
+contains a pointer to an F-rule object so that it knows whichs actions must
+be performed when it is applied to the world.
+
+
+The algorithm
+-------------
+
+Most of the work is done by process_strips(), defined in BasFact and
+in the classes derived from it. This function takes a StripsObject and
+generates all of its successors. The original idea was to have the
+generation of successors take place in expand(), where it logically
+should be. The idea was to take the first object from the stack and to
+pass it the current configuration of the world; the object determines
+if it's true in the world and if not it returns a list of "things" that
+either have not been satisfied yet (goals of a compound goal) or that will
+make the object true (substitutions or actions). If the object does not
+return anything it is true and can be popped off the stack. If it does,
+one or more new StripsObjects (the successors) are created and the "things"
+that were returned by the stack object are applied to these successors.
+This method turned out to be impractible because each stack object has its
+own notion of what these "things" should be, meaning there was no easy
+and uniform way to process and apply them to the new StripsObjects. Because
+the stack objects do know what must be done and how this can be done the
+logical thing to do was to encorporate this procedure in the stack objects
+themselves instead of in the StripsObject class. As a consequence the
+generation of successor nodes is not done in the StripsObject class, where
+it normally would be done, but in the Fact, FactList and Action class,
+by means of process_strips(). Each of these classes has its own
+implementation of this function which check whether the object (i.e.
+an object of class Fact, FactList or Action) is true in the world and if not
+it determines how it can be made true and uses this information to generate
+new StripsObjects, i.e. the successors.
+
+For more details on the implementation of the STRIPS-planner see the
+comments accompanying the source code.
+
+
+Using the STRIPS-planner
+------------------------
+
+Using the STRIPS-planner is very straigthforward. First an object of
+class Strips and one or more objects of class StripsObject must be
+created. The StripsObject is passed the initial configuration of the blocks
+world and the goal configuration:
+
+StripsObject *problem = new StripsObject(
+        "clear(b) & clear(c) & ontable(a) & ontable(b) & on(c, a) & arm(empty)",
+        "on(a, b) & on(b, c)");
+
+Its is improtant to note that the StripsObject object must be created by
+operator new. Next an object of type Strips is declared and the search is
+started:
+
+Strips planner;
+
+planner.set_startnode(problem);
+if (planner.generate())
+    planner.display();
+
+This will input start the search and output the solution, if one is found.
+Adding these steps together results in the following program:
+
+#include "strips.h"
+
+void main()
+{
+    /* Create STRIPS-planner object. */
+    Strips planner;
+
+    /* Create STRIPS-problem. */
+    StripsObject *problem = new StripsObject(
+        "clear(b) & clear(c) & ontable(a) & ontable(b) & on(c, a) & arm(empty)",
+        "on(a, b) & on(b, c)");
+
+    /* Add problem to the search tree. */
+    planner.set_startnode(problem);
+
+    /* Start search and print solution if one is found. */
+    if (planner.generate())
+        planner.display();
+}
+
+
+Known problems
+--------------
+Unfortunately the planner isn't perfect. It loops on some problems,
+for instance:
+
+world:    clear(a) & on(a, b) & on(b, c) & ontable(c) & arm(empty)
+goal:     on(a, b) & ontable(b) & ontable(c)
+

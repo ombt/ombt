@@ -1,0 +1,5 @@
+These files were provided by Chuck Baumer. These are products that
+run in a UNIXWARE environment on a INTEL machine. ocelf, as it is
+now, does not swab words, so it fails when it trys to read these files.
+
+NOTE: need to added swabbing to ocelf and edelf.

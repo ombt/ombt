@@ -1,0 +1,4 @@
+chess: chess.c 
+	-rm $(HOME)/bin/chess
+	cc chess.c -g -o chess -lcurses
+	-ln chess $(HOME)/bin/chess

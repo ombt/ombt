@@ -1,0 +1,22 @@
+all:	ncr myncr omyncr key2num
+	touch all
+
+ncr:	ncr.c debug.h
+	CC -DDEBUG -g -o ncr ncr.c
+	-rm -f $(HOME)/bin/ncr
+	-ln ncr $(HOME)/bin/ncr
+
+myncr:	myncr.c debug.h
+	CC -DDEBUG -g -o myncr myncr.c
+	-rm -f $(HOME)/bin/myncr
+	-ln myncr $(HOME)/bin/myncr
+
+omyncr:	omyncr.c debug.h
+	CC -DDEBUG -g -o omyncr omyncr.c
+	-rm -f $(HOME)/bin/omyncr
+	-ln omyncr $(HOME)/bin/omyncr
+
+key2num:	key2num.c
+	CC -DDEBUG -g -o key2num key2num.c
+	-rm -f $(HOME)/bin/key2num
+	-ln key2num $(HOME)/bin/key2num

@@ -1,0 +1,13 @@
+CC = CC
+CCFLAGS = -g -xildoff -DDEBUG
+#
+LD = CC
+LDFLAGS = -g -xildoff -DDEBUG
+#
+dag
+dag.c
+mystring.c
+map.c
+mylist.c
+queue_List.c
+stack_List.c

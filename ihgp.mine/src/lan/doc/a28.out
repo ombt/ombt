@@ -1,0 +1,29 @@
+
+Number of Stations            : 4
+Actual Simulation Time        : 300000062 usecs
+Maximum Simulation Time       : 300000000 usecs
+Calls Transmitted Over Cable  : 1159083
+Calls Queued Waiting For Cable: 646291
+Calls Actually Corrupted      : 133260
+Bits Transmitted Over Cable   : 1631922480
+Transmission Rate             : 5.440 Mbps
+
+Station  Orig   QPass  QFail  QCable  Block  Coll   Fail   Term   Corr 
+         Calls  Calls  Calls  Calls   Calls  Calls  Calls  Calls  Calls
+-----------------------------------------------------------------------
+000001  299905 185825   7360  161750 101062 455071   2755 287964  31966
+000002  300192 185675   7967  161426 100780 454590   2857 288372  31892
+000003  301201 187302   7835  161570 100887 455189   2853 288266  32011
+000004  299834 186069   7565  161545 100403 453726   2841 289201  31999
+-----------------------------------------------------------------------
+Totals  1201132 744871  30727  646291 403132 1818576  11306 1153803 127868
+
+Station Avg     Avg    Avg      Avg    Avg    Inter  
+        Station Cable  Back Off Trans  Call   Arrival
+        Q Time  Q Time Time     Time   Time   Time   
+        (usec)  (usec) (usec)   (usec) (usec) (usec) 
+-----------------------------------------------------
+000001     3837     51      420    149   4496    1000
+000002     3864     51      423    149   4525     999
+000003     3894     51      423    149   4556     996
+000004     3898     51      425    149   4562    1000

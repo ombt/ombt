@@ -1,0 +1,131 @@
+Addressing-Data-Elements
+	{ itu-t  recommendation  h  450  1 version1(0) addressing-data-elements(9)}
+
+DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+
+IMPORTS		
+	AliasAddress, PartyNumber 
+		FROM H323-MESSAGES;  -- see H.225.0
+		
+PresentedAddressScreened ::= CHOICE 
+{
+	presentationAllowedAddress				AddressScreened,
+	presentationRestricted					NULL,
+	numberNotAvailableDueToInterworking		NULL,
+	presentationRestrictedAddress			AddressScreened,
+	...
+}
+
+PresentedAddressUnscreened ::= CHOICE 
+{
+	presentationAllowedAddress				Address,
+	presentationRestricted					NULL,
+	numberNotAvailableDueToInterworking		NULL,
+	presentationRestrictedAddress			Address,
+	...
+}
+
+PresentedNumberScreened ::= CHOICE 
+{
+	presentationAllowedAddress				NumberScreened,
+	presentationRestricted					NULL,
+	numberNotAvailableDueToInterworking		NULL,
+	presentationRestrictedAddress			NumberScreened,
+	...
+}
+
+PresentedNumberUnscreened ::= CHOICE 
+{
+	presentationAllowedAddress				PartyNumber,
+	presentationRestricted					NULL,
+	numberNotAvailableDueToInterworking		NULL,
+	presentationRestrictedAddress			PartyNumber,
+	...
+}
+
+AddressScreened ::= SEQUENCE
+{
+	partyNumber					PartyNumber,
+	screeningIndicator			ScreeningIndicator,
+	partySubaddress				PartySubaddress OPTIONAL,
+	...
+}
+
+NumberScreened ::= SEQUENCE
+{
+	partyNumber					PartyNumber,
+	screeningIndicator			ScreeningIndicator,
+	...
+}
+
+Address ::= SEQUENCE
+{
+	partyNumber					PartyNumber,
+	partySubaddress				PartySubaddress OPTIONAL,
+	...
+}
+
+SeqOfAliasAddress ::= SEQUENCE OF AliasAddress
+
+EndpointAddress	::=	SEQUENCE
+{
+	destinationAddress			SeqOfAliasAddress,
+		-- multiple alias addresses may be used to address the same 
+		-- H.323 endpoint
+
+	remoteExtensionAddress		AliasAddress OPTIONAL,
+	...
+}
+
+PartySubaddress ::= CHOICE
+{
+	userSpecifiedSubaddress		UserSpecifiedSubaddress,
+		-- not recommended.
+
+	nsapSubaddress				NSAPSubaddress,
+		-- according to Recommendation X.213. 
+	...
+}
+
+UserSpecifiedSubaddress ::= SEQUENCE
+{
+	subaddressInformation		SubaddressInformation,
+	oddCountIndicator 			BOOLEAN OPTIONAL,
+		-- used when the coding of subaddress is BCD
+	...
+}
+					
+NSAPSubaddress ::= OCTET STRING (SIZE(1..20))
+	-- specified according to X.213. Some networks may
+	-- limit the subaddress value to some other length
+	-- e.g. 4 octets
+
+SubaddressInformation ::= OCTET STRING (SIZE(1..20))
+	-- coded according to user requirements. Some networks 
+	-- may limit the subaddress value to some other length
+	-- e.g. 4 octets
+
+ScreeningIndicator ::= ENUMERATED 
+{
+	userProvidedNotScreened (0),
+		-- number was provided by a remote user,
+		-- and has not been screened by a gatekeeper
+		
+	userProvidedVerifiedAndPassed (1),
+		-- number was provided by a user
+		-- equipment (or by a remote network), and has
+		-- been screened by a gatekeeper
+
+	userProvidedVerifiedAndFailed (2),
+		-- not used, value reserved.
+
+	networkProvided (3), 
+		-- number was provided by a gatekeeper
+		
+	...
+}
+
+PresentationAllowedIndicator ::= BOOLEAN
+
+END -- of Addressing-Data-Elements

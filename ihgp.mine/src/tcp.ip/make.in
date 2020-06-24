@@ -1,0 +1,97 @@
+# Solaris versions
+# CC=CC
+# CCFLAGS=-g -DDEBUG -xildoff
+# LD=CC
+# LDFLAGS=-g -DDEBUG -xildoff
+#
+# gnu versions
+CC=g++
+CCFLAGS=-g -DDEBUG -Wno-deprecated
+LD=g++
+LDFLAGS=-g -DDEBUG -Wno-deprecated
+#
+gethostname
+gethostname.c
+-lnsl
+#
+getprotoname
+getprotoname.c
+-lsocket
+-lnsl
+#
+getservname
+getservname.c
+-lsocket
+-lnsl
+#
+tcpdaytime
+tcpdaytime.c
+mysockets.c
+-lsocket
+-lnsl
+#
+udptime
+udptime.c
+mysockets.c
+-lsocket
+-lnsl
+#
+tcpecho
+tcpecho.c
+mysockets.c
+-lsocket
+-lnsl
+#
+udpecho
+udpecho.c
+mysockets.c
+-lsocket
+-lnsl
+#
+myping
+myping.c
+mysockets.c
+-lsocket
+-lnsl
+#
+udptimed
+udptimed.c
+mysockets.c
+-lsocket
+-lnsl
+#
+tcpdaytimed
+tcpdaytimed.c
+mysockets.c
+-lsocket
+-lnsl
+#
+tcpechod
+tcpechod.c
+mysockets.c
+-lsocket
+-lnsl
+#
+tcpmechod
+tcpmechod.c
+mysockets.c
+-lsocket
+-lnsl
+#
+daytimed
+daytimed.c
+mysockets.c
+-lsocket
+-lnsl
+#
+udpdaytime
+udpdaytime.c
+mysockets.c
+-lsocket
+-lnsl
+#
+superd
+superd.c
+mysockets.c
+-lsocket
+-lnsl

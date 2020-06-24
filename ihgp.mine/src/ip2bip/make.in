@@ -1,0 +1,11 @@
+CC = CC
+CCFLAGS = -g -DDEBUG
+#
+LD = CC
+LDFLAGS = -g -DDEBUG
+#
+ip2bip
+ip2bip.c
+install1 = chmod 755 ip2bip
+install2 = rcp ip2bip rumore@ihlssb1:/home/rumore/bin/ip2bip
+install3 = rcp ip2bip rumore@3gmsclsp:/home/rumore/bin/ip2bip

@@ -1,0 +1,13 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = clause.o literal.o resnode.o ctable.o run.o
+TARGETS = prover
+
+all:	$(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+prover:	$(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(AILIB) $(UTILLIB) -o $@
+

@@ -1,0 +1,109 @@
+.SUFFIXES:	.o .c
+
+CC = CC
+
+CCFLAGS = -g -DDEBUG
+
+HDRS = boolean.h debug.h 1040.h federal.h il.h taxTable.h scheduleA.h \
+	db.h money.h number.h returns.h realEstate.h
+
+.c.o:
+	$(CC) $(CCFLAGS) -c $<
+
+all:		ntax ttax tdb usury interest interest2
+		touch all;
+
+ntax:		ntax.o 1040.o scheduleA.o federal.o il.o \
+		db.o taxTable.o money.o number.o realEstate.o
+		CC $(CCFLAGS) -o ntax \
+			ntax.o \
+			1040.o \
+			federal.o \
+			il.o \
+			db.o \
+			taxTable.o \
+			scheduleA.o \
+			money.o \
+			number.o \
+			realEstate.o \
+			-lm
+
+usury:		usury.o db.o money.o number.o
+		CC $(CCFLAGS) -o usury \
+			usury.o \
+			db.o \
+			money.o \
+			number.o \
+			-lm
+
+interest:	interest.o db.o money.o number.o
+		CC $(CCFLAGS) -o interest \
+			interest.o \
+			db.o \
+			money.o \
+			number.o \
+			-lm
+
+interest2:	interest2.o db.o money.o number.o
+		CC $(CCFLAGS) -o interest2 \
+			interest2.o \
+			db.o \
+			money.o \
+			number.o \
+			-lm
+
+ttax:		ttax.o 1040.o scheduleA.o federal.o il.o \
+		taxTable.o money.o number.o db.o fica.o realEstate.o
+		CC $(CCFLAGS) -o ttax \
+			ttax.o \
+			1040.o \
+			federal.o \
+			il.o \
+			fica.o \
+			taxTable.o \
+			scheduleA.o \
+			money.o \
+			number.o \
+			db.o \
+			realEstate.o \
+			-lm
+
+tdb:		tdb.o db.o number.o 
+		CC $(CCFLAGS) -o tdb \
+			tdb.o \
+			db.o \
+			number.o \
+			-lm
+
+1040.o:		1040.c $(HDRS)
+
+db.o:		db.c $(HDRS)
+
+federal.o:	federal.c $(HDRS)
+
+fica.o:		fica.c $(HDRS)
+
+il.o:		il.c $(HDRS)
+
+money.o:	money.c $(HDRS)
+
+ntax.o:		ntax.c $(HDRS)
+
+number.o:	number.c $(HDRS)
+
+realEstate.o:	realEstate.c $(HDRS)
+
+scheduleA.o:	scheduleA.c $(HDRS)
+
+taxTable.o:	taxTable.c $(HDRS)
+
+tdb.o:		tdb.c $(HDRS)
+
+ttax.o:		ttax.c $(HDRS)
+
+usury.o:	usury.c $(HDRS)
+
+interest.o:	interest.c $(HDRS)
+
+interest2.o:	interest2.c $(HDRS)
+

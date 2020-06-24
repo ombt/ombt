@@ -1,0 +1,15 @@
+BNF for stab strings
+
+NAME = [^;:'"]+
+STRING = '.*' | ".*" where \", \', \\ are allowed in the string.
+INTEGER = (-)[0-9]+
+HEXINTEGER = [0-9A-F]+
+REAL = [+-][0-9]+(.)[0-9]*([eEqQ](-+)[0-9]+)|(-+)INF|QNAN|SNAN
+same as scanf %lf format.
+
+stabstring -> NAME : class |
+		: class
+
+class ->	C = constant ; 
+
+constant ->	b 

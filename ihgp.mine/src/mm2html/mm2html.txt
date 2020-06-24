@@ -1,0 +1,47 @@
+
+To Install mm2html:
+
+NOTE mm2html.gif is a transparent Lucent Image.  AT&T Users should replace
+if with the appropropriate image.
+
+1. Move mm2html, mm2html.gif, and mm2html.awk to a common bin directory
+   (e.g. /usr/add-on/local/bin, or /usr/local/bin, etc.)
+
+2. Copy mm2html.gif to a common GIF or image directory on your server
+   (if applicable)
+
+   a.  In mm2html, change the line containing:
+
+       DEFLOGO=${DEFLOGO:-/GIFS/mm2html.gif}
+
+       so that it reflects the correct location of mm2html on your server.
+
+3. If Company is AT&T, change mm2html on the line containing:
+
+   COMPANY="${COMPANY:-Lucent Technologies, Inc.}"
+
+   to reflect the appropriate name
+
+4. If division is not 'Bell Laboratories', change the line containing:
+
+   DIVISION="${DIVISION:-Bell Laboratories}"
+
+   to the appropriate label.
+
+5. The default background color is white (FFFFFF).  If you wish a different
+   color change the line:
+
+   BGCOLOR=${BGCOLOR:-FFFFFF}  #Default color is White
+
+6. mm2html by default will use 'tag' to resolve internal document
+   references.  If you do not have access to this utility, change the
+   line:
+
+   TAG=tag
+
+   to
+
+   TAG=cat
+
+
+Good Luck.

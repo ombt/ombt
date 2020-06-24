@@ -1,0 +1,21 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -O2 -ML -GX -DWIN32 -D_WINDOWS -DNEED_CAST
+
+INCPATH = ..\..\include
+LIBPATH = ..\..\lib
+INCFLAGS = -I. -I$(INCPATH)
+LIBS = $(LIBPATH)\aisearch.lib $(LIBPATH)\util.lib $(LIBPATH)\logic.lib
+
+TARGETS = sample1.exe sample2.exe
+
+OBJS = pclause.obj prolog.obj ptable.obj
+
+.cpp.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cpp
+
+all:	$(TARGETS)
+
+sample1.exe:       sample1.obj $(OBJS)
+        $(CC) $(CFLAGS) $** $(LIBS)
+sample2.exe:      sample2.obj $(OBJS)
+        $(CC) $(CFLAGS) $** $(LIBS)

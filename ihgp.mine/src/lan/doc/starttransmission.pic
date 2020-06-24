@@ -1,0 +1,101 @@
+.nf
+.PS
+scale=100
+define t103 |
+[ box invis ht 52 wid 114 with .sw at 0,0
+"\fR\s10\&call state = queue for cable\fP\s0" at 57,45
+"\fR\s10\&next event = cable is idle\fP\s0" at 57,32
+"\fR\s10\&queue call, wait for cable\fP\s0" at 57,19
+"\fR\s10\&to idle\fP\s0" at 57,6
+] |
+
+define t104 |
+[ box invis ht 26 wid 48 with .sw at 0,0
+"\fR\s10\&goto \fP\s0" at 24,19
+"\fR\s10\&retry state\fP\s0" at 24,6
+] |
+
+define t105 |
+[ box invis ht 26 wid 48 with .sw at 0,0
+"\fR\s10\&goto \fP\s0" at 24,19
+"\fR\s10\&retry state\fP\s0" at 24,6
+] |
+
+define t109 |
+[ box invis ht 26 wid 78 with .sw at 0,0
+"\fR\s10\&increment backoff\fP\s0" at 39,19
+"\fR\s10\&counter\fP\s0" at 39,6
+] |
+
+define t110 |
+[ box invis ht 26 wid 78 with .sw at 0,0
+"\fR\s10\&increment backoff\fP\s0" at 39,19
+"\fR\s10\&counter\fP\s0" at 39,6
+] |
+
+define t114 |
+[ box invis ht 26 wid 88 with .sw at 0,0
+"\fR\s10\&queue call for end of\fP\s0" at 44,19
+"\fR\s10\&preamble event\fP\s0" at 44,6
+] |
+
+define t116 |
+[ box invis ht 26 wid 116 with .sw at 0,0
+"\fR\s10\&ca;ll state = start preamble\fP\s0" at 58,19
+"\fR\s10\&next event = preamble ends\fP\s0" at 58,6
+] |
+
+box invis ht 560 wid 568 with .sw at 0,0
+"\fR\s10\&start transmission state\fP\s0" at 276,441
+"\fR\s10\&call state = retry\fP\s0" at 364,141
+"\fR\s10\&cable is jammed\fP\s0" at 364,269
+line -> from 368,176 to 368,160 
+line -> from 208,72 to 208,48 
+line -> from 368,248 to 368,216 
+box ht 40 wid 104 with .nw at 312,216 
+box ht 40 wid 104 with .nw at 160,216 
+line -> from 208,120 to 208,104 
+box ht 40 wid 112 with .nw at 440,288 
+line -> from 208,176 to 208,152 
+box ht 40 wid 104 with .nw at 312,160 
+ellipse ht 48 wid 96 at 368,72
+ellipse ht 48 wid 96 at 208,24
+box ht 72 wid 128 with .nw at 440,224 
+line -> from 208,248 to 208,216 
+line -> from 504,248 to 504,224 
+t103 with .nw at 447,215
+line -> from 368,120 to 368,96 
+t104 with .nw at 344,89
+t105 with .nw at 188,42
+ellipse ht 48 wid 160 at 272,440
+"\fR\s10\&call state = retry\fP\s0" at 212,89
+box ht 32 wid 104 with .nw at 160,104 
+box ht 40 wid 104 with .nw at 312,288 
+box ht 32 wid 104 with .nw at 160,152 
+"\fR\s10\&cable state = jammed\fP\s0" at 212,141
+"\fR\s10\&cable in preamble\fP\s0" at 216,269
+t109 with .nw at 329,209
+t110 with .nw at 169,210
+box ht 40 wid 104 with .nw at 160,288 
+line -> from 272,416 to 272,384 
+box ht 40 wid 104 with .nw at 224,384 
+line -> from 328,368 to 504,288 
+box ht 40 wid 88 with .nw at 32,288 
+line -> from 304,344 to 368,288 
+"\fR\s10\&cable is idle\fP\s0" at 76,269
+line -> from 248,344 to 208,288 
+"\fR\s10\&cable state ?\fP\s0" at 280,365
+line -> from 224,368 to 80,288 
+line -> from 80,128 to 80,104 
+"\fR\s10\&cable is tramsmitting\fP\s0" at 500,269
+line -> from 80,184 to 80,168 
+box ht 48 wid 136 with .nw at 0,232 
+line -> from 80,248 to 80,232 
+box ht 40 wid 136 with .nw at 0,104 
+t114 with .nw at 16,102
+box ht 40 wid 136 with .nw at 0,168 
+"\fR\s10\&cable state = preamble\fP\s0" at 64,153
+t116 with .nw at 14,226
+"\fR\s14\&START TRANSMISSION FUNCTION FLOW CHART\fP\s0" at 292,549
+.PE
+.fi

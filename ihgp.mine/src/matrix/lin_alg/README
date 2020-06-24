@@ -1,0 +1,277 @@
+			Numerical Math Class Library
+
+***** For version history, read on
+
+***** Highlights and idioms
+
+1. Never return complex objects (matrices or vectors)
+Danger: For example, when the following snippet 
+	Matrix foo(const int n)
+	{ Matrix foom(n,n); fill_in(foom); return foom; }
+	Matrix m = foo(5);
+runs, it constructs matrix foo:foom, copies it onto stack as a return
+value and destroys foo:foom. Return value (a matrix) from foo() is
+then copied over to m (via a copy constructor), and the return value
+is destroyed. So, the matrix constructor is called 3 times and the
+destructor 2 times. For big matrices, the cost of multiple
+constructing/copying/destroying of objects may be very large. *Some*
+optimized compilers can cut down on 1 copying/destroying, but still it
+leaves at least two calls to the constructor. Note, LazyMatrices (see
+below) can construct Matrix m "inplace", with only a _single_ call to
+the constructor.
+
+
+2. Use "two-address instructions"
+	      "void Matrix::operator += (const Matrix& B);"
+as much as possible
+That is, to add two matrices, it's much more efficient to write
+	A += B;
+than
+	Matrix C = A + B;
+(if both operand should be preserved,
+	Matrix C = A; C += B;
+is still better).
+
+3. Use glorified constructors when returning of an object seems
+inevitable:
+		"Matrix A(Matrix::Transposed,B);"
+		"Matrix C(A,Matrix::TransposeMult,B);"
+
+like in the following snippet (from vmatrix1.cc) that verifies that
+for an orthogonal matrix T, T'T = TT' = E.
+
+    Matrix haar = haar_matrix(5);
+    Matrix unit(Matrix::Unit,haar);
+    Matrix haar_t(Matrix::Transposed,haar);
+    Matrix hth(haar,Matrix::TransposeMult,haar);
+    Matrix hht(haar,Matrix::Mult,haar_t);
+    Matrix hht1 = haar; hht1 *= haar_t;
+    verify_matrix_identity(unit,hth);
+    verify_matrix_identity(unit,hht);
+    verify_matrix_identity(unit,hht1);
+
+4. Accessing row/col/diagonal of a matrix without much fuss
+(and without moving a lot of stuff around)
+
+	  Matrix m(n,n); Vector v(n); MatrixDiag(m) += 4;
+	  v = MatrixRow(m,1);
+	  MatrixColumn m1(m,1); m1(2) = 3; // the same as m(2,1)=3;
+Note, constructing of, say, MatrixDiag does *not* involve any copying
+of any elements of the source matrix.
+
+5. It's possible (and encouraged) to use "nested" functions
+For example, creating of a Hilbert matrix can be done as follows:
+
+   void foo(const Matrix& m)
+   {
+    Matrix m1(Matrix::Zero,m);
+    struct MakeHilbert : public ElementAction
+    {
+      void operation(REAL& element) { element = 1./(i+j-1); }
+    };
+    m1.apply(MakeHilbert());
+   }
+
+of course, using a special method Matrix::hilbert_matrix() is still
+more optimal, but not by the whole lot. And that's right, class
+MakeHilbert is declared *within* a function and local to that
+function. It means one can define another MakeHilbert class (within
+another function or outside of any function, that is, in the global
+scope), and it still will be OK.
+
+Another example is applying of a simple function to each matrix element
+
+ void foo(Matrix& m, Matrix& m1)
+ {
+  class ApplyFunction : public ElementPrimAction
+  {
+    double (*func)(const double x);
+    void operation(REAL& element) { element = func(element); }
+    public: ApplyFunction(double (*_func)(const double x)) : func(_func) {}
+  };
+  m.apply(ApplyFunction(sin));
+  m1.apply(ApplyFunction(cos));
+ }
+
+Validation code vmatrix.cc and vvector.cc contains a few more examples
+of that kind (especially vmatrix.cc:test_special_creation())
+
+6. Lazy matrices: instead of returning an object return a "recipe" how
+to make it. The full matrix would be rolled out only when and where
+it's needed:
+    Matrix haar = haar_matrix(5);
+haar_matrix() is a *class*, not a simple function. However similar
+this looks to a returning of an object (see note #1 above), it's
+dramatically different. haar_matrix() constructs a LazyMatrix, an
+object of just a few bytes long. A special "Matrix(const LazyMatrix&
+recipe)" constructor follows the recipe and makes the matrix haar()
+right in place. No matrix element is moved whatsoever!
+
+Another example of matrix promises is
+  REAL array[] = {0,-4,0,  1,0,0,  0,0,9 };
+  test_svd_expansion(MakeMatrix(3,3,array,sizeof(array)/sizeof(array[0])));
+
+Here, MakeMatrix is a LazyMatrix that promises to deliver a matrix
+filled in from a specified array. Function test_svd_expansion(const Matrix&)
+forces the promise: the compiler makes a temporary matrix, fills
+it in using LazyMatrix's recipe, passes it out to test_svd_expansion()
+function, Once the function returns, the temporary matrix is disposed of.
+All this goes behind the scenes. See vsvd.cc for more details (this is
+where the fragment was snipped from).
+
+One more example is using Matrix/vector promises along with the
+Element actions:
+
+    class square_add : public LazyMatrix, public ElementAction
+    {
+      const Vector &v1; Vector &v2;
+      void operation(REAL& element)
+      		{ assert(j==1); element = v1(i)*v1(i) + v2(i)*v2(i); }
+     void fill_in(Matrix& m) const { m.apply(*this); }
+     public: square_add(const Vector& _v1, Vector& _v2) :
+   	LazyMatrix(_v1.q_row_lwb(),_v1.q_row_upb(),1,1),
+   	v1(_v1), v2(_v2) {}
+    };
+    Vector vres = square_add(v2,v3);
+    Vector vres1 = v2; assert( !(vres1 == vres) );
+    verify_element_value(vres,1);
+    vres1 = square_add(v2,v3);
+Here square_add promises to deliver a vector with elements being sums
+of squares of elements of two other vectors. The promise is forced either
+by a Vector constructor, or by an assignment to another vector (in the
+latter case, a check is made that the dimensions of the promise are
+compatible with those of the target). In either case, computation of
+new vector elements is done "inplace", no temporary storage is ever
+allocated/used. Iteration is also done "behind the scenes", relieving the
+user of worries about index range checking, etc.
+
+7. SVD decomposition and its applications
+Class SVD performs a  Singular Value Decomposition of a rectangular matrix
+A = U * Sig * V'. Here, matrices U and V are orthogonal; matrix Sig is a
+diagonal matrix: its diagonal elements, which are all non-negative, are
+singular values (numbers) of the original matrix A. In another interpretation,
+the singular values are eigenvalues of matrix A'A.
+
+Application of SVD: _regularized_ solution of a set of simultaneous
+linear equations Ax=B.  Matrix A does _not_ have to be a square matrix.
+If A is a MxN rectangular matrix with M>N, the set Ax=b is obviously
+overspecified. The solution x produced by SVD_inv_mult would be then 
+the least-norm solution, that is, a least-squares solution.
+Note, B can be either a vector (Mx1-matrix), or a "thick" matrix. If B is
+chosen to be a unit matrix, then x is A's inverse, or a pseudo-inverse if
+A is non-square and/or singular.
+An example of using SVD:
+	SVD svd(A);
+	cout << "condition number of matrix A " << svd.q_cond_number();
+	Vector x = SVD_inv_mult(svd,b);		// Solution of Ax=b
+Note that SVD_inv_mult is a LazyMatrix. That is, the actual computation
+occurs not when the object SVD_inv_mult is constructed, but when it's
+required (in an assignment).
+
+***** Grand plans
+	computing a random orthogonal matrix
+	use M_PI instead of PI (in the fft package)
+	saving/loading of a matrix
+	finding matrix Extrema (and extrema of abs(matrix))
+	compute X'AX for a square matrix
+	compute x'Ax (a square form)
+	asymmetry index
+	add ArithmeticProgression class ("virtual" constant vector)
+	In fft, overload * and / for the direct/inverse FFT: FFT f(n);
+		Vk = f*V; V = Vk/f;
+	make Matrix(ElementAction& action, const Matrix& prototype);
+	Make a special class for SymmetricMatrix
+	Make Matrix, symmetric matrix, etc. inherit from the class
+	matrixstorage, which holds refs to the data storage (starting
+	ptr, the end pointer, the number of elements) and can perform
+	element-by-element operations like assignment, assignment of a
+	scalar, etc.
+	When gcc starts supporting member function templates, make
+	iterator classes for iterating over a vector, two vectors, Matrix
+	slices, etc.
+	Use <const_cast> when gcc starts supporting it
+	Make procedures to perform row/col rotations, and use it
+	in SVD
+	Code to verify a matrix (pseudo)inverse, that is,
+	test Moore-Penrose  conditions XAX = X, AXA = A; AX and XA are
+	symmetric (that is, AX = (AX)', etc.) where X is a (pseudo)inverse
+	of A. Another SVD application: compute a covariance matrix for a
+	given design matrix X, i.e. find the inverse of the X'X for a
+	rectangular matrix X.
+ 	Add ispline(): building a spline and integrating it
+	Add slehol: solve a set of SLE with a symmetric matrix
+	
+***** Revision history
+
+Version 3.2
+	hjmin(), Hooks-Jeevse optimization, embellished and tested
+	ali.cc beautified, using nested functions, etc. (nice style)
+	Added SVD, singular value decomposition, and a some code
+	to use it (Solving Ax=b, where A doesn't have to be rectangular,
+	and b doesn't have to be a vector)
+	Minor embellishments
+	using bool datatype wherever appropriate
+	short replaced by 'int' as a datatype for indices, etc.: all
+	modern CPUs handle int more efficiently than short
+	(and memory isn't that of a problem any more)
+	Forcing promise (LazyMatrix) on assignment
+	Testing Matrix(Matrix::Inverted,m) glorified constructor
+	added retrieving an element from row/col/diag
+	added Matrix C.mult(A,B);	// Product A*B
+	*= operation on Matrix slices
+	Making a vector from a LazyMatrix
+	made sure that if memory is allocated via new, it's disposed
+	of via delete; if it was allocated via malloc/calloc, it's
+	disposed of via free(). It's important for CodeWarrior, where
+	new and malloc() are completely different beasts.
+	
+
+Version 3.1
+	Deleted dummy destructors (they're better left inferred: it results
+	in more optimal code, especially in a class with virtual functions)
+	Minor tweaking and embellishments to please gcc 2.6.3
+	#included <float.h> and <minmax.h> where missing
+
+Version 3.0 (beta): only Linear Algebra package was changed
+	got rid of a g++ extension when returning objects (in a_columns, etc)
+	removed "inline MatrixColumn Matrix::a_column(const int coln) const"
+	  and likes: less problems with non-g++ compilers, better portability
+	Matrix(operation::Transpose) constructors and likes, 
+	  (plus like-another constructor) Zero:, Unit, constructors
+	invert() matrix
+	true copy constructor (*this=another; at the very end)
+	fill in the matrix (with env) by doing ElementAction
+
+	cleaned Makefile (pruned dead wood, don't growl creating libla
+	  for the first time), a lots of comments as to how to make things
+	used M_PI instead of PI
+	#ifndef around GNU #pragma's
+	REAL is introduced via 'typedef' rather than via '#define': more
+	  portable and flexible
+	added verify_element_value(), verify_matrix_identity() to the main
+	  package (used to be local functions). They are useful in
+	  writing the validation code
+	added inplace and regular matrix multiplication: computing A*B and A'*B
+	all matrix multiplication code is tested now
+	implemented A*x = y (inplace (w/resizing))
+	Matrix::allocate() made virtual
+	improved allocation of vectors (more optimal now)
+	added standard function to make an orthogonal Haar matrix
+	  (useful for testing/validating purposes)
+	Resizing a vector keeps old info now (expansion adds zeros (but still
+	  keeps old elements)
+	universal matrix creator from a special class: Lazy Matrices
+
+Version 2.0, Mar 1994: Only LinAlg package was changed significantly
+	Linear Algebra library was made more portable and compiles now
+	  under gcc 2.5.8 without a single warning.
+	Added comparisons between a matrix and a scalar (for-every/all -type
+	  comparisons)
+	More matrix slice operators implemented
+	  (operations on a col/row/diag of a matrix, assignments them
+	  to/from a vector)
+	Other modules weren't changed (at least, significantly), but work
+	  fine with the updated libla library
+
+Version 1.1, Mar 1992 (initial revision)
+

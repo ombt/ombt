@@ -1,0 +1,39 @@
+ enter number of rows and columns for matrix A: 
+ enter number of rows and columns for matrix B: 
+ enter '*' for A*B
+ enter '+' for A+B
+ enter '-' for A+B
+ enter 'q' for quit
+ c = 
+
+  0.12E+02  0.12E+02  0.12E+02  0.00E+00  0.00E+00
+  0.24E+02  0.24E+02  0.24E+02  0.00E+00  0.00E+00
+  0.36E+02  0.36E+02  0.36E+02  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+ enter '*' for A*B
+ enter '+' for A+B
+ enter '-' for A+B
+ enter 'q' for quit
+ c = 
+
+  0.40E+01  0.40E+01  0.40E+01  0.00E+00  0.00E+00
+  0.60E+01  0.60E+01  0.60E+01  0.00E+00  0.00E+00
+  0.80E+01  0.80E+01  0.80E+01  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+ enter '*' for A*B
+ enter '+' for A+B
+ enter '-' for A+B
+ enter 'q' for quit
+ c = 
+
+ -0.20E+01 -0.20E+01 -0.20E+01  0.00E+00  0.00E+00
+ -0.20E+01 -0.20E+01 -0.20E+01  0.00E+00  0.00E+00
+ -0.20E+01 -0.20E+01 -0.20E+01  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+  0.00E+00  0.00E+00  0.00E+00  0.00E+00  0.00E+00
+ enter '*' for A*B
+ enter '+' for A+B
+ enter '-' for A+B
+ enter 'q' for quit

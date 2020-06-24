@@ -1,0 +1,112 @@
+#***************************************************************************
+#
+#                    M V ++     M A K E F I L E . D E F
+#
+#    Compiler Specific Section:   Edit to reflect your environment
+#---------------------------------------------------------------------------
+#
+#	Macro                 Significance
+#
+#   CCC                   C++ compiler
+#   CCCFLAGS              flags to C++ compiler
+#   CC                    C compiler
+#   CFLAGS                flags to C compiler
+#   LDFLAGS				  libraries 
+#   HASRANLIB             't' if your system has ranlib, 'f' otherwise
+#
+#
+# Some defaults are below for Sun C++, and GNU g++.  Uncomment the 
+# relevant sections.
+#
+#
+
+#
+# Support for optional vector-bounds checking:
+#
+# Use -DMV_VECTOR_BOUNDS_CHECK to perform runtime checking of
+#		index bounds. Can be used to create a "debug" and a
+#		a "production" version of MV++ libraries.
+#
+# Support for vectors and matrices of type complex:
+#
+# Use -DCOMPLEX_OSTREAM if your compiler does not provide a predefine
+#			a way to print complex numbers (e.g. cout << u; ) 
+#
+# Define COMPLEX to expand to whatever name your compiler uses for
+#		complex numbers (e.g. g++ 2.7.0 uses templated classes
+#		as per ANSI C++)  Most other compilers use "complex" or
+#		"Complex".
+
+# IBM xlC  v. 1.1
+#
+CCC 			= xlC
+CC 				= xlc
+CFLAGS 			= -O
+CCCFLAGS		= -+ -O -DCOMPLEX=complex  -DMV_VECTOR_BOUNDS_CHECK
+LDFLAGS			= ../lib/libmv.a -lm -lcomplex
+
+
+
+# g++ v. 2.7.0
+#
+CCC 			= g++
+CC 				= gcc	
+CFLAGS 			= -O
+CCCFLAGS		=   -DMV_VECTOR_BOUNDS_CHECK -'DCOMPLEX=complex<double>'
+LDFLAGS			=    ../lib/libmv.a -lm
+
+# g++ v. 2.6.3
+#
+CCC 			= g++
+CC 				= gcc	
+CFLAGS 			= -O
+CCCFLAGS		=  -Wall  -DMV_VECTOR_BOUNDS_CHECK -DCOMPLEX=complex
+LDFLAGS			=    ../lib/libmv.a -lm
+
+# Sun C++ 4.0.1 
+#
+CCC 			= CC
+CC 				= acc	
+CFLAGS 			= -O
+CCCFLAGS		=  +w -DCOMPLEX_OSTREAM -I/usr/local/apps/lang1/SC3.0.1/include/CC_413/ -DCOMPLEX=complex  -DMV_VECTOR_BOUNDS_CHECK
+LDFLAGS			=  ../lib/libmv.a -lm -lcomplex
+
+# ranlib available on this system? 't' or 'f'
+HASRANLIB = t
+
+
+
+################################################################
+#                                                              #
+#           Implicit rules: do not modfiy after here           #
+#                                                              #
+################################################################
+
+
+MV_DIR 				= ..
+MV_LIB_DIR			= $(MV_DIR)/lib
+MV_LIB_A			= $(MV_LIB_DIR)/libmv.a
+MV_INCLUDE_DIR		= $(MV_DIR)/include
+
+EXENAME     = -o
+LIB_EXT     = a
+EXE_EXT     =
+
+
+.SUFFIXES: .c .cc .o $(EXE_EXT)
+
+
+.o$(EXE_EXT):
+	$(CCC) $(EXENAME)  $@$(EXE_EXT) $@.o \
+	$(LIBS)$(LDFLAGS)
+        
+.cc.o:
+	$(CCC) $(CCCFLAGS)  $(INCLUDES) -c $<
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+
+.f.o:
+	$(F77)  -c $<
+
+

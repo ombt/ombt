@@ -1,0 +1,409 @@
+#
+# sort a rop file by output classes, that is, route individual
+# rop records to different parsers depending on the msg class.
+#
+######################################################################
+#
+# declare all functions.
+#
+# usage function.
+#
+usage () {
+more >&2 <<EOF
+
+usage: ${cmd} [-?xn] [-o filename] classes_file rop_files ...
+
+where
+	-? = usage message is printed,
+	-x = debug mode,
+	-n = do not execute parser, just create it,
+	-o = parser file name,
+
+classes_file is a file containing a list of classes and the corresponding
+parser for each class. rop_files is a list of rop files to process.
+
+EOF
+}
+#
+########################################################################
+#
+# functions to create parts of rop parser.
+#
+parserGen1() {
+cat << EOF
+#
+# international and domestic rop class parser.
+#
+# save command name and defaults.
+#
+cmd="\${0}"
+classfile=
+#
+# get command line options.
+#
+set -- \`getopt '?xc:' \${*}\`
+if [ "\${?}" -ne 0 ]
+then
+	echo "\${cmd}: invalid command line option." >&2
+	echo "usage: \${cmd} [-?x] [-c classfile] ropfiles" >&2
+	exit 2
+fi
+#
+for opt in \${*}
+do
+	case "\${opt}" in
+	-x)
+		set -x
+		shift 1
+		;;
+	-c)
+		classfile="\${2}"
+		shift 2
+		;;
+	--)
+		shift 1
+		break
+		;;
+	esac
+done
+#
+# check if any rop file were given.
+#
+if [ \$# -eq 0 ]
+then
+	echo "\${cmd}: no rop files were given." >&2
+	exit 2
+fi
+#
+# save list of rop files.
+#
+ropList=\${*}
+shift \$#
+#
+# get list of classes, if given.
+#
+if [ -r "\${classfile}" ]
+then
+	classlist="\`cat \${classfile} | cut -d ' ' -f1 | tr '\\012' ' '\`"
+else
+	classlist=
+fi
+#
+for rop in \${ropList}
+do
+	#
+	# rop-specific info.
+	#
+	echo "INFO ABOUT ROP FILE: FILENAME \${rop}"
+	echo "INFO ABOUT ROP FILE: DATE \`date '+%y/%m/%d %H:%M:%S'\`"
+	echo "INFO ABOUT ROP FILE: CLASSES \${classlist}"
+	#
+	# check for compressed files.
+	#
+	case "\${rop}" in
+	*Z)
+		# expand compressed files.
+		zcat \${rop}
+		;;
+	*)
+		# regular file, just cat it.
+		cat \${rop}
+		;;
+	esac
+done |
+nawk 'BEGIN {
+	#
+	# patterns for date and time.
+	#
+	pday = "[0-9][0-9]-[01][0-9]-[0-3][0-9]";
+	ptime = "[0-2][0-9]:[0-6][0-9]:[0-6][0-9]";
+	pdate = pday " " ptime;
+EOF
+#
+return 0
+}
+#
+parserGen2() {
+cat >/tmp/PG2$$ << EOF
+	#
+	# class-specific patterns.
+	#
+	pstartintl["CLASSNAME"] = pdate " " "CLASSNAME[ \t]";
+	pstartusa["CLASSNAME"] = pdate " [0-9]+ " "CLASSNAME[ \t]";
+EOF
+#
+if [ $# -ne 1 ]
+then
+	echo "parserGen2: class file is missing." >&2
+	exit 2
+fi
+#
+cat ${1} | 
+while read class junk
+do
+	cat /tmp/PG2$$ | sed "s?CLASSNAME?${class}?g"
+done
+#
+return 0
+}
+#
+parserGen3() {
+cat << EOF
+	#
+	# end of pattern
+	#
+	# pendintl = "\\+\\+\\-";
+	# pendusa = "";
+EOF
+}
+#
+parserGen4() {
+cat >/tmp/PG4$$ << EOF
+	#
+	# class-specific parsers.
+	#
+	class2parser["CLASSNAME"] = "PARSERNAME OUTPUTFILENAME";
+	parsers["PARSERNAME OUTPUTFILENAME"] = "PARSERNAME OUTPUTFILENAME";
+EOF
+#
+if [ $# -ne 1 ]
+then
+	echo "parserGen4: class file is missing." >&2
+	exit 2
+fi
+#
+cat ${1} | 
+while read class parser outfile
+do
+	cat /tmp/PG4$$ | 
+	sed "s?CLASSNAME?${class}?g;
+	     s?PARSERNAME?${parser}?g;
+	     s?OUTPUTFILENAME?${outfile}?g;"
+done
+#
+return 0
+}
+#
+parserGen5() {
+cat << EOF
+	printit = 0;
+	printidx = 0;
+	#
+	startno = -1;
+	endno = -1;
+}
+\$0 ~ /INFO ABOUT ROP FILE:/ {
+	lineNoOffset = NR;
+	for (p in parsers)
+	{
+		print \$0 | parsers[p];
+	}
+	next;
+}
+EOF
+#
+return 0
+}
+#
+parserGen6() {
+#
+cat >/tmp/PG6$$ << EOF
+\$0 ~ pstartintl["CLASSNAME"] {
+	if (match(\$0, pdate))
+		printDate = substr(\$0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "CLASSNAME";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = \$0;
+	next;
+}
+\$0 ~ pstartusa["CLASSNAME"] {
+	if (match(\$0, pdate))
+		printDate = substr(\$0, RSTART, RLENGTH);
+	else
+		printDate = "00-00-00 00:00:00"
+	class = "CLASSNAME";
+	startno = NR - lineNoOffset;
+	printit = 1;
+	printidx = 0;
+	printbuffer[printidx++] = \$0;
+	next;
+}
+EOF
+#
+if [ $# -ne 1 ]
+then
+	echo "parserGen6: class file is missing." >&2
+	exit 2
+fi
+#
+cat ${1} | 
+while read class junk
+do
+	cat /tmp/PG6$$ | sed "s?CLASSNAME?${class}?g"
+done
+#
+return 0
+}
+#
+parserGen7() {
+cat << EOF
+\$0 ~ /\\+\\+\\-/ {
+	if (printit == 1)
+	{
+		endno = NR - lineNoOffset;
+		print "INFO ABOUT RECORD: " printDate " " startno " " endno | class2parser[class];
+		for (idx = 0; idx < printidx; idx++)
+		{
+			print printbuffer[idx] | class2parser[class];
+		}
+		print \$0 | class2parser[class];
+	}
+	printit = 0;
+	next
+}
+\$0 ~ // {
+	if (printit == 1)
+	{
+		endno = NR - lineNoOffset - 1;
+		print "INFO ABOUT RECORD: " printDate " " startno " " endno | class2parser[class];
+		for (idx = 0; idx < printidx; idx++)
+		{
+			print printbuffer[idx] | class2parser[class];
+		}
+		print \$0 | class2parser[class];
+	}
+	printit = 0;
+	next
+}
+{
+	if (printit == 1)
+	{
+		printbuffer[printidx] = \$0;
+		printidx = printidx + 1;
+	}
+	next;
+}
+END {
+	for (p in parsers)
+	{
+		close(parsers[p]);
+	}
+} '
+#
+exit 0
+EOF
+}
+#
+##########################################################################
+#
+# default values.
+#
+cmd=${0}
+noExec=no
+outputFile="/tmp/of$$"
+#
+# get command line options.
+#
+set -- `getopt '?xno:' ${*}`
+#
+if [ $? -ne 0 ]
+then
+	echo "bad command line option" >&2
+	usage
+	exit 2
+fi
+#
+for opt in ${*}
+do
+	case "${opt}" in
+	-x)
+		set -x
+		shift 1
+		;;
+	-n)
+		noExec=yes;
+		shift 1
+		;;
+	-o)
+		outputFile="${2}"
+		shift 2
+		;;
+	--)
+		shift 1
+		break
+		;;
+	esac
+done
+#
+# check that a class file and a rop file was given.
+#
+if [ "${noExec}" = "no" ]
+then
+	# check if any files were given.
+	if [ $# -lt 2 ]
+	then
+		echo "missing class or rop file." >&2
+		usage
+		exit 2
+	fi
+	# save file names
+	classFile="${1}"
+	shift 1
+	ropFiles="${*}"
+	shift $#
+else
+	# at least the class file is needed.
+	if [ $# -lt 1 ]
+	then
+		echo "missing class file." >&2
+		usage
+		exit 2
+	fi
+	# save file names
+	classFile="${1}"
+	shift 1
+fi
+#
+allOk=yes
+#
+for f in ${classFile} ${ropFiles}
+do
+	if [ ! -r "${f}" ]
+	then
+		echo "File ${f} is not readable." >&2
+		allOk=no
+	fi
+done
+#
+if [ ${allOk} = "no" ]
+then
+	exit 2
+fi
+#
+# create parser
+#
+parserGen1 >${outputFile}
+parserGen2 ${classFile} >>${outputFile}
+# parserGen3 >>${outputFile}
+parserGen4 ${classFile} >>${outputFile}
+parserGen5 >>${outputFile}
+parserGen6 ${classFile} >>${outputFile}
+parserGen7 >>${outputFile}
+#
+chmod 755 ${outputFile}
+#
+# execute parser.
+#
+if [ "${noExec}" = "no" ]
+then
+	${outputFile} -c ${classFile} ${ropFiles}
+	rm -f ${outputFile}
+else
+	echo "Parser is in file: ${outputFile}."
+fi
+#
+exit 0

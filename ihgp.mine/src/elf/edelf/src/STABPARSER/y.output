@@ -1,0 +1,4846 @@
+
+state 0
+	$accept : _stabstring $end 
+
+	NAME  shift 2
+	:  shift 3
+	.  error
+
+	stabstring  goto 1
+
+state 1
+	$accept :  stabstring_$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	stabstring :  NAME_: class 
+
+	:  shift 4
+	.  error
+
+
+state 3
+	stabstring :  :_class 
+
+	INTEGER  shift 38
+	c  shift 6
+	r  shift 23
+	C  shift 17
+	S  shift 25
+	t  shift 12
+	T  shift 13
+	a  shift 14
+	p  shift 15
+	v  shift 16
+	D  shift 18
+	R  shift 19
+	d  shift 22
+	G  shift 24
+	V  shift 26
+	Y  shift 27
+	Z  shift 28
+	L  shift 29
+	f  shift 30
+	g  shift 31
+	m  shift 32
+	J  shift 33
+	F  shift 34
+	I  shift 35
+	P  shift 36
+	Q  shift 37
+	(  shift 39
+	.  error
+
+	class  goto 5
+	namedtype  goto 7
+	parameter  goto 8
+	procedure  goto 9
+	variable  goto 10
+	label  goto 11
+	typeid  goto 21
+	proc  goto 20
+
+state 4
+	stabstring :  NAME :_class 
+
+	INTEGER  shift 38
+	c  shift 6
+	r  shift 23
+	C  shift 17
+	S  shift 25
+	t  shift 12
+	T  shift 13
+	a  shift 14
+	p  shift 15
+	v  shift 16
+	D  shift 18
+	R  shift 19
+	d  shift 22
+	G  shift 24
+	V  shift 26
+	Y  shift 27
+	Z  shift 28
+	L  shift 29
+	f  shift 30
+	g  shift 31
+	m  shift 32
+	J  shift 33
+	F  shift 34
+	I  shift 35
+	P  shift 36
+	Q  shift 37
+	(  shift 39
+	.  error
+
+	class  goto 40
+	namedtype  goto 7
+	parameter  goto 8
+	procedure  goto 9
+	variable  goto 10
+	label  goto 11
+	typeid  goto 21
+	proc  goto 20
+
+state 5
+	stabstring :  : class_    (2)
+
+	.  reduce 2
+
+
+state 6
+	class :  c_= constant ; 
+
+	=  shift 41
+	.  error
+
+
+state 7
+	class :  namedtype_    (4)
+
+	.  reduce 4
+
+
+state 8
+	class :  parameter_    (5)
+
+	.  reduce 5
+
+
+state 9
+	class :  procedure_    (6)
+
+	.  reduce 6
+
+
+state 10
+	class :  variable_    (7)
+
+	.  reduce 7
+
+
+state 11
+	class :  label_    (8)
+
+	.  reduce 8
+
+
+state 12
+	namedtype :  t_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 42
+
+state 13
+	namedtype :  T_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 43
+
+state 14
+	parameter :  a_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 44
+
+state 15
+	parameter :  p_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 45
+
+state 16
+	parameter :  v_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 46
+
+state 17
+	parameter :  C_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 47
+
+state 18
+	parameter :  D_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 48
+
+state 19
+	parameter :  R_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 49
+
+state 20
+	procedure :  proc_    (30)
+	procedure :  proc_, NAME : NAME 
+
+	,  shift 50
+	.  reduce 30
+
+
+state 21
+	variable :  typeid_    (32)
+
+	.  reduce 32
+
+
+state 22
+	variable :  d_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 51
+
+state 23
+	variable :  r_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 52
+
+state 24
+	variable :  G_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 53
+
+state 25
+	variable :  S_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 54
+
+state 26
+	variable :  V_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 55
+
+state 27
+	variable :  Y_    (38)
+
+	.  reduce 38
+
+
+state 28
+	variable :  Z_typeid NAME 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 56
+
+state 29
+	label :  L_    (40)
+
+	.  reduce 40
+
+
+state 30
+	proc :  f_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 57
+
+state 31
+	proc :  g_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 58
+
+state 32
+	proc :  m_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 59
+
+state 33
+	proc :  J_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 60
+
+state 34
+	proc :  F_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 61
+
+state 35
+	proc :  I_    (46)
+
+	.  reduce 46
+
+
+state 36
+	proc :  P_    (47)
+
+	.  reduce 47
+
+
+state 37
+	proc :  Q_    (48)
+
+	.  reduce 48
+
+
+state 38
+	typeid :  INTEGER_    (49)
+	typeid :  INTEGER_= typedef 
+	typeid :  INTEGER_typeattrs typedef 
+
+	=  shift 62
+	@  shift 64
+	.  reduce 49
+
+	typeattrs  goto 63
+
+state 39
+	typeid :  (_INTEGER , INTEGER ) 
+	typeid :  (_INTEGER , INTEGER ) = typedef 
+	typeid :  (_INTEGER , INTEGER ) typeattrs typedef 
+
+	INTEGER  shift 65
+	.  error
+
+
+state 40
+	stabstring :  NAME : class_    (1)
+
+	.  reduce 1
+
+
+state 41
+	class :  c =_constant ; 
+
+	c  shift 68
+	b  shift 67
+	e  shift 69
+	i  shift 70
+	r  shift 71
+	s  shift 72
+	C  shift 73
+	S  shift 74
+	.  error
+
+	constant  goto 66
+
+state 42
+	namedtype :  t typeid_    (22)
+
+	.  reduce 22
+
+
+state 43
+	namedtype :  T typeid_    (23)
+
+	.  reduce 23
+
+
+state 44
+	parameter :  a typeid_    (24)
+
+	.  reduce 24
+
+
+state 45
+	parameter :  p typeid_    (25)
+
+	.  reduce 25
+
+
+state 46
+	parameter :  v typeid_    (26)
+
+	.  reduce 26
+
+
+state 47
+	parameter :  C typeid_    (27)
+
+	.  reduce 27
+
+
+state 48
+	parameter :  D typeid_    (28)
+
+	.  reduce 28
+
+
+state 49
+	parameter :  R typeid_    (29)
+
+	.  reduce 29
+
+
+state 50
+	procedure :  proc ,_NAME : NAME 
+
+	NAME  shift 75
+	.  error
+
+
+state 51
+	variable :  d typeid_    (33)
+
+	.  reduce 33
+
+
+state 52
+	variable :  r typeid_    (34)
+
+	.  reduce 34
+
+
+state 53
+	variable :  G typeid_    (35)
+
+	.  reduce 35
+
+
+state 54
+	variable :  S typeid_    (36)
+
+	.  reduce 36
+
+
+state 55
+	variable :  V typeid_    (37)
+
+	.  reduce 37
+
+
+state 56
+	variable :  Z typeid_NAME 
+
+	NAME  shift 76
+	.  error
+
+
+state 57
+	proc :  f typeid_    (41)
+
+	.  reduce 41
+
+
+state 58
+	proc :  g typeid_    (42)
+
+	.  reduce 42
+
+
+state 59
+	proc :  m typeid_    (43)
+
+	.  reduce 43
+
+
+state 60
+	proc :  J typeid_    (44)
+
+	.  reduce 44
+
+
+state 61
+	proc :  F typeid_    (45)
+
+	.  reduce 45
+
+
+state 62
+	typeid :  INTEGER =_typedef 
+
+	INTEGER  shift 78
+	c  shift 80
+	b  shift 79
+	e  shift 82
+	i  shift 84
+	r  shift 112
+	s  shift 117
+	C  shift 92
+	S  shift 97
+	a  shift 106
+	p  shift 114
+	v  shift 119
+	D  shift 108
+	R  shift 115
+	d  shift 81
+	G  shift 121
+	V  shift 100
+	Y  shift 120
+	Z  shift 101
+	f  shift 113
+	g  shift 83
+	m  shift 87
+	F  shift 116
+	I  shift 93
+	P  shift 111
+	k  shift 85
+	l  shift 86
+	n  shift 88
+	o  shift 89
+	w  shift 90
+	z  shift 91
+	K  shift 94
+	M  shift 95
+	N  shift 96
+	*  shift 98
+	&  shift 99
+	A  shift 107
+	E  shift 109
+	O  shift 110
+	u  shift 118
+	.  error
+
+	typedef  goto 77
+	array  goto 102
+	subrange  goto 103
+	proceduretype  goto 104
+	record  goto 105
+
+state 63
+	typeid :  INTEGER typeattrs_typedef 
+
+	INTEGER  shift 78
+	c  shift 80
+	b  shift 79
+	e  shift 82
+	i  shift 84
+	r  shift 112
+	s  shift 117
+	C  shift 92
+	S  shift 97
+	a  shift 106
+	p  shift 114
+	v  shift 119
+	D  shift 108
+	R  shift 115
+	d  shift 81
+	G  shift 121
+	V  shift 100
+	Y  shift 120
+	Z  shift 101
+	f  shift 113
+	g  shift 83
+	m  shift 87
+	F  shift 116
+	I  shift 93
+	P  shift 111
+	k  shift 85
+	l  shift 86
+	n  shift 88
+	o  shift 89
+	w  shift 90
+	z  shift 91
+	K  shift 94
+	M  shift 95
+	N  shift 96
+	*  shift 98
+	&  shift 99
+	A  shift 107
+	E  shift 109
+	O  shift 110
+	u  shift 118
+	.  error
+
+	typedef  goto 122
+	array  goto 102
+	subrange  goto 103
+	proceduretype  goto 104
+	record  goto 105
+
+state 64
+	typeattrs :  @_typeattrlist ; 
+
+	error  shift 129
+	s  shift 126
+	a  shift 125
+	p  shift 127
+	P  shift 128
+	.  error
+
+	typeattrlist  goto 123
+	typeattr  goto 124
+
+state 65
+	typeid :  ( INTEGER_, INTEGER ) 
+	typeid :  ( INTEGER_, INTEGER ) = typedef 
+	typeid :  ( INTEGER_, INTEGER ) typeattrs typedef 
+
+	,  shift 130
+	.  error
+
+
+state 66
+	class :  c = constant_; 
+
+	;  shift 131
+	.  error
+
+
+state 67
+	constant :  b_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 132
+
+state 68
+	constant :  c_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 134
+
+state 69
+	constant :  e_typeid , ordvalue 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 135
+
+state 70
+	constant :  i_INTEGER 
+
+	INTEGER  shift 136
+	.  error
+
+
+state 71
+	constant :  r_REAL 
+
+	REAL  shift 137
+	.  error
+
+
+state 72
+	constant :  s_STRING 
+
+	STRING  shift 138
+	.  error
+
+
+state 73
+	constant :  C_REAL , REAL 
+
+	REAL  shift 139
+	.  error
+
+
+state 74
+	constant :  S_typeid , numelements , numbits , bitpattern 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 140
+
+state 75
+	procedure :  proc , NAME_: NAME 
+
+	:  shift 141
+	.  error
+
+
+state 76
+	variable :  Z typeid NAME_    (39)
+
+	.  reduce 39
+
+
+state 77
+	typeid :  INTEGER = typedef_    (50)
+
+	.  reduce 50
+
+
+state 78
+	typedef :  INTEGER_    (63)
+
+	.  reduce 63
+
+
+state 79
+	typedef :  b_typeid ; # numbytes 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 142
+
+state 80
+	typedef :  c_typeid ; # numbits 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 143
+
+state 81
+	typedef :  d_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 144
+
+state 82
+	typedef :  e_enumspec ; 
+
+	INTEGER  shift 38
+	NAME  shift 149
+	(  shift 39
+	.  error
+
+	typeid  goto 147
+	enumspec  goto 145
+	enumlist  goto 146
+	enum  goto 148
+
+state 83
+	typedef :  g_typeid ; # numbits 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 150
+
+state 84
+	typedef :  i_NAME : NAME ; 
+	typedef :  i_NAME : NAME , typeid ; 
+
+	NAME  shift 151
+	.  error
+
+
+state 85
+	typedef :  k_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 152
+
+state 86
+	typedef :  l_; # 
+
+	;  shift 153
+	.  error
+
+
+state 87
+	typedef :  m_optvbasespec optmultibasespec typeid : typeid : typeid ; 
+	optvbasespec : _    (136)
+
+	v  shift 155
+	.  reduce 136
+
+	optvbasespec  goto 154
+
+state 88
+	typedef :  n_typeid ; # numbytes 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 156
+
+state 89
+	typedef :  o_NAME ; 
+	typedef :  o_NAME , typeid 
+
+	NAME  shift 157
+	.  error
+
+
+state 90
+	typedef :  w_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 158
+
+state 91
+	typedef :  z_typeid ; # numbytes 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 159
+
+state 92
+	typedef :  C_usage 
+
+	c  shift 165
+	b  shift 164
+	e  shift 167
+	i  shift 171
+	r  shift 180
+	s  shift 181
+	t  shift 182
+	a  shift 163
+	p  shift 178
+	d  shift 166
+	f  shift 168
+	g  shift 169
+	m  shift 175
+	k  shift 173
+	l  shift 174
+	n  shift 176
+	o  shift 177
+	h  shift 170
+	j  shift 172
+	q  shift 179
+	.  error
+
+	usage  goto 160
+	redefinition  goto 162
+	picstoragetype  goto 161
+
+state 93
+	typedef :  I_numbytes ; # picsize 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 183
+
+state 94
+	typedef :  K_cobolfiledesc ; 
+
+	i  shift 187
+	r  shift 189
+	s  shift 190
+	l  shift 188
+	.  error
+
+	cobolfiledesc  goto 185
+	organization  goto 186
+
+state 95
+	typedef :  M_typeid ; # bound 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 191
+
+state 96
+	typedef :  N_    (83)
+
+	.  reduce 83
+
+
+state 97
+	typedef :  S_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 192
+
+state 98
+	typedef :  *_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 193
+
+state 99
+	typedef :  &_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 194
+
+state 100
+	typedef :  V_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 195
+
+state 101
+	typedef :  Z_    (88)
+
+	.  reduce 88
+
+
+state 102
+	typedef :  array_    (89)
+
+	.  reduce 89
+
+
+state 103
+	typedef :  subrange_    (90)
+
+	.  reduce 90
+
+
+state 104
+	typedef :  proceduretype_    (91)
+
+	.  reduce 91
+
+
+state 105
+	typedef :  record_    (92)
+
+	.  reduce 92
+
+
+state 106
+	array :  a_typeid ; # typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 196
+
+state 107
+	array :  A_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 197
+
+state 108
+	array :  D_INTEGER , typeid 
+
+	INTEGER  shift 198
+	.  error
+
+
+state 109
+	array :  E_INTEGER , typeid 
+
+	INTEGER  shift 199
+	.  error
+
+
+state 110
+	array :  O_INTEGER , typeid 
+
+	INTEGER  shift 200
+	.  error
+
+
+state 111
+	array :  P_typeid ; # typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 201
+
+state 112
+	subrange :  r_typeid ; # bound ; # bound 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 202
+
+state 113
+	proceduretype :  f_typeid ; 
+	proceduretype :  f_typeid , numparams ; tparamlist ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 203
+
+state 114
+	proceduretype :  p_numparams ; tparamlist ; 
+
+	INTEGER  shift 205
+	.  error
+
+	numparams  goto 204
+
+state 115
+	proceduretype :  R_numparams ; namedtparamlist 
+
+	INTEGER  shift 205
+	.  error
+
+	numparams  goto 206
+
+state 116
+	proceduretype :  F_typeid , numparams ; namedtparamlist ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 207
+
+state 117
+	record :  s_numbytes # fieldlist ; 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 208
+
+state 118
+	record :  u_numbytes # fieldlist ; 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 209
+
+state 119
+	record :  v_numbytes # fieldlist variantpart ; 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 210
+
+state 120
+	record :  Y_numbytes classkey optpbv optbasespeclist ( extendedfieldlist optnameresolutionlist ; 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 211
+
+state 121
+	record :  G_redefinition , n numbits # fieldlist ; 
+	record :  G_redefinition , c numbits # condfieldlist ; 
+	record :  G_n numbits fieldlist ; 
+	record :  G_c numbits condfieldlist ; 
+
+	c  shift 214
+	r  shift 215
+	n  shift 213
+	.  error
+
+	redefinition  goto 212
+
+state 122
+	typeid :  INTEGER typeattrs typedef_    (51)
+
+	.  reduce 51
+
+
+state 123
+	typeattrs :  @ typeattrlist_; 
+	typeattrlist :  typeattrlist_; @ typeattr 
+
+	;  shift 216
+	.  error
+
+
+state 124
+	typeattrlist :  typeattr_    (57)
+
+	.  reduce 57
+
+
+state 125
+	typeattr :  a_INTEGER 
+
+	INTEGER  shift 217
+	.  error
+
+
+state 126
+	typeattr :  s_INTEGER 
+
+	INTEGER  shift 218
+	.  error
+
+
+state 127
+	typeattr :  p_INTEGER 
+
+	INTEGER  shift 219
+	.  error
+
+
+state 128
+	typeattr :  P_    (61)
+
+	.  reduce 61
+
+
+state 129
+	typeattr :  error_    (62)
+
+	.  reduce 62
+
+
+state 130
+	typeid :  ( INTEGER ,_INTEGER ) 
+	typeid :  ( INTEGER ,_INTEGER ) = typedef 
+	typeid :  ( INTEGER ,_INTEGER ) typeattrs typedef 
+
+	INTEGER  shift 220
+	.  error
+
+
+state 131
+	class :  c = constant ;_    (3)
+
+	.  reduce 3
+
+
+state 132
+	constant :  b ordvalue_    (9)
+
+	.  reduce 9
+
+
+state 133
+	ordvalue :  INTEGER_    (17)
+
+	.  reduce 17
+
+
+state 134
+	constant :  c ordvalue_    (10)
+
+	.  reduce 10
+
+
+state 135
+	constant :  e typeid_, ordvalue 
+
+	,  shift 221
+	.  error
+
+
+state 136
+	constant :  i INTEGER_    (12)
+
+	.  reduce 12
+
+
+state 137
+	constant :  r REAL_    (13)
+
+	.  reduce 13
+
+
+state 138
+	constant :  s STRING_    (14)
+
+	.  reduce 14
+
+
+state 139
+	constant :  C REAL_, REAL 
+
+	,  shift 222
+	.  error
+
+
+state 140
+	constant :  S typeid_, numelements , numbits , bitpattern 
+
+	,  shift 223
+	.  error
+
+
+state 141
+	procedure :  proc , NAME :_NAME 
+
+	NAME  shift 224
+	.  error
+
+
+state 142
+	typedef :  b typeid_; # numbytes 
+
+	;  shift 225
+	.  error
+
+
+state 143
+	typedef :  c typeid_; # numbits 
+
+	;  shift 226
+	.  error
+
+
+state 144
+	typedef :  d typeid_    (66)
+
+	.  reduce 66
+
+
+state 145
+	typedef :  e enumspec_; 
+
+	;  shift 227
+	.  error
+
+
+state 146
+	enumspec :  enumlist_    (93)
+	enumlist :  enumlist_enum 
+
+	NAME  shift 149
+	.  reduce 93
+
+	enum  goto 228
+
+state 147
+	enumspec :  typeid_: enumlist 
+
+	:  shift 229
+	.  error
+
+
+state 148
+	enumlist :  enum_    (95)
+
+	.  reduce 95
+
+
+state 149
+	enum :  NAME_: ordvalue , # 
+
+	:  shift 230
+	.  error
+
+
+state 150
+	typedef :  g typeid_; # numbits 
+
+	;  shift 231
+	.  error
+
+
+state 151
+	typedef :  i NAME_: NAME ; 
+	typedef :  i NAME_: NAME , typeid ; 
+
+	:  shift 232
+	.  error
+
+
+state 152
+	typedef :  k typeid_    (71)
+
+	.  reduce 71
+
+
+state 153
+	typedef :  l ;_# 
+
+	#  shift 233
+	.  error
+
+
+state 154
+	typedef :  m optvbasespec_optmultibasespec typeid : typeid : typeid ; 
+	optmultibasespec : _    (138)
+
+	m  shift 235
+	.  reduce 138
+
+	optmultibasespec  goto 234
+
+state 155
+	optvbasespec :  v_    (137)
+
+	.  reduce 137
+
+
+state 156
+	typedef :  n typeid_; # numbytes 
+
+	;  shift 236
+	.  error
+
+
+state 157
+	typedef :  o NAME_; 
+	typedef :  o NAME_, typeid 
+
+	;  shift 237
+	,  shift 238
+	.  error
+
+
+state 158
+	typedef :  w typeid_    (77)
+
+	.  reduce 77
+
+
+state 159
+	typedef :  z typeid_; # numbytes 
+
+	;  shift 239
+	.  error
+
+
+state 160
+	typedef :  C usage_    (79)
+
+	.  reduce 79
+
+
+state 161
+	usage :  picstoragetype_numbits , editdescription , picsize ; 
+	usage :  picstoragetype_numbits , editdescription , picsize , # condition ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 240
+
+state 162
+	usage :  redefinition_picstoragetype numbits , editdescription , picsize ; 
+	usage :  redefinition_picstoragetype numbits , editdescription , picsize , # condition ; 
+
+	c  shift 165
+	b  shift 164
+	e  shift 167
+	i  shift 171
+	r  shift 243
+	s  shift 181
+	t  shift 182
+	a  shift 163
+	p  shift 178
+	d  shift 166
+	f  shift 168
+	g  shift 169
+	m  shift 175
+	k  shift 173
+	l  shift 174
+	n  shift 176
+	o  shift 177
+	h  shift 170
+	j  shift 172
+	q  shift 179
+	.  error
+
+	picstoragetype  goto 242
+
+state 163
+	picstoragetype :  a_    (233)
+
+	.  reduce 233
+
+
+state 164
+	picstoragetype :  b_    (234)
+
+	.  reduce 234
+
+
+state 165
+	picstoragetype :  c_    (235)
+
+	.  reduce 235
+
+
+state 166
+	picstoragetype :  d_    (236)
+
+	.  reduce 236
+
+
+state 167
+	picstoragetype :  e_    (237)
+
+	.  reduce 237
+
+
+state 168
+	picstoragetype :  f_    (238)
+
+	.  reduce 238
+
+
+state 169
+	picstoragetype :  g_    (239)
+
+	.  reduce 239
+
+
+state 170
+	picstoragetype :  h_    (240)
+
+	.  reduce 240
+
+
+state 171
+	picstoragetype :  i_    (241)
+
+	.  reduce 241
+
+
+state 172
+	picstoragetype :  j_    (242)
+
+	.  reduce 242
+
+
+state 173
+	picstoragetype :  k_    (243)
+
+	.  reduce 243
+
+
+state 174
+	picstoragetype :  l_    (244)
+
+	.  reduce 244
+
+
+state 175
+	picstoragetype :  m_    (245)
+
+	.  reduce 245
+
+
+state 176
+	picstoragetype :  n_    (246)
+
+	.  reduce 246
+
+
+state 177
+	picstoragetype :  o_    (247)
+
+	.  reduce 247
+
+
+state 178
+	picstoragetype :  p_    (248)
+
+	.  reduce 248
+
+
+state 179
+	picstoragetype :  q_    (249)
+
+	.  reduce 249
+
+
+state 180
+	redefinition :  r_NAME 
+	picstoragetype :  r_    (250)
+
+	NAME  shift 244
+	.  reduce 250
+
+
+state 181
+	picstoragetype :  s_    (251)
+
+	.  reduce 251
+
+
+state 182
+	picstoragetype :  t_    (252)
+
+	.  reduce 252
+
+
+state 183
+	typedef :  I numbytes_; # picsize 
+
+	;  shift 245
+	.  error
+
+
+state 184
+	numbytes :  INTEGER_    (20)
+
+	.  reduce 20
+
+
+state 185
+	typedef :  K cobolfiledesc_; 
+
+	;  shift 246
+	.  error
+
+
+state 186
+	cobolfiledesc :  organization_accessmethod numbytes 
+
+	r  shift 250
+	s  shift 251
+	d  shift 248
+	o  shift 249
+	.  error
+
+	accessmethod  goto 247
+
+state 187
+	organization :  i_    (271)
+
+	.  reduce 271
+
+
+state 188
+	organization :  l_    (272)
+
+	.  reduce 272
+
+
+state 189
+	organization :  r_    (273)
+
+	.  reduce 273
+
+
+state 190
+	organization :  s_    (274)
+
+	.  reduce 274
+
+
+state 191
+	typedef :  M typeid_; # bound 
+
+	;  shift 252
+	.  error
+
+
+state 192
+	typedef :  S typeid_    (84)
+
+	.  reduce 84
+
+
+state 193
+	typedef :  * typeid_    (85)
+
+	.  reduce 85
+
+
+state 194
+	typedef :  & typeid_    (86)
+
+	.  reduce 86
+
+
+state 195
+	typedef :  V typeid_    (87)
+
+	.  reduce 87
+
+
+state 196
+	array :  a typeid_; # typeid 
+
+	;  shift 253
+	.  error
+
+
+state 197
+	array :  A typeid_    (99)
+
+	.  reduce 99
+
+
+state 198
+	array :  D INTEGER_, typeid 
+
+	,  shift 254
+	.  error
+
+
+state 199
+	array :  E INTEGER_, typeid 
+
+	,  shift 255
+	.  error
+
+
+state 200
+	array :  O INTEGER_, typeid 
+
+	,  shift 256
+	.  error
+
+
+state 201
+	array :  P typeid_; # typeid 
+
+	;  shift 257
+	.  error
+
+
+state 202
+	subrange :  r typeid_; # bound ; # bound 
+
+	;  shift 258
+	.  error
+
+
+state 203
+	proceduretype :  f typeid_; 
+	proceduretype :  f typeid_, numparams ; tparamlist ; 
+
+	;  shift 259
+	,  shift 260
+	.  error
+
+
+state 204
+	proceduretype :  p numparams_; tparamlist ; 
+
+	;  shift 261
+	.  error
+
+
+state 205
+	numparams :  INTEGER_    (118)
+
+	.  reduce 118
+
+
+state 206
+	proceduretype :  R numparams_; namedtparamlist 
+
+	;  shift 262
+	.  error
+
+
+state 207
+	proceduretype :  F typeid_, numparams ; namedtparamlist ; 
+
+	,  shift 263
+	.  error
+
+
+state 208
+	record :  s numbytes_# fieldlist ; 
+
+	#  shift 264
+	.  error
+
+
+state 209
+	record :  u numbytes_# fieldlist ; 
+
+	#  shift 265
+	.  error
+
+
+state 210
+	record :  v numbytes_# fieldlist variantpart ; 
+
+	#  shift 266
+	.  error
+
+
+state 211
+	record :  Y numbytes_classkey optpbv optbasespeclist ( extendedfieldlist optnameresolutionlist ; 
+
+	c  shift 270
+	s  shift 268
+	u  shift 269
+	.  error
+
+	classkey  goto 267
+
+state 212
+	record :  G redefinition_, n numbits # fieldlist ; 
+	record :  G redefinition_, c numbits # condfieldlist ; 
+
+	,  shift 271
+	.  error
+
+
+state 213
+	record :  G n_numbits fieldlist ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 272
+
+state 214
+	record :  G c_numbits condfieldlist ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 273
+
+state 215
+	redefinition :  r_NAME 
+
+	NAME  shift 244
+	.  error
+
+
+state 216
+	typeattrs :  @ typeattrlist ;_    (55)
+	typeattrlist :  typeattrlist ;_@ typeattr 
+
+	@  shift 274
+	.  reduce 55
+
+
+state 217
+	typeattr :  a INTEGER_    (58)
+
+	.  reduce 58
+
+
+state 218
+	typeattr :  s INTEGER_    (59)
+
+	.  reduce 59
+
+
+state 219
+	typeattr :  p INTEGER_    (60)
+
+	.  reduce 60
+
+
+state 220
+	typeid :  ( INTEGER , INTEGER_) 
+	typeid :  ( INTEGER , INTEGER_) = typedef 
+	typeid :  ( INTEGER , INTEGER_) typeattrs typedef 
+
+	)  shift 275
+	.  error
+
+
+state 221
+	constant :  e typeid ,_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 276
+
+state 222
+	constant :  C REAL ,_REAL 
+
+	REAL  shift 277
+	.  error
+
+
+state 223
+	constant :  S typeid ,_numelements , numbits , bitpattern 
+
+	INTEGER  shift 279
+	.  error
+
+	numelements  goto 278
+
+state 224
+	procedure :  proc , NAME : NAME_    (31)
+
+	.  reduce 31
+
+
+state 225
+	typedef :  b typeid ;_# numbytes 
+
+	#  shift 280
+	.  error
+
+
+state 226
+	typedef :  c typeid ;_# numbits 
+
+	#  shift 281
+	.  error
+
+
+state 227
+	typedef :  e enumspec ;_    (67)
+
+	.  reduce 67
+
+
+state 228
+	enumlist :  enumlist enum_    (96)
+
+	.  reduce 96
+
+
+state 229
+	enumspec :  typeid :_enumlist 
+
+	NAME  shift 149
+	.  error
+
+	enumlist  goto 282
+	enum  goto 148
+
+state 230
+	enum :  NAME :_ordvalue , # 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 283
+
+state 231
+	typedef :  g typeid ;_# numbits 
+
+	#  shift 284
+	.  error
+
+
+state 232
+	typedef :  i NAME :_NAME ; 
+	typedef :  i NAME :_NAME , typeid ; 
+
+	NAME  shift 285
+	.  error
+
+
+state 233
+	typedef :  l ; #_    (72)
+
+	.  reduce 72
+
+
+state 234
+	typedef :  m optvbasespec optmultibasespec_typeid : typeid : typeid ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 286
+
+state 235
+	optmultibasespec :  m_    (139)
+
+	.  reduce 139
+
+
+state 236
+	typedef :  n typeid ;_# numbytes 
+
+	#  shift 287
+	.  error
+
+
+state 237
+	typedef :  o NAME ;_    (75)
+
+	.  reduce 75
+
+
+state 238
+	typedef :  o NAME ,_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 288
+
+state 239
+	typedef :  z typeid ;_# numbytes 
+
+	#  shift 289
+	.  error
+
+
+state 240
+	usage :  picstoragetype numbits_, editdescription , picsize ; 
+	usage :  picstoragetype numbits_, editdescription , picsize , # condition ; 
+
+	,  shift 290
+	.  error
+
+
+state 241
+	numbits :  INTEGER_    (19)
+
+	.  reduce 19
+
+
+state 242
+	usage :  redefinition picstoragetype_numbits , editdescription , picsize ; 
+	usage :  redefinition picstoragetype_numbits , editdescription , picsize , # condition ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 291
+
+state 243
+	picstoragetype :  r_    (250)
+
+	.  reduce 250
+
+
+state 244
+	redefinition :  r NAME_    (232)
+
+	.  reduce 232
+
+
+state 245
+	typedef :  I numbytes ;_# picsize 
+
+	#  shift 292
+	.  error
+
+
+state 246
+	typedef :  K cobolfiledesc ;_    (81)
+
+	.  reduce 81
+
+
+state 247
+	cobolfiledesc :  organization accessmethod_numbytes 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 293
+
+state 248
+	accessmethod :  d_    (275)
+
+	.  reduce 275
+
+
+state 249
+	accessmethod :  o_    (276)
+
+	.  reduce 276
+
+
+state 250
+	accessmethod :  r_    (277)
+
+	.  reduce 277
+
+
+state 251
+	accessmethod :  s_    (278)
+
+	.  reduce 278
+
+
+state 252
+	typedef :  M typeid ;_# bound 
+
+	#  shift 294
+	.  error
+
+
+state 253
+	array :  a typeid ;_# typeid 
+
+	#  shift 295
+	.  error
+
+
+state 254
+	array :  D INTEGER ,_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 296
+
+state 255
+	array :  E INTEGER ,_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 297
+
+state 256
+	array :  O INTEGER ,_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 298
+
+state 257
+	array :  P typeid ;_# typeid 
+
+	#  shift 299
+	.  error
+
+
+state 258
+	subrange :  r typeid ;_# bound ; # bound 
+
+	#  shift 300
+	.  error
+
+
+state 259
+	proceduretype :  f typeid ;_    (113)
+
+	.  reduce 113
+
+
+state 260
+	proceduretype :  f typeid ,_numparams ; tparamlist ; 
+
+	INTEGER  shift 205
+	.  error
+
+	numparams  goto 301
+
+state 261
+	proceduretype :  p numparams ;_tparamlist ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 304
+	tparamlist  goto 302
+	tparam  goto 303
+
+262: shift/reduce conflict (shift 308, red'n 122) on NAME
+262: shift/reduce conflict (shift 309, red'n 122) on :
+state 262
+	proceduretype :  R numparams ;_namedtparamlist 
+	namedtparamlist : _    (122)
+
+	NAME  shift 308
+	:  shift 309
+	.  reduce 122
+
+	namedtparamlist  goto 305
+	namedtplist  goto 306
+	namedtparam  goto 307
+
+state 263
+	proceduretype :  F typeid ,_numparams ; namedtparamlist ; 
+
+	INTEGER  shift 205
+	.  error
+
+	numparams  goto 310
+
+state 264
+	record :  s numbytes #_fieldlist ; 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 311
+	field  goto 312
+
+state 265
+	record :  u numbytes #_fieldlist ; 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 314
+	field  goto 312
+
+state 266
+	record :  v numbytes #_fieldlist variantpart ; 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 315
+	field  goto 312
+
+state 267
+	record :  Y numbytes classkey_optpbv optbasespeclist ( extendedfieldlist optnameresolutionlist ; 
+	optpbv : _    (140)
+
+	V  shift 317
+	.  reduce 140
+
+	optpbv  goto 316
+
+state 268
+	classkey :  s_    (142)
+
+	.  reduce 142
+
+
+state 269
+	classkey :  u_    (143)
+
+	.  reduce 143
+
+
+state 270
+	classkey :  c_    (144)
+
+	.  reduce 144
+
+
+state 271
+	record :  G redefinition ,_n numbits # fieldlist ; 
+	record :  G redefinition ,_c numbits # condfieldlist ; 
+
+	c  shift 319
+	n  shift 318
+	.  error
+
+
+state 272
+	record :  G n numbits_fieldlist ; 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 320
+	field  goto 312
+
+273: shift/reduce conflict (shift 313, red'n 225) on NAME
+state 273
+	record :  G c numbits_condfieldlist ; 
+	conditions : _    (225)
+
+	NAME  shift 313
+	.  reduce 225
+
+	fieldlist  goto 323
+	condfieldlist  goto 321
+	field  goto 312
+	conditions  goto 322
+
+state 274
+	typeattrlist :  typeattrlist ; @_typeattr 
+
+	error  shift 129
+	s  shift 126
+	a  shift 125
+	p  shift 127
+	P  shift 128
+	.  error
+
+	typeattr  goto 324
+
+state 275
+	typeid :  ( INTEGER , INTEGER )_    (52)
+	typeid :  ( INTEGER , INTEGER )_= typedef 
+	typeid :  ( INTEGER , INTEGER )_typeattrs typedef 
+
+	=  shift 325
+	@  shift 64
+	.  reduce 52
+
+	typeattrs  goto 326
+
+state 276
+	constant :  e typeid , ordvalue_    (11)
+
+	.  reduce 11
+
+
+state 277
+	constant :  C REAL , REAL_    (15)
+
+	.  reduce 15
+
+
+state 278
+	constant :  S typeid , numelements_, numbits , bitpattern 
+
+	,  shift 327
+	.  error
+
+
+state 279
+	numelements :  INTEGER_    (18)
+
+	.  reduce 18
+
+
+state 280
+	typedef :  b typeid ; #_numbytes 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 328
+
+state 281
+	typedef :  c typeid ; #_numbits 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 329
+
+state 282
+	enumspec :  typeid : enumlist_    (94)
+	enumlist :  enumlist_enum 
+
+	NAME  shift 149
+	.  reduce 94
+
+	enum  goto 228
+
+state 283
+	enum :  NAME : ordvalue_, # 
+
+	,  shift 330
+	.  error
+
+
+state 284
+	typedef :  g typeid ; #_numbits 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 331
+
+state 285
+	typedef :  i NAME : NAME_; 
+	typedef :  i NAME : NAME_, typeid ; 
+
+	;  shift 332
+	,  shift 333
+	.  error
+
+
+state 286
+	typedef :  m optvbasespec optmultibasespec typeid_: typeid : typeid ; 
+
+	:  shift 334
+	.  error
+
+
+state 287
+	typedef :  n typeid ; #_numbytes 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 335
+
+state 288
+	typedef :  o NAME , typeid_    (76)
+
+	.  reduce 76
+
+
+state 289
+	typedef :  z typeid ; #_numbytes 
+
+	INTEGER  shift 184
+	.  error
+
+	numbytes  goto 336
+
+state 290
+	usage :  picstoragetype numbits ,_editdescription , picsize ; 
+	usage :  picstoragetype numbits ,_editdescription , picsize , # condition ; 
+
+	INTEGER  shift 339
+	STRING  shift 338
+	.  error
+
+	editdescription  goto 337
+
+state 291
+	usage :  redefinition picstoragetype numbits_, editdescription , picsize ; 
+	usage :  redefinition picstoragetype numbits_, editdescription , picsize , # condition ; 
+
+	,  shift 340
+	.  error
+
+
+state 292
+	typedef :  I numbytes ; #_picsize 
+
+	INTEGER  shift 342
+	.  error
+
+	picsize  goto 341
+
+state 293
+	cobolfiledesc :  organization accessmethod numbytes_    (270)
+
+	.  reduce 270
+
+
+state 294
+	typedef :  M typeid ; #_bound 
+
+	INTEGER  shift 344
+	S  shift 348
+	t  shift 351
+	T  shift 349
+	a  shift 350
+	J  shift 346
+	A  shift 347
+	.  error
+
+	bound  goto 343
+	boundtype  goto 345
+
+state 295
+	array :  a typeid ; #_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 352
+
+state 296
+	array :  D INTEGER , typeid_    (100)
+
+	.  reduce 100
+
+
+state 297
+	array :  E INTEGER , typeid_    (101)
+
+	.  reduce 101
+
+
+state 298
+	array :  O INTEGER , typeid_    (102)
+
+	.  reduce 102
+
+
+state 299
+	array :  P typeid ; #_typeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 353
+
+state 300
+	subrange :  r typeid ; #_bound ; # bound 
+
+	INTEGER  shift 344
+	S  shift 348
+	t  shift 351
+	T  shift 349
+	a  shift 350
+	J  shift 346
+	A  shift 347
+	.  error
+
+	bound  goto 354
+	boundtype  goto 345
+
+state 301
+	proceduretype :  f typeid , numparams_; tparamlist ; 
+
+	;  shift 355
+	.  error
+
+
+state 302
+	proceduretype :  p numparams ; tparamlist_; 
+	tparamlist :  tparamlist_tparam 
+
+	INTEGER  shift 38
+	;  shift 356
+	(  shift 39
+	.  error
+
+	typeid  goto 304
+	tparam  goto 357
+
+state 303
+	tparamlist :  tparam_    (119)
+
+	.  reduce 119
+
+
+state 304
+	tparam :  typeid_, passby ; # 
+
+	,  shift 358
+	.  error
+
+
+state 305
+	proceduretype :  R numparams ; namedtparamlist_    (116)
+
+	.  reduce 116
+
+
+306: shift/reduce conflict (shift 308, red'n 123) on NAME
+306: shift/reduce conflict (shift 309, red'n 123) on :
+state 306
+	namedtparamlist :  namedtplist_    (123)
+	namedtplist :  namedtplist_namedtparam 
+
+	NAME  shift 308
+	:  shift 309
+	.  reduce 123
+
+	namedtparam  goto 359
+
+state 307
+	namedtplist :  namedtparam_    (124)
+
+	.  reduce 124
+
+
+state 308
+	namedtparam :  NAME_: typeid , passby initbody ; # 
+
+	:  shift 360
+	.  error
+
+
+state 309
+	namedtparam :  :_typeid , passby initbody ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 361
+
+state 310
+	proceduretype :  F typeid , numparams_; namedtparamlist ; 
+
+	;  shift 362
+	.  error
+
+
+state 311
+	record :  s numbytes # fieldlist_; 
+	fieldlist :  fieldlist_field 
+
+	NAME  shift 313
+	;  shift 363
+	.  error
+
+	field  goto 364
+
+state 312
+	fieldlist :  field_    (205)
+
+	.  reduce 205
+
+
+state 313
+	field :  NAME_: typeid , bitoffset , numbits ; # 
+
+	:  shift 365
+	.  error
+
+
+state 314
+	record :  u numbytes # fieldlist_; 
+	fieldlist :  fieldlist_field 
+
+	NAME  shift 313
+	;  shift 366
+	.  error
+
+	field  goto 364
+
+state 315
+	record :  v numbytes # fieldlist_variantpart ; 
+	fieldlist :  fieldlist_field 
+
+	NAME  shift 313
+	[  shift 368
+	.  error
+
+	variantpart  goto 367
+	field  goto 364
+
+state 316
+	record :  Y numbytes classkey optpbv_optbasespeclist ( extendedfieldlist optnameresolutionlist ; 
+	optbasespeclist : _    (145)
+	virtualaccessspec : _    (152)
+
+	i  shift 375
+	v  shift 373
+	(  reduce 145
+	o  shift 376
+	u  shift 377
+	.  reduce 152
+
+	optbasespeclist  goto 369
+	basespeclist  goto 370
+	basespec  goto 371
+	virtualaccessspec  goto 372
+	accessspec  goto 374
+
+state 317
+	optpbv :  V_    (141)
+
+	.  reduce 141
+
+
+state 318
+	record :  G redefinition , n_numbits # fieldlist ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 378
+
+state 319
+	record :  G redefinition , c_numbits # condfieldlist ; 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 379
+
+state 320
+	record :  G n numbits fieldlist_; 
+	fieldlist :  fieldlist_field 
+
+	NAME  shift 313
+	;  shift 380
+	.  error
+
+	field  goto 364
+
+state 321
+	record :  G c numbits condfieldlist_; 
+
+	;  shift 381
+	.  error
+
+
+state 322
+	condfieldlist :  conditions_, # fieldlist 
+	conditions :  conditions_condition 
+
+	NAME  shift 384
+	,  shift 382
+	.  error
+
+	condition  goto 383
+
+state 323
+	fieldlist :  fieldlist_field 
+	condfieldlist :  fieldlist_# 
+
+	NAME  shift 313
+	#  shift 385
+	.  error
+
+	field  goto 364
+
+state 324
+	typeattrlist :  typeattrlist ; @ typeattr_    (56)
+
+	.  reduce 56
+
+
+state 325
+	typeid :  ( INTEGER , INTEGER ) =_typedef 
+
+	INTEGER  shift 78
+	c  shift 80
+	b  shift 79
+	e  shift 82
+	i  shift 84
+	r  shift 112
+	s  shift 117
+	C  shift 92
+	S  shift 97
+	a  shift 106
+	p  shift 114
+	v  shift 119
+	D  shift 108
+	R  shift 115
+	d  shift 81
+	G  shift 121
+	V  shift 100
+	Y  shift 120
+	Z  shift 101
+	f  shift 113
+	g  shift 83
+	m  shift 87
+	F  shift 116
+	I  shift 93
+	P  shift 111
+	k  shift 85
+	l  shift 86
+	n  shift 88
+	o  shift 89
+	w  shift 90
+	z  shift 91
+	K  shift 94
+	M  shift 95
+	N  shift 96
+	*  shift 98
+	&  shift 99
+	A  shift 107
+	E  shift 109
+	O  shift 110
+	u  shift 118
+	.  error
+
+	typedef  goto 386
+	array  goto 102
+	subrange  goto 103
+	proceduretype  goto 104
+	record  goto 105
+
+state 326
+	typeid :  ( INTEGER , INTEGER ) typeattrs_typedef 
+
+	INTEGER  shift 78
+	c  shift 80
+	b  shift 79
+	e  shift 82
+	i  shift 84
+	r  shift 112
+	s  shift 117
+	C  shift 92
+	S  shift 97
+	a  shift 106
+	p  shift 114
+	v  shift 119
+	D  shift 108
+	R  shift 115
+	d  shift 81
+	G  shift 121
+	V  shift 100
+	Y  shift 120
+	Z  shift 101
+	f  shift 113
+	g  shift 83
+	m  shift 87
+	F  shift 116
+	I  shift 93
+	P  shift 111
+	k  shift 85
+	l  shift 86
+	n  shift 88
+	o  shift 89
+	w  shift 90
+	z  shift 91
+	K  shift 94
+	M  shift 95
+	N  shift 96
+	*  shift 98
+	&  shift 99
+	A  shift 107
+	E  shift 109
+	O  shift 110
+	u  shift 118
+	.  error
+
+	typedef  goto 387
+	array  goto 102
+	subrange  goto 103
+	proceduretype  goto 104
+	record  goto 105
+
+state 327
+	constant :  S typeid , numelements ,_numbits , bitpattern 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 388
+
+state 328
+	typedef :  b typeid ; # numbytes_    (64)
+
+	.  reduce 64
+
+
+state 329
+	typedef :  c typeid ; # numbits_    (65)
+
+	.  reduce 65
+
+
+state 330
+	enum :  NAME : ordvalue ,_# 
+
+	#  shift 389
+	.  error
+
+
+state 331
+	typedef :  g typeid ; # numbits_    (68)
+
+	.  reduce 68
+
+
+state 332
+	typedef :  i NAME : NAME ;_    (69)
+
+	.  reduce 69
+
+
+state 333
+	typedef :  i NAME : NAME ,_typeid ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 390
+
+state 334
+	typedef :  m optvbasespec optmultibasespec typeid :_typeid : typeid ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 391
+
+state 335
+	typedef :  n typeid ; # numbytes_    (74)
+
+	.  reduce 74
+
+
+state 336
+	typedef :  z typeid ; # numbytes_    (78)
+
+	.  reduce 78
+
+
+state 337
+	usage :  picstoragetype numbits , editdescription_, picsize ; 
+	usage :  picstoragetype numbits , editdescription_, picsize , # condition ; 
+
+	,  shift 392
+	.  error
+
+
+state 338
+	editdescription :  STRING_    (253)
+
+	.  reduce 253
+
+
+state 339
+	editdescription :  INTEGER_    (254)
+
+	.  reduce 254
+
+
+state 340
+	usage :  redefinition picstoragetype numbits ,_editdescription , picsize ; 
+	usage :  redefinition picstoragetype numbits ,_editdescription , picsize , # condition ; 
+
+	INTEGER  shift 339
+	STRING  shift 338
+	.  error
+
+	editdescription  goto 393
+
+state 341
+	typedef :  I numbytes ; # picsize_    (80)
+
+	.  reduce 80
+
+
+state 342
+	picsize :  INTEGER_    (255)
+
+	.  reduce 255
+
+
+state 343
+	typedef :  M typeid ; # bound_    (82)
+
+	.  reduce 82
+
+
+state 344
+	bound :  INTEGER_    (105)
+
+	.  reduce 105
+
+
+state 345
+	bound :  boundtype_INTEGER 
+
+	INTEGER  shift 394
+	.  error
+
+
+state 346
+	bound :  J_    (107)
+
+	.  reduce 107
+
+
+state 347
+	boundtype :  A_    (108)
+
+	.  reduce 108
+
+
+state 348
+	boundtype :  S_    (109)
+
+	.  reduce 109
+
+
+state 349
+	boundtype :  T_    (110)
+
+	.  reduce 110
+
+
+state 350
+	boundtype :  a_    (111)
+
+	.  reduce 111
+
+
+state 351
+	boundtype :  t_    (112)
+
+	.  reduce 112
+
+
+state 352
+	array :  a typeid ; # typeid_    (98)
+
+	.  reduce 98
+
+
+state 353
+	array :  P typeid ; # typeid_    (103)
+
+	.  reduce 103
+
+
+state 354
+	subrange :  r typeid ; # bound_; # bound 
+
+	;  shift 395
+	.  error
+
+
+state 355
+	proceduretype :  f typeid , numparams ;_tparamlist ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 304
+	tparamlist  goto 396
+	tparam  goto 303
+
+state 356
+	proceduretype :  p numparams ; tparamlist ;_    (115)
+
+	.  reduce 115
+
+
+state 357
+	tparamlist :  tparamlist tparam_    (120)
+
+	.  reduce 120
+
+
+state 358
+	tparam :  typeid ,_passby ; # 
+
+	INTEGER  shift 398
+	.  error
+
+	passby  goto 397
+
+state 359
+	namedtplist :  namedtplist namedtparam_    (125)
+
+	.  reduce 125
+
+
+state 360
+	namedtparam :  NAME :_typeid , passby initbody ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 399
+
+state 361
+	namedtparam :  : typeid_, passby initbody ; # 
+
+	,  shift 400
+	.  error
+
+
+state 362
+	proceduretype :  F typeid , numparams ;_namedtparamlist ; 
+	namedtparamlist : _    (122)
+
+	NAME  shift 308
+	:  shift 309
+	.  reduce 122
+
+	namedtparamlist  goto 401
+	namedtplist  goto 306
+	namedtparam  goto 307
+
+state 363
+	record :  s numbytes # fieldlist ;_    (128)
+
+	.  reduce 128
+
+
+state 364
+	fieldlist :  fieldlist field_    (206)
+
+	.  reduce 206
+
+
+state 365
+	field :  NAME :_typeid , bitoffset , numbits ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 402
+
+state 366
+	record :  u numbytes # fieldlist ;_    (129)
+
+	.  reduce 129
+
+
+state 367
+	record :  v numbytes # fieldlist variantpart_; 
+
+	;  shift 403
+	.  error
+
+
+state 368
+	variantpart :  [_vtag vfieldlist ] 
+
+	(  shift 405
+	.  error
+
+	vtag  goto 404
+
+state 369
+	record :  Y numbytes classkey optpbv optbasespeclist_( extendedfieldlist optnameresolutionlist ; 
+
+	(  shift 406
+	.  error
+
+
+state 370
+	optbasespeclist :  basespeclist_    (146)
+	basespeclist :  basespeclist_, basespec 
+
+	,  shift 407
+	.  reduce 146
+
+
+state 371
+	basespeclist :  basespec_    (147)
+
+	.  reduce 147
+
+
+state 372
+	basespec :  virtualaccessspec_baseclassoffset : classtypeid 
+
+	INTEGER  shift 409
+	.  error
+
+	baseclassoffset  goto 408
+
+state 373
+	virtualaccessspec :  v_accessspec 
+	virtualaccessspec :  v_    (154)
+
+	i  shift 375
+	o  shift 376
+	u  shift 377
+	.  reduce 154
+
+	accessspec  goto 410
+
+state 374
+	virtualaccessspec :  accessspec_    (155)
+
+	.  reduce 155
+
+
+state 375
+	accessspec :  i_# 
+
+	#  shift 411
+	.  error
+
+
+state 376
+	accessspec :  o_# 
+
+	#  shift 412
+	.  error
+
+
+state 377
+	accessspec :  u_# 
+
+	#  shift 413
+	.  error
+
+
+state 378
+	record :  G redefinition , n numbits_# fieldlist ; 
+
+	#  shift 414
+	.  error
+
+
+state 379
+	record :  G redefinition , c numbits_# condfieldlist ; 
+
+	#  shift 415
+	.  error
+
+
+state 380
+	record :  G n numbits fieldlist ;_    (134)
+
+	.  reduce 134
+
+
+state 381
+	record :  G c numbits condfieldlist ;_    (135)
+
+	.  reduce 135
+
+
+state 382
+	condfieldlist :  conditions ,_# fieldlist 
+
+	#  shift 416
+	.  error
+
+
+state 383
+	conditions :  conditions condition_    (226)
+
+	.  reduce 226
+
+
+state 384
+	condition :  NAME_: INTEGER = q conditiontype , valuelist ; # 
+
+	:  shift 417
+	.  error
+
+
+state 385
+	condfieldlist :  fieldlist #_    (224)
+
+	.  reduce 224
+
+
+state 386
+	typeid :  ( INTEGER , INTEGER ) = typedef_    (53)
+
+	.  reduce 53
+
+
+state 387
+	typeid :  ( INTEGER , INTEGER ) typeattrs typedef_    (54)
+
+	.  reduce 54
+
+
+state 388
+	constant :  S typeid , numelements , numbits_, bitpattern 
+
+	,  shift 418
+	.  error
+
+
+state 389
+	enum :  NAME : ordvalue , #_    (97)
+
+	.  reduce 97
+
+
+state 390
+	typedef :  i NAME : NAME , typeid_; 
+
+	;  shift 419
+	.  error
+
+
+state 391
+	typedef :  m optvbasespec optmultibasespec typeid : typeid_: typeid ; 
+
+	:  shift 420
+	.  error
+
+
+state 392
+	usage :  picstoragetype numbits , editdescription ,_picsize ; 
+	usage :  picstoragetype numbits , editdescription ,_picsize , # condition ; 
+
+	INTEGER  shift 342
+	.  error
+
+	picsize  goto 421
+
+state 393
+	usage :  redefinition picstoragetype numbits , editdescription_, picsize ; 
+	usage :  redefinition picstoragetype numbits , editdescription_, picsize , # condition ; 
+
+	,  shift 422
+	.  error
+
+
+state 394
+	bound :  boundtype INTEGER_    (106)
+
+	.  reduce 106
+
+
+state 395
+	subrange :  r typeid ; # bound ;_# bound 
+
+	#  shift 423
+	.  error
+
+
+state 396
+	proceduretype :  f typeid , numparams ; tparamlist_; 
+	tparamlist :  tparamlist_tparam 
+
+	INTEGER  shift 38
+	;  shift 424
+	(  shift 39
+	.  error
+
+	typeid  goto 304
+	tparam  goto 357
+
+state 397
+	tparam :  typeid , passby_; # 
+
+	;  shift 425
+	.  error
+
+
+state 398
+	passby :  INTEGER_    (279)
+
+	.  reduce 279
+
+
+state 399
+	namedtparam :  NAME : typeid_, passby initbody ; # 
+
+	,  shift 426
+	.  error
+
+
+state 400
+	namedtparam :  : typeid ,_passby initbody ; # 
+
+	INTEGER  shift 398
+	.  error
+
+	passby  goto 427
+
+state 401
+	proceduretype :  F typeid , numparams ; namedtparamlist_; 
+
+	;  shift 428
+	.  error
+
+
+state 402
+	field :  NAME : typeid_, bitoffset , numbits ; # 
+
+	,  shift 429
+	.  error
+
+
+state 403
+	record :  v numbytes # fieldlist variantpart ;_    (130)
+
+	.  reduce 130
+
+
+state 404
+	variantpart :  [ vtag_vfieldlist ] 
+
+	(  shift 433
+	.  error
+
+	vfieldlist  goto 430
+	vlist  goto 431
+	vfield  goto 432
+
+state 405
+	vtag :  (_field 
+	vtag :  (_NAME : ; # 
+
+	NAME  shift 435
+	.  error
+
+	field  goto 434
+
+state 406
+	record :  Y numbytes classkey optpbv optbasespeclist (_extendedfieldlist optnameresolutionlist ; 
+	extendedfieldlist : _    (166)
+
+	.  reduce 166
+
+	extendedfieldlist  goto 436
+
+state 407
+	basespeclist :  basespeclist ,_basespec 
+	virtualaccessspec : _    (152)
+
+	i  shift 375
+	v  shift 373
+	o  shift 376
+	u  shift 377
+	.  reduce 152
+
+	basespec  goto 437
+	virtualaccessspec  goto 372
+	accessspec  goto 374
+
+state 408
+	basespec :  virtualaccessspec baseclassoffset_: classtypeid 
+
+	:  shift 438
+	.  error
+
+
+state 409
+	baseclassoffset :  INTEGER_    (150)
+
+	.  reduce 150
+
+
+state 410
+	virtualaccessspec :  v accessspec_    (153)
+
+	.  reduce 153
+
+
+state 411
+	accessspec :  i #_    (158)
+
+	.  reduce 158
+
+
+state 412
+	accessspec :  o #_    (159)
+
+	.  reduce 159
+
+
+state 413
+	accessspec :  u #_    (160)
+
+	.  reduce 160
+
+
+state 414
+	record :  G redefinition , n numbits #_fieldlist ; 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 439
+	field  goto 312
+
+415: shift/reduce conflict (shift 313, red'n 225) on NAME
+state 415
+	record :  G redefinition , c numbits #_condfieldlist ; 
+	conditions : _    (225)
+
+	NAME  shift 313
+	.  reduce 225
+
+	fieldlist  goto 323
+	condfieldlist  goto 440
+	field  goto 312
+	conditions  goto 322
+
+state 416
+	condfieldlist :  conditions , #_fieldlist 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 441
+	field  goto 312
+
+state 417
+	condition :  NAME :_INTEGER = q conditiontype , valuelist ; # 
+
+	INTEGER  shift 442
+	.  error
+
+
+state 418
+	constant :  S typeid , numelements , numbits ,_bitpattern 
+
+	HEXADECIMAL  shift 444
+	.  error
+
+	bitpattern  goto 443
+
+state 419
+	typedef :  i NAME : NAME , typeid ;_    (70)
+
+	.  reduce 70
+
+
+state 420
+	typedef :  m optvbasespec optmultibasespec typeid : typeid :_typeid ; 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 445
+
+state 421
+	usage :  picstoragetype numbits , editdescription , picsize_; 
+	usage :  picstoragetype numbits , editdescription , picsize_, # condition ; 
+
+	;  shift 446
+	,  shift 447
+	.  error
+
+
+state 422
+	usage :  redefinition picstoragetype numbits , editdescription ,_picsize ; 
+	usage :  redefinition picstoragetype numbits , editdescription ,_picsize , # condition ; 
+
+	INTEGER  shift 342
+	.  error
+
+	picsize  goto 448
+
+state 423
+	subrange :  r typeid ; # bound ; #_bound 
+
+	INTEGER  shift 344
+	S  shift 348
+	t  shift 351
+	T  shift 349
+	a  shift 350
+	J  shift 346
+	A  shift 347
+	.  error
+
+	bound  goto 449
+	boundtype  goto 345
+
+state 424
+	proceduretype :  f typeid , numparams ; tparamlist ;_    (114)
+
+	.  reduce 114
+
+
+state 425
+	tparam :  typeid , passby ;_# 
+
+	#  shift 450
+	.  error
+
+
+state 426
+	namedtparam :  NAME : typeid ,_passby initbody ; # 
+
+	INTEGER  shift 398
+	.  error
+
+	passby  goto 451
+
+state 427
+	namedtparam :  : typeid , passby_initbody ; # 
+	initbody : _    (196)
+
+	STRING  shift 453
+	.  reduce 196
+
+	initbody  goto 452
+
+state 428
+	proceduretype :  F typeid , numparams ; namedtparamlist ;_    (117)
+
+	.  reduce 117
+
+
+state 429
+	field :  NAME : typeid ,_bitoffset , numbits ; # 
+
+	INTEGER  shift 455
+	.  error
+
+	bitoffset  goto 454
+
+state 430
+	variantpart :  [ vtag vfieldlist_] 
+	vfieldlist :  vfieldlist_vlist 
+
+	(  shift 433
+	]  shift 456
+	.  error
+
+	vlist  goto 457
+	vfield  goto 432
+
+state 431
+	vfieldlist :  vlist_    (211)
+
+	.  reduce 211
+
+
+state 432
+	vlist :  vfield_    (213)
+	vlist :  vfield_variantpart 
+
+	[  shift 368
+	.  reduce 213
+
+	variantpart  goto 458
+
+state 433
+	vfield :  (_vrangelist : fieldlist 
+
+	c  shift 462
+	b  shift 461
+	e  shift 463
+	i  shift 464
+	r  shift 465
+	.  error
+
+	vrangelist  goto 459
+	vrange  goto 460
+
+state 434
+	vtag :  ( field_    (209)
+
+	.  reduce 209
+
+
+state 435
+	field :  NAME_: typeid , bitoffset , numbits ; # 
+	vtag :  ( NAME_: ; # 
+
+	:  shift 466
+	.  error
+
+
+436: shift/reduce conflict (shift 375, red'n 156) on i
+436: shift/reduce conflict (shift 376, red'n 156) on o
+436: shift/reduce conflict (shift 377, red'n 156) on u
+state 436
+	record :  Y numbytes classkey optpbv optbasespeclist ( extendedfieldlist_optnameresolutionlist ; 
+	extendedfieldlist :  extendedfieldlist_extendedfield 
+	optnameresolutionlist : _    (198)
+	genspec : _    (156)
+	anonspec : _    (161)
+
+	c  shift 473
+	;  reduce 198
+	i  shift 375
+	a  shift 474
+	v  reduce 156
+	)  shift 469
+	o  shift 376
+	u  shift 377
+	.  reduce 161
+
+	optnameresolutionlist  goto 467
+	accessspec  goto 471
+	genspec  goto 470
+	anonspec  goto 472
+	extendedfield  goto 468
+
+state 437
+	basespeclist :  basespeclist , basespec_    (148)
+
+	.  reduce 148
+
+
+state 438
+	basespec :  virtualaccessspec baseclassoffset :_classtypeid 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 476
+	classtypeid  goto 475
+
+state 439
+	record :  G redefinition , n numbits # fieldlist_; 
+	fieldlist :  fieldlist_field 
+
+	NAME  shift 313
+	;  shift 477
+	.  error
+
+	field  goto 364
+
+state 440
+	record :  G redefinition , c numbits # condfieldlist_; 
+
+	;  shift 478
+	.  error
+
+
+state 441
+	fieldlist :  fieldlist_field 
+	condfieldlist :  conditions , # fieldlist_    (223)
+
+	NAME  shift 313
+	.  reduce 223
+
+	field  goto 364
+
+state 442
+	condition :  NAME : INTEGER_= q conditiontype , valuelist ; # 
+
+	=  shift 479
+	.  error
+
+
+state 443
+	constant :  S typeid , numelements , numbits , bitpattern_    (16)
+
+	.  reduce 16
+
+
+state 444
+	bitpattern :  HEXADECIMAL_    (21)
+
+	.  reduce 21
+
+
+state 445
+	typedef :  m optvbasespec optmultibasespec typeid : typeid : typeid_; 
+
+	;  shift 480
+	.  error
+
+
+state 446
+	usage :  picstoragetype numbits , editdescription , picsize ;_    (228)
+
+	.  reduce 228
+
+
+state 447
+	usage :  picstoragetype numbits , editdescription , picsize ,_# condition ; 
+
+	#  shift 481
+	.  error
+
+
+state 448
+	usage :  redefinition picstoragetype numbits , editdescription , picsize_; 
+	usage :  redefinition picstoragetype numbits , editdescription , picsize_, # condition ; 
+
+	;  shift 482
+	,  shift 483
+	.  error
+
+
+state 449
+	subrange :  r typeid ; # bound ; # bound_    (104)
+
+	.  reduce 104
+
+
+state 450
+	tparam :  typeid , passby ; #_    (121)
+
+	.  reduce 121
+
+
+state 451
+	namedtparam :  NAME : typeid , passby_initbody ; # 
+	initbody : _    (196)
+
+	STRING  shift 453
+	.  reduce 196
+
+	initbody  goto 484
+
+state 452
+	namedtparam :  : typeid , passby initbody_; # 
+
+	;  shift 485
+	.  error
+
+
+state 453
+	initbody :  STRING_    (197)
+
+	.  reduce 197
+
+
+state 454
+	field :  NAME : typeid , bitoffset_, numbits ; # 
+
+	,  shift 486
+	.  error
+
+
+state 455
+	bitoffset :  INTEGER_    (227)
+
+	.  reduce 227
+
+
+state 456
+	variantpart :  [ vtag vfieldlist ]_    (208)
+
+	.  reduce 208
+
+
+state 457
+	vfieldlist :  vfieldlist vlist_    (212)
+
+	.  reduce 212
+
+
+state 458
+	vlist :  vfield variantpart_    (214)
+
+	.  reduce 214
+
+
+state 459
+	vfield :  ( vrangelist_: fieldlist 
+	vrangelist :  vrangelist_, vrange 
+
+	:  shift 487
+	,  shift 488
+	.  error
+
+
+state 460
+	vrangelist :  vrange_    (216)
+
+	.  reduce 216
+
+
+state 461
+	vrange :  b_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 489
+
+state 462
+	vrange :  c_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 490
+
+state 463
+	vrange :  e_typeid , ordvalue 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 491
+
+state 464
+	vrange :  i_INTEGER 
+
+	INTEGER  shift 492
+	.  error
+
+
+state 465
+	vrange :  r_typeid ; bound ; bound 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 493
+
+state 466
+	field :  NAME :_typeid , bitoffset , numbits ; # 
+	vtag :  ( NAME :_; # 
+
+	INTEGER  shift 38
+	;  shift 494
+	(  shift 39
+	.  error
+
+	typeid  goto 402
+
+state 467
+	record :  Y numbytes classkey optpbv optbasespeclist ( extendedfieldlist optnameresolutionlist_; 
+
+	;  shift 495
+	.  error
+
+
+state 468
+	extendedfieldlist :  extendedfieldlist extendedfield_    (167)
+
+	.  reduce 167
+
+
+state 469
+	optnameresolutionlist :  )_nameresolutionlist 
+
+	NAME  shift 499
+	.  error
+
+	nameresolutionlist  goto 496
+	nameresolution  goto 497
+	membername  goto 498
+
+470: shift/reduce conflict (shift 375, red'n 163) on i
+470: shift/reduce conflict (shift 376, red'n 163) on o
+470: shift/reduce conflict (shift 377, red'n 163) on u
+state 470
+	extendedfield :  genspec_accessspec anonspec datamember 
+	extendedfield :  genspec_virtualspec accessspec optvirtualfuncindex memberfunction 
+	virtualspec : _    (163)
+
+	i  shift 375
+	v  shift 502
+	o  shift 376
+	u  shift 377
+	.  error
+
+	accessspec  goto 500
+	virtualspec  goto 501
+
+state 471
+	extendedfield :  accessspec_anonspec nestedclass 
+	anonspec : _    (161)
+
+	a  shift 474
+	.  reduce 161
+
+	anonspec  goto 503
+
+state 472
+	extendedfield :  anonspec_friendclass 
+	extendedfield :  anonspec_friendfunction 
+
+	(  shift 506
+	]  shift 507
+	.  error
+
+	friendclass  goto 504
+	friendfunction  goto 505
+
+state 473
+	genspec :  c_    (157)
+
+	.  reduce 157
+
+
+state 474
+	anonspec :  a_    (162)
+
+	.  reduce 162
+
+
+state 475
+	basespec :  virtualaccessspec baseclassoffset : classtypeid_    (149)
+
+	.  reduce 149
+
+
+state 476
+	classtypeid :  typeid_    (151)
+
+	.  reduce 151
+
+
+state 477
+	record :  G redefinition , n numbits # fieldlist ;_    (132)
+
+	.  reduce 132
+
+
+state 478
+	record :  G redefinition , c numbits # condfieldlist ;_    (133)
+
+	.  reduce 133
+
+
+state 479
+	condition :  NAME : INTEGER =_q conditiontype , valuelist ; # 
+
+	q  shift 508
+	.  error
+
+
+state 480
+	typedef :  m optvbasespec optmultibasespec typeid : typeid : typeid ;_    (73)
+
+	.  reduce 73
+
+
+state 481
+	usage :  picstoragetype numbits , editdescription , picsize , #_condition ; 
+
+	NAME  shift 384
+	.  error
+
+	condition  goto 509
+
+state 482
+	usage :  redefinition picstoragetype numbits , editdescription , picsize ;_    (229)
+
+	.  reduce 229
+
+
+state 483
+	usage :  redefinition picstoragetype numbits , editdescription , picsize ,_# condition ; 
+
+	#  shift 510
+	.  error
+
+
+state 484
+	namedtparam :  NAME : typeid , passby initbody_; # 
+
+	;  shift 511
+	.  error
+
+
+state 485
+	namedtparam :  : typeid , passby initbody ;_# 
+
+	#  shift 512
+	.  error
+
+
+state 486
+	field :  NAME : typeid , bitoffset ,_numbits ; # 
+
+	INTEGER  shift 241
+	.  error
+
+	numbits  goto 513
+
+state 487
+	vfield :  ( vrangelist :_fieldlist 
+
+	NAME  shift 313
+	.  error
+
+	fieldlist  goto 514
+	field  goto 312
+
+state 488
+	vrangelist :  vrangelist ,_vrange 
+
+	c  shift 462
+	b  shift 461
+	e  shift 463
+	i  shift 464
+	r  shift 465
+	.  error
+
+	vrange  goto 515
+
+state 489
+	vrange :  b ordvalue_    (218)
+
+	.  reduce 218
+
+
+state 490
+	vrange :  c ordvalue_    (219)
+
+	.  reduce 219
+
+
+state 491
+	vrange :  e typeid_, ordvalue 
+
+	,  shift 516
+	.  error
+
+
+state 492
+	vrange :  i INTEGER_    (221)
+
+	.  reduce 221
+
+
+state 493
+	vrange :  r typeid_; bound ; bound 
+
+	;  shift 517
+	.  error
+
+
+state 494
+	vtag :  ( NAME : ;_# 
+
+	#  shift 518
+	.  error
+
+
+state 495
+	record :  Y numbytes classkey optpbv optbasespeclist ( extendedfieldlist optnameresolutionlist ;_    (131)
+
+	.  reduce 131
+
+
+state 496
+	optnameresolutionlist :  ) nameresolutionlist_    (199)
+
+	.  reduce 199
+
+
+state 497
+	nameresolutionlist :  nameresolution_    (200)
+	nameresolutionlist :  nameresolution_, nameresolutionlist 
+
+	,  shift 519
+	.  reduce 200
+
+
+state 498
+	nameresolution :  membername_: classtypeid 
+	nameresolution :  membername_: 
+
+	:  shift 520
+	.  error
+
+
+state 499
+	membername :  NAME_    (204)
+
+	.  reduce 204
+
+
+state 500
+	extendedfield :  genspec accessspec_anonspec datamember 
+	anonspec : _    (161)
+
+	a  shift 474
+	.  reduce 161
+
+	anonspec  goto 521
+
+state 501
+	extendedfield :  genspec virtualspec_accessspec optvirtualfuncindex memberfunction 
+
+	i  shift 375
+	o  shift 376
+	u  shift 377
+	.  error
+
+	accessspec  goto 522
+
+state 502
+	virtualspec :  v_p 
+	virtualspec :  v_    (165)
+
+	p  shift 523
+	.  reduce 165
+
+
+state 503
+	extendedfield :  accessspec anonspec_nestedclass 
+
+	N  shift 525
+	.  error
+
+	nestedclass  goto 524
+
+state 504
+	extendedfield :  anonspec friendclass_    (171)
+
+	.  reduce 171
+
+
+state 505
+	extendedfield :  anonspec friendfunction_    (172)
+
+	.  reduce 172
+
+
+state 506
+	friendclass :  (_typeid ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 526
+
+state 507
+	friendfunction :  ]_NAME : typeid ; # 
+
+	NAME  shift 527
+	.  error
+
+
+state 508
+	condition :  NAME : INTEGER = q_conditiontype , valuelist ; # 
+
+	a  shift 531
+	f  shift 532
+	n  shift 530
+	.  error
+
+	conditiontype  goto 528
+	conditionprimitive  goto 529
+
+state 509
+	usage :  picstoragetype numbits , editdescription , picsize , # condition_; 
+
+	;  shift 533
+	.  error
+
+
+state 510
+	usage :  redefinition picstoragetype numbits , editdescription , picsize , #_condition ; 
+
+	NAME  shift 384
+	.  error
+
+	condition  goto 534
+
+state 511
+	namedtparam :  NAME : typeid , passby initbody ;_# 
+
+	#  shift 535
+	.  error
+
+
+state 512
+	namedtparam :  : typeid , passby initbody ; #_    (127)
+
+	.  reduce 127
+
+
+state 513
+	field :  NAME : typeid , bitoffset , numbits_; # 
+
+	;  shift 536
+	.  error
+
+
+state 514
+	fieldlist :  fieldlist_field 
+	vfield :  ( vrangelist : fieldlist_    (215)
+
+	NAME  shift 313
+	.  reduce 215
+
+	field  goto 364
+
+state 515
+	vrangelist :  vrangelist , vrange_    (217)
+
+	.  reduce 217
+
+
+state 516
+	vrange :  e typeid ,_ordvalue 
+
+	INTEGER  shift 133
+	.  error
+
+	ordvalue  goto 537
+
+state 517
+	vrange :  r typeid ;_bound ; bound 
+
+	INTEGER  shift 344
+	S  shift 348
+	t  shift 351
+	T  shift 349
+	a  shift 350
+	J  shift 346
+	A  shift 347
+	.  error
+
+	bound  goto 538
+	boundtype  goto 345
+
+state 518
+	vtag :  ( NAME : ; #_    (210)
+
+	.  reduce 210
+
+
+state 519
+	nameresolutionlist :  nameresolution ,_nameresolutionlist 
+
+	NAME  shift 499
+	.  error
+
+	nameresolutionlist  goto 539
+	nameresolution  goto 497
+	membername  goto 498
+
+state 520
+	nameresolution :  membername :_classtypeid 
+	nameresolution :  membername :_    (203)
+
+	INTEGER  shift 38
+	(  shift 39
+	.  reduce 203
+
+	typeid  goto 476
+	classtypeid  goto 540
+
+state 521
+	extendedfield :  genspec accessspec anonspec_datamember 
+	isstatic : _    (175)
+
+	s  shift 544
+	.  reduce 175
+
+	datamember  goto 541
+	memberattrs  goto 542
+	isstatic  goto 543
+
+state 522
+	extendedfield :  genspec virtualspec accessspec_optvirtualfuncindex memberfunction 
+	optvirtualfuncindex : _    (191)
+
+	INTEGER  shift 546
+	.  reduce 191
+
+	optvirtualfuncindex  goto 545
+
+state 523
+	virtualspec :  v p_    (164)
+
+	.  reduce 164
+
+
+state 524
+	extendedfield :  accessspec anonspec nestedclass_    (170)
+
+	.  reduce 170
+
+
+state 525
+	nestedclass :  N_typeid ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 547
+
+state 526
+	friendclass :  ( typeid_; # 
+
+	;  shift 548
+	.  error
+
+
+state 527
+	friendfunction :  ] NAME_: typeid ; # 
+
+	:  shift 549
+	.  error
+
+
+state 528
+	condition :  NAME : INTEGER = q conditiontype_, valuelist ; # 
+
+	,  shift 550
+	.  error
+
+
+state 529
+	conditiontype :  conditionprimitive_, kanjichar 
+
+	,  shift 551
+	.  error
+
+
+state 530
+	conditionprimitive :  n_sign decimalsite 
+	sign : _    (263)
+
+	+  shift 553
+	-  shift 554
+	.  reduce 263
+
+	sign  goto 552
+
+state 531
+	conditionprimitive :  a_    (259)
+
+	.  reduce 259
+
+
+state 532
+	conditionprimitive :  f_    (260)
+
+	.  reduce 260
+
+
+state 533
+	usage :  picstoragetype numbits , editdescription , picsize , # condition ;_    (230)
+
+	.  reduce 230
+
+
+state 534
+	usage :  redefinition picstoragetype numbits , editdescription , picsize , # condition_; 
+
+	;  shift 555
+	.  error
+
+
+state 535
+	namedtparam :  NAME : typeid , passby initbody ; #_    (126)
+
+	.  reduce 126
+
+
+state 536
+	field :  NAME : typeid , bitoffset , numbits ;_# 
+
+	#  shift 556
+	.  error
+
+
+state 537
+	vrange :  e typeid , ordvalue_    (220)
+
+	.  reduce 220
+
+
+state 538
+	vrange :  r typeid ; bound_; bound 
+
+	;  shift 557
+	.  error
+
+
+state 539
+	nameresolutionlist :  nameresolution , nameresolutionlist_    (201)
+
+	.  reduce 201
+
+
+state 540
+	nameresolution :  membername : classtypeid_    (202)
+
+	.  reduce 202
+
+
+state 541
+	extendedfield :  genspec accessspec anonspec datamember_    (168)
+
+	.  reduce 168
+
+
+state 542
+	datamember :  memberattrs_: field ; 
+
+	:  shift 558
+	.  error
+
+
+state 543
+	memberattrs :  isstatic_isvtblptr isvbaseptr 
+	isvtblptr : _    (177)
+
+	p  shift 560
+	.  reduce 177
+
+	isvtblptr  goto 559
+
+state 544
+	isstatic :  s_    (176)
+
+	.  reduce 176
+
+
+state 545
+	extendedfield :  genspec virtualspec accessspec optvirtualfuncindex_memberfunction 
+
+	[  shift 562
+	.  error
+
+	memberfunction  goto 561
+
+state 546
+	optvirtualfuncindex :  INTEGER_    (192)
+
+	.  reduce 192
+
+
+state 547
+	nestedclass :  N typeid_; # 
+
+	;  shift 563
+	.  error
+
+
+state 548
+	friendclass :  ( typeid ;_# 
+
+	#  shift 564
+	.  error
+
+
+state 549
+	friendfunction :  ] NAME :_typeid ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 565
+
+state 550
+	condition :  NAME : INTEGER = q conditiontype ,_valuelist ; # 
+
+	INTEGER  shift 568
+	.  error
+
+	valuelist  goto 566
+	value  goto 567
+
+state 551
+	conditiontype :  conditionprimitive ,_kanjichar 
+
+	INTEGER  shift 570
+	.  error
+
+	kanjichar  goto 569
+
+state 552
+	conditionprimitive :  n sign_decimalsite 
+
+	INTEGER  shift 572
+	.  error
+
+	decimalsite  goto 571
+
+state 553
+	sign :  +_    (261)
+
+	.  reduce 261
+
+
+state 554
+	sign :  -_    (262)
+
+	.  reduce 262
+
+
+state 555
+	usage :  redefinition picstoragetype numbits , editdescription , picsize , # condition ;_    (231)
+
+	.  reduce 231
+
+
+state 556
+	field :  NAME : typeid , bitoffset , numbits ; #_    (207)
+
+	.  reduce 207
+
+
+state 557
+	vrange :  r typeid ; bound ;_bound 
+
+	INTEGER  shift 344
+	S  shift 348
+	t  shift 351
+	T  shift 349
+	a  shift 350
+	J  shift 346
+	A  shift 347
+	.  error
+
+	bound  goto 573
+	boundtype  goto 345
+
+state 558
+	datamember :  memberattrs :_field ; 
+
+	NAME  shift 313
+	.  error
+
+	field  goto 574
+
+state 559
+	memberattrs :  isstatic isvtblptr_isvbaseptr 
+	isvbaseptr : _    (179)
+
+	b  shift 576
+	r  shift 577
+	.  reduce 179
+
+	isvbaseptr  goto 575
+
+state 560
+	isvtblptr :  p_INTEGER NAME 
+
+	INTEGER  shift 578
+	.  error
+
+
+state 561
+	extendedfield :  genspec virtualspec accessspec optvirtualfuncindex memberfunction_    (169)
+
+	.  reduce 169
+
+
+state 562
+	memberfunction :  [_functype memberfuncattrs : NAME : typeid ; # 
+
+	c  shift 581
+	d  shift 582
+	f  shift 580
+	.  error
+
+	functype  goto 579
+
+state 563
+	nestedclass :  N typeid ;_# 
+
+	#  shift 583
+	.  error
+
+
+state 564
+	friendclass :  ( typeid ; #_    (189)
+
+	.  reduce 189
+
+
+state 565
+	friendfunction :  ] NAME : typeid_; # 
+
+	;  shift 584
+	.  error
+
+
+state 566
+	condition :  NAME : INTEGER = q conditiontype , valuelist_; # 
+	valuelist :  valuelist_value 
+
+	INTEGER  shift 568
+	;  shift 585
+	.  error
+
+	value  goto 586
+
+state 567
+	valuelist :  value_    (266)
+
+	.  reduce 266
+
+
+state 568
+	value :  INTEGER_: arbitrarycharacters # 
+
+	:  shift 587
+	.  error
+
+
+state 569
+	conditiontype :  conditionprimitive , kanjichar_    (257)
+
+	.  reduce 257
+
+
+state 570
+	kanjichar :  INTEGER_    (265)
+
+	.  reduce 265
+
+
+state 571
+	conditionprimitive :  n sign decimalsite_    (258)
+
+	.  reduce 258
+
+
+state 572
+	decimalsite :  INTEGER_    (264)
+
+	.  reduce 264
+
+
+state 573
+	vrange :  r typeid ; bound ; bound_    (222)
+
+	.  reduce 222
+
+
+state 574
+	datamember :  memberattrs : field_; 
+
+	;  shift 588
+	.  error
+
+
+state 575
+	memberattrs :  isstatic isvtblptr isvbaseptr_    (174)
+
+	.  reduce 174
+
+
+state 576
+	isvbaseptr :  b_    (180)
+
+	.  reduce 180
+
+
+state 577
+	isvbaseptr :  r_    (181)
+
+	.  reduce 181
+
+
+state 578
+	isvtblptr :  p INTEGER_NAME 
+
+	NAME  shift 589
+	.  error
+
+
+state 579
+	memberfunction :  [ functype_memberfuncattrs : NAME : typeid ; # 
+	memberfuncattrs : _    (183)
+
+	i  shift 592
+	s  shift 591
+	V  shift 594
+	k  shift 593
+	.  reduce 183
+
+	memberfuncattrs  goto 590
+
+state 580
+	functype :  f_    (193)
+
+	.  reduce 193
+
+
+state 581
+	functype :  c_    (194)
+
+	.  reduce 194
+
+
+state 582
+	functype :  d_    (195)
+
+	.  reduce 195
+
+
+state 583
+	nestedclass :  N typeid ; #_    (188)
+
+	.  reduce 188
+
+
+state 584
+	friendfunction :  ] NAME : typeid ;_# 
+
+	#  shift 595
+	.  error
+
+
+state 585
+	condition :  NAME : INTEGER = q conditiontype , valuelist ;_# 
+
+	#  shift 596
+	.  error
+
+
+state 586
+	valuelist :  valuelist value_    (267)
+
+	.  reduce 267
+
+
+state 587
+	value :  INTEGER :_arbitrarycharacters # 
+
+	INTEGER  shift 598
+	.  error
+
+	arbitrarycharacters  goto 597
+
+state 588
+	datamember :  memberattrs : field ;_    (173)
+
+	.  reduce 173
+
+
+state 589
+	isvtblptr :  p INTEGER NAME_    (178)
+
+	.  reduce 178
+
+
+state 590
+	memberfunction :  [ functype memberfuncattrs_: NAME : typeid ; # 
+
+	:  shift 599
+	.  error
+
+
+state 591
+	memberfuncattrs :  s_    (184)
+
+	.  reduce 184
+
+
+state 592
+	memberfuncattrs :  i_    (185)
+
+	.  reduce 185
+
+
+state 593
+	memberfuncattrs :  k_    (186)
+
+	.  reduce 186
+
+
+state 594
+	memberfuncattrs :  V_    (187)
+
+	.  reduce 187
+
+
+state 595
+	friendfunction :  ] NAME : typeid ; #_    (190)
+
+	.  reduce 190
+
+
+state 596
+	condition :  NAME : INTEGER = q conditiontype , valuelist ; #_    (256)
+
+	.  reduce 256
+
+
+state 597
+	value :  INTEGER : arbitrarycharacters_# 
+
+	#  shift 600
+	.  error
+
+
+state 598
+	arbitrarycharacters :  INTEGER_    (269)
+
+	.  reduce 269
+
+
+state 599
+	memberfunction :  [ functype memberfuncattrs :_NAME : typeid ; # 
+
+	NAME  shift 601
+	.  error
+
+
+state 600
+	value :  INTEGER : arbitrarycharacters #_    (268)
+
+	.  reduce 268
+
+
+state 601
+	memberfunction :  [ functype memberfuncattrs : NAME_: typeid ; # 
+
+	:  shift 602
+	.  error
+
+
+state 602
+	memberfunction :  [ functype memberfuncattrs : NAME :_typeid ; # 
+
+	INTEGER  shift 38
+	(  shift 39
+	.  error
+
+	typeid  goto 603
+
+state 603
+	memberfunction :  [ functype memberfuncattrs : NAME : typeid_; # 
+
+	;  shift 604
+	.  error
+
+
+state 604
+	memberfunction :  [ functype memberfuncattrs : NAME : typeid ;_# 
+
+	#  shift 605
+	.  error
+
+
+state 605
+	memberfunction :  [ functype memberfuncattrs : NAME : typeid ; #_    (182)
+
+	.  reduce 182
+
+Rule not reduced:   virtualspec :  
+
+66/127 terminals, 97/600 nonterminals
+280/300 grammar rules, 606/1000 states
+12 shift/reduce, 0 reduce/reduce conflicts reported
+97/601 working sets used
+memory: states,etc. 1225/2000, parser 299/4000
+108/3001 distinct lookahead sets
+289 extra closures
+791 shift entries, 4 exceptions
+247 goto entries
+44 entries saved by goto default
+Optimizer space used: input 1981/2000, output 732/4000
+732 table entries, 64 zero
+maximum spread: 261, maximum offset: 602

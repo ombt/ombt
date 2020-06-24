@@ -1,0 +1,23 @@
+hrdcpy proj5
+ f1: enter [a, b] ...
+-5 5
+ f1: enter epsilon ...
+0.00001
+ bisect: root is ...     1.55775
+ bisect: number of iterations is ...  21
+ newton: root is ...     1.55775
+ newton: number of iterations is ...  6
+ secant: root is ...     1.55775
+ secant: number of iterations is ...  12
+ f2: enter [a, b] ...
+-5 5
+ f2: enter epsilon ...
+0.00001
+ bisect: root is ...     3.62027
+ bisect: number of iterations is ...  21
+ newton: root is ...     3.62027
+ newton: number of iterations is ...  10
+ division by zero
+ secant failed
+ secant: number of iterations is ...  2
+hrdcpy exit

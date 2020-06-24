@@ -1,0 +1,147 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+
+nsbFile: 1
+generatedBy: NSBD version 1.6 patchlevel 2004/10/21 19:49:29
+generatedAt: Sat, 06 Nov 2004 18:10:22 GMT
+package: edelfsrc
+paths:
+    edelfsrc.npd
+	length: 91
+	md5: 04095e8d93029b12f35899a13fab0da6
+	mtime: 1031681180
+    edelf.npd
+	length: 195
+	md5: 059ddb1e08728b98b7938ea4e1aba8e1
+	mtime: 1034881329
+    dasm.c
+	length: 93348
+	md5: 183d5dffb7b4f497ed9ee63ec4b833b4
+	mtime: 1095390427
+    data.c
+	length: 497
+	md5: c1c75b2bc18413567d8c1914abff3df1
+	mtime: 1095390427
+    dynamic.c
+	length: 10341
+	md5: afae7199ed8e3249898bd4ba1cd73b04
+	mtime: 1095390427
+    edelf.c
+	length: 1756
+	md5: f565b920060f143c8f0812c13c611e75
+	mtime: 1095390427
+    fhdr.c
+	length: 6393
+	md5: 8fc41ce034b87394ab7d2c9e1e4bae94
+	mtime: 1095390427
+    hash.c
+	length: 11174
+	md5: 50a82d76735a70a3f3732bd83e641829
+	mtime: 1095390427
+    menu.c
+	length: 5085
+	md5: 4d217735877763f4351acf2f65a52939
+	mtime: 1095390428
+    overwriter.c
+	length: 12226
+	md5: 581491065965939c15ca96f390983a94
+	mtime: 1095390428
+    phdrs.c
+	length: 5873
+	md5: 9f261e25e3b20d6b1321cd0c7f2a35b3
+	mtime: 1095390428
+    reloc.c
+	length: 21132
+	md5: 75cf4b4acdbc562a964c9e7acc0315f4
+	mtime: 1095390428
+    shdrs.c
+	length: 8486
+	md5: b921c84f6242c5ad2d0735fd0359fe77
+	mtime: 1095390428
+    strings.c
+	length: 15261
+	md5: f8e66689fcd1837be556e9cd43f3b378
+	mtime: 1095390429
+    symbols.c
+	length: 16589
+	md5: b38285fcd00a8fe6dd6f6c91f86a538a
+	mtime: 1095390429
+    tokenize.c
+	length: 1813
+	md5: eb840f9161e664321b18d0cca51f0433
+	mtime: 1095390429
+    trans.c
+	length: 21529
+	md5: bfbe90b16716ac39443c0fa912a362e9
+	mtime: 1095390429
+    ttoken.c
+	length: 223
+	md5: 885549d7cc977b6a25a4a698fc71221d
+	mtime: 1095390429
+    util.c
+	length: 1768
+	md5: 0d29fb0fab4c9c7756542a9483a6fe78
+	mtime: 1095390430
+    versions.c
+	length: 28927
+	md5: 55d2d87b6bf13ecc674832fcb01229a8
+	mtime: 1095390430
+    stabs.c
+	length: 132302
+	md5: 8bad62ac42d98f4b6fd18558406ca396
+	mtime: 1099764406
+    stabtokenizer.c
+	length: 1062
+	md5: 0dc81e20fa6c365908b5d52ba8d78617
+	mtime: 1099764522
+    spaces.c
+	length: 88
+	md5: 0c49abd776c347584a0fe7036c0de441
+	mtime: 1095390428
+    data.h
+	length: 752
+	md5: f1df6a70d5e46016e9c1819fecd64f17
+	mtime: 1095390427
+    debug.h
+	length: 3908
+	md5: 1a4585045f6cf6a543ddf49df76dd3e2
+	mtime: 1095390427
+    edelf.h
+	length: 1788
+	md5: dd48278e3fea2f98beb762d761ba0b57
+	mtime: 1095390427
+    returns.h
+	length: 156
+	md5: 9dcce623de93e5c093edd53b23a8c704
+	mtime: 1095390428
+    tokenize.h
+	length: 263
+	md5: a6999bd08ee77d5df57bfe02b7f8a412
+	mtime: 1095390429
+    trans.h
+	length: 2182
+	md5: c8c8cf7cf7d7bb9208f7709954bdd51b
+	mtime: 1095390429
+    stab.h
+	length: 5756
+	md5: b90ffa2f871b127e7cfdf0409f8c8b52
+	mtime: 1089838789
+    stabtokenizer.h
+	length: 13258
+	md5: ee6d5d288b391263ea9876ca783850c1
+	mtime: 1099764431
+    spaces.h
+	length: 1000
+	md5: 42f4387f69e7e2d272d0f2ae53f17aac
+	mtime: 1095390428
+    makefile
+	length: 3751
+	md5: 876309cc55e6afd41556316478cf20bd
+	mtime: 1099764617
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.2-exptools3 (SunOS)
+
+iD8DBQFBjROSFe3nE5KI0XgRAlskAJ9rThXuJDyPSBQ39YNH0/GL9LXX+ACgjk0a
+S5jLqnTVBTBKKVOKsEeuqWc=
+=6jtT
+-----END PGP SIGNATURE-----

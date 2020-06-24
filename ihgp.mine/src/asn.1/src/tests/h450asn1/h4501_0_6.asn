@@ -1,0 +1,9 @@
+H225-generic-parameters-definition
+	{ itu-t  recommendation  h  450  1  version1(0)  h225-generic-parameters(6)}
+
+DEFINITIONS AUTOMATIC TAGS ::=
+BEGIN
+	
+H225InformationElement	::=	OCTET STRING
+
+END  -- of H225 generic parameters definition

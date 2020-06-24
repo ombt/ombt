@@ -1,0 +1,12 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = tictac.o
+TARGETS = tictac
+
+all:	$(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(TARGETS)
+
+tictac:	$(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(UTILLIB) -o $@

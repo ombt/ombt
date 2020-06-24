@@ -1,0 +1,14 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+OBJS = search.o astar.o gbreadth.o gdepth.o gucost.o \
+       tbreadth.o tdepth.o tucost.o
+
+all:    $(OBJS)
+	$(AR) $(AILIB) $(OBJS)
+ifdef RANLIB
+	$(RANLIB) $(AILIB)
+endif
+
+clean:
+	rm -f $(OBJS)
+ 

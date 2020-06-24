@@ -1,0 +1,207 @@
+OL-resolution theorem prover
+============================
+
+This program checks whether a given theorem logically follows
+from a set of formulas. Both the theorem and the set of formulas
+must be specified in clausal-form. The resolution technique used
+by the theorem prover is a special form of linear resolution
+called OL-resolution. A description of OL-resolution can be
+found in the section where the algoritm is explained. One of the
+advantages of using OL-resolution is that the existing database
+of clauses never has to be updated with the new clauses generated
+(the resolvents) during the theorem proving process. This means
+the database can be left intact: no new clauses will be added
+and neither will it be necessary to retract clauses from add
+if a wrong path has been taken by the search process. This is
+turns means there has to be only one copy of the database which
+can be used by every node in the search tree.
+
+The classes
+-----------
+
+The theorem prover consists of the following classes:
+
+Literal : public ListNode
+	Propositional literals, including so-called framed literals.
+	Examples of literals are: p, ~p, |p|, |~p|. '~' means the
+	literal is negated and '| |' means the literal is framed.
+
+Clause
+	A clause is simply a collection of literals. An example of
+	a clause is: [p, q, |r|, s]. A Clause object consists of
+	a list of Literal object: IntrList<Literal>.
+
+ResNode : public Node
+	Nodes in the search graph. Each ResNode contains (pointers to)
+	two Clause objects: the current resolvent and the side clause
+	that was used to create the resolvent.
+
+ResGraph : public DepthGraph
+	The search algorithm: depth-first graph search.
+
+ClauseTable
+	A table of Clause objects: PtrArray<Clause>. ClauseTable
+	objects are used to store the clauses of a theory.
+
+
+Class ResNode contains two Clause objects: the current resolvent and the
+side clause that was used to create the resolvent. Note that the center
+clause is never stored. This is because the center clause will always be
+equal to the resolvent clause of the last resolution step. This means that
+if a ResNode object is the root node of the search the resolvent of this
+node will represent the top clause of the resolution process. A ResNode
+object is considered a goal node if the resolvent will be the empty
+clause: [], meaning the Clause object in question is empty.
+
+The algorithm
+-------------
+A description of OL-resolution can be found in C.L. Chang & R.T. Lee,
+"Symbolic Logic and Mechanical Theorem Proving". Key issues in
+OL-resolution are:
+
+- ordered clauses: each clause is considered as a sequence of literals.
+  This means that the literals of a clause have a certain order: literal L1
+  is larger than literal L2 if L1 comes after L1 in the clause. When
+  two clauses, C1 and C2 are resolved the literals resolved upon are always
+  the last (largest) literal of C1 and the negation of this literal in C2.
+  The important thing to note here is that not any literal of C1 is taken,
+  but only the last one.
+
+- using the information contained in the literals resolved upon. Normally
+  in resolution the literals resolved upon are simply removed. Chang and
+  Lee argue that the information contained in these literals should be
+  used to speed up the resolution process. In OL-resolution this information
+  is saved by way of so-called framed literals: one of the literals
+  resolved upon, the last literal of C1, is kept and marked as 'framed':
+  | |.
+
+- reduction of ordered clauses: clause C can be 'reduced' if the last literal
+  of C is unifiable with the negation of a framed literal of C. If this
+  condition is true the last literal is deleted from C. Also, every framed
+  literal not followed by any unframed literal must be removed. ABy the way,
+  this is how the information contained in the literals resolved upon is used
+  to speed up the resolution process.
+
+- merging left: if a clause contains more than one occurrence of the same
+  unframed literal the left most (the smallest) is kept and the others
+  are deleted from the clause.
+
+Resolving two clauses C1 and C2 according to the OL-resolution scheme
+consists of the following steps:
+
+- Determine the literals resolved upon: take the last literal, L1, of C1
+  and determine if C2 contains the negation of L1: ~L2.
+- Create the resolvent, C3,  of C1 and C2 by concatenating C1 and C2,
+  framing L1, removing L2 and merging left for any identical unframed
+  literals from C3.
+- Remove from C3 every framed literal not followed by any unframed literal.
+- Apply the reduce order operation to C3.
+  
+This procedure is implemented by Clause::resolve(). This routine makes
+us the following routines:
+
+- merge_except(): merges the current clause with another, exempting
+  literal L2. Duplicate literals are not copied (this is merging left).
+- frame_last(): frames the last literal of a clause.
+- delete_framed(): deletes every framed literal not followed by any unframed
+  literal.
+- reduce_order(): applies the reduce order operation to a Clause.
+
+In the implementation of the OL-resolution theorem prover merging left
+is done not only for unframed literals, but also for framed literals. We
+can safely do this because the theorem prover is used for propositional
+logic only and the second occurence of the same (propositional) literal
+does not add new information to the resolution process. Furthermore, if
+duplicate framed literals were not removed it would be much harder to
+detect cycles in the search graph because clauses which are really the
+same would now be different because one of them contains more of the
+same framed literals than the other.
+
+The problem solving process centres on finding a side clause that
+can be resolved with the current resolvent to produce a new resolvent,
+eventually producing the empty clause. The process of finding a
+suitable side clause and calling the OL-resolution algorithm take
+place in class ResNode. Each time a ResNode object is expanded to
+generate its successors the database of clauses is search for any
+clauses that can be resolved with the current resolved. For each
+clause found, or put differently for each new resolvent thus
+generated, a successor node is generated. This process ends when
+the empty clause has been generated.
+
+Using the prover
+----------------
+
+To use the theorem prover first an object of class ClauseTable must
+be created containing the clauses representing the theory or
+database. A ClauseTable object can be created by passing it an array
+of strings that represent the clauses:
+
+char
+     *clauses[] = {
+		    "[p, q, r]",
+                    "[p, q, ~r]",
+                    "[p, ~q, r]",
+                    "[p, ~q, ~r]",
+                    "[~p, q, r]",
+                    "[~p, q, ~r]",
+                    "[~p, ~q, r]",
+                    "[~p, ~q, ~r]",
+                    NULL,
+		  };
+ClauseTable
+     table(clauses);
+
+Next an object of class ResNode must be created. A ResNode object must
+be passed to arguments: a resolvent clause the side clause. Both
+arguments are passed as pointers to Clause objects. The Clause object
+that the first argument points to be allocated memory. Since at this stage
+there is no side clause the second argument will be NULL. Then a ResGraph
+object must be created, passing it a copy of the ResNode and the ClauseTable
+object. These steps can be combined like this:
+
+Clause
+    topclause = clauses[0];
+
+ResGraph
+    prover(new ResNode(topclause.clone(), NULL), table);
+		       /* important: pass a copy of the top clause */
+
+In this example the first clause in the ClauseTable object is used as the
+top clause. Starting the search is done by calling generate(). If this
+function returns true the solution can be displayed be calling display():
+
+if (prover.generate())
+    prover.display();
+else
+    puts("no solution found");
+
+The following program shows all of these steps together:
+
+#include "resnode.h"
+
+int main()
+{
+    char
+	*clauses[] = { "[p, q, r]",
+                       "[p, q, ~r]",
+                       "[p, ~q, r]",
+                       "[p, ~q, ~r]",
+                       "[~p, q, r]",
+                       "[~p, q, ~r]",
+                       "[~p, ~q, r]",
+                       "[~p, ~q, ~r]",
+                       NULL,
+		     };
+    ClauseTable
+	table(clauses);
+    Clause
+	topclause = clauses[0];
+    ResGraph
+	prover(new ResNode(topclause.clone(), NULL), table);
+
+    if (prover.generate())
+	prover.display();
+    else
+	puts("no solution found");
+    putchar('\n');
+}

@@ -1,0 +1,378 @@
+%union
+{
+	char cvalue[128];
+	long lvalue;
+	unsigned long ulvalue;
+}
+
+%token <cvalue> ABBREV
+%token <cvalue> ACT
+%token <cvalue> ACT1
+%token <cvalue> ACT2
+%token <cvalue> BLANK
+%token <cvalue> CRIT
+%token <cvalue> DCF
+%token <cvalue> FULL
+%token <cvalue> RSP
+%token <cvalue> INFO
+%token <cvalue> DEATH
+%token <cvalue> MAJ
+%token <cvalue> MAN
+%token <cvalue> MIN
+%token <cvalue> REGULAR
+%token <cvalue> SPURT
+%token <cvalue> ZERO
+%token <cvalue> ACTION
+%token <cvalue> ARY_HEX
+%token <cvalue> ARY_NUM
+%token <cvalue> ARY_OCT
+%token <cvalue> CLASS
+%token <cvalue> COMPLR
+%token <cvalue> OTYDEBUG
+%token <cvalue> VAR
+%token <cvalue> DUMP_CNT
+%token <cvalue> ENUM
+%token <cvalue> FIELD
+%token <cvalue> FIELDUP
+%token <cvalue> FREQ
+%token <cvalue> FWARY_HEX
+%token <cvalue> FWARY_NUM
+%token <cvalue> FWARY_OCT
+%token <cvalue> HEX_NUM
+%token <cvalue> HNDLPRIO
+%token <cvalue> IM_NUM
+%token <cvalue> LRNG
+%token <cvalue> MSGCLS
+%token <cvalue> MSGID
+%token <cvalue> NLOGU
+%token <cvalue> NORM
+%token <cvalue> NP_HNUM
+%token <cvalue> NP_IMNUM
+%token <cvalue> NP_NUM
+%token <cvalue> NP_ONUM
+%token <cvalue> NP_RNG
+%token <cvalue> NPVAL
+%token <cvalue> NUM
+%token <cvalue> OCT_NUM
+%token <cvalue> OUTPRIOR
+%token <cvalue> PAD0_NUM
+%token <cvalue> PAD0_UNUM
+%token <cvalue> PAD_NUM
+%token <cvalue> PAD_UNUM
+%token <cvalue> PHONE_NO
+%token <cvalue> PHONE_32
+%token <cvalue> PID
+%token <cvalue> PROTOTYPE
+%token <cvalue> RNG
+%token <cvalue> RNGLOGU
+%token <cvalue> SENUM
+%token <cvalue> SM_ID
+%token <cvalue> STR
+%token <cvalue> STR4BIT
+%token <cvalue> TAB_ENUM
+%token <cvalue> TIME
+%token <cvalue> UNUM
+%token <cvalue> VERB
+%token <cvalue> WIDTH
+%token <cvalue> OUTPUT
+%token <cvalue> LOWERCASE
+%token <cvalue> UPPERCASE
+%token <cvalue> IDENTIFIER
+%token <lvalue> NUMBER
+%token <ulvalue> HEXNUMBER
+%token <cvalue> NEWLINE
+%token <cvalue> EQUAL
+%token <cvalue> PERCENT
+%token <cvalue> COMMA
+%token <cvalue> COLON
+%token <cvalue> SEMICOLON
+%token <cvalue> MINUS
+%token <cvalue> UNDERSCORE
+%token <cvalue> PERIOD
+%token <cvalue> TILDE
+%token <cvalue> LEFTBRACE
+%token <cvalue> RIGHTBRACE
+%token <cvalue> LEFTPAREN
+%token <cvalue> RIGHTPAREN
+%token <cvalue> LEFTBRACKET
+%token <cvalue> RIGHTBRACKET
+%token <cvalue> SLASH
+%token <cvalue> BACKSLASH
+%token <cvalue> PLUS
+%token <cvalue> SHARP
+%token <cvalue> SINGLEQUOTE
+%token <cvalue> STAR
+%token <cvalue> GREATERTHAN
+%token <cvalue> LESSTHAN
+%token <cvalue> BARTHAN
+%token <cvalue> BACKQUOTE
+%token <cvalue> DOUBLEQUOTE
+%token <cvalue> BAR
+%token <cvalue> AND
+%token <cvalue> DOLLAR
+
+%type <cvalue> tstamp
+%type <cvalue> prioract
+%type <cvalue> hndlprio
+%type <cvalue> frequency
+%type <cvalue> msgname
+%type <cvalue> classname
+%type <cvalue> punctuation
+%type <cvalue> otranstyp
+%type <cvalue> varfld
+%type <ulvalue> padwidth
+%type <cvalue> padtype
+%type <cvalue> identifier
+%type <cvalue> verbs
+
+begin:		/* empty */
+		| begin msg
+		| begin NEWLINE
+		| begin error RIGHTBRACE NEWLINE
+
+msg:		msgstart msgbody msgend
+
+msgstart:	OUTPUT LEFTBRACE NEWLINE
+
+msgend:		RIGHTBRACE NEWLINE
+		| RIGHTBRACE SEMICOLON NEWLINE
+
+msgbody:	error NEWLINE
+		| msgbody error NEWLINE
+		| NEWLINE
+		| msgbody NEWLINE
+		| requiredbody NEWLINE
+		| msgbody requiredbody NEWLINE
+		| optionalbody NEWLINE
+		| msgbody optionalbody NEWLINE
+
+requiredbody:	MSGID msgname
+		| TIME tstamp
+		| CLASS classname
+		| ACTION prioract
+		| OUTPRIOR hndlprio
+		| FREQ frequency
+		| PROTOTYPE msgline
+
+msgname:	IDENTIFIER
+		| UPPERCASE
+		| LOWERCASE
+
+classname:	IDENTIFIER
+		| UPPERCASE
+		| LOWERCASE
+		| VAR
+
+optionalbody:	FIELD itm_name otranstyp varfld padwidth padtype
+		| FIELDUP itm_name LOWERCASE LOWERCASE
+		| NPVAL npvalue
+		| WIDTH widthv
+		| ENUM
+
+widthv:		primaryexpr
+
+npvalue:	primaryexpr
+
+itm_name:	postfixexpr
+
+postfixexpr:	primaryexpr
+		| postfixexpr LEFTBRACKET postfixexpr RIGHTBRACKET
+		| postfixexpr PERIOD identifier
+
+primaryexpr:	identifier
+		| NUMBER
+		| MINUS NUMBER
+		| HEXNUMBER
+		| LEFTPAREN postfixexpr RIGHTPAREN
+
+identifier:	LOWERCASE
+		| UPPERCASE
+		| IDENTIFIER
+		| verbs
+
+verbs:		ABBREV
+		| ACT
+		| ACT1
+		| ACT2
+		| BLANK
+		| CRIT
+		| DEATH
+		| OTYDEBUG
+		| FULL
+		| INFO
+		| MAJ
+		| MAN
+		| MIN
+		| NORM
+		| REGULAR
+		| RSP
+		| VAR
+		| ZERO
+		| ACTION
+		| ARY_NUM
+		| ARY_OCT
+		| CLASS
+		| COMPLR
+		| DUMP_CNT
+		| FIELD
+		| FIELDUP
+		| FREQ
+		| FWARY_HEX
+		| FWARY_NUM
+		| FWARY_OCT
+		| HEX_NUM
+		| HNDLPRIO
+		| IM_NUM
+		| LRNG
+		| MSGCLS
+		| MSGID
+		| NLOGU
+		| NP_HNUM
+		| NP_IMNUM
+		| NP_NUM
+		| NP_ONUM
+		| NP_RNG
+		| NPVAL
+		| NUM
+		| OCT_NUM
+		| OUTPRIOR
+		| OUTPUT
+		| PAD0_NUM
+		| PAD0_UNUM
+		| PAD_NUM
+		| PHONE_NO
+		| PID
+		| PROTOTYPE
+		| RNG
+		| RNGLOGU
+		| SENUM
+		| SM_ID
+		| STR
+		| STR4BIT
+		| TAB_ENUM
+		| TIME
+		| UNUM
+		| VERB
+		| WIDTH
+
+otranstyp:	ARY_HEX
+		| ARY_NUM
+		| ARY_OCT
+		| COMPLR
+		| DUMP_CNT
+		| FWARY_HEX
+		| FWARY_NUM
+		| FWARY_OCT
+		| HEX_NUM
+		| HNDLPRIO
+		| IM_NUM
+		| LRNG
+		| MSGCLS
+		| NLOGU
+		| NP_HNUM
+		| NP_IMNUM
+		| NP_NUM
+		| NP_ONUM
+		| NP_RNG
+		| NUM
+		| OCT_NUM
+		| PAD0_NUM
+		| PAD0_UNUM
+		| PAD_NUM
+		| PAD_UNUM
+		| PHONE_NO
+		| PHONE_32
+		| PID
+		| RNG
+		| RNGLOGU
+		| RSP
+		| SENUM
+		| SM_ID
+		| STR
+		| STR4BIT
+		| TAB_ENUM
+		| UNUM
+		| VERB
+		| WIDTH
+
+varfld:		/* empty */
+		| LOWERCASE
+		| VERB
+		| FREQ
+		| ACTION
+
+padwidth:	/* empty */
+		| NUMBER
+		| HEXNUMBER
+
+padtype:	/* empty */
+		| BLANK
+		| ZERO
+
+tstamp:		ABBREV
+		| FULL
+
+prioract:	CRIT
+		| MAJ
+		| MIN
+		| MAN
+		| ACT
+		| INFO
+
+hndlprio:	OTYDEBUG
+		| NORM
+		| ACT2
+		| DCF
+		| RSP
+		| DEATH
+		| INFO
+		| ACT1
+		| VAR
+
+frequency:	REGULAR
+		| SPURT
+
+msgline:	/* empty */
+		| msgline msglinefields
+
+msglinefields:	LOWERCASE
+		| UPPERCASE
+		| IDENTIFIER
+		| NUMBER
+		| HEXNUMBER
+		| punctuation
+		| hndlprio
+		| FULL
+		| ACTION
+		| FREQ
+		| VERB
+		| ACT
+		| MIN
+		| MAN
+
+punctuation:	EQUAL
+		| PERCENT
+		| COMMA
+		| COLON
+		| MINUS
+		| UNDERSCORE
+		| PERIOD
+		| SEMICOLON
+		| TILDE
+		| SLASH
+		| BACKSLASH
+		| PLUS
+		| SHARP
+		| SINGLEQUOTE
+		| STAR
+		| GREATERTHAN
+		| LESSTHAN
+		| BAR
+		| BACKQUOTE
+		| DOUBLEQUOTE
+		| AND
+		| DOLLAR
+		| LEFTPAREN
+		| RIGHTPAREN
+		| LEFTBRACKET
+		| RIGHTBRACKET

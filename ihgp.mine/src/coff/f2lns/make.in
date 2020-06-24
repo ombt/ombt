@@ -1,0 +1,10 @@
+CC = cc
+CCFLAGS = -g -DFLEXWARN
+LD = cc
+LDFLAGS = -g
+INCLDIRS=-I../include
+#
+f2lns
+f2lns.c
+#
+install1=cp f2lns $(HOME)/bin/f2lns

@@ -1,0 +1,34 @@
+CIS 255 Project 2 - due 1/29/97 at start of class.
+
+1) The problem is to solve a quadratic equation using the 
+   standard quadratic formula (same as project 1). The difference
+   is that in this project you have to deal with 3 cases for the
+   roots. The cases are:
+
+	1) roots r1 and r2 are real and unequal.
+	2) roots r1 and r2 are complex.
+	3) roots r1 and r2 are equal and real.
+
+2) The coefficients to the quadratic equation are all real, that is, for
+   the following:
+
+	a*x**2 + b*x +c
+
+   coefficients a, b, c are all real.
+
+3) Your program should read in the coefficients a, b, c (same as project
+   1) and print out the roots AND whether the roots are complex,
+   real and unequal, or real and equal. Use the determinant to
+   determine the type of roots.
+
+4) Run your program on all of the following coefficients and turn
+   in the output. You should only need to run your program once.
+
+	a	b	c
+   ----------------------------
+	1	1	-12
+	1	10	25
+	1	-11	30
+	1	-2	2
+
+5) Turn in a flow chart of your program.

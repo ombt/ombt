@@ -1,0 +1,48 @@
+hrdcpy f17 < proj6.in
+ enter number of problems:
+ ============== matrix   1 ===============
+ enter matrix size 
+ enter matrix elements:
+ enter y-values:
+ matrix is ...
+     1.00000E-04    1.00000
+     1.00000    1.00000
+ y-vector is ...
+     1.00000    2.00000
+ x(  1) =     1.00010
+ x(  2) =    0.999900
+ ============== matrix   2 ===============
+ enter matrix size 
+ enter matrix elements:
+ enter y-values:
+ matrix is ...
+     4.00000    3.00000    2.00000    1.00000
+     14.0000    23.0000    32.0000    41.0000
+     33.0000    44.0000    67.0000    87.0000
+     9.00000    8.00000    7.00000  0.
+ y-vector is ...
+     23.0000    54.0000    65.0000    76.0000
+ x(  1) =   -0.775835
+ x(  2) =     9.62833
+ x(  3) =    0.850833
+ x(  4) =    -4.48333
+ ============== matrix   3 ===============
+ enter matrix size 
+ enter matrix elements:
+ enter y-values:
+ matrix is ...
+     1.00000    1.00000    1.00000
+     2.00000    2.00000    2.00000
+     4.00000    2.00000    4.00000
+ y-vector is ...
+     2.00000    3.90000    8.00000
+ backsubstitution: array(  3,  3) is zero.
+ backsubstitution failed.
+ matrix is ...
+     4.00000    2.00000    4.00000
+   0.    1.00000  0.
+   0.  0.  0.
+ y-vector is ...
+     8.00000   -9.99999E-02    5.00000E-02
+STOP: gaussian failed.
+hrdcpy exit

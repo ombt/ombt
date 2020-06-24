@@ -1,0 +1,174 @@
+    AISearch II - a C++ library for developing AI programs V1.0
+    -----------------------------------------------------------
+
+	   Copyright (C) 1995, 1996, 1997 Peter Bouthoorn
+		      peter@icce.rug.nl
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* NOTE: AISearch II is featured in a book about AI and C++ called *
+* "Object Oriented AI using C++", published by Computer Science   *
+* Press (ISBN 0-7167-8294-4). For more information see below.     *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+Copyrights
+----------
+
+Copyright (C) 1995, 1996, 1997 Peter Bouthoorn (peter@icce.rug.nl)
+
+This software may be freely distributed (*) and modified provided
+this copyright message is left intact. The copyright message must be
+included both with this (the original) software and with any modified
+copies of this software or with any new software based on this software.
+Furthermore any modified copies of this software must carry prominent
+notices stating the software was changed and the date of any change.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. In no event
+will the copyright holder be liable for any damage arising out of
+the use of this software.
+
+(*) with one exception: it is not allowed to include this software with
+any library or collection on whatever media, e.g. CD-ROM or on the WWW,
+without prior admission of the author.
+
+
+Description
+-----------
+
+First of all, in case you didn't read the copyright message above (who
+does? :-), AISearch II is free software. This means you don't have to pay
+for it and are free to do with it under the terms of the conditions described
+above. 
+
+As a matter of courtesy, the author requests to be informed about
+any bugs found in this software or improvements that may be of general
+interest. Send any comments to:
+
+peter@icce.rug.nl
+
+AISearch II is the sequel of AISearch. AISearch grew out of a project I
+once did during an internship. The goal of this project was to develop a
+library of algorithms in C++ that would facilitate the development of AI
+programs, specifically problem solving software in which search (as in
+searching for the solution to a problem) plays a major role. The library
+consists of a number of different AI search algorithms that can be used to
+solve all kinds of problems. The philosophy of AISearch is that when developing
+problem solving software the programmer should be able to concentrate on the
+representation of the problem at hand and need not bother with the
+implementation of the atcual search algorithm that will conduct the search.
+This idea has been realized by the implementation of a set of search classes
+that may be incorporated in other software through C++'s features of
+derivation and inheritance. AISearch II builds on the work that was done
+for AISearch. The search library itself has been heavily modified and
+extended:
+
+- New search algortihms.
+- Better comments and description files that contain design information.
+- Template list and array classes to make better use of C++'s support
+  for code reuse and to hide the "gory details" better.
+- New, larger and more interesting sample applications.
+
+The following search algorithms have been built into AISearch II:
+
+- Normal (uni-directional) search:
+  * depth-first
+  * breadth-first
+  * uniform-cost
+  * A*
+
+- Bi-directional search:
+  * depth-first
+  * breadth-first
+
+- AND/OR search:
+  * depth-first
+  * breadth-first
+	
+- Backtracking
+
+- Minimax:
+  * with and without alpha-beta cutoffs
+
+To make use of one of these search algorithms two classes must be
+defined, one derived from the desired search class and another from
+a so called "node" class that serves as a representation of the problem
+states that are generated during the search. AISearch will also help
+standardizing the process of turning the representation of the problem into
+actual source code because for every problem certain functions which have
+been declared 'virtual' in the library must be implemented.
+
+The following sample programs have been included with AISearch II:
+
+- 8puzzle solving program.
+- Route finder.
+- Natural language parser.
+- Logic classes to represent predicates in C++.
+- STRIPS based planner.
+- Theorem prover for propositional logic. 
+- Prolog-like theorem prover.
+- Tic Tac Toe.
+
+AISearch II is also featured in a book about AI and C++ of which I'm
+co-author: 
+
+	Kim W. Tracy & Peter Bouthoorn, "Object-oriented Artificial
+        Intelligence Using C++", Computer Science Press 1996,
+        ISBN 0-7167-829404 (hard cover)
+
+As its title suggests this book is about the integration of object-oriented
+programming and the principles of AI. If you take interest in these matters
+or if AISearch II aroused your curiosity then this book is a must. As
+far as I know it is the only book that offers such integrated object-oriented
+approach to AI. The C++ source code for the algorithms and applications
+presented in the book is taken from AISearch II. Information about the book
+can also be found on the WWW on the homepage of W.H. Freeman:
+
+	http://www.whfreeman.com/
+
+
+Obtaining AISearch II
+---------------------
+
+AISearch II is available on anonymous ftp:
+
+ftp://ftp.icce.rug.nl/pub/peter/aisrch2.tar.gz	(UNIX version)
+ftp://ftp.icce.rug.nl/pub/peter/aisrch2.zip	(DOS/Windows/etc. version)
+
+The two versions of AIsearch II are the same except for the way the package
+has been archived and for the extension of the source files (.cc vs cpp).
+
+
+Documentation
+-------------
+
+There's no manual for AISearch II that explains how AISearch II
+can be used to develop your own AI programs. I've given up on
+writing one as I can't find the time to do it. If you want to use
+AIsearch II to develop your own applications take a look at the sample
+applications and go from there. Another good starting point would
+be the manual of the old search library (called the C++ Search
+library) - but keep in mind that a lot has been changed in AISearch II.
+You can get the old library through ftp on the following location:
+
+ftp://ftp.icce.rug.nl/pub/peter/old/aisearch.tar.Z   (UNIX version)
+ftp://ftp.icce.rug.nl/pub/peter/old/aisearch.zip     (DOS/Windows/etc. version)
+
+If you stil need help feel free to send me your questions through
+e-mail.
+
+If you want to know more about the "inner workings" of AISearch II take
+a look at the description files that have been added and at the comments
+accompanying the source code. The description files contain design
+information. The comments should be helpful even to those that aren't
+fully familiar with AI.
+
+
+Known problems
+--------------
+* There's an error in either the minimax-class or in the Tic Tac Toe
+  program. If a depth of 8 or more is specified incorrect results
+  are returned: if you let the computer make the first move it does
+  not play its best move. I gave up looking for the cause of this,
+  so if anybody finds it please, please let me know!
+

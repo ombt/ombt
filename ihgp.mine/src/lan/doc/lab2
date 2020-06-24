@@ -1,0 +1,84 @@
+.SA 1
+.ND "\*(DT"
+.DS
+Mike Rumore
+CSC 669
+Lab Report
+.DE
+.H 1 "Lab Description"
+.P
+A network consisting of three workstations, one user terminal, and
+a file server was simulated using NETWORK II.5. The stations were
+running a module for reading a file, editing the file, and closing
+the file. The user terminal was running a module which sent start
+messages to each station. The LAN was defined to execute the protocol
+IEEE 802.3 CSMA/CD 10BASET. Appendix 1 lists the input parameters for
+the network described in the lab assignment.
+.H 1 "Part 1 Reports"
+.P
+The following sections described briefly some of the reports generated
+for network described in the first part of the lab. Appendix 1 lists
+the input parameters for the part 1 network.
+.H 2 "Processing Element Utilization Statistics"
+.P
+This report is displayed in appendix 2. The report lists the number
+of requests issued and how many attempts it took for the request
+to be fulfilled. For example, looking at station A, this station
+issued 57 requests, but it took 178 attempts to satisfy the requests
+because of collisions. The average waiting time was 256 microseconds.
+The station had a utilization of 10.8 percent. This would indicate
+that the station was not very busy. The numbers are similar for 
+stations B and C.
+.H 2 "Transfer Device Utilization Statistics"
+.P
+This report is displayed in appendix 3. The report lists statistics
+on the LAN performance. The report indicates that each request
+for the LAN was subjected to an average of 2.4 collisions before
+the request was fulfilled. The average time a station had to wait
+before access to the LAN was granted was 539 microseconds. The percent
+utilization of 13 percent indicates a LAN which is not under a very
+heavy load. 
+.H 2 "Complete Module Statistics"
+.P
+This report is displayed in appendix 4. This report lists the 
+execution times for each module on each processor element. For
+example, the Station Module was executed 25 times on station A.
+The average execution time was 4276 microseconds. The maximum
+time for execution was 9394 microseconds. A large part of the 
+delay is probably caused by delays in accessing the LAN. The delays
+are caused by collisions.
+.H 2 "Received Message Report"
+.P
+The final report for part 1 is displayed in appecndix 5. This report
+lists how many messages were lost by each processor element. It is
+immediately obvious that the USR-D processor has lost 74 out of 75
+messages sent to it from stations A, B and C. This indicates some
+type of problem with queuing of messages. Changes will be made to the
+network in part 1 to remedy this situation. 
+.H 1 "Part 2 Reports"
+.P
+The following sections described briefly some of the reports generated
+for network described in the second part of the lab. Appendix 6 lists
+the input parameters for the part 2 network. The major changes between
+network 1 and network 2 are the queue flags are set to YES. This allows
+the queuing of messages in case a station in busy.
+.H 2 "Utilization Reports"
+.P
+The utilization reports for network 2 are displayed in appendix 7. The
+utilization reports have changed very little from the network 1 case.
+.H 2 "Received Message Report"
+.P
+The final report for part 2 is displayed in appendix 8. This report
+lists how many messages were lost by each processor element. For
+this network it can be seen that no messages are lost for USR-D. This
+is an improvement over network 1.
+.H 1 "Conclusions"
+.P
+Since the network is running at a low utilization, less than 15 percent,
+the network is running in a satisfactory way. If the network was 
+running at 50 percent or more, then the network would be running in
+a region where performance is degrades. Also, the utilization for 
+the stations relatively low (about 15 percent) and does not indicate 
+a heavy load. Since the network appears satisfactory I chose to 
+limit the changes to the network. The only change was to the
+queuing of messages.

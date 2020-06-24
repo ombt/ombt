@@ -1,0 +1,462 @@
+
+state 0
+	$accept : _start $end 
+	start : _    (1)
+
+	.  reduce 1
+
+	start  goto 1
+
+state 1
+	$accept :  start_$end 
+	start :  start_conclusion linesynch 
+	start :  start_expressionlist conclusion linesynch 
+	start :  start_newline 
+	start :  start_error newline 
+	start :  start_QUIT linesynch 
+	start :  start_QUIT newline 
+
+	$end  accept
+	error  shift 5
+	NEWLINE  shift 9
+	THEREFORE  shift 7
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	QUIT  shift 6
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	conclusion  goto 2
+	expression  goto 10
+	biconditional  goto 11
+	implication  goto 12
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+	expressionlist  goto 3
+	newline  goto 4
+	separator_expressionlist  goto 8
+
+state 2
+	start :  start conclusion_linesynch 
+
+	SEMICOLON  shift 23
+	.  error
+
+	linesynch  goto 22
+
+state 3
+	start :  start expressionlist_conclusion linesynch 
+	expressionlist :  expressionlist_separator_expressionlist linesynch 
+
+	THEREFORE  shift 7
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	conclusion  goto 24
+	expression  goto 10
+	biconditional  goto 11
+	implication  goto 12
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+	separator_expressionlist  goto 25
+
+state 4
+	start :  start newline_    (4)
+
+	.  reduce 4
+
+
+state 5
+	start :  start error_newline 
+
+	NEWLINE  shift 9
+	.  error
+
+	newline  goto 26
+
+state 6
+	start :  start QUIT_linesynch 
+	start :  start QUIT_newline 
+
+	NEWLINE  shift 9
+	SEMICOLON  shift 23
+	.  error
+
+	linesynch  goto 27
+	newline  goto 28
+
+state 7
+	conclusion :  THEREFORE_expression 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	expression  goto 29
+	biconditional  goto 11
+	implication  goto 12
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+
+state 8
+	expressionlist :  separator_expressionlist_linesynch 
+	separator_expressionlist :  separator_expressionlist_separator expression 
+
+	COMMA  shift 32
+	SEMICOLON  shift 23
+	.  error
+
+	linesynch  goto 30
+	separator  goto 31
+
+state 9
+	newline :  NEWLINE_    (30)
+
+	.  reduce 30
+
+
+state 10
+	separator_expressionlist :  expression_    (10)
+
+	.  reduce 10
+
+
+state 11
+	expression :  biconditional_    (12)
+	biconditional :  biconditional_BICONDITIONAL implication 
+
+	BICONDITIONAL  shift 33
+	.  reduce 12
+
+
+state 12
+	biconditional :  implication_    (13)
+	implication :  implication_IMPLICATION or 
+
+	IMPLICATION  shift 34
+	.  reduce 13
+
+
+state 13
+	implication :  or_    (15)
+	or :  or_OR and 
+
+	OR  shift 35
+	.  reduce 15
+
+
+state 14
+	or :  and_    (17)
+	and :  and_AND unary 
+
+	AND  shift 36
+	.  reduce 17
+
+
+state 15
+	and :  unary_    (19)
+
+	.  reduce 19
+
+
+state 16
+	unary :  primary_    (21)
+
+	.  reduce 21
+
+
+state 17
+	unary :  NEGATION_unary 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	unary  goto 37
+	primary  goto 16
+
+state 18
+	primary :  IDENTIFIER_    (23)
+
+	.  reduce 23
+
+
+state 19
+	primary :  TRUE_    (24)
+
+	.  reduce 24
+
+
+state 20
+	primary :  FALSE_    (25)
+
+	.  reduce 25
+
+
+state 21
+	primary :  LPAREN_expression RPAREN 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	expression  goto 38
+	biconditional  goto 11
+	implication  goto 12
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+
+state 22
+	start :  start conclusion linesynch_    (2)
+
+	.  reduce 2
+
+
+state 23
+	linesynch :  SEMICOLON_newline 
+
+	NEWLINE  shift 9
+	.  error
+
+	newline  goto 39
+
+state 24
+	start :  start expressionlist conclusion_linesynch 
+
+	SEMICOLON  shift 23
+	.  error
+
+	linesynch  goto 40
+
+state 25
+	expressionlist :  expressionlist separator_expressionlist_linesynch 
+	separator_expressionlist :  separator_expressionlist_separator expression 
+
+	COMMA  shift 32
+	SEMICOLON  shift 23
+	.  error
+
+	linesynch  goto 41
+	separator  goto 31
+
+state 26
+	start :  start error newline_    (5)
+
+	.  reduce 5
+
+
+state 27
+	start :  start QUIT linesynch_    (6)
+
+	.  reduce 6
+
+
+state 28
+	start :  start QUIT newline_    (7)
+
+	.  reduce 7
+
+
+state 29
+	conclusion :  THEREFORE expression_    (28)
+
+	.  reduce 28
+
+
+state 30
+	expressionlist :  separator_expressionlist linesynch_    (8)
+
+	.  reduce 8
+
+
+state 31
+	separator_expressionlist :  separator_expressionlist separator_expression 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	expression  goto 42
+	biconditional  goto 11
+	implication  goto 12
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+
+state 32
+	separator :  COMMA_    (27)
+
+	.  reduce 27
+
+
+state 33
+	biconditional :  biconditional BICONDITIONAL_implication 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	implication  goto 43
+	and  goto 14
+	or  goto 13
+	unary  goto 15
+	primary  goto 16
+
+state 34
+	implication :  implication IMPLICATION_or 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	and  goto 14
+	or  goto 44
+	unary  goto 15
+	primary  goto 16
+
+state 35
+	or :  or OR_and 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	and  goto 45
+	unary  goto 15
+	primary  goto 16
+
+state 36
+	and :  and AND_unary 
+
+	NEGATION  shift 17
+	LPAREN  shift 21
+	IDENTIFIER  shift 18
+	TRUE  shift 19
+	FALSE  shift 20
+	.  error
+
+	unary  goto 46
+	primary  goto 16
+
+state 37
+	unary :  NEGATION unary_    (22)
+
+	.  reduce 22
+
+
+state 38
+	primary :  LPAREN expression_RPAREN 
+
+	RPAREN  shift 47
+	.  error
+
+
+state 39
+	linesynch :  SEMICOLON newline_    (29)
+
+	.  reduce 29
+
+
+state 40
+	start :  start expressionlist conclusion linesynch_    (3)
+
+	.  reduce 3
+
+
+state 41
+	expressionlist :  expressionlist separator_expressionlist linesynch_    (9)
+
+	.  reduce 9
+
+
+state 42
+	separator_expressionlist :  separator_expressionlist separator expression_    (11)
+
+	.  reduce 11
+
+
+state 43
+	biconditional :  biconditional BICONDITIONAL implication_    (14)
+	implication :  implication_IMPLICATION or 
+
+	IMPLICATION  shift 34
+	.  reduce 14
+
+
+state 44
+	implication :  implication IMPLICATION or_    (16)
+	or :  or_OR and 
+
+	OR  shift 35
+	.  reduce 16
+
+
+state 45
+	or :  or OR and_    (18)
+	and :  and_AND unary 
+
+	AND  shift 36
+	.  reduce 18
+
+
+state 46
+	and :  and AND unary_    (20)
+
+	.  reduce 20
+
+
+state 47
+	primary :  LPAREN expression RPAREN_    (26)
+
+	.  reduce 26
+
+
+17/127 terminals, 14/600 nonterminals
+31/300 grammar rules, 48/1000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+28/601 working sets used
+memory: states,etc. 123/2000, parser 69/4000
+29/3001 distinct lookahead sets
+11 extra closures
+73 shift entries, 1 exceptions
+31 goto entries
+37 entries saved by goto default
+Optimizer space used: input 196/2000, output 71/4000
+71 table entries, 9 zero
+maximum spread: 271, maximum offset: 267

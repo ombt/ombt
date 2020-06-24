@@ -1,0 +1,36 @@
+CC = CC
+CCFLAGS = -g -xildoff -DDEBUG 
+#
+LD = CC
+LDFLAGS = -g -xildoff -DDEBUG 
+#
+tpred
+pred.y
+pred.l
+array.c
+binaryTree_AVL.c
+clause.c
+list.c
+mystring.c
+queue_List.c
+semantic.c
+set_List.c
+stack_List.c
+symbol.c
+term.c
+-ll
+-ly
+#
+#tterm
+#tterm.c
+#term.c
+#mystring.c
+#list.c
+#
+#tclause
+#tclause.c
+#clause.c
+#term.c
+#mystring.c
+#list.c
+#

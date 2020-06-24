@@ -1,0 +1,10 @@
+Determining changed paths
+POSTing to http://exptools.web.lucent.com:8665/expmake/changedPaths?ocelfsrc
+Determining length of updates
+POSTing to http://exptools.web.lucent.com:8665/expmake/batchUpdate/clean.darwin?ocelfsrc
+Sending command to clean ocelfsrc on darwin make machine
+Determining changed paths
+POSTing to http://osxexp2.ih.lucent.com:8666/changedPaths?ocelfsrc
+Determining length of updates
+POSTing to http://osxexp2.ih.lucent.com:8666/batchUpdate?ocelfsrc
+Cleaning out /Volumes/UFS_exp2/exptools/expmake/build/ocelfsrc

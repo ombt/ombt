@@ -1,0 +1,28 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 26 wid 102 with .sw at 0,0
+"\fR\s10\&goto\fP\s0" at 51,19
+"\fR\s10\&start transmission state\fP\s0" at 51,6
+] |
+
+define t102 |
+[ box invis ht 26 wid 80 with .sw at 0,0
+"\fR\s10\&back state\fP\s0" at 40,19
+"\fR\s10\&backoff ends event\fP\s0" at 40,6
+] |
+
+box invis ht 448 wid 248 with .sw at 0,0
+box ht 8 wid 0 with .nw at 192,96 
+ellipse ht 64 wid 160 at 120,32
+line -> from 120,96 to 120,64 
+ellipse ht 80 wid 144 at 120,216
+line -> from 120,176 to 120,144 
+t100 with .nw at 69,49
+"\fR\s10\&call state = start transmission\fP\s0" at 124,121
+box ht 48 wid 168 with .nw at 40,144 
+t102 with .nw at 84,232
+"\fR\s14\&BACKOFF FUNCTION FLOW CHART\fP\s0" at 124,433
+.PE
+.fi

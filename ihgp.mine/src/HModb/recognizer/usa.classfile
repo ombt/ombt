@@ -1,0 +1,4 @@
+ASRT myecho asserts.usa
+ASRTMON myecho asserts.usa
+AUDTFST myecho audits.usa
+AUDTMON myecho audits.usa

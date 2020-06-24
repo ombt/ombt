@@ -1,0 +1,35 @@
+1.0 problem statement
+
+I need a generic interface for graphics. The interface should support
+graphics on several different platforms. The basic drawing functions,
+and text writing and reading should be available. The interface should
+support multiple windows on a physical device and multiple displays. 
+Input is from a keyboard or a pointing device (e.g. a mouse).
+
+The graphics system consists of processes running on a platform and
+drawing figures or text in windows. The windows are displayed on one 
+or more physical devices, i.e., CRT or LCD. Input comes from a 
+pointing device (a mouse) and a keyboard. The processes are built 
+with the graphics library.
+
+drawing functions: arcs, lines, circles, boxes, fill regions, fill boxes,
+fill arcs, fill circles, writing text using different fonts, reading
+text.
+
+2.0 object classes and data dictionary.
+
+platform - different CPUs or operating systems.
+physical display - the physical device used to display graphics, text or
+figures. A CRT or a liquid crystal device can be used.
+window - a region on the physical display.
+processes - threads of code executing on a platform which draw or 
+write to a window on a physical device.
+mouse - input pointing device.
+keyboard - input device for text.
+
+3.0 associations from problem statement
+
+windows on a physical device.
+multiple displays on a physical device.
+text entered from a keyboard.
+input (pointing) from a pointing device (mouse).

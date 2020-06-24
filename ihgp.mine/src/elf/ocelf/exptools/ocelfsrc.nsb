@@ -1,0 +1,55 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+
+nsbFile: 1
+generatedBy: NSBD version 1.6 patchlevel 2006/05/19 16:55:04
+generatedAt: Thu, 23 Aug 2007 23:51:10 GMT
+package: ocelfsrc
+paths:
+    ocelfsrc.npd
+	length: 91
+	md5: e475befea10d098c799dbd8710a69e72
+	mtime: 1043333513
+    ocelf.npd
+	length: 195
+	md5: 80c5bb7922f56abb654e2546297e6218
+	mtime: 1043333592
+    compare.c
+	length: 24871
+	md5: 657ec64140eec852aaaac036dc9d78a3
+	mtime: 1187910253
+    ocelf.c
+	length: 4701
+	md5: 1fb910327060ef28826e6832110123fe
+	mtime: 1187910253
+    readdata.c
+	length: 3306
+	md5: f6ad7033490b114677bfc0103a91505f
+	mtime: 1187910253
+    swabdata.c
+	length: 1968
+	md5: 42c8bbe91725353e52cc941460a1609b
+	mtime: 1187910253
+    debug.h
+	length: 3876
+	md5: df60ef0035066d98eda0a1649481f4eb
+	mtime: 1187910253
+    ocelf.h
+	length: 2208
+	md5: 2926f23189e3e5049c9424b5e37dd0e8
+	mtime: 1187910254
+    returns.h
+	length: 156
+	md5: 9dcce623de93e5c093edd53b23a8c704
+	mtime: 1187910254
+    makefile
+	length: 1251
+	md5: f16ed183cacd0ae5d244b8c94f73c2a2
+	mtime: 1080272191
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7-exptools1 (SunOS)
+
+iD8DBQFGzh1vFe3nE5KI0XgRAqvQAJ9Dt0AqK/AgtwQBeMiwmKlEKdMmcACg5nKN
+iC8+pxawsbVevOTQTtWp2MQ=
+=Jvpn
+-----END PGP SIGNATURE-----

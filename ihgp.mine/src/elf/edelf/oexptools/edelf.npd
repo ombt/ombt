@@ -1,0 +1,11 @@
+nsbPackageDescription: 1
+executableTypes: solaris
+paths: 
+	edelf.%E
+	edelf.1
+	edelf.toolnews
+pathSubs:
+	edelf.1 man/man1/edelf.1
+	edelf.toolnews lib/toolnews/edelf
+regSubs:
+	^edelf.%E$ bin/edelf

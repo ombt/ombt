@@ -1,0 +1,217 @@
+hrdcpy f20
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ [a, b] = [   -5.00000,    5.00000]
+ f(a) =    -509.000 f(b) =     11.0000
+ c =   0. f(c) =    -24.0000
+ [a, b] = [  0.,    5.00000]
+ f(a) =    -24.0000 f(b) =     11.0000
+ c =     2.50000 f(c) =     2.87500
+ [a, b] = [  0.,    2.50000]
+ f(a) =    -24.0000 f(b) =     2.87500
+ c =     1.25000 f(c) =    -2.35938
+ [a, b] = [    1.25000,    2.50000]
+ f(a) =    -2.35938 f(b) =     2.87500
+ c =     1.87500 f(c) =     1.57617
+ [a, b] = [    1.25000,    1.87500]
+ f(a) =    -2.35938 f(b) =     1.57617
+ c =     1.56250 f(c) =     2.95410E-02
+ [a, b] = [    1.25000,    1.56250]
+ f(a) =    -2.35938 f(b) =     2.95410E-02
+ c =     1.40625 f(c) =    -1.04819
+ [a, b] = [    1.40625,    1.56250]
+ f(a) =    -1.04819 f(b) =     2.95410E-02
+ c =     1.48438 f(c) =   -0.481571
+ [a, b] = [    1.48438,    1.56250]
+ f(a) =   -0.481571 f(b) =     2.95410E-02
+ c =     1.52344 f(c) =   -0.219256
+ [a, b] = [    1.52344,    1.56250]
+ f(a) =   -0.219256 f(b) =     2.95410E-02
+ c =     1.54297 f(c) =    -9.31900E-02
+ [a, b] = [    1.54297,    1.56250]
+ f(a) =    -9.31900E-02 f(b) =     2.95410E-02
+ c =     1.55273 f(c) =    -3.14105E-02
+ [a, b] = [    1.55273,    1.56250]
+ f(a) =    -3.14105E-02 f(b) =     2.95410E-02
+ c =     1.55762 f(c) =    -8.31604E-04
+ [a, b] = [    1.55762,    1.56250]
+ f(a) =    -8.31604E-04 f(b) =     2.95410E-02
+ c =     1.56006 f(c) =     1.43805E-02
+ [a, b] = [    1.55762,    1.56006]
+ f(a) =    -8.31604E-04 f(b) =     1.43805E-02
+ c =     1.55884 f(c) =     6.78110E-03
+ [a, b] = [    1.55762,    1.55884]
+ f(a) =    -8.31604E-04 f(b) =     6.78110E-03
+ c =     1.55823 f(c) =     2.97618E-03
+ [a, b] = [    1.55762,    1.55823]
+ f(a) =    -8.31604E-04 f(b) =     2.97618E-03
+ c =     1.55792 f(c) =     1.07265E-03
+ [a, b] = [    1.55762,    1.55792]
+ f(a) =    -8.31604E-04 f(b) =     1.07265E-03
+ c =     1.55777 f(c) =     1.20640E-04
+ [a, b] = [    1.55762,    1.55777]
+ f(a) =    -8.31604E-04 f(b) =     1.20640E-04
+ c =     1.55769 f(c) =    -3.55482E-04
+ [a, b] = [    1.55769,    1.55777]
+ f(a) =    -3.55482E-04 f(b) =     1.20640E-04
+ c =     1.55773 f(c) =    -1.17302E-04
+ [a, b] = [    1.55773,    1.55777]
+ f(a) =    -1.17302E-04 f(b) =     1.20640E-04
+ c =     1.55775 f(c) =     1.66893E-06
+ [a, b] = [    1.55773,    1.55775]
+ f(a) =    -1.17302E-04 f(b) =     1.66893E-06
+ c =     1.55774 f(c) =    -5.79357E-05
+ root is ...     1.55775
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ [a, b] = [   -5.00000,    5.00000]
+ f(a) =    -99995.0 f(b) =     5.00000
+ c =   0. f(c) =    -3120.00
+ [a, b] = [  0.,    5.00000]
+ f(a) =    -3120.00 f(b) =     5.00000
+ c =     2.50000 f(c) =    -92.6562
+ [a, b] = [    2.50000,    5.00000]
+ f(a) =    -92.6562 f(b) =     5.00000
+ c =     3.75000 f(c) =     1.94824
+ [a, b] = [    2.50000,    3.75000]
+ f(a) =    -92.6562 f(b) =     1.94824
+ c =     3.12500 f(c) =    -18.1743
+ [a, b] = [    3.12500,    3.75000]
+ f(a) =    -18.1743 f(b) =     1.94824
+ c =     3.43750 f(c) =    -4.31323
+ [a, b] = [    3.43750,    3.75000]
+ f(a) =    -4.31323 f(b) =     1.94824
+ c =     3.59375 f(c) =   -0.499367
+ [a, b] = [    3.59375,    3.75000]
+ f(a) =   -0.499367 f(b) =     1.94824
+ c =     3.67188 f(c) =    0.867672
+ [a, b] = [    3.59375,    3.67188]
+ f(a) =   -0.499367 f(b) =    0.867672
+ c =     3.63281 f(c) =    0.223163
+ [a, b] = [    3.59375,    3.63281]
+ f(a) =   -0.499367 f(b) =    0.223163
+ c =     3.61328 f(c) =   -0.127928
+ [a, b] = [    3.61328,    3.63281]
+ f(a) =   -0.127928 f(b) =    0.223163
+ c =     3.62305 f(c) =     5.01075E-02
+ [a, b] = [    3.61328,    3.62305]
+ f(a) =   -0.127928 f(b) =     5.01075E-02
+ c =     3.61816 f(c) =    -3.82814E-02
+ [a, b] = [    3.61816,    3.62305]
+ f(a) =    -3.82814E-02 f(b) =     5.01075E-02
+ c =     3.62061 f(c) =     6.06966E-03
+ [a, b] = [    3.61816,    3.62061]
+ f(a) =    -3.82814E-02 f(b) =     6.06966E-03
+ c =     3.61938 f(c) =    -1.60666E-02
+ [a, b] = [    3.61938,    3.62061]
+ f(a) =    -1.60666E-02 f(b) =     6.06966E-03
+ c =     3.62000 f(c) =    -4.98867E-03
+ [a, b] = [    3.62000,    3.62061]
+ f(a) =    -4.98867E-03 f(b) =     6.06966E-03
+ c =     3.62030 f(c) =     5.42641E-04
+ [a, b] = [    3.62000,    3.62030]
+ f(a) =    -4.98867E-03 f(b) =     5.42641E-04
+ c =     3.62015 f(c) =    -2.22254E-03
+ [a, b] = [    3.62015,    3.62030]
+ f(a) =    -2.22254E-03 f(b) =     5.42641E-04
+ c =     3.62022 f(c) =    -8.39710E-04
+ [a, b] = [    3.62022,    3.62030]
+ f(a) =    -8.39710E-04 f(b) =     5.42641E-04
+ c =     3.62026 f(c) =    -1.48296E-04
+ [a, b] = [    3.62026,    3.62030]
+ f(a) =    -1.48296E-04 f(b) =     5.42641E-04
+ c =     3.62028 f(c) =     1.96934E-04
+ [a, b] = [    3.62026,    3.62028]
+ f(a) =    -1.48296E-04 f(b) =     1.96934E-04
+ c =     3.62027 f(c) =     2.43187E-05
+ root is ...     3.62027
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ interval [a, b] does not contain a root.
+STOP: bisect failed
+hrdcpy lf
+ all		 f17.f		 f23.f		*f9		 proj4
+ binary.for	 f17.in		 f23.o		 f9.f		 proj4.2
+ binary.out	 f17.in2	*f24		 final		 proj4.for
+ bisect.f	 f17.in3	 f24.f		 find.roots.out	 proj4.in
+ bisect.o	 f17.in4	 f24.o		 gauss.f	 proj4.out
+ bubble.for	 f17.in5	 f24.out	 gauss.o	 proj4b.for
+ bubble.out	 f17.in6	 f24.out2	 grades.c	 proj4b.in
+ chap1		 f17.in7	*f25		 grades.in	 proj4b.out
+ circle.f	 f17.o		 f25.f		 graph.f	 proj5
+ cos.f		*f18		 f25.out	 graph.o	 proj6
+ debug.h	 f18.f		*f26		 in		*quad
+ exp.f		 f18.in		 f26.f		 j.f		 quad.for
+ exp.o		 f18.in2	 f26.out	 linearfit.f	 quad.out
+*f1		 f18.o		*f27		 linearfit.o	 secant.f
+ f1.f		 f18.out	 f27.f		 list.of.files	 secant.o
+ f1.for		*f19		 f27.out	 makefile	 sieve.for
+*f10		 f19.f		*f28		*matrix		 sieve.out
+ f10.f		 f19.in		 f28.f		 matrix.f	 sieve2.for
+*f11		 f19.o		 f28.in		 mean.for	 sin.f
+ f11.f		 f19.out	 f28.o		 mean.out	*stat
+ f11.in		*f2		*f29		 midterm	 stat.f
+*f12		 f2.f		 f29.f		 midterm.mkup	 stat.out
+ f12.f		 f2.for		 f29.o		 newton.f	 sum.f
+ f12.in		*f20		*f3		 newton.o	 syllabus
+*f13		 f20.f		 f3.f		 ngauss.f	 syllabus.sched
+ f13.f		 f20.o		*f4		 ngauss.o	 t.f
+*f14		 f20.out	 f4.f		 out		 trig.f
+ f14.f		*f21		 f5.f		*p4		 trig.o
+ f14.in		 f21.f		*f6		*p4b		 trig.old
+*f15		 f21.o		 f6.f		 proj2		 trig1.f
+ f15.f		*f22		*f7		 proj3		 trig2.f
+*f16		 f22.f		 f7.f		 proj3.2
+ f16.f		 f22.o		*f8		 proj3.for
+*f17		*f23		 f8.f		 proj3.in
+hrdcpy 
+hrdcpy f f23
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ root is ...     1.55775
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ division by zero
+STOP: secant failed
+hrdcpy f23
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.00001
+ root is ...     1.55775
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.0001
+ division by zero
+STOP: secant failed
+hrdcpy newton
+sh: newton:  not found
+hrdcpy f22
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.0001
+ root is ...     1.55775
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.0001
+ root is ...     3.62027
+ enter [a, b] ...
+-5 5
+ enter epsilon ...
+0.0001
+ interval [a, b] does not contain a root.
+STOP: newton failed
+hrdcpy exit

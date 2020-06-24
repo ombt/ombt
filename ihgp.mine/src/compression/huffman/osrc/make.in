@@ -1,0 +1,12 @@
+CC = CC
+CCFLAGS = -g -DDEBUG -DUSEEXCEPTION
+LD = CC
+LDFLAGS = -g 
+#
+hfe
+hfe.c
+array.c
+#
+# install1=chmod 755 hfe
+# install2=rm -f /home/rumore/bin/hfe
+# install3=ln -s `pwd`/hfe /home/rumore/bin/hfe

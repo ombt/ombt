@@ -1,0 +1,252 @@
+C++ logic classes
+=================
+
+A library of classes and routines to represent predicates and
+substitutions in C++ and to perform operations like matching
+and unification of predicates and composition of substitutions.
+
+The classes
+-----------
+The basic logic classes are class Complex and class Substitution.
+Class Complex represents first-order predicates and class Substitution
+represents, as its name suggests, substitutions as used in unification.
+A predicate is regarded as a combination of a functor and a collection
+(an array) of arguments. Because each argument can be either a variable,
+a constant or a predicate classes have been defined for each of these type.
+Furthermore, because these types must be stored in the same container
+class a common base class is needed from which each of these classes is
+derived:
+
+class Term
+
+class Var : public Term
+
+class Constant : public Term
+
+class Complex : public Term
+
+This derivation scheme makes it possible to store (pointers to) different
+objects of class Term in the same container object.
+
+A substitution is treated as a collection (a list) of bindings. Bindings
+are represented by their own class:
+
+class Binding;
+
+class Substitution;
+
+
+The algorithm
+-------------
+The unification algorithm that is used in the logic classes is similar
+to that found in many books. Specifically ideas from Gentzen, "Logic
+for Computer Science - Foundations of Automatic Theorem Proving" and
+Fitting, "First-Order Logic and Automated Theorem Proving" were used.
+Terms are thought of as trees and the basic idea of the unification
+algorithm is that it must be determined how two trees "disagree" and
+try to force them to agree by substituting trees with new values (i.e.
+the substitution or binding). Instead of trees arrays are used. As in
+Fitting's description of the unification algorithm if a binding is
+found for two terms the substitution is not actually carried out, but
+stored in an environment list and each time a variable is encountered
+its actual value is retrieved from this list. For details on the
+implementation see the comments in file logic.cc
+
+It is important to note that the unification algorithm is "spread
+out" over each of the logic classes: Var, Constant and Complex. Each of
+these classes implements routine unify_me() which is defined pure
+virtual in their common base class Term. In each 'version' of this
+routine a part of the unification algorithm has been implemented,
+namely only that part which is needed to unify the Term type in question
+with another Term object. So to get a complete picture of the unification
+algorithm it is necessary to examine Var::unify_me(), Constant::unify_me()
+and Complex::unify_me(). Furthermore, since bindings are stored in a
+Substitution object, by means of objects of type Binding, these two
+classes should be studied as well, specifically: Substitution::add_binding()
+and Binding::replace_binding().
+
+The occurs check can be found in Complex::occurs_in(). Beside unification
+matching has been implemented: see Var::match(), Constant::match(),
+Complex::match() and Complex::operator==(). Composition of two substitutions
+is implemented by Substitution::compose().
+
+
+Using the Logic classes
+-----------------------
+
+The classes to be used are class Complex and class Substitution,
+the other classes are meant for internal use and should never be used
+directly. A Complex object can be created in two ways:
+
+Complex complex("f(Y)");
+
+Complex empty;
+
+empty = "g(a)";
+
+The following functions can be called on a Complex object:
+
+- operator=(const Complex &other)
+	assignment by another Complex object.
+	Returns: reference to Complex object.
+
+- operator(const char *string)
+	assignment by string.
+	Returns: reference to Complex object.
+
+- operator==(const Complex &other)
+	equality operator. Note that this function should be used
+	to determine whether to Complex object match each other.
+	Returns: 0 - objects are not equal.
+ 		 1 - objects are equal.
+
+- operator!=(const Complex &other)
+	inequality operator.
+	Returns: 0 - objects are equal.
+		 1 - objects are not equal.
+
+- clone()
+	copies the object. Note that the object returned is allocated memory.
+	Returns: pointer to Complex object
+
+- unify(const Complex &other, Substitution &subst)
+	unifies two Complex objects, storing the result in subst.
+        Note that this substitution can be used to bind not only
+	the variables in the Complex objects that are tested for
+	unification, but for other Complex objects as well that may
+	share the same variables with these objects. This way suppose
+	that after unification 'X' is bound to 'a' then if the substitution
+	is applied to other terms that also contain 'X', 'a' will be
+	substituted for 'X' in the these terms also.
+	Returns: 0 - unification failed.
+		 1 - unification succeeded.
+
+- apply_subst(Substitution &subst)
+	applies a substitution to the Complex object.
+
+- update_vars(Substitution &subst)
+	provides the Complex object with fresh values storing the old
+	and new values of the variables as bindings in subst. These
+	bindings can be used to update other Complex objects that may
+	contain the same variables that must be replaced with the same
+	new values.
+
+- update_vars()
+	performs the same operation as the previous routine, but does not
+	any bindings.
+
+ - display()
+	prints the Complex object on the screen. Note that operator<<
+	can be used as well.
+
+- notempty()
+	tests whether the Complex object has been 'initialized', i.e.
+	whether or not it has been fed a predicate-string.
+	Returns: 0 - object has not been initialized.
+	        >0 - object has been initialized, the number of arguments
+		     that the object contains is returned.
+
+A Substitution object is created in the following way:
+
+Substitution subst;
+
+The following functions can be called on a Substitution object:
+
+- operator==(const Substitution &other)
+	equality operator
+	Returns: 0 - objects are not equal.
+		 1 - object are equal.
+- operator!=(const Substitution &other)
+	inequality operator
+	Returns: 0 - objects are equal.
+		 1 - objects are not equal.
+- clone()
+	copies the substitution object. Note that the object returned
+	is allocated memory.
+	Returns: pointer to Substitution object.
+- is_empty()
+	tests if the object is empty, i.e. if it contains any bindings.
+	Returns: 0 - object not empty.
+		 1 - object is empty.
+- compose(const Substitution &other)
+	composes two substitutions. The result of the substitition is
+	stored in the current object.
+	Returns: 0 - composition failed.
+		 1 - composition succeeded.
+- update(const Substitution &other)
+	performs a limited form of composition. See comment in logic.cc
+	Returns: 0 - operation failed.
+		 1 - operation succeeded.
+- clear()
+	empties the object by removing all the bindings it contains.
+
+Together these two classes can be used as follows:
+
+#include "logic.h"
+
+void main()
+{
+    Complex a,
+            b("f(g(Y), f(g(a), Z))"),
+            c("f(X11, g(b))"),
+            d("f(a, Y1234)"),
+            e("g(a)"),
+	    f(b);
+
+    Substitution s, s2, s3;
+
+    cout << a << "  " << f << "\n";
+    /*
+     * Outputs:
+     * ()  f(g(Y), f(g(a), Z))
+     */
+
+    a = "f(X, f(X, Y))";
+
+    cout << a << "\n" << b << "\n" << a.unify(b, s) << "\n";
+    /*
+     * Outputs:
+     * f(X, f(X, Y))
+     * f(g(Y), f(g(a), Z))
+     * 1
+     */
+
+    cout << s << "\n";
+    /*
+     * Outputs:
+     * (X/g(a), Y/a, Z/a)
+     */
+
+    a.apply_subst(s);
+    cout << a << "\n";
+    /*
+     * Outputs:
+     * f(g(a), f(g(a), a))
+     */
+
+    cout << (a == b) << " " << (a == a) << "\n";
+    /*
+     * Outputs:
+     * 0 1
+     */
+
+    c.unify(d, s2);
+    s3 = s2;
+    cout << s2 << " " << (s == s) << " " << " " << (s == s2) << " " << s3 << "\n";
+    /*
+     * Outputs:
+     * (X11/a, Y1234/g(b)) 1  0 (X11/a, Y1234/g(b))
+     */
+
+    cout << e << "\n";
+    /*
+     * Outputs:
+     * g(a)
+     */
+    e = d;
+    cout << e << " " << d << "\n";
+    /*
+     * Outputs:
+     * f(a, Y1234) f(a, Y1234)
+     */
+}

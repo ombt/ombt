@@ -1,0 +1,69 @@
+.nf
+.PS
+scale=100
+define t100 |
+[ box invis ht 26 wid 86 with .sw at 0,0
+"\fR\s10\&start preamble state\fP\s0" at 43,19
+"\fR\s10\&preamble ends event\fP\s0" at 43,6
+] |
+
+define t102 |
+[ box invis ht 38 wid 112 with .sw at 0,0
+"\fR\s10\&increment backoff counter\fP\s0" at 56,31
+"\fR\s10\&call state = retry\fP\s0" at 56,18
+"\fR\s10\&next event = jammer\fP\s0" at 56,5
+] |
+
+define t104 |
+[ box invis ht 38 wid 134 with .sw at 0,0
+"\fR\s10\&next event = message end, \fP\s0" at 67,31
+"\fR\s10\&queue call for an end of message\fP\s0" at 67,18
+"\fR\s10\&transmission event\fP\s0" at 67,5
+] |
+
+define t105 |
+[ box invis ht 38 wid 142 with .sw at 0,0
+"\fR\s10\&send message over cable,  schedule\fP\s0" at 71,31
+"\fR\s10\&all station receiver to receive an\fP\s0" at 71,18
+"\fR\s10\&incoming message event\fP\s0" at 71,5
+] |
+
+box invis ht 584 wid 472 with .sw at 0,0
+t100 with .nw at 193,498
+box ht 32 wid 128 with .nw at 16,192 
+box ht 32 wid 128 with .nw at 16,248 
+line -> from 80,160 to 80,136 
+box ht 40 wid 112 with .nw at 336,368 
+line -> from 80,216 to 80,192 
+box ht 32 wid 128 with .nw at 16,296 
+line -> from 80,264 to 80,248 
+line -> from 80,80 to 80,56 
+box ht 32 wid 96 with .nw at 344,296 
+box ht 32 wid 144 with .nw at 328,152 
+"\fR\s10\&queue call for a jammer event\fP\s0" at 400,137
+box ht 56 wid 160 with .nw at 0,56 
+box ht 56 wid 120 with .nw at 336,240 
+t102 with .nw at 340,233
+line -> from 80,328 to 80,296 
+"\fR\s10\&cable state = idle\fP\s0" at 392,277
+t104 with .nw at 13,49
+ellipse ht 64 wid 144 at 232,480
+box ht 56 wid 168 with .nw at 0,136 
+t105 with .nw at 9,133
+line -> from 392,184 to 392,152 
+box ht 40 wid 112 with .nw at 24,368 
+line -> from 392,264 to 392,240 
+"\fR\s10\&cable state = transmitting\fP\s0" at 80,177
+line -> from 392,328 to 392,296 
+"\fR\s10\&cable is jammed\fP\s0" at 392,349
+"\fR\s10\&generate message\fP\s0" at 80,233
+box ht 32 wid 104 with .nw at 184,424 
+"\fR\s10\&call state = start message\fP\s0" at 80,285
+"\fR\s10\&cable is in preamble\fP\s0" at 80,349
+line -> from 288,408 to 392,368 
+"\fR\s10\&cable state ?\fP\s0" at 232,409
+line -> from 232,448 to 232,424 
+line -> from 184,408 to 80,368 
+"\fR\s14\&START PREAMBLE  FUNCTION FLOW CHART\fP\s0" at 240,569
+.PE
+.fi

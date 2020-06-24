@@ -1,0 +1,338 @@
+enter number of floors: 
+enter cost (time/floor) for express: 
+costs[Express] is ... 1
+enter cost (time/floor) for local: 
+costs[Local] is ... 5
+enter cost (time/floor) for service: 
+costs[Service] is ... 10
+enter elevator type (e,l,s), f1, f2
+type, f1, f2: s,1,10
+enter elevator type (e,l,s), f1, f2
+type, f1, f2: l,3,7
+enter elevator type (e,l,s), f1, f2
+type, f1, f2: e,1,5
+enter elevator type (e,l,s), f1, f2
+type, f1, f2: e,1,5
+         1    2    3    4    5    6    7    8    9   10
+  1:     0   10   20   30    4   50   60   70   80   90
+  2:    10    0   10   20   30   40   50   60   70   80
+  3:    20   10    0    5   10   15   20   50   60   70
+  4:    30   20    5    0    5   10   15   40   50   60
+  5:     4   30   10    5    0    5   10   30   40   50
+  6:    50   40   15   10    5    0    5   20   30   40
+  7:    60   50   20   15   10    5    0   10   20   30
+  8:    70   60   50   40   30   20   10    0   10   20
+  9:    80   70   60   50   40   30   20   10    0   10
+ 10:    90   80   70   60   50   40   30   20   10    0
+
+enter start floor: enter destination floor: ITERATION ... 1
+OLD SETS ... 1
+set S = { 
+0  }
+set V = { 
+1 2 3 4 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 4
+NEW SETS ... 1
+set S = { 
+0 4  }
+set V = { 
+1 2 3 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 2
+OLD SETS ... 2
+set S = { 
+0 4  }
+set V = { 
+1 2 3 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 3
+NEW SETS ... 2
+set S = { 
+0 3 4  }
+set V = { 
+1 2 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 3
+OLD SETS ... 3
+set S = { 
+0 3 4  }
+set V = { 
+1 2 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 5
+NEW SETS ... 3
+set S = { 
+0 3 4 5  }
+set V = { 
+1 2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 4
+OLD SETS ... 4
+set S = { 
+0 3 4 5  }
+set V = { 
+1 2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 1
+NEW SETS ... 4
+set S = { 
+0 1 3 4 5  }
+set V = { 
+2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 5
+OLD SETS ... 5
+set S = { 
+0 1 3 4 5  }
+set V = { 
+2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 2
+NEW SETS ... 5
+set S = { 
+0 1 2 3 4 5  }
+set V = { 
+6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 6
+OLD SETS ... 6
+set S = { 
+0 1 2 3 4 5  }
+set V = { 
+6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 6
+NEW SETS ... 6
+set S = { 
+0 1 2 3 4 5 6  }
+set V = { 
+7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 7
+OLD SETS ... 7
+set S = { 
+0 1 2 3 4 5 6  }
+set V = { 
+7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 7
+NEW SETS ... 7
+set S = { 
+0 1 2 3 4 5 6 7  }
+set V = { 
+8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 8
+OLD SETS ... 8
+set S = { 
+0 1 2 3 4 5 6 7  }
+set V = { 
+8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 8
+NEW SETS ... 8
+set S = { 
+0 1 2 3 4 5 6 7 8  }
+set V = { 
+9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 9
+OLD SETS ... 9
+set S = { 
+0 1 2 3 4 5 6 7 8  }
+set V = { 
+9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 9
+NEW SETS ... 9
+set S = { 
+0 1 2 3 4 5 6 7 8 9  }
+set V = { 
+ }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+path array ... 
+path[1] = -1
+path[2] = -1
+path[3] = 5
+path[4] = 5
+path[5] = -1
+path[6] = 5
+path[7] = 5
+path[8] = 7
+path[9] = 7
+path[10] = 7
+enter start floor: enter destination floor: ITERATION ... 1
+OLD SETS ... 1
+set S = { 
+0  }
+set V = { 
+1 2 3 4 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 4
+NEW SETS ... 1
+set S = { 
+0 4  }
+set V = { 
+1 2 3 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 2
+OLD SETS ... 2
+set S = { 
+0 4  }
+set V = { 
+1 2 3 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 3
+NEW SETS ... 2
+set S = { 
+0 3 4  }
+set V = { 
+1 2 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 3
+OLD SETS ... 3
+set S = { 
+0 3 4  }
+set V = { 
+1 2 5 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 5
+NEW SETS ... 3
+set S = { 
+0 3 4 5  }
+set V = { 
+1 2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 4
+OLD SETS ... 4
+set S = { 
+0 3 4 5  }
+set V = { 
+1 2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 1
+NEW SETS ... 4
+set S = { 
+0 1 3 4 5  }
+set V = { 
+2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 5
+OLD SETS ... 5
+set S = { 
+0 1 3 4 5  }
+set V = { 
+2 6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 2
+NEW SETS ... 5
+set S = { 
+0 1 2 3 4 5  }
+set V = { 
+6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 6
+OLD SETS ... 6
+set S = { 
+0 1 2 3 4 5  }
+set V = { 
+6 7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 6
+NEW SETS ... 6
+set S = { 
+0 1 2 3 4 5 6  }
+set V = { 
+7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 7
+OLD SETS ... 7
+set S = { 
+0 1 2 3 4 5 6  }
+set V = { 
+7 8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 7
+NEW SETS ... 7
+set S = { 
+0 1 2 3 4 5 6 7  }
+set V = { 
+8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 8
+OLD SETS ... 8
+set S = { 
+0 1 2 3 4 5 6 7  }
+set V = { 
+8 9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 8
+NEW SETS ... 8
+set S = { 
+0 1 2 3 4 5 6 7 8  }
+set V = { 
+9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+ITERATION ... 9
+OLD SETS ... 9
+set S = { 
+0 1 2 3 4 5 6 7 8  }
+set V = { 
+9  }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+NEW w ... 9
+NEW SETS ... 9
+set S = { 
+0 1 2 3 4 5 6 7 8 9  }
+set V = { 
+ }
+set D = { 
+1 2 3 4 5 6 7 8 9  }
+path array ... 
+path[1] = -1
+path[2] = -1
+path[3] = 5
+path[4] = 5
+path[5] = -1
+path[6] = 5
+path[7] = 5
+path[8] = 7
+path[9] = 7
+path[10] = 7
+enter start floor: 

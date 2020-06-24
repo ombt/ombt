@@ -1,0 +1,117 @@
+The subdirectory hp contains the October 31, 1995 release of
+the Hewlett-Packard implementation of STL (Standard Template Library)
+and some related files (this is a mirror of butler.hpl.hp.com/stl.
+
+The subdirectory book contains source code resources for 
+
+  D.R. Musser and Atul Saini, STL Tutorial and Reference
+  Guide: C++ Programming with the Standard Template Library
+  Addison-Wesley, Reading, MA, 1996. (Available now.)
+
+including a slightly modified version of the HP implementation of
+STL. (The main modifications are to make it compile with several major
+compilers.)  See the README file there for details.
+
+The files here include hash table extension to the library.
+There are also some files containing related documentation and
+research papers.
+
+____________________________________________________________________________
+
+The following files contain a proposal document "Hash Tables for the
+Standard Template Library," by Javier Barreiro, Robert Fraley and
+David R. Musser, and a preliminary distribution of an implementation
+that conforms to the proposed requirements, developed by Barreiro and
+Musser. (Tested originally with Apogee and xlC compilers;
+slightly revised 9/27/96 to make it compile with MSV C++ compiler.)
+
+  hashdoc.ps.Z    proposal document, compressed postscript
+  hashrationale.ps.Z 	paper by Musser giving rationale for proposal
+  hashimp2.Z      preliminary implementation, compressed shar file (includes
+                  a postscript implementation document)
+  hashimp2.tar.gz same as above as gzip compressed tar file
+  hashimp2.zip    same as above as zip archive file
+
+____________________________________________________________________________
+
+The following file
+
+  stl-info.ps.Z
+
+is a compressed postscript file that contains all of the information
+on STL available on the WWW via http://www.cs.rpi.edu/~musser/stl.html,
+except for papers and reports, which are in separate files described
+below. There may be minor differences between this postscript file and the
+material in the Web pages; we are reorganizing the material to be able
+to generate all of the Web pages from a single LaTeX document (using
+the latex2html translator).  The new Web pages, corresponding to the
+above postscript file, will replace the current ones as soon as we get
+some problems with the index ironed out.
+____________________________________________________________________________
+
+The generic algorithm example programs that appear in the above
+WWW reference material are contained in the following files
+as ASCII files so that they can be compiled with your local
+compiler.
+
+	algexampl.tar.Z		Unix tar, compress
+	algexampl.tar.gz	Unix tar, gzip
+	algexampl.zip		zip 
+____________________________________________________________________________
+
+
+The file 
+
+  iota.h 
+
+is used in most of the example programs in the
+STL generic algorithms reference in http://www.cs.rpi.edu/~musser/stl.html.  
+
+____________________________________________________________________________
+
+
+The file 
+
+  mstring.h
+
+contains minimal string classes, derived from vector<char>:
+   string: sequence of non-white-space chacters
+   alpha: sequence of aphabetic or dash or apostrophe characters
+   line: sequence of non-newline characters
+
+These are not part of the C++ Standard Library.
+
+____________________________________________________________________________
+
+
+The following file contains "Higher-Order Imperative Programming" by
+Aaron Kershenbaum, David R. Musser and Alexander A. Stepanov,
+Rensselaer Polytechnic Institute Computer Science Department Technical
+Report 88-10, April 1988.  It contains many small examples of generic
+programming methods in Scheme.
+
+  hop.ps.Z      
+
+____________________________________________________________________________
+
+The following file contains "Generic Programming", by David R. Musser
+and Alexander A. Stepanov, Lecture Notes in Computer Science 358,
+Springer-Verlag, 1989, pp. 13-25.  Four kinds of abstraction---data,
+algorithmic, structural, and representational---are discussed, with
+examples of their use in building an Ada library of software
+components.  The main topic discussed is generic algorithms and an
+approach to their formal specification and verification.
+
+  genprog.ps.Z
+
+____________________________________________________________________________
+
+The following file contains "Algorithm-Oriented Generic Libraries", by
+David R. Musser and Alexander A. Stepanov.  This is a research paper
+describing some key design principles for building and documenting a
+software library based on generic algorithms.  It does not describe
+STL per se, but has examples from a library that was STL's
+predecessor.  A later version of this paper appeared in
+Software--Practice & Experience, Vol. 24(7), 623-642 (July 1994).
+
+ algor.ps.Z

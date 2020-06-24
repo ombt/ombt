@@ -1,0 +1,17 @@
+hrdcpy a.out
+ enter a number
+23
+ number was NOT found
+hrdcpy a.out
+ enter a number
+33
+ number was found in location   13
+hrdcpy a.out
+ enter a number
+12
+ number was found in location   2
+hrdcpy a.out
+ enter a number
+22
+ number was NOT found
+hrdcpy exit

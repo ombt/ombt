@@ -1,0 +1,8 @@
+CC = cc
+CCFLAGS = -g -DVAX
+LD = cc
+LDFLAGS = -g -DVAX
+
+ttyattr
+ttyattr.c
+install1 = cp ttyattr $(HOME)/bin/ttyattr

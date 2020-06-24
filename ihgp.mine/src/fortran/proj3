@@ -1,0 +1,40 @@
+CIS 255 Project 3
+
+flow chart or pseudo-code due 4/29/96
+code due 5/6/96
+
+1) The problem is to fit a power curve to a sequence of
+   points (X,Y). You are to use the least-squares fit 
+   method to calculate the parameters, A and B, in the
+   following equation:
+
+	Y = A*X**B
+
+2) Your program should read in a sequence of (X, Y) points
+   and print out the corresponding A and B coefficients.
+
+3) Your program should then calculate the CHI-squared coefficient
+   using your A and B coefficients and the same sequence of
+   (X, Y) points.
+
+4) Run your program on the following set of points.
+
+	X	Y	
+   -------------------
+	1	1
+	2	4
+	3	9
+	4	16
+	5	25
+	6	36
+	7	49
+	8	64
+	9	81
+	10	100
+	11	121
+	12	144
+	13	169
+	14	196
+	15	225
+
+5) Turn in output and flow-chart (or pseudo-code).

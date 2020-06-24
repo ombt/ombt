@@ -1,0 +1,321 @@
+
+state 0
+	$accept : _begin $end 
+	begin : _    (1)
+
+	.  reduce 1
+
+	begin  goto 1
+
+state 1
+	$accept :  begin_$end 
+	begin :  begin_msg 
+	begin :  begin_NEWLINE 
+	begin :  begin_error RIGHTBRACE NEWLINE 
+
+	$end  accept
+	error  shift 4
+	NEWLINE  shift 3
+	OUTPUT  shift 6
+	.  error
+
+	msg  goto 2
+	msgstart  goto 5
+
+state 2
+	begin :  begin msg_    (2)
+
+	.  reduce 2
+
+
+state 3
+	begin :  begin NEWLINE_    (3)
+
+	.  reduce 3
+
+
+state 4
+	begin :  begin error_RIGHTBRACE NEWLINE 
+
+	RIGHTBRACE  shift 7
+	.  error
+
+
+state 5
+	msg :  msgstart_msgbody msgend 
+
+	error  shift 9
+	NEWLINE  shift 10
+	MSGID  shift 13
+	TIME  shift 14
+	CLASS  shift 15
+	ACTION  shift 16
+	OUTPRIOR  shift 17
+	FREQ  shift 18
+	PROTOTYPE  shift 19
+	FIELD  shift 20
+	FIELDUP  shift 21
+	NPVAL  shift 22
+	WIDTH  shift 23
+	ENUM  shift 24
+	.  error
+
+	requiredbody  goto 11
+	optionalbody  goto 12
+	msgbody  goto 8
+
+state 6
+	msgstart :  OUTPUT_LEFTBRACE NEWLINE 
+
+	LEFTBRACE  shift 25
+	.  error
+
+
+state 7
+	begin :  begin error RIGHTBRACE_NEWLINE 
+
+	NEWLINE  shift 26
+	.  error
+
+
+state 8
+	msg :  msgstart msgbody_msgend 
+	msgbody :  msgbody_error NEWLINE 
+	msgbody :  msgbody_NEWLINE 
+	msgbody :  msgbody_requiredbody NEWLINE 
+	msgbody :  msgbody_optionalbody NEWLINE 
+
+	error  shift 28
+	NEWLINE  shift 29
+	MSGID  shift 13
+	TIME  shift 14
+	CLASS  shift 15
+	ACTION  shift 16
+	OUTPRIOR  shift 17
+	FREQ  shift 18
+	PROTOTYPE  shift 19
+	FIELD  shift 20
+	FIELDUP  shift 21
+	NPVAL  shift 22
+	WIDTH  shift 23
+	ENUM  shift 24
+	RIGHTBRACE  shift 32
+	.  error
+
+	requiredbody  goto 30
+	optionalbody  goto 31
+	msgend  goto 27
+
+state 9
+	msgbody :  error_NEWLINE 
+
+	NEWLINE  shift 33
+	.  error
+
+
+state 10
+	msgbody :  NEWLINE_    (10)
+
+	.  reduce 10
+
+
+state 11
+	msgbody :  requiredbody_NEWLINE 
+
+	NEWLINE  shift 34
+	.  error
+
+
+state 12
+	msgbody :  optionalbody_NEWLINE 
+
+	NEWLINE  shift 35
+	.  error
+
+
+state 13
+	requiredbody :  MSGID_    (16)
+
+	.  reduce 16
+
+
+state 14
+	requiredbody :  TIME_    (17)
+
+	.  reduce 17
+
+
+state 15
+	requiredbody :  CLASS_    (18)
+
+	.  reduce 18
+
+
+state 16
+	requiredbody :  ACTION_    (19)
+
+	.  reduce 19
+
+
+state 17
+	requiredbody :  OUTPRIOR_    (20)
+
+	.  reduce 20
+
+
+state 18
+	requiredbody :  FREQ_    (21)
+
+	.  reduce 21
+
+
+state 19
+	requiredbody :  PROTOTYPE_    (22)
+
+	.  reduce 22
+
+
+state 20
+	optionalbody :  FIELD_    (23)
+
+	.  reduce 23
+
+
+state 21
+	optionalbody :  FIELDUP_    (24)
+
+	.  reduce 24
+
+
+state 22
+	optionalbody :  NPVAL_    (25)
+
+	.  reduce 25
+
+
+state 23
+	optionalbody :  WIDTH_    (26)
+
+	.  reduce 26
+
+
+state 24
+	optionalbody :  ENUM_    (27)
+
+	.  reduce 27
+
+
+state 25
+	msgstart :  OUTPUT LEFTBRACE_NEWLINE 
+
+	NEWLINE  shift 36
+	.  error
+
+
+state 26
+	begin :  begin error RIGHTBRACE NEWLINE_    (4)
+
+	.  reduce 4
+
+
+state 27
+	msg :  msgstart msgbody msgend_    (5)
+
+	.  reduce 5
+
+
+state 28
+	msgbody :  msgbody error_NEWLINE 
+
+	NEWLINE  shift 37
+	.  error
+
+
+state 29
+	msgbody :  msgbody NEWLINE_    (11)
+
+	.  reduce 11
+
+
+state 30
+	msgbody :  msgbody requiredbody_NEWLINE 
+
+	NEWLINE  shift 38
+	.  error
+
+
+state 31
+	msgbody :  msgbody optionalbody_NEWLINE 
+
+	NEWLINE  shift 39
+	.  error
+
+
+state 32
+	msgend :  RIGHTBRACE_NEWLINE 
+
+	NEWLINE  shift 40
+	.  error
+
+
+state 33
+	msgbody :  error NEWLINE_    (8)
+
+	.  reduce 8
+
+
+state 34
+	msgbody :  requiredbody NEWLINE_    (12)
+
+	.  reduce 12
+
+
+state 35
+	msgbody :  optionalbody NEWLINE_    (14)
+
+	.  reduce 14
+
+
+state 36
+	msgstart :  OUTPUT LEFTBRACE NEWLINE_    (6)
+
+	.  reduce 6
+
+
+state 37
+	msgbody :  msgbody error NEWLINE_    (9)
+
+	.  reduce 9
+
+
+state 38
+	msgbody :  msgbody requiredbody NEWLINE_    (13)
+
+	.  reduce 13
+
+
+state 39
+	msgbody :  msgbody optionalbody NEWLINE_    (15)
+
+	.  reduce 15
+
+
+state 40
+	msgend :  RIGHTBRACE NEWLINE_    (7)
+
+	.  reduce 7
+
+
+18/127 terminals, 7/600 nonterminals
+28/300 grammar rules, 41/1000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+21/601 working sets used
+memory: states,etc. 104/2000, parser 10/4000
+10/601 distinct lookahead sets
+0 extra closures
+43 shift entries, 1 exceptions
+9 goto entries
+0 entries saved by goto default
+Optimizer space used: input 99/2000, output 53/4000
+53 table entries, 1 zero
+maximum spread: 272, maximum offset: 272

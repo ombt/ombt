@@ -1,0 +1,1229 @@
+STABS from SUN's STABS interface document.
+
+------------ general stabs information -----------------------------
+
+1) stabs support C++, Fortran 77, Fortran 95, C.
+
+2) assembler generates linker stab entries for files and non-local
+symbols. compiler (when -g is given) generates stabs for debugging.
+
+the general form for stabs is:
+
+.stabs "string", type, other, desc, value
+
+or
+
+.stabn type, other, desc, value
+
+where:
+
+string - contains name and description for symbol. in general, the form
+is a name followed by a colon, a symbol descriptor (one or more characters)
+and descriptor specific information.
+
+type - specifies the type of stab entry.
+
+other - contains miscellaneous information for some types of stabs entries.
+
+value - contains an offset or some other type of value.
+
+3) other addition types of stabs are:
+
+.xstabs "section", "string", type, other, desc, value
+
+and
+
+.xcstabs "section", "string", type, other, desc, value
+
+where "section" is the name of section in which to place the stabs entry.
+and string, type, other, desc, and value have the same meanings as before.
+
+4) stabs entries can be continued from one line to another by using a
+backslash as the last character in a stabs string. for example:
+
+.stabs "boolean:t(0,2)=efalse:0,\\", 0x20, 0, 0, 0
+.stabs "true:1,", 0x20, 0, 0, 0
+
+is equivalent to:
+
+.stabs "boolean:t(0,2)=efalse:0,true:1,", 0x20, 0, 0, 0
+
+there may be any number of continuation lines.
+
+4) stabs that describe symbols contain three pieces of information:
+
+	- symbol name
+	- symbol descriptor
+	- type description
+
+5) the name of the symbol starts with a string and ends with a colon ":". the
+descriptor immediately follows the colon and describes the symbol. descriptions
+of local variables omit the symbol descriptor.
+
+the actual description of the type follows the symbol descriptor. this may
+reference a previously defined type, or it may be a new definition of a 
+type consisting of a type number pair followed by an equal sign.
+
+symbol names that represent ELF level symbols retain their ELF spellings.
+
+6) stab symbol table entry in the ELF file is defined in the file
+stab.h. it is:
+
+============== /opt/SUNWspro/SC5.0/include/cc/stab.h ==================
+/*
+ * Copyright 10/24/97 Sun Microsystems, Inc. All Rights Reserved
+ *
+ * stab.h 4.33 97/10/24
+ */
+
+/*
+ */
+
+/*
+ * THIS FILE IS NOW THE MASTER stab.h FILE, A DUPLICATE OF stab.h MAY BE
+ * MAINTAINED BY SPARCompilers
+ *
+ * KEEP IN SYNC 
+ *
+ */
+
+/* FILE NOT I18N */
+
+/*
+ * This file gives definitions supplementing <a.out.h>
+ * for debugging symbol table entries.
+ * These entries must have one of the N_STAB bits on,
+ * and are subject to relocation according to the masks in <a.out.h>
+ * on 4.x (stabs not relocated on SVR4).
+ */
+
+#ifndef _STAB_H
+#define _STAB_H
+
+#if (!defined(_a_out_h) && !defined(_A_OUT_H)) || defined(HP_UX)
+/* this file also contains fragments of a.out.h relevant to
+ * support of stab processing within ELF files
+ * (when a.out.h is not available)
+ */
+struct  stab {
+        unsigned	n_strx;		/* index into file string table */
+        unsigned char   n_type;		/* type flag (N_TEXT,..)  */
+        char		n_other;	/* used by N_SLINE stab */
+        short		n_desc;		/* see stabs documentation */
+        unsigned	n_value;	/* value of symbol (or sdb offset) */ 
+};
+ 
+/* patchtypes for N_PATCH stab (n_desc field) */
+
+#define P_BITFIELD 0x1
+#define P_SPILL 0x2
+#define P_SCOPY 0x3
+
+/*
+ * Simple values for n_type.
+ */
+#define N_UNDF  0x0             /* undefined */
+#define N_ABS   0x2             /* absolute */
+#define N_TEXT  0x4             /* text */
+#define N_DATA  0x6             /* data */
+#define N_BSS   0x8             /* bss */
+#define N_COMM  0x12            /* common (internal to ld) */
+#define N_FN    0x1f            /* file name symbol */
+ 
+#define N_EXT   01              /* external bit, or'ed in */
+#define N_TYPE  0x1e            /* mask for all the type bits */
+
+#endif
+
+/* 
+ * maximum length of stab string before using continuation stab.
+ *   (this is just a suggested limit), assembler has no limit.
+ */
+
+#define MAX_STAB_STR_LEN 250
+
+/*
+ * for symbolic debuggers:
+ */
+#define	N_GSYM	0x20		/* global symbol: name,,0,type,0 */
+#define	N_FNAME	0x22		/* procedure name (f77 kludge): name,,0 */
+#define	N_FUN	0x24		/* procedure: name,,0,linenumber,0 */
+#define	N_STSYM	0x26		/* static symbol: name,,0,type,0 or section relative */
+#define	N_LCSYM	0x28		/* .lcomm symbol: name,,0,type,0 or section relative */
+#define N_MAIN  0x2a            /* name of main routine : name,,0,0,0 */
+#define N_ROSYM 0x2c		/* ro_data: name,,0,type,0 or section relative */
+#define	N_PC	0x30		/* global pascal symbol: name,,0,subtype,line */
+#define N_CMDLINE 0x34		/* command line info */
+#define N_OBJ	0x38		/* object file path or name */
+#define N_OPT	0x3c		/* compiler options */
+#define	N_RSYM	0x40		/* register sym: name,,0,type,register */
+#define	N_SLINE	0x44		/* src line: 0,,0,linenumber,function relative */
+#define	N_XLINE	0x45		/* h.o. src line: 0,,0,linenumber>>16,0 */
+#define	N_ILDPAD 0x4c		/* now used as ild pad stab value=strtab delta
+				   was designed for "function start.end" */
+#define	N_SSYM	0x60		/* structure elt: name,,0,type,struct_offset */
+#define N_ENDM	0x62		/* last stab emitted for module */
+#define	N_SO	0x64		/* source file name: name,,0,0,0 */
+#define N_ALIAS 0x6c		/* alias name: name,,0,0,0 */
+#define	N_LSYM	0x80		/* local sym: name,,0,type,offset */
+#define	N_BINCL 0x82		/* header file: name,,0,0,0 */
+#define	N_SOL	0x84		/* #included file name: name,,0,0,0 */
+#define	N_PSYM	0xa0		/* parameter: name,,0,type,offset */
+#define N_EINCL 0xa2		/* end of include file */
+#define	N_ENTRY	0xa4		/* alternate entry: name,linenumber,0 */
+#define N_SINCL 0xa6            /* shared include file */
+#define	N_LBRAC	0xc0		/* left bracket: 0,,0,nesting level,function relative */
+#define	N_EXCL	0xc2		/* excluded include file */
+#define	N_USING	0xc4		/* C++ using command */
+#define N_ISYM  0xc6            /* position independent type symbol, internal */
+#define N_ESYM  0xc8            /* position independent type symbol, external */
+#define N_PATCH 0xd0            /* Instruction to be ignored by run-time checking. */
+#define N_CONSTRUCT 0xd2        /* C++ constructor call. */
+#define N_DESTRUCT 0xd4         /* C++ destructor call. */
+#define	N_RBRAC	0xe0		/* right bracket: 0,,0,nesting level,function relative */
+#define	N_BCOMM	0xe2		/* begin common: name,, */
+#define	N_TCOMM	0xe3		/* begin task common: name,, */
+#define	N_ECOMM	0xe4		/* end task_common/common: name,, */
+#define N_XCOMM	0xe6		/* excluded common block */
+#define	N_ECOML	0xe8		/* end common (local name): ,,address */
+#define	N_WITH	0xea		/* pascal with statement: type,,0,0,offset */
+#define	N_LENG	0xfe		/* second stab entry with length information */
+
+/*
+ * for code browser only
+ */
+#define N_BROWS	0x48		/* path to associated .cb file */
+
+/*
+ * Optional language designations for N_SO (n_desc field)
+ */
+#define N_SO_AS         1       /* Assembler    */
+#define N_SO_C          2       /* C            */
+#define N_SO_ANSI_C     3       /* ANSI C       */
+#define N_SO_CC         4       /* C++          */
+#define N_SO_FORTRAN    5       /* Fortran 77   */
+#define N_SO_PASCAL     6       /* Pascal       */
+#define N_SO_FORTRAN90  7       /* Fortran 90   */
+#define N_SO_JAVA  	8       /* Java 	*/
+
+/*
+ * Floating point type values (encoded in "R" type specification string)
+ */
+#define NF_NONE		0	/* Undefined type 	*/
+#define NF_SINGLE	1	/* IEEE 32 bit float	*/
+#define NF_DOUBLE	2	/* IEEE 64 bit float	*/
+#define NF_COMPLEX	3	/* Fortran complex 	*/
+#define NF_COMPLEX16	4	/* Fortran double complex */
+#define NF_COMPLEX32	5	/* Fortran complex*16	*/
+#define NF_LDOUBLE 	6	/* Long double		*/
+#define NF_INTERARITH   7       /* Fortran interval arithmatic  */
+#define NF_DINTERARITH  8       /* Fortran double interval arithmatic */
+#define NF_QINTERARITH  9       /* Fortran quad interval arithmatic     */
+
+#endif
+
+============== /opt/SUNWspro/SC5.0/include/cc/stab.h ==================
+
+7) older versions of stabs used the header nlist.h.
+
+================== /usr/include/nlist.h ========================
+
+/*	Copyright (c) 1988 AT&T	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+#ifndef _NLIST_H
+#define	_NLIST_H
+
+#pragma ident	"@(#)nlist.h	1.9	92/07/14 SMI"	/* SVr4.0 1.8.2.4 */
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+struct nlist {
+	char		*n_name;	/* symbol name */
+	long		n_value;	/* value of symbol */
+	short		n_scnum;	/* section number */
+	unsigned short	n_type;		/* type and derived type */
+	char		n_sclass;	/* storage class */
+	char		n_numaux;	/* number of aux. entries */
+};
+
+#if defined(__STDC__)
+extern int nlist(const char *, struct nlist *);
+#else	/* __STDC__ */
+extern int nlist();
+#endif  /* __STDC__ */
+
+#ifdef	__cplusplus
+}
+#endif
+
+#endif	/* _NLIST_H */
+================== /usr/include/nlist.h ========================
+
+8) the actual stab entry definition is:
+
+struct  stab {
+        unsigned	n_strx;		/* index into file string table */
+        unsigned char   n_type;		/* type flag (N_TEXT,..)  */
+        char		n_other;	/* used by N_SLINE stab */
+        short		n_desc;		/* see stabs documentation */
+        unsigned	n_value;	/* value of symbol (or sdb offset) */ 
+};
+
+where n_strx is the offset for the corresponding stab string in the
+the stab string table. it is always terminated with a null byte.
+
+9) debugging stabs are stored in several section in an ELF file. in
+an object file (not and executable file or library) the stabs are 
+stored in the .stab section (with the strings in the .stabstr section) or
+in the .stab.excl section (with strings in .stab.exclstr). if the 
+object file is retained after linking, then the stabs are in the 
+.stab.excl section. the solaris linker will not copy the .stab.excl*
+sections to the final executable file. if the object file is temporary,
+not retained, then the .stab and .stabstr sections are copied to the 
+final executable.
+
+10) the .stab.index and .stab.indexstr sections are used to support
+the auto-load of stabs data. globals (functions and data) are stored
+here since the data are not available anywhere else.
+
+11) stabs and stab strings from each file are concatenated into the
+final executable file. the stabs from each object file are preceded
+with a N_UNDEF stab entry. the n_value field in this stab contains
+the total length of the stab strings for this object file. also, the
+n_strx field contains the offset to the object file name.
+
+-------------------- debugger stabs --------------------------------------
+
+1) the stabs are listed here alphabetically, along with the a.out linker
+stab entries.
+
+2) N_ALIAS - symbol alias - 0x6c - introduces alias for a function,
+variable, Fortran namelist, "external redefine", or namespace. no
+forward references are made here.
+
+.stabs "newname:Foldname", N_ALIAS, 0, 0, 0
+
+indicates that newname is another name for the function oldname. the
+F prefix indicates it is a function.
+
+.stabs "newname:Voldname", N_ALIAS, 0, 0, 0
+
+where the V stands for variable.
+
+.stabs "newname:Noldname", N_ALIAS, 0, 0, 0
+
+where the N stands for Fortran namelists.
+
+.stabs "externalname:Rsourcename", N_ALIAS, 0, 0, 0
+
+where R is for external redefines, not to be used with C++.
+
+namespace aliases come about from lines like:
+
+	namespace foo = bar;
+
+local namespace alias, position dependent (because of scoping) have the form:
+
+.stabs "newname:S typeid-of-newname=typeid-of-oldname", N_ALIAS, 0, 0, 0
+
+namespace, class, global namespace alias, position independent has the form:
+
+.stabs "mangled_newname:Stypeid-of-newname=typeid-of-oldname:
+	typeid-of-enclosing-scope", N_ALIAS, 0, 0, 0
+
+Fortran OpenMP threadprivate variables are indicated using a T prefix 
+to sourcename:
+
+.stabs "compname: T sourcename", N_ALIAS, 0, 0, 0
+
+where compname is a compiler-generated pointer to the threadprivate values
+of sourcename, the user-defined source variable.
+
+alias -->
+	newname ':' 'F' oldname |
+	newname ':' 'V' oldname |
+	newname ':' 'N' oldname |
+	externalname ':' 'R' resourcename |
+	newname ':' 'S' typeid-of-newname '=' typeid-of-oldname |
+	mangled_newname ':' 'S' typeid-of-newname '=' typeid-of-oldname ':'
+		typeid-of-enclosing-scope
+
+newname --> NAME
+
+oldname --> NAME
+
+externalname --> NAME
+
+resourcename --> NAME
+
+mangled_newname --> NAME
+
+typeid-of-newname --> typeid
+
+typeid-of-oldname --> typeid
+
+typeid-of-enclosing-scope --> typeid
+
+typeid -> ???
+
+---------------------
+alias -->
+	NAME ':' 'F' NAME |
+	NAME ':' 'V' NAME |
+	NAME ':' 'N' NAME |
+	NAME ':' 'R' NAME |
+	NAME ':' 'S' typeid '=' typeid |
+	NAME ':' 'S' typeid '=' typeid ':' typeid
+
+---------------------
+
+3) N_BCOMM - begin common block - 0xe2 - introduces common block and
+precedes the list of symbols in the common block. the common block
+is terminated with a N_ECOMM stab.
+
+only N_GSYM stabs with a V symbol type may appear between the 
+N_BCOMM and N_ECOMM stabs. these may not be nested.
+
+.stabs "blockname", N_BCOMM, 0, 0, hashvalue
+
+the common block is named "blockname". the address of the common
+block is found in the ELF symbol table. hashvalue is a hashvalue 
+which, when combined with blockname, uniquely identifies the common
+block. 
+
+the unnamed common block is given the default name "__BLNK__.
+
+bcomm --> blockname
+
+ecomm --> blockname
+
+blockname --> NAME
+
+4) N_BINCL - begin include file - 0x82 - has the form:
+
+.stabs "filepath", N_BINCL, 0, 0, hashvalue
+
+where filepath is the path to the file from the source directory
+specified in the N_SO stab. stabs after a N_BINCL are generated 
+from the included file. the stabs are terminated with a N_EINCL.
+
+the N_BINCL stab must follow an N_SO stab for a source file and precede
+the matching N_ENDM stab. N_BINCL and N_EINCL mat be nested within other
+N_BINCL/N_EINCL pairs. hashvalue is generated by the linker and is unique
+to this occurrence of the include file. the hashvalue can and will be
+different from case to case.
+
+it is an error for the two N_BINCL to appear in the same executable
+file or shared library with the same filepath and hashvalue.
+
+bincl --> filepath
+filepath --> NAME
+
+N_EINCL is a .stabn entry and contains NOT stab string.
+
+5) N_BROWS - source browser - 0x48 - has the form:
+
+.stabs "bdfile", N_BROWS, 0, 0, 0
+
+where bdfile is the path to the .bd file which is used by the
+Source Browser.  this stab is placed in the section called:
+
+	.stab.sbfocus
+
+bdfile --> NAME
+
+6) N_CMDLINE - compilation command line - 0x34 - command line
+used to compile the object file. used to support "fix and continue".
+
+.stabs "cwd:driver options prefix", N_CMDLINE, 0, 0, 0
+
+where:
+
+cwd - is the full path to the working directory as specified by the -cwd 
+option to the compiler driver.
+
+driver - is the full path to the compiler driver.
+
+options - list of options passed to the compiler. 
+
+prefix - set of options of the form needed to pass the current global
+prefix back to the compiler.
+
+cmdline --> cwd ';' driver options prefix
+cwd --> NAME
+driver --> NAME
+options --> NAME
+prefix --> NAME
+
+7) N_CODETAG - code generation detail - 0xd8 - generated code used
+for debugging. replaces part of the functionality of the N_PATCH
+stab.
+
+.stabn N_CODETAG, marker, 0, addr
+
+where marker is:
+
+0x1 - CODETAG_BITFIELD - load/store of a bit field.
+0x2 - CODETAG_SPILL - spill of registers.
+0x3 - CODETAG_SCOPY - structure copy load/store
+0x4 - CODETAG_FSTART - (not used) points to first inst. of new frame (leaf==0)
+0x5 - CODETAG_END_CTORS - (not used) end of calls to super-class constuctors.
+0x6 - not used in stabs - DW_ATCF_SUN_branch_target in dwarf.
+0x7 - CODETAG_STACK_PROBE - marks instructions that probe the stack memory.
+
+addr - byte-offset of an instruction from the function label. for any
+module that creates one or more N_CODETAG stabs, one index stab must be 
+created also. the form is:
+
+.xstabs "", N_CODETAG, marker, 0, 0
+
+if no N_CODETAG stabs are created by a module, then NO index N_CODETAG
+entries should be created.
+
+there 4 types of N_CODETAG stabs. the stabs format is the same and
+it is added to the index stab section.
+
+codetag --> "" (null-length string)
+
+8) N_CONSTRUCT - constructor description - 0xd2 - for each local variable
+which requires a call to a destructor will have a pair of stabs created,
+N_CONSTRUCT and N_DESTRUCT. this includes inlined constructor and 
+destructor calls. N_CONSTRUCT is created immediately after the variable
+is created and the N_DESTRUCT is associated with the location immediately
+before the variables destruction. N_CONSTRUCT and N_DESTRUCT can be nested
+for object within classes that also need to be initialized or deleted. 
+for embedded objects, the state is incremented by one for each constructor
+that is seen. after executing a constructor the state is the "state"
+given in the stabs entry.
+
+.stabs "var:state", N_CONSTRUCT, 0, end-start, start-func
+
+where:
+
+var - is the name (if any) of the variable being constructed.
+state - is the new destructor state number.
+end - is the location of the instruction immediately after the 
+	object construction.
+start - is the location of the first instuction in the objects
+	constructor. so end-start is the number of bytes of 
+	constructor code at this spot.
+func - name of the current function. start-func is a function-relative
+	offset.
+
+construct --> var ':' state
+var --> NAME
+state --> NUMBER
+
+9) N_DESTRUCT - destructor description - 0xd4 - the variable being
+destroyed is not mentioned, just the new state after the destruction
+is done is mentioned.
+
+.stabs "fromstate:tostate", N_DESTRUCT, 0, end-start, start-func
+
+where
+
+state - the new state number after the variable is destroyed. used 
+by dbx.
+
+end - address of the first instruction after the last instruction
+of the destructor code.
+
+start - the first instruction of the destructor code. end-start gives
+the size of the destructor code.
+
+func - start of current function.
+
+10) N_CPROF - cache profile feedback - 0xf0 - reserved for future use.
+
+11) N_ECOMM - end common block - 0xe4 - terminates the listing of 
+symbols in a common block. the unnamed common block is given the 
+name "__BLNK__". N_BCOMM and N_ECOMM may NOT be nested.
+
+.stabs "blockname", N_ECOMM, 0, 0, 0
+
+12) N_EINCL - end included file - 0xa2 - terminates the list 
+of symbols added because of an include file. matches the nearest
+N_BINCL stab before it.
+
+.stabn N_EINCL, 0, 0, 0
+
+13) N_EMOD - fortran90 module end - ends sequence of stabs added
+because of a fortran90 N_MOD stab.
+
+.stabs "name", N_EMOD, 0, 0, 0
+
+where name is the module name.
+
+14) N_ENDM - end module - 0x62 - ends the stabs started with a
+a sourcefile stab, N_SO. it is the last stab for a file.
+
+.stabn N_ENDM, 0, 0, 0 
+
+15) N_ENTRY - fortran alternate entry - 0xa4 - generated for 
+alternate entry points into a fortran function named "name". rtntype
+is the return type for the function. if "line" is not zero, then
+it is the line number of the entry statement. "funcname" is the
+name of the function containing the entry point.
+
+.stabs "name:e rtntype; funcname ; ;", N_ENTRY, 0, line, 0
+
+entry --> NAME ':' 'e' rtntype ';' funcname ';' ';'
+rtntype --> typeid
+funcname --> NAME
+
+16) N_ESYM - position-independent external data type - 0xc8 - 
+
+.stabs "name : symdesc type", N_ESYM, 0, desc, value
+
+N_ESYM is used instead of N_LSYM where the position of the stab
+relative to the surrounding stabs does not indicate the correct
+scoping. this occurs during of the C++ 5.0 compiler generation
+of template code. N_ESYM is used for data types that can have 
+external linkages: class, struct, union, enum. this stab entry
+must appear in the index stab section.
+
+the syntax is similar to N_LSYM but the names are mangled.
+
+esym --> name ':' symdesc typeid
+
+17) N_FLSYM - fragmented data symbol - 0x2e - defines a global
+symbol with the included name. the symbol became global because
+the linker placed the static local symbol in a separate ELF section.
+
+symdesc is a symbol descriptor and can have the values: 
+G - global weak (C++)
+S - file
+V - local.
+
+the syntax is:
+
+.stabs "name : symdesc type", N_FLSYM, OpenMP, size, 0
+
+where:
+
+name - the symbol name
+size - size of variable in bytes
+
+flsym --> NAME ':' symdesc type
+
+18) N_FUN - function or procedure definition - 0x24 - defines 
+the beginning of a function or procedure. 
+
+.stabs "name : symdesc runtype [ ; argtype ] *", N_FUN, funkind, line, 0
+
+where;
+
+name - function or procedure name
+symdesc - symbol descriptor and one of the following:
+	F - global function
+	f - local function
+	M - module function (Fortran 95)
+	J - internal procedure (Fortran 95)
+	P - prototype function
+	Y - C++ spsecification
+
+rtntype - return type
+argtype - type of arguments, last one may be '0' to indicate '...'
+funkind - Fortran95 function types:
+	1 = pure
+	2 = elemental
+	3 - recursive
+
+in the index stab, funkind == 1, means the stab came from a COMDAT section.
+
+line - the source line where the function starts.
+
+all the stabs that follow a N_FUN stab are for symbols defined within
+the function.
+
+fun --> 
+	NAME ':' symdesc runtype funtail
+funtail --> 
+	/* empty */
+	| ';' argtype funtail
+argtype --> 
+	'0' |
+	type
+
+
+19) N_GSYM - global symbol - 0x20 - global symbol 
+
+.stabs "name : symdesc type ", N_GSYM, 0, desc, value
+
+where;
+
+name - global symbol
+symdesc - symbol descriptor
+desc, value depend on symdesc.
+
+gsym --> NAME ':' symdesc type 
+
+20) N_ILDPAD - incremental link padding - 0x4c - string position must be
+updated.
+
+.stabs "objname", N_ILDPAD, 0, 0, bytesofstringtable
+
+adjust sting table position by bytesofstringtable bytes.
+
+ildpad --> NAME
+
+
+21) N_ISYM - position-independent internal data type - 0xc6 -
+used when the surrounding stabs do no indicate the correct 
+scoping for a local symbol.
+
+.stabs "name : symdesc type", N_ISYM, 0, desc, value
+
+isym --> NAME ':' symdesc type 
+
+22) N_LBRAC - begin scope - 0xc0 - start a new scope. the scope
+is terminated with a N_RBRAC. N_LBRAC and N_RBRAC must appear
+within a function. also, N_LBRAC and N_RBRAC may be nested to 
+indicate blocking of statements or functions.
+
+.stabn N_LBRAC, 0, level, offset
+
+in a.out, the offset is from the start of the object file. in ELF file
+it is the offset from the beginning of the function.
+
+23) N_LCSYM - uninitialized static symbol - 0x28 - describes uninitialized
+static variables. symdesc can be:
+
+	G - global weak (C++)
+	S - file
+	V - local
+	b - fortran "based" variable
+
+OpenMP - used for thread-private variables.
+
+size - size of symbol in bytes.
+
+offset - number of bytes from the start of the objects uninitialized data.
+
+Bbss.bss symbol has the address of the first byte in the bss area.
+
+name can be globalized and will be found in the ELF symbol table.
+
+.stabs "name : symdesc type", N_LCSYM, OpenMP, size, offset
+
+lcsym --> NAME ':' symdesc type 
+
+24) N_LSYM - local symbol - 0x80 - defines a file local or function
+local symbol.
+
+.stabs "name : symdesc type", N_LSYM, 0, desc, value
+
+lsym --> NAME ':' symdesc type 
+
+25) N_MAIN - main routine name - 0x2a - specifies the name of the
+first function to execute. "main" --> C, "program" --> Pascal,
+"MAIN" --> Fortran. this entry must also be in the index stabs.
+
+.stabs "name", N_MAIN, 0, 0, 0
+
+26) N_MOD - fortran95 module begin - 
+
+.stabs "name : memberlist", N_MOD, 0, 0, 0
+
+memberlist - list of members separated by semicolons, the list
+is terminated by a ';;'.
+
+mod --> 
+	name ':' memberlist
+memberlist --> 
+		';' member |
+		';;'
+member --> ppp-code NAME
+ppp-code --> ???? 
+
+27) N_OBJ - object file directory and file - 0x38 - identifies the
+current working directory and the path to the object file.
+
+.stabs "objectdir", N_OBJ, 0, 0, 0
+.stabs "objectfile", N_OBJ, 0, 0, 0
+
+28) N_OPT - options - 0x3c - command line options
+
+.stabs "options", N_OPT, 0, 0, timestamp
+
+timestamp - same format as time(2).
+
+options - command line options.
+
+29) N_OUTL - outlined function - when optimized code is produced that
+is separate from the main code. 
+
+.stabs "name", N_OUTL, 0, 0, 0
+
+name - related to original function name.
+
+30) N_PATCH - patch run time checker - 0xd0 - inhibit checking of 
+loading and storing instructions not generated from user code.
+
+.stabn N_PATCH, 0, patchtype, addr
+
+patchtype  can be:
+
+0x1 - P_BITFIELD, read a bitfield container
+0x2 - P_SPILL, register spill or unspill
+0x3 - P_SCOPY, structure copy.
+
+addr - byte offset to instruction from function start.
+
+for any module that generates a N_PATCH stab, then one index stab
+must also be generated.
+
+.xstabs "", N_PATCH, 0x0, 0x0, 0x0
+
+patch --> ""
+
+31) N_PSYM - formal parameter - 0xa0 - describes a function parameter,
+giving its name, kind, type and argument offset.
+
+.stabs "name : symdesc type [ ; s number]", N_PSYM, 0, 0, offset
+
+symdesc can be:
+
+	b - based variable, offset refers to address, extra level
+		of indirection.
+	c - conformant array bound
+	d - allocatable array (dope vector)
+	p - value parameter
+	v - fortran variable parameter by reference
+	x - value parameter by reference
+	X - function result parameter
+
+;snumber - C99 static size situation.
+
+N_PSYM follows the N_FUN stab. N_RSYM is generated for register variables.
+
+psym --> 
+	NAME ':' symdesc type psymtail
+psymtail --> 
+	/* empty */ |
+	';' 's' INTEGER
+
+32) N_RBRAC - end scope - 0xe0 - end a scope started with N_LBRAC.
+if it appears after a N_FUN and any parameters, then it is taken
+as the start of a new function scope. an N_SLINE stab entry should
+be generated to allow stopping before exiting the scope.
+
+.stabn N_RBRAC, 0, level, offset
+
+where:
+
+level - nesting level for scope.
+offset - bytes from start of object file for a.out, bytes from
+	start of function for an ELF file.
+
+33) N_READ_MOD - fortran module use - 
+
+.stabs "name [ : ] [only ; ] [ namelist ]"
+
+describes the fortran95 "use" statement.
+
+34) N_ROSYM - read-only static symbol - 0x2c -
+
+.stabs "name : symdesc type", N_ROSYM, flag, 0, offset
+
+where:
+
+symdesc can be:
+	G - global weak (not used)
+	S - file variable
+	v - local static variable
+	b - fortran based variable.
+
+if flag == 0, offset is the number of bytes in the object file's 
+read-only data area. the location is identified with the symbol table
+entry for symbol "Drodata.rodata".
+
+if flag == 1, offset is into the object files position independent
+area, identified with the symbol Dpicdata.picdata.
+
+rosym --> NAME ':' symdesc type 
+
+35) N_RSYM - register symbol - 0x40 - describes a register variable or
+parameter, gives the size, name, type, register number. a formal parameter
+has a N_PSYM stab or an N_RSYM stab with a symdesc of p, parameter.
+
+symdesc can be:
+
+	p - register parameter
+	r - register variable
+
+SPARC platform registers are:
+
+	integer global registers - g0-g7 - 0 to 7
+	integer out registers - o0-o7 - 8 to 15
+	integer local registers - l0-l7 - 16 to 23
+	integer in registers - i0-i7 - 24 to 31
+	floating-point registers - f0-f31 - 32 to 63
+
+.stabs "name : symdesc type", N_RSYM, 0, size, number
+
+rsym --> NAME ':' symdesc type 
+
+============================================================================
+
+
+Type specifications - 
+
+a - array
+B - volatile
+b - basic integer
+C - conformant array bounds
+c - comformant array
+d - dope vector
+e - enumeration
+F - function parameter
+f - function
+g - function with prototype info
+K - restricted
+k - const
+l - pascal file
+P - procedure parameter
+p - value parameter
+q - reference parameter
+R - floating point
+r - range
+S - set
+s - structure or record
+u - union
+v - variant record
+x - forward reference
+Y - C++ specification (C++ 4.0 and later)
+y - varying string
+* - pointer
+& - reference
+
+type -->
+	typeid 
+	| typeno
+	| typeno '=' typeid
+
+typeno -->
+	/* empty */
+	| '(' NUMBER ',' NUMBER ')'
+
+typeid -->
+	array
+	| volatile
+	| basic_integer
+	| conformant_array_bounds
+	| conformant_array
+	| dope_vector
+	| enumeration
+	| function_parameter
+	| function
+	| function_with_prototype_info
+	| restricted
+	| const
+	| pascal_file
+	| procedure_file
+	| procedure_parameter
+	| value_procedure
+	| reference_parameter
+	| floating_point
+	| range
+	| set
+	| structure_or_union
+	| variant_record
+	| forward_reference
+	| cplusplus_specification
+	| varying_string	
+	| pointer
+	| reference
+	
+array --> 
+	'a' type ';' type
+
+volatile -->
+	'B' type
+
+basic_integer -->
+	'b' sign display width ';' offset ';' nbits
+
+sign -->
+	's'
+	| 'u'
+
+display -->
+	/* empty */
+	| 'c' 
+	| 'b' 
+	| 'v'
+
+width -->
+	INTEGER
+
+offset -->
+	INTEGER
+
+nbits -->
+	INTEGER
+
+conformant_array_bounds -->
+	'C' low_bound ',' high_bound ',' type
+
+low_bound -->
+	/* empty */
+	| NAME
+
+high_bound -->
+	/* empty */
+	| NAME
+
+conformant_array -->
+	'c' type ';' type
+
+dope_vector -->
+	'd' type
+
+enumeration -->
+	'e' etype enumeration_tail
+
+etype -->
+	/* type */
+	| type
+
+enumeration_tail -->
+	/* empty */
+	| NAME ':' NUMBER ',' enumeration_tail ';'
+
+function_parameter -->
+	'F' type
+
+function -->
+	'f' type
+
+function_with_prototype_info -->
+	'g' type argumenttype '#'
+
+argumenttype -->
+	/* empty */
+	| type
+
+restricted -->
+	'K' type
+
+const -->
+	'k' type
+
+pascal_file -->
+	'L' type
+
+procedure_parameter -->
+	'P' type
+
+floating_point -->
+	'R' format ';' nbytes
+
+format --> INTEGER
+
+nbytes --> INTEGER
+
+set -->
+	'S' type
+
+structure_or_union -->
+	's' size fieldlist
+	| 'u' size fieldlist
+
+size --> INTEGER
+
+fieldlist --> 
+	fieldname ':' type_or_variant ',' bitoffset ',' byteoffset ';'
+	| fieldname ':' type_or_variant ',' bitoffset ',' byteoffset ';' fieldlist
+
+fieldname --> NAME
+
+bitoffset --> INTEGER
+
+byteoffset --> INTEGER
+
+type_or_variant -->
+	type
+	| variant
+
+variant --> selector ';' case_list ';'
+
+case_list --> 
+	case ';'
+	| case ';' case_list
+
+selector -->
+	'v' flag ':' type
+
+flag --> INTEGER
+
+case -->
+	casevaluelist ':' fieldlist
+
+casevaluelist -->
+	casevalue ','
+	| casevalue ',' casevaluelist
+
+casevalue --> INTEGER
+
+forward_reference -->
+	'x' fref_type name
+
+fref_type -->
+	'e'
+	| 's'
+	| 'u'
+	| type
+
+varying_string -->
+	'y' ';' INTEGER
+
+pointer -->
+	'*' type
+
+reference -->
+	'&' type
+
+=============================================================================
+
+C++ Specification symbol descriptors -
+
+prior to Sun C++ 4.0, C++ encoding used a 'Z' symbol descriptor. starting
+with 4.0 and 5.0, 'Y' descriptors are used to describe C++ debug info.
+
+1) default arguments are given after the arguments in the N_FUN 
+stabs.
+
+2) inline functions are compiled are static functions into each object 
+file. this is done when -g option is used. to turn this off and 
+keep inlining enabled, compile with the -g0 option.
+
+3) anonymous unions - file-level unions must be static, so these stabs
+are marked as N_LCSYM -
+
+	"mangledname : Ya username typeno", N_LCSYM, ...
+
+anonymous_unions --> 
+	NAME ':' 'Ya' NAME typeno
+
+4) stabs for classes, structs and non-anonymous unions -
+
+classes --> 'Y' type size 
+	classname ';' 
+	bases ';'
+	datamembers ';' 
+	memberfunctions ';'
+	staticdatamembers ';' 
+	friends ';'
+	virtualfunctioninfo ';' 
+	nestedclasslist ';'
+	accessadjustments ';' 
+	virtualbaseclassoffsets ';'
+	/* templatemembers ';' */
+	passmethod ';' optsemicolon
+
+optsemicolon --> 
+	/* empty */
+	| ';'
+
+ppp-code --> 
+	virt-ppp-code |
+	non-virt-ppp-code
+
+virt-ppp-code -->
+	'I' | 'J' | 'K'
+
+non-virt-ppp-code -->
+	'A' | 'B' | 'C' | 
+	'E' | 'F' | 'G'
+	'M' | 'N' | 'O' | 
+
+type --> 'c'
+	| 's'
+	| 'u'
+	| 'a'
+	| 'o'
+	| 'C'
+	| 'S'
+	| 'U'
+	| 'A'
+	| 'O'
+	
+
+size --> INTEGER
+
+offset --> INTEGER
+
+classname --> NAME
+
+bases --> /* empty */
+	| ppp-code offset typeno bases
+
+datamembers --> /* empty */
+	| ppp-code NAME ':' typeid ',' offset ',' size ';' datamembers
+
+
+memberfunctions -->
+	/* empty */
+	| virt-ppp-code optminus INTEGER NAME memberfunctions
+	| non-virt-ppp-code NAME memberfunctions
+
+staticdatamembers -->
+	/* empty */
+	| non-virt-ppp-code NAME staticdatamembers
+
+friends -->
+	/* empty */
+	| NAME friends 
+	| '@' NAME friends 
+
+virtualfunctioninfo -->
+	/* empty */
+	| INTEGER INTEGER
+
+nestedclasslist -->
+	/* empty */
+	| ppp-code typeno nestedclasslist
+
+accessadjustments -->
+	/* empty */
+	| ppp-code NAME accessadjustments 
+
+virtualbaseclassoffsets -->
+	/* empty */
+	| INTEGER typeno virtualbaseclassoffsets
+
+passmethod -->
+	/* empty */
+	| INTEGER passmethod
+
+5) namespaces (Yn) -
+
+namespaces --> 'Yn' INTEGER NAME
+
+6) stabs for function templates -
+
+function_templates -->
+	templatename ':' "YTf" templateparamlist ';' '@' ';'
+	';' templatename ':' 'T' returntype ';' paramtypelist ';' '@' ';'
+	paramnameslist ';' '@' ';'
+	startinglinenum ';' endinglinenum
+
+templatename --> NAME
+
+templateparam --> NAME ':' opttemplateparamopt type ';'
+
+templateparamlist --> templateparam
+	| templateparam templateparamlist
+
+optemplateparamopt --> 
+	/* empty */
+	| "TYc"
+

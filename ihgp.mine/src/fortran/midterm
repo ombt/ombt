@@ -1,0 +1,71 @@
+
+CIS 255 MIDTERM EXAM			NAME:
+
+1) (25) Write down the CHI-squared expression for the following 
+   function and derive the least-squares expression for parameter A.
+
+	Y = exp(A*sin(X))
+
+2) (25) Convert the following program to a flowchart.
+
+	PROGRAM PROB2
+
+	INTEGER I, IMAX
+	REAL X,Y,R
+
+   10	PRINT *, 'ENTER A RADIUS: '
+	READ *, R
+	IF (R.LE.0) THEN
+		PRINT *, 'R MUST BE > 0. TRY AGAIN.'
+		GOTO 10
+	ENDIF
+
+	PRINT *, 'ENTER NUMBER OF POINTS'
+	READ *, IMAX
+
+	DO I=1, IMAX
+		PRINT *, 'ENTER X, Y: '
+		READ *, X, Y
+
+		IF ((X**2+Y**2).GT.R**2) THEN
+			PRINT *, 'OUTSIDE OF CIRCLE'
+		ELSE IF ((X**2+Y**2).LT.R**2) THEN
+			PRINT *, 'INSIDE OF CIRCLE'
+		ELSE
+			PRINT *, 'ON CIRCLE'
+		ENDIF
+	ENDDO
+
+	END
+	
+
+3) (25) You are given two concentric circles centered on the origin.
+   The circle's equations are:
+
+	x**2 + y**2 = R1**2
+
+	x**2 + y**2 = R2**2
+
+   where R1 < R2. You are to write the flowchart and Fortran code
+   for a program which reads in a list of points and determines
+   the region which contains each point. The regions are:
+
+	0 <= R < R1
+	R1 <= R < R2
+	R2 <= R
+
+   where R = SQRT(X**2+Y**2).
+
+
+4) (25) Write a program (flow chart and Fortran) which calculates 
+   the following sum. You should read in N and X. Remember that 
+   N! is the factorial function, that is, 5! = 5*4*3*2*1, or 
+   N! = N*(N-1)*(N-2)* ... *3*2*1.
+
+		   N
+		  ---
+	sum(x) =  \	(-1)**n * x**(2*n+1)
+		  /     ----------------------
+		  ---          (2*n) !
+		  n=0
+

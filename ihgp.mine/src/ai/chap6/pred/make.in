@@ -1,0 +1,73 @@
+CC = CC
+CCFLAGS = -g -compat=4 -xildoff -DDEBUG 
+#CCFLAGS = -pg -xildoff -DDEBUG 
+#
+LD = CC
+LDFLAGS = -g -compat=4 -xildoff -DDEBUG 
+#LDFLAGS = -pg -xildoff -DDEBUG 
+#
+tpredpp
+pred.y
+pred.l
+array.c
+binaryTree_AVL.c
+irclause.c
+list.c
+mystring.c
+queue_List.c
+semantic.c
+stack_List.c
+symbol.c
+-ll
+-ly
+#
+install1 = chmod 755 tpredpp
+install2 = cp tpredpp /home/rumore/bin/tpredpp
+#
+tterm
+tterm.c
+term.c
+mystring.c
+list.c
+#
+tsub
+tsub.c
+term.c
+substitution.c
+mystring.c
+list.c
+#
+tsub2
+tsub2.c
+term.c
+substitution.c
+mystring.c
+list.c
+#
+tsub3
+tsub3.c
+term.c
+substitution.c
+mystring.c
+list.c
+#
+tunify
+tunify.c
+term.c
+substitution.c
+mystring.c
+list.c
+unification.c
+#
+tunify_tree
+tunify_tree.c
+mystring.c
+list.c
+term_tree.c
+#
+tunify_tree2
+tunify_tree2.c
+mystring.c
+list.c
+term_tree.c
+#

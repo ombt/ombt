@@ -1,0 +1,15 @@
+#
+# ALL THESE TESTS ARE INVALID.
+#
+(S --> T) && (T --> S);
+(U && T) || (~T && ~U);
+(U || V) || (S || T);
+~U --> (W && X);
+(V --> ~S) && (~V --> ~Y);
+X --> (~Y --> ~X);
+(U || S) && (V || Z);
+|- X && Z;
+#
+quit;
+
+

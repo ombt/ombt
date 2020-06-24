@@ -1,0 +1,9 @@
+SUBDIRS = nodes unisear bisear aosear btrack
+
+all:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE); done
+
+clean:
+	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i -f $(MAKEFILE) clean; done
+	rm -f $(AILIB)
+

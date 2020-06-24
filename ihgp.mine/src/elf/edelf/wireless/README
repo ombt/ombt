@@ -1,0 +1,13 @@
+Wireless version of edelf:
+
+1) Maintained by Pam Kimbro.
+
+2) Built on bldn machine.
+
+3) rlogin bldn -l ibb
+
+4) Pam's login is "kimbro". To get to her home directory, enter:
+
+	$ cd ~kimbro
+
+5) 

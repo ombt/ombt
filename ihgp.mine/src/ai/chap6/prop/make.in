@@ -1,0 +1,25 @@
+#
+LD=CC
+LDFLAGS=-g -compat=4 -DDEBUG -xildoff
+#
+CC=CC
+CCFLAGS=-g -compat=4 -DDEBUG -xildoff
+#
+tprop
+prop.y
+prop.l
+array.c
+list.c
+set_List.c
+stack_List.c
+queue_List.c
+binaryTree_AVL.c
+atom.c
+clause.c
+semantic.c
+mystring.c
+-ly
+-ll
+#
+install1=chmod 755 tprop
+install2=cp tprop /home/rumore/bin/tprop

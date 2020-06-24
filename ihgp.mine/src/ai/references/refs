@@ -1,0 +1,211 @@
+1) Principles of Artificial Intelligence, 1980
+	Nilsson
+	006/N71p
+
+2) Artificial Intelligence, 1991
+	Rich, Knight
+	006.3/R49a:2
+
+3) Deduction: Introductory Symbolic Logic, 1987
+	Bonevac
+	162/B71d
+
+4) Building Expert Systems in Prolog, 1989
+	Merritt
+	066.33/M572b
+
+5) Automated Reasoning: 33 Basic Research Problems, 1988
+	Wos
+	006.3/W935a
+
+6) Formal Methods in Artificial Intelligence, 1987
+	Delahaye
+	006.3/D333f:E
+
+7) Deduction Systems, 1997
+	Socher-Ambrosius, Johann
+	511.3/S678d
+
+8) Formal Concepts in Artificial Intelligence, 1992
+	Shinghal
+	066.3/S556f <<== not correct??? 66???
+	006.3/S556f
+
+9) First-Order Logic and Automated Theorem Proving, 1990
+	Fitting
+	511.3/F54f
+
+10) Formal Methods in Artificial Intelligence, 1988
+	Ramsay
+	006.3/R178f
+
+11) Logical Foundations of Artificial Intelligence, 1987
+	Genesereth, Nilsson
+	006.3/G327
+
+12) Principles of Automated Theorem Proving, 1991
+	Duffy
+	511.3/D85p
+
+13) Probabilistic Reasoning in Expert Systems, 1990
+	Neapolitan
+	006.33/N353p
+
+14) Expert Systems, 1997
+	Nikolopoulos
+	006.33/N693e
+
+15) Non-Monotonic Reasoning: Formalization of Commonsense Reasoning, 1990
+	Lukaszewicz
+	006.3/L954n
+
+16) Heuristics: Intelligent Search Strategies for Computer Problem
+Solving, 1984
+	Pearl
+	006/P35
+
+17) Automated Reasoning: Introduction and Applications, 1984
+	Wos, Overbeek, Lusk, Boyle
+	006/A92
+
+18) Logic for Computer Scientists
+	Schoning
+	511.3/S371
+
+19) Logic-Based Knowledge Representation
+	Jackson, Reichgelt, Van Harmelen
+	006.33/J131
+
+20) Formalized Common Sense: Papers by John McCarthy
+	edited by Vladmir Lifschitz
+	006.3/M123f
+
+21) Default Reasoning: Causal and Conditional Theories
+	Gefner
+	006.3/G299d
+
+22) Mathematical Logic For Computer Science
+	Lu
+	004.O151/L926m
+
+23) The Computer Modelling of Mathematical Reasoning
+	Bundy
+	006/B94c
+
+24) The Deductive Foundations of Computer Programming
+	Manna, Waldinger
+	519.7/M28d
+
+25) Logical Basis for Computer Programming: 
+	Volume 1 Deductive Reasoning
+	Manna, Waldinger
+	519.7
+	M28l
+	
+26) Computing with Logic: Logic Programming with Prolog
+	Maier, Warren
+	005
+	133P96/M217c
+
+27)  Logic with Prolog
+	Gibbins
+	005
+	133P96/G438L
+
+28) An Introduction to Fuzzy Logic Applications in Intelligent Systems
+	Edited by R. Yager and L. Zadeh
+	511.3
+	I99f
+
+29) Representations of Commonsense Knowledge
+	Davis, Ernest
+	006.3
+	D261r
+
+30) An Introduction to Default Logic
+	Besnard, Philippe
+	006.3
+	B555i
+
+31) Logics for Artificial Intelligence
+	Turner, Raymond
+	006.6
+	T951
+
+=========================================================================
+
+1) Expert Systems Development in Prolog and Turbo Prolog
+	Smith, Peter
+	066.33
+	S656e
+
+2) Temporal Logic: Mathematical Foundations and 
+	Computational Aspects, Volume 1.
+	Gabbay, Hodkinson, Reynolds
+	511.3
+	G11t
+
+3) Computing in Horn Clause Theories
+	Padawitz, Peter
+	005.131
+	P12c
+
+4) Introduction to Expert Systems: The Develpment and Implementation
+	of Rule-Based Expert Systems
+	Ignizio, James
+	006.33
+	I24i
+
+NOTE: very good book on ruled-based expert systems !!!
+
+5) Programming Expert Systems in Pascal
+	Sawyer, Brian and Foster, Dennis
+	006.33
+	S271p
+
+6) Formal Methods in Artificial Intelligence
+	Ramsay, Allan
+	006.3
+	R178f
+
+7) Logic for Applications
+	Nerode, Anil and Shore, Richard E.
+	005.131
+	N452l:2
+
+8) Autmated Deduction in Classical and Non-Classical Logics
+	Caferra, Ricardo and Salzer, Gernot (editors)
+	006.3
+	A939d
+
+9) Automated Deduction in Equational Logic and Cubic Curves
+	McCune, W. and Padmanabhan, R.
+	516.352
+	M13a
+
+10) Foundations of Equational Logic Programming
+	Holldobler, Steffen
+	006.3
+	H737f
+
+11) Conditional Logic in Expert Systems
+	Goodman, I.R., Gupta, M.M., Nguyen, H.T., Rogers, G.S.
+	006.33
+	C745l
+
+12) Automated Theorem Proving
+	Bibel, Wolfgang
+	006
+	B58a
+
+13) A Many-Sorted Calculus Based on Resolution and Paramodulation
+	Walther, Christoph
+	006.3
+	W237m
+
+14) First-Order Logic and Automated Theorem Proving
+	Fitting, Melvin
+	511.3
+	F54f
+
+	

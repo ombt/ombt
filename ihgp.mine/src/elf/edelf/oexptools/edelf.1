@@ -1,0 +1,1296 @@
+.TH EDELF 1 EXPTOOLS
+.SH NAME
+edelf - edit an ELF (Executable and Linking Format) file
+.SH SYNTAX
+.B edelf
+[-?D] ELF_file ...
+.SH DESCRIPTION
+.I Edelf
+is an interactive object file editor which provides the capability to 
+review and update the internal structure of a ELF (Executable and 
+Linking Format) file. Examples of the ELF files are: object files, executables
+and shared libraries.
+The tool edelf is an for viewing and updating the internal
+data of an ELF file. It is composed of several menus: the main
+menu, and several submenus for updating the different parts 
+in an ELF file. The usage of edelf is described below.
+.P
+Edelf is invoked as follows. For this example
+the shared library file, libm.so, will be edited. It is
+copied to /tmp so we can modify the file.
+.EX 1
+	$ cp /usr/lib/libm.so /tmp
+	$ edelf /tmp/libm.so
+	editing file libm.so ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: q
+.EE
+.P
+In the above example, edelf is invoked using the file /tmp/libm.so, the mathematics shared library file. The edelf main menu prompt "cmd: " is displayed.
+If you enter a question mark, "?", the main menu is displayed. The
+main menu contains the one-letter commands for editing the various parts
+of an ELF file. The following table summarizes the choices.
+.TP in
+"?" - display main menu options.
+.TP in
+"M" - changes how the file is opened, for read or write.
+.TP in
+"D" - enables or disables demangling C++ names. Name demangling applies
+to symbol names and some strings.
+.TP in
+"A" - built-in SPARC (version 8) disassembler.
+.TP in
+"f" - edit the file header.
+.TP in
+"s" - edit the section headers.
+.TP in
+"p" - edit the program segment headers.
+.TP in
+"y" - edit the symbol tables.
+.TP in
+"t" - edit the strings tables.
+.TP in
+"r" - edit the relocation tables.
+.TP in
+"o" - invoke overwriter.
+.TP in
+"h" - edit the symbol hash table.
+.TP in
+"v" - edit the version entries.
+.TP in
+"d" - edit the dynamic table.
+.TP in
+"!" - escape to a shell.
+.TP in
+"q" - quit editing the current file. If edelf was invoked with
+multiple files, then edit the next file in the list. If only
+one file was given, then exit edelf.
+.TP in
+"Q" - exit from edelf.
+.SH EDITING FILE HEADER
+.P
+The command to edit the ELF file header is as follows. To print the 
+contents of the file header, enter a return. Enter a "?" to list the menu.
+.EX 1
+	$ edelf /tmp/libm.so
+
+	editing file /tmp/libm.so ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: f
+	editing file headers:
+	fhdr cmd: <cr>
+	File Header:
+	e_ident    : ELF
+	e_class    : 0x1 (ELFCLASS32)
+	e_data     : 0x2 (ELFDATA2MSB)
+	e_version  : 0x1 (EV_CURRENT)
+	e_type     : 0x3 (ET_DYN)
+	e_machine  : 0x2 (EM_SPARC)
+	e_version  : 0x1 (EV_CURRENT)
+	e_entry    : 0x94
+	e_phoff    : 0x34
+	e_shoff    : 0x18cf8
+	e_flags    : 0x0
+	e_ehsize   : 0x34
+	e_phentsize: 0x20
+	e_phnum    : 0x3
+	e_shentsize: 0x28
+	e_shnum    : 0x14
+	e_shstrndx : 0x13
+	fhdr cmd: ?
+
+	file header menu:
+
+	? or h - show menu
+	r - review file header
+	u - update file header
+	q - quit
+	
+	fhdr cmd: 
+.EE
+.P
+"r" prints the contents of the file header, and "u" allows you to update
+the contents. An example of "u" is given next. Note after an actual
+update, you are asked if you want the changes saved. In the following
+example, <return> is entered to leave a field unchanged, and a new
+value is typed to modify a field. After the data is written
+to file, a review verifies the changes were actually made. Finally, 
+two quits, "q", exit from the file header submenu and from the main menu 
+(from edelf).
+.EX 1
+	fhdr cmd: u		<<<=== update mode
+
+	File Header:
+	e_ident [cr=ELF]: <cr>
+	e_class [cr=0x1]: 2		<<<=== change value
+	e_class: 0x2
+	e_data [cr=0x2]: <cr>
+	e_version [cr=0x1]: <cr>
+	e_type [cr=0x3]: <cr>
+	e_machine [cr=0x2]: <cr>
+	e_version [cr=0x1]: <cr>
+	e_entry [cr=0x94]: <cr>
+	e_phoff [cr=0x34]: <cr.
+	e_shoff [cr=0x18cf8]: <cr>
+	e_flags [cr=0x0]: <cr>
+	e_ehsize [crc=0x34]: <cr>
+	e_phentsize [cr=0x20]: <cr>
+	e_phnum [cr=0x3]: <cr>
+	e_shentsize [cr=0x28]: <cr>
+	e_shnum [cr=0x14]: <cr>
+	e_shstrndx [cr=0x13]: <cr>
+	write to file [cr=n/n/y] ? y
+	fhdr cmd: <cr>
+
+	File Header:
+	e_ident    : ELF
+	e_class    : 0x2 (ELFCLASS64)
+	e_data     : 0x2 (ELFDATA2MSB)	<<<=== new value
+	e_version  : 0x1 (EV_CURRENT)
+	e_type     : 0x3 (ET_DYN)
+	e_machine  : 0x2 (EM_SPARC)
+	e_version  : 0x1 (EV_CURRENT)
+	e_entry    : 0x94
+	e_phoff    : 0x34
+	e_shoff    : 0x18cf8
+	e_flags    : 0x0
+	e_ehsize   : 0x34
+	e_phentsize: 0x20
+	e_phnum    : 0x3
+	e_shentsize: 0x28
+	e_shnum    : 0x14
+	e_shstrndx : 0x13
+	fhdr cmd: q
+	cmd: q
+.EE
+.SH EDITING SECTION HEADERS
+.P
+The ELF section headers are edited using the "s" option from the main menu.
+This option places you in a submenu which allows you to query and update the
+contents of the section headers. The section headers described the internal
+format of the ELF file from a compiler and linker point-of-view. The following
+example shows how to review, query and update using this submenu. Again,
+enter "?" or "h" for a listing of the submenu, and "q" to exit the
+submenu. 
+.P
+To enter the section header submenu and to print the commands, enter as follows.
+The prompt for the section header submenu is "shdrs cmd:".
+.EX 1
+	$ edelf /tmp/libm.so
+
+	editing file /tmp/libm.so ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: s
+	editing sections headers:
+	shdrs cmd: ?
+
+	section headers menu:
+	
+	? or h - show menu
+	n - show all section names
+	r - review current section header data
+	r * - review all section headers data
+	r <name> - review <name> section header data
+	r <number> - review <number> section header data
+	+ - show next section header data
+	- - show previous section header data
+	u - update current section data
+	q - quit
+	
+	shdrs cmd:
+.EE
+.P
+The following table summarizes the submenu choices.
+.TP in
+"?" or "h" - show section header submenu.
+.TP in
+"n" - show the names of all the sections. The names are stored
+in one of the string tables.
+.TP in
+"r" - allow the user to view the current section header data.
+.TP in
+"r *" - display the data for all section headers.
+.TP in
+"r <name>" - search for sections with the name of <name> and to print the
+section header data. <name> is interpreted as a regular expression.
+.TP in
+"r <number>" - display the data for section <number>.
+.TP in
+"+" - display the data for the next section header.
+.TP in
+"-" - display the data for the previous section header.
+.TP in
+"u" - update the current section data.
+.TP in
+"q" - quit or exit from the submenu. Program returns to the main menu.
+.P
+To display the names of all the sections and the corresponding types, enter
+the "n" option. To review the data for a specific section, use the the 
+"r <name>" option and give it a section name, or use the "r <number>"
+option and enter a section number. The "u" command allows you to 
+edit the section data. The following example demonstrates.
+.EX 1
+	shdrs cmd: ?
+
+	section headers menu:
+
+	? or h - show menu
+	n - show all section names
+	r - review current section header data
+	r * - review all section headers data
+	r <name> - review <name> section header data
+	r <number> - review <number> section header data
+	+ - show next section header data
+	- - show previous section header data
+	u - update current section data
+	q - quit
+
+	shdrs cmd: n
+	section names:
+	section 0:  (0, SHT_NULL)
+	section 1: .hash (1, SHT_HASH)
+	section 2: .dynsym (7, SHT_DYNSYM)
+	section 3: .dynstr (15, SHT_STRTAB)
+	section 4: .SUNW_version (23, SHT_SUNW_verneed)
+	section 5: .SUNW_version (37, SHT_SUNW_verdef)
+	section 6: .SUNW_versym (51, SHT_SUNW_versym)
+	section 7: .rela.got (64, SHT_RELA)
+	section 8: .rela.plt (74, SHT_RELA)
+	section 9: .text (84, SHT_PROGBITS)
+	section 10: .rodata (90, SHT_PROGBITS)
+	section 11: .rodata1 (98, SHT_PROGBITS)
+	section 12: .got (107, SHT_PROGBITS)
+	section 13: .plt (112, SHT_PROGBITS)
+	section 14: .dynamic (117, SHT_DYNAMIC)
+	section 15: .data (126, SHT_PROGBITS)
+	section 16: .bss (132, SHT_NOBITS)
+	section 17: .symtab (137, SHT_SYMTAB)
+	section 18: .strtab (145, SHT_STRTAB)
+	section 19: .shstrtab (174, SHT_STRTAB)
+	shdrs cmd: r 2
+	section hdr data:
+	section 2: .dynsym (7)
+	sh_name     : 0x7
+	sh_type     : 0xb (SHT_DYNSYM)
+	sh_flags    : 0x2 (SHF_ALLOC)
+	sh_addr     : 0x528
+	sh_offset   : 0x528
+	sh_size     : 0x8c0
+	sh_link     : 0x3
+	sh_info     : 0x17
+	sh_addralign: 0x4
+	sh_entsize  : 0x10
+	shdrs cmd: r symtab
+	section hdr data:
+	section 17: .symtab (137)
+	sh_name     : 0x89
+	sh_type     : 0x2 (SHT_SYMTAB)
+	sh_flags    : 0x0 (unknown)
+	sh_addr     : 0x0
+	sh_offset   : 0x15084
+	sh_size     : 0x29c0
+	sh_link     : 0x12
+	sh_info     : 0x227
+	sh_addralign: 0x4
+	sh_entsize  : 0x10
+	shdrs cmd: u		<<<=== update mode
+	
+	section (17) .symtab header:
+	sh_name [cr=.symtab]: <cr>
+	sh_type [cr=0x2]: 1		<<<=== change value
+	sh_type: 0x1
+	sh_flags [cr=0x0]: <cr>
+	sh_addr [cr=0x0]: <cr>
+	sh_offset [cr=0x15084]: <cr>
+	sh_size [cr=0x29c0]: <cr>
+	sh_link [cr=0x12]: <cr>
+	sh_info [cr=0x227]: <cr>
+	sh_addralign [cr=0x4]: <cr>
+	sh_entsize [cr=0x10]: <cr>
+	write to file [cr=n/n/y] ? y
+	shdrs cmd: r 17
+	section hdr data:
+	section 17: .symtab (137)
+	sh_name     : 0x89
+	sh_type     : 0x1 (SHT_PROGBITS)	<<<=== new value
+	sh_flags    : 0x0 (unknown)
+	sh_addr     : 0x0
+	sh_offset   : 0x15084
+	sh_size     : 0x29c0
+	sh_link     : 0x12
+	sh_info     : 0x227
+	sh_addralign: 0x4
+	sh_entsize  : 0x10
+	shdrs cmd: q
+	cmd: q
+.EE
+.P
+To move from one section to the next section, you can enter "<cr>" or "+".
+Enter "-" to move the to previous section header. Enter "r" to review the
+current section header.
+.SS EDITING PROGRAM HEADERS
+.P
+The ELF program segment headers are edited using the "p" option from the 
+main menu. This option places you in a submenu which allows you to query and 
+update the contents of the program segment headers. The program segment 
+headers described the internal format of the ELF file from a loader 
+point-of-view. A fully-bound executable has both a section header table
+and program segment header table. An object file only contains a section
+header table since it is not executable. A shared library file contains
+both a sections headers table and a program segment header table.
+.P
+The following example shows how to review, query and update 
+using this submenu. Again, enter "?" or "h" for a listing of the submenu, 
+and "q" to exit the submenu. 
+.P
+To enter the program segment header submenu and to print the commands, enter 
+as follows.  The prompt for the section header submenu is "phdrs cmd:".
+.EX 1
+	$ edelf /tmp/libm.so
+
+	editing file /tmp/libm.so ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: p
+	editing program headers:
+	phdrs cmd: ?
+
+	program headers menu:
+
+	? or h - show menu
+	r - review current program header data
+	r * - review all program headers data
+	r <number> - review <number> program header data
+	+ - show next program header data
+	- - show previous program header data
+	u - update current program data
+	q - quit
+
+	phdrs cmd:
+.EE
+.P
+The following table summarizes the submenu choices.
+.TP in
+"?" or "h" - show section header submenu.
+.TP in
+"r" - allow the user to view the current segment data.
+.TP in
+"r *" - display the data for all section headers.
+.TP in
+"r <number>" - display the data for segment <number>.
+.TP in
+"+" - display the data for the next segment.
+.TP in
+"-" - display the data for the previous segment.
+.TP in
+"u" - update the current segment data.
+.TP in
+"q" - quit or exit from the submenu. Program returns to the main menu.
+.P
+To display all the segment data, enter
+the "r *" option. To review the data for a specific segment, 
+use the "r <number>"
+option and enter a segment number. The "u" command allows you to 
+edit the segment data. The following example demonstrates.
+.EX 1
+	$ edelf /tmp/libm.so
+
+	editing file /tmp/libm.so ...
+	cmd: p
+	editing program headers:
+	phdrs cmd: r *
+	program segment hdrs data:
+
+	segment : 0
+	p_type  : 0x1 (PT_LOAD)
+	p_offset: 0x0
+	p_vaddr : 0x0
+	p_paddr : 0x0
+	p_filesz: 0x14be2
+	p_memsz : 0x14be2
+	p_flags : 0x5 (PF_R PF_X)
+	p_align : 0x10000
+
+	segment : 1
+	p_type  : 0x1 (PT_LOAD)
+	p_offset: 0x14be4
+	p_vaddr : 0x24be4
+	p_paddr : 0x0
+	p_filesz: 0x4a0
+	p_memsz : 0x4a4
+	p_flags : 0x7 (PF_R PF_W PF_X)
+	p_align : 0x10000
+
+	segment : 2
+	p_type  : 0x2 (PT_DYNAMIC)
+	p_offset: 0x14fd8
+	p_vaddr : 0x24fd8
+	p_paddr : 0x0
+	p_filesz: 0xa8
+	p_memsz : 0x0
+	p_flags : 0x7 (PF_R PF_W PF_X)
+	p_align : 0x0
+	phdrs cmd: r 1
+	segment hdr data:
+
+	segment : 1
+	p_type  : 0x1 (PT_LOAD)
+	p_offset: 0x14be4
+	p_vaddr : 0x24be4
+	p_paddr : 0x0
+	p_filesz: 0x4a0
+	p_memsz : 0x4a4
+	p_flags : 0x7 (PF_R PF_W PF_X)
+	p_align : 0x10000
+	phdrs cmd: u		<<<=== update mode
+
+	segment 1 header:
+	p_type [cr=0x1]: <cr>
+	p_offset [cr=0x14be4]: <cr>
+	p_vaddr [cr=0x24be4]: <cr>
+	p_paddr [cr=0x0]: <cr>
+	p_filesz [cr=0x4a0]: <cr>
+	p_memsz [cr=0x4a4]: <cr>
+	p_flags [cr=0x7]: 0x5		<<<=== change value
+	p_flags: 0x5
+	p_align [cr=0x10000]: <cr>
+	write to file [cr=n/n/y] ? y
+	phdrs cmd: r
+
+	segment : 1
+	p_type  : 0x1 (PT_LOAD)
+	p_offset: 0x14be4
+	p_vaddr : 0x24be4
+	p_paddr : 0x0
+	p_filesz: 0x4a0
+	p_memsz : 0x4a4
+	p_flags : 0x5 (PF_R PF_X)	<<<=== new value
+	p_align : 0x10000
+	phdrs cmd: q
+	cmd: q
+.EE
+.P
+To move from one section to the next section, you can enter "<cr>" or "+".
+Enter "-" to move the to previous section header. Enter "r" to review the
+current section header.
+.SH EDITING SYMBOL TABLES
+.P
+The ELF program symbols tables are edited using the "y" option from the 
+main menu. This option places you in a submenu which allows you to query and 
+update the contents of the symbol tables. Unlike the COFF format which
+only has one symbol table, the ELF format can have more than one
+symbol table. The two most common symbol tables are ".dynsym" and 
+".symtab". Table .dynsym contains symbols for dynamic linking and 
+.symtab contains symbols for locating and relocating a program's symbolic
+definitions and references.
+.P
+The following example shows how to review, query and update 
+using symbol table submenu. Again, enter "?" or "h" for a listing of 
+the submenu, and "q" to exit the submenu. 
+.P
+To enter the symbol table submenu and to print the commands, enter 
+as follows.  The prompt for the symbol table submenu is "symbols cmd:".
+.EX 1
+	$ edelf /tmp/libm.so    
+
+	editing file /tmp/libm.so ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: y
+	editing symbols:
+	symbols cmd: ?
+	symbols menu:
+	? or h - show menu
+	n - show all symbol tables section names
+	r - review current symbol
+	r * - review all symbols in symbol tables
+	r * <symbol> - review <symbol> in all symbol tables
+	r <section> - review 1st symbol in <section> symbol table
+	r <section> * - review all symbols in <section> symbol table
+	r <section> <symbol> - review <symbol> in <section> symbol table
+	r <section#> - review 1st symbol in <section#> symbol table
+	r <section#> * - review all symbols in <section#> symbol table
+	r <section#> <symbol> - review <symbol> in <section#> symbol table
+	+ - next symbol
+	- - previous symbol
+	u - update current symbol in current symbol table
+	D - toggle demangle mode
+	q - quit
+	symbols cmd: 
+.EE
+.P
+The following table summarizes the submenu choices.
+.TP in
+"?" or "h" - show symbol table submenu.
+.TP in
+"n" - show all symbol tables section names
+.TP in
+"r" - display current symbol data.
+.TP in
+"r *" - display data for all symbols in symbol tables.
+.TP in
+"r * <symbol>" - display data for symbol <symbol> in all symbol tables.
+<symbol> is interpreted as a regular expression.
+.TP in
+"r <section>" - display the data for the 1st symbol in <section> 
+symbol table. <section is interpreted as a regular expression.
+.TP in
+"r <section> *" - display the data for all symbols in <section> 
+symbol table.  <section is interpreted as a regular expression.
+.TP in
+"r <section> <symbol>" - display data for <symbol> in <section> 
+symbol table. <section> and <symbol> are interpreted as regular
+expressions.
+.TP in
+"r <section#>" - display the data for 1st symbol in <section#> 
+symbol table.
+.TP in
+"r <section#> *" - display data for all the symbols in <section#> 
+symbol table.
+.TP in
+"r <section#> <symbol>" - display the data for symbol <symbol> in 
+<section#> symbol table. <symbol> is interpreted as a symbol
+table.
+.TP in
+"+" - display the data for the next symbol. 
+.TP in
+"-" - display the data for the previous symbol.
+.TP in
+"u" - update the data for the current symbol in current symbol table.
+.TP in
+"D" - toggle demangle C++ symbol names mode.
+.TP in
+"q" - quit or exit from the submenu. Program returns to the main menu.
+.P
+The following example uses the file /usr/lib/libc.so. Once in the
+symbol table submenu, to display the symbol tables, you enter "n".
+To display all the symbols in a specific symbol table, .dynsym for 
+this example, enter "r .dynsym *". To view the data for the 
+1st symbol in a symbol table, enter "r .dymsym". You can step
+through the symbol table using the "+" or "-" commands, or by
+entering "<cr>". A "q" exits the symbol table submenu.
+An example is displayed below.
+.EX 1
+	$ edelf /usr/lib/libc.so
+
+	editing file /usr/lib/libc.so ...
+	cmd: y
+	editing symbols:
+	symbols cmd: ?
+	symbols menu:
+	? or h - show menu
+	n - show all symbol tables section names
+	r - review current symbol
+	r * - review all symbols in symbol tables
+	r * <symbol> - review <symbol> in all symbol tables
+	r <section> - review 1st symbol in <section> symbol table
+	r <section> * - review all symbols in <section> symbol table
+	r <section> <symbol> - review <symbol> in <section> symbol table
+	r <section#> - review 1st symbol in <section#> symbol table
+	r <section#> * - review all symbols in <section#> symbol table
+	r <section#> <symbol> - review <symbol> in <section#> symbol table
+	+ - next symbol
+	- - previous symbol
+	u - update current symbol in current symbol table
+	D - toggle demangle mode
+	q - quit
+	symbols cmd: n
+	symbol table names:
+	section 2: .dynsym (7)
+	section 24: .symtab (206)
+	symbols cmd: r .dynsym *
+	section 2: .dynsym (7)
+	0: st_name :  (0)
+	0: st_value: 0x0
+	0: st_size : 0x0
+	0: st_bind : 0x0 (STB_LOCAL)
+	0: st_type : 0x0 (STT_NOTYPE)
+	0: st_other: 0x0
+	0: st_shndx: 0x0 (SHN_UNDEF)
+	1: st_name :  (0)
+	1: st_value: 0x94
+	1: st_size : 0x0
+	1: st_bind : 0x0 (STB_LOCAL)
+	1: st_type : 0x3 (STT_SECTION)
+	1: st_other: 0x0
+	1: st_shndx: 0x1 (unknown)
+	2: st_name :  (0)
+	2: st_value: 0x44b4
+	2: st_size : 0x0
+	2: st_bind : 0x0 (STB_LOCAL)
+	2: st_type : 0x3 (STT_SECTION)
+	2: st_other: 0x0
+	2: st_shndx: 0x2 (unknown)
+	.
+	.
+	.
+	2154: st_name : _pthread_atfork (5c74)
+	2154: st_value: 0x95f88
+	2154: st_size : 0x28
+	2154: st_bind : 0x2 (STB_WEAK)
+	2154: st_type : 0x2 (STT_FUNC)
+	2154: st_other: 0x0
+	2154: st_shndx: 0x9 (unknown)
+	symbols cmd: r .dynsym
+	0: st_name :  (0)
+	0: st_value: 0x0
+	0: st_size : 0x0
+	0: st_bind : 0x0 (STB_LOCAL)
+	0: st_type : 0x0 (STT_NOTYPE)
+	0: st_other: 0x0
+	0: st_shndx: 0x0 (SHN_UNDEF)
+	symbols cmd: <cr>
+	1: st_name :  (0)
+	1: st_value: 0x94
+	1: st_size : 0x0
+	1: st_bind : 0x0 (STB_LOCAL)
+	1: st_type : 0x3 (STT_SECTION)
+	1: st_other: 0x0
+	1: st_shndx: 0x1 (unknown)
+	symbols cmd: <cr>
+	2: st_name :  (0)
+	2: st_value: 0x44b4
+	2: st_size : 0x0
+	2: st_bind : 0x0 (STB_LOCAL)
+	2: st_type : 0x3 (STT_SECTION)
+	2: st_other: 0x0
+	2: st_shndx: 0x2 (unknown)
+	symbols cmd: <cr>
+	3: st_name :  (0)
+	3: st_value: 0xcb64
+	3: st_size : 0x0
+	3: st_bind : 0x0 (STB_LOCAL)
+	3: st_type : 0x3 (STT_SECTION)
+	3: st_other: 0x0
+	3: st_shndx: 0x3 (unknown)
+	symbols cmd: <cr>
+	4: st_name :  (0)
+	4: st_value: 0x1284c
+	4: st_size : 0x0
+	4: st_bind : 0x0 (STB_LOCAL)
+	4: st_type : 0x3 (STT_SECTION)
+	4: st_other: 0x0
+	4: st_shndx: 0x4 (unknown)
+	symbols cmd: <cr>
+	5: st_name :  (0)
+	5: st_value: 0x1286c
+	5: st_size : 0x0
+	5: st_bind : 0x0 (STB_LOCAL)
+	5: st_type : 0x3 (STT_SECTION)
+	5: st_other: 0x0
+	5: st_shndx: 0x5 (unknown)
+	symbols cmd: +
+	6: st_name :  (0)
+	6: st_value: 0x12cb0
+	6: st_size : 0x0
+	6: st_bind : 0x0 (STB_LOCAL)
+	6: st_type : 0x3 (STT_SECTION)
+	6: st_other: 0x0
+	6: st_shndx: 0x6 (unknown)
+	symbols cmd: +
+	7: st_name :  (0)
+	7: st_value: 0x13d88
+	7: st_size : 0x0
+	7: st_bind : 0x0 (STB_LOCAL)
+	7: st_type : 0x3 (STT_SECTION)
+	7: st_other: 0x0
+	7: st_shndx: 0x7 (unknown)
+	symbols cmd: -
+	6: st_name :  (0)
+	6: st_value: 0x12cb0
+	6: st_size : 0x0
+	6: st_bind : 0x0 (STB_LOCAL)
+	6: st_type : 0x3 (STT_SECTION)
+	6: st_other: 0x0
+	6: st_shndx: 0x6 (unknown)
+	symbols cmd: -
+	5: st_name :  (0)
+	5: st_value: 0x1286c
+	5: st_size : 0x0
+	5: st_bind : 0x0 (STB_LOCAL)
+	5: st_type : 0x3 (STT_SECTION)
+	5: st_other: 0x0
+	5: st_shndx: 0x5 (unknown)
+	symbols cmd: q
+	cmd: q
+.EE
+.P
+An example of updating a symbol in a symbol table is given below. The
+shared library /usr/lib/libc.so was copied to /tmp before running edelf
+on it. The following example looks for all symbols containing the word
+"open", updates one of the symbol table entries, and then reviews the
+same symbol to show the changes. One thing to note, when a symbol is 
+found, you are asked if you wish to continue the search. The default
+value is yes.
+.EX 1
+	$ edelf /tmp/libc.so
+
+	editing file /tmp/libc.so ...
+	cmd: y
+	editing symbols:
+	symbols cmd: r * open	<<<=== search for phrase open
+	section 2: .dynsym (7)
+	186: st_name : _fdopen (6fc)
+	186: st_value: 0x8d424
+	186: st_size : 0xb0
+	186: st_bind : 0x1 (STB_GLOBAL)
+	186: st_type : 0x2 (STT_FUNC)
+	186: st_other: 0x0
+	186: st_shndx: 0x9 (unknown)
+	next symbol? [n/y/cr=y] <cr>	<<<== next entry
+	262: st_name : _open (a3c)
+	262: st_value: 0x92718
+	262: st_size : 0x68
+	262: st_bind : 0x2 (STB_WEAK)
+	262: st_type : 0x2 (STT_FUNC)
+	262: st_other: 0x0
+	262: st_shndx: 0x9 (unknown)
+	next symbol? [n/y/cr=y] n	<<<=== stop search
+	symbols cmd: u	<<<=== update current entry
+	section 2: .dynsym (7)
+	262: st_name [cr=_open]: <cr>
+	262: st_value [cr=0x92718]: <cr>
+	262: st_size [cr=0x68]: <cr>
+	262: st_bind [cr=0x2]: 0x3	<<<=== change value
+	st_bind: 0x3
+	262: st_type [cr=0x2]: <cr>
+	262: st_other [cr=0x0]: <cr>
+	262: st_shndx: [cr=0x9]: <cr>
+	write to file [cr=n/n/y] ? y	<<<=== write changes to file
+	symbols cmd: r * _open 	<<<=== verify changes
+	section 2: .dynsym (7)
+	262: st_name : _open (a3c)
+	262: st_value: 0x92718
+	262: st_size : 0x68
+	262: st_bind : 0x3 (STB_NUM)
+	262: st_type : 0x2 (STT_FUNC)
+	262: st_other: 0x0
+	262: st_shndx: 0x9 (unknown)
+	next symbol? [n/y/cr=y] n
+	symbols cmd: q
+	cmd: q
+.EE
+.SS EDELF DISASSEMBLER
+.P
+Edelf has a builtin SPARC (version 8) disassembler. You can give
+it an address, a file offset or a symbol, and edelf will find
+the text and disassemble it. The following example demonstrates
+how to disassemble within edelf.
+.EX 1
+
+	$ edelf edelf
+
+	editing	file edelf ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: A		<<<=== invoke disassembler
+	disassembler:
+	dasm cmd: ?
+	
+	disassembler menu:
+	
+	? or h - show menu
+	s - show section header data
+	p - show program header data
+	lf - list all functions in this file
+	lf * - list all functions in this file
+	lf <symbol> - list <symbol> functions in this file
+	d <symbol> - disassembler
+	d <symbol> <reloffset> <size> - disassembler
+	sd <offset> <size> - disassembler (section headers)
+	sd <section> <reloffset> <size> - disassembler (section headers)
+	sd <section#> <reloffset> <size> - disassembler (section headers)
+	pd <address> <size> - disassembler (program headers)
+	D - toggle C++ demangle mode
+	q - quit
+
+	dasm cmd: d main 0 100	<<<=== dasm 100 bytes of main 
+	541: st_name : main (1528)
+	541: st_value: 0x11324
+	541: st_size : 0x49c
+	541: st_bind : 0x1 (STB_GLOBAL)
+	541: st_type : 0x2 (STT_FUNC)
+	541: st_other: 0x0
+	541: st_shndx: 0xb (unknown)
+	use this symbol? [n/y/cr=n] y
+	00011324: 9de3bf78	save	rd=14 rs1=14 simm13=8056
+	00011328: f027a044	st	rd=24 rs1=30 simm13=68
+	0001132c: f227a048	st	rd=25 rs1=30 simm13=72
+	00011330: c027bfec	st	rd=0 rs1=30 simm13=8172
+	00011334: d007a044	ld	rd=8 rs1=30 simm13=68
+	00011338: d207a048	ld	rd=9 rs1=30 simm13=72
+	0001133c: 170000e2	sethi	rd=11 imm22=226
+	00011340: 9412e358	or	rd=10 rs1=11 simm13=856
+	00011344: 400106c0	call	0x106c0
+	00011348: 01000000	nop
+	0001134c: d027bfec	st	rd=8 rs1=30 simm13=8172
+	00011350: d007bfec	ld	rd=8 rs1=30 simm13=8172
+	00011354: 80a23fff	subcc	rd=0 rs1=8 simm13=8191
+	00011358: 12800004	bne	a=0 disp22=4
+	0001135c: 01000000	nop
+	00011360: 10800098	ba	a=0 disp22=152
+	00011364: 01000000	nop
+	00011368: d007bfec	ld	rd=8 rs1=30 simm13=8172
+	0001136c: 80a2203f	subcc	rd=0 rs1=8 simm13=63
+	00011370: 0280000d	be	a=0 disp22=13
+	00011374: 01000000	nop
+	00011378: 80a22064	subcc	rd=0 rs1=8 simm13=100
+	0001137c: 02800004	be	a=0 disp22=4
+	00011380: 01000000	nop
+	00011384: 1080000f	ba	a=0 disp22=15
+	dasm cmd: ?
+	
+	disassembler menu:
+	
+	? or h - show menu
+	s - show section header	data
+	p - show program header	data
+	d <symbol> <reloffset> <size> -	disassembler (uses section headers)
+	sd <offset> <size> - disassembler (uses	section	headers)
+	sd <section> <reloffset> <size>	- disassembler (uses section headers)
+	sd <section#> <reloffset> <size> - disassembler	(uses section headers)
+	pd <address> <size> - disassembler (uses program headers)
+	q - quit
+	
+	dasm cmd: d read 0 100
+	29: st_name : read (179)
+	29: st_value: 0x52d18
+	29: st_size : 0x28
+	29: st_bind : 0x2 (STB_WEAK)
+	29: st_type : 0x2 (STT_FUNC)
+	29: st_other: 0x0
+	29: st_shndx: 0x0 (SHN_UNDEF)
+	use this symbol? [n/y/cr=n]<cr>
+	475: st_name : readdynamic__FPc	(1160)
+	475: st_value: 0x31e30
+	475: st_size : 0x76c
+	475: st_bind : 0x1 (STB_GLOBAL)
+	475: st_type : 0x2 (STT_FUNC)
+	475: st_other: 0x0
+	475: st_shndx: 0xb (unknown)
+	use this symbol? [n/y/cr=n] y
+	00031e30: 9de3bf88	save	rd=14 rs1=14 simm13=8072
+	00031e34: f027a044	st	rd=24 rs1=30 simm13=68
+	00031e38: d007a044	ld	rd=8 rs1=30 simm13=68
+	00031e3c: 7fff967a	call	0x3fff967a
+	00031e40: 01000000	nop
+	00031e44: 13000141	sethi	rd=9 imm22=321
+	00031e48: 901263e0	or	rd=8 rs1=9 simm13=992
+	00031e4c: d2020000	ld	rd=9 rs1=8 asi=0 rs2=0
+	00031e50: 80a26000	subcc	rd=0 rs1=9 simm13=0
+	00031e54: 0280004e	be	a=0 disp22=78
+	00031e58: 01000000	nop
+	00031e5c: c027bfec	st	rd=0 rs1=30 simm13=8172
+	00031e60: 11000141	sethi	rd=8 imm22=321
+	00031e64: 921223c4	or	rd=9 rs1=8 simm13=964
+	00031e68: d0024000	ld	rd=8 rs1=9 asi=0 rs2=0
+	00031e6c: d2122030	lduh	rd=9 rs1=8 simm13=48
+	00031e70: 952a6010	sll	rd=10 rs1=9 shcnt=16
+	00031e74: 9132a010	srl	rd=8 rs1=10 shcnt=16
+	00031e78: d207bfec	ld	rd=9 rs1=30 simm13=8172
+	00031e7c: 80a24008	subcc	rd=0 rs1=9 rs2=8
+	00031e80: 06800004	bl	a=0 disp22=4
+	00031e84: 01000000	nop
+	00031e88: 10800031	ba	a=0 disp22=49
+	00031e8c: 01000000	nop
+	00031e90: d007bfec	ld	rd=8 rs1=30 simm13=8172
+	dasm cmd: ?
+	
+	disassembler menu:
+	
+	? or h - show menu
+	s - show section header	data
+	p - show program header	data
+	d <symbol> <reloffset> <size> -	disassembler (uses section headers)
+	sd <offset> <size> - disassembler (uses	section	headers)
+	sd <section> <reloffset> <size>	- disassembler (uses section headers)
+	sd <section#> <reloffset> <size> - disassembler	(uses section headers)
+	pd <address> <size> - disassembler (uses program headers)
+	q - quit
+	
+	dasm cmd: pd 0x31e30 100
+	00031e30: 9de3bf88	save	rd=14 rs1=14 simm13=8072
+	00031e34: f027a044	st	rd=24 rs1=30 simm13=68
+	00031e38: d007a044	ld	rd=8 rs1=30 simm13=68
+	00031e3c: 7fff967a	call	0x3fff967a
+	00031e40: 01000000	nop
+	00031e44: 13000141	sethi	rd=9 imm22=321
+	00031e48: 901263e0	or	rd=8 rs1=9 simm13=992
+	00031e4c: d2020000	ld	rd=9 rs1=8 asi=0 rs2=0
+	00031e50: 80a26000	subcc	rd=0 rs1=9 simm13=0
+	00031e54: 0280004e	be	a=0 disp22=78
+	00031e58: 01000000	nop
+	00031e5c: c027bfec	st	rd=0 rs1=30 simm13=8172
+	00031e60: 11000141	sethi	rd=8 imm22=321
+	00031e64: 921223c4	or	rd=9 rs1=8 simm13=964
+	00031e68: d0024000	ld	rd=8 rs1=9 asi=0 rs2=0
+	00031e6c: d2122030	lduh	rd=9 rs1=8 simm13=48
+	00031e70: 952a6010	sll	rd=10 rs1=9 shcnt=16
+	00031e74: 9132a010	srl	rd=8 rs1=10 shcnt=16
+	00031e78: d207bfec	ld	rd=9 rs1=30 simm13=8172
+	00031e7c: 80a24008	subcc	rd=0 rs1=9 rs2=8
+	00031e80: 06800004	bl	a=0 disp22=4
+	00031e84: 01000000	nop
+	00031e88: 10800031	ba	a=0 disp22=49
+	00031e8c: 01000000	nop
+	00031e90: d007bfec	ld	rd=8 rs1=30 simm13=8172
+	dasm cmd: q
+	cmd: q
+.EE
+.SH REMAINING MAIN MENU OPTIONS
+.P
+The main menu allows editing of several types of sections. I will not
+cover all these cases since the menus work similar to the previous
+examples. The additional menu options allow editing of the ELF
+hash table, versioning information, relocation data, and string
+tables. More editing options will be added later. 
+.P
+One menu option has not been mentioned, the overwriter. This option
+allows you overwrite anything in an ELF file. The overwriter
+is described in the next section.
+.SH EDELF OVERWRITER
+.P
+The final menu option I will cover is the overwriter. It allows
+you to view a section or segment of an ELF file as a hexadecimal
+stream, and allows you to overwrite sections of the file. It is
+strictly an overwriter. You can not insert new data or delete old
+data, just update the current contents. This capability allows you
+change machine code or update global data. You can see and update
+any section or segment of an ELF file using the overwriter mode.
+.P
+Since an ELF file contains information to describe an executable
+or object file from two points of view, compiler/linker vs. 
+loader, it provides two methods for accessing the data stored
+within the file. One mode uses the section headers and sees the
+file as a binary stream, the offsets are bytes offsets within 
+the file. The second mode sees the file as a program in memory,
+the offsets are virtual addresses which are translated to byte
+offsets within the file. The first mode uses the section headers,
+and the second mode using the program headers.
+.P
+The following example shows how to invoke the overwriter and how
+display the submenu.
+.EX 1
+	$ edelf reloc.o
+
+	editing file reloc.o ...
+	cmd: ?
+	main menu cmds:
+	? --> (show menu)
+	M --> (toggle review/update mode)
+	D --> (toggle demangle mode)
+	A --> (disassembler)
+	f --> (file header)
+	s --> (section headers)
+	p --> (program headers)
+	y --> (symbol tables)
+	t --> (string tables)
+	r --> (relocation entries)
+	o --> (overwrite)
+	h --> (hash table)
+	v --> (version entries)
+	d --> (dynamic table)
+	! --> (escape to shell)
+	q --> (quit current file)
+	Q --> (quit edelf)
+	cmd: o
+	section/segment overwriter:
+	overwriter cmd: ?
+
+	overwriter menu:
+
+	? or h - show menu
+	s - show section header data
+	p - show program header data
+	so <offset> - file overwriter (uses section headers)
+	so <section> <reloffset> - file overwriter (uses section headers)
+	so <section#> <reloffset> - file overwriter (uses section headers)
+	po <address> - memory overwriter (uses program headers)
+	q - quit
+	
+	overwriter cmd: 
+.EE
+.P
+The menu commands are described next.
+.TP in
+"?" or "h" - show menu.
+.TP in
+"s" - show section header data.
+.TP in
+"p" - show program header data.
+.TP in
+"so <offset>" - invoke file overwriter using section headers at the
+given file offset.
+.TP in
+"so <section> <reloffset>" - invoke file overwriter using the given 
+section header
+at the give relative offset, relative to the start of the section.
+.TP in
+"so <section#> <reloffset>" - invoke the file overwriter using the 
+given section header at the given relative offset, the offset is relative
+to the start of the section.
+.TP in
+"po <address>" - invoke memory overwriter at the given virtual address,
+uses the program headers to determine file offset internally.
+.TP in
+"q" - quit
+.P
+The following example uses the file shown below. The overwriter will
+be used to make two updates. The first update will modify the 
+global symbol greeting. The second update will modify the machine
+code in the function main. All offsets are virtual addresses since
+we will update the file a.out, a fully-bound executable. The 
+Solaris disassembler, dis, is used to find the addresses within
+main. All user input is in bold lettering.
+.EX 1
+	$ cat t.c		<<<=== source file to compile
+	#include <stdio.h>
+
+	char greeting[]	= "Hello World !!!";
+
+	main()
+	{
+		int i;
+
+		for (i=1; i<5; i++)
+		{
+			printf("%s\n", greeting);
+		}
+		return(0);
+	}
+
+	$ CC t.c		<<<=== compiler
+
+	$ a.out		<<<=== run a.out as is
+	Hello World !!!
+	Hello World !!!
+	Hello World !!!
+	Hello World !!!
+
+	$ edelf a.out	<<<=== run edelf the 1st time
+
+	editing	file a.out ...
+	cmd: y		<<<=== find address for "greeting"
+	editing	symbols:
+	symbols	cmd: r * greeting
+	section	3: .dynsym (15)
+	6: st_name : greeting (38)
+	6: st_value: 0x20e08		<<<=== address for greeting
+	6: st_size : 0x10
+	6: st_bind : 0x1 (STB_GLOBAL)
+	6: st_type : 0x1 (STT_OBJECT)
+	6: st_other: 0x0
+	6: st_shndx: 0x10 (unknown)
+	next symbol? [n/y/cr=y]	n
+	symbols	cmd: q
+	cmd: o		<<<=== invoke the overwriter
+	section/segment	overwriter:
+	overwriter cmd:	po 0x20e08	<<<=== overwrite greeting
+	00020e08: 48656c6c6f20576f726c642021212100    Hello World !!!.
+	00020e08: 3031323334		<<<=== enter "01234"
+	00020e08: 303132333420576f726c642021212100    01234 World !!!.
+	00020e18: 000000000000000000000000    ............
+	00020e18: q
+	write to file [cr=n/n/y] ? y
+	overwriter cmd:	q
+	cmd: q
+
+	$ a.out		<<<=== rerun command
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	
+	$ dis a.out 		<<<=== disassembler output of main
+			****   DISASSEMBLER  ****
+
+
+	disassembly for	a.out
+	
+	section	.text
+	.
+	.
+	.
+	main()
+	108b8:	9d e3 bf 98	   save		%sp, -104, %sp
+	108bc:	a0 10 20 01	   mov		1, %l0
+	108c0:	e0 27 bf f8	   st		%l0, [%fp - 8]
+	108c4:	e0 07 bf f8	   ld		[%fp - 8], %l0
+	108c8:	80 a4 20 05	   cmp		%l0, 5	<<<=== for-loop comparison
+	108cc:	16 80 00 0c	   bge		0x108fc
+	108d0:	01 00 00 00	   nop
+	108d4:	11 00 00 43	   sethi	%hi(0x10c00), %o0
+	108d8:	90 12 20 24	   or		%o0, 0x24, %o0	! 0x10c24
+	108dc:	13 00 00 83	   sethi	%hi(0x20c00), %o1
+	108e0:	92 12 62 08	   or		%o1, 0x208, %o1	! greeting
+	108e4:	40 00 40 e9	   call		printf
+	108e8:	01 00 00 00	   nop
+	108ec:	e0 07 bf f8	   ld		[%fp - 8], %l0
+	108f0:	a0 04 20 01	   add		%l0, 1,	%l0
+	108f4:	10 bf ff f4	   ba		0x108c4
+	108f8:	e0 27 bf f8	   st		%l0, [%fp - 8]
+	108fc:	c0 27 bf fc	   st		%g0, [%fp - 4]
+	10900:	b0 10 00 00	   clr		%i0
+	10904:	81 c7 e0 08	   ret
+	10908:	81 e8 00 00	   restore
+	1090c:	b0 10 00 00	   clr		%i0
+	10910:	81 c7 e0 08	   ret
+	10914:	81 e8 00 00	   restore
+	10918:	00 00 00 00	   unimp	0x0
+	1091c:	00 00 00 00	   unimp	0x0
+	10920:	00 00 00 00	   unimp	0x0
+	10924:	00 00 00 00	   unimp	0x0
+
+	$ edelf a.out	<<<=== run edelf the 2nd time
+	
+	editing	file a.out ...
+	cmd: o
+	section/segment	overwriter:
+	overwriter cmd:	po 0x108c8		<<<=== overwrite for-loop
+	000108c8: 80a420051680000c0100000011000043    .. ............C
+	000108c8:	10	<<<=== change iterations to 0x10
+	000108c8: 80a420101680000c0100000011000043    .. ............C
+	000108d8: 901220241300008392126208400040e9    .. $......b.@.@.
+	000108d8: q
+	write to file [cr=n/n/y] ? y
+	overwriter cmd:	q
+	cmd: q
+
+	$ a.out 		<<<=== rerun cmd with updated iterations
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+	01234 World !!!
+
+.EE
+.SH OPTIONS
+.TP 1i
+.BI \-? 
+causes a usage message to be printed.
+.TP 1i
+.BI \-D
+enables C++ name demangling; by default, it is turned off. C++ name
+demangling can be enabled from within edelf.
+.SH SEE ALSO
+elf(3ELF), a.out(4)
+.SH PROVIDER
+Mike A. Rumore, mrumore@lucent.com
+.SH AUTHOR
+Mike A. Rumore, mrumore@lucent.com

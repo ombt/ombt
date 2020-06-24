@@ -1,0 +1,28 @@
+hrdcpy a.out
+ ENTER START AND END VALUES: 
+-3 4
+ WILL COUNT UP !!!
+ NUMBER IS ...   -3
+ NUMBER IS ...   -2
+ NUMBER IS ...   -1
+ NUMBER IS ...   0
+ NUMBER IS ...   1
+ NUMBER IS ...   2
+ NUMBER IS ...   3
+ NUMBER IS ...   4
+hrdcpy a.out
+ ENTER START AND END VALUES: 
+-5 -7
+ WILL COUNT DOWN !!!
+ NUMBER IS ...   -5
+ NUMBER IS ...   -6
+ NUMBER IS ...   -7
+hrdcpy a.out
+ ENTER START AND END VALUES: 
+10 7
+ WILL COUNT DOWN !!!
+ NUMBER IS ...   10
+ NUMBER IS ...   9
+ NUMBER IS ...   8
+ NUMBER IS ...   7
+hrdcpy exit

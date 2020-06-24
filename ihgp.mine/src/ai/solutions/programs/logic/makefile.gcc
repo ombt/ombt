@@ -1,0 +1,23 @@
+#All variables needed by this makefile are set by the top-level makefile.
+
+LIB_OBJS = logic.o
+
+OBJS = $(LIB_OBJS) test1.o test2.o test3.o
+
+TARGETS = test1 test2 test3
+
+all:    logiclib $(TARGETS)
+
+clean:
+	rm -f $(OBJS) $(LOGICLIB) $(TARGETS)
+
+logiclib:	$(LIB_OBJS)
+	$(AR) $(LOGICLIB) $(LIB_OBJS)
+
+test1:	test1.o
+	$(CXX) $(CXXFLAGS) $< -o $@ $(LOGICLIB) $(UTILLIB)
+test2:	test2.o
+	$(CXX) $(CXXFLAGS) $< -o $@ $(LOGICLIB) $(UTILLIB)
+test3:	test3.o
+	$(CXX) $(CXXFLAGS) $< -o $@ $(LOGICLIB) $(UTILLIB)
+

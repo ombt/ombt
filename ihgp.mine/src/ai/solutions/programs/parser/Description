@@ -1,0 +1,141 @@
+Parser based on CF-PSG (context-free phrase structure grammar)
+==============================================================
+
+This program parses natural language using a context-free
+phrase structure grammar or CF-PSG. Key features of a CF-PSG are
+the use of a set of syntactic categories and a set of rules that
+describe how one syntactic category, the LHS of the rule, can be
+realized as sequences of other syntactic categories, the RHS of the
+rule. As will be explained in "The algorithm" section the process
+of rewriting as it were LHS categories to RHS syntactic categories
+can be thought of as a problem-reduction problem.
+
+The classes
+-----------
+
+First an enum is defined that described all syntactic categories
+known by the parser:
+
+enum Item
+{
+    S,
+    VP,
+    etc.
+};
+
+Next a class Rule is defined that represents rules of the CF-PSG
+grammar (the "rewrite" rules):
+
+class Rule;
+
+Objects of class Rule consist of a head element of type Item, the LHS
+category, and a body of elements of type Item, a sequence of RHS categories.
+The rules are stored in a database, called the grammar. The words that the
+parser recognizes are stored in another database, called the lexicon. The
+items in this database are objects of class Word:
+
+class Word;
+
+Objects of class Word consist of a string and an element of type Item
+that denotes the syntactic category associated with this string.
+
+The main search classes are class Element and class Parse:
+
+class Element : public OrNode;
+
+Class Element represents the nodes generated the AND/OR-search and
+serves as an abstraction of the syntactic categories that must
+be "solved". It consists of an element of type Item. 
+
+Class Parse represents the search algorithm. The depth-first algorithm
+is selected:
+
+class Parse : public AODepthTree
+
+The algorithm
+-------------
+
+A different way to describe how the rules of the grammar are used is to
+say that each LHS category can be rewritten to one or more RHS categories.
+The parsing process starts with one syntactic category that represents
+the sentence. This category is called S. The first step is to rewrite
+S to one or more new syntactic categories. These syntactic categories
+must also be rewritten. A syntactic category is final or terminal if
+it can be associated to the corresponding "phrase" in the sentence.
+As such the parsing process can be regarded as a problem reduction
+process. Rewriting the LHS category to a number of RHS categories means
+dividing the original problem into a number of sub-problems, where
+each new RHS represents one of the sub-problems. Since several rules
+may apply to the same LHS it will be necessary to try several possibilities,
+i.e. search will be needed. In terms of AND/OR-search each syntactic
+category is considered a node in the search tree. Rewriting a syntactic
+category means generating the node's successors. Depending on the
+rule that is used to rewrite the syntactic category AND-nodes or OR-nodes
+will be generated. If the rule specifies that the category is rewritten
+to more than one new category this means that AND-nodes must be
+generated, one for every new syntactic category. If the rule rewrites
+the category to only one new category only one node must be created:
+an OR-node. A node is terminal if the syntactic category is terminal,
+meaning that the category can be associated to the corresponding
+"phrase" in the sentence.
+
+Remember that the terminology used for AND/OR-nodes differs from
+standard terminology (which was also used in the description above
+of the parsing process as an AND/OR search). In AIsearch's terminology
+each node in the AND/OR-search is an OR-node and an AND-node is a
+collection of OR-nodes. In terms of the parser this means that every
+time a syntactic category is rewritten to more than one new category
+an AND-node must be created to which each category is added as an
+OR-node.
+
+The algorithm itself is failry simple. Every time an object of class
+Element must be expanded the grammar is searched to check for a rule
+whose head matches with the Item element of the object. For each rule
+found first an AND-node is created. Next for every syntactic
+category in the RHS of the rule an OR-node is created which is then
+added to the AND-node. To determine if a node is terminal the lexicon
+is searched for a word whose string and syntatic category together
+match the word in the sentence that is to be parsed and the syntactic
+category associated with this word according to the Element object generated
+by the search.
+
+Using the parser
+----------------
+
+The parser can be used simple by calling the program and specifying
+the sentence to be parsed as a command line option. For example:
+
+parser john thinks that the man sleeps
+
+The parser will than check if the sentence can be parsed using the
+rules in the grammar and the words in the lexicon. If according to
+this information the sentence is correct the parse tree, i.e. the
+syntactic categories that together make up the solution path, is
+output to the screen.
+
+The parser can easily be extended by adding rules to the grammar and
+words to the lexicon. New rules can be introduced by modifying
+the following array:
+
+Rule rules[] = { ... };
+
+The size of this array is denoted by MaxRule. If new rules are added
+to rules[] MaxRule must be updated accordingly. New words can be
+introduced by modifying the following array:
+
+Word lexicon[] = { ... };
+
+The size of this array is denoted by MaxWord. If new words are added 
+to lexicon[] MaxWord must be updated accordingly. Both of these arrays
+are declared in data.cc
+
+It is also possible to introduce new syntactic categories. Two trings
+must be done. First, the enumeration type Item must be updated with
+the new categories. Next the textual representation of this category
+must be added to the following array declared in parser.cc (so that
+it can be printed when the parse tree is output to the screen):
+
+char *table[] = { ... };
+
+Note that the order of the elements in this array must be equal to
+the order of the elements defined in the enumeration type Item.

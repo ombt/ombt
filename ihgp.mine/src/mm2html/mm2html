@@ -1,0 +1,439 @@
+#/bin/ksh
+###########################################################################
+#
+# mm2html
+#
+# This tool converts a troff formatted document to an html formatted document.
+# It has many restrictions and limitations.
+#
+# D. Noonan 1.0 7/23/95   Original Version
+# D. Noonan 2.0 12/26/95  Added Macro Capability and Proper MT Macro Expansion.
+# D. Noonan 2.1 12/31/95  Improved Table Capability
+# D. Noonan 2.2 7/10/95   Change Company Name to Lucent technologies
+# D. Noonan 2.3 8/1/96    Fixed problems with use of .tr macros in Headings
+#                     	  (With help of Gary Dodd)
+# D. Noonan 2.4 8/2/96    Implemented .MT 4 and .MT 5 macros
+# D. Noonan 3.0 8/7/96    Added -g option to overide default logo
+#                         Added .FG list 
+#		          Added all remaining .MT types.
+#		          Added .PM macros support
+#		          Added -c option
+#			  Changed background color to white.
+#			  Allow for Common logo image location.
+# D. Noonan 3.1 8/8/96    Added BP option to .PM macro
+#			  Fixed bug in .MT 0
+#			  Removed 'Inc.' for COMPANY Name
+#			  Fixed bug in start of <BODY> to properly set BGCOLOR
+# D. Noonan 3.2 10/2/96   Change TAG variable to use cat if TAG non existent.
+#			  or if $TAG not executable
+#                         Fixed .ce so that it accepts 2nd argument.
+# D. Noonan 3.3 11/11/97  Added support for AS and AE macros.
+#
+# D. Noonan 3.4 02/20/98  Fixed bug in handling of Tables using T{ and T} 
+#			  in mm2html.awk (Fix Provided by Scott Collins)
+#
+##########################################################################
+VERSION=3.4
+DATE=02/20/98
+COMPANY="${COMPANY:-Lucent Technologies}"
+DIVISION="${DIVISION:-Bell Laboratories}"
+LOGOFILE=/GIFS/mm2html.gif
+DEFLOGO="`basename $0`.gif"  #Default Logo Image File
+BGCOLOR=${BGCOLOR:-FFFFFF}  #Default color is White
+TAG=${TAG:-cat} # Default Tag program ... set to 'cat' if not needed
+
+[[ ! -x $TAG ]] && echo "Warning! $TAG not found, ignoring it." >&2 && TAG=cat
+
+if [ "$1" = "-?" ]
+then
+    echo "
+usage: $0 [ -l num ] [-g file] [-c color] [ troff_file ]
+
+       Version $VERSION - $DATE
+
+       $0 will attempt to convert a troff file  with memorandum macros
+       to an html 3.0 file.  The html translation makes use of hypertext
+       links in the table of contents (TOC), footnotes, and references.
+
+       The TOC will appear at the beginning of the html document.
+       The level of headings which is displayed in the TOC can be 
+       controlled by the '-l' option.  The default is three levels.  
+       A value of 0 will prevent a Table of Contents from being generated.
+
+       The company logo will by default be referenced as a GIF file called
+       $DEFLOGO in the current directory.
+       The '-g' option can be used to specify an alternate company logo file.
+
+       The '-c' option allows you to overide the default background color.
+       The default is set to '$BGCOLOR' (white).
+
+       Footnotes are numbered sequentially and are displayed at the end of
+       the document.
+
+       References are number sequentially and are displayed at the end of
+       the document.
+       
+       Imbedded font controls (e.g., \\\\fB) are interpreted.
+
+       $0 understands the following mm macros.
+
+	TITLE/ABSTRACT:
+	.ND, .TL, .AU, .AS, .AE, .MT
+       
+	HEADING:
+	.H, .HU, 
+
+	LISTS:
+	.AL, .DL, .BL, .LI, .LE,  (arguments to these macros are ignored)
+
+	MACROS:
+	.de, ..  (Does not interpret .if yet)
+
+	MISCELLANEOUS:
+	.P, .PM, .br, .bp, .sp, .ce, .nf, .fi, .tr, .DS, .DE, .NS, .TB, .FG,
+	
+	FONT CONTROL:
+	.R, .I, .B, \\\\fB, \\\\fI, \\\\fP, \\\\f1, \\\\f2, \\\\f(CO
+
+	FOOTNOTES/REFERENCES:
+	.FS, .FE, .RS, .RF
+
+	REGISTERS/STRINGS
+	.nr, .ds
+	
+	TABLES:
+	.TS, .TE  With Limitations:
+			- Recognizes l,c,r,s,B, and I specifications only.
+			- Treats n as l.
+			- Does not recognize ^ as vertical spans.
+			- Does not recognize .TH or .T&
+
+	EQUATIONS:
+	.EQ, .EN  (Does not interpret equations, simply centers the
+		   eqn text)
+
+	PIC/GRAP, etc:
+	.BP, .PS, .PE,.G1, .G2 
+	  (Does not interpret, justs prints a line that indicates
+		   picture is missing)
+
+	ESCAPE TO HTML:
+	.html text
+	Using the '.html' macro will cause the text following it to be
+	printed to the html file while not printing in a troff file.
+
+	No user defined macros are supported.
+" | pg
+    exit 1
+fi
+
+if [ "$1" = "-l" ]
+then
+    shift
+    level=$1
+    shift
+elif [ "$1" = "-g" ]
+then
+    shift
+    LOGOFILE=$1
+    shift
+elif [ "$1" = "-c" ]
+then
+    shift
+    BGCOLOR=$1
+    shift
+else
+    level=3
+fi
+
+BINDIR=`whence $0`
+BINDIR=${BINDIR%/`basename $0`}
+TEMPDIR=/tmp/$$
+tmpfile=$TEMPDIR/pass2
+tocfile=$TEMPDIR/pass3
+trap "rm -rf $TEMPDIR;exit" 0 1 2
+mkdir -p $TEMPDIR
+
+#PASS 0 - Resolve Tags
+
+echo "<HTML><BODY BGCOLOR=#$BGCOLOR>"
+
+#PASS 1 - Macro Substitution
+$TAG $* | nawk '
+BEGIN { de="" }
+
+$1 == ".de" { de="."$2; cnt=0; next }
+
+$1 == ".." { de=""; next }
+
+de != "" {
+    line=$0
+    gsub("\\\\\\.",".",line)
+    gsub("\\\\\\\\","\\",line)
+    if(de in macro) macro[de]=macro[de]"\n"line
+    else macro[de]=line
+}
+
+de == "" { 
+    if ($1 in macro) 
+    {
+	expand=macro[$1]
+	macroline=parse($0)
+	nf=split(macroline,Args,";")
+	for (i=2;i<=nf;i++)
+	{
+	    Arg=i-1
+	    gsub("\\\\\\$"Arg,Args[i],expand)
+	}
+	# Get rid of args not specified on macroline
+	gsub("\\\\\\$.","",expand)
+	print expand
+    }
+    else print
+}
+
+# Parses lines that may have some tokens in quotes
+# return parsed string with delimeters of ";"
+# any original ";" will be changed to a ":"
+function parse(line)
+{
+	gsub(";",":",line)
+	dquote="\""
+	nf=split(line,args,dquote)
+	nline=""
+	for(i=1;i<=nf;i++)
+	{
+	    if(i%2 == 1) gsub("  *",";",args[i])
+	    nline=nline args[i]
+	}
+	return(nline)
+}
+
+END {
+    #print "---------------------------------------"
+    #for (m in macro)
+    #{
+	#print "macro: "m
+	#print macro[m]
+	#print ""
+    #}
+}
+#PASS 2 - Number and String Register Substitution
+' | nawk '
+BEGIN { maxH=0 }
+
+{
+    for(i in nr) gsub("\\\\n\\("i,nr[i],$0)
+    for(i in ds) gsub("\\\\\\*\\("i,ds[i],$0)
+}
+
+$1 == ".H" { 
+    if ($2>maxH) maxH=$2
+    nr["H"$2]++
+    for(i=1+$2;i<maxH;i++) nr["H"i]=0
+}
+
+$1 == ".HU" { 
+    if (2>maxH) maxH=2
+    nr["H2"]++
+    for(i=1+2;i<maxH;i++) nr["H"i]=0
+}
+
+$1 == ".nr" {
+    nrline=parse($0)
+    split(nrline,args,";")
+    val=args[3]
+    #print "arg3=\""arg3"\""
+    gsub(" ","",val)
+    #print "val=\""val"\""
+    str="ksh \"let x=" val ";echo \\$x\""
+    #print "STRING="str
+    str | getline ans
+    close(str)
+    #print "ans=\""ans"\""
+    nr[args[2]]=ans
+    #next
+}
+
+$1 == ".ds" {
+    dsline=parse($0)
+    split(dsline,args,";")
+    ds[args[2]]=args[3]
+    #next
+}
+
+{ 
+    i=index($0,"\\\"")
+    #print "i="
+    if (i > 0) print substr($0,1,i-1)
+    else print
+}
+# Parses lines that may have some tokens in quotes
+# return parsed string with delimeters of ";"
+# any original ";" will be changed to a ":"
+function parse(line)
+{
+	gsub(";",":",line)
+	dquote="\""
+	nf=split(line,args,dquote)
+	nline=""
+	for(i=1;i<=nf;i++)
+	{
+	    if(i%2 == 1) gsub("  *",";",args[i])
+	    nline=nline args[i]
+	}
+	return(nline)
+}
+
+' > $tmpfile
+
+#PASS 3 - Table of Contents
+nawk '
+BEGIN {
+    oFS=FS
+    tb=0;fg=0;
+    llevel=0
+    mt[1]="TECHNICAL MEMORANDUM"
+    mt[2]="INTERNAL MEMORANDUM"
+    mt[3]="ADMINISTRATIVE MEMORANDUM"
+    mt[4]=""
+    mt[5]=""
+    if (level>0) toc=1
+}
+NR==1 { if (level>0) toc=1 }
+$1==".tr" {
+    ltr=length($2)
+    for(i=1;i<=ltr;i++)
+    {
+	t=substr($2,i+1,1)
+	if(t=="" || ltr==1) t=" "
+	tr[substr($2,i++,1)]=t
+    }
+    next
+}
+$1==".HU" {
+    if(toc==1) print "<hr><H2 align=center>TABLE OF CONTENTS</H2>"
+    toc=0
+    if(level < 2) next
+    gsub(quote,"")
+    gsub(".HU ","")
+    clean()
+    for(i=2;i<llevel;i++) print "</ul>"
+    for(i=llevel;i<2;i++) print "<ul>"
+    print "<li><A HREF=\"#"$0"\">"$0"</A></li>"
+    sec[2]++
+    llevel=2
+    next
+}
+$1==".H" {
+    if(toc==1) print "<hr><H2 align=center>TABLE OF CONTENTS</H2>"
+    toc=0
+    gsub(quote,"")
+    clean()
+    if(level < $2) next
+    heading=substr($0,index($0,$3))
+    sec[$2]++
+    getsection($2)
+    hsize=$2+1
+    for(i=$2;i<llevel;i++) print "</ul>"
+    for(i=llevel;i<$2;i++) print "<ul>"
+    print "<li> <A HREF=\"#" heading "\">" section "   " heading "</A></li>"
+    llevel=$2
+    next
+}
+$1==".FG" {
+    line=parse($0)
+    split(line,l,";")
+    FG[++fg]=l[2]
+}
+$1==".TB" {
+    line=parse($0)
+    split(line,l,";")
+    TB[++tb]=l[2]
+}
+# Parses lines that may have some tokens in quotes
+# return parsed string with delimeters of ";"
+# any original ";" will be changed to a ":"
+function parse(line)
+{
+	gsub(";",":",line)
+	dquote="\""
+	nf=split(line,args,dquote)
+	nline=""
+	for(i=1;i<=nf;i++)
+	{
+	    if(i%2 == 1) gsub("  *",";",args[i])
+	    nline=nline args[i]
+	}
+	return(nline)
+}
+function clean()
+{
+    npre=gsub("\\\\f\\(CO","<pre>")
+    if(npre>0)pre="</pre>"
+    opre=gsub("\\\\fB",pre"<B>")
+    opre+=gsub("\\\\f3",pre"<B>")
+    opre+=gsub("\\\\fI",pre"<I>")
+    opre+=gsub("\\\\f2",pre"<I>")
+    opre+=gsub("\\\\fP",pre"</B></I>")
+    opre+=gsub("\\\\fR",pre"</B></I>")
+    if(opre>0) pre=""
+    gsub("\\\\\\(co","\\&#169;")
+    gsub("\\\\\\(dg","\\&#134;")
+    gsub("\\\\\\(co","\\&#1;")
+    gsub("\\\\\\(dd","\\&#135;")
+    gsub("\\\\\\(rg","\\&#174;")
+    gsub("\\\\\\(tm","\\&#153;")
+    for (cli=1;cli<=refn;cli++)
+    {
+	search="\\\\\\*\\("REFN[cli]
+	repl="<A HREF=\"#Ref_"cli"\">[Reference "cli"]</A>"
+        gsub(search,repl)
+    }
+    gsub("\\\\\\*\\(..","")
+    for(t in tr)
+    {
+	    gsub(t,tr[t])
+    }
+}
+function getsection(l)
+{
+    section=""
+    for (i=1;i<=l;i++)
+    {
+	if(sec[i]=="") break
+	if (section=="") section=sec[i]
+	else section=section "." sec[i]
+    }
+    for (i=l+1;i<=6;i++) sec[i]=""
+    if(l==1) section=section"."
+}
+END {
+    for(i=1;i<=llevel;i++) print "</ul>"
+    print "<p>"
+    if(fg>0){
+        print "<hr><H2 align=center>FIGURES</H2><ul>"
+        for(i=1;i<=fg;i++)
+        {
+            print "<li><A HREF=\"#Figure "i"\">Figure "i": "FG[i]"</A></li>"
+        }
+        print "</ul>"
+    }
+    if(tb>0){
+	print "<hr><H2 align=center>TABLES</H2><ul>"
+	for(i=1;i<=tb;i++)
+	{
+	    print "<li><A HREF=\"#Table "i"\">Table "i": "TB[i]"</A></li>"
+	}
+	print "</ul>"
+    }
+}
+' COMPANY="$COMPANY" DIVISION="$DIVISION" level=${level:-3} quote="\"" fs="'" $tmpfile > $tocfile
+
+#PASS 4 - HTML Translation
+nawk -f $BINDIR/mm2html.awk BGCOLOR=$BGCOLOR COMPANY="$COMPANY" DIVISION="$DIVISION" LOGOFILE=${LOGOFILE:-DEFLOGO} tocfile=$tocfile quote="\"" fs="'" $tmpfile
+echo "<hr>
+<H5> Converted from troff text to html using <A href=http://waterworks.cb.lucent.com/noonan>mm2html</A> on `date` </H5>
+</BODY></HTML>"
+[[ "$LOGOFILE" = "" ]] && echo "WARNING: Be sure to copy $LOGOFILE for the $COMPANY Logo." >&2
+exit

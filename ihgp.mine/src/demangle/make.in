@@ -1,0 +1,14 @@
+CC = CC
+CCFLAGS = -g 
+#
+LD = CC
+LDFLAGS = -g 
+#
+demangle
+demangle.c
+-ldemangle
+install1=chmod 755 demangle
+install2=cp demangle /home/rumore/bin/demangle
+install3=rcp demangle integ@lts02:/home/integ/bin/demangle
+install4=rcp demangle integ@ihlbs1:/home/integ/bin/demangle
+

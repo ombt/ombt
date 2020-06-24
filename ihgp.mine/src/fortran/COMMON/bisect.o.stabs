@@ -1,0 +1,243 @@
+Elf Header:
+  Ident = "\x7fELF", Class = 1 (32), Data = 2 (2MSB), Id ver = 1 (CURRENT)
+  Type = 1 (REL),	Machine = 2 (SPARC),	Version = 1 (CURRENT)
+  Start address = 0x00000000,	Phdr offset = 0x00000000
+  Shdr offset   = 0x00001798,	File flags = 0x00000000
+  Ehdr size = 52,	Phdr size = 0,		Num Phdrs = 0
+  Shdr size = 40,	Num Shdrs = 13,		Str Index = 10
+
+
+Section Table @ 0x00001798 (13 entries, 40 bytes each):
+
+Section 0 () @ 0x00001798
+  Type = 0 (NULL),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000000, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000000,	Entry size = 0
+
+Section 1 (.text) @ 0x000017c0
+  Type = 1 (PROGBITS),	Flags = 0x6 (EXEC-ALLOC)
+  Addr = 0x00000000,	Offset = 0x00000034, Size = 1464
+  Link = 0,		Info = 0
+  Align = 0x00000004,	Entry size = 0
+
+Section 2 (.rela.text) @ 0x000017e8
+  Type = 4 (RELA),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00001bc4, Size = 2172
+  Link = 11 (.symtab),	Info = 1 (.text)
+  Align = 0x00000004,	Entry size = 12
+
+Section 3 (.data) @ 0x00001810
+  Type = 1 (PROGBITS),	Flags = 0x3 (ALLOC-WRITE)
+  Addr = 0x00000000,	Offset = 0x000005ec, Size = 140
+  Link = 0,		Info = 0
+  Align = 0x00000004,	Entry size = 0
+
+Section 4 (.bss) @ 0x00001838
+  Type = 8 (NOBITS),	Flags = 0x3 (ALLOC-WRITE)
+  Addr = 0x00000000,	Offset = 0x00000678, Size = 0
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 5 (.stab) @ 0x00001860
+  Type = 1 (PROGBITS),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000678, Size = 1464
+  Link = 7 (.stabstr),	Info = 0
+  Align = 0x00000004,	Entry size = 12
+
+Section 6 (.rela.stab) @ 0x00001888
+  Type = 4 (RELA),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00002440, Size = 132
+  Link = 11 (.symtab),	Info = 5 (.stab)
+  Align = 0x00000004,	Entry size = 12
+
+Section 7 (.stabstr) @ 0x000018b0
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00000c30, Size = 2582
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 8 (.rodata) @ 0x000018d8
+  Type = 1 (PROGBITS),	Flags = 0x2 (ALLOC)
+  Addr = 0x00000000,	Offset = 0x00001648, Size = 200
+  Link = 0,		Info = 0
+  Align = 0x00000008,	Entry size = 0
+
+Section 9 (.comment) @ 0x00001900
+  Type = 1 (PROGBITS),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00001710, Size = 38
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 10 (.shstrtab) @ 0x00001928
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00001736, Size = 98
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+Section 11 (.symtab) @ 0x00001950
+  Type = 2 (SYMTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x000019a0, Size = 368
+  Link = 12 (.strtab),	Info = 18 (end of LOCAL syms)
+  Align = 0x00000004,	Entry size = 16
+
+Section 12 (.strtab) @ 0x00001978
+  Type = 3 (STRTAB),	Flags = 0x0 (NONE)
+  Addr = 0x00000000,	Offset = 0x00001b10, Size = 180
+  Link = 0,		Info = 0
+  Align = 0x00000001,	Entry size = 0
+
+
+Symbol table -- 23 entries	 value	   size		info	  shndx
+
+  0:                           00000000  00000000  LOCAL  NOTYPE    0
+  1:                 bisect.f  00000000  00000000  LOCAL    FILE  ABS
+  2:                           00000000  00000000  LOCAL SECTION    1
+  3:                           00000000  00000000  LOCAL SECTION    3
+  4:                           00000000  00000000  LOCAL SECTION    4
+  5:         __g77_cilist_0.0  00000000  00000014  LOCAL  OBJECT    3
+  6:                           00000000  00000000  LOCAL SECTION    8
+  7:         __g77_cilist_1.1  00000014  00000014  LOCAL  OBJECT    3
+  8:         __g77_cilist_2.2  00000028  00000014  LOCAL  OBJECT    3
+  9:         __g77_cilist_3.3  0000003c  00000014  LOCAL  OBJECT    3
+ 10:         __g77_cilist_4.4  00000050  00000014  LOCAL  OBJECT    3
+ 11:         __g77_cilist_5.5  00000064  00000014  LOCAL  OBJECT    3
+ 12:         __g77_cilist_6.6  00000078  00000014  LOCAL  OBJECT    3
+ 13:                   Letext  000005b8  00000000  LOCAL  NOTYPE    1
+ 14:                    *ABS*  00000000  00000000  LOCAL  NOTYPE  ABS
+ 15:                           00000000  00000000  LOCAL SECTION    5
+ 16:                           00000000  00000000  LOCAL SECTION    7
+ 17:                           00000000  00000000  LOCAL SECTION    9
+ 18:                  bisect_  00000000  000005b8 GLOBAL    FUNC    1
+ 19:                 bigtest_  00000008  00000010 GLOBAL  OBJECT  COMMON
+ 20:                   s_wsle  00000000  00000000 GLOBAL  NOTYPE    0
+ 21:                   do_lio  00000000  00000000 GLOBAL  NOTYPE    0
+ 22:                   e_wsle  00000000  00000000 GLOBAL  NOTYPE    0
+
+
+Debugging Stab table -- 122 entries
+
+   0:  .stabs "bisect.f",N_UNDF,0x0,0x79,0xa16
+   1:  .stabs "/home/rumore/src/fortran/COMMON/",N_SO,0x0,0x0,0x0
+   2:  .stabs "bisect.f",N_SO,0x0,0x0,0x0
+   3:  .stabs "gcc2_compiled.",N_OPT,0x0,0x0,0x0
+   4:  .stabs "int:t(0,1)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+   5:  .stabs "char:t(0,2)=r(0,2);0;255;",N_LSYM,0x0,0x0,0x0
+   6:  .stabs "long int:t(0,3)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+   7:  .stabs "unsigned int:t(0,4)=r(0,1);0000000000000;0037777777777;",N_LSYM,0x0,0x0,0x0
+   8:  .stabs "long unsigned int:t(0,5)=r(0,1);0000000000000;0037777777777;",N_LSYM,0x0,0x0,0x0
+   9:  .stabs "long long int:t(0,6)=r(0,1);01000000000000000000000;0777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  10:  .stabs "long long unsigned int:t(0,7)=r(0,1);0000000000000;01777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  11:  .stabs "short int:t(0,8)=r(0,8);-32768;32767;",N_LSYM,0x0,0x0,0x0
+  12:  .stabs "short unsigned int:t(0,9)=r(0,9);0;65535;",N_LSYM,0x0,0x0,0x0
+  13:  .stabs "signed char:t(0,10)=r(0,10);-128;127;",N_LSYM,0x0,0x0,0x0
+  14:  .stabs "unsigned char:t(0,11)=r(0,11);0;255;",N_LSYM,0x0,0x0,0x0
+  15:  .stabs "float:t(0,12)=r(0,1);4;0;",N_LSYM,0x0,0x0,0x0
+  16:  .stabs "double:t(0,13)=r(0,1);8;0;",N_LSYM,0x0,0x0,0x0
+  17:  .stabs "long double:t(0,14)=r(0,1);16;0;",N_LSYM,0x0,0x0,0x0
+  18:  .stabs "complex int:t(0,15)=s8real:(0,1),0,32;imag:(0,1),32,32;;",N_LSYM,0x0,0x0,0x0
+  19:  .stabs "complex float:t(0,16)=r(0,16);4;0;",N_LSYM,0x0,0x0,0x0
+  20:  .stabs "complex double:t(0,17)=r(0,17);8;0;",N_LSYM,0x0,0x0,0x0
+  21:  .stabs "complex long double:t(0,18)=r(0,18);16;0;",N_LSYM,0x0,0x0,0x0
+  22:  .stabs "void:t(0,19)=(0,19)",N_LSYM,0x0,0x0,0x0
+  23:  .stabs "integer:t(0,20)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  24:  .stabs "unsigned:t(0,21)=r(0,1);0000000000000;0037777777777;",N_LSYM,0x0,0x0,0x0
+  25:  .stabs "byte:t(0,22)=r(0,22);-128;127;",N_LSYM,0x0,0x0,0x0
+  26:  .stabs "unsigned byte:t(0,23)=r(0,23);0;255;",N_LSYM,0x0,0x0,0x0
+  27:  .stabs "word:t(0,24)=r(0,24);-32768;32767;",N_LSYM,0x0,0x0,0x0
+  28:  .stabs "unsigned word:t(0,25)=r(0,25);0;65535;",N_LSYM,0x0,0x0,0x0
+  29:  .stabs "integer4:t(0,26)=r(0,1);01000000000000000000000;0777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  30:  .stabs "unsigned4:t(0,27)=r(0,1);0000000000000;01777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  31:  .stabs "logical:t(0,28)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  32:  .stabs "logical2:t(0,29)=r(0,29);-128;127;",N_LSYM,0x0,0x0,0x0
+  33:  .stabs "logical3:t(0,30)=r(0,30);-32768;32767;",N_LSYM,0x0,0x0,0x0
+  34:  .stabs "logical4:t(0,31)=r(0,1);01000000000000000000000;0777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  35:  .stabs "real:t(0,32)=r(0,1);4;0;",N_LSYM,0x0,0x0,0x0
+  36:  .stabs "double precision:t(0,33)=r(0,1);8;0;",N_LSYM,0x0,0x0,0x0
+  37:  .stabs "complex:t(0,34)=r(0,34);4;0;",N_LSYM,0x0,0x0,0x0
+  38:  .stabs "double complex:t(0,35)=r(0,35);8;0;",N_LSYM,0x0,0x0,0x0
+  39:  .stabs "__g77_f2c_integer:t(0,36)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  40:  .stabs "__g77_f2c_address:t(0,37)=*(0,10)",N_LSYM,0x0,0x0,0x0
+  41:  .stabs "__g77_f2c_real:t(0,38)=r(0,1);4;0;",N_LSYM,0x0,0x0,0x0
+  42:  .stabs "__g77_f2c_doublereal:t(0,39)=r(0,1);8;0;",N_LSYM,0x0,0x0,0x0
+  43:  .stabs "__g77_f2c_complex:t(0,40)=r(0,40);4;0;",N_LSYM,0x0,0x0,0x0
+  44:  .stabs "__g77_f2c_doublecomplex:t(0,41)=r(0,41);8;0;",N_LSYM,0x0,0x0,0x0
+  45:  .stabs "__g77_f2c_longint:t(0,42)=r(0,1);01000000000000000000000;0777777777777777777777;",N_LSYM,0x0,0x0,0x0
+  46:  .stabs "__g77_f2c_logical:t(0,43)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  47:  .stabs "__g77_f2c_flag:t(0,44)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  48:  .stabs "__g77_f2c_ftnlen:t(0,45)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  49:  .stabs "__g77_f2c_ftnint:t(0,46)=r(0,1);0020000000000;0017777777777;",N_LSYM,0x0,0x0,0x0
+  50:  .stabs "bisect_:F(0,28)",N_FUN,0x0,0x8,0x0
+  51:  .stabs "f:p(0,47)=*(0,48)=f(0,33)",N_PSYM,0x0,0x8,0x44
+  52:  .stabn N_SLINE,0x0,0x8,0x0
+  53:  .stabn N_SLINE,0x0,0x8,0x8
+  54:  .stabn N_SLINE,0x0,0x19,0x8
+  55:  .stabn N_SLINE,0x0,0x1a,0x60
+  56:  .stabn N_SLINE,0x0,0x1b,0x9c
+  57:  .stabn N_SLINE,0x0,0x1c,0xa0
+  58:  .stabn N_SLINE,0x0,0x21,0xb0
+  59:  .stabn N_SLINE,0x0,0x22,0xd4
+  60:  .stabn N_SLINE,0x0,0x23,0xf8
+  61:  .stabn N_SLINE,0x0,0x24,0x120
+  62:  .stabn N_SLINE,0x0,0x25,0x15c
+  63:  .stabn N_SLINE,0x0,0x26,0x160
+  64:  .stabn N_SLINE,0x0,0x2b,0x170
+  65:  .stabn N_SLINE,0x0,0x2c,0x178
+  66:  .stabn N_SLINE,0x0,0x2d,0x1c4
+  67:  .stabn N_SLINE,0x0,0x2e,0x290
+  68:  .stabn N_SLINE,0x0,0x32,0x330
+  69:  .stabn N_SLINE,0x0,0x33,0x360
+  70:  .stabn N_SLINE,0x0,0x34,0x380
+  71:  .stabn N_SLINE,0x0,0x38,0x420
+  72:  .stabn N_SLINE,0x0,0x39,0x448
+  73:  .stabn N_SLINE,0x0,0x3a,0x458
+  74:  .stabn N_SLINE,0x0,0x3b,0x460
+  75:  .stabn N_SLINE,0x0,0x3c,0x490
+  76:  .stabn N_SLINE,0x0,0x3d,0x4a0
+  77:  .stabn N_SLINE,0x0,0x3e,0x4a8
+  78:  .stabn N_SLINE,0x0,0x3f,0x4b0
+  79:  .stabn N_SLINE,0x0,0x40,0x4ec
+  80:  .stabn N_SLINE,0x0,0x41,0x4f0
+  81:  .stabn N_SLINE,0x0,0x43,0x500
+  82:  .stabn N_SLINE,0x0,0x48,0x508
+  83:  .stabn N_SLINE,0x0,0x49,0x518
+  84:  .stabn N_SLINE,0x0,0x4a,0x554
+  85:  .stabn N_SLINE,0x0,0x4b,0x558
+  86:  .stabn N_SLINE,0x0,0x4c,0x560
+  87:  .stabn N_SLINE,0x0,0x4d,0x598
+  88:  .stabn N_SLINE,0x0,0x52,0x5a0
+  89:  .stabn N_SLINE,0x0,0x52,0x5b0
+  90:  .stabs "bisect:(0,28)",N_LSYM,0x0,0x8,0xffffffec
+  91:  .stabs "c:(0,32)",N_LSYM,0x0,0xe,0xffffffe8
+  92:  .stabs "u:(0,32)",N_LSYM,0x0,0xe,0xffffffe4
+  93:  .stabs "v:(0,32)",N_LSYM,0x0,0xe,0xffffffe0
+  94:  .stabs "w:(0,32)",N_LSYM,0x0,0xe,0xffffffdc
+  95:  .stabs "iter:(0,20)",N_LSYM,0x0,0x14,0xffffffd8
+  96:  .stabn N_LBRAC,0x0,0x0,0x8
+  97:  .stabs "__g77_cilist_0:V(0,49)=s20err:(0,44),0,32;unit:(0,46),32,32;end:(0,44),64,32;format:(0,50)=*(0,2),96,32;rec:(0,46),128,32;;",N_STSYM,0x0,0x1a,0x0
+  98:  .stabn N_LBRAC,0x0,0x0,0x60
+  99:  .stabn N_RBRAC,0x0,0x0,0x9c
+ 100:  .stabs "__g77_cilist_1:V(0,49)",N_STSYM,0x0,0x24,0x0
+ 101:  .stabn N_LBRAC,0x0,0x0,0x120
+ 102:  .stabn N_RBRAC,0x0,0x0,0x15c
+ 103:  .stabs "__g77_cilist_2:V(0,49)",N_STSYM,0x0,0x2d,0x0
+ 104:  .stabn N_LBRAC,0x0,0x0,0x1c4
+ 105:  .stabn N_RBRAC,0x0,0x0,0x290
+ 106:  .stabs "__g77_cilist_3:V(0,49)",N_STSYM,0x0,0x2e,0x0
+ 107:  .stabn N_LBRAC,0x0,0x0,0x290
+ 108:  .stabn N_RBRAC,0x0,0x0,0x330
+ 109:  .stabs "__g77_cilist_4:V(0,49)",N_STSYM,0x0,0x34,0x0
+ 110:  .stabn N_LBRAC,0x0,0x0,0x380
+ 111:  .stabn N_RBRAC,0x0,0x0,0x420
+ 112:  .stabs "__g77_cilist_5:V(0,49)",N_STSYM,0x0,0x3f,0x0
+ 113:  .stabn N_LBRAC,0x0,0x0,0x4b0
+ 114:  .stabn N_RBRAC,0x0,0x0,0x4ec
+ 115:  .stabs "__g77_cilist_6:V(0,49)",N_STSYM,0x0,0x49,0x0
+ 116:  .stabn N_LBRAC,0x0,0x0,0x518
+ 117:  .stabn N_RBRAC,0x0,0x0,0x554
+ 118:  .stabn N_RBRAC,0x0,0x0,0x5b0
+ 119:  .stabn N_FUN,0x0,0x0,0x5b8
+ 120:  .stabs "bigtest_:G(0,51)=ar(0,1);0;15;(0,2)",N_GSYM,0x0,0xd,0x0
+ 121:  .stabn N_SO,0x0,0x0,0x0
+
+No Dynamic Table

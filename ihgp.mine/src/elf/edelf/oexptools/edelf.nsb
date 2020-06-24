@@ -1,0 +1,31 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+
+nsbFile: 1
+generatedBy: NSBD version 1.6 patchlevel 2003/09/26 04:08:57
+generatedAt: Wed, 20 Oct 2004 18:07:42 GMT
+package: edelf
+executableTypes:
+    solaris
+pathSubs:
+    edelf.1 man/man1/edelf.1
+    edelf.toolnews lib/toolnews/edelf
+regSubs:
+    ^edelf.%E$ bin/edelf
+paths:
+    edelf.solaris
+	length: 1269480
+	md5: 402737cba53280b70a696418794121f6
+    edelf.1
+	length: 37616
+	md5: 8706679ee6a8b770b660a12d6aa0b19a
+    edelf.toolnews
+	length: 1653
+	md5: bb8794c46384b07e06e43820694c2781
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.2-exptools3 (SunOS)
+
+iD8DBQFBdqoQFe3nE5KI0XgRAlBJAKCkP5R6zahwe61YIvWwXJHpQLm3RgCgmV3U
+LdZntq8WxiTnH2+Ig+Op4bY=
+=/5Jx
+-----END PGP SIGNATURE-----

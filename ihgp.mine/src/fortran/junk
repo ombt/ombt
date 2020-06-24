@@ -1,0 +1,72 @@
+CIS 255 FINAL EXAM
+
+1) (10) Write down the CHI-squared expression for the following 
+   function and derive the least-squares expressions for the parameters 
+   A and B:
+
+	Y = A*exp(B*sin(X))
+ 
+
+2) (20) List the steps and explain the method of gaussian elimination 
+   with pivoting. What does pivoting do?
+
+
+3) (20) Write a subroutine implementing the bisection method for finding
+   a root x in an interval given by a <= x <= b. Assume that a 
+   function f(x) is passed into your subroutine.
+
+4) (20) Write a subroutine implementing Newton's method for finding
+   a root x in an interval given by a <= x <= b. Assume that a 
+   function f(x) is passed into your subroutine.
+
+
+5) (10) Assume that variables X and Y are real, and variables I and J are
+   integers. Furthermore, assume that X, Y, I and J have the following
+   values:
+
+	X = 1.2345
+	Y = 9.8765
+	I = 12345
+	J = 98765
+
+   How does the output appear for the following format statements. Show
+   all spaces.
+
+	   PRINT 12, X, Y, I, J
+	12 FORMAT(F10.3, T15, F10.3, T29, I10, T43, I10)
+
+	   PRINT 13, X, Y, I, J
+	13 FORMAT(' ', F10.3, T15, F10.3, T29, I10, T43, I10)
+
+	   PRINT 14, X, Y, I, J
+	14 FORMAT(' ', 2(F10.3, 4X), 2(I10, 4X))
+
+	   PRINT 15, X, Y, I, J
+	15 FORMAT(' ', 2(F10.3, 4X), //, 1X, 2(I10, 4X))
+
+
+6) (20) Solve the following set of equations using gaussian elimination
+   WITHOUT pivoting. Explain what happens when E << 1.0.
+
+	E*x + y = 1
+	  x + y = 2
+
+   Then solve the above set of equations with pivoting and show how 
+   it helps.
+
+
+7) (20) Write a subroutine to calculate sech(x) to a given precision. 
+   That is, using a taylor series, determine where to truncate the 
+   series to obtain a given precison and implement it.
+
+   The series representation for sech(x) is given by:
+
+		infinity
+		  ---
+	sech(x) = \	(-1)**n * E(n) * x**(2*n)
+		  /     ------------------------
+		  ---        (2*n) !
+		  n=0
+
+   where E(n) are the Euler numbers. Assume E(n) and the factorial 
+   function (n!) already exist (i.e., you don't have to write them).

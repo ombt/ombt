@@ -1,0 +1,51 @@
+cc = CC
+#CCFLAGS = -g -DDEBUG
+CCFLAGS = -g
+LD = cc
+LDFLAGS = -g
+INCLDIRS = -I/opt/x11r5/include
+#
+drawapp
+append.c
+args.c
+bitmap.c
+classhnt.c
+color.c
+colormap.c
+connect.c
+da_draw.c
+da_edit.c
+da_file.c
+da_meta.c
+da_pix.c
+da_undo.c
+dialog.c
+display.c
+drawapp.c
+drawstr.c
+entry.c
+error.c
+fontht.c
+fontname.c
+gc.c
+geometry.c
+icon.c
+key.c
+label.c
+loadfont.c
+oval.c
+pixmap.c
+pushb.c
+query.c
+sizehint.c
+startupx.c
+toolkit.c
+topwind.c
+tranwind.c
+usage.c
+visual.c
+window.c
+wmhints.c
+wmname.c
+xor.c
+-lX11

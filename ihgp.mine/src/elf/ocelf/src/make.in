@@ -1,0 +1,18 @@
+CC = CC
+# CC = g++
+CCFLAGS = -g -DDEBUG -DUSEEXCEPTION 
+# LD = g++
+LD = CC
+LDFLAGS = -g -DDEBUG -DUSEEXCEPTION
+#
+ocelf58
+ocelf.c
+compare.c
+readdata.c
+swabdata.c
+-ldemangle
+#
+install1=chmod 755 ocelf58
+install2=rm -f /home/rumore/bin/ocelf58
+install3=cp ocelf58 /home/rumore/bin/ocelf58 
+#

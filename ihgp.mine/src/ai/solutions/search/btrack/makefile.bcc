@@ -1,0 +1,15 @@
+#The CFLAGS variable will be handed down from the top-level makefile.
+#CFLAGS = -P -O2 -mc -DNEED_CAST
+
+AR = tlib 
+AILIB = ..\..\lib\aisearch.lib
+INCFLAGS = -I..\..\include
+
+.cc.obj:
+        $(CC) $(CFLAGS) $(INCFLAGS) -c $*.cc
+        $(AR) $(AILIB) -+$*
+
+OBJS =  btrack.obj
+
+all:	$(OBJS)
+

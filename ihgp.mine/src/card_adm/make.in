@@ -1,0 +1,4 @@
+card_adm
+card_adm.sh
+install1 = rcp card_adm rumore@3gmsclsp:/home/rumore/bin
+install2 = rcp card_adm rumore@ihlssb1:/home/rumore/bin

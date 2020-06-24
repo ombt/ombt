@@ -1,0 +1,28 @@
+# SCCS id:	@(#)DIST.src	7.1.2.2	11/15/99
+#
+#
+# This file contains list of all files that have to
+# be distributed as part of the the release we make.
+# Keywords:
+# ALL means that the file is to be distributed for all platforms
+# SUN5 means that the file is to be distributed only on the sun platform
+# WIN32 means that the file is to be distributed only on the windows platform
+#
+
+#
+# The directory where the distribution files will be copied. Path is relative
+# to distribution root.
+#
+DESTDIR=asn1/h225anxgasn1
+
+#
+# List of files, in this directory that will make it to the installation.
+#
+# To the right of "colon" the keyword is either 
+# ALL or a "comma" seperated list of platform names.
+#
+
+*.asn:ALL
+makefile:ALL
+mkh225anxg.awk:ALL
+

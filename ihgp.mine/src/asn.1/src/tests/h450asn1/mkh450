@@ -1,0 +1,195 @@
+#!/usr/bin/ksh
+#
+# 
+#              Copyright (c) 1996-1998 Lucent Technologies
+#                      All Rights Reserved
+#
+#                      THIS IS UNPUBLISHED
+#                      PROPRIETARY SOURCE
+#                  CODE OF Lucent Technologies
+#
+#          The copyright notice above does not evidence any
+#         actual or intended publication of such source code
+#
+# CVS Information:
+#
+# $Revision: 1.2 $
+# $Date: 1998/12/21 18:44:27 $
+#
+
+BASENAME=basename
+EXPR=expr
+SED=sed
+CAT=cat
+GREP=grep
+HEAD=head
+TAIL=tail
+CP=cp
+RM=rm
+
+NAME=`$BASENAME $0`
+
+INTERNAL_ERROR="Internal error."
+DEFINE_EM_ERROR="#define   EmXXX not found."
+TYPEDEF_ERROR="Typedef not found."
+STRUCT_ERROR="Struct not found."
+
+InsertIncludes()
+{
+	if [ $# != 1 ]
+	then
+		echo $NAME error: $INTERNAL_ERROR
+		exit 2
+	fi
+
+	FIRST=`$GREP -n "#define.*Em" ${1} | $HEAD -1 | $SED -e "s/:.*$//"`
+
+	if [ "$FIRST" = "" ]
+	then
+		echo $NAME error: $DEFINE_EM_ERROR
+		exit 1
+	fi
+
+	$CP ${1} ${1}-			
+	$CAT ${1}- \
+		| $SED -e "${FIRST}i\\
+"\
+		| $SED -e "${FIRST}i\\
+#include \"asn1/em_asn1_common.h\"" > ${1}
+	$RM ${1}-
+}
+
+ChangePDUs()
+{
+	if [ $# != 1 ]
+	then
+		echo $NAME error: $INTERNAL_ERROR
+		exit 2
+	fi
+
+	FIRST=`$GREP -n "#define.*Em" ${1} | $HEAD -1 | $SED -e "s/:.*$//"`
+	LAST=`$GREP -n "#define.*Em" ${1} | $TAIL -1 | $SED -e "s/:.*$//"`
+
+	if [ "$FIRST" = "" -o "$LAST" = "" ]
+	then
+		echo `$BASENAME $0` error: $DEFINE_EM_ERROR
+		exit 1
+	fi
+
+	$CP ${1} ${1}-			
+	$CAT ${1}- \
+		| $SED -e "${FIRST},${LAST}s/Em/EM_/" > ${1}
+	$RM ${1}-
+}
+
+RemoveTypedef()
+{
+	if [ $# != 3 ]
+	then
+		echo $NAME error: $INTERNAL_ERROR
+		exit 2
+	fi
+
+	FIRST=`$GREP -n "typedef ${1}.*${2}" ${3} \
+			| $HEAD -1 | $SED -e "s/:.*$//"`
+
+	if [ "$FIRST" = "" ]
+	then
+		echo `$BASENAME $0` error: $TYPEDEF_ERROR \(typedef $1 $2\;\)
+		exit 1
+	fi
+
+	$CP ${3} ${3}-
+	$CAT ${3}- \
+		| $SED -e "${FIRST},`$EXPR $FIRST + 1`d" > ${3}
+	$RM ${3}-
+}
+
+RemoveStruct()
+{
+	if [ $# != 2 ]
+	then
+		echo $NAME error: $INTERNAL_ERROR
+		exit 2
+	fi
+
+	FIRST=`$GREP -n "typedef struct ${1} {" ${2} \
+			| $HEAD -1 |$SED -e "s/:.*$//"`
+	LAST=`$GREP -n "} ${1};" ${2} \
+			| $HEAD -1 | $SED -e "s/:.*$//"`
+
+	if [ "$FIRST" = "" ]
+	then
+		echo `$BASENAME $0` error: $STRUCT_ERROR \($1\)
+		exit 1
+	fi
+
+	$CP ${2} ${2}-
+	$CAT ${2}- \
+		| $SED -e "${FIRST},`$EXPR ${LAST} + 1`d" > ${2}
+	${RM} ${2}-
+}
+
+RemoveLastStruct()
+{
+	if [ $# != 2 ]
+	then
+		echo $NAME error: $INTERNAL_ERROR
+		exit 2
+	fi
+
+	FIRST=`$GREP -n "typedef struct ${1} {" ${2} \
+			| $TAIL -1 |$SED -e "s/:.*$//"`
+	LAST=`$GREP -n "} ${1};" ${2} \
+			| $TAIL -1 | $SED -e "s/:.*$//"`
+
+	if [ "$FIRST" = "" ]
+	then
+		echo `$BASENAME $0` error: $STRUCT_ERROR \($1\)
+		exit 1
+	fi
+
+	$CP ${2} ${2}-
+	$CAT ${2}- \
+		| $SED -e "${FIRST},`$EXPR ${LAST} + 1`d" > ${2}
+	${RM} ${2}-
+}
+
+if [ $# != 1 ]
+then
+	echo Usage: `$BASENAME $0` filename
+	exit 1
+fi
+
+InsertIncludes $1
+ChangePDUs $1
+RemoveStruct Em_ObjectID $1
+RemoveStruct EmOctetString $1
+RemoveTypedef Em_ObjectID EmObjectIdentifier $1
+RemoveStruct EmIP $1
+RemoveStruct EmH221NonStandard $1
+RemoveStruct EmNonStandardIdentifier $1
+RemoveStruct EmNonStandardParameter $1
+RemoveStruct EmSeqOfIP $1
+RemoveStruct EmRouting $1
+RemoveStruct EmH225TransportAddress $1
+RemoveStruct EmPublicTypeOfNumber $1
+RemoveTypedef char EmNumberDigits $1
+RemoveStruct EmPublicPartyNumber $1
+RemoveStruct EmPrivateTypeOfNumber $1
+RemoveStruct EmPrivatePartyNumber $1
+RemoveStruct EmPartyNumber $1
+RemoveStruct EmH323ID $1
+RemoveStruct EmAliasAddress $1
+RemoveStruct EmSeqOfAliasAddress $1
+RemoveStruct EmGloballyUniqueID $1
+RemoveStruct EmCallIdentifier $1
+# RemoveLastStruct EmExtensionSet $1
+# RemoveLastStruct EmExtensionSet $1
+# RemoveLastStruct EmExtensionSet $1
+# RemoveLastStruct EmExtensionSet $1
+RemoveTypedef EmExtensionSet EmExtensionSet $1
+RemoveTypedef EmExtensionSet EmExtensionSet $1
+RemoveTypedef EmExtensionSet EmExtensionSet $1
+RemoveTypedef EmExtensionSet EmExtensionSet $1
+RemoveLastStruct EmBMPString128 $1

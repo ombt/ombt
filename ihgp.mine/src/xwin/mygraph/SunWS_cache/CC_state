@@ -1,0 +1,32 @@
+#.sym "NY6YeYvfU3rEf2f9_-XP" 
+	=SN "" 
+	=SC "" ;
+#.sym "qRaUOVLQg7HNKNZWoFPg" 
+	=SN "" 
+	=SC "" ;
+#.sym "HFrr1duR2btRv-7Efi5i" 
+	=SN "" 
+	=SC "" ;
+#.sym "5weuFI5b3w5PKAC3qjlG" 
+	=SN "" 
+	=SC "" ;
+#.sym "UCsRR1P8Qt406PMsPP2R" 
+	=SN "" 
+	=SC "" ;
+#.obj "/home/rumore/src/xwin/mygraph/mygraph.o" 
+	+CS
+	"NY6YeYvfU3rEf2f9_-XP"
+	"qRaUOVLQg7HNKNZWoFPg"
+	"HFrr1duR2btRv-7Efi5i"
+	"5weuFI5b3w5PKAC3qjlG"
+	"UCsRR1P8Qt406PMsPP2R"
+	=BP "/home/rumore/src/xwin/mygraph" 
+	=SO "/home/rumore/src/xwin/mygraph/mygraph.c" 
+	=CM "-g -DDEBUG -I/opt/x11r5/include -c " ;
+#.obj "/home/rumore/src/xwin/mygraph/mygraph" 
+	+CO
+	""
+	=BP "/home/rumore/src/xwin/mygraph" 
+	=CM "mygraph.o -lX11 -o mygraph " ;
+#.obj "" ;
+#.obj "/home/rumore/src/xwin/mygraph" ;
